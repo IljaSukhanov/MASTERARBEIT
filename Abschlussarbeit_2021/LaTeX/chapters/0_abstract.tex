@@ -1,0 +1,10 @@
+\chapter{Abstract}
+
+Persistent homology is, by design, scale-agnostic: its central output, the persistence
+diagram, records topological features across \emph{all} filtration scales simultaneously and
+thereby avoids committing to any single resolution.
+This is a genuine strength, and no scale-selection procedure can or should replace the full
+persistence diagram as a summary of multiscale structure.
+Nevertheless, a surprising number of problems in and around TDA reduce --- explicitly or
+implicitly --- to the choice of \emph{one} filtration parameter, and doing so in a theoretically justified
+way remains a longstanding methodological gap. In our contribution, we try to fill it by studying the  scale similarity matrices. We propose a general spectral principle for scale selection that applies to a very broad class of functionals on filtrations, far beyond homology ranks or simple face counts. Given a finite point cloud and a chosen filtration (Vietoris–Rips, \v Cech, $\alpha$– or related complexes), we evaluate a (non)–monotonic functional across scales and assemble a nonnegative, symmetric similarity matrix whose entries encode cross–scale interactions of the complexes. The Perron–Frobenius eigenvalue–eigenvector pair of this matrix then identifies a small set of distinguished scales and, in particular, a spectrally optimal parameter at which the functional exhibits the most structurally significant behavior in the context of the entire filtration, rather than at an isolated local extremum. This framework yields a unified, model–free way to detect topological phase transitions, to regularize noisy scale profiles, and to rank competing candidate scales in a filtration. We illustrate its use for a robust scale–selection in a variant of the MAPPER algorithm for topological data visualization. The approach  is theoretically justified by the connections between min/meet matrices and Markov chains.

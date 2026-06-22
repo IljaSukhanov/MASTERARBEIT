@@ -1,0 +1,374 @@
+\chapter{Introduction}
+
+\section{Basics about Topology}
+
+\begin{itemize}
+    \item definition of continuous function in topological space 
+    \item contractible sets, LS-category, examples, homotopic functions
+    \item Closure, Star, Link
+    \item topolgical invariants (homotopy invariance)
+\end{itemize}
+
+\begin{Def}[Topological Space]
+    Let $X$ be any set. Let $\mathcal{T}\subseteq\mathcal{P}(X)$ be a collection of subsets of $X$ such that
+    \begin{itemize}
+        \item $\emptyset\in\mathcal{T}$ and $X\in\mathcal{T}$
+        \item $\bigcup_{i\in I}U_i\in\mathcal{T}$ for all $(U_i)_{i\in I}\subseteq\mathcal{T}$
+        \item $U_1\cap U_2\in\mathcal{T}$ for all $U_1,U_2\in\mathcal{T}$
+    \end{itemize}
+    Then the pair $(X,\mathcal{T})$ is called a topological space.
+\end{Def}
+
+\begin{Def}[contractible set]
+    Let $(X,\mathcal{T})$ be a topological space. A set $U\in\mathcal{T}$ is contractible in $X$ if there exists a (continuous) map $H:U\times[0,1]\to X$ and a point $x_0\in X$ such that $H(u,0)=u$ and $H(u,1)=x_0$ for all $u\in U$.
+\end{Def}
+
+\begin{Def}[Lusternik-Schnirelmann category]
+    Let $(X,\mathcal{T})$ be a topological space. The Lusternik-Schnirelman category (LS-category) of $X$ is the minimum number of open contractible sets $U_i$ that cover $X$. Formally speaking
+    \begin{align*}
+        \text{cat}(X)=\min\{n\in\mathbb{N}:\exists U_1,\dots,U_n\in\mathcal{T},U_j\ \text{is contractible in}\ X\}
+    \end{align*}
+\end{Def}
+
+The LS-category of a topological space can be interpreted as a measure for its complexity, i.e. a topological space has a more complex structure if we need more open and contractible sets to cover it.
+
+\begin{Prop}
+    Let $X_1,\mathcal{T}_1$ and $(X_2,\mathcal{T}_2)$ be topological spaces. Then the following properties hold:
+    \begin{enumerate}
+        \item[1.] Subadditivity: $\text{cat}(X_1\cup X_2)\le\text{cat}(X_1)+\text{cat}(X_2)$
+        \item[2.] Simple upper bound
+        \item[3.] Simple lower bound?
+        \item[4.] Homotopy invariance
+        \item[5.] $\text{cat}(X)=1\iff X$ is contractible
+    \end{enumerate}
+\end{Prop}
+
+
+
+\section{Simplicial Complexes}
+
+\begin{itemize}
+    \item LS-category of (geometric realization of) simplicial complexes, properties, bounds
+    \item surrogates, estimations for LS-category from data
+    \item Random simplicial (geometric) complexes: sample points in space and build Vietoris-Rips complex
+    \begin{itemize}
+        \item Phase transitions, Limit laws
+    \end{itemize}
+\end{itemize}
+
+We begin by introducing the simplicial complex, the main mathematical object in Topological Data Analysis. For literature consult \cite{Dey_Wang_2022}.
+
+\begin{Def}[Abstract simplicial complex]
+    Let $V$ be a finite set of vertices. An abstract simplicial complex $K$ is a collection of subsets of $V$ such that:
+    \begin{itemize}
+        \item $\emptyset\in K$
+        \item $\{v\}\in K$ for every $v\in V$
+        \item if $\sigma\in K$ and $\tau\subseteq\sigma$ then $\tau\in K$
+    \end{itemize}
+    We denote by $\mathcal{K}(V)$ the set of all simplicial complexes with vertex set $V$.
+\end{Def}
+
+\todo[inline]{Point out that this is a generalization of a simple graph}
+
+The abstract simplicial complex is a purely combinatorial object. It can be given a geometric meaning by embedding it in the $d$-dimensional euclidean space.
+
+\begin{Def}[Geometric realization]
+    The geometric realization of an abstract simplicial complex $K$ with vertex set $V=\{v_1,\dots,v_n\}$ is given by
+    \begin{align*}
+        |K|_{\Phi}=\bigcup\limits_{\sigma\in K}\operatorname{conv}\{p_t:t\in\sigma\}
+    \end{align*},
+    where $\Phi:V\to\mathbb{R}^m$ is an embedding map that may have further properties.
+\end{Def}
+
+Using the geometric realization $|K|_{\Phi}$ the volume of a simplex $\sigma=[v_{i_0}\dots v_{i_j}]$ can be defined by
+\begin{align*}
+    \operatorname{Vol}(\sigma):= \frac{1}{j!}\sqrt{\det{\left(\langle x_{i_k}-x_{i_0},x_{i_l}-x_{i_0}\rangle_{k,l=1}^{j}\right)}},
+\end{align*}
+where $\langle x_k,x_l\rangle_{k,l=1}^{j}$ is the Gram matrix defined by $X^TX$ with $X=(x_1\cdots x_j)$. We see that $\operatorname{Vol}(\sigma)=0$ for all $\sigma\in K$ with $\dim{\sigma}<\dim{K}$. The volume of a simplicial complex is
+\begin{align*}
+    \operatorname{Vol}(K)=\sum_{\sigma\in K,\dim{\sigma}=\dim{K}}\operatorname{Vol}(\sigma)
+\end{align*}
+
+\subsection*{Binary operations on simplicial complexes}
+
+\todo[inline]{Symmetric difference}
+
+There exist different operations $\oplus:\mathcal{K}(V)\times\mathcal{K}(V)\to\mathcal{K}(V)$ which we will discuss below. The union of two complexes $K_1$ and $K_2$ is defined as
+\begin{align*}
+    K_1\cup K_2:=\{\sigma\subseteq V:\sigma\in K_1\text{ or }\sigma\in K_2\}
+\end{align*}
+
+\todo[inline]{Give general discussion on operations $\oplus\in\{\cup,\dots\}$ with examples}
+
+The geometric realization $\tilde{K}$ of an abstract simplicial complex $K$ can be viewed as a topological space, which allows us to define the LS-category of a simplicial complex $K$ by $\text{cat}(K):=\text{cat}(\tilde{K})$.
+
+
+
+\subsection{Simplex Trees}
+
+Simplex trees are used to store simplicial complexes efficiently.
+
+\subsection{Types of simplicial complexes}
+In this chapter, we describe different methods to construct simplicial complexes from data points $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^d$.
+
+\subsubsection{\v{C}ech complex}
+
+$\check{C}_{\epsilon}(X)=\{\sigma\subseteq X:\bigcap\limits_{x\in\sigma} B(x,\epsilon)\ne\emptyset\}$
+
+\subsubsection{Vietoris--Rips Complex}
+
+$\operatorname{VR}_{\epsilon}(X)=\{\sigma\subseteq X:d(x,y)\le\epsilon\ \text{for all} \ x,y\in\sigma\}$
+
+In what way is the Vietoris--Rips complex an approximation of the \v{C}ech complex?
+
+\subsubsection{alpha complex}
+
+\subsubsection{(Lazy) Witness complex}
+
+\subsection{Constructing simplicial complexes from graphs}
+
+Let $G=(V,E)$ be a simple graph, that is, $V=\{v_1,\dots,v_n\}$ is the finite set of vertices and $E\subseteq\{\{u,v\}:u,v\in V,u\neq v\}$ the set of undirected edges. We will write $uv\in E$ instead of $\{u,v\}\in E$ as shorthand. A common way to construct a simplicial complex from $G$ is the flag complex $K(G)$.
+
+\begin{Def}[Flag Complex]
+    Let $G=(V,E)$ be a simple graph. The flag complex $\operatorname{Flag}(G)$ is a simplicial complex with vertex set $V$ and $\sigma=[v_{i_0},\dots,v_{i_k}]$ is a $k$-simplex inside this complex if $v_{i_l}v_{i_j}\in E$ for all $l,j=0,\dots,k$, $l\ne j$.
+\end{Def}
+
+\begin{Def}[Independence Complex]
+    $I(G)$
+\end{Def}
+
+\begin{Def}[Neighborhood Complex]
+    $N(G)$
+\end{Def}
+
+\begin{Def}[Matching Complex]
+    $M(G)$
+\end{Def}
+
+\begin{Def}[Dominance Complex]
+    $D(G)$
+\end{Def}
+
+\section{The Point Complexity of a simplicial complex}
+
+\begin{itemize}
+    \item degree/ local density weighting: $\operatorname{pc}_f(x)=\operatorname{pc}(x)f(\deg{(x)})$ with $f:\mathbb{N}_0\to[0,1)$ increasing (instead of degree, any other centrality measure can be used)
+\end{itemize}
+
+A surrogate (upper bound?) for the LS-category of a simplicial complex $K$ is
+\begin{align*}
+    \sum_{x\in X}\text{pc}(x)
+\end{align*}
+where $\text{pc}(x)$ is the point complexity defined by
+\begin{align*}
+    \text{pc}(x):=d-\max\{\text{dim}(\sigma):\sigma\in K,x\in\sigma\}
+\end{align*}
+Here, $d$ is the dimension of the simplicial complex which is given by the dimension of the largest simplex contained in $K$. Thus, $0\le\text{pc}(x)\le d$. If $x$ is an isolated vertex, then $\text{pc}(x)=d$
+
+Next, we define the values $b_k(x)$ by $b_k(x):=\#\{\sigma:\text{dim}(\sigma)=k,\ x\in\sigma\}$ (the number of $k$-dimensional simplices that contain $x$). Note that in particular $b_1(x)=\text{deg}(x)$ is the degree of the vertex $x\in X$ and $b_2(x)=\text{tri}(x)$ is the number of triangles that contain $x$. Furthermore, we let $a_k(x)$ be the maximum number of $k$-simplices that could contain the vertex $x$, given that the edges are fixed. In particular, $a_1(x)=b_1(x)=\text{deg}(x)$ and $a_2(x)=\binom{b_1(x)}{2}$. In general, $a_k(x)=1\{b_1(x)\ge k\}\binom{b_1(x)}{k}$. Also, $a_0(x):=1$.
+
+Given $b_k(x)$ and $a_k(x)$ we define the ratio $r_k(x)=1\{a_k(x)>0\}b_k(x)/a_k(x)$. In particular, $r_1(x)=1\{\text{deg}(x)>0\}$ and $r_2(x)=1\{\text{deg}(x)>1\}b_2(x)/a_2(x)$. The value $r_2(x)$ is also known as clustering coefficient of $x$.
+
+Now we can write the point complexity as
+\begin{align*}
+    \text{pc}(x)&:=d-\max_{\sigma:x\in\sigma}\text{dim}(\sigma)=\sum_{k=1}^{d}\bigg[1-\mathbf{1}\{r_k(x)>0\}\bigg]
+\end{align*}
+
+In the code, the corrected point complexity is defined as
+\begin{align*}
+    \text{pc}'(x)&:=\text{pc}(x)-\sum_{k=0}^{d}\underbrace{\mathbf{1}\{a_k(x)>0\}\mathbf{1}\{b_k(x)\ge a_k(x)\}}_{=\mathbf{1}\{r_k(x)=1\}}\\&
+    \stackrel{r_0(x)=1}{=}\sum_{k=1}^{d}\left[1-\mathbf{1}\{r_k(x)>0\}-\mathbf{1}\{r_k(x)=1\}\right]-1\\&
+    =\sum_{k=1}^{d}\left[1-\left(\mathbf{1}\{r_k(x)>0\}+\mathbf{1}\{r_k(x)\ge 1\}\right)\right]-1
+\end{align*}
+Beginning the summation at zero seems wrong, which is why from now on we set
+\begin{align*}
+    \text{pc}'(x)=\sum_{k=1}^{d}\bigg[1-\left(\mathbf{1}\{r_k(x)>0\}+\mathbf{1}\{r_k(x)\ge 1\}\right)\bigg]
+\end{align*}
+The code also provides a soft correction, which is defined by
+\begin{align*}
+    \text{pc}'_{\tau}(x)&:=\text{pc}(x)-\sum_{k=1}^{d}\mathbf{1}\{r_k(x)\ge\tau_k\}\\&
+    =\sum_{k=1}^{d}\bigg[1-\left(\mathbf{1}\{r_k(x)>0\}+\mathbf{1}\{r_k(x)\ge\tau_k\}\right)\bigg]
+\end{align*}
+for some thresholds $\tau_k>0$. Obviously, $\text{pc}'$ is a special case of $\text{pc}'_{\tau}$, namely when $\tau_k=1$ for each $k$. By putting $\tau_k>1$ for each $k$, we recover the original point complexity, because $r_k(x)\le1$ and thus $\mathbf{1}\{r_k(x)\ge\tau_k\}\le\mathbf{1}\{r_k(x)>1\}=0$.
+
+The first summand $\mathbf{1}\{r_k(x)>0\}$ is equal to $1$ if $x$ is inside some $k$-simplex, and the second summand $\mathbf{1}\{r_k(x)\ge\tau_k\}$ is equal to $1$ if $x$ is inside sufficiently many $k$-simplices. This means that if $x$ is inside sufficiently many $k$-simplices, then the point complexity is corrected by subtracting $2$; if $x$ is not inside sufficiently many $k$-simplices, but inside at least one $k$-simplex, the point complexity is corrected by subtracting $1$.
+
+% \section{Archetypal manifolds}
+
+% In this section, we present some basic manifolds in $\mathbb{R}^2$ and $\mathbb{R}^3$ to test our pipeline. We will also discuss which types of noise we will add to the points sampled from those manifolds.
+
+% effects on the pipeline: sample size $n$, noise level $\sigma^2$, type of noise, number of filtration steps $N$
+
+% additive noise $Y_i=X_i+\sigma\xi_i$ with $\xi_i\sim N(0,1)$
+
+% \subsection*{Two dimensional manifolds}
+
+% Circle: $S^1=\{(\cos{t},\sin{t}):t\in[0,2\pi)\}$
+
+% $(\beta_0,\beta_1)=(1,1)$, $\chi(S^1)=0$
+
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Abschlussarbeit_2021/LaTeX/images/noisy_circle.pdf}
+%     \caption{Noisy Circle, 200 points sampled from a circle with Gaussian noise ($\sigma^2=0.1$) and additionally 50 points sampled uniformly from $\mathcal{U}([-1,1]^2)$}
+%     \label{fig:noisy_circle}
+% \end{figure}
+
+% What configurations of $(\beta_0,\beta_1)$ are possible when using two circles?
+% \begin{itemize}
+%     \item $(\beta_0,\beta_1)=(1,1)$: two circles overlap completely
+%     \item $(\beta_0,\beta_1)=(1,2)$: two circles touch at one point
+%     \item $(\beta_0,\beta_1)=(1,3)$: two circles overlap partially (two intersections)
+%     \item $(\beta_0,\beta_1)=(2,2)$: two disjoint circles
+% \end{itemize}
+
+
+% \begin{figure}[ht]
+%     \centering
+
+%     \begin{subfigure}{0.2\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/two_circles_1.pdf}
+%         \caption{First image}
+%         \label{fig:image1}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.2\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/two_circles_2.pdf}
+%         \caption{Second image}
+%         \label{fig:image2}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.2\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/two_circles_3.pdf}
+%         \caption{Third image}
+%         \label{fig:image3}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.2\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/two_circles_4.pdf}
+%         \caption{Fourth image}
+%         \label{fig:image4}
+%     \end{subfigure}
+
+%     \caption{Comparison of four different point clouds.}
+%     \label{fig:four-point-clouds}
+% \end{figure}
+
+
+% \subsection*{Three dimensional manifolds}
+
+% Torus: $T^2=\{\}$
+
+% $(\beta_0,\beta_1,\beta_2)=(1,2,1)$, $\chi(T^2)=0$
+
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/noisy_torus.pdf}
+%     \caption{Noisy Torus}
+%     \label{fig:noisy_torus}
+% \end{figure}
+
+% Sphere: $S^2=\{(\sin{(\pi u)}\cos{(2\pi v)},\sin{(\pi u)}\sin{(2\pi v)},\cos{(\pi u)}):u,v\in[0,1]\}$
+
+% $(\beta_0,\beta_1,\beta_2)=(1,0,1)$, $\chi(S^2)=2$
+
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/noisy_sphere.pdf}
+%     \caption{Noisy Sphere}
+%     \label{fig:noisy_sphere}
+% \end{figure}
+
+\section{Topological Data Analysis}
+
+\begin{itemize}
+    \item persistance diagrams
+    \item betti numbers
+    \item homology
+\end{itemize}
+
+\todo[inline]{Cite papers about TDA intro}
+
+Let $(V,\Sigma)$ be an abstract simplicial complex and denote by $\Sigma_k$ the set of all simplices in $\Sigma$ with dimension $k$. Let $C_k(\mathbb{F})$ be the free Abelian group generated using $\Sigma_k$ as the basis with linear coefficients from the field $\mathbb{F}$, that is,
+\begin{align*}
+    C_k(\mathbb{F})=\left\{\sum_{i=1}^{n}k_i\sigma_i:\sigma_i\in\Sigma_K,k_i\in\mathbb{F},n\in\mathbb{N},i=1,\dots,n\right\}.
+\end{align*}
+Throughout this work, we will only consider $\mathbb{F}=\mathbb{Z}_2=\{0,1\}$ and set $C_k(\mathbb{Z}_2)=C_k$. The sum in [] is seen as a formal sum: the coefficient $k_i=0$ means that the simplex $\sigma_i$ is excluded and the coefficient $k_i=1$ means that the simplex $\sigma_i$ is included in the sum. Next we define the boundary map $\delta_k:\Sigma_k\to C_{k-1}$ by
+\begin{align*}
+    \delta_k(\sigma):=\sum_{i=0}^{k}(-1)^{i}\sigma_{-i},\quad\sigma=[x_0\dots x_k]\in\Sigma_k,
+\end{align*}
+where $\sigma_{-i}\in\Sigma_{k-1}$ is the simplicial complex with vertices $x_0,\dots,x_{i-1},x_{i+1},\dots,x_k$. We extend $\delta_k$ from $\Sigma_k$ to $C_k$ by the rule
+\begin{align*}
+    \delta_k(\Gamma):=\sum_{i=1}^{n}k_i\delta_k(\sigma_i),
+\end{align*}
+where $\Gamma=\sum_{i=1}^{n}k_i\sigma_i\in C_k$.
+
+The $k$-th Betti number $\beta_k$ is set to be the dimension of the image of $\delta_k$:
+\begin{align*}
+    \beta_k=\dim(\operatorname{Im}\delta_k)
+\end{align*}
+
+\subsection{The Mapper Algorithm}
+
+In this section, we describe the Mapper algorithm which was first mentioned by [].
+
+Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^d$ be our sampled data. Let $f:\mathbb{R}^d\to\mathbb{R}^{d'}$ be the so called lens function and $\mathcal{U}$ some finite open cover of $f(X)$. The choices of $f$ and $\mathcal{U}$ are important and will be discussed below. For each $U\in\mathcal{U}$ we decompose $f^{-1}(U)$ into $k_U$ clusters $C_{U}^{(1)},\dots,C_U^{(k_U)}$. Now $\{C_U^{(i)}:U\in\mathcal{U},i=1,\dots,k_U\}$ is a cover of $X$ and we compute its nerve. The clustering can be done in multiple ways, and we will discuss these different methods below as well.
+
+
+% \section{Principal component analysis}
+
+% \begin{itemize}
+%     \item explained variance ratio of the $k$-th principal component: $\frac{\lambda_k}{\lambda_1+\dots+\lambda_N}$
+% \end{itemize}
+
+% Let $X=(X_1,\dots,X_n)$ be a random vector and let $\Sigma\in\mathbb{R}^{n\times n}$ be the covariance matrix $X$. We assume that $\Sigma$ has eigenvalues $\lambda_1>\dots>\lambda_n>0$. The $i$-th principal component of $X$ is defined as $Y_i=\alpha_i^TX$, where $\alpha_i\in\mathbb{R}^n$ is a deterministic vector that solves the following maximization problem:
+% \begin{align*}
+%     \alpha_i\in\arg\max\left\{\text{Var}[\alpha^TX]:\alpha\in\mathbb{S}^{n-1},\text{Cov}[\alpha^TX,\alpha_j^{T}X]=0\ \forall j=1,\dots,i-1\right\}
+% \end{align*}
+% We have the following equalities:
+% \begin{itemize}
+%     \item $\text{Var}[\alpha^TX]=\alpha^T\Sigma\alpha$
+%     \item $\text{Cov}[\alpha^TX,\alpha_j^TX]=\alpha^T\Sigma\alpha_j^T$
+% \end{itemize}
+% Therefore, we can express the maximization problem more compactly as
+% \begin{align*}
+%     \alpha_i\in\arg\max\left\{\alpha^T X\alpha:\alpha\in\mathbb{S}^{n-1},\alpha^T\Sigma\alpha_j=0\ \forall j=1,\dots,i-1\right\}
+% \end{align*}
+
+% It is well known that $\alpha_i=v_i$ where $v_i$ is the (unique) eigenvector of $\Sigma$ that corresponds to the eigenvalue $\lambda_i$. Also $\text{Var}[Y_i]=\lambda_i$. Let $A=(\alpha_1\cdots\alpha_n)$. This matrix is orthogonal and it holds $\Sigma A=A\Lambda$, where $\Lambda=\text{diag}(\lambda_1,\dots,\lambda_n)$.
+
+\section{Manifold Learning}
+
+\begin{itemize}
+    \item kernel PCA, t-SNE, UMAP, Isomap
+    \item common datasets for testing?
+\end{itemize}
+
+\section*{Applications}
+
+\begin{itemize}
+    \item shape recognition, signal processing, time series, biological data (proteins, neurons)
+    \item feature extraction, multiscale analysis
+    \item Dimensionality reduction
+    \item Noise filter
+    \item critical scale detection (elbow method, bandwidth kernel density estimate)
+    \item outlier detection (already established methods)
+\end{itemize}
+
+Building one simplicial complex from a point cloud: $K_{\epsilon_{\text{crit}}}$ should have the same topological features as the manifold $\mathcal{X}$ from which the points where sampled (with noise).
+
+Choosing the graph for graph-based data analysis. (spectral clustering, manifold learning, Laplacian eigenmaps, diffusion maps, Isomap-like methods, semi-supervised learning)
+
+MAPPER
+
+Persisitent homology interpretation
+
+Denoising point clouds
+
+Estimating connected components or clusters
+
+Shape reconstruction

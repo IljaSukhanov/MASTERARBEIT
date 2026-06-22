@@ -1,0 +1,70 @@
+\documentclass[12pt,a4]{article}
+\usepackage{amssymb}\usepackage{hyperref}
+\usepackage{amsmath}
+
+
+\begin{document}
+
+
+\textbf{Data modeling with multiscale $\alpha$-neighboring graph }
+
+
+
+The multiscale $\alpha $-neighboring graph is a data model used to perform exploratory data analysis. Within this framework
+\begin{itemize}
+\item Nodes represent individual data points from a given dataset.
+\item Edges connect nodes if they are considered "similar" based on a specific metric.
+\end{itemize}
+
+
+
+Let \ $\displaystyle X\subset \mathbb{R}^{n}$ be the dataset. The construction of an $\alpha $-neighboring graph consists of three main steps:
+
+
+
+1. \textbf{Metric Selection}. A distance metric $d$ is selected based on the nature of the data. For example, the Hamming distance may be used for binary data, while the Euclidean distance is used for continuous data.
+
+
+
+2. \textbf{Dataset Covering. }A projection function $f:X\rightarrow \mathbb{R}^{d}$ is defined, where usually $d=1$ or $d=2$. The projection method is chosen based on which features need to be highlighted (e.g., general geometric properties, outliers, flyers, cycles etc.). Given a covering $\bigcup _{i\in I} U_{i}$ of the image $f(X)$, the preimages $X_{i} =f^{-1} (U_{i} )$ form a covering of the original dataset $X$.
+
+
+
+3. \textbf{Threshold Selection. }For each subset $X_{i}$ in the dataset covering, a local scale threshold $\alpha _{i}$ is selected. Two nodes $u,v\in X_{i}$ are connected by an edge if $d(u,v)\leq 2\alpha _{i}$. For a pair of nodes that belong to the intersection of multiple covering sets, the maximum of the corresponding thresholds is used. Proper scale threshold selection is crucial for ensuring the connectivity and conciseness of the $\alpha $-neighboring graph.
+
+
+
+The multiscale $\alpha$-neighboring graph is primarily constructed to build a visual map of the data. Visual observation, supplemented by automated community detection, allows researchers to identify specific groups of interest on the map. Finally, statistical tests can be applied to confirm whether the differences between these groups are significant.
+
+
+\bigskip
+\textbf{Synthetic dataset experiment}
+
+The two-dimensional `eight` synthetic dataset was constructed and the multiscale $\alpha $-neighboring graph model was built.
+
+The original dataset is given in the Figure  eight\_dataset.png. 
+
+The graph with spectral local thresholds with respect to the functional $|C|\cdot|E|$ ($|C|$ -- number of connected components, $|E|$ -- number of edges) is given in Figure eight\_proper.png. The metric is selected to be Euclidean, the projection is the first principal component.
+
+The graph in Figure eight\_fail.png is constructed with random local thresholds and does not preserve the structure of the dataset. 
+
+
+\bigskip
+\textbf{Case study: spectral $\alpha$-scale selection for the spread of COVID-19 in the US}
+
+
+
+Each node of the graph corresponds to one of the $3{,}142$ counties of the United States. Two counties are connected by an edge if they are similar with respect to a $28$-dimensional outcome vector that encodes the daily numbers of confirmed cases and deaths (3-day sliding window, normalized) over a $39$-day observation window starting from each county's second confirmed case, together with their cumulative log-totals. Similarity is measured by a Euclidean-type distance, evaluated separately within overlapping covering sets chosen by a 2-dimensional projection function (density and centrality of the outcomes).
+
+
+
+For every covering set the local threshold $\alpha _{i}$ is selected automatically by the spectral procedure described above, applied to the functional $|C|\cdot|E|$ ($|C|$ -- number of connected components, $|E|$ -- number of edges) computed across candidate scales. The resulting graph attains a high clustering score (with a random-walk mixing rate $0.99997$) and reveals four well-separated communities, obtained without any manual threshold tuning. These communities are analogous to the four communities from the original study \cite{COVID-19}. The authors compared the communities and found statistically significant differences ($p$-values from two-sample tests, all $<10^{-2}$) in several county-level predictors not used to build the graph: total population, urban influence code, number of hospitals per $100{,}000$ residents, and number of general-practice physicians per $100{,}000$ residents. This indicates that the spectrally selected $\alpha$-neighboring graph recovers a partition of counties that is meaningfully aligned with independent demographic and healthcare-infrastructure characteristics, beyond the epidemic time series used to construct it.
+
+\begin{thebibliography}{99}
+	
+	\bibitem{COVID-19} Understanding the spread of COVID-19 in the United States using topology and machine learning for time series, PHUSE EU-Connect-2020, on-line, November 9-13, 2020. ${https://www.lexjansen.com/phuse/2020/rw/PAP \_ RW03.pdf}$
+	
+\end{thebibliography}
+
+
+\end{document}
