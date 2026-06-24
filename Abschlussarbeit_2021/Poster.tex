@@ -3,27 +3,43 @@
 \usepackage[paperwidth=84.1cm,paperheight=118.9cm,margin=3cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage{multicol}
+\usepackage[most]{tcolorbox}
 \usepackage{tikz}
 \usepackage{parskip}
 
 \pagestyle{empty}
-\setlength{\columnsep}{2.5cm}
-\setlength{\columnseprule}{0pt}
 
 \definecolor{uulmgray}{RGB}{70,70,70}
 \definecolor{posterline}{RGB}{220,220,220}
+\definecolor{posterfill}{RGB}{250,250,250}
 
 \newcommand{\postertitle}{}
 \newcommand{\posterauthor}{}
 \newcommand{\posterinfo}{}
 
-\newcommand{\postersection}[1]{%
-  \vspace{1.2cm}%
-  {\Large\bfseries\color{uulmgray}#1}\par
-  \vspace{0.3cm}%
-  {\color{posterline}\rule{\linewidth}{1.5pt}}\par
-  \vspace{0.6cm}%
+\tcbset{
+  posterblockstyle/.style={
+    enhanced,
+    colback=posterfill,
+    colframe=posterline,
+    coltitle=uulmgray,
+    fonttitle=\Large\bfseries,
+    boxrule=1.5pt,
+    arc=8mm,
+    left=1.2cm,
+    right=1.2cm,
+    top=1cm,
+    bottom=1cm,
+    title filled=false,
+    attach title to upper={\par\vspace{0.5cm}},
+  }
+}
+
+\newcommand{\posterblock}[2]{%
+  \begin{tcolorbox}[posterblockstyle,title={#1}]
+    #2
+  \end{tcolorbox}
+  \vspace{1.3cm}
 }
 
 \begin{document}
@@ -48,14 +64,38 @@
 
 \vspace{3cm}
 
-\begin{multicols}{3}
-  \postersection{}
+\begin{minipage}[t]{0.48\textwidth}
+  \posterblock{Section Title}{
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Replace this text
+    with your own content, figures, tables, or short explanations.
+  }
 
-  \columnbreak
-  \postersection{}
+  \posterblock{Section Title}{
+    Praesent vitae neque at arcu consequat aliquet. This area can be used for
+    methods, background information, or a compact list of important points.
+  }
 
-  \columnbreak
-  \postersection{}
-\end{multicols}
+  \posterblock{Section Title}{
+    Integer facilisis, augue sed tempor luctus, justo urna cursus sapien, sed
+    tincidunt purus neque vitae lectus. Add your own notes here.
+  }
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \posterblock{Section Title}{
+    Donec euismod, nisl eget consectetur commodo, massa lectus porttitor orci,
+    non feugiat magna erat id ligula. This is placeholder text.
+  }
+
+  \posterblock{Section Title}{
+    Curabitur sed velit non urna congue vestibulum. Use this block for results,
+    diagrams, images, equations, or other poster material.
+  }
+
+  \posterblock{Section Title}{
+    Sed at magna sed mi blandit posuere. Replace this paragraph with your final
+    conclusion, references, acknowledgements, or additional content.
+  }
+\end{minipage}
 
 \end{document}
