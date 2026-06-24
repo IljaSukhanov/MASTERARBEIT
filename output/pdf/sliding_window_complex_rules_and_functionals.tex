@@ -1,0 +1,450 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  urlcolor=blue!55!black,
+  citecolor=blue!55!black
+}
+
+\setlist[itemize]{leftmargin=1.5em}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert_2}
+\newcommand{\frob}[1]{\left\lVert #1 \right\rVert_F}
+
+\title{Sliding-Window Complex Rules and Simple Functional Profiles}
+\author{Companion note for \texttt{ar\_process\_sliding\_window\_embedding.ipynb}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+
+The notebook constructs a sequence of simplicial complexes
+\[
+  L_1,L_2,\ldots,L_{k_{\max}}
+\]
+from a simulated autoregressive time series. For each embedding scale \(k\),
+the notebook first builds a graph using one of the selected construction rules,
+then takes the flag complex of that graph. The plotted profile is a simple
+functional
+\[
+  k \longmapsto F(L_k), \qquad k=1,\ldots,k_{\max}.
+\]
+
+The following basic functionals are kept in the current notebook:
+\[
+  f_0,\quad f_1,\quad f_2,\quad \beta_0,\quad \beta_1,
+  \quad \operatorname{PC}.
+\]
+These are the entries of the face vector, the first two Betti numbers, and the
+point complexity. The notebook lets the user choose two such functionals
+\(F_1,F_2\) and two scalar weights \(a,b\), and plots
+\[
+  aF_1(L_k)+bF_2(L_k).
+\]
+It also builds a scale-similarity matrix from the same linear combination:
+\[
+  S_{k\ell}=aF_1(L_k\oplus L_\ell)+bF_2(L_k\oplus L_\ell),
+\]
+where \(\oplus\) is either union or intersection, and plots the principal
+eigenvector of this matrix against \(k\).
+
+\section{Time-Series and Lifting Notation}
+
+The simulated autoregressive process has order \(p\):
+\[
+  x_t = c + \phi_1 x_{t-1} + \cdots + \phi_p x_{t-p} + \varepsilon_t.
+\]
+In the interactive notebook, the user selects \(p\), not the coefficient vector.
+The coefficients are drawn reproducibly from the seed in partial-autocorrelation
+coordinates. Since every partial autocorrelation lies in \((-1,1)\), the
+resulting AR polynomial is stationary.
+
+For a univariate series \(x_0,\ldots,x_{n-1}\), the forward sliding-window
+embedding of dimension \(k\) is
+\[
+  Y_t^{(k)} =
+  (x_t,x_{t+1},\ldots,x_{t+k-1})^\top \in \R^k.
+\]
+The series is split chronologically into training and test segments. For each
+\(k \leq k_{\max}\), the training windows of length \(k_{\max}\) are split as
+\[
+  W_t =
+  (x_t,\ldots,x_{t+k_{\max}-1})^\top
+  =
+  \begin{pmatrix}
+    Y_t^{(k)}\\
+    Z_t^{(k)}
+  \end{pmatrix},
+\]
+where
+\[
+  Z_t^{(k)} = (x_{t+k},\ldots,x_{t+k_{\max}-1})^\top.
+\]
+
+The completion matrix \(\widehat A_k\) is fitted by least squares:
+\[
+  \widehat A_k
+  \in
+  \arg\min_A
+  \sum_t \left\| Z_t^{(k)} - A Y_t^{(k)} \right\|_2^2.
+\]
+For \(k=k_{\max}\), no tail is missing, and \(\widehat A_{k_{\max}}\) is empty.
+
+On the test segment, each \(k\)-window is lifted to the common ambient space
+\(\R^{k_{\max}}\):
+\[
+  p_t^{(k)}
+  =
+  \begin{pmatrix}
+    Y_t^{(k)}\\
+    \widehat A_k Y_t^{(k)}
+  \end{pmatrix}.
+\]
+The corresponding prediction-error vector is
+\[
+  e_t^{(k)}
+  =
+  \widehat A_k Y_t^{(k)} - Z_t^{(k)}.
+\]
+
+\section{Common Graph and Flag-Complex Setup}
+
+Fix \(k\). Let \(m\) be the number of complete test windows of length
+\(k_{\max}\). Each time index \(t=0,\ldots,m-1\) is a vertex:
+\[
+  V_k = \{0,1,\ldots,m-1\}.
+\]
+
+Before applying a construction rule, the notebook restricts attention to
+temporal candidate edges:
+\[
+  E_k^{\mathrm{temp}}
+  =
+  \bigl\{\{s,t\}: 0\leq s<t\leq m-1,\; 1\leq |s-t|\leq k-1\bigr\}.
+\]
+For \(k=1\), this set is empty. For larger \(k\), a vertex can connect only to
+nearby window-start times.
+
+Each construction rule produces a retained edge set
+\[
+  E_k \subseteq E_k^{\mathrm{temp}}.
+\]
+The graph is \(H_k=(V_k,E_k)\). The simplicial complex is the flag complex
+\[
+  L_k = \operatorname{Flag}(H_k).
+\]
+Thus a finite vertex set \(\sigma\subseteq V_k\) is a simplex of \(L_k\) exactly
+when every pair of vertices in \(\sigma\) is an edge of \(H_k\). In the notebook,
+GUDHI expands the graph through dimension two.
+
+
+\section{Complex Construction Rules}
+
+The notebook now uses manually chosen thresholds. Let \(\tau_e\geq0\) be the
+error threshold, let \(\tau_d\geq0\) be the lifted-cloud distance threshold,
+and let \(\tau_c\geq0\) be the covariance threshold.
+
+A general way to describe the construction is to put nonnegative weights on
+the temporal candidate graph. For a weight function
+\[
+  w_k:E_k^{\mathrm{temp}}\to\R_{\geq 0},
+\]
+retain the thresholded edge set
+\[
+  F_k^\tau
+  =
+  \{e\in E_k^{\mathrm{temp}}:w_k(e)\leq \tau\}.
+\]
+This gives a subgraph
+\[
+  H_k=(V_k,F_k^\tau)
+\]
+and therefore the data-dependent subcomplex
+\[
+  L_k=\operatorname{Flag}(H_k).
+\]
+If one wants the sequence \(L_1,\ldots,L_{k_{\max}}\) to be a filtration under
+the common temporal edge sets, the edge weights should satisfy
+\[
+  w_{k+1}(e)\leq w_k(e),
+  \qquad
+  e\in E_k^{\mathrm{temp}},
+  \quad
+  k=1,\ldots,k_{\max}-1.
+\]
+The notebook reports the complexes scale by scale; this monotonicity condition
+is the mathematical condition to check when the selected rule is intended to
+define a true filtration.
+
+\subsection{Both Errors Small}
+
+Let
+\[
+  r_t^{(k)}=\norm{e_t^{(k)}}
+\]
+be the completion-error norm at time \(t\). A temporal candidate edge
+\(\{s,t\}\in E_k^{\mathrm{temp}}\) is retained when both endpoint errors are
+small:
+\[
+  \norm{e_s^{(k)}} \leq \tau_e,
+  \qquad
+  \norm{e_t^{(k)}} \leq \tau_e.
+\]
+This rule connects nearby windows only when both windows are individually well
+predicted by the completion map.
+
+\subsection{Similar Errors}
+
+This rule ignores the absolute size of each individual error and only compares
+error-vector similarity. A temporal candidate edge is retained when
+\[
+  \norm{e_s^{(k)}-e_t^{(k)}} \leq \tau_e.
+\]
+The endpoint errors may be large; what matters is that the two error vectors are
+close to each other.
+
+\subsection{Lifted-Cloud Distance Graph}
+
+This rule uses the lifted points \(p_t^{(k)}\in\R^{k_{\max}}\). For all temporal
+candidate edges, compute
+\[
+  d_{s,t}^{(k)}=\norm{p_s^{(k)}-p_t^{(k)}}.
+\]
+The edge \(\{s,t\}\) is retained when
+\[
+  d_{s,t}^{(k)} \leq \tau_d.
+\]
+This is a local distance graph on the lifted test cloud, restricted to temporal
+candidate edges.
+
+\subsection{Window Covariance Similarity}
+
+Assume the AR process has finite innovation variance. The covariance rules are
+therefore not available for Cauchy innovations or for centered Pareto
+innovations with shape parameter at most \(2\).
+
+Let
+\[
+  C_{s,t}^{(k)}
+  =
+  \operatorname{Cov}\!\left[Y_s^{(k)},Y_t^{(k)}\right].
+\]
+Using the stationary autocovariance function
+\[
+  \gamma(h)=\operatorname{Cov}(X_{u+h},X_u),
+\]
+the entries of this matrix are
+\[
+  C_{s,t}^{(k)}
+  =
+  \begin{pmatrix}
+    \gamma(s-t) & \gamma(s-t-1) & \cdots & \gamma(s-t-k+1)\\
+    \gamma(s-t+1) & \gamma(s-t) & \cdots & \gamma(s-t-k+2)\\
+    \vdots & \vdots & \ddots & \vdots\\
+    \gamma(s-t+k-1) & \gamma(s-t+k-2) & \cdots & \gamma(s-t)
+  \end{pmatrix}.
+\]
+The notebook computes \(\gamma\) from the AR coefficients by solving the
+stationary companion-matrix covariance equation, which is equivalent to the
+Yule-Walker equations.
+
+The scalar covariance summary is
+\[
+  \rho_k(s,t)=\frob{C_{s,t}^{(k)}}^2.
+\]
+Because the graph convention retains edges with small weights, the notebook
+uses the reciprocal similarity weight
+\[
+  w_k^\rho(s,t)=\frac{1}{\rho_k(s,t)+\varepsilon},
+  \qquad \varepsilon=10^{-12}.
+\]
+Thus an edge is retained when
+\[
+  w_k^\rho(s,t)\leq \tau_c.
+\]
+Equivalently, this keeps temporally admissible pairs whose window covariance is
+large enough relative to the chosen threshold.
+
+\subsection{Lifted Covariance Similarity}
+
+The lifted point is
+\[
+  p_t^{(k)}
+  =
+  \begin{pmatrix}
+    I_k\\
+    \widehat A_k
+  \end{pmatrix}
+  Y_t^{(k)}.
+\]
+Therefore the cross-covariance matrix of two lifted points is
+\[
+  D_{s,t}^{(k)}
+  =
+  \operatorname{Cov}\!\left[p_t^{(k)},p_s^{(k)}\right]
+  =
+  \begin{pmatrix}
+    I_k\\
+    \widehat A_k
+  \end{pmatrix}
+  C_{s,t}^{(k)}
+  \begin{pmatrix}
+    I_k & \widehat A_k^\top
+  \end{pmatrix}.
+\]
+The scalar lifted-covariance summary is
+\[
+  \eta_k(s,t)=\frob{D_{s,t}^{(k)}}^2.
+\]
+The notebook again converts this similarity score into a threshold weight:
+\[
+  w_k^\eta(s,t)=\frac{1}{\eta_k(s,t)+\varepsilon}.
+\]
+The edge \(\{s,t\}\) is retained when
+\[
+  w_k^\eta(s,t)\leq \tau_c.
+\]
+This rule compares windows after the least-squares completion map has lifted
+them into the common ambient space \(\R^{k_{\max}}\).
+
+\subsection{Full Temporal Graph}
+
+This rule retains every temporal candidate edge:
+\[
+  E_k = E_k^{\mathrm{temp}}.
+\]
+It is useful as a baseline because it shows what the flag complex looks like
+when the only restriction is temporal proximity.
+
+\section{Simple Functional Definitions}
+
+Let \(K=L_k\) be one of the complexes. Let \(K_i\) be the set of \(i\)-simplices.
+In the notebook, dimensions \(0,1,2\) correspond to vertices, edges, and
+triangles.
+
+\subsection{Face-Vector Entries}
+
+The face-vector entries are
+\[
+  f_i(K)=|K_i|.
+\]
+The notebook keeps
+\[
+  f_0(K)=\text{number of vertices},\qquad
+  f_1(K)=\text{number of edges},\qquad
+  f_2(K)=\text{number of triangles}.
+\]
+
+\subsection{Betti Numbers}
+
+The Betti number \(\beta_i(K)\) is the rank of the \(i\)-th homology group over
+\(\mathbb{F}_2\):
+\[
+  \beta_i(K)=\operatorname{rank} H_i(K;\mathbb{F}_2).
+\]
+The notebook keeps:
+\begin{itemize}
+  \item \(\beta_0(K)\), the number of connected components.
+  \item \(\beta_1(K)\), the number of independent one-dimensional cycles.
+\end{itemize}
+
+\subsection{Point Complexity}
+
+Let \(d=\dim K\), the largest simplex dimension present in \(K\). For a vertex
+\(x\in K_0\), the point complexity is
+\[
+  \operatorname{pc}(x)
+  =
+  d-\max\{\dim(\sigma):\sigma\in K,\; x\in\sigma\}.
+\]
+Thus a vertex has low point complexity when it belongs to a high-dimensional
+simplex, and high point complexity when it is isolated relative to the maximal
+dimension of the complex.
+
+The notebook plots the total point complexity
+\[
+  \operatorname{PC}(K)
+  =
+  \sum_{x\in K_0}\operatorname{pc}(x).
+\]
+Because the complexes are expanded through dimension two, the computed values
+use \(d\leq 2\) in the current implementation.
+
+\subsection{Linear Combination of Two Functionals}
+
+In the interactive panel, the user chooses two basic functionals
+\[
+  F_1,F_2\in
+  \{f_0,f_1,f_2,\beta_0,\beta_1,\operatorname{PC}\}
+\]
+and two scalar weights \(a,b\in\mathbb{R}\). The plotted profile is
+\[
+  k\longmapsto aF_1(L_k)+bF_2(L_k).
+\]
+For example, choosing \(F_1=\beta_0\), \(F_2=f_1\), \(a=2\), and \(b=-1\)
+plots
+\[
+  2\beta_0(L_k)-f_1(L_k).
+\]
+
+\section{Scale-Similarity Matrix}
+
+The notebook also compares different embedding scales pairwise. It uses the
+same two functionals \(F_1,F_2\) and scalar weights \(a,b\) chosen for the
+profile plot. Choose an operation
+\[
+  \oplus\in\{\cup,\cap\}.
+\]
+The scale-similarity matrix is
+\[
+  S_{k\ell}
+  =
+  aF_1(L_k\oplus L_\ell)+bF_2(L_k\oplus L_\ell),
+  \qquad 1\leq k,\ell\leq k_{\max}.
+\]
+The union \(L_k\cup L_\ell\) contains all simplices appearing in either
+complex. The intersection \(L_k\cap L_\ell\) contains exactly the simplices
+appearing in both complexes. Since all \(L_k\) are stored as simplicial
+complexes over the same test-window vertex set, both operations again produce
+simplicial complexes.
+
+The matrix \(S\) is symmetric. The notebook computes an eigenvector
+\[
+  v=(v_1,\ldots,v_{k_{\max}})^\top
+\]
+corresponding to the largest eigenvalue of \(S\), and plots
+\[
+  k\longmapsto v_k.
+\]
+The sign of an eigenvector is arbitrary, so the notebook flips the sign when
+necessary to make the sum of entries nonnegative.
+
+\section{Summary Table}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Dropdown name & Mathematical meaning \\
+\midrule
+\texttt{f0 (vertices)} & \(f_0(K)=|K_0|\) \\
+\texttt{f1 (edges)} & \(f_1(K)=|K_1|\) \\
+\texttt{f2 (triangles)} & \(f_2(K)=|K_2|\) \\
+\texttt{beta0} & \(\beta_0(K)\) \\
+\texttt{beta1} & \(\beta_1(K)\) \\
+\texttt{point complexity} & \(\operatorname{PC}(K)=\sum_{x\in K_0}\operatorname{pc}(x)\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
