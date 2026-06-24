@@ -7,6 +7,9 @@
 \usepackage{tikz}
 \usepackage{parskip}
 
+\usepackage{amsmath, amssymb}
+\usepackage{caption}
+
 \pagestyle{empty}
 
 \definecolor{uulmgray}{RGB}{70,70,70}
@@ -65,37 +68,86 @@
 \vspace{3cm}
 
 \begin{minipage}[t]{0.48\textwidth}
-  \posterblock{Section Title}{
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Replace this text
-    with your own content, figures, tables, or short explanations.
+    \posterblock{Problem Setting}{
+    Persistent Homology is scale agnostic but in many applications, one is still faced with the problem of reasonable scale selection. We propose a spectral scale selection principle that is grounded in Perron-Frobenius and Markov chain theory. 
   }
 
-  \posterblock{Section Title}{
-    Praesent vitae neque at arcu consequat aliquet. This area can be used for
-    methods, background information, or a compact list of important points.
+  \posterblock{Methodology}{
+    We have a sequence of simplicial complexes $\{K_{i}\}_{i=1}^{N}$ for example $K_i=\text{VR}_{\epsilon_i}(X)$ for some dataset $X=\{x_1,\dots,x_n\}\in\mathbb{R}^d$. Define a scale similarity matrix $\Sigma^{(N)}$ by
+    \begin{align*}
+        \Sigma^{(N)}=\begin{pmatrix}
+            f(K_1) & f(K_1\oplus K_2) & \cdots & f(K_1\oplus K_N)\\
+            f(K_1\oplus K_2) & f(K_2) & \cdots & f(K_2\oplus K_N)\\
+            \vdots & \vdots & \ddots & \vdots\\
+            f(K_1\oplus K_N) & f(K_2\oplus K_N) & \cdots & f(K_N)
+        \end{pmatrix}
+    \end{align*}
+    where $\oplus$ is a binary operation on simplicial complexes. For example, let $\{K_i\}_{i=1}^{N}$ be a filtration. Then
+    \begin{align*}
+        K_i\oplus K_j=\begin{cases}
+            K_{i\vee j}, & \oplus=\cup\\
+            K_{i\wedge j}, & \oplus=\cap
+        \end{cases}
+    \end{align*}
+    The choice of the functional $f$ is crucial. We consider the following general form of the functional:
+    \begin{align*}
+        f(K)=f_{\text{Top}}(K)\cdot f_{\text{Comb}}(K),
+    \end{align*}
+    where the topological part $f_{\text{Top}}$ is defined by
+    \begin{align*}
+        f_{\text{Top}}(K)=\delta_{-1}+\sum_{j=0}^{d-1}\delta_j\beta_j^{\alpha_j}(K)
+    \end{align*}
+    with coefficients $\delta_j\in\mathbb{R}$, $j=-1,0,\dots,d-1$ and $\alpha_j\in\mathbb{R}$, $j=0,\dots,d-1$. The combinatorial part $f_{\text{Comb}}$ is defined by
+    \begin{align*}
+        f_{\text{Comb}}(K)&=\gamma_{-1}+\sum_{j=0}^{d}\gamma_jf_j^{\xi_j}(K)
+    \end{align*}
+    with coefficients $\gamma_j\in\mathbb{R}$, $j=-1,0,\dots,d$ and $\xi_{j}\in\mathbb{R}$, $j=0,\dots,d$.
+
+    By Perron-Frobenius the principal eigenvector $v^*$ of $\Sigma^{(N)}$ has all positive entries. Choose the critical scale by $i_{\text{crit}}\in\arg\max\{v^{*}_i:i=1,\dots,N\}$.
+
+    \textbf{Why do we have to compute the principal eigenvector and not just take $i\in\arg\max\{f(K_i):i=1,\dots,N\}$}
   }
 
-  \posterblock{Section Title}{
-    Integer facilisis, augue sed tempor luctus, justo urna cursus sapien, sed
-    tincidunt purus neque vitae lectus. Add your own notes here.
+  \posterblock{Connection to Markov Chains and Monotone Scale Selection}{
+    Take the Doob's $h$-transform of the scale similarity matrix: $P=\frac{1}{\lambda_N}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*}$. The stationary distribution of a Markov chain on the state space $\{1,\dots,N\}$ with transition matrix $P$ is given by $\pi=(\pi_i)$ with $\pi_i=(v^*_i)^2/\|v^*\|_2^2$
+
+    \textbf{Interpretation:}
+
+    \textbf{Monotone Scale Selection:} If the functional $f$ is monotone, an alternative approach is better: Define the discrete Laplacian $\mathcal{L}=\frac{1}{d_1}\text{diag}(1,0,\dots,0)-(\Sigma^{(N)})^{-1}$, which acts as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. Let $\pi^{\text{BD}}$ be its stationary distribution. Choose the critical scale by $i_{\text{crit}}\in\arg\min\{\pi^{\text{BD}}_i:i=1,\dots,N\}$
   }
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-  \posterblock{Section Title}{
-    Donec euismod, nisl eget consectetur commodo, massa lectus porttitor orci,
-    non feugiat magna erat id ligula. This is placeholder text.
-  }
-
-  \posterblock{Section Title}{
+    \posterblock{The Mapper Algorithm}{
     Curabitur sed velit non urna congue vestibulum. Use this block for results,
     diagrams, images, equations, or other poster material.
   }
 
-  \posterblock{Section Title}{
-    Sed at magna sed mi blandit posuere. Replace this paragraph with your final
-    conclusion, references, acknowledgements, or additional content.
-  }
+  \posterblock{Multiscale $\alpha$ Neighboring graph}{
+    \begin{center}
+        \begin{minipage}[t]{0.47\linewidth}
+            \vspace{0pt}
+            \centering
+            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
+            \captionof{figure}{First caption}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.47\linewidth}
+            \vspace{0pt}
+            \centering
+            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
+            \captionof{figure}{Second caption}
+        \end{minipage}
+    \end{center}
+}
+
+  \posterblock{Case Study: Covid-19 Spread in the USA}{
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png}
+        \captionof{figure}{Caption}
+        \label{fig:placeholder}
+    \end{center}
+}
 \end{minipage}
 
 \end{document}

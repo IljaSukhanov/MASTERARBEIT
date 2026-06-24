@@ -309,30 +309,22 @@ The $k$-th Betti number $\beta_k$ is set to be the dimension of the image of $\d
 
 In this section, we describe the Mapper algorithm which was first mentioned by [].
 
-Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^d$ be our sampled data. Let $f:\mathbb{R}^d\to\mathbb{R}^{d'}$ be the so called lens function and $\mathcal{U}$ some finite open cover of $f(X)$. The choices of $f$ and $\mathcal{U}$ are important and will be discussed below. For each $U\in\mathcal{U}$ we decompose $f^{-1}(U)$ into $k_U$ clusters $C_{U}^{(1)},\dots,C_U^{(k_U)}$. Now $\{C_U^{(i)}:U\in\mathcal{U},i=1,\dots,k_U\}$ is a cover of $X$ and we compute its nerve. The clustering can be done in multiple ways, and we will discuss these different methods below as well.
+Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^d$ be our sampled data. Let $f:\mathbb{R}^d\to\mathbb{R}$ be the so called lens function and $\mathcal{U}=\{U_i\}_{i\in I}$ some finite open cover of $f(X)$, that is, $f(X)\subseteq\bigcup_{i\in I}U_i$. The family $\{X_i\}_{i\in I}$ defined by $X_i=f^{-1}(U_i)=\{x\in X:f(x)\in U_i\}$ is called pull-back cover with respect to $(f,\mathcal{U})$. The choices of $f$ and $\mathcal{U}$ are important and will be discussed below. Each $X_i$ is decomposed into $k_i$ clusters $C_{i}^{(1)},\dots,C_i^{(k_i)}$. The clustering can be done by using one of many established clustering algorithms. Now $\{C_i^{(j)}:i\in I,j=1,\dots,k_i\}$ is a cover of $X$ and we compute its nerve.
 
+\begin{Def}[Nerve]
+    Let $X$ be a topological space with cover $\mathcal{U}=\{U_i\}_{i\in I}$. The nerve of $\mathcal{U}$ is an abstract simplicial complex $C(\mathcal{U})$ with vertex set $V=\{U_i:i\in I\}$ and simplices
+    \begin{align*}
+        \Sigma=\left\{\sigma=[U_{i_0},U_{i_1},\dots,U_{i_k}]:\bigcap_{j=0}^{k}U_{i_j}\ne\emptyset\right\}
+    \end{align*}
+\end{Def}
 
-% \section{Principal component analysis}
+The output is often just the 1-skeleton of the computed nerve. That is a node $v_{i,j}$ for each cluster $C_{i}^{(j)}$ with an edge between two nodes $v_{i}^{(j)}$ and $v_{k}^{(l)}$ iff $C_i^{(j)}\cap C_{k}^{(l)}\ne\emptyset$.
 
-% \begin{itemize}
-%     \item explained variance ratio of the $k$-th principal component: $\frac{\lambda_k}{\lambda_1+\dots+\lambda_N}$
-% \end{itemize}
+Choice of $f$: density estimates, PCA coordinates, centrality: $f(x)=\sum_{y\in X}d(x,y)$, eccentricity: $f(x)=\max_{y\in X}d(x,y)$
 
-% Let $X=(X_1,\dots,X_n)$ be a random vector and let $\Sigma\in\mathbb{R}^{n\times n}$ be the covariance matrix $X$. We assume that $\Sigma$ has eigenvalues $\lambda_1>\dots>\lambda_n>0$. The $i$-th principal component of $X$ is defined as $Y_i=\alpha_i^TX$, where $\alpha_i\in\mathbb{R}^n$ is a deterministic vector that solves the following maximization problem:
-% \begin{align*}
-%     \alpha_i\in\arg\max\left\{\text{Var}[\alpha^TX]:\alpha\in\mathbb{S}^{n-1},\text{Cov}[\alpha^TX,\alpha_j^{T}X]=0\ \forall j=1,\dots,i-1\right\}
-% \end{align*}
-% We have the following equalities:
-% \begin{itemize}
-%     \item $\text{Var}[\alpha^TX]=\alpha^T\Sigma\alpha$
-%     \item $\text{Cov}[\alpha^TX,\alpha_j^TX]=\alpha^T\Sigma\alpha_j^T$
-% \end{itemize}
-% Therefore, we can express the maximization problem more compactly as
-% \begin{align*}
-%     \alpha_i\in\arg\max\left\{\alpha^T X\alpha:\alpha\in\mathbb{S}^{n-1},\alpha^T\Sigma\alpha_j=0\ \forall j=1,\dots,i-1\right\}
-% \end{align*}
+Choice of the cover $\mathcal{U}$: ??
 
-% It is well known that $\alpha_i=v_i$ where $v_i$ is the (unique) eigenvector of $\Sigma$ that corresponds to the eigenvalue $\lambda_i$. Also $\text{Var}[Y_i]=\lambda_i$. Let $A=(\alpha_1\cdots\alpha_n)$. This matrix is orthogonal and it holds $\Sigma A=A\Lambda$, where $\Lambda=\text{diag}(\lambda_1,\dots,\lambda_n)$.
+Choice of the clusters: apply for each $U_i$ a cluster algorithm to $X_i$, build neighboring graph on top of $X$ and take for each $U_i$ the connected components of the subgraph with vertex set $X_i$
 
 \section{Manifold Learning}
 
@@ -355,8 +347,6 @@ Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^d$ be our sampled data. Let $f:\math
 Building one simplicial complex from a point cloud: $K_{\epsilon_{\text{crit}}}$ should have the same topological features as the manifold $\mathcal{X}$ from which the points where sampled (with noise).
 
 Choosing the graph for graph-based data analysis. (spectral clustering, manifold learning, Laplacian eigenmaps, diffusion maps, Isomap-like methods, semi-supervised learning)
-
-MAPPER
 
 Persisitent homology interpretation
 
