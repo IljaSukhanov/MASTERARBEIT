@@ -47,15 +47,6 @@ The LS-category of a topological space can be interpreted as a measure for its c
 
 \section{Simplicial Complexes}
 
-\begin{itemize}
-    \item LS-category of (geometric realization of) simplicial complexes, properties, bounds
-    \item surrogates, estimations for LS-category from data
-    \item Random simplicial (geometric) complexes: sample points in space and build Vietoris-Rips complex
-    \begin{itemize}
-        \item Phase transitions, Limit laws
-    \end{itemize}
-\end{itemize}
-
 We begin by introducing the simplicial complex, the main mathematical object in Topological Data Analysis. For literature consult \cite{Dey_Wang_2022}.
 
 \begin{Def}[Abstract simplicial complex]
@@ -68,15 +59,17 @@ We begin by introducing the simplicial complex, the main mathematical object in 
     We denote by $\mathcal{K}(V)$ the set of all simplicial complexes with vertex set $V$.
 \end{Def}
 
-\todo[inline]{Point out that this is a generalization of a simple graph}
+An element $\sigma\in K$ is called face. The dimension of a face $\sigma$ is $\dim{\sigma}=|\sigma|-1$. The dimension of $K$ is $\dim{K}=\max\{\dim{\sigma}:\sigma\in K\}$. A face $\sigma\in K$ with $\dim{\sigma}=\dim{K}$ is called facet.
+
+Note that a simplicial complex $K$ with $\dim{K}=1$ is a simple graph. Thus, an abstract simplicial complex can be considered as a generalization of a simple graph.
 
 The abstract simplicial complex is a purely combinatorial object. It can be given a geometric meaning by embedding it in the $d$-dimensional euclidean space.
 
 \begin{Def}[Geometric realization]
     The geometric realization of an abstract simplicial complex $K$ with vertex set $V=\{v_1,\dots,v_n\}$ is given by
     \begin{align*}
-        |K|_{\Phi}=\bigcup\limits_{\sigma\in K}\operatorname{conv}\{p_t:t\in\sigma\}
-    \end{align*},
+        |K|_{\Phi}=\bigcup\limits_{\sigma\in K}\operatorname{conv}\{p_t:t\in\sigma\},
+    \end{align*}
     where $\Phi:V\to\mathbb{R}^m$ is an embedding map that may have further properties.
 \end{Def}
 
@@ -100,7 +93,7 @@ There exist different operations $\oplus:\mathcal{K}(V)\times\mathcal{K}(V)\to\m
 
 \todo[inline]{Give general discussion on operations $\oplus\in\{\cup,\dots\}$ with examples}
 
-The geometric realization $\tilde{K}$ of an abstract simplicial complex $K$ can be viewed as a topological space, which allows us to define the LS-category of a simplicial complex $K$ by $\text{cat}(K):=\text{cat}(\tilde{K})$.
+% The geometric realization $\tilde{K}$ of an abstract simplicial complex $K$ can be viewed as a topological space, which allows us to define the LS-category of a simplicial complex $K$ by $\text{cat}(K):=\text{cat}(\tilde{K})$.
 
 
 
