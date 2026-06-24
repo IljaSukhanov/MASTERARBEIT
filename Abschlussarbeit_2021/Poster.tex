@@ -1,0 +1,61 @@
+\documentclass[final]{article}
+
+\usepackage[paperwidth=118.9cm,paperheight=84.1cm,margin=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{parskip}
+
+\pagestyle{empty}
+\setlength{\columnsep}{2.5cm}
+\setlength{\columnseprule}{0pt}
+
+\definecolor{uulmgray}{RGB}{70,70,70}
+\definecolor{posterline}{RGB}{220,220,220}
+
+\newcommand{\postertitle}{}
+\newcommand{\posterauthor}{}
+\newcommand{\posterinfo}{}
+
+\newcommand{\postersection}[1]{%
+  \vspace{1.2cm}%
+  {\Large\bfseries\color{uulmgray}#1}\par
+  \vspace{0.3cm}%
+  {\color{posterline}\rule{\linewidth}{1.5pt}}\par
+  \vspace{0.6cm}%
+}
+
+\begin{document}
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[posterline,line width=1.5pt]
+    ([xshift=3cm,yshift=-8cm]current page.north west) --
+    ([xshift=-3cm,yshift=-8cm]current page.north east);
+\end{tikzpicture}
+
+\begin{minipage}[t]{0.68\textwidth}
+  {\Huge\bfseries\postertitle\par}
+  \vspace{0.8cm}
+  {\Large\posterauthor\par}
+  \vspace{0.3cm}
+  {\large\posterinfo\par}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.24\textwidth}
+  \raggedleft
+  \includegraphics[width=0.85\linewidth]{LaTeX/images/logo_uulm_sw.png}
+\end{minipage}
+
+\vspace{3cm}
+
+\begin{multicols}{3}
+  \postersection{}
+
+  \columnbreak
+  \postersection{}
+
+  \columnbreak
+  \postersection{}
+\end{multicols}
+
+\end{document}
