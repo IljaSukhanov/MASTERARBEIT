@@ -132,6 +132,10 @@ This optimal scale will serve as an estimation of the AR order $p$ that does not
 
 \subsection*{Dimension lift}
 
+\begin{itemize}
+    \item $X_{\text{train}}=(X_1,\dots,X_{T_{\text{train}}})$, $X_{\text{test}}=(X_{T_{\text{train}}+1},\dots,X_T)$
+\end{itemize}
+
 For $k\in\{1,\dots,k_{\max}\}$ we complete $Y_t^{(k)}\in\mathbb{R}^{k}$ to
 \begin{align*}
     p_t^{(k)}:=\begin{pmatrix}
@@ -285,6 +289,12 @@ where the matrix $M_t^{(k)}\in\mathbb{R}^{k_{\max}\times T}$ is given by
 with $\mathbf{0}$ being matrices of the right size that contain only zeros.
 
 \subsection*{Simplicial complex construction}
+
+A general construction principle can be described in a graph theoretical way. Consider the set of vertices $V=\{1,\dots,T-k_{\max}+1\}$ or $V=\{T_{\text{train}}+1,\dots,T-k_{\max}+1\}$. Two distinct time indices $s$ and $t$ form an edge if $w_k(s,t)\le\tau$, where $w_k:V\times V\to\mathbb{R}_{\ge0}$ is a weight function and $\tau>0$ some threshold parameter. Information about linear dependence enters via the choice of the weight function $w_k$. By keeping $\tau$ fixed across $k$, we may hope to detect a transition at $k=p$. Let $E_k^{\tau}$ be the set of edges and $G_k^{\tau}=(V,E_k^{\tau})$ the resulting graph. 
+
+What if we take this approach: For a given functional $f$ what would be the correct choice of weight $w_k$. 
+
+\subsection*{Simplicial complex construction (old)}
 
 We obtain the point clouds $\mathcal{Q}_k=\{p_t^{k}:t=1,\dots,T-k_{\max}+1\}\subseteq\mathbb{R}^{k_{\max}}$, which can be regarded as geometric embeddings of the abstract vertex set $V=\{1,\dots,T-k_{\max}+1\}$ with embedding $V\to\mathbb{R}^{k_{\max}}$, $t\mapsto p_t^{k}$. We build a filtration of simplicial complexes on $V$ according to the following rule: connect $t_0,\dots,t_j\in V$ by a $j$-simplex for all $j=1,\dots,k-1$ if $\{t_0,\dots,t_j\}$ is a consecutive set of time indices. In particular, two indices $s$ and $t$ are connected by an edge if $|s-t|=1$. We write explicitly
 \begin{align*}
