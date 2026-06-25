@@ -565,9 +565,9 @@ It can be shown that the $j$-th intrinsic volume can by computed by the formula
 
 \subsection{Scale selection for Geometric Approach}
 
-We can fill our scale similarity matrix $\Sigma$ with the entries
+We can fill our scale similarity matrix $\Sigma^{(n)}=\left(\Sigma^{(n)}_{kl}\right)$ with the entries
 \begin{align*}
-    \Sigma_{kl}=f(Z_k^{(n)}\oplus Z_l^{(n)})-f(Z_k^{(n)})-f(Z_l^{(n)}),
+    \Sigma^{(n)}_{kl}=f\left(Z_k^{(n)}\right)+f\left(Z_l^{(k)}\right)-f\left(Z_k^{(n)}\oplus Z_l^{(n)}\right),
 \end{align*}
 where $\oplus$ is an operation that takes two zonotopes and combines them into a new zonotope. Such an operation can be the following:
 \begin{align*}
