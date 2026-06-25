@@ -149,33 +149,41 @@
 \vspace{3cm}
 
 \begin{minipage}[t]{0.48\textwidth}
-  \posteraccentblock{Why Select One Scale?}{
-    Persistent homology is deliberately multiscale. The persistence diagram
-    should not be replaced, but many practical steps still ask for one
-    representative complex or one graph threshold:
-    \[
-      X \leadsto
-      \{K_{\epsilon_1}\subseteq \cdots \subseteq K_{\epsilon_N}\}
-      \leadsto
-      \epsilon_{\mathrm{crit}} .
-    \]
+    \posteraccentblock{Why Select One Scale}{
+    Persistent homology is scale-agnostic: the persistence diagram records topological features across all filtration scales simultaneously and thereby avoids committing to any single resolution. Nevertheless, a surprising number of problems in and around TDA reduce to the choice of one filtration parameter, and doing so in a theoretically justified way remains a longstanding methodological gap.
 
     \begin{itemize}
-      \item Reconstruction and graph construction commit to one scale.
-      \item Mapper needs local thresholds inside pull-back sets.
-      \item The selected scale should be supported by the whole filtration.
+        \item Reconstruction and meshing from point clouds
+        \item Topology-aware clustering and graph construction
+        \item Statistical inference for point processes
+        \item Materials and physical systems with intrinsic length scales
     \end{itemize}
+    }
 
-    The paper draft treats this as a PCA-type problem on a finite chain of
-    simplicial complexes: build a scale similarity matrix and read the dominant
-    spectral direction.
-  }
+  % \posteraccentblock{Why Select One Scale?}{
+  %   Persistent homology is deliberately multiscale. The persistence diagram
+  %   should not be replaced, but many practical steps still ask for one
+  %   representative complex or one graph threshold:
+  %   \[
+  %     X \leadsto
+  %     \{K_{\epsilon_1}\subseteq \cdots \subseteq K_{\epsilon_N}\}
+  %     \leadsto
+  %     \epsilon_{\mathrm{crit}} .
+  %   \]
 
-  \posterblock{Spectral Scale Selection}{
-    The paper starts from an $f$-divergence on simplicial complexes. Its entries
-    measure how two scales interact through a chosen topological or
-    combinatorial functional $f$.
+  %   \begin{itemize}
+  %     \item Reconstruction and graph construction commit to one scale.
+  %     \item Mapper needs local thresholds inside pull-back sets.
+  %     \item The selected scale should be supported by the whole filtration.
+  %   \end{itemize}
 
+  %   The paper draft treats this as a PCA-type problem on a finite chain of
+  %   simplicial complexes: build a scale similarity matrix and read the dominant
+  %   spectral direction.
+  % }
+
+    \posterblock{Spectral Scale Selection}{
+    Let $(K_i)_{i=1}^{N}$ be a sequence of simplicial complexes. Introduce the $f$-based divergence on simplicial complexes and the scale similarity matrix:
     \posterequation{
       \[
         \langle K_i,K_j\rangle_f
@@ -185,48 +193,77 @@
       \]
     }
 
-    For filtrations with $\oplus=\cup$, this becomes the min/meet matrix
-    $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$, where
-    $i\wedge j=\min\{i,j\}$.
-
-    If the scale graph induced by $\Sigma^{(N)}$ is connected, the matrix is
-    irreducible. Perron-Frobenius gives a positive dominant eigenvector, hence
-    a canonical ranking of scales.
+    If $(K_i)$ is a filtration and $\oplus=\cup$, the scale similarity matrix becomes a min matrix: $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$. By Perron-Frobenius, the principal eigenvector $v^*$ is positive and unique up to scaling. It provides a canonical ranking of scales. Choose the critical scale by the rule
 
     \posterequation{
       \[
-        \Sigma^{(N)}v^*=\lambda^*v^*,
+        i_{\mathrm{crit}}\in\arg\max_i v_i^*,
         \qquad
-        i_{\mathrm{crit}}\in\arg\max_i v_i^*
+        \epsilon_{\mathrm{crit}}=\epsilon_{i_{\mathrm{crit}}}
       \]
     }
-  }
 
-  \posterblock{PCA, Min Matrices, and Markov Chains}{
-    The matrix $\Sigma^{(N)}$ is PCA-like: scales are the variables and
-    cross-scale similarities are the entries. If $f$ is monotone in a filtration,
-    the min-matrix theory shows that the Perron vector is comonotone with the
-    sequence $f(K_{\epsilon_i})$. This motivates using non-monotone functionals
-    when we want to detect a transition rather than monotonic growth.
-
-    For the application:
-    \[
-      f(K)=\beta_0(K)f_1(K),
-    \]
-    where $\beta_0$ decreases as components merge, while $f_1$ increases as
-    edges appear.
+    If $f$ is monotone in a filtration, the min-matrix theory shows that the Perron vector is comonotone with the sequence $f(K_{\epsilon_i})$. This motivates using non-monotone functionals when we want to detect a transition rather than monotonic growth. For example:
 
     \posterequation{
+        \[
+            f(K)=\beta_0(K)f_1(K),
+        \]
+    }
+    where $\beta_0$ decreases as components merge, while $f_1$ increases as edges appear.
+    }
+
+  % \posterblock{Spectral Scale Selection}{
+  %   The paper starts from an $f$-divergence on simplicial complexes. Its entries
+  %   measure how two scales interact through a chosen topological or
+  %   combinatorial functional $f$.
+
+  %   \posterequation{
+  %     \[
+  %       \langle K_i,K_j\rangle_f
+  %       = f(K_i)+f(K_j)-f(K_i\oplus K_j),
+  %       \qquad
+  %       \Sigma^{(N)}_{ij}=\langle K_i,K_j\rangle_f
+  %     \]
+  %   }
+
+  %   For filtrations with $\oplus=\cup$, this becomes the min/meet matrix
+  %   $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$, where
+  %   $i\wedge j=\min\{i,j\}$.
+
+  %   If the scale graph induced by $\Sigma^{(N)}$ is connected, the matrix is
+  %   irreducible. Perron-Frobenius gives a positive dominant eigenvector, hence
+  %   a canonical ranking of scales.
+
+  %   \posterequation{
+  %     \[
+  %       \Sigma^{(N)}v^*=\lambda^*v^*,
+  %       \qquad
+  %       i_{\mathrm{crit}}\in\arg\max_i v_i^*
+  %     \]
+  %   }
+  % }
+
+  \posterblock{Connection to Markov Chains and Monotone Scale Selection}{
+  The spectral scale choice can be motivated by the association of a finite Markov chain to scale similarity matrix $\Sigma^{(N)}$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using Doob's $h$-Transform and obtain the stationary distribution:
+
+  \posterequation{
       \[
         P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*},
         \qquad
         \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}.
       \]
     }
+.
+    If the functional $f$ is strictly increasing, define the discrete Laplacian $\mathcal{L}=\frac{1}{d_1}\mathrm{diag}(1,0,\dots,0)-\left(\Sigma^{(N)}\right)^{-1}$ and consider the continuous-time birth-death chain on the state space $\{1,\dots,N\}$ generated by $\mathcal{L}$. Its stationary distribution $\pi^{\mathrm{BD}}$ can by used for identification of critical scales:
 
-    This Doob transform gives a Markov chain on scales. High stationary mass
-    means strong global support; the construction is the stochastic counterpart
-    of the scale similarity matrix.
+    \posterequation{
+        \[
+            i_{\mathrm{crit}}\in\arg\min_{i}\pi^{\mathrm{BD}}_i,
+            \qquad
+            \epsilon_{\mathrm{crit}}=\epsilon_{i_{\mathrm{crit}}}
+        \]
+    }
   }
 \end{minipage}
 \hfill
