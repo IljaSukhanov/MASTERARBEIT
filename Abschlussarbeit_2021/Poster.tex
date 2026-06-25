@@ -21,7 +21,6 @@
 \definecolor{posteraccent}{RGB}{0,104,125}
 \definecolor{posteraccentlight}{RGB}{232,245,248}
 \definecolor{postercallout}{RGB}{255,248,230}
-\definecolor{posterorange}{RGB}{220,125,35}
 
 \newcommand{\postertitle}{Spectral Scale Selection Principle in TDA}
 \newcommand{\posterauthor}{Ilja Sukhanov \quad Institute of Stochastics, Ulm University}
@@ -127,66 +126,6 @@
     #1
   \end{tcolorbox}
 }
-\newcommand{\mapperpicture}{%
-  \begin{center}
-  \begin{tikzpicture}[scale=1.0, every node/.style={font=\large}]
-    \draw[posteraccent!15, fill=posteraccent!6, rounded corners=8pt]
-      (-0.4,-0.7) rectangle (4.5,3.0);
-    \foreach \x/\y in {
-      0.1/0.2,
-      0.4/0.9,
-      0.8/1.4,
-      1.1/1.9,
-      1.5/1.2,
-      1.9/0.6,
-      2.2/1.5,
-      2.6/2.1,
-      3.0/1.3,
-      3.4/0.8,
-      3.8/1.8
-    }{
-      \fill[posteraccent] (\x,\y) circle (4pt);
-    }
-    \foreach \x/\y in {1.2/0.4,2.7/0.4,3.5/2.3}{
-      \fill[posterorange] (\x,\y) circle (4pt);
-    }
-    \node[anchor=south] at (2.05,3.0) {point cloud $X$};
-
-    \draw[->, line width=1.2pt, posteraccent] (4.9,1.2) -- (6.0,1.2);
-    \node[anchor=south, posteraccent] at (5.45,1.25) {lens $g$};
-
-    \draw[posteraccent!60, line width=1.1pt] (6.35,-0.3) -- (6.35,2.7);
-    \foreach \y/\lab in {0.1/$U_1$,0.8/$U_2$,1.5/$U_3$,2.2/$U_4$}{
-      \draw[fill=posteraccent!12, draw=posteraccent, rounded corners=3pt]
-        (6.0,\y-0.23) rectangle (6.7,\y+0.23);
-      \node at (6.35,\y) {\lab};
-    }
-    \node[anchor=south] at (6.35,3.0) {cover of $g(X)$};
-
-    \draw[->, line width=1.2pt, posteraccent] (7.1,1.2) -- (8.2,1.2);
-    \node[anchor=south, posteraccent] at (7.65,1.25) {pull back};
-
-    \foreach \x/\y/\lab in {8.8/2.2/$X_1$,9.8/1.55/$X_2$,8.9/0.8/$X_3$,10.0/0.25/$X_4$}{
-      \draw[fill=posteraccentlight, draw=posteraccent, rounded corners=8pt]
-        (\x-0.45,\y-0.28) rectangle (\x+0.45,\y+0.28);
-      \node at (\x,\y) {\lab};
-    }
-    \node[anchor=south] at (9.4,3.0) {local sets};
-
-    \draw[->, line width=1.2pt, posteraccent] (10.7,1.2) -- (11.8,1.2);
-    \node[anchor=south, posteraccent] at (11.25,1.25) {nerve};
-
-    \foreach \x/\y/\n in {12.4/2.1/a,13.5/1.6/b,12.7/0.75/c,13.8/0.35/d}{
-      \fill[posteraccent] (\x,\y) circle (7pt);
-      \node[white] at (\x,\y) {};
-    }
-    \draw[line width=1.5pt, posteraccent] (12.4,2.1)--(13.5,1.6)--(12.7,0.75)--(13.8,0.35);
-    \draw[line width=1.5pt, posteraccent] (12.4,2.1)--(12.7,0.75);
-    \node[anchor=south] at (13.1,3.0) {Mapper graph};
-  \end{tikzpicture}
-  \end{center}
-}
-
 \begin{document}
 \begin{tikzpicture}[remember picture,overlay]
   \draw[posterline,line width=1.5pt]
@@ -293,7 +232,10 @@
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
   \posterblock{Mapper and Local Scale Choice}{
-    \mapperpicture
+    \begin{center}
+      \includegraphics[width=0.72\linewidth]{mapper_algorithm_placeholder.png}
+      \captionof{figure}{Mapper workflow illustration placeholder.}
+    \end{center}
 
     Mapper first localizes the data by a lens function and a cover:
     \posterequation{
