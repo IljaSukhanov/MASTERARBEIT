@@ -9,16 +9,26 @@
 
 \usepackage{amsmath, amssymb}
 \usepackage{caption}
+\usepackage{enumitem}
 
 \pagestyle{empty}
+\renewcommand{\familydefault}{\sfdefault}
+\graphicspath{{LaTeX/images/}{Abschlussarbeit_2021/LaTeX/images/}}
 
 \definecolor{uulmgray}{RGB}{70,70,70}
 \definecolor{posterline}{RGB}{220,220,220}
-\definecolor{posterfill}{RGB}{250,250,250}
+\definecolor{posterfill}{RGB}{255,255,255}
+\definecolor{posteraccent}{RGB}{0,104,125}
+\definecolor{posteraccentlight}{RGB}{232,245,248}
+\definecolor{postercallout}{RGB}{255,248,230}
 
 \newcommand{\postertitle}{}
 \newcommand{\posterauthor}{}
 \newcommand{\posterinfo}{}
+
+\captionsetup{font=small,labelfont=bf}
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.25em,topsep=0.25em}
+\setlist[enumerate]{leftmargin=1.4em,itemsep=0.3em,topsep=0.3em}
 
 \tcbset{
   posterblockstyle/.style={
@@ -26,7 +36,8 @@
     colback=posterfill,
     colframe=posterline,
     coltitle=uulmgray,
-    fonttitle=\Large\bfseries,
+    fonttitle=\huge\bfseries,
+    fontupper=\Large,
     boxrule=1.5pt,
     arc=8mm,
     left=1.2cm,
@@ -35,6 +46,36 @@
     bottom=1cm,
     title filled=false,
     attach title to upper={\par\vspace{0.5cm}},
+    borderline west={7pt}{0pt}{posteraccent},
+    drop fuzzy shadow=black!10,
+  },
+  posteraccentblockstyle/.style={
+    posterblockstyle,
+    colback=posteraccentlight,
+    colframe=posteraccent,
+    top=1cm,
+  },
+  posterquestionstyle/.style={
+    enhanced,
+    colback=postercallout,
+    colframe=posteraccent!45,
+    boxrule=1pt,
+    arc=5mm,
+    left=0.8cm,
+    right=0.8cm,
+    top=0.6cm,
+    bottom=0.6cm,
+  },
+  posterequationstyle/.style={
+    enhanced,
+    colback=white,
+    colframe=posteraccent!25,
+    boxrule=1pt,
+    arc=5mm,
+    left=0.6cm,
+    right=0.6cm,
+    top=0.25cm,
+    bottom=0.25cm,
   }
 }
 
@@ -43,6 +84,31 @@
     #2
   \end{tcolorbox}
   \vspace{1.3cm}
+}
+\newcommand{\posteraccentblock}[2]{%
+  \begin{tcolorbox}[posteraccentblockstyle]
+    \tikz[baseline=(label.base)] \node[
+      fill=posteraccent,
+      text=white,
+      rounded corners=5pt,
+      inner xsep=0.8cm,
+      inner ysep=0.3cm,
+      font=\huge\bfseries
+    ] (label) {#1};
+    \par\vspace{0.7cm}
+    #2
+  \end{tcolorbox}
+  \vspace{1.3cm}
+}
+\newcommand{\posterequation}[1]{%
+  \begin{tcolorbox}[posterequationstyle]
+    #1
+  \end{tcolorbox}
+}
+\newcommand{\posterquestion}[1]{%
+  \begin{tcolorbox}[posterquestionstyle]
+    \textbf{Question.} #1
+  \end{tcolorbox}
 }
 
 \begin{document}
@@ -62,58 +128,95 @@
 \hfill
 \begin{minipage}[t]{0.24\textwidth}
   \raggedleft
-  \includegraphics[width=0.85\linewidth]{LaTeX/images/logo_uulm_sw.png}
+  \includegraphics[width=0.85\linewidth]{logo_uulm_sw.png}
 \end{minipage}
 
 \vspace{3cm}
 
 \begin{minipage}[t]{0.48\textwidth}
-    \posterblock{Problem Setting}{
-    Persistent Homology is scale agnostic but in many applications, one is still faced with the problem of reasonable scale selection. We propose a spectral scale selection principle that is grounded in Perron-Frobenius and Markov chain theory. 
+  \posteraccentblock{Problem Setting}{
+    Persistent homology is scale agnostic, but applications still require a
+    meaningful scale at which structure is interpreted.
+
+    \begin{itemize}
+      \item We compare candidate scales through a scale similarity matrix.
+      \item Perron-Frobenius theory turns this matrix into a stable ranking.
+      \item The dominant scale is selected from the principal eigenvector.
+    \end{itemize}
   }
 
   \posterblock{Methodology}{
-    We have a sequence of simplicial complexes $\{K_{i}\}_{i=1}^{N}$ for example $K_i=\text{VR}_{\epsilon_i}(X)$ for some dataset $X=\{x_1,\dots,x_n\}\in\mathbb{R}^d$. Define a scale similarity matrix $\Sigma^{(N)}$ by
-    \begin{align*}
-        \Sigma^{(N)}=\begin{pmatrix}
-            f(K_1) & f(K_1\oplus K_2) & \cdots & f(K_1\oplus K_N)\\
-            f(K_1\oplus K_2) & f(K_2) & \cdots & f(K_2\oplus K_N)\\
-            \vdots & \vdots & \ddots & \vdots\\
-            f(K_1\oplus K_N) & f(K_2\oplus K_N) & \cdots & f(K_N)
-        \end{pmatrix}
-    \end{align*}
-    where $\oplus$ is a binary operation on simplicial complexes. For example, let $\{K_i\}_{i=1}^{N}$ be a filtration. Then
-    \begin{align*}
-        K_i\oplus K_j=\begin{cases}
-            K_{i\vee j}, & \oplus=\cup\\
-            K_{i\wedge j}, & \oplus=\cap
+    Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes, for example
+    $K_i=\mathrm{VR}_{\epsilon_i}(X)$ for a data set
+    $X=\{x_1,\dots,x_n\}\subset\mathbb{R}^d$.
+
+    \posterequation{
+      \[
+        \Sigma^{(N)}_{ij}=f(K_i\oplus K_j),
+        \qquad
+        K_i\oplus K_j=
+        \begin{cases}
+          K_{i\vee j}, & \oplus=\cup,\\
+          K_{i\wedge j}, & \oplus=\cap.
         \end{cases}
-    \end{align*}
-    The choice of the functional $f$ is crucial. We consider the following general form of the functional:
-    \begin{align*}
-        f(K)=f_{\text{Top}}(K)\cdot f_{\text{Comb}}(K),
-    \end{align*}
-    where the topological part $f_{\text{Top}}$ is defined by
-    \begin{align*}
-        f_{\text{Top}}(K)=\delta_{-1}+\sum_{j=0}^{d-1}\delta_j\beta_j^{\alpha_j}(K)
-    \end{align*}
-    with coefficients $\delta_j\in\mathbb{R}$, $j=-1,0,\dots,d-1$ and $\alpha_j\in\mathbb{R}$, $j=0,\dots,d-1$. The combinatorial part $f_{\text{Comb}}$ is defined by
-    \begin{align*}
-        f_{\text{Comb}}(K)&=\gamma_{-1}+\sum_{j=0}^{d}\gamma_jf_j^{\xi_j}(K)
-    \end{align*}
-    with coefficients $\gamma_j\in\mathbb{R}$, $j=-1,0,\dots,d$ and $\xi_{j}\in\mathbb{R}$, $j=0,\dots,d$.
+      \]
+    }
 
-    By Perron-Frobenius the principal eigenvector $v^*$ of $\Sigma^{(N)}$ has all positive entries. Choose the critical scale by $i_{\text{crit}}\in\arg\max\{v^{*}_i:i=1,\dots,N\}$.
+    The functional combines topological and combinatorial information:
 
-    \textbf{Why do we have to compute the principal eigenvector and not just take $i\in\arg\max\{f(K_i):i=1,\dots,N\}$}
+    \posterequation{
+      \[
+        f(K)=f_{\mathrm{Top}}(K)\,f_{\mathrm{Comb}}(K)
+      \]
+      \[
+        f_{\mathrm{Top}}(K)=
+        \delta_{-1}+\sum_{j=0}^{d-1}\delta_j\beta_j^{\alpha_j}(K),
+        \qquad
+        f_{\mathrm{Comb}}(K)=
+        \gamma_{-1}+\sum_{j=0}^{d}\gamma_j f_j^{\xi_j}(K).
+      \]
+    }
+
+    By Perron-Frobenius, the principal eigenvector $v^*$ of $\Sigma^{(N)}$
+    has positive entries. The critical scale is chosen by
+    \[
+      i_{\mathrm{crit}}\in\arg\max_{1\leq i\leq N}v_i^*.
+    \]
+
+    \posterquestion{
+      Why use the principal eigenvector instead of only maximizing the diagonal
+      scores $f(K_i)$?
+    }
   }
 
   \posterblock{Connection to Markov Chains and Monotone Scale Selection}{
-    Take the Doob's $h$-transform of the scale similarity matrix: $P=\frac{1}{\lambda_N}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*}$. The stationary distribution of a Markov chain on the state space $\{1,\dots,N\}$ with transition matrix $P$ is given by $\pi=(\pi_i)$ with $\pi_i=(v^*_i)^2/\|v^*\|_2^2$
+    The scale similarity matrix also defines a Markov chain through Doob's
+    $h$-transform:
 
-    \textbf{Interpretation:}
+    \posterequation{
+      \[
+        P=\frac{1}{\lambda_N}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*},
+        \qquad
+        \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}.
+      \]
+    }
 
-    \textbf{Monotone Scale Selection:} If the functional $f$ is monotone, an alternative approach is better: Define the discrete Laplacian $\mathcal{L}=\frac{1}{d_1}\text{diag}(1,0,\dots,0)-(\Sigma^{(N)})^{-1}$, which acts as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. Let $\pi^{\text{BD}}$ be its stationary distribution. Choose the critical scale by $i_{\text{crit}}\in\arg\min\{\pi^{\text{BD}}_i:i=1,\dots,N\}$
+    \textbf{Interpretation.}
+    The eigenvector score measures how strongly one scale is supported by all
+    other scales, not only by its own functional value.
+
+    \textbf{Monotone scale selection.}
+    If $f$ is monotone, define
+    \[
+      \mathcal{L}
+      =\frac{1}{d_1}\mathrm{diag}(1,0,\dots,0)-(\Sigma^{(N)})^{-1}.
+    \]
+    This acts as the generator of a continuous-time birth-death chain. With
+    stationary distribution $\pi^{\mathrm{BD}}$, choose
+    \[
+      i_{\mathrm{crit}}\in
+      \arg\min_{1\leq i\leq N}\pi_i^{\mathrm{BD}}.
+    \]
   }
 \end{minipage}
 \hfill
@@ -128,14 +231,14 @@
         \begin{minipage}[t]{0.47\linewidth}
             \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
+            \includegraphics[width=\linewidth]{eight_fail.png}
             \captionof{figure}{First caption}
         \end{minipage}
         \hfill
         \begin{minipage}[t]{0.47\linewidth}
             \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
+            \includegraphics[width=\linewidth]{eight_proper.png}
             \captionof{figure}{Second caption}
         \end{minipage}
     \end{center}
@@ -143,7 +246,7 @@
 
   \posterblock{Case Study: Covid-19 Spread in the USA}{
     \begin{center}
-        \includegraphics[width=0.8\linewidth]{Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png}
+        \includegraphics[width=0.8\linewidth]{COVID-projections_coloring.png}
         \captionof{figure}{Caption}
         \label{fig:placeholder}
     \end{center}
