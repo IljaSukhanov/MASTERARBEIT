@@ -134,35 +134,48 @@
 \vspace{3cm}
 
 \begin{minipage}[t]{0.48\textwidth}
-  \posteraccentblock{Problem Setting}{
-    Persistent homology is scale agnostic, but applications still require a
-    meaningful scale at which structure is interpreted.
+  \posteraccentblock{Why Select One Scale?}{
+    Persistent homology records features across all filtration values. This is
+    the right multiscale summary, but several downstream tasks still require
+    one representative complex.
 
     \begin{itemize}
-      \item We compare candidate scales through a scale similarity matrix.
-      \item Perron-Frobenius theory turns this matrix into a stable ranking.
-      \item The dominant scale is selected from the principal eigenvector.
+      \item Reconstruction and meshing need one complex with the right homotopy type.
+      \item Topology-aware clustering depends on a neighborhood scale.
+      \item Mapper and graph construction require local thresholds.
+      \item Statistical tests on point processes often evaluate Betti numbers at selected scales.
     \end{itemize}
+
+    The goal is therefore not to replace the persistence diagram, but to turn it
+    into an operational scale choice.
   }
 
-  \posterblock{Methodology}{
-    Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes, for example
-    $K_i=\mathrm{VR}_{\epsilon_i}(X)$ for a data set
-    $X=\{x_1,\dots,x_n\}\subset\mathbb{R}^d$.
+  \posterblock{Spectral Scale Selection}{
+    Let $K_1,\dots,K_N$ be complexes from a filtration, for example
+    $K_i=\mathrm{VR}_{\epsilon_i}(X)$, $\check{C}_{\epsilon_i}(X)$, or
+    $\alpha_{\epsilon_i}(X)$. For a functional $f$ on simplicial complexes,
+    define the scale interaction by
 
     \posterequation{
       \[
-        \Sigma^{(N)}_{ij}=f(K_i\oplus K_j),
+        \langle K_i,K_j\rangle_f
+        = f(K_i)+f(K_j)-f(K_i\oplus K_j),
         \qquad
-        K_i\oplus K_j=
-        \begin{cases}
-          K_{i\vee j}, & \oplus=\cup,\\
-          K_{i\wedge j}, & \oplus=\cap.
-        \end{cases}
+        \Sigma^{(N)}_{ij}=\langle K_i,K_j\rangle_f .
       \]
     }
 
-    The functional combines topological and combinatorial information:
+    In the filtration case with the union operation this reduces to a min/meet
+    matrix:
+
+    \posterequation{
+      \[
+        \Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}}),
+        \qquad i\wedge j=\min\{i,j\}.
+      \]
+    }
+
+    The functional is chosen to combine topology and combinatorics:
 
     \posterequation{
       \[
@@ -177,42 +190,53 @@
       \]
     }
 
-    By Perron-Frobenius, the principal eigenvector $v^*$ of $\Sigma^{(N)}$
-    has positive entries. The critical scale is chosen by
+    The Perron vector ranks scales by their interaction with the entire
+    filtration:
     \[
-      i_{\mathrm{crit}}\in\arg\max_{1\leq i\leq N}v_i^*.
+      \Sigma^{(N)}v^*=\lambda^*v^*,
+      \qquad
+      i_{\mathrm{crit}}\in\arg\max_{1\leq i\leq N}v_i^* .
     \]
 
     \posterquestion{
-      Why use the principal eigenvector instead of only maximizing the diagonal
-      scores $f(K_i)$?
+      Which scale is most strongly supported by all other scales, not only by
+      its own value $f(K_i)$?
     }
   }
 
-  \posterblock{Connection to Markov Chains and Monotone Scale Selection}{
-    The scale similarity matrix also defines a Markov chain through Doob's
-    $h$-transform:
+  \posterblock{PCA and Markov Chain View}{
+    The scale similarity matrix plays the role of a covariance matrix on the
+    space of scales. Its dominant eigenvector is analogous to the first
+    principal component: it identifies the scale direction carrying the strongest
+    cross-scale signal.
 
     \posterequation{
       \[
-        P=\frac{1}{\lambda_N}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*},
+        P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*},
         \qquad
         \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}.
       \]
     }
 
-    \textbf{Interpretation.}
-    The eigenvector score measures how strongly one scale is supported by all
-    other scales, not only by its own functional value.
+    This is Doob's $h$-transform. It turns $\Sigma^{(N)}$ into a reversible
+    Markov chain on the state space of scales. Scales with high stationary mass
+    are globally supported by the filtration.
 
-    \textbf{Monotone scale selection.}
-    If $f$ is monotone, define
+    \textbf{Non-monotone case.}
+    The Perron ranking is the main selection rule. It is most informative when
+    $i\mapsto f(K_{\epsilon_i})$ is not merely monotone, for instance when
+    $\beta_0$ decreases while the edge count $f_1$ increases.
+
+    \textbf{Monotone case.}
+    If $f$ is monotone, the min matrix mainly reflects this monotonicity. Then
+    the inverse matrix gives a birth-death chain with generator
     \[
       \mathcal{L}
-      =\frac{1}{d_1}\mathrm{diag}(1,0,\dots,0)-(\Sigma^{(N)})^{-1}.
+      =\frac{1}{c_1}\mathrm{diag}(1,0,\dots,0)-(\Sigma^{(N)})^{-1},
+      \qquad c_i=f(K_{\epsilon_i}).
     \]
-    This acts as the generator of a continuous-time birth-death chain. With
-    stationary distribution $\pi^{\mathrm{BD}}$, choose
+    The critical scale is selected where the embedded chain has minimal
+    stationary mass:
     \[
       i_{\mathrm{crit}}\in
       \arg\min_{1\leq i\leq N}\pi_i^{\mathrm{BD}}.
