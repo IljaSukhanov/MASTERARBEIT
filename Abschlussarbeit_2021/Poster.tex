@@ -13,7 +13,7 @@
 
 \pagestyle{empty}
 \renewcommand{\familydefault}{\sfdefault}
-\graphicspath{{LaTeX/images/}{Abschlussarbeit_2021/LaTeX/images/}}
+\graphicspath{{LaTeX/images/}{Abschlussarbeit_2021/LaTeX/images/}{Images/}}
 
 \definecolor{uulmgray}{RGB}{70,70,70}
 \definecolor{posterline}{RGB}{220,220,220}
@@ -22,9 +22,9 @@
 \definecolor{posteraccentlight}{RGB}{232,245,248}
 \definecolor{postercallout}{RGB}{255,248,230}
 
-\newcommand{\postertitle}{}
-\newcommand{\posterauthor}{}
-\newcommand{\posterinfo}{}
+\newcommand{\postertitle}{Spectral Scale Selection Principle in TDA}
+\newcommand{\posterauthor}{Ilja Sukhanov \quad Institute of Stochastics, Ulm University}
+\newcommand{\posterinfo}{Perron-Frobenius scale ranking for filtrations, Mapper, and graph-based data analysis}
 
 \captionsetup{font=small,labelfont=bf}
 \setlist[itemize]{leftmargin=1.2em,itemsep=0.25em,topsep=0.25em}
@@ -245,36 +245,67 @@
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-    \posterblock{The Mapper Algorithm}{
-    Curabitur sed velit non urna congue vestibulum. Use this block for results,
-    diagrams, images, equations, or other poster material.
+  \posterblock{Mapper and Local Scale Choice}{
+    Mapper converts a point cloud into a graph that summarizes the shape of the
+    data. Choose a lens function $g:X\to\mathbb{R}^m$ and a cover
+    $\mathcal{U}=\{U_i\}_{i\in I}$ of $g(X)$. The pull-back sets are
+    \[
+      X_i=g^{-1}(U_i)=\{x\in X:g(x)\in U_i\}.
+    \]
+    Each $X_i$ is split into clusters, and the Mapper graph is the nerve of
+    these clusters: vertices are clusters and edges indicate non-empty
+    intersections.
+
+    \textbf{Where scale enters.}
+    Instead of choosing one global clustering threshold by hand, we use the
+    spectral scale principle locally. Each cover element receives its own
+    scale $\alpha_i$, selected from a scale similarity matrix built on the
+    local data.
   }
 
   \posterblock{Multiscale $\alpha$ Neighboring graph}{
+    Within every pull-back set $X_i$, connect two data points when their
+    distance is at most $2\alpha_i$. For points lying in several cover sets,
+    the largest admissible local threshold is used. This produces a graph that
+    adapts to non-uniform sampling density and different local length scales.
+
     \begin{center}
         \begin{minipage}[t]{0.47\linewidth}
             \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{eight_fail.png}
-            \captionof{figure}{First caption}
+            \includegraphics[width=\linewidth]{synthetic_eight_random_thresholds_poster_style.png}
+            \captionof{figure}{Random thresholds fragment the geometry.}
         \end{minipage}
         \hfill
         \begin{minipage}[t]{0.47\linewidth}
             \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{eight_proper.png}
-            \captionof{figure}{Second caption}
+            \includegraphics[width=\linewidth]{synthetic_eight_malphaN_poster_style.png}
+            \captionof{figure}{Spectral thresholds recover the two-loop structure.}
         \end{minipage}
     \end{center}
-}
+  }
 
-  \posterblock{Case Study: Covid-19 Spread in the USA}{
+  \posterblock{Case Study: COVID-19 Spread in the USA}{
+    Each node represents one of $3{,}142$ U.S. counties. Similarity is measured
+    on normalized epidemic outcome vectors built from confirmed cases and
+    deaths over an aligned observation window. The lens combines density and
+    centrality of these outcomes.
+
+    The local thresholds are selected spectrally with the non-monotone
+    functional
+    \[
+      f(K)=\beta_0(K)\,f_1(K),
+    \]
+    balancing connected components and edge complexity. The resulting graph
+    reveals separated county communities whose differences align with
+    demographic and health-care variables not used in the graph construction.
+
     \begin{center}
-        \includegraphics[width=0.8\linewidth]{COVID-projections_coloring.png}
-        \captionof{figure}{Caption}
-        \label{fig:placeholder}
+        \includegraphics[width=0.72\linewidth]{COVID-projections_coloring.png}
+        \captionof{figure}{County-level projection colored by detected graph structure.}
     \end{center}
-}
+  }
 \end{minipage}
 
 \end{document}
