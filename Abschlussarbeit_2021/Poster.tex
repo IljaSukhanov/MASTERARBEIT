@@ -66,6 +66,17 @@
     top=0.6cm,
     bottom=0.6cm,
   },
+  posterformulastyle/.style={
+    enhanced,
+    colback=posteraccentlight,
+    colframe=posteraccent,
+    boxrule=1.3pt,
+    arc=6mm,
+    left=0.8cm,
+    right=0.8cm,
+    top=0.45cm,
+    bottom=0.45cm,
+  },
   posterequationstyle/.style={
     enhanced,
     colback=white,
@@ -110,6 +121,11 @@
     \textbf{Question.} #1
   \end{tcolorbox}
 }
+\newcommand{\posterformula}[1]{%
+  \begin{tcolorbox}[posterformulastyle]
+    #1
+  \end{tcolorbox}
+}
 
 \begin{document}
 \begin{tikzpicture}[remember picture,overlay]
@@ -135,82 +151,70 @@
 
 \begin{minipage}[t]{0.48\textwidth}
   \posteraccentblock{Why Select One Scale?}{
-    Persistent homology records features across all filtration values. This is
-    the right multiscale summary, but several downstream tasks still require
-    one representative complex.
+    Persistent homology is multiscale. Many applications still need one
+    representative complex or one local graph threshold.
 
-    \begin{itemize}
-      \item Reconstruction and meshing need one complex with the right homotopy type.
-      \item Topology-aware clustering depends on a neighborhood scale.
-      \item Mapper and graph construction require local thresholds.
-      \item Statistical tests on point processes often evaluate Betti numbers at selected scales.
-    \end{itemize}
-
-    The goal is therefore not to replace the persistence diagram, but to turn it
-    into an operational scale choice.
-  }
-
-  \posterblock{Spectral Scale Selection}{
-    Let $K_1,\dots,K_N$ be complexes from a filtration, for example
-    $K_i=\mathrm{VR}_{\epsilon_i}(X)$, $\check{C}_{\epsilon_i}(X)$, or
-    $\alpha_{\epsilon_i}(X)$. For a functional $f$ on simplicial complexes,
-    define the scale interaction by
-
-    \posterequation{
+    \posterformula{
       \[
-        \langle K_i,K_j\rangle_f
-        = f(K_i)+f(K_j)-f(K_i\oplus K_j),
-        \qquad
-        \Sigma^{(N)}_{ij}=\langle K_i,K_j\rangle_f .
+        X \leadsto
+        \{K_{\epsilon_1}\subseteq \cdots \subseteq K_{\epsilon_N}\}
+        \leadsto
+        \epsilon_{\mathrm{crit}}
       \]
     }
 
-    In the filtration case with the union operation this reduces to a min/meet
-    matrix:
+    \begin{itemize}
+      \item Use the full filtration to choose the scale.
+      \item Avoid isolated local maxima of a single curve.
+      \item Apply the same principle locally inside Mapper.
+    \end{itemize}
+  }
 
-    \posterequation{
+  \posterblock{Spectral Scale Selection}{
+    \posterformula{
+      \[
+        \langle K_i,K_j\rangle_f
+        = f(K_i)+f(K_j)-f(K_i\oplus K_j),
+      \]
+      \[
+        \Sigma^{(N)}_{ij}=\langle K_i,K_j\rangle_f
+      \]
+    }
+
+    For filtrations with $\oplus=\cup$:
+    \posterformula{
       \[
         \Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}}),
         \qquad i\wedge j=\min\{i,j\}.
       \]
     }
 
-    The functional is chosen to combine topology and combinatorics:
-
     \posterequation{
       \[
-        f(K)=f_{\mathrm{Top}}(K)\,f_{\mathrm{Comb}}(K)
-      \]
-      \[
-        f_{\mathrm{Top}}(K)=
-        \delta_{-1}+\sum_{j=0}^{d-1}\delta_j\beta_j^{\alpha_j}(K),
+        \Sigma^{(N)}v^*=\lambda^*v^*,
         \qquad
-        f_{\mathrm{Comb}}(K)=
-        \gamma_{-1}+\sum_{j=0}^{d}\gamma_j f_j^{\xi_j}(K).
+        i_{\mathrm{crit}}\in\arg\max_i v_i^*
       \]
     }
 
-    The Perron vector ranks scales by their interaction with the entire
-    filtration:
-    \[
-      \Sigma^{(N)}v^*=\lambda^*v^*,
-      \qquad
-      i_{\mathrm{crit}}\in\arg\max_{1\leq i\leq N}v_i^* .
-    \]
-
     \posterquestion{
-      Which scale is most strongly supported by all other scales, not only by
-      its own value $f(K_i)$?
+      Which scale is globally supported by the whole filtration?
     }
   }
 
   \posterblock{PCA and Markov Chain View}{
-    The scale similarity matrix plays the role of a covariance matrix on the
-    space of scales. Its dominant eigenvector is analogous to the first
-    principal component: it identifies the scale direction carrying the strongest
-    cross-scale signal.
+    \posterformula{
+      \[
+        \text{scales as variables}
+        \qquad
+        \Sigma^{(N)} \sim \text{covariance matrix}
+      \]
+      \[
+        v^* \sim \text{first principal direction}
+      \]
+    }
 
-    \posterequation{
+    \posterformula{
       \[
         P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*},
         \qquad
@@ -218,56 +222,63 @@
       \]
     }
 
-    This is Doob's $h$-transform. It turns $\Sigma^{(N)}$ into a reversible
-    Markov chain on the state space of scales. Scales with high stationary mass
-    are globally supported by the filtration.
+    This Doob transform gives a Markov chain on scales. High stationary mass
+    means strong global support.
 
-    \textbf{Non-monotone case.}
-    The Perron ranking is the main selection rule. It is most informative when
-    $i\mapsto f(K_{\epsilon_i})$ is not merely monotone, for instance when
-    $\beta_0$ decreases while the edge count $f_1$ increases.
-
-    \textbf{Monotone case.}
-    If $f$ is monotone, the min matrix mainly reflects this monotonicity. Then
-    the inverse matrix gives a birth-death chain with generator
-    \[
-      \mathcal{L}
-      =\frac{1}{c_1}\mathrm{diag}(1,0,\dots,0)-(\Sigma^{(N)})^{-1},
-      \qquad c_i=f(K_{\epsilon_i}).
-    \]
-    The critical scale is selected where the embedded chain has minimal
-    stationary mass:
-    \[
-      i_{\mathrm{crit}}\in
-      \arg\min_{1\leq i\leq N}\pi_i^{\mathrm{BD}}.
-    \]
+    \posterquestion{
+      The poster application uses the non-monotone functional
+      $f(K)=\beta_0(K)f_1(K)$.
+    }
   }
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
   \posterblock{Mapper and Local Scale Choice}{
-    Mapper converts a point cloud into a graph that summarizes the shape of the
-    data. Choose a lens function $g:X\to\mathbb{R}^m$ and a cover
-    $\mathcal{U}=\{U_i\}_{i\in I}$ of $g(X)$. The pull-back sets are
-    \[
-      X_i=g^{-1}(U_i)=\{x\in X:g(x)\in U_i\}.
-    \]
-    Each $X_i$ is split into clusters, and the Mapper graph is the nerve of
-    these clusters: vertices are clusters and edges indicate non-empty
-    intersections.
+    \posterformula{
+      \[
+        g:X\to\mathbb{R}^m,
+        \qquad
+        X_i=g^{-1}(U_i)
+      \]
+    }
 
-    \textbf{Where scale enters.}
-    Instead of choosing one global clustering threshold by hand, we use the
-    spectral scale principle locally. Each cover element receives its own
-    scale $\alpha_i$, selected from a scale similarity matrix built on the
-    local data.
+    Apply the scale selection principle separately on each pull-back set:
+
+    \posterformula{
+      \[
+        X_i \leadsto
+        \{K_{\epsilon}^{(i)}\}_{\epsilon}
+        \leadsto
+        \Sigma_i
+        \leadsto
+        v_i^*
+        \leadsto
+        \alpha_i
+      \]
+      \[
+        f(K)=\beta_0(K)\,f_1(K)
+      \]
+    }
+
+    These local scales are then used to construct the graph.
   }
 
   \posterblock{Multiscale $\alpha$ Neighboring graph}{
-    Within every pull-back set $X_i$, connect two data points when their
-    distance is at most $2\alpha_i$. For points lying in several cover sets,
-    the largest admissible local threshold is used. This produces a graph that
-    adapts to non-uniform sampling density and different local length scales.
+    \posterformula{
+      \[
+        x,y\in X_i
+        \quad\Longrightarrow\quad
+        xy\in E
+        \ \text{if}\ 
+        d(x,y)\leq 2\alpha_i
+      \]
+    }
+
+    \[
+      x,y\in X_i\cap X_j
+      \quad\Longrightarrow\quad
+      \alpha=\max\{\alpha_i,\alpha_j\}
+    \]
 
     \begin{center}
         \begin{minipage}[t]{0.47\linewidth}
@@ -287,23 +298,26 @@
   }
 
   \posterblock{Case Study: COVID-19 Spread in the USA}{
-    Each node represents one of $3{,}142$ U.S. counties. Similarity is measured
-    on normalized epidemic outcome vectors built from confirmed cases and
-    deaths over an aligned observation window. The lens combines density and
-    centrality of these outcomes.
+    \posterformula{
+      \[
+        \text{counties}
+        \leadsto
+        \text{local spectral scales}
+        \leadsto
+        M\alpha N\text{ graph}
+        \leadsto
+        \text{communities}
+      \]
+    }
 
-    The local thresholds are selected spectrally with the non-monotone
-    functional
-    \[
-      f(K)=\beta_0(K)\,f_1(K),
-    \]
-    balancing connected components and edge complexity. The resulting graph
-    reveals separated county communities whose differences align with
-    demographic and health-care variables not used in the graph construction.
+    The M$\alpha$N construction gives a readable graph structure without manual
+    threshold tuning. The detected communities are visually separated in the
+    projection, showing that the local spectral scales produce a meaningful
+    data map.
 
     \begin{center}
-        \includegraphics[width=0.72\linewidth]{COVID-projections_coloring.png}
-        \captionof{figure}{County-level projection colored by detected graph structure.}
+        \includegraphics[width=0.78\linewidth]{COVID-projections_coloring.png}
+        \captionof{figure}{M$\alpha$N recovers separated county communities.}
     \end{center}
   }
 \end{minipage}
