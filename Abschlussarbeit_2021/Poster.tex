@@ -151,43 +151,39 @@
 
 \begin{minipage}[t]{0.48\textwidth}
   \posteraccentblock{Why Select One Scale?}{
-    Persistent homology is multiscale. Many applications still need one
-    representative complex or one local graph threshold.
-
-    \posterformula{
-      \[
-        X \leadsto
-        \{K_{\epsilon_1}\subseteq \cdots \subseteq K_{\epsilon_N}\}
-        \leadsto
-        \epsilon_{\mathrm{crit}}
-      \]
-    }
+    Persistent homology is deliberately multiscale. The persistence diagram
+    should not be replaced, but many practical steps still ask for one
+    representative complex or one graph threshold:
+    \[
+      X \leadsto
+      \{K_{\epsilon_1}\subseteq \cdots \subseteq K_{\epsilon_N}\}
+      \leadsto
+      \epsilon_{\mathrm{crit}} .
+    \]
 
     \begin{itemize}
-      \item Use the full filtration to choose the scale.
-      \item Avoid isolated local maxima of a single curve.
-      \item Apply the same principle locally inside Mapper.
+      \item Reconstruction and graph construction commit to one scale.
+      \item Mapper needs local thresholds inside pull-back sets.
+      \item The selected scale should be supported by the whole filtration.
     \end{itemize}
   }
 
   \posterblock{Spectral Scale Selection}{
-    \posterformula{
+    We compare scales through a similarity matrix whose entries measure how
+    two complexes interact through a chosen functional $f$.
+
+    \posterequation{
       \[
         \langle K_i,K_j\rangle_f
         = f(K_i)+f(K_j)-f(K_i\oplus K_j),
-      \]
-      \[
+        \qquad
         \Sigma^{(N)}_{ij}=\langle K_i,K_j\rangle_f
       \]
     }
 
-    For filtrations with $\oplus=\cup$:
-    \posterformula{
-      \[
-        \Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}}),
-        \qquad i\wedge j=\min\{i,j\}.
-      \]
-    }
+    For filtrations with $\oplus=\cup$, this becomes the min/meet matrix
+    $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$, where
+    $i\wedge j=\min\{i,j\}$.
 
     \posterequation{
       \[
@@ -203,18 +199,11 @@
   }
 
   \posterblock{PCA and Markov Chain View}{
-    \posterformula{
-      \[
-        \text{scales as variables}
-        \qquad
-        \Sigma^{(N)} \sim \text{covariance matrix}
-      \]
-      \[
-        v^* \sim \text{first principal direction}
-      \]
-    }
+    The matrix $\Sigma^{(N)}$ plays a PCA-like role: scales are the variables,
+    cross-scale similarities are the entries, and $v^*$ is the dominant
+    direction of variation.
 
-    \posterformula{
+    \posterequation{
       \[
         P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*},
         \qquad
@@ -226,7 +215,7 @@
     means strong global support.
 
     \posterquestion{
-      The poster application uses the non-monotone functional
+      The application uses a non-monotone functional:
       $f(K)=\beta_0(K)f_1(K)$.
     }
   }
@@ -234,7 +223,8 @@
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
   \posterblock{Mapper and Local Scale Choice}{
-    \posterformula{
+    Mapper first localizes the data by a lens function and a cover:
+    \posterequation{
       \[
         g:X\to\mathbb{R}^m,
         \qquad
@@ -242,9 +232,9 @@
       \]
     }
 
-    Apply the scale selection principle separately on each pull-back set:
-
-    \posterformula{
+    The connection to the left side is direct: the spectral selection principle
+    is applied separately to every $X_i$.
+    \posterequation{
       \[
         X_i \leadsto
         \{K_{\epsilon}^{(i)}\}_{\epsilon}
@@ -260,11 +250,13 @@
       \]
     }
 
-    These local scales are then used to construct the graph.
+    Thus Mapper supplies the local data sets, while the Perron vector supplies
+    the local scales $\alpha_i$.
   }
 
   \posterblock{Multiscale $\alpha$ Neighboring graph}{
-    \posterformula{
+    With the selected local scales, the graph is built by a simple rule:
+    \posterequation{
       \[
         x,y\in X_i
         \quad\Longrightarrow\quad
@@ -274,11 +266,8 @@
       \]
     }
 
-    \[
-      x,y\in X_i\cap X_j
-      \quad\Longrightarrow\quad
-      \alpha=\max\{\alpha_i,\alpha_j\}
-    \]
+    On overlaps, the larger available local scale is used. This makes the graph
+    adapt to local sampling density instead of imposing one global threshold.
 
     \begin{center}
         \begin{minipage}[t]{0.47\linewidth}
@@ -298,22 +287,15 @@
   }
 
   \posterblock{Case Study: COVID-19 Spread in the USA}{
-    \posterformula{
-      \[
-        \text{counties}
-        \leadsto
-        \text{local spectral scales}
-        \leadsto
-        M\alpha N\text{ graph}
-        \leadsto
-        \text{communities}
-      \]
-    }
+    The COVID data provide a practical stress test: many counties, noisy time
+    series, and no obvious global threshold. The M$\alpha$N approach still
+    produces a readable graph without manual tuning.
 
-    The M$\alpha$N construction gives a readable graph structure without manual
-    threshold tuning. The detected communities are visually separated in the
-    projection, showing that the local spectral scales produce a meaningful
-    data map.
+    \[
+      \text{local spectral scales}
+      \leadsto M\alpha N\text{ graph}
+      \leadsto \text{separated communities}
+    \]
 
     \begin{center}
         \includegraphics[width=0.78\linewidth]{COVID-projections_coloring.png}
