@@ -21,6 +21,7 @@
 \definecolor{posteraccent}{RGB}{0,104,125}
 \definecolor{posteraccentlight}{RGB}{232,245,248}
 \definecolor{postercallout}{RGB}{255,248,230}
+\definecolor{posterorange}{RGB}{220,125,35}
 
 \newcommand{\postertitle}{Spectral Scale Selection Principle in TDA}
 \newcommand{\posterauthor}{Ilja Sukhanov \quad Institute of Stochastics, Ulm University}
@@ -126,6 +127,65 @@
     #1
   \end{tcolorbox}
 }
+\newcommand{\mapperpicture}{%
+  \begin{center}
+  \begin{tikzpicture}[scale=1.0, every node/.style={font=\large}]
+    \draw[posteraccent!15, fill=posteraccent!6, rounded corners=8pt]
+      (-0.4,-0.7) rectangle (4.5,3.0);
+    \foreach \x/\y in {
+      0.1/0.2,
+      0.4/0.9,
+      0.8/1.4,
+      1.1/1.9,
+      1.5/1.2,
+      1.9/0.6,
+      2.2/1.5,
+      2.6/2.1,
+      3.0/1.3,
+      3.4/0.8,
+      3.8/1.8
+    }{
+      \fill[posteraccent] (\x,\y) circle (4pt);
+    }
+    \foreach \x/\y in {1.2/0.4,2.7/0.4,3.5/2.3}{
+      \fill[posterorange] (\x,\y) circle (4pt);
+    }
+    \node[anchor=south] at (2.05,3.0) {point cloud $X$};
+
+    \draw[->, line width=1.2pt, posteraccent] (4.9,1.2) -- (6.0,1.2);
+    \node[anchor=south, posteraccent] at (5.45,1.25) {lens $g$};
+
+    \draw[posteraccent!60, line width=1.1pt] (6.35,-0.3) -- (6.35,2.7);
+    \foreach \y/\lab in {0.1/$U_1$,0.8/$U_2$,1.5/$U_3$,2.2/$U_4$}{
+      \draw[fill=posteraccent!12, draw=posteraccent, rounded corners=3pt]
+        (6.0,\y-0.23) rectangle (6.7,\y+0.23);
+      \node at (6.35,\y) {\lab};
+    }
+    \node[anchor=south] at (6.35,3.0) {cover of $g(X)$};
+
+    \draw[->, line width=1.2pt, posteraccent] (7.1,1.2) -- (8.2,1.2);
+    \node[anchor=south, posteraccent] at (7.65,1.25) {pull back};
+
+    \foreach \x/\y/\lab in {8.8/2.2/$X_1$,9.8/1.55/$X_2$,8.9/0.8/$X_3$,10.0/0.25/$X_4$}{
+      \draw[fill=posteraccentlight, draw=posteraccent, rounded corners=8pt]
+        (\x-0.45,\y-0.28) rectangle (\x+0.45,\y+0.28);
+      \node at (\x,\y) {\lab};
+    }
+    \node[anchor=south] at (9.4,3.0) {local sets};
+
+    \draw[->, line width=1.2pt, posteraccent] (10.7,1.2) -- (11.8,1.2);
+    \node[anchor=south, posteraccent] at (11.25,1.25) {nerve};
+
+    \foreach \x/\y/\n in {12.4/2.1/a,13.5/1.6/b,12.7/0.75/c,13.8/0.35/d}{
+      \fill[posteraccent] (\x,\y) circle (7pt);
+      \node[white] at (\x,\y) {};
+    }
+    \draw[line width=1.5pt, posteraccent] (12.4,2.1)--(13.5,1.6)--(12.7,0.75)--(13.8,0.35);
+    \draw[line width=1.5pt, posteraccent] (12.4,2.1)--(12.7,0.75);
+    \node[anchor=south] at (13.1,3.0) {Mapper graph};
+  \end{tikzpicture}
+  \end{center}
+}
 
 \begin{document}
 \begin{tikzpicture}[remember picture,overlay]
@@ -166,11 +226,16 @@
       \item Mapper needs local thresholds inside pull-back sets.
       \item The selected scale should be supported by the whole filtration.
     \end{itemize}
+
+    The paper draft treats this as a PCA-type problem on a finite chain of
+    simplicial complexes: build a scale similarity matrix and read the dominant
+    spectral direction.
   }
 
   \posterblock{Spectral Scale Selection}{
-    We compare scales through a similarity matrix whose entries measure how
-    two complexes interact through a chosen functional $f$.
+    The paper starts from an $f$-divergence on simplicial complexes. Its entries
+    measure how two scales interact through a chosen topological or
+    combinatorial functional $f$.
 
     \posterequation{
       \[
@@ -185,6 +250,10 @@
     $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$, where
     $i\wedge j=\min\{i,j\}$.
 
+    If the scale graph induced by $\Sigma^{(N)}$ is connected, the matrix is
+    irreducible. Perron-Frobenius gives a positive dominant eigenvector, hence
+    a canonical ranking of scales.
+
     \posterequation{
       \[
         \Sigma^{(N)}v^*=\lambda^*v^*,
@@ -192,16 +261,21 @@
         i_{\mathrm{crit}}\in\arg\max_i v_i^*
       \]
     }
-
-    \posterquestion{
-      Which scale is globally supported by the whole filtration?
-    }
   }
 
-  \posterblock{PCA and Markov Chain View}{
-    The matrix $\Sigma^{(N)}$ plays a PCA-like role: scales are the variables,
-    cross-scale similarities are the entries, and $v^*$ is the dominant
-    direction of variation.
+  \posterblock{PCA, Min Matrices, and Markov Chains}{
+    The matrix $\Sigma^{(N)}$ is PCA-like: scales are the variables and
+    cross-scale similarities are the entries. If $f$ is monotone in a filtration,
+    the min-matrix theory shows that the Perron vector is comonotone with the
+    sequence $f(K_{\epsilon_i})$. This motivates using non-monotone functionals
+    when we want to detect a transition rather than monotonic growth.
+
+    For the application:
+    \[
+      f(K)=\beta_0(K)f_1(K),
+    \]
+    where $\beta_0$ decreases as components merge, while $f_1$ increases as
+    edges appear.
 
     \posterequation{
       \[
@@ -212,17 +286,15 @@
     }
 
     This Doob transform gives a Markov chain on scales. High stationary mass
-    means strong global support.
-
-    \posterquestion{
-      The application uses a non-monotone functional:
-      $f(K)=\beta_0(K)f_1(K)$.
-    }
+    means strong global support; the construction is the stochastic counterpart
+    of the scale similarity matrix.
   }
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
   \posterblock{Mapper and Local Scale Choice}{
+    \mapperpicture
+
     Mapper first localizes the data by a lens function and a cover:
     \posterequation{
       \[
