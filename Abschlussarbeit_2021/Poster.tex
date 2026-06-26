@@ -162,28 +162,6 @@
     \end{itemize}
     }
 
-  % \posteraccentblock{Why Select One Scale?}{
-  %   Persistent homology is deliberately multiscale. The persistence diagram
-  %   should not be replaced, but many practical steps still ask for one
-  %   representative complex or one graph threshold:
-  %   \[
-  %     X \leadsto
-  %     \{K_{\epsilon_1}\subseteq \cdots \subseteq K_{\epsilon_N}\}
-  %     \leadsto
-  %     \epsilon_{\mathrm{crit}} .
-  %   \]
-
-  %   \begin{itemize}
-  %     \item Reconstruction and graph construction commit to one scale.
-  %     \item Mapper needs local thresholds inside pull-back sets.
-  %     \item The selected scale should be supported by the whole filtration.
-  %   \end{itemize}
-
-  %   The paper draft treats this as a PCA-type problem on a finite chain of
-  %   simplicial complexes: build a scale similarity matrix and read the dominant
-  %   spectral direction.
-  % }
-
 \posterblock{Spectral Scale Selection}{
     Let $(K_i)_{i=1}^{N}$ be a sequence of simplicial complexes. Introduce the $f$-based divergence on simplicial complexes and the scale similarity matrix:
     \posterequation{
@@ -195,7 +173,7 @@
       \]
     }
 
-    If $(K_i)$ is a filtration and $\oplus=\cup$, the scale similarity matrix becomes a min matrix: $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$. By Perron-Frobenius, the principal eigenvector $v^*$ is positive and unique up to scaling. It provides a canonical ranking of scales. Choose the critical scale by the rule
+    If $(K_i)$ is a filtration and $\oplus=\cup$, the scale similarity matrix becomes a min matrix: $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$. By Perron-Frobenius, the principal eigenvector $v^*$ is positive and unique up to scaling, provided that $f(K_1)>0$. It provides a canonical ranking of scales. Choose the critical scale by the rule
 
     \posterequation{
       \[
@@ -321,13 +299,17 @@
         \]
     }
 
-    % Thus Mapper supplies the local data sets, while the Perron vector supplies
-    % the local scales $\alpha_i$.
-
     The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph
     adapt to local sampling density instead of imposing one global threshold.
 
-    \todo[inline]{Import two plots, one shows $j\mapsto F(\text{VR}_{\epsilon_j}(X_i))$ and one the principal eigenvector}
+    \begin{center}
+        \vspace{0pt}
+        \centering
+        \includegraphics[width=0.92\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice exemplary.png}
+        \captionof{figure}{Local scale selection on $X_i$: the functional profile
+        $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal
+        eigenvector identify the local threshold $\alpha_i$.}
+    \end{center}
 
     \begin{center}
         \begin{minipage}[t]{0.47\linewidth}
