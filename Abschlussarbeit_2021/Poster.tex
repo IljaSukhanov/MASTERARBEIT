@@ -1,12 +1,11 @@
 \documentclass[final]{article}
 
-\usepackage[paperwidth=84.1cm,paperheight=118.9cm,margin=3cm]{geometry}
+\usepackage[paperwidth=84.1cm,paperheight=118.9cm,margin=2.4cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[most]{tcolorbox}
 \usepackage{tikz}
 \usepackage{parskip}
-\usepackage{todonotes}
 
 \usepackage{amsmath, amssymb}
 \usepackage{caption}
@@ -27,8 +26,8 @@
 \newcommand{\posterauthor}{Ilja Sukhanov \quad Institute of Stochastics, Ulm University}
 \newcommand{\posterinfo}{}
 
-\captionsetup{font=small,labelfont=bf}
-\setlist[itemize]{leftmargin=1.2em,itemsep=0.25em,topsep=0.25em}
+\captionsetup{font=scriptsize,labelfont=bf,skip=0.15cm}
+\setlist[itemize]{leftmargin=1.1em,itemsep=0.1em,topsep=0.1em}
 \setlist[enumerate]{leftmargin=1.4em,itemsep=0.3em,topsep=0.3em}
 
 \tcbset{
@@ -37,24 +36,24 @@
     colback=posterfill,
     colframe=posterline,
     coltitle=uulmgray,
-    fonttitle=\huge\bfseries,
-    fontupper=\Large,
-    boxrule=1.5pt,
-    arc=8mm,
-    left=1.2cm,
-    right=1.2cm,
-    top=1cm,
-    bottom=1cm,
+    fonttitle=\LARGE\bfseries,
+    fontupper=\large,
+    boxrule=1.25pt,
+    arc=6mm,
+    left=0.9cm,
+    right=0.9cm,
+    top=0.7cm,
+    bottom=0.75cm,
     title filled=false,
-    attach title to upper={\par\vspace{0.35cm}},
-    borderline west={7pt}{0pt}{posteraccent},
-    drop fuzzy shadow=black!10,
+    attach title to upper={\par\vspace{0.2cm}},
+    borderline west={5pt}{0pt}{posteraccent},
+    drop fuzzy shadow=black!7,
   },
   posteraccentblockstyle/.style={
     posterblockstyle,
     colback=posteraccentlight,
     colframe=posteraccent,
-    top=1cm,
+    top=0.7cm,
   },
   posterquestionstyle/.style={
     enhanced,
@@ -86,8 +85,19 @@
     arc=5mm,
     left=0.6cm,
     right=0.6cm,
-    top=0.25cm,
-    bottom=0.25cm,
+    top=0.16cm,
+    bottom=0.16cm,
+  },
+  posternotestyle/.style={
+    enhanced,
+    colback=posteraccentlight,
+    colframe=posteraccent!35,
+    boxrule=0.9pt,
+    arc=3mm,
+    left=0.45cm,
+    right=0.45cm,
+    top=0.16cm,
+    bottom=0.16cm,
   }
 }
 
@@ -95,7 +105,7 @@
   \begin{tcolorbox}[posterblockstyle,title={#1}]
     #2
   \end{tcolorbox}
-  \vspace{1.05cm}
+  \vspace{0.65cm}
 }
 \newcommand{\posteraccentblock}[2]{%
   \begin{tcolorbox}[posteraccentblockstyle]
@@ -103,14 +113,14 @@
       fill=posteraccent,
       text=white,
       rounded corners=5pt,
-      inner xsep=0.8cm,
-      inner ysep=0.3cm,
-      font=\huge\bfseries
+      inner xsep=0.65cm,
+      inner ysep=0.22cm,
+      font=\LARGE\bfseries
     ] (label) {#1};
-    \par\vspace{0.55cm}
+    \par\vspace{0.35cm}
     #2
   \end{tcolorbox}
-  \vspace{1.05cm}
+  \vspace{0.65cm}
 }
 \newcommand{\posterequation}[1]{%
   \begin{tcolorbox}[posterequationstyle]
@@ -127,18 +137,23 @@
     #1
   \end{tcolorbox}
 }
+\newcommand{\posternote}[1]{%
+  \begin{tcolorbox}[posternotestyle]
+    \small #1
+  \end{tcolorbox}
+}
 \begin{document}
 \begin{tikzpicture}[remember picture,overlay]
   \draw[posterline,line width=1.5pt]
-    ([xshift=3cm,yshift=-8cm]current page.north west) --
-    ([xshift=-3cm,yshift=-8cm]current page.north east);
+    ([xshift=2.4cm,yshift=-7.2cm]current page.north west) --
+    ([xshift=-2.4cm,yshift=-7.2cm]current page.north east);
 \end{tikzpicture}
 
 \begin{minipage}[t]{0.68\textwidth}
   {\Huge\bfseries\postertitle\par}
-  \vspace{0.8cm}
+  \vspace{0.55cm}
   {\Large\posterauthor\par}
-  \vspace{0.3cm}
+  \vspace{0.15cm}
   {\large\posterinfo\par}
 \end{minipage}
 \hfill
@@ -147,7 +162,7 @@
   \includegraphics[width=0.85\linewidth]{logo_uulm_sw.png}
 \end{minipage}
 
-\vspace{2.2cm}
+\vspace{1.35cm}
 
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
@@ -197,14 +212,14 @@
     \begin{center}
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
+        \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
 
         {\small (a) Multiple equal maxima}
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
+        \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
 
         {\small (b) Non-maximal functional value selected}
     \end{minipage}
@@ -253,17 +268,17 @@
     \begin{center}
       \begin{minipage}[t]{0.48\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
+        \includegraphics[width=0.88\linewidth]{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
 
-        \vspace{0.2em}
+        \vspace{0.05em}
         {\scriptsize Strictly increasing functional values $c_i=f(K_i)$.}
       \end{minipage}
       \hfill
       \begin{minipage}[t]{0.48\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
+        \includegraphics[width=0.88\linewidth]{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
 
-        \vspace{0.2em}
+        \vspace{0.05em}
         {\scriptsize Stationary distribution $\pi_i^{\mathrm{BD}}$ of the embedded jump chain.}
       \end{minipage}
     \end{center}
@@ -274,7 +289,7 @@
 \vspace{0pt}
   \posterblock{Mapper and Local Scale Choice}{
     \begin{center}
-      \includegraphics[width=0.62\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 2 new.png}
+      \includegraphics[width=0.52\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 2 new.png}
       \captionof{figure}{Mapper illustrative: from []}
     \end{center}
 
@@ -302,6 +317,7 @@
     The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph
     adapt to local sampling density instead of imposing one global threshold.
 
+<<<<<<< Updated upstream
     \begin{center}
         \vspace{0pt}
         \centering
@@ -310,43 +326,44 @@
         $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal
         eigenvector identify the local threshold $\alpha_i$.}
     \end{center}
+=======
+    \posternote{Import two plots, one shows $j\mapsto F(\text{VR}_{\epsilon_j}(X_i))$ and one the principal eigenvector}
+>>>>>>> Stashed changes
 
     \begin{center}
         \begin{minipage}[t]{0.47\linewidth}
             \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
+            \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
             \captionof{figure}{Random thresholds fragment the geometry.}
         \end{minipage}
         \hfill
         \begin{minipage}[t]{0.47\linewidth}
             \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
+            \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
             \captionof{figure}{Spectral thresholds recover the two-loop structure.}
         \end{minipage}
     \end{center}
   }
 
+  \posterblock{Case Study: COVID-19 Spread in the USA}{
+    The COVID data provide a practical stress test: many counties, noisy time
+    series, and no obvious global threshold. The M$\alpha$N approach still
+    produces a readable graph without manual tuning.
+
+    \[
+      \text{local spectral scales}
+      \leadsto M\alpha N\text{ graph}
+      \leadsto \text{separated communities}
+    \]
+
+    \begin{center}
+        \includegraphics[width=0.72\linewidth]{COVID-projections_coloring.png}
+        \captionof{figure}{M$\alpha$N recovers separated county communities.}
+    \end{center}
+  }
+
 \end{minipage}
-
-\vspace{0.3cm}
-
-\posterblock{Case Study: COVID-19 Spread in the USA}{
-  The COVID data provide a practical stress test: many counties, noisy time
-  series, and no obvious global threshold. The M$\alpha$N approach still
-  produces a readable graph without manual tuning.
-
-  \[
-    \text{local spectral scales}
-    \leadsto M\alpha N\text{ graph}
-    \leadsto \text{separated communities}
-  \]
-
-  \begin{center}
-      \includegraphics[width=0.46\linewidth]{COVID-projections_coloring.png}
-      \captionof{figure}{M$\alpha$N recovers separated county communities.}
-  \end{center}
-}
 
 \end{document}
