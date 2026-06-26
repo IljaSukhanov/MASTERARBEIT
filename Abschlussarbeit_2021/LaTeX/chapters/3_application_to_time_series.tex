@@ -290,6 +290,41 @@ where the matrix $M_t^{(k)}\in\mathbb{R}^{k_{\max}\times T}$ is given by
 \end{align*}
 with $\mathbf{0}$ being matrices of the right size that contain only zeros.
 
+\subsection*{Dimension lift via Excursion metric minimization}
+
+We again have an observed time series $X=(X_{1},\dots,X_T)$ that is split up into $X_{\text{train}}=(X_1,\dots,X_{T_{\text{train}}})$ and $X_{\text{test}}=(X_{T_{\text{train}}+1},\dots,X_T)$. Define $X^{\text{test}}_t=X_{T_{\text{train}}+t}$ for $t=1,\dots,T-T_{\text{train}}$. The goal is to lift $Y_t^{(k)}$ for $t=T_{\text{train}}+1,\dots,T$ from $\mathbb{R}^k$ to $\mathbb{R}^{k_{\max}}$. Denote the lifted point by $p_t^{(k)}$. It is given by
+\begin{align*}
+    p_t^{(k)}=\begin{pmatrix}
+        X_{t}\\
+        X_{t+1}\\
+        \vdots\\
+        X_{t+k-1}\\
+        \hat{X}_{t+k}\\
+        \vdots\\
+        \hat{X}_{t+k_{\max}-1}
+    \end{pmatrix}
+\end{align*}
+with
+\begin{align*}
+    \hat{X}_{t+k-1+m}=\sum_{j=1}^{k}\lambda_j^{(m)}X_{t+j-1}, && m=1,\dots,k_{\max}-k
+\end{align*}
+The coeficients $\lambda_j^{(m)}$ are determined by
+\begin{align*}
+    \hat{\lambda}^{(m)}&\in\arg\min\left\{\mathcal{E}(X_{t+k-1+m},\hat{X}_{t+k-1+m})\right\}
+\end{align*}
+We have
+\begin{align*}
+    \mathcal{E}(X_{t+k-1+m},\hat{X}_{t+k-1+m})&=2\mathbb{E}\left[F(X_{t+k-1+m})\vee F(\hat{X}_{t+k-1+m})\right]\\&
+    -\mathbb{E}\left[F(\hat{X}_{t+k-1+m})\right]-\frac{1}{2}
+\end{align*}
+
+The empirical version is
+\begin{align*}
+    \Phi(\lambda)&=\frac{2}{T_{\text{train}}-k_{\max}+1}\sum_{s=1}^{T_{\text{train}}-k_{\max}+1}F_{\hat{\theta}}\left(\sum_{j=1}^{k}\lambda_jX_{s-1+j}\right)\vee F_{\hat{\theta}}\left(X_{s+k-1+m}\right)\\&
+    -\frac{2}{T_{\text{train}}-k_{\max}+1}\sum_{s=1}^{T_{\text{train}}-k_{\max}+1}F_{\hat{\theta}}\left(\sum_{j=1}^{k}\lambda_jX_{s-1+j}\right)-\frac{1}{2}
+\end{align*}
+where $F_{\hat{\theta}}$ is the empirical cumulative distribution function fitted on the data $X_{\text{train}}$.
+
 \subsection*{Simplicial complex construction}
 
 A general construction principle can be described in a graph theoretical way. Consider the set of vertices $V=\{1,\dots,T-k_{\max}+1\}$ or $V=\{T_{\text{train}}+1,\dots,T-k_{\max}+1\}$. Two distinct time indices $s$ and $t$ form an edge if $w_k(s,t)\le\tau$, where $w_k:V\times V\to\mathbb{R}_{\ge0}$ is a weight function and $\tau>0$ some threshold parameter. Information about linear dependence enters via the choice of the weight function $w_k$. By keeping $\tau$ fixed across $k$, we may hope to detect a transition at $k=p$. Let $E_k^{\tau}$ be the set of edges and $G_k^{\tau}=(V,E_k^{\tau})$ the resulting graph. 
