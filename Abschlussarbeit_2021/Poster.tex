@@ -6,6 +6,7 @@
 \usepackage[most]{tcolorbox}
 \usepackage{tikz}
 \usepackage{parskip}
+\usepackage{mathtools}
 
 \usepackage{amsmath, amssymb}
 \usepackage{caption}
@@ -178,92 +179,94 @@
     }
 
 \posterblock{Spectral Scale Selection}{
-    Let $(K_i)_{i=1}^{N}$ be a sequence of simplicial complexes. Introduce the $f$-based divergence on simplicial complexes and the scale similarity matrix:
+    Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes. Motivated by [] we introduce the \textbf{$f$-based divergence} on simplicial complexes as
     \posterequation{
-      \[
-        \langle K_i,K_j\rangle_f
-        = f(K_i)+f(K_j)-f(K_i\oplus K_j),
-        \qquad
-        \Sigma^{(N)}_{ij}=\langle K_i,K_j\rangle_f
-      \]
+        \begin{align*}
+            \langle K_i,K_j\rangle_f \coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)
+        \end{align*}
     }
-
-    If $(K_i)$ is a filtration and $\oplus=\cup$, the scale similarity matrix becomes a min matrix: $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$. By Perron-Frobenius, the principal eigenvector $v^*$ is nonnegative and unique up to scaling, provided that $f(K_j)>0$ for some $j=1,\dots,N$. It provides a canonical ranking of scales. Choose the critical scale by the rule
-
+    In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and $0<\epsilon_i<\epsilon_j$ for all $i<j$, and $\oplus=\cup$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{i\wedge j})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
     \posterequation{
-      \[
-        i_{\mathrm{crit}}\in\arg\max_i v_i^*,
-        \qquad
-        \epsilon_{\mathrm{crit}}=\epsilon_{i_{\mathrm{crit}}}
-      \]
+        \begin{align*}
+            \Sigma_N=\begin{pmatrix}
+                a_1 & a_1 & \cdots & a_1\\
+                a_1 & a_2 & \cdots & a_2\\
+                \vdots & \vdots & \ddots & \vdots\\
+                a_1 & a_2 & \cdots & a_N
+            \end{pmatrix}
+        \end{align*}
     }
-
-    If $f$ is monotone in a filtration, the min-matrix theory shows that the Perron vector is comonotone with the sequence $f(K_{\epsilon_i})$. This motivates using non-monotone functionals when we want to detect a transition rather than monotonic growth. For example:
-
+    In this easy case, the scale similarity matrix $\Sigma_N$ is irreducible iff $a_1>0$. By \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus provides a \textbf{canonical ranking} of the scales. The critical scale is chosen by the rule
     \posterequation{
-        \[
-            f(K)=C(K)E(K),
-        \]
+        \begin{align*}
+            i_{\text{crit}}\in\arg\max_iv^*_i
+        \end{align*}
     }
-    where $C$ decreases as components merge, while $E$ increases as edges appear.
+    As functional $f$ we consider any combination of \textbf{topological or geometric features} like Betti numbers or face counts of certain dimension. For example, we can choose
+    \posterequation{
+        \begin{align*}
+            f(K)=C(K)\cdot E(K),
+        \end{align*}
+    }
+    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. We easily see that the sequences $\{a_i\}_{i=1}^{N}$ and $\{v_i\}_{i=1}^{N}$ are \textbf{comonotone} and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide and the Perron vector can still serve as tiebreaker.
 
     \vspace{0.5em}
 
     \begin{center}
-    \begin{minipage}{0.49\linewidth}
-        \centering
-        \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
+        \begin{minipage}{0.49\linewidth}
+            \centering
+            \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
 
-        {\small (a) Multiple equal maxima}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.49\linewidth}
-        \centering
-        \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
+            {\small (a) Multiple equal maxima}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.49\linewidth}
+            \centering
+            \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
 
-        {\small (b) Non-maximal functional value selected}
-    \end{minipage}
+            {\small (b) Non-maximal functional value selected}
+        \end{minipage}
 
-    \vspace{0.4em}
+        \vspace{0.4em}
 
-    {\small Examples where the principal eigenvector resolves ambiguities in the functional scale profile.}
+        {\small Examples where the principal eigenvector resolves ambiguities in the functional scale profile.}
     \end{center}
 }
 
 
-  \posterblock{Connection to Markov Chains and Monotone Scale Selection}{
-  The spectral scale choice can be motivated by the association of a finite Markov chain to scale similarity matrix $\Sigma^{(N)}$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using Doob's $h$-Transform and obtain the stationary distribution:
-
-  \posterequation{
-      \[
-        P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma^{(N)}D_{v^*},
-        \qquad
-        \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}.
-      \]
-    }
-
-    The obtained transition matrix maximizes the Donsker-Varadhan free-energy functional:
-
+\posterblock{Connection to Markov Chains and Monotone Scale Selection}{
+    The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequation{
         \begin{align*}
-            P&=\arg\max\left\{\mathcal{F}(Q):Q\in\mathbb{R}^{N\times N}\text{ is row-stochastic and irreducible}\right\}\\
-            \mathcal{F}(Q)&=\sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{\Sigma_{ij}^{(N)}}{q_{ij}}}
+            P=\frac{1}{\lambda_N}D_{v^*}^{-1}\Sigma_ND_{v^*}, && \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}
+        \end{align*}
+    }
+    The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
+    \posterequation{
+        \begin{align*}
+            P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):Q\in\mathbb{R}^{N\times N}\text{ is row-stochastic and irreducible}\right\}, && \mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
+        \end{align*}
+    }
+    That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for monotone functionals, that is, $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=\frac{1}{a_1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
+    \posterequation{
+        \begin{align*}
+            \mathcal{L}=\begin{pmatrix}
+                -\frac{1}{d_2} & \frac{1}{d_2} & 0 & \cdots & 0 & 0\\
+                \frac{1}{d_2} & -\left(\frac{1}{d_2}+\frac{1}{d_3}\right) & \frac{1}{d_3} & \cdots & 0 & 0\\
+                \vdots & \ddots & \ddots  & \ddots & \vdots & \vdots\\
+                0 & \cdots & & \frac{1}{d_{N-1}} & -\left(\frac{1}{d_{N-1}}+\frac{1}{d_{N-2}}\right) & \frac{1}{d_N}\\
+                0 & \cdots & & 0 & \frac{1}{d_N} & -\frac{1}{d_N}
+            \end{pmatrix}
+        \end{align*}
+    }
+    The transition matrix of the corresponding embedded discrete-time Markov chain is given by $P^{\text{BD}}_{ij}=-\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
+    \posterequation{
+        \begin{align*}
+            i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}
         \end{align*}
     }
 
-    That is, the matrix $P$ is the Markov Chain transition matrix that is closest to the scale selection matrix $\Sigma^{(N)}$. \\
-
-
-    If the functional $f$ is strictly increasing (or strictly decreasing), that is, $0<f(K_1)<\dots<f(K_N)$, the scale similarity matrix is positive definite and the inverse $(\Sigma^{(N)})^{-1}$ is tridiagonal. Define the discrete Laplacian $\mathcal{L}=\frac{1}{d_1}\mathrm{diag}(1,0,\dots,0)-\left(\Sigma^{(N)}\right)^{-1}$ and consider the continuous-time birth-death chain on the state space $\{1,\dots,N\}$ generated by $\mathcal{L}$. Its stationary distribution $\pi^{\mathrm{BD}}$ can by used for identification of critical scales:
-
-    \posterequation{
-        \[
-            i_{\mathrm{crit}}\in\arg\min_{i}\pi^{\mathrm{BD}}_i,
-            \qquad
-            \epsilon_{\mathrm{crit}}=\epsilon_{i_{\mathrm{crit}}}
-        \]
-    }
-        \vspace{0.4em}
+    \vspace{0.4em}
 
     \begin{center}
       \begin{minipage}[t]{0.48\linewidth}
@@ -282,7 +285,9 @@
         {\scriptsize Stationary distribution $\pi_i^{\mathrm{BD}}$ of the embedded jump chain.}
       \end{minipage}
     \end{center}
-  }
+}
+
+
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
