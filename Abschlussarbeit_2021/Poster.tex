@@ -188,7 +188,7 @@
       \]
     }
 
-    If $(K_i)$ is a filtration and $\oplus=\cup$, the scale similarity matrix becomes a min matrix: $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$. By Perron-Frobenius, the principal eigenvector $v^*$ is positive and unique up to scaling, provided that $f(K_1)>0$. It provides a canonical ranking of scales. Choose the critical scale by the rule
+    If $(K_i)$ is a filtration and $\oplus=\cup$, the scale similarity matrix becomes a min matrix: $\Sigma^{(N)}_{ij}=f(K_{\epsilon_{i\wedge j}})$. By Perron-Frobenius, the principal eigenvector $v^*$ is nonnegative and unique up to scaling, provided that $f(K_j)>0$ for some $j=1,\dots,N$. It provides a canonical ranking of scales. Choose the critical scale by the rule
 
     \posterequation{
       \[
@@ -296,14 +296,41 @@
     Mapper first localizes the data by a \textbf{lens function} and a \textbf{cover}:
     \posterequation{
       \[
-        f:X\to\mathbb{R},
+        F:X\to\mathbb{R}^{d}\text{ with }d\in\{1,2\},
         \qquad
         X_i=f^{-1}(U_i)
       \]
     }
-    common choice for lens: first principal component, common choice for cover: ??
 
-    Output depends heavily on the choice of clustering algorithm
+    \begin{center}
+        \begin{minipage}[t]{0.47\linewidth}
+            \vspace{0pt}
+            \textbf{Popular choices for the lens function include:}
+            \begin{itemize}
+                \item principal components:
+                \[
+                    F(x_i)=\sigma_1(u_1)_i
+                \]
+                \item density estimate:
+                \[
+                    F(x_i)=\frac{1}{nh^d}
+                    \sum_{j=1}^{n}
+                    K\!\left(\frac{d(x_i,x_j)}{h}\right)
+                \]
+            \end{itemize}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.47\linewidth}
+            \vspace{0pt}
+            \textbf{Popular choices for the cover include:}
+            \begin{itemize}
+                \item cover in \(1d\): interval cover controlled by the number of intervals \(N\) and the percentage of overlap \(g\)
+                \item cover in \(2d\): rectangular cover controlled by the number of intervals in each coordinate direction and the overlap percentage
+            \end{itemize}
+        \end{minipage}
+    \end{center}
+
+    Output depends heavily on the \textbf{choice of clustering algorithm}. We replace this choice by an \textbf{automatic threshold selection}.
   }
 
   \posterblock{Multiscale $\alpha$ Neighboring graph}{
@@ -317,7 +344,6 @@
     The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph
     adapt to local sampling density instead of imposing one global threshold.
 
-<<<<<<< Updated upstream
     \begin{center}
         \vspace{0pt}
         \centering
@@ -326,9 +352,6 @@
         $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal
         eigenvector identify the local threshold $\alpha_i$.}
     \end{center}
-=======
-    \posternote{Import two plots, one shows $j\mapsto F(\text{VR}_{\epsilon_j}(X_i))$ and one the principal eigenvector}
->>>>>>> Stashed changes
 
     \begin{center}
         \begin{minipage}[t]{0.47\linewidth}
