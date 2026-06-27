@@ -50,6 +50,10 @@
     borderline west={5pt}{0pt}{posteraccent},
     drop fuzzy shadow=black!7,
   },
+  posterleftblockstyle/.style={
+    posterblockstyle,
+    borderline north={1.2pt}{0pt}{posteraccent!32},
+  },
   posteraccentblockstyle/.style={
     posterblockstyle,
     colback=posteraccentlight,
@@ -80,14 +84,23 @@
   },
   posterequationstyle/.style={
     enhanced,
-    colback=white,
-    colframe=posteraccent!25,
-    boxrule=1pt,
-    arc=5mm,
-    left=0.6cm,
-    right=0.6cm,
-    top=0.16cm,
-    bottom=0.16cm,
+    colback=posteraccent!4,
+    colframe=posteraccent!18,
+    boxrule=0pt,
+    arc=2.5mm,
+    left=0.48cm,
+    right=0.48cm,
+    top=0cm,
+    bottom=0cm,
+    before skip=0.18em,
+    after skip=0.32em,
+    borderline west={3pt}{0pt}{posteraccent!72},
+    before upper={%
+      \setlength{\abovedisplayskip}{0.12em}%
+      \setlength{\belowdisplayskip}{0.12em}%
+      \setlength{\abovedisplayshortskip}{0.08em}%
+      \setlength{\belowdisplayshortskip}{0.08em}%
+    },
   },
   posternotestyle/.style={
     enhanced,
@@ -104,6 +117,16 @@
 
 \newcommand{\posterblock}[2]{%
   \begin{tcolorbox}[posterblockstyle,title={#1}]
+    #2
+  \end{tcolorbox}
+  \vspace{0.65cm}
+}
+\newcommand{\posterleftblock}[2]{%
+  \begin{tcolorbox}[posterleftblockstyle]
+    {\color{posteraccent}\LARGE\bfseries #1\par}
+    \vspace{0.16cm}
+    {\color{posteraccent!28}\hrule height 1.2pt}
+    \vspace{0.34cm}
     #2
   \end{tcolorbox}
   \vspace{0.65cm}
@@ -178,7 +201,7 @@
     \end{itemize}
     }
 
-\posterblock{Spectral Scale Selection}{
+\posterleftblock{Spectral Scale Selection}{
     Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes. Motivated by [] we introduce the \textbf{$f$-based divergence} on simplicial complexes as
     \posterequation{
         \begin{align*}
@@ -234,7 +257,7 @@
 }
 
 
-\posterblock{Connection to Markov Chains and Monotone Scale Selection}{
+\posterleftblock{Connection to Markov Chains and Monotone Scale Selection}{
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequation{
         \begin{align*}
