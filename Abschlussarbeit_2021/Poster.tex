@@ -315,105 +315,97 @@
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
-  \posterblock{Mapper and Local Scale Choice}{
-    \begin{center}
-      \includegraphics[width=0.52\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 2 new.png}
-      \captionof{figure}{Mapper illustrative: from []}
-    \end{center}
 
-    Mapper first localizes the data by a \textbf{lens function} and a \textbf{cover}:
-    \posterequation{
-      \[
-        F:X\to\mathbb{R}^{d}\text{ with }d\in\{1,2\},
-        \qquad
-        X_i=f^{-1}(U_i)
-      \]
+    \posterblock{The Mapper Algorithm}{
+        \begin{center}
+            \includegraphics[width=0.52\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
+            \captionof{figure}{Illustration of Mapper, taken from \cite{chazal_introduction_2021}}
+        \end{center}
+
+        Let $X=\{x_1,\dots,x_n\}\in\mathbb{R}^{d}$ be the data at hand. One must first choose a \textbf{lens function} $f:X\to\mathbb{R}^{m}$, $m\in\{1,2\}$ and a \textbf{cover} $\mathcal{U}$.
+
+        \begin{center}
+            \begin{minipage}[t]{0.47\linewidth}
+                \vspace{0pt}
+                \textbf{Popular choices for the lens function include:}
+                \begin{itemize}
+                    \item principal components:
+                    \begin{align*}
+                        f(x_i)=\sigma_1(u_1)_i
+                    \end{align*}
+                    \item density estimate:
+                    \begin{align*}
+                        f(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)
+                    \end{align*}
+                \end{itemize}
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.47\linewidth}
+                \vspace{0pt}
+                \textbf{Popular choices for the cover include:}
+                \begin{itemize}
+                    \item cover in $1d$: interval cover controlled by the number of intervals $N$ and the percentage of overlap $g$
+                    \item cover in $2d$: ??
+                \end{itemize}
+            \end{minipage}
+        \end{center}
+
+        The output depends heavily on the \textbf{choice of clustering algorithm}. We replace this choice by an \textbf{automatic threshold selection}. This approach is also \textbf{computationally more efficient}.
     }
 
-    \begin{center}
-        \begin{minipage}[t]{0.47\linewidth}
-            \vspace{0pt}
-            \textbf{Popular choices for the lens function include:}
-            \begin{itemize}
-                \item principal components:
-                \[
-                    F(x_i)=\sigma_1(u_1)_i
-                \]
-                \item density estimate:
-                \[
-                    F(x_i)=\frac{1}{nh^d}
-                    \sum_{j=1}^{n}
-                    K\!\left(\frac{d(x_i,x_j)}{h}\right)
-                \]
-            \end{itemize}
-        \end{minipage}
-        \hfill
-        \begin{minipage}[t]{0.47\linewidth}
-            \vspace{0pt}
-            \textbf{Popular choices for the cover include:}
-            \begin{itemize}
-                \item cover in \(1d\): interval cover controlled by the number of intervals \(N\) and the percentage of overlap \(g\)
-                \item cover in \(2d\): rectangular cover controlled by the number of intervals in each coordinate direction and the overlap percentage
-            \end{itemize}
-        \end{minipage}
-    \end{center}
+    \posterblock{Multiscale $\alpha$-neighboring graph approach}{
+        Instead of clustering each $X_i$, connect two points $x,y\in X_i$ if $d(x,y)\le\alpha_i$. The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold.
 
-    Output depends heavily on the \textbf{choice of clustering algorithm}. We replace this choice by an \textbf{automatic threshold selection}.
-  }
+        \begin{center}
+            \vspace{0pt}
+            \centering
+            \includegraphics[width=0.92\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice exemplary.png}
+            \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
+        \end{center}
 
-  \posterblock{Multiscale $\alpha$ Neighboring graph}{
-    Instead of clustering each $X_i$, connect two points $x,y\in\bigcap_{i\in I_0}X_i$ if
-    \posterequation{
-        \[
-            d(x,y)\le\max_{i\in I_0}\alpha_i
-        \]
+        \begin{center}
+            \begin{minipage}[t]{0.47\linewidth}
+                \vspace{0pt}
+                \centering
+                \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
+                \captionof{figure}{Random thresholds fragment the geometry.}
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.47\linewidth}
+                \vspace{0pt}
+                \centering
+                \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
+                \captionof{figure}{Spectral thresholds recover the two-loop structure.}
+            \end{minipage}
+        \end{center}
     }
 
-    The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph
-    adapt to local sampling density instead of imposing one global threshold.
+    \posterblock{Case Study: COVID-19 Spread in the USA}{
+        The COVID data provide a \textbf{practical stress test}: many counties, noisy time series, and no obvious global threshold. The M$\alpha$N approach still produces a readable graph \textbf{without manual tuning}.
 
-    \begin{center}
-        \vspace{0pt}
-        \centering
-        \includegraphics[width=0.92\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice exemplary.png}
-        \captionof{figure}{Local scale selection on $X_i$: the functional profile
-        $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal
-        eigenvector identify the local threshold $\alpha_i$.}
+        \begin{itemize}
+            \item each node $x_i\in\mathbb{R}^{28}$ represents one of 3142 county in the USA
+            \item first 14 entries encode confirmed cases, second 14 entries encode deaths
+        \end{itemize}
+
+        As distance measure we use a block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
+        \posterequation{
+            \[
+                d(x_i,x_j)
+                =
+                \|x_i[1\!:\!14]-x_j[1\!:\!14]\|_2
+                +
+                \|x_i[15\!:\!28]-x_j[15\!:\!28]\|_2 .
+            \]
+}
+
+        \begin{center}
+            \includegraphics[width=0.72\linewidth]{COVID-projections_coloring.png}
+            \captionof{figure}{M$\alpha$N recovers separated county communities.}
     \end{center}
 
-    \begin{center}
-        \begin{minipage}[t]{0.47\linewidth}
-            \vspace{0pt}
-            \centering
-            \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
-            \captionof{figure}{Random thresholds fragment the geometry.}
-        \end{minipage}
-        \hfill
-        \begin{minipage}[t]{0.47\linewidth}
-            \vspace{0pt}
-            \centering
-            \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
-            \captionof{figure}{Spectral thresholds recover the two-loop structure.}
-        \end{minipage}
-    \end{center}
-  }
-
-  \posterblock{Case Study: COVID-19 Spread in the USA}{
-    The COVID data provide a practical stress test: many counties, noisy time
-    series, and no obvious global threshold. The M$\alpha$N approach still
-    produces a readable graph without manual tuning.
-
-    \[
-      \text{local spectral scales}
-      \leadsto M\alpha N\text{ graph}
-      \leadsto \text{separated communities}
-    \]
-
-    \begin{center}
-        \includegraphics[width=0.72\linewidth]{COVID-projections_coloring.png}
-        \captionof{figure}{M$\alpha$N recovers separated county communities.}
-    \end{center}
-  }
+    \textbf{Results:}
+    }
 
 \end{minipage}
 
