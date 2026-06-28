@@ -399,7 +399,7 @@
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
 
-    \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring approach}{
+    \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring (M$\alpha$N) approach}{
         \begin{center}
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
@@ -442,14 +442,8 @@
                 \vspace{0pt}
                 \textbf{Popular choices for the lens function include:}
                 \begin{itemize}
-                    \item principal components:
-                    \begin{align*}
-                        f(x_i)=\sigma_1(u_1)_i
-                    \end{align*}
-                    \item density estimate:
-                    \begin{align*}
-                        f(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)
-                    \end{align*}
+                    \item principal components: $f(x_i)=\sigma_1(u_1)_i$
+                    \item density estimate: $f(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$
                 \end{itemize}
             \end{minipage}
             \hfill
@@ -468,7 +462,7 @@
 
     
 
-    \posterblock{Multiscale $\alpha$-neighboring graph approach}{
+    \posterblock{M$\alpha$N graph approach: Synthetic dataset experiment}{
         Instead of clustering each $X_i$, connect two points $x,y\in X$ that belong to at least one common pullback set if and only if
         \posterequation{
             \begin{align*}
@@ -476,12 +470,12 @@
             \end{align*}
         }
         
-        The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold.
+        The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure []. As a first stress test, the M$\alpha$N approach was tested on a \enquote{noisy 8} dataset.
         \begin{center}
             \vspace{0pt}
             \centering
             \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}
-            \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
+            \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\text{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
         \end{center}
 
         \begin{center}
@@ -541,7 +535,46 @@
             \captionof{figure}{M$\alpha$N recovers separated county communities.}
     \end{center}
 
-    \textbf{Results:}
+    \medskip
+    
+    \noindent
+    \begin{minipage}[t]{0.31\linewidth}
+        \centering
+        \colorbox{gray!10}{
+        \parbox{0.90\linewidth}{
+            \centering
+            {\Large\textbf{4}}\\[-0.2em]
+            \textbf{communities}\\[0.25em]
+            recovered without manual threshold tuning
+        }}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.31\linewidth}
+        \centering
+        \colorbox{gray!10}{
+        \parbox{0.90\linewidth}{
+            \centering
+            {\Large\textbf{$p<0.01$}}\\[-0.2em]
+            \textbf{external validation}\\[0.25em]
+            significant differences in county-level predictors
+        }}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.31\linewidth}
+        \centering
+        \colorbox{gray!10}{
+        \parbox{0.90\linewidth}{
+            \centering
+            {\Large\textbf{$\checkmark$}}\\[-0.2em]
+            \textbf{meaningful partition}\\[0.25em]
+            aligned with variables not used to build the graph
+        }}
+    \end{minipage}
+
+    \medskip
+
+    \textbf{Conclusion.}
+    The spectrally selected M$\alpha$N graph reproduces the manually tuned communities from the original study and yields a partition that is supported by independent county-level characteristics.
     }
 
 \end{minipage}
