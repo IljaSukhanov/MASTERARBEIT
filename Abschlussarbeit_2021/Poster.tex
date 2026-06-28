@@ -472,6 +472,7 @@
         
         The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure []. As a first stress test, the M$\alpha$N approach was tested on a \enquote{noisy 8} dataset.
         \begin{center}
+<<<<<<< Updated upstream
             \vspace{0pt}
             \centering
             \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}
@@ -480,35 +481,82 @@
 
         \begin{center}
             \begin{minipage}[t]{0.48\linewidth}
+=======
+            \begin{minipage}[t]{0.36\linewidth}
+>>>>>>> Stashed changes
                 \vspace{0pt}
-                \centering
+                {\color{posteraccent}\bfseries 1. Noisy input $X$}\par
+                \vspace{0.18cm}
                 \begingroup
                 \setlength{\fboxsep}{0pt}%
                 \fcolorbox{posterline}{white}{%
-                    \parbox[c][17.2cm][c]{0.98\linewidth}{%
+                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
                         \centering
-                        \includegraphics[width=\linewidth,height=17cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}%
+                        \includegraphics[width=\linewidth,height=9.25cm,keepaspectratio]{Images/noisy_synthetic_eight.png}%
                     }%
                 }
                 \endgroup
-                \captionof{figure}{Random thresholds fragment the geometry.}
+                \par\vspace{0.18cm}
+                {\small 480 noisy samples from a Gerono lemniscate.}
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.60\linewidth}
+                \vspace{0pt}
+                {\color{posteraccent}\bfseries 2. Select the local scales $\alpha_i$}\par
+                \vspace{0.18cm}
+                \begingroup
+                \setlength{\fboxsep}{0pt}%
+                \fcolorbox{posterline}{white}{%
+                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
+                        \centering
+                        \includegraphics[width=\linewidth,height=9.25cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}%
+                    }%
+                }
+                \endgroup
+                \par\vspace{0.18cm}
+                {\small PC1 lens; 12 intervals with 50\% overlap. On each $X_i$, the profile $F=|\mathcal C|\,|E|$ and its Perron vector select $\alpha_i$.}
+            \end{minipage}
+        \end{center}
+
+        \vspace{0.35cm}
+        \begin{center}
+            \begin{minipage}[t]{0.48\linewidth}
+                \vspace{0pt}
+                {\color{posteraccent}\bfseries 3a. Random thresholds}\par
+                \vspace{0.18cm}
+                \begingroup
+                \setlength{\fboxsep}{0pt}%
+                \fcolorbox{posterline}{white}{%
+                    \parbox[c][14.2cm][c]{0.98\linewidth}{%
+                        \centering
+                        \includegraphics[width=\linewidth,height=14cm,keepaspectratio]{Images/synthetic_eight_random_thresholds_poster_style.png}%
+                    }%
+                }
+                \endgroup
+                \par\vspace{0.18cm}
+                {\small The sampled geometry fragments.}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
-                \centering
+                {\color{posteraccent}\bfseries 3b. Spectrally selected thresholds}\par
+                \vspace{0.18cm}
                 \begingroup
                 \setlength{\fboxsep}{0pt}%
                 \fcolorbox{posterline}{white}{%
-                    \parbox[c][17.2cm][c]{0.98\linewidth}{%
+                    \parbox[c][14.2cm][c]{0.98\linewidth}{%
                         \centering
-                        \includegraphics[width=\linewidth,height=17cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}%
+                        \includegraphics[width=\linewidth,height=14cm,keepaspectratio]{Images/synthetic_eight_malphaN_poster_style.png}%
                     }%
                 }
                 \endgroup
-                \captionof{figure}{Spectral thresholds recover the two-loop structure.}
+                \par\vspace{0.18cm}
+                {\small The two-loop structure is recovered.}
             \end{minipage}
         \end{center}
+
+        \vspace{0.28cm}
+        \posternote{\centering\textbf{Controlled comparison:} the data, lens, cover, and edge rule are fixed; only the threshold-selection method changes.}
     }
 
     \posterblock{Case Study: COVID-19 Spread in the USA}{
