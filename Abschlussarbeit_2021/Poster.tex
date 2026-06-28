@@ -224,18 +224,47 @@
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
     \posteraccentblock{Why Select One Scale}{
-    Persistent homology is scale-agnostic: the persistence diagram records topological features across all filtration scales simultaneously and thereby avoids committing to any single resolution. Nevertheless, a surprising number of problems in and around TDA reduce to the choice of one filtration parameter, and doing so in a theoretically justified way remains a longstanding methodological gap.
+    Persistent homology is scale-agnostic: the persistence diagram records topological features across all filtration scales simultaneously and thereby avoids committing to any single resolution. Nevertheless, a surprising number of problems in and around TDA reduce to the \textbf{choice of one filtration parameter}, and doing so in a theoretically justified way remains a longstanding methodological gap. We list four representative settings in which a topologically justified choice of scale is essential:
 
-    \begin{itemize}
-        \item Reconstruction and meshing from point clouds
-        \item Topology-aware clustering and graph construction
-        \item Statistical inference for point processes
-        \item Materials and physical systems with intrinsic length scales
-    \end{itemize}
-    }
+    \vspace{0.6em}
+
+    \begin{center}
+    \setlength{\fboxsep}{6pt}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{cc}
+        \fbox{
+            \begin{minipage}{0.42\linewidth}
+                \centering
+                \textbf{Reconstruction and meshing from point clouds}
+            \end{minipage}
+        }
+        &
+        \fbox{
+            \begin{minipage}{0.42\linewidth}
+                \centering
+                \textbf{Topology-aware clustering and graph construction}
+            \end{minipage}
+        }
+        \\[0.8em]
+        \fbox{
+            \begin{minipage}{0.42\linewidth}
+                \centering
+                \textbf{Statistical inference for point processes}
+            \end{minipage}
+        }
+        &
+        \fbox{
+            \begin{minipage}{0.42\linewidth}
+                \centering
+                \textbf{Materials and physical systems with intrinsic length scales}
+            \end{minipage}
+        }
+    \end{tabular}
+    \end{center}
+}
 
 \posterleftblock{Spectral Scale Selection}{
-    Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes. Motivated by [] we introduce the \textbf{$f$-based divergence} on simplicial complexes as
+    Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes. Motivated by \cite{schlather2024algebraicgeneralizationentropyapplication} we introduce the \textbf{$f$-based divergence} on simplicial complexes as
     \posterequation{
         \begin{align*}
             \langle K_i,K_j\rangle_f \coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)
@@ -264,7 +293,7 @@
             f(K)=C(K)\cdot E(K),
         \end{align*}
     }
-    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. We easily see that the sequences $\{a_i\}_{i=1}^{N}$ and $\{v_i\}_{i=1}^{N}$ are \textbf{comonotone} and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide and the Perron vector can still serve as tiebreaker.
+    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. We easily see that the sequences $\{a_i\}_{i=1}^{N}$ and $\{v_i\}_{i=1}^{N}$ are \textbf{comonotone} and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide, cf. Figure~\ref{?} and the Perron vector can still serve as tiebreaker, cf. Figure~\ref{?}.
 
     \vspace{0.5em}
 
