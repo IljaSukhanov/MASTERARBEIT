@@ -7,6 +7,7 @@
 \usepackage{tikz}
 \usepackage{parskip}
 \usepackage{mathtools}
+\usepackage[style=english]{csquotes}
 
 \usepackage{amsmath, amssymb}
 \usepackage{caption}
@@ -272,16 +273,62 @@
     }
     That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for monotone functionals, that is, $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=\frac{1}{a_1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
     \posterequation{
-        \begin{align*}
-            \mathcal{L}=\begin{pmatrix}
-                -\frac{1}{d_2} & \frac{1}{d_2} & 0 & \cdots & 0 & 0\\
-                \frac{1}{d_2} & -\left(\frac{1}{d_2}+\frac{1}{d_3}\right) & \frac{1}{d_3} & \cdots & 0 & 0\\
-                \vdots & \ddots & \ddots  & \ddots & \vdots & \vdots\\
-                0 & \cdots & & \frac{1}{d_{N-1}} & -\left(\frac{1}{d_{N-1}}+\frac{1}{d_{N-2}}\right) & \frac{1}{d_N}\\
-                0 & \cdots & & 0 & \frac{1}{d_N} & -\frac{1}{d_N}
-            \end{pmatrix}
-        \end{align*}
-    }
+\[
+\mathcal{L}
+=
+\begin{pmatrix}
+-\frac{1}{d_2}
+&
+\frac{1}{d_2}
+&
+0
+&
+\cdots
+&
+0
+\\[0.4em]
+\frac{1}{d_2}
+&
+-\left(\frac{1}{d_2}+\frac{1}{d_3}\right)
+&
+\frac{1}{d_3}
+&
+\ddots
+&
+\vdots
+\\[0.4em]
+0
+&
+\frac{1}{d_3}
+&
+-\left(\frac{1}{d_3}+\frac{1}{d_4}\right)
+&
+\ddots
+&
+0
+\\[0.4em]
+\vdots
+&
+\ddots
+&
+\ddots
+&
+\ddots
+&
+\frac{1}{d_N}
+\\[0.4em]
+0
+&
+\cdots
+&
+0
+&
+\frac{1}{d_N}
+&
+-\frac{1}{d_N}
+\end{pmatrix}.
+\]
+}
     The transition matrix of the corresponding embedded discrete-time Markov chain is given by $P^{\text{BD}}_{ij}=-\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
     \posterequation{
         \begin{align*}
@@ -308,6 +355,8 @@
         {\scriptsize Stationary distribution $\pi_i^{\mathrm{BD}}$ of the embedded jump chain.}
       \end{minipage}
     \end{center}
+
+    We can use the connection to Markov chains, to define an \textbf{\enquote{spectrally optimizable}} (admissible) triple $(f,\{K_i\},\oplus)$, namely if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$. 
 }
 
 
@@ -316,11 +365,25 @@
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
 
-    \posterblock{The Mapper Algorithm}{
+    \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring approach}{
         \begin{center}
-            \includegraphics[width=0.52\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
-            \captionof{figure}{Illustration of Mapper, taken from \cite{chazal_introduction_2021}}
+            \begin{minipage}[t]{0.48\linewidth}
+                \vspace{0pt}
+                \centering
+                \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
+
+                \captionof{figure}{Illustration of Mapper, taken from \cite{chazal_introduction_2021}.}
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \vspace{0pt}
+                \centering
+                \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
+
+                \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph}
+            \end{minipage}
         \end{center}
+
 
         Let $X=\{x_1,\dots,x_n\}\in\mathbb{R}^{d}$ be the data at hand. One must first choose a \textbf{lens function} $f:X\to\mathbb{R}^{m}$, $m\in\{1,2\}$ and a \textbf{cover} $\mathcal{U}$.
 
@@ -352,6 +415,8 @@
 
         The output depends heavily on the \textbf{choice of clustering algorithm}. We replace this choice by an \textbf{automatic threshold selection}. This approach is also \textbf{computationally more efficient}.
     }
+
+    
 
     \posterblock{Multiscale $\alpha$-neighboring graph approach}{
         Instead of clustering each $X_i$, connect two points $x,y\in X_i$ if $d(x,y)\le\alpha_i$. The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold.
@@ -387,6 +452,10 @@
             \item each node $x_i\in\mathbb{R}^{28}$ represents one of 3142 county in the USA
             \item first 14 entries encode confirmed cases, second 14 entries encode deaths
         \end{itemize}
+
+        \textbf{chosen lens:}
+
+        \textbf{chosen cover:}
 
         As distance measure we use a block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
         \posterequation{
