@@ -470,7 +470,7 @@
             \end{align*}
         }
         
-        The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure []. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8} dataset}.
+        The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure~\ref{fig:local-scale-selection}. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8} dataset}.
         \begin{center}
             \begin{minipage}[t]{0.36\linewidth}
                 \vspace{0pt}
@@ -486,7 +486,8 @@
                 }
                 \endgroup
                 \par\vspace{0.18cm}
-                {\small The \enquote{Noisy 8} dataset}
+                \captionof{figure}{The \enquote{Noisy 8} dataset.}
+                \label{fig:noisy-eight-data}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.60\linewidth}
@@ -503,7 +504,8 @@
                 }
                 \endgroup
                 \par\vspace{0.18cm}
-                {\small PC1 lens; 12 intervals with 50\% overlap. On each $X_i$, the profile $F=|\mathcal C|\,|E|$ and its Perron vector select $\alpha_i$.}
+                \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
+                \label{fig:local-scale-selection}
             \end{minipage}
         \end{center}
 
@@ -523,7 +525,8 @@
                 }
                 \endgroup
                 \par\vspace{0.18cm}
-                {\small The two-loop structure is lost.}
+                \captionof{figure}{The two-loop structure is lost.}
+                \label{fig:noisy-eight-random-thresholds}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.48\linewidth}
@@ -540,7 +543,8 @@
                 }
                 \endgroup
                 \par\vspace{0.18cm}
-                {\small The two-loop structure is recovered.}
+                \captionof{figure}{The two-loop structure is recovered.}
+                \label{fig:noisy-eight-spectral-thresholds}
             \end{minipage}
         \end{center}
     }
