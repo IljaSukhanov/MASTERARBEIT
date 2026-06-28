@@ -7,11 +7,8 @@
 \usepackage{tikz}
 \usepackage{parskip}
 \usepackage{mathtools}
-<<<<<<< Updated upstream
 \usepackage[style=english]{csquotes}
-=======
 \usepackage{lmodern}
->>>>>>> Stashed changes
 
 \usepackage{amsmath, amssymb}
 \usepackage{caption}
@@ -118,6 +115,23 @@
     right=0.45cm,
     top=0.16cm,
     bottom=0.16cm,
+  },
+  posterreferencesstyle/.style={
+    enhanced,
+    colback=posteraccent!3,
+    colframe=posterline,
+    coltitle=posteraccent,
+    fonttitle=\fontsize{18}{21}\selectfont\bfseries,
+    fontupper=\fontsize{11}{13.5}\selectfont,
+    boxrule=1pt,
+    arc=4mm,
+    left=0.7cm,
+    right=0.7cm,
+    top=0.4cm,
+    bottom=0.45cm,
+    title filled=false,
+    attach title to upper={\par\vspace{0.12cm}},
+    borderline west={4pt}{0pt}{posteraccent},
   }
 }
 
@@ -170,6 +184,19 @@
 \newcommand{\posternote}[1]{%
   \begin{tcolorbox}[posternotestyle]
     \small #1
+  \end{tcolorbox}
+}
+\newcommand{\posterreferences}{%
+  \begin{tcolorbox}[posterreferencesstyle,title={References}]
+    \begin{minipage}[t]{0.49\linewidth}
+      \textbf{[1]} F. Chazal and B. Michel. \emph{An Introduction to Topological Data Analysis: Fundamental and Practical Aspects for Data Scientists}. Frontiers in Artificial Intelligence, 2021.\\[0.18em]
+      \textbf{[2]} G. Singh, F. M\'emoli, and G. Carlsson. \emph{Topological Methods for the Analysis of High Dimensional Data Sets and 3D Object Recognition}. 2007.
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.49\linewidth}
+      \textbf{[3]} R. A. Horn and C. R. Johnson. \emph{Matrix Analysis}. Cambridge University Press, 2nd ed., 2017.\\[0.18em]
+      \textbf{[4]} S. Glushakov, I. Kotenko, and K. Drach. \emph{Understanding the Spread of COVID-19 in the United States Using Topology and Machine Learning for Time Series}. PHUSE EU Connect, 2020.
+    \end{minipage}
   \end{tcolorbox}
 }
 \begin{document}
@@ -374,26 +401,37 @@
 
     \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring approach}{
         \begin{center}
-<<<<<<< Updated upstream
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
+                \begingroup
+                \setlength{\fboxsep}{0pt}%
+                \fcolorbox{posterline}{white}{%
+                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
+                        \centering
+                        \includegraphics[width=\linewidth,height=9.2cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}%
+                    }%
+                }
+                \endgroup
 
-                \captionof{figure}{Illustration of Mapper, taken from \cite{chazal_introduction_2021}.}
+                \captionof{figure}{Illustration of Mapper, taken from [1].}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
+                \begingroup
+                \setlength{\fboxsep}{0pt}%
+                \fcolorbox{posterline}{white}{%
+                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
+                        \centering
+                        \includegraphics[width=\linewidth,height=9.2cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}%
+                    }%
+                }
+                \endgroup
 
-                \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph}
+                \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph.}
             \end{minipage}
-=======
-            \includegraphics[width=0.60\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
-            \captionof{figure}{Illustration of Mapper, taken from \cite{chazal_introduction_2021}}
->>>>>>> Stashed changes
         \end{center}
 
 
@@ -505,5 +543,8 @@
     }
 
 \end{minipage}
+
+\vspace{0.25cm}
+\posterreferences
 
 \end{document}
