@@ -7,7 +7,11 @@
 \usepackage{tikz}
 \usepackage{parskip}
 \usepackage{mathtools}
+<<<<<<< Updated upstream
 \usepackage[style=english]{csquotes}
+=======
+\usepackage{lmodern}
+>>>>>>> Stashed changes
 
 \usepackage{amsmath, amssymb}
 \usepackage{caption}
@@ -25,10 +29,11 @@
 \definecolor{postercallout}{RGB}{255,248,230}
 
 \newcommand{\postertitle}{Spectral Optimal Scale in TDA problems}
-\newcommand{\posterauthor}{Ilja Sukhanov \quad Institute of Stochastics, Ulm University}
-\newcommand{\posterinfo}{}
+\newcommand{\posterauthor}{Ilja Sukhanov \quad Anna Keller \quad Markus Weber \quad Sofia Hartmann \quad David Nguyen}
+\newcommand{\posterinfo}{Institute of Stochastics, Ulm University}
 
-\captionsetup{font=scriptsize,labelfont=bf,skip=0.15cm}
+\captionsetup{font=small,labelfont=bf,skip=0.18cm}
+\setlength{\parskip}{0.45em}
 \setlist[itemize]{leftmargin=1.1em,itemsep=0.1em,topsep=0.1em}
 \setlist[enumerate]{leftmargin=1.4em,itemsep=0.3em,topsep=0.3em}
 
@@ -38,14 +43,14 @@
     colback=posterfill,
     colframe=posterline,
     coltitle=uulmgray,
-    fonttitle=\LARGE\bfseries,
-    fontupper=\large,
+    fonttitle=\fontsize{22}{26}\selectfont\bfseries,
+    fontupper=\fontsize{15.5}{19.5}\selectfont,
     boxrule=1.25pt,
     arc=6mm,
     left=0.9cm,
     right=0.9cm,
-    top=0.7cm,
-    bottom=0.75cm,
+    top=0.85cm,
+    bottom=0.9cm,
     title filled=false,
     attach title to upper={\par\vspace{0.2cm}},
     borderline west={5pt}{0pt}{posteraccent},
@@ -120,17 +125,17 @@
   \begin{tcolorbox}[posterblockstyle,title={#1}]
     #2
   \end{tcolorbox}
-  \vspace{0.65cm}
+  \vspace{0.85cm}
 }
 \newcommand{\posterleftblock}[2]{%
   \begin{tcolorbox}[posterleftblockstyle]
-    {\color{posteraccent}\LARGE\bfseries #1\par}
+    {\color{posteraccent}\fontsize{22}{26}\selectfont\bfseries #1\par}
     \vspace{0.16cm}
     {\color{posteraccent!28}\hrule height 1.2pt}
     \vspace{0.34cm}
     #2
   \end{tcolorbox}
-  \vspace{0.65cm}
+  \vspace{0.85cm}
 }
 \newcommand{\posteraccentblock}[2]{%
   \begin{tcolorbox}[posteraccentblockstyle]
@@ -140,12 +145,12 @@
       rounded corners=5pt,
       inner xsep=0.65cm,
       inner ysep=0.22cm,
-      font=\LARGE\bfseries
+      font=\fontsize{22}{26}\selectfont\bfseries
     ] (label) {#1};
     \par\vspace{0.35cm}
     #2
   \end{tcolorbox}
-  \vspace{0.65cm}
+  \vspace{0.85cm}
 }
 \newcommand{\posterequation}[1]{%
   \begin{tcolorbox}[posterequationstyle]
@@ -170,16 +175,16 @@
 \begin{document}
 \begin{tikzpicture}[remember picture,overlay]
   \draw[posterline,line width=1.5pt]
-    ([xshift=2.4cm,yshift=-7.2cm]current page.north west) --
-    ([xshift=-2.4cm,yshift=-7.2cm]current page.north east);
+    ([xshift=2.4cm,yshift=-9.4cm]current page.north west) --
+    ([xshift=-2.4cm,yshift=-9.4cm]current page.north east);
 \end{tikzpicture}
 
 \begin{minipage}[t]{0.68\textwidth}
-  {\Huge\bfseries\postertitle\par}
-  \vspace{0.55cm}
-  {\Large\posterauthor\par}
-  \vspace{0.15cm}
-  {\large\posterinfo\par}
+  {\fontsize{42}{48}\selectfont\bfseries\postertitle\par}
+  \vspace{0.65cm}
+  {\fontsize{20}{24}\selectfont\posterauthor\par}
+  \vspace{0.28cm}
+  {\fontsize{16}{20}\selectfont\posterinfo\par}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.24\textwidth}
@@ -187,7 +192,7 @@
   \includegraphics[width=0.85\linewidth]{logo_uulm_sw.png}
 \end{minipage}
 
-\vspace{1.35cm}
+\vspace{1.9cm}
 
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
@@ -237,16 +242,18 @@
     \vspace{0.5em}
 
     \begin{center}
-        \begin{minipage}{0.49\linewidth}
+        \begin{minipage}{0.72\linewidth}
             \centering
-            \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
+            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
 
             {\small (a) Multiple equal maxima}
         \end{minipage}
-        \hfill
-        \begin{minipage}{0.49\linewidth}
+
+        \vspace{0.55em}
+
+        \begin{minipage}{0.72\linewidth}
             \centering
-            \includegraphics[width=0.9\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
+            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
 
             {\small (b) Non-maximal functional value selected}
         \end{minipage}
@@ -341,7 +348,7 @@
     \begin{center}
       \begin{minipage}[t]{0.48\linewidth}
         \centering
-        \includegraphics[width=0.88\linewidth]{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
+        \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
 
         \vspace{0.05em}
         {\scriptsize Strictly increasing functional values $c_i=f(K_i)$.}
@@ -349,7 +356,7 @@
       \hfill
       \begin{minipage}[t]{0.48\linewidth}
         \centering
-        \includegraphics[width=0.88\linewidth]{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
+        \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
 
         \vspace{0.05em}
         {\scriptsize Stationary distribution $\pi_i^{\mathrm{BD}}$ of the embedded jump chain.}
@@ -367,6 +374,7 @@
 
     \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring approach}{
         \begin{center}
+<<<<<<< Updated upstream
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
@@ -382,6 +390,10 @@
 
                 \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph}
             \end{minipage}
+=======
+            \includegraphics[width=0.60\linewidth]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
+            \captionof{figure}{Illustration of Mapper, taken from \cite{chazal_introduction_2021}}
+>>>>>>> Stashed changes
         \end{center}
 
 
@@ -424,22 +436,38 @@
         \begin{center}
             \vspace{0pt}
             \centering
-            \includegraphics[width=0.92\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice exemplary.png}
+            \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice exemplary.png}
             \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
         \end{center}
 
         \begin{center}
-            \begin{minipage}[t]{0.47\linewidth}
+            \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
+                \begingroup
+                \setlength{\fboxsep}{0pt}%
+                \fcolorbox{posterline}{white}{%
+                    \parbox[c][17.2cm][c]{0.98\linewidth}{%
+                        \centering
+                        \includegraphics[width=\linewidth,height=17cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}%
+                    }%
+                }
+                \endgroup
                 \captionof{figure}{Random thresholds fragment the geometry.}
             \end{minipage}
             \hfill
-            \begin{minipage}[t]{0.47\linewidth}
+            \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \includegraphics[width=0.94\linewidth]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
+                \begingroup
+                \setlength{\fboxsep}{0pt}%
+                \fcolorbox{posterline}{white}{%
+                    \parbox[c][17.2cm][c]{0.98\linewidth}{%
+                        \centering
+                        \includegraphics[width=\linewidth,height=17cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}%
+                    }%
+                }
+                \endgroup
                 \captionof{figure}{Spectral thresholds recover the two-loop structure.}
             \end{minipage}
         \end{center}
@@ -469,7 +497,7 @@
 }
 
         \begin{center}
-            \includegraphics[width=0.72\linewidth]{COVID-projections_coloring.png}
+            \includegraphics[width=0.94\linewidth]{COVID-projections_coloring.png}
             \captionof{figure}{M$\alpha$N recovers separated county communities.}
     \end{center}
 
