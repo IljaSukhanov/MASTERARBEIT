@@ -26,7 +26,7 @@
 \definecolor{postercallout}{RGB}{255,248,230}
 
 \newcommand{\postertitle}{Spectral Optimal Scale in TDA problems}
-\newcommand{\posterauthor}{Ilja Sukhanov \quad Anna Keller \quad Markus Weber \quad Sofia Hartmann \quad David Nguyen}
+\newcommand{\posterauthor}{Ilja Sukhanov \quad Djordje Baralic \quad Oleksandr Leonov \quad Liudmyla Polyakova \quad Evgeny Spodarev}
 \newcommand{\posterinfo}{Institute of Stochastics, Ulm University}
 
 \captionsetup{font=small,labelfont=bf,skip=0.18cm}
@@ -469,12 +469,18 @@
     
 
     \posterblock{Multiscale $\alpha$-neighboring graph approach}{
-        Instead of clustering each $X_i$, connect two points $x,y\in X_i$ if $d(x,y)\le\alpha_i$. The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold.
-
+        Instead of clustering each $X_i$, connect two points $x,y\in X$ that belong to at least one common pullback set if and only if
+        \posterequation{
+            \begin{align*}
+                d(x,y)\le2\max_{\substack{i\in I\\x,y\in X_i}}\alpha_i.
+            \end{align*}
+        }
+        
+        The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold.
         \begin{center}
             \vspace{0pt}
             \centering
-            \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice exemplary.png}
+            \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}
             \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
         \end{center}
 
@@ -525,14 +531,10 @@
 
         As distance measure we use a block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
         \posterequation{
-            \[
-                d(x_i,x_j)
-                =
-                \|x_i[1\!:\!14]-x_j[1\!:\!14]\|_2
-                +
-                \|x_i[15\!:\!28]-x_j[15\!:\!28]\|_2 .
-            \]
-}
+            \begin{align*}
+                d(x_i,x_j)=\|x_i[1\!:\!14]-x_j[1\!:\!14]\|_2+\|x_i[15\!:\!28]-x_j[15\!:\!28]\|_2
+            \end{align*}
+        }
 
         \begin{center}
             \includegraphics[width=0.94\linewidth]{COVID-projections_coloring.png}
