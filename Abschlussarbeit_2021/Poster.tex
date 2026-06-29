@@ -508,10 +508,25 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{aligned}
         }
 
+        The application of the Girvan--Newman algorithm yielded four communities, shown alongside the continuously colored graph in Figures~\ref{fig:covid-spectral-graph} and~\ref{fig:covid-girvan-newman}.
+
         \begin{center}
-            \includegraphics[width=0.94\linewidth]{COVID-projections_coloring.png}
-            \captionof{figure}{M$\alpha$N recovers separated county communities.}
-    \end{center}
+            \begin{minipage}[t]{0.48\linewidth}
+                \vspace{0pt}
+                \centering
+                \posterimageframe{14cm}{COVID-projections_coloring.png}
+                \captionof{figure}{Spectrally selected M$\alpha$N graph with continuous node coloring.}
+                \label{fig:covid-spectral-graph}
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.48\linewidth}
+                \vspace{0pt}
+                \centering
+                \posterimageframe{14cm}{COVID_Girvan-Newman_4communities.png}
+                \captionof{figure}{Four communities obtained by Girvan--Newman; remaining nodes are shown in gray.}
+                \label{fig:covid-girvan-newman}
+            \end{minipage}
+        \end{center}
 
     \medskip
     
@@ -550,8 +565,6 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     \end{minipage}
 
     \medskip
-
-    The application of the Girvan-Newman algorithm yielded four communities.
 
     \textbf{Conclusion.}
     The spectrally selected M$\alpha$N graph reproduces the manually tuned communities from the original study and yields a partition that is supported by independent county-level characteristics.
