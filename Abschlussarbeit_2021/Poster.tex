@@ -201,7 +201,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             f(K)=C(K)\cdot E(K),
         \end{aligned}
     }
-    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and a grid $0<\epsilon_1<\cdots<\epsilon_N$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{\min\{i,j\}})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
+    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. Since connected components merge and new edges appear in the filtration, the above functional captures the opposing effects and thus, is in general \textbf{non-monotone}. In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and a grid $0<\epsilon_1<\cdots<\epsilon_N$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{\min\{i,j\}})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
     \posterequation{
         \begin{aligned}
             \Sigma_N=\begin{pmatrix}
@@ -246,7 +246,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 
         \vspace{0.4em}
 
-        {\small Examples where the principal eigenvector resolves ambiguities in the functional scale profile.}
+        {\small Examples illustrating how the Perron vector reweights local maxima and breaks ties between equal functional peaks.}
     \end{center}
 }
 
@@ -256,7 +256,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     \posterequationpair{0.56}{0.39}
       {P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*}}
       {\pi_i^{P}=\frac{(v_i^*)^2}{\|v^*\|_2^2}}
-    where $D_{v^*}=\text{diag}(v^*_1,\dots,v^*_N)$ and $\lambda^*>0$ the eigenvalue corresponding to the principal eigenvector $v^*$. The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
+    where $D_{v^*}=\text{diag}(v^*_1,\dots,v^*_N)$ and $\lambda^*>0$ the eigenvalue corresponding to the principal eigenvector $v^*$. The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional} over irreducible, row-stochastic matrices $Q$ with stationary distribution $\pi^{Q}$:
     \posterequationpair{0.57}{0.40}
       {\mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}}
       {P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
@@ -347,7 +347,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     \posterequationpair{0.40}{0.51}
       {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
       {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
-    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. The minimum is chosen because $\pi^{\text{BD}}_i$ is small iff $d_i$ and $d_{i+1}$ are simultaneously large.
+    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. The minimum is chosen because for interior scales $2\le i\le N-1$ it holds that $\pi^{\text{BD}}_i$ is small iff $d_i$ and $d_{i+1}$ are simultaneously large.
 
     \vspace{0.4em}
 
@@ -355,11 +355,11 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
       \begin{minipage}[t]{0.48\linewidth}
         \vspace{0pt}
         \centering
-        \posterimageframe{10.2cm}{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
+        \posterimageframe{10.2cm}{Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png}
 
         \vspace{0.05em}
         \refstepcounter{figure}\label{fig:monotone-functional}%
-        {\scriptsize Figure~\thefigure: Strictly increasing functional values $c_i=f(K_i)$.}
+        {\scriptsize Figure~\thefigure: Strictly increasing functional values $f(K_i)$.}
       \end{minipage}
       \hfill
       \begin{minipage}[t]{0.48\linewidth}
@@ -409,8 +409,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 \vspace{0pt}
                 \textbf{Popular choices for the lens function include:}
                 \begin{itemize}
-                    \item principal components: $f(x_i)=\sigma_1(u_1)_i$
-                    \item density estimate: $f(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$
+                    \item density estimate: $\rho(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$
+                    \item  centrality: $c(x_i)=(\sum_{j=1}^{N}d(x_i,x_j)^p)^{1/p}$
                 \end{itemize}
             \end{minipage}
             \hfill
@@ -424,7 +424,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{minipage}
         \end{center}
 
-        The output depends heavily on the \textbf{choice of clustering algorithm}. We replace this choice by an \textbf{automatic threshold selection}. This approach is also \textbf{computationally more efficient}.
+        The output depends heavily on the \textbf{choice of clustering algorithm}. We replace this choice by an \textbf{automatic threshold selection}.
     }
 
     
