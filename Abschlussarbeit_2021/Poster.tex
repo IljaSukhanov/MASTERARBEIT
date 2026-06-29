@@ -21,7 +21,7 @@
 \definecolor{posterline}{RGB}{220,220,220}
 \definecolor{posteraccent}{RGB}{0,104,125}
 
-\newcommand{\postertitle}{Spectral Optimal Scale in TDA problems}
+\newcommand{\postertitle}{Spectral Scale Selection in Topological Data Analysis}
 \newcommand{\posterauthor}{Ilja Sukhanov\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
 \newcommand{\posterinfo}{\textsuperscript{1} Universität Ulm, Germany \quad \textsuperscript{2} MISANU, Belgrade \quad \textsuperscript{3} Kharazin National University, Charkiw}
 
@@ -218,7 +218,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             i_{\text{crit}}\in\arg\max_iv^*_i
         \end{aligned}
     }
-    It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}.
+    It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima do not need to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}. In case of monotone functionals $f$ the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
 
     \vspace{0.5em}
 
@@ -347,7 +347,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     \posterequationpair{0.40}{0.51}
       {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
       {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
-    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. The minimum is chosen because for interior scales $2\le i\le N-1$ it holds that $\pi^{\text{BD}}_i$ is small iff $d_i$ and $d_{i+1}$ are simultaneously large.
+    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. Since $-\mathcal{L}_{ii}=d_i^{-1}+d_{i+1}^{-1}$ for interior scales $2\le i\le N-1$, minimizing $\pi_i^{\text{BD}}$ favors scales with two large consecutive increments.
 
     \vspace{0.4em}
 
