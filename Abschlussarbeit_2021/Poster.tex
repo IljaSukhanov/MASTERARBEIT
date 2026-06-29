@@ -190,7 +190,7 @@
 }
 
 \posterblock{Spectral Scale Selection}{
-Let $K_1,\dots,K_N$ be simplicial complexes and let $\oplus$ be a chosen operation on them.
+Let $K_1,\dots,K_N$ be simplicial complexes and let $\oplus$ be a commutative, binary operation on them.
 Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
 \posterequationpair{0.58}{0.39}
   {\langle K_i,K_j\rangle_f\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)}
@@ -207,19 +207,19 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
             \end{pmatrix}
         \end{aligned}
     }
-    In this easy case, the scale similarity matrix $\Sigma_N$ is irreducible iff $a_1>0$. By \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus provides a \textbf{canonical ranking} of the scales. The critical scale is chosen by the rule
+    In this easy case, the scale similarity matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$. By \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus provides a \textbf{canonical ranking} of the scales. The critical scale is chosen by the rule
     \posterequation{
         \begin{aligned}
             i_{\text{crit}}\in\arg\max_iv^*_i
         \end{aligned}
     }
-    As functional $f$ we consider any combination of \textbf{topological or geometric features} like Betti numbers or face counts of certain dimension. For example, we can choose
+    As functional $f$ we consider any combination of \textbf{topological or combinatorial features} like Betti numbers or face counts of certain dimension. For example, we can choose
     \posterequation{
         \begin{aligned}
             f(K)=C(K)\cdot E(K),
         \end{aligned}
     }
-    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ are \textbf{comonotone} and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as tiebreaker, cf. Figure~\ref{fig:functional-multiple-maxima}.
+    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}.
 
     \vspace{0.5em}
 
@@ -228,7 +228,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
         \begin{minipage}[t]{0.72\linewidth}
             \vspace{0pt}
             \centering
-            \makebox[\linewidth][c]{\includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}}
+            \makebox[\linewidth][c]{\includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice 2.png}}
 
             \captionof{figure}{Non-maximal functional value selected.}
             \label{fig:functional-scale-choice}
@@ -256,14 +256,14 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequationpair{0.56}{0.39}
       {P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*}}
-      {\pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}}
+      {\pi_i^{P}=\frac{(v_i^*)^2}{\|v^*\|_2^2}}
     where $D_{v^*}=\text{diag}(v^*_1,\dots,v^*_N)$ and $\lambda^*>0$ the eigenvalue corresponding to the principal eigenvector $v^*$. The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
     \posterequationpair{0.57}{0.40}
       {\mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}}
       {P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
        \substack{Q\in\mathbb{R}^{N\times N}\\
        \text{row-stochastic and irreducible}}\right\}}
-    That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly monotone functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
+    That is, the transition matrix $P$ is the \textbf{variationally optimal stochastic normalization} of the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly monotone functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
 \posterequation{
 \begin{aligned}
 \mathcal{L}
@@ -340,15 +340,15 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
 \frac{1}{d_N}
 &
 -\frac{1}{d_N}
-\end{pmatrix}.
+\end{pmatrix}, \quad d_i=f(K_i)-f(K_{i-1}), i=2,\dots,N.
 \end{aligned}
 }
 
-    The transition matrix of the corresponding embedded discrete-time Markov chain is given by $P^{\text{BD}}_{ij}=-\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
+    The entries of the transition matrix $P^{\text{BD}}$ of the corresponding embedded discrete-time Markov chain are given by $P^{\text{BD}}_{ij}=-(1-\delta_{ij})\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
     \posterequationpair{0.40}{0.51}
       {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
       {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
-    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. The minimum is chosen because $\pi^{\text{BD}}_i$ is small iff $\mathcal{L}_{ii}$ is small iff $d_i$ and $d_{i+1}$ are simultaneously large.
+    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. The minimum is chosen because $\pi^{\text{BD}}_i$ is small iff $d_i$ and $d_{i+1}$ are simultaneously large.
 
     \vspace{0.4em}
 
@@ -374,7 +374,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
       \end{minipage}
     \end{center}
 
-    We can use the connection to Markov chains, to define an \textbf{\enquote{spectrally optimizable}} (admissible) triple $(f,\{K_i\},\oplus)$, namely if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$. 
+    % We can use the connection to Markov chains, to define an \textbf{\enquote{spectrally optimizable}} (admissible) triple $(f,\{K_i\},\oplus)$, namely if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$. 
 }
 
 
