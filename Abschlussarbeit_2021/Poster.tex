@@ -201,7 +201,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             f(K)=C(K)\cdot E(K),
         \end{aligned}
     }
-    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. Since connected components merge and new edges appear in the filtration, the above functional captures the opposing effects and thus, is in general \textbf{non-monotone}. In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and a grid $0<\epsilon_1<\cdots<\epsilon_N$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{\min\{i,j\}})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
+    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. Since connected components merge and new edges appear in the filtration, the above functional captures the opposing effects and may consequently exhibit \textbf{non-monotone} behavior. In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and a grid $0<\epsilon_1<\cdots<\epsilon_N$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{\min\{i,j\}})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
     \posterequation{
         \begin{aligned}
             \Sigma_N=\begin{pmatrix}
@@ -212,7 +212,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{pmatrix}
         \end{aligned}
     }
-    In this easy case, \textbf{nonnegativity} of the functional $f$ already implies its subadditivity along the filtration and the scale similarity matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$. Consequently, by \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus provides a \textbf{canonical ranking} of the scales. The critical scale is chosen by the rule
+    In this easy case, \textbf{nonnegativity} of the functional $f$ already implies its subadditivity along the filtration and the scale similarity matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$. Consequently, by \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus induces a ranking of the scales $\epsilon_i$ that incorporates their coupling to all other scales through $\Sigma_N$. The critical scale is chosen by the rule
     \posterequation{
         \begin{aligned}
             i_{\text{crit}}\in\arg\max_iv^*_i
@@ -262,7 +262,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
       {P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
        \substack{Q\in\mathbb{R}^{N\times N}\\
        \text{row-stochastic and irreducible}}\right\}}
-    That is, the transition matrix $P$ is the \textbf{variationally optimal stochastic normalization} of the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly monotone functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
+    That is, the transition matrix $P$ is the \textbf{variationally optimal stochastic normalization} of the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly increasing functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
 \posterequation{
 \begin{aligned}
 \mathcal{L}
