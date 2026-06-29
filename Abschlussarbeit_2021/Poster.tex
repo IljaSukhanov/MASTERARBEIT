@@ -62,6 +62,35 @@
   \end{center}
   \smallskip
 }
+\newcommand{\posterequationbox}[1]{%
+  \setlength{\fboxsep}{0.32cm}%
+  \setlength{\fboxrule}{0.7pt}%
+  \fcolorbox{black!35}{black!4}{$\displaystyle #1$}%
+}
+\newcommand{\posterequationpair}[4]{%
+  \par\smallskip
+  \noindent\makebox[\linewidth][c]{%
+    \begin{minipage}[c]{#1\linewidth}
+      \centering\posterequationbox{#3}%
+    \end{minipage}%
+    \hspace{0.25em},\hspace{0.25em}%
+    \begin{minipage}[c]{#2\linewidth}
+      \centering\posterequationbox{#4}%
+    \end{minipage}%
+  }%
+  \par\smallskip
+}
+\newcommand{\posterimageframe}[2]{%
+  \begingroup
+  \setlength{\fboxsep}{0pt}%
+  \fcolorbox{posterline}{white}{%
+    \parbox[t][#1][t]{0.98\linewidth}{%
+      \vspace{0pt}\centering
+      \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}%
+    }%
+  }%
+  \endgroup
+}
 \newcommand{\posterreferences}{%
   \begin{tcolorbox}[
     posterblockstyle,
@@ -148,17 +177,9 @@
 \posterblock{Spectral Scale Selection}{
 Let $K_1,\dots,K_N$ be simplicial complexes and let $\oplus$ be a chosen operation on them.
 Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
-\posterequation{
-    \begin{aligned}
-        \langle K_i,K_j\rangle_f
-        &\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j),
-        \\[0.25em]
-        \Sigma_N
-        &\coloneqq
-        \bigl(\langle K_i,K_j\rangle_f\bigr)_{i,j=1}^{N}
-        \in\mathbb{R}^{N\times N}.
-    \end{aligned}
-}
+\posterequationpair{0.58}{0.39}
+  {\langle K_i,K_j\rangle_f\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)}
+  {\Sigma_N\coloneqq \bigl(\langle K_i,K_j\rangle_f\bigr)_{i,j=1}^{N}\in\mathbb{R}^{N\times N}.}
 
     In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and $0<\epsilon_i<\epsilon_j$ for all $i<j$, and $\oplus=\cup$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{i\wedge j})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
     \posterequation{
@@ -216,33 +237,15 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
 
 \posterblock{Connection to Markov Chains and Monotone Scale Selection}{
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
-    \posterequation{
-        \begin{aligned}
-            P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*}, && \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}
-        \end{aligned}
-    }
+    \posterequationpair{0.56}{0.39}
+      {P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*}}
+      {\pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}}
     where $D_{v^*}=\text{diag}(v^*_1,\dots,v^*_N)$ and $\lambda^*>0$ the eigenvalue corresponding to the principal eigenvector $v^*$. The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
-    \par\noindent
-    \begin{minipage}[t]{0.58\linewidth}
-        \vspace{0pt}
-        \posterequation{
-            \begin{aligned}
-                \mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
-            \end{aligned}
-        }
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.40\linewidth}
-        \vspace{0pt}
-        \posterequation{
-            \begin{aligned}
-                P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
-                \substack{Q\in\mathbb{R}^{N\times N}\\
-                \text{row-stochastic and irreducible}}\right\}
-            \end{aligned}
-        }
-    \end{minipage}
-    \par\smallskip
+    \posterequationpair{0.57}{0.40}
+      {\mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}}
+      {P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
+       \substack{Q\in\mathbb{R}^{N\times N}\\
+       \text{row-stochastic and irreducible}}\right\}}
     That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly monotone functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
 \posterequation{
 \begin{aligned}
@@ -325,19 +328,18 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
 }
 
     The transition matrix of the corresponding embedded discrete-time Markov chain is given by $P^{\text{BD}}_{ij}=-\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
-    \posterequation{
-        \begin{aligned}
-            i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}, \quad \pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}
-        \end{aligned}
-    }
+    \posterequationpair{0.40}{0.51}
+      {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
+      {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
     A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. The minimum is chosen because $\pi^{\text{BD}}_i$ is small iff $\mathcal{L}_{ii}$ is small iff $d_i$ and $d_{i+1}$ are simultaneously large.
 
     \vspace{0.4em}
 
     \begin{center}
       \begin{minipage}[t]{0.48\linewidth}
+        \vspace{0pt}
         \centering
-        \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
+        \posterimageframe{10.2cm}{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
 
         \vspace{0.05em}
         \refstepcounter{figure}\label{fig:monotone-functional}%
@@ -345,8 +347,9 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
       \end{minipage}
       \hfill
       \begin{minipage}[t]{0.48\linewidth}
+        \vspace{0pt}
         \centering
-        \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
+        \posterimageframe{10.2cm}{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
 
         \vspace{0.05em}
         \refstepcounter{figure}\label{fig:monotone-stationary-distribution}%
@@ -368,15 +371,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \begingroup
-                \setlength{\fboxsep}{0pt}%
-                \fcolorbox{posterline}{white}{%
-                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
-                        \centering
-                        \includegraphics[width=\linewidth,height=9.2cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}%
-                    }%
-                }
-                \endgroup
+                \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
 
                 \captionof{figure}{Illustration of Mapper, taken from [1].}
             \end{minipage}
@@ -384,15 +379,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \begingroup
-                \setlength{\fboxsep}{0pt}%
-                \fcolorbox{posterline}{white}{%
-                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
-                        \centering
-                        \includegraphics[width=\linewidth,height=9.2cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}%
-                    }%
-                }
-                \endgroup
+                \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
 
                 \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph.}
             \end{minipage}
@@ -440,15 +427,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 1. Noisy input $X$}\par
                 \vspace{0.18cm}
-                \begingroup
-                \setlength{\fboxsep}{0pt}%
-                \fcolorbox{posterline}{white}{%
-                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
-                        \centering
-                        \includegraphics[width=\linewidth,height=9.25cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/eight_dataset.png}%
-                    }%
-                }
-                \endgroup
+                \posterimageframe{9.25cm}{Abschlussarbeit_2021/LaTeX/images/eight_dataset.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The \enquote{Noisy 8} dataset.}
                 \label{fig:noisy-eight-data}
@@ -458,15 +437,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 2. Select the local scales $\alpha_i$}\par
                 \vspace{0.18cm}
-                \begingroup
-                \setlength{\fboxsep}{0pt}%
-                \fcolorbox{posterline}{white}{%
-                    \parbox[c][9.6cm][c]{0.98\linewidth}{%
-                        \centering
-                        \includegraphics[width=\linewidth,height=9.25cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}%
-                    }%
-                }
-                \endgroup
+                \posterimageframe{9.25cm}{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
                 \label{fig:local-scale-selection}
@@ -479,15 +450,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 3a. Random thresholds}\par
                 \vspace{0.18cm}
-                \begingroup
-                \setlength{\fboxsep}{0pt}%
-                \fcolorbox{posterline}{white}{%
-                    \parbox[c][14.2cm][c]{0.98\linewidth}{%
-                        \centering
-                        \includegraphics[width=\linewidth,height=14cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}%
-                    }%
-                }
-                \endgroup
+                \posterimageframe{14cm}{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The two-loop structure is lost.}
                 \label{fig:noisy-eight-random-thresholds}
@@ -497,15 +460,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 3b. Spectrally selected thresholds}\par
                 \vspace{0.18cm}
-                \begingroup
-                \setlength{\fboxsep}{0pt}%
-                \fcolorbox{posterline}{white}{%
-                    \parbox[c][14.2cm][c]{0.98\linewidth}{%
-                        \centering
-                        \includegraphics[width=\linewidth,height=14cm,keepaspectratio]{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}%
-                    }%
-                }
-                \endgroup
+                \posterimageframe{14cm}{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The two-loop structure is recovered.}
                 \label{fig:noisy-eight-spectral-thresholds}
@@ -586,6 +541,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
 
 \end{minipage}
 
+\enlargethispage{5cm}
 \vspace{-0.5cm}
 \posterreferences
 
