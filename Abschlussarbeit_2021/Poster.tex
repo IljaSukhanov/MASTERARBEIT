@@ -409,8 +409,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 \vspace{0pt}
                 \textbf{Popular choices for the lens function include:}
                 \begin{itemize}
-                    \item density estimate: $\rho(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$
-                    \item  centrality: $c(x_i)=(\sum_{j=1}^{N}d(x_i,x_j)^p)^{1/p}$
+                    \item density estimate: $\rho(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$ with bandwidth $h$ and $K$ the Gaussian kernel
+                    \item  centrality: $c(x_i)=(\sum_{j=1}^{N}d(x_i,x_j)^p)^{1/p}$ for some power
                 \end{itemize}
             \end{minipage}
             \hfill
@@ -418,8 +418,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 \vspace{0pt}
                 \textbf{Popular choices for the cover include:}
                 \begin{itemize}
-                    \item cover in $1d$: interval cover controlled by the number of intervals $N$ and the percentage of overlap $g$
-                    \item cover in $2d$: ??
+                    \item cover in $1d$: interval cover $\{I_j\}_{j=1}^{N}$ controlled by the number of intervals $N$ and the overlap fraction $g$: $|I_j\cap I_{j+1}|=g|I_j|$ for all $1\le j\le N-1$
+                    \item cover in $2d$: cartesian product construction $\{U_{ij}\}_{1\le i\le N_1,1\le j\le N_2}$, where $U_{ij}=I^{(1)}_{i}\times I_j^{(2)}$ with number of intervals $N_1$, $N_2$ and overlap fractions $g_1$, $g_2$
                 \end{itemize}
             \end{minipage}
         \end{center}
