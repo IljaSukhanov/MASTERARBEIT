@@ -54,11 +54,13 @@
   \vspace{0.85cm}
 }
 \newcommand{\posterequation}[1]{%
-  \begingroup
-  \setlength{\abovedisplayskip}{0.2em}%
-  \setlength{\belowdisplayskip}{0.2em}%
-  #1%
-  \endgroup
+  \par\smallskip
+  \begin{center}
+    \setlength{\fboxsep}{0.32cm}%
+    \setlength{\fboxrule}{0.7pt}%
+    \fcolorbox{black!35}{black!4}{$\displaystyle #1$}%
+  \end{center}
+  \smallskip
 }
 \newcommand{\posterreferences}{%
   \begin{tcolorbox}[
@@ -146,32 +148,32 @@
 \posterblock{Spectral Scale Selection}{
     Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes. Motivated by \textbf{[5]}, we introduce the \textbf{$f$-based divergence} on simplicial complexes as
     \posterequation{
-        \begin{align*}
+        \begin{aligned}
             \langle K_i,K_j\rangle_f \coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)
-        \end{align*}
+        \end{aligned}
     }
     In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and $0<\epsilon_i<\epsilon_j$ for all $i<j$, and $\oplus=\cup$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{i\wedge j})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
     \posterequation{
-        \begin{align*}
+        \begin{aligned}
             \Sigma_N=\begin{pmatrix}
                 a_1 & a_1 & \cdots & a_1\\
                 a_1 & a_2 & \cdots & a_2\\
                 \vdots & \vdots & \ddots & \vdots\\
                 a_1 & a_2 & \cdots & a_N
             \end{pmatrix}
-        \end{align*}
+        \end{aligned}
     }
     In this easy case, the scale similarity matrix $\Sigma_N$ is irreducible iff $a_1>0$. By \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus provides a \textbf{canonical ranking} of the scales. The critical scale is chosen by the rule
     \posterequation{
-        \begin{align*}
+        \begin{aligned}
             i_{\text{crit}}\in\arg\max_iv^*_i
-        \end{align*}
+        \end{aligned}
     }
     As functional $f$ we consider any combination of \textbf{topological or geometric features} like Betti numbers or face counts of certain dimension. For example, we can choose
     \posterequation{
-        \begin{align*}
+        \begin{aligned}
             f(K)=C(K)\cdot E(K),
-        \end{align*}
+        \end{aligned}
     }
     where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. We easily see that the sequences $\{a_i\}_{i=1}^{N}$ and $\{v_i\}_{i=1}^{N}$ are \textbf{comonotone} and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as tiebreaker, cf. Figure~\ref{fig:functional-multiple-maxima}.
 
@@ -206,21 +208,22 @@
 \posterblock{Connection to Markov Chains and Monotone Scale Selection}{
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequation{
-        \begin{align*}
+        \begin{aligned}
             P=\frac{1}{\lambda_N}D_{v^*}^{-1}\Sigma_ND_{v^*}, && \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}
-        \end{align*}
+        \end{aligned}
     }
     The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
     \posterequation{
-        \begin{align*}
-            P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):Q\in\mathbb{R}^{N\times N}\text{ is row-stochastic and irreducible}\right\}, && \mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
-        \end{align*}
+        \begin{aligned}
+            P&=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):Q\in\mathbb{R}^{N\times N}\text{ is row-stochastic and irreducible}\right\},\\
+            \mathcal{F}(Q;\Sigma_N)&\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
+        \end{aligned}
     }
     That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for monotone functionals, that is, $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=\frac{1}{a_1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
     \posterequation{
-\[
+\begin{aligned}
 \mathcal{L}
-=
+&=
 \begin{pmatrix}
 -\frac{1}{d_2}
 &
@@ -272,13 +275,13 @@
 &
 -\frac{1}{d_N}
 \end{pmatrix}.
-\]
+\end{aligned}
 }
     The transition matrix of the corresponding embedded discrete-time Markov chain is given by $P^{\text{BD}}_{ij}=-\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
     \posterequation{
-        \begin{align*}
+        \begin{aligned}
             i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}
-        \end{align*}
+        \end{aligned}
     }
 
     \vspace{0.4em}
@@ -376,9 +379,9 @@
     \posterblock{M$\alpha$N graph approach: Synthetic dataset experiment}{
         Instead of clustering each $X_i$, connect two points $x,y\in X$ that belong to at least one common pullback set if and only if
         \posterequation{
-            \begin{align*}
+            \begin{aligned}
                 d(x,y)\le2\max_{\substack{i\in I\\x,y\in X_i}}\alpha_i.
-            \end{align*}
+            \end{aligned}
         }
         
         The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure~\ref{fig:local-scale-selection}. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8} dataset}.
@@ -479,9 +482,9 @@
 
         As distance measure we use a block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
         \posterequation{
-            \begin{align*}
+            \begin{aligned}
                 d(x_i,x_j)=\|x_i[1\!:\!14]-x_j[1\!:\!14]\|_2+\|x_i[15\!:\!28]-x_j[15\!:\!28]\|_2
-            \end{align*}
+            \end{aligned}
         }
 
         \begin{center}
