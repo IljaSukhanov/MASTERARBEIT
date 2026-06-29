@@ -381,14 +381,14 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 \vspace{0pt}
 
     \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring (M$\alpha$N) approach}{
-    Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ be the data at hand. One must first choose a \textbf{lens function} $\ell:X\to\mathbb{R}^{m}$, typically $m\in\{1,2\}$ and a \textbf{finite cover} $\mathcal{U}=\{U_i\}_{i\in I}\subseteq\mathbb{R}^m$ of $\ell(X)$. The pull back cover is $X_i=\ell^{-1}(U_i)$.
+    Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{D}$ be the data at hand, equipped with a metric $d$. One must first choose a \textbf{lens function} $\ell:X\to\mathbb{R}^{m}$, typically $m\in\{1,2\}$ and a \textbf{finite cover} $\mathcal{U}=\{U_i\}_{i\in I}$ of $\ell(X)$, where $U_i\subseteq\mathbb{R}^{m}$. The pullback cover is $X_i=\ell^{-1}(U_i)$.
 
     \begin{center}
             \begin{minipage}[t]{0.47\linewidth}
                 \vspace{0pt}
                 \textbf{Popular choices for the lens function include:}
                 \begin{itemize}
-                    \item density estimate: $\rho(x_i)=\frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$ with bandwidth $h$ and $K$ the Gaussian kernel
+                    \item density estimate: $\rho(x_i)=\frac{1}{nh^D}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$ with bandwidth $h$ and $K$ the Gaussian kernel
                     \item  centrality: $c(x_i)=\left(n^{-1}\sum_{j=1}^{n}d(x_i,x_j)^p\right)^{1/p}$ for some power $p\ge1$
                 \end{itemize}
             \end{minipage}
@@ -397,8 +397,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 \vspace{0pt}
                 \textbf{Popular choices for the cover include:}
                 \begin{itemize}
-                    \item cover in $1d$: interval cover $\{I_j\}_{j=1}^{N}$ controlled by the number of intervals $N$ and the overlap fraction $g$: $|I_j\cap I_{j+1}|=g|I_j|$ for all $1\le j\le N-1$
-                    \item cover in $2d$: cartesian product construction $\{U_{ij}\}_{1\le i\le N_1,1\le j\le N_2}$, where $U_{ij}=I^{(1)}_{i}\times I_j^{(2)}$ with number of intervals $N_1$, $N_2$ and overlap fractions $g_1$, $g_2$
+                    \item cover in $1D$: interval cover $\{I_j\}_{j=1}^{N}$ controlled by the number of intervals $N$ and the overlap fraction $g$
+                    \item cover in $2D$: Cartesian product construction $\{U_{ij}\}_{1\le i\le N_1,1\le j\le N_2}$, where $U_{ij}=I^{(1)}_{i}\times I_j^{(2)}$ with number of intervals $N_1$, $N_2$ and overlap fractions $g_1$, $g_2$
                 \end{itemize}
             \end{minipage}
         \end{center}
@@ -423,7 +423,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{minipage}
         \end{center}
 
-        The output of the MAPPER algorithm heavily depends on the \textbf{choice of clustering algorithm} in order to cluster each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{fig:mapper-illustration}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{fig:man-illustration}. The question becomes, by which rule to connect two nodes.
+        In addition to the lens and cover, the output of Mapper depends on the clustering algorithm used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{fig:mapper-illustration}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{fig:man-illustration}. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. The question becomes, by which rule to connect two nodes.
     }
 
     
@@ -489,7 +489,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 
         \begin{itemize}
             \item each node $x_i\in\mathbb{R}^{28}$ represents one of 3,142 US counties and county equivalents
-            \item first 14 entries encode confirmed cases, second 14 entries encode deaths
+            \item first 14 entries encode 13 normalized three-day case aggregates and their log-total, the second 14 analogously encode deaths
         \end{itemize}
 
         \noindent
