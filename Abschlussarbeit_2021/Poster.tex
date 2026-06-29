@@ -327,10 +327,10 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
     The transition matrix of the corresponding embedded discrete-time Markov chain is given by $P^{\text{BD}}_{ij}=-\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
     \posterequation{
         \begin{aligned}
-            i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}
+            i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}, \quad \pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}
         \end{aligned}
     }
-    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}.
+    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. The minimum is chosen because $\pi^{\text{BD}}_i$ is small iff $\mathcal{L}_{ii}$ is small iff $d_i$ and $d_{i+1}$ are simultaneously large.
 
     \vspace{0.4em}
 
