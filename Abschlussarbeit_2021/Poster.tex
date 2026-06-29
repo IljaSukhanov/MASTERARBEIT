@@ -146,20 +146,28 @@
 }
 
 \posterblock{Spectral Scale Selection}{
-    Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes. Motivated by \textbf{[5]}, we introduce the \textbf{$f$-based divergence} on simplicial complexes as
-    \posterequation{
-        \begin{aligned}
-            \langle K_i,K_j\rangle_f \coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)
-        \end{aligned}
-    }
+Let $K_1,\dots,K_N$ be simplicial complexes and let $\oplus$ be a chosen operation on them.
+Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
+\posterequation{
+    \begin{aligned}
+        \langle K_i,K_j\rangle_f
+        &\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j),
+        \\[0.25em]
+        \Sigma_N
+        &\coloneqq
+        \bigl(\langle K_i,K_j\rangle_f\bigr)_{i,j=1}^{N}
+        \in\mathbb{R}^{N\times N}.
+    \end{aligned}
+}
+
     In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and $0<\epsilon_i<\epsilon_j$ for all $i<j$, and $\oplus=\cup$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{i\wedge j})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
     \posterequation{
         \begin{aligned}
             \Sigma_N=\begin{pmatrix}
-                a_1 & a_1 & \cdots & a_1\\
-                a_1 & a_2 & \cdots & a_2\\
+                f(K_1) & f(K_1) & \cdots & f(K_1)\\
+                f(K_1) & f(K_2) & \cdots & f(K_2)\\
                 \vdots & \vdots & \ddots & \vdots\\
-                a_1 & a_2 & \cdots & a_N
+                f(K_1) & f(K_2) & \cdots & f(K_N)
             \end{pmatrix}
         \end{aligned}
     }
@@ -175,27 +183,28 @@
             f(K)=C(K)\cdot E(K),
         \end{aligned}
     }
-    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. We easily see that the sequences $\{a_i\}_{i=1}^{N}$ and $\{v_i\}_{i=1}^{N}$ are \textbf{comonotone} and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as tiebreaker, cf. Figure~\ref{fig:functional-multiple-maxima}.
+    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ are \textbf{comonotone} and thus their \textbf{local maxima coincide}. For non-monotone functionals this is not a problem, since global maxima do not have to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as tiebreaker, cf. Figure~\ref{fig:functional-multiple-maxima}.
 
     \vspace{0.5em}
 
     \begin{center}
-        \begin{minipage}{0.72\linewidth}
-            \centering
-            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
-
-            \captionof{figure}{Multiple equal maxima.}
-            \label{fig:functional-multiple-maxima}
-        \end{minipage}
-
-        \vspace{0.55em}
-
+        
         \begin{minipage}{0.72\linewidth}
             \centering
             \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
 
             \captionof{figure}{Non-maximal functional value selected.}
             \label{fig:functional-scale-choice}
+        \end{minipage}
+
+        \vspace{0.55em}
+
+        \begin{minipage}{0.72\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
+
+            \captionof{figure}{Multiple equal maxima.}
+            \label{fig:functional-multiple-maxima}
         \end{minipage}
 
         \vspace{0.4em}
@@ -209,12 +218,21 @@
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequation{
         \begin{aligned}
-            P=\frac{1}{\lambda_N}D_{v^*}^{-1}\Sigma_ND_{v^*}, && \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}
+            P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*}, && \pi_i=\frac{(v_i^*)^2}{\|v^*\|_2^2}
         \end{aligned}
     }
-    The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
+    where $D_{v^*}=\text{diag}(v^*_1,\dots,v^*_N)$ and $\lambda^*>0$ the eigenvalue corresponding to the principal eigenvector $v^*$. The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
     \par\noindent
     \begin{minipage}[t]{0.58\linewidth}
+        \vspace{0pt}
+        \posterequation{
+            \begin{aligned}
+                \mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
+            \end{aligned}
+        }
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.40\linewidth}
         \vspace{0pt}
         \posterequation{
             \begin{aligned}
@@ -224,18 +242,9 @@
             \end{aligned}
         }
     \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.40\linewidth}
-        \vspace{0pt}
-        \posterequation{
-            \begin{aligned}
-                \mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
-            \end{aligned}
-        }
-    \end{minipage}
     \par\smallskip
-    That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for monotone functionals, that is, $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=\frac{1}{a_1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
-    \posterequation{
+    That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly monotone functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
+\posterequation{
 \begin{aligned}
 \mathcal{L}
 &=
@@ -249,6 +258,8 @@
 \cdots
 &
 0
+&
+0
 \\[0.4em]
 \frac{1}{d_2}
 &
@@ -257,6 +268,8 @@
 \frac{1}{d_3}
 &
 \ddots
+&
+\vdots
 &
 \vdots
 \\[0.4em]
@@ -269,6 +282,8 @@
 \ddots
 &
 0
+&
+0
 \\[0.4em]
 \vdots
 &
@@ -278,11 +293,27 @@
 &
 \ddots
 &
+\frac{1}{d_{N-1}}
+&
+0
+\\[0.4em]
+0
+&
+\cdots
+&
+0
+&
+\frac{1}{d_{N-1}}
+&
+-\left(\frac{1}{d_{N-1}}+\frac{1}{d_N}\right)
+&
 \frac{1}{d_N}
 \\[0.4em]
 0
 &
 \cdots
+&
+0
 &
 0
 &
@@ -292,12 +323,14 @@
 \end{pmatrix}.
 \end{aligned}
 }
+
     The transition matrix of the corresponding embedded discrete-time Markov chain is given by $P^{\text{BD}}_{ij}=-\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
     \posterequation{
         \begin{aligned}
             i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}
         \end{aligned}
     }
+    An visual representation of the monotone scale selection rule is given in Figures [] and []. 
 
     \vspace{0.4em}
 
