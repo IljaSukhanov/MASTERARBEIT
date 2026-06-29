@@ -388,6 +388,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
 
                 \captionof{figure}{Illustration of Mapper, taken from [1].}
+                \label{fig:mapper-illustration}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.48\linewidth}
@@ -396,6 +397,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
 
                 \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph.}
+                \label{fig:man-illustration}
             \end{minipage}
         \end{center}
 
@@ -422,7 +424,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{minipage}
         \end{center}
 
-        The output of the MAPPER algorithm heavily depends on the \textbf{choice of clustering algorithm} in order to cluster each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{}. The question becomes, by which rule to connect two nodes.
+        The output of the MAPPER algorithm heavily depends on the \textbf{choice of clustering algorithm} in order to cluster each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{fig:mapper-illustration}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{fig:man-illustration}. The question becomes, by which rule to connect two nodes.
     }
 
     
