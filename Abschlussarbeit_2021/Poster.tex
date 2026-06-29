@@ -22,8 +22,8 @@
 \definecolor{posteraccent}{RGB}{0,104,125}
 
 \newcommand{\postertitle}{Spectral Optimal Scale in TDA problems}
-\newcommand{\posterauthor}{Ilja Sukhanov \quad Djordje Baralic \quad Oleksandr Leonov \quad Liudmyla Polyakova \quad Evgeny Spodarev}
-\newcommand{\posterinfo}{Institute of Stochastics, Ulm University}
+\newcommand{\posterauthor}{Ilja Sukhanov\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
+\newcommand{\posterinfo}{\textsuperscript{1} Northbridge University \quad \textsuperscript{2} Lakeside University \quad \textsuperscript{3} Westfield University}
 
 \captionsetup{font=small,labelfont=bf,skip=0.18cm}
 \setlength{\parskip}{0.45em}
@@ -330,7 +330,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
             i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}
         \end{aligned}
     }
-    An visual representation of the monotone scale selection rule is given in Figures [] and []. 
+    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}.
 
     \vspace{0.4em}
 
@@ -340,7 +340,8 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
         \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png}
 
         \vspace{0.05em}
-        {\scriptsize Strictly increasing functional values $c_i=f(K_i)$.}
+        \refstepcounter{figure}\label{fig:monotone-functional}%
+        {\scriptsize Figure~\thefigure: Strictly increasing functional values $c_i=f(K_i)$.}
       \end{minipage}
       \hfill
       \begin{minipage}[t]{0.48\linewidth}
@@ -348,7 +349,8 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
         \includegraphics[width=0.96\linewidth]{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
 
         \vspace{0.05em}
-        {\scriptsize Stationary distribution $\pi_i^{\mathrm{BD}}$ of the embedded jump chain.}
+        \refstepcounter{figure}\label{fig:monotone-stationary-distribution}%
+        {\scriptsize Figure~\thefigure: Stationary distribution $\pi_i^{\mathrm{BD}}$ of the embedded jump chain.}
       \end{minipage}
     \end{center}
 
@@ -584,7 +586,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
 
 \end{minipage}
 
-\vspace{0.25cm}
+\vspace{-0.5cm}
 \posterreferences
 
 \end{document}
