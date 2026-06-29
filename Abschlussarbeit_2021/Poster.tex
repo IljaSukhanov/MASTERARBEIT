@@ -190,7 +190,7 @@
 }
 
 \posterblock{Spectral Scale Selection}{
-Let $K_1,\dots,K_N$ be simplicial complexes and let $\oplus$ be a commutative, binary operation on them. In what follows, we restrict ourselves to $\oplus=\cup$. Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
+Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $\oplus$ be a commutative, binary operation on them. In what follows, we restrict attention to $\oplus=\cup$. Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
 \posterequationpair{0.58}{0.39}
   {\langle K_i,K_j\rangle_f\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)}
   {\Sigma_N\coloneqq \bigl(\langle K_i,K_j\rangle_f\bigr)_{i,j=1}^{N}\in\mathbb{R}^{N\times N}.}
@@ -201,7 +201,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes and let $\oplus$ be a commutative, b
             f(K)=C(K)\cdot E(K),
         \end{aligned}
     }
-    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and a grid $0<\epsilon_1<\cdots<\epsilon_N$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{i\wedge j})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
+    where $C(K)$ is the number of connected components and $E(K)$ the number of edges of $K$ respectively. In general, this functional is \textbf{non-monotone}, since connected components merge and new edges appear in filtration and thus, $f(K)$ captures the opposing effects. In the special case where $\{K_i\}_{i=1}^{N}$ is a filtration, for example $K_i=\operatorname{VR}_{\epsilon_i}(X)$ for some data set $X$ and a grid $0<\epsilon_1<\cdots<\epsilon_N$, the $f$-based divergence reduces to $\langle K_i,K_j\rangle_f=f(K_{\min\{i,j\}})$ and the scale similarity matrix becomes a classical \textbf{min/meet-matrix}:
     \posterequation{
         \begin{aligned}
             \Sigma_N=\begin{pmatrix}
