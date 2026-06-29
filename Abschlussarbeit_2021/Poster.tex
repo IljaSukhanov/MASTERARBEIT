@@ -3,7 +3,7 @@
 \usepackage[paperwidth=84.1cm,paperheight=118.9cm,margin=2.4cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[most]{tcolorbox}
+\usepackage{tcolorbox}
 \usepackage{tikz}
 \usepackage{parskip}
 \usepackage{mathtools}
@@ -18,12 +18,8 @@
 \renewcommand{\familydefault}{\sfdefault}
 \graphicspath{{LaTeX/images/}{Abschlussarbeit_2021/LaTeX/images/}{Images/}}
 
-\definecolor{uulmgray}{RGB}{70,70,70}
 \definecolor{posterline}{RGB}{220,220,220}
-\definecolor{posterfill}{RGB}{255,255,255}
 \definecolor{posteraccent}{RGB}{0,104,125}
-\definecolor{posteraccentlight}{RGB}{232,245,248}
-\definecolor{postercallout}{RGB}{255,248,230}
 
 \newcommand{\postertitle}{Spectral Optimal Scale in TDA problems}
 \newcommand{\posterauthor}{Ilja Sukhanov \quad Djordje Baralic \quad Oleksandr Leonov \quad Liudmyla Polyakova \quad Evgeny Spodarev}
@@ -36,102 +32,18 @@
 
 \tcbset{
   posterblockstyle/.style={
-    enhanced,
-    colback=posterfill,
-    colframe=posterline,
-    coltitle=uulmgray,
+    colback=white,
+    colframe=black!55,
+    colbacktitle=white,
+    coltitle=black,
     fonttitle=\fontsize{22}{26}\selectfont\bfseries,
     fontupper=\fontsize{15.5}{19.5}\selectfont,
-    boxrule=1.25pt,
-    arc=6mm,
-    left=0.9cm,
-    right=0.9cm,
-    top=0.85cm,
-    bottom=0.9cm,
-    title filled=false,
-    attach title to upper={\par\vspace{0.2cm}},
-    borderline west={5pt}{0pt}{posteraccent},
-    drop fuzzy shadow=black!7,
-  },
-  posterleftblockstyle/.style={
-    posterblockstyle,
-    borderline north={1.2pt}{0pt}{posteraccent!32},
-  },
-  posteraccentblockstyle/.style={
-    posterblockstyle,
-    colback=posteraccentlight,
-    colframe=posteraccent,
-    top=0.7cm,
-  },
-  posterquestionstyle/.style={
-    enhanced,
-    colback=postercallout,
-    colframe=posteraccent!45,
     boxrule=1pt,
-    arc=5mm,
-    left=0.8cm,
-    right=0.8cm,
-    top=0.6cm,
-    bottom=0.6cm,
-  },
-  posterformulastyle/.style={
-    enhanced,
-    colback=posteraccentlight,
-    colframe=posteraccent,
-    boxrule=1.3pt,
-    arc=6mm,
-    left=0.8cm,
-    right=0.8cm,
-    top=0.45cm,
-    bottom=0.45cm,
-  },
-  posterequationstyle/.style={
-    enhanced,
-    colback=posteraccent!4,
-    colframe=posteraccent!18,
-    boxrule=0pt,
-    arc=2.5mm,
-    left=0.48cm,
-    right=0.48cm,
-    top=0cm,
-    bottom=0cm,
-    before skip=0.18em,
-    after skip=0.32em,
-    borderline west={3pt}{0pt}{posteraccent!72},
-    before upper={%
-      \setlength{\abovedisplayskip}{0.12em}%
-      \setlength{\belowdisplayskip}{0.12em}%
-      \setlength{\abovedisplayshortskip}{0.08em}%
-      \setlength{\belowdisplayshortskip}{0.08em}%
-    },
-  },
-  posternotestyle/.style={
-    enhanced,
-    colback=posteraccentlight,
-    colframe=posteraccent!35,
-    boxrule=0.9pt,
-    arc=3mm,
-    left=0.45cm,
-    right=0.45cm,
-    top=0.16cm,
-    bottom=0.16cm,
-  },
-  posterreferencesstyle/.style={
-    enhanced,
-    colback=posteraccent!3,
-    colframe=posterline,
-    coltitle=posteraccent,
-    fonttitle=\fontsize{18}{21}\selectfont\bfseries,
-    fontupper=\fontsize{11}{13.5}\selectfont,
-    boxrule=1pt,
-    arc=4mm,
+    arc=0pt,
     left=0.7cm,
     right=0.7cm,
-    top=0.4cm,
-    bottom=0.45cm,
-    title filled=false,
-    attach title to upper={\par\vspace{0.12cm}},
-    borderline west={4pt}{0pt}{posteraccent},
+    top=0.55cm,
+    bottom=0.65cm,
   }
 }
 
@@ -141,53 +53,20 @@
   \end{tcolorbox}
   \vspace{0.85cm}
 }
-\newcommand{\posterleftblock}[2]{%
-  \begin{tcolorbox}[posterleftblockstyle]
-    {\color{posteraccent}\fontsize{22}{26}\selectfont\bfseries #1\par}
-    \vspace{0.16cm}
-    {\color{posteraccent!28}\hrule height 1.2pt}
-    \vspace{0.34cm}
-    #2
-  \end{tcolorbox}
-  \vspace{0.85cm}
-}
-\newcommand{\posteraccentblock}[2]{%
-  \begin{tcolorbox}[posteraccentblockstyle]
-    \tikz[baseline=(label.base)] \node[
-      fill=posteraccent,
-      text=white,
-      rounded corners=5pt,
-      inner xsep=0.65cm,
-      inner ysep=0.22cm,
-      font=\fontsize{22}{26}\selectfont\bfseries
-    ] (label) {#1};
-    \par\vspace{0.35cm}
-    #2
-  \end{tcolorbox}
-  \vspace{0.85cm}
-}
 \newcommand{\posterequation}[1]{%
-  \begin{tcolorbox}[posterequationstyle]
-    #1
-  \end{tcolorbox}
-}
-\newcommand{\posterquestion}[1]{%
-  \begin{tcolorbox}[posterquestionstyle]
-    \textbf{Question.} #1
-  \end{tcolorbox}
-}
-\newcommand{\posterformula}[1]{%
-  \begin{tcolorbox}[posterformulastyle]
-    #1
-  \end{tcolorbox}
-}
-\newcommand{\posternote}[1]{%
-  \begin{tcolorbox}[posternotestyle]
-    \small #1
-  \end{tcolorbox}
+  \begingroup
+  \setlength{\abovedisplayskip}{0.2em}%
+  \setlength{\belowdisplayskip}{0.2em}%
+  #1%
+  \endgroup
 }
 \newcommand{\posterreferences}{%
-  \begin{tcolorbox}[posterreferencesstyle,title={References}]
+  \begin{tcolorbox}[
+    posterblockstyle,
+    title={References},
+    fonttitle=\fontsize{18}{21}\selectfont\bfseries,
+    fontupper=\fontsize{11}{13.5}\selectfont
+  ]
     \begin{minipage}[t]{0.49\linewidth}
       \textbf{[1]} F. Chazal and B. Michel. \emph{An Introduction to Topological Data Analysis: Fundamental and Practical Aspects for Data Scientists}. Frontiers in Artificial Intelligence, 2021.\\[0.18em]
       \textbf{[2]} G. Singh, F. M\'emoli, and G. Carlsson. \emph{Topological Methods for the Analysis of High Dimensional Data Sets and 3D Object Recognition}. 2007.
@@ -224,7 +103,7 @@
 
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
-    \posteraccentblock{Why Select One Scale}{
+    \posterblock{Why Select One Scale}{
     Persistent homology is scale-agnostic: the persistence diagram records topological features across all filtration scales simultaneously and thereby avoids committing to any single resolution. Nevertheless, a surprising number of problems in and around TDA reduce to the \textbf{choice of one filtration parameter}, and doing so in a theoretically justified way remains a longstanding methodological gap. We list four representative settings in which a topologically justified choice of scale is essential:
 
     \vspace{0.6em}
@@ -264,7 +143,7 @@
     \end{center}
 }
 
-\posterleftblock{Spectral Scale Selection}{
+\posterblock{Spectral Scale Selection}{
     Let $\{K_i\}_{i=1}^{N}$ be a sequence of simplicial complexes. Motivated by \textbf{[5]}, we introduce the \textbf{$f$-based divergence} on simplicial complexes as
     \posterequation{
         \begin{align*}
@@ -324,7 +203,7 @@
 }
 
 
-\posterleftblock{Connection to Markov Chains and Monotone Scale Selection}{
+\posterblock{Connection to Markov Chains and Monotone Scale Selection}{
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequation{
         \begin{align*}
