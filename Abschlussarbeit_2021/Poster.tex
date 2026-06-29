@@ -213,12 +213,27 @@
         \end{aligned}
     }
     The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional}:
-    \posterequation{
-        \begin{aligned}
-            P&=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):Q\in\mathbb{R}^{N\times N}\text{ is row-stochastic and irreducible}\right\},\\
-            \mathcal{F}(Q;\Sigma_N)&\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
-        \end{aligned}
-    }
+    \par\noindent
+    \begin{minipage}[t]{0.58\linewidth}
+        \vspace{0pt}
+        \posterequation{
+            \begin{aligned}
+                P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
+                \substack{Q\in\mathbb{R}^{N\times N}\\
+                \text{row-stochastic and irreducible}}\right\}
+            \end{aligned}
+        }
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.40\linewidth}
+        \vspace{0pt}
+        \posterequation{
+            \begin{aligned}
+                \mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}
+            \end{aligned}
+        }
+    \end{minipage}
+    \par\smallskip
     That is, the matrix $P$ is the closest Markov Chain transition matrix to the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for monotone functionals, that is, $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=\frac{1}{a_1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
     \posterequation{
 \begin{aligned}
