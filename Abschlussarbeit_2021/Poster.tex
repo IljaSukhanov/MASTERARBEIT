@@ -408,7 +408,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 \textbf{Popular choices for the lens function include:}
                 \begin{itemize}
                     \item density estimate: $\rho(x_i)=\frac{1}{nh^m}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$ with bandwidth $h$ and $K$ the Gaussian kernel
-                    \item  centrality: $c(x_i)=(\sum_{j=1}^{N}d(x_i,x_j)^p)^{1/p}$ for some power
+                    \item  centrality: $c(x_i)=(\sum_{j=1}^{n}d(x_i,x_j)^p)^{1/p}$ for some power
                 \end{itemize}
             \end{minipage}
             \hfill
@@ -422,9 +422,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{minipage}
         \end{center}
 
-        The output of the MAPPER algorithm heavily depends on the \textbf{choice of clustering algorithm} in order to cluster each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{}. In some applications, like clinical studies or epidemiological ... one wishes to keep the interpretation of each node being a single subject (patient/county), cf. Figure~\ref{}. The question becomes, by which rule to connect two nodes.
-        
-        % We replace this choice by an \textbf{automatic threshold selection}.
+        The output of the MAPPER algorithm heavily depends on the \textbf{choice of clustering algorithm} in order to cluster each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{}. The question becomes, by which rule to connect two nodes.
     }
 
     
@@ -498,7 +496,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
         \end{minipage}
         \hfill
         \begin{minipage}[t]{0.48\linewidth}
-            \textbf{chosen cover:} overlapping rectangles: $U_{ij}=I_i^{(1)}\cap I_j^{(2)}$
+            \textbf{chosen cover:} overlapping rectangles: $U_{ij}=I_i^{(1)}\times I_j^{(2)}$
         \end{minipage}
 
         As distance measure we use a block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
