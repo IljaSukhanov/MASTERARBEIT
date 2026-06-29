@@ -381,6 +381,28 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 \vspace{0pt}
 
     \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring (M$\alpha$N) approach}{
+    Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ be the data at hand. One must first choose a \textbf{lens function} $\ell:X\to\mathbb{R}^{m}$, typically $m\in\{1,2\}$ and a \textbf{finite cover} $\mathcal{U}=\{U_i\}_{i\in I}\subseteq\mathbb{R}^m$ of $\ell(X)$. The pull back cover is $X_i=\ell^{-1}(U_i)$.
+
+    \begin{center}
+            \begin{minipage}[t]{0.47\linewidth}
+                \vspace{0pt}
+                \textbf{Popular choices for the lens function include:}
+                \begin{itemize}
+                    \item density estimate: $\rho(x_i)=\frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$ with bandwidth $h$ and $K$ the Gaussian kernel
+                    \item  centrality: $c(x_i)=\left(n^{-1}\sum_{j=1}^{n}d(x_i,x_j)^p\right)^{1/p}$ for some power $p\ge1$
+                \end{itemize}
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.47\linewidth}
+                \vspace{0pt}
+                \textbf{Popular choices for the cover include:}
+                \begin{itemize}
+                    \item cover in $1d$: interval cover $\{I_j\}_{j=1}^{N}$ controlled by the number of intervals $N$ and the overlap fraction $g$: $|I_j\cap I_{j+1}|=g|I_j|$ for all $1\le j\le N-1$
+                    \item cover in $2d$: cartesian product construction $\{U_{ij}\}_{1\le i\le N_1,1\le j\le N_2}$, where $U_{ij}=I^{(1)}_{i}\times I_j^{(2)}$ with number of intervals $N_1$, $N_2$ and overlap fractions $g_1$, $g_2$
+                \end{itemize}
+            \end{minipage}
+        \end{center}
+    
         \begin{center}
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
@@ -401,29 +423,6 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{minipage}
         \end{center}
 
-
-        Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ be the data at hand. One must first choose a \textbf{lens function} $\ell:X\to\mathbb{R}^{m}$, typically $m\in\{1,2\}$ and a \textbf{finite cover} $\mathcal{U}=\{U\}_{i\in I}\subseteq\mathbb{R}^m$ of $\ell(X)$. The pull back cover is $X_i=\ell^{-1}(U_i)$.
-
-        \begin{center}
-            \begin{minipage}[t]{0.47\linewidth}
-                \vspace{0pt}
-                \textbf{Popular choices for the lens function include:}
-                \begin{itemize}
-                    \item density estimate: $\rho(x_i)=\frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{d(x_i,x_j)}{h}\right)$ with bandwidth $h$ and $K$ the Gaussian kernel
-                    \item  centrality: $c(x_i)=(\sum_{j=1}^{n}d(x_i,x_j)^p)^{1/p}$ for some power
-                \end{itemize}
-            \end{minipage}
-            \hfill
-            \begin{minipage}[t]{0.47\linewidth}
-                \vspace{0pt}
-                \textbf{Popular choices for the cover include:}
-                \begin{itemize}
-                    \item cover in $1d$: interval cover $\{I_j\}_{j=1}^{N}$ controlled by the number of intervals $N$ and the overlap fraction $g$: $|I_j\cap I_{j+1}|=g|I_j|$ for all $1\le j\le N-1$
-                    \item cover in $2d$: cartesian product construction $\{U_{ij}\}_{1\le i\le N_1,1\le j\le N_2}$, where $U_{ij}=I^{(1)}_{i}\times I_j^{(2)}$ with number of intervals $N_1$, $N_2$ and overlap fractions $g_1$, $g_2$
-                \end{itemize}
-            \end{minipage}
-        \end{center}
-
         The output of the MAPPER algorithm heavily depends on the \textbf{choice of clustering algorithm} in order to cluster each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{fig:mapper-illustration}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{fig:man-illustration}. The question becomes, by which rule to connect two nodes.
     }
 
@@ -436,8 +435,9 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
                 d(x,y)\le2\max_{\substack{i\in I\\x,y\in X_i}}\alpha_i.
             \end{aligned}
         }
-        
-        The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$. This makes the graph \textbf{adapt to local sampling density} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure~\ref{fig:local-scale-selection}. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8} dataset}.
+
+        The thresholds $\alpha_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure~\ref{fig:local-scale-selection}. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
+
         \begin{center}
             \begin{minipage}[t]{0.36\linewidth}
                 \vspace{0pt}
@@ -508,7 +508,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{aligned}
         }
 
-        The application of the Girvan--Newman algorithm yielded four communities, shown alongside the continuously colored graph in Figures~\ref{fig:covid-spectral-graph} and~\ref{fig:covid-girvan-newman}.
+        The application of the \textbf{Girvan--Newman algorithm} yielded four communities, shown alongside the continuously colored graph in Figures~\ref{fig:covid-spectral-graph} and~\ref{fig:covid-girvan-newman}.
 
         \begin{center}
             \begin{minipage}[t]{0.48\linewidth}
