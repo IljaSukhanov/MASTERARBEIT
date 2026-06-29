@@ -218,7 +218,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             i_{\text{crit}}\in\arg\max_iv^*_i, \quad\epsilon_{\text{crit}}=\epsilon_{i_{\text{crit}}}
         \end{aligned}
     }
-    It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima do not need to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}. For strictly monotone functionals $f$ the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
+    Under the above assumptions, it can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima need not coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}. For strictly monotone functionals $f$ the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
 
     \vspace{0.5em}
 
@@ -259,7 +259,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     where $D_{v^*}=\text{diag}(v^*_1,\dots,v^*_N)$ and $\lambda^*>0$ the eigenvalue corresponding to the principal eigenvector $v^*$. The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional} over irreducible, row-stochastic matrices $Q$ with stationary distribution $\pi^{Q}$:
     \posterequationpair{0.57}{0.40}
       {\mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}}
-      {P=\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
+      {P\in\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
        \substack{Q\in\mathbb{R}^{N\times N}\\
        \text{row-stochastic and irreducible}}\right\}}
     That is, the transition matrix $P$ is the \textbf{variationally optimal stochastic normalization} of the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly increasing functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
@@ -343,7 +343,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 \end{aligned}
 }
 
-    The entries of the transition matrix $P^{\text{BD}}$ of the corresponding embedded discrete-time Markov chain are given by $P^{\text{BD}}_{ij}=-(1-\delta_{ij})\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for monotone functional:
+    The entries of the transition matrix $P^{\text{BD}}$ of the corresponding embedded discrete-time Markov chain are given by $P^{\text{BD}}_{ij}=-(1-\delta_{ij})\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for strictly increasing functionals:
     \posterequationpair{0.40}{0.51}
       {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
       {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
