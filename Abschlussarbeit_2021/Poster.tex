@@ -83,10 +83,25 @@
 \newcommand{\posterimageframe}[2]{%
   \begingroup
   \setlength{\fboxsep}{0pt}%
-  \fcolorbox{posterline}{white}{%
-    \parbox[t][#1][t]{0.98\linewidth}{%
-      \vspace{0pt}\centering
-      \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}%
+  \makebox[\linewidth][c]{%
+    \fcolorbox{posterline}{white}{%
+      \parbox[t][#1][t]{0.98\linewidth}{%
+        \vspace{0pt}\centering
+        \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}%
+      }%
+    }%
+  }%
+  \endgroup
+}
+\newcommand{\postercenteredimageframe}[2]{%
+  \begingroup
+  \setlength{\fboxsep}{0pt}%
+  \makebox[\linewidth][c]{%
+    \fcolorbox{posterline}{white}{%
+      \parbox[c][#1][c]{0.98\linewidth}{%
+        \centering
+        \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}%
+      }%
     }%
   }%
   \endgroup
@@ -210,9 +225,10 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
 
     \begin{center}
         
-        \begin{minipage}{0.72\linewidth}
+        \begin{minipage}[t]{0.72\linewidth}
+            \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}
+            \makebox[\linewidth][c]{\includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png}}
 
             \captionof{figure}{Non-maximal functional value selected.}
             \label{fig:functional-scale-choice}
@@ -220,9 +236,10 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
 
         \vspace{0.55em}
 
-        \begin{minipage}{0.72\linewidth}
+        \begin{minipage}[t]{0.72\linewidth}
+            \vspace{0pt}
             \centering
-            \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}
+            \makebox[\linewidth][c]{\includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png}}
 
             \captionof{figure}{Multiple equal maxima.}
             \label{fig:functional-multiple-maxima}
@@ -437,7 +454,7 @@ Motivated by \textbf{[5]}, we define the \textbf{$f$-based divergence} and the \
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 2. Select the local scales $\alpha_i$}\par
                 \vspace{0.18cm}
-                \posterimageframe{9.25cm}{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}
+                \postercenteredimageframe{9.25cm}{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto F(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
                 \label{fig:local-scale-selection}
