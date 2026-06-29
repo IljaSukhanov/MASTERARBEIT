@@ -400,7 +400,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
         \end{center}
 
 
-        Let $X=\{x_1,\dots,x_n\}\in\mathbb{R}^{d}$ be the data at hand. One must first choose a \textbf{lens function} $f:X\to\mathbb{R}^{m}$, $m\in\{1,2\}$ and a \textbf{cover} $\mathcal{U}$.
+        Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ be the data at hand. One must first choose a \textbf{lens function} $l:X\to\mathbb{R}^{m}$, $m\in\{1,2\}$ and a \textbf{cover} $\mathcal{U}$.
 
         \begin{center}
             \begin{minipage}[t]{0.47\linewidth}
@@ -422,7 +422,9 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{minipage}
         \end{center}
 
-        The output depends heavily on the \textbf{choice of clustering algorithm}. We replace this choice by an \textbf{automatic threshold selection}.
+        The output of the MAPPER algorithm heavily depends on the \textbf{choice of clustering algorithm} in order to cluster each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{}. In some applications, like clinical studies or epidemiological ... one wishes to keep the interpretation of each node being a single subject (patient/county), cf. Figure~\ref{}. The question becomes, by which rule to connect two nodes.
+        
+        % We replace this choice by an \textbf{automatic threshold selection}.
     }
 
     
@@ -492,11 +494,11 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 
         \noindent
         \begin{minipage}[t]{0.48\linewidth}
-            \textbf{chosen lens:}
+            \textbf{chosen lens:} $l(x)=(\rho(x),c(x))$
         \end{minipage}
         \hfill
         \begin{minipage}[t]{0.48\linewidth}
-            \textbf{chosen cover:}
+            \textbf{chosen cover:} overlapping rectangles: $U_{ij}=I_i^{(1)}\cap I_j^{(2)}$
         \end{minipage}
 
         As distance measure we use a block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
