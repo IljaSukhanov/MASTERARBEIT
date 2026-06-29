@@ -215,10 +215,10 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     In this easy case, \textbf{nonnegativity} of the functional $f$ already implies its subadditivity along the filtration and the scale similarity matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$. Consequently, by \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus induces a ranking of the scales $\epsilon_i$ that incorporates their coupling to all other scales through $\Sigma_N$. The critical scale is chosen by the rule
     \posterequation{
         \begin{aligned}
-            i_{\text{crit}}\in\arg\max_iv^*_i
+            i_{\text{crit}}\in\arg\max_iv^*_i, \quad\epsilon_{\text{crit}}=\epsilon_{i_{\text{crit}}}
         \end{aligned}
     }
-    It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima do not need to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}. In case of monotone functionals $f$ the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
+    It can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima do not need to coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}. For strictly monotone functionals $f$ the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
 
     \vspace{0.5em}
 
