@@ -257,7 +257,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
        \substack{Q\in\mathbb{R}^{N\times N}\\
        \text{row-stochastic and irreducible}}\right\}}
     That is, the transition matrix $P$ is the \textbf{variationally optimal stochastic normalization} of the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly increasing functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
-\posterequation{
+\posterequationpair{0.72}{0.25}
+{
 \begin{aligned}
 \mathcal{L}
 &=
@@ -336,10 +337,11 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 \end{pmatrix}
 \end{aligned}
 }
-\posterequation{
-\begin{aligned}
-d_i=f(K_i)-f(K_{i-1}),\qquad i=2,\dots,N.
-\end{aligned}
+{
+\begin{gathered}
+d_i=f(K_i)-f(K_{i-1})\\
+i=2,\dots,N
+\end{gathered}
 }
 
     The entries of the transition matrix $P^{\text{BD}}$ of the corresponding embedded discrete-time Markov chain are given by $P^{\text{BD}}_{ij}=-(1-\delta_{ij})\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for strictly increasing functionals:
@@ -461,37 +463,33 @@ d_i=f(K_i)-f(K_{i-1}),\qquad i=2,\dots,N.
             \end{minipage}
         \end{center}
 
-        \vspace{0.25cm}
-        \begin{center}
-            \begin{minipage}[t]{0.50\linewidth}
-                \vspace{0pt}
-                \centering
-                {\color{posteraccent}\bfseries 2b. Stability under grid refinement}\par
-                \vspace{0.18cm}
-                \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png}
-                \par\vspace{0.18cm}
-                \captionof{figure}{Selected critical scale as the number $N$ of candidate scales increases.}
-                \label{fig:epsilon-critical-stability}
-            \end{minipage}
-        \end{center}
-
         \vspace{0.35cm}
         \begin{center}
-            \begin{minipage}[t]{0.48\linewidth}
+            \begin{minipage}[t]{0.35\linewidth}
+                \vspace{0pt}
+                {\color{posteraccent}\bfseries 2b. Grid stability}\par
+                \vspace{0.18cm}
+                \postercenteredimageframe{9.5cm}{Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png}
+                \par\vspace{0.18cm}
+                \captionof{figure}{Critical scale as the number $N$ of candidate scales increases.}
+                \label{fig:epsilon-critical-stability}
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.305\linewidth}
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 3a. Random thresholds}\par
                 \vspace{0.18cm}
-                \posterimageframe{14cm}{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
+                \postercenteredimageframe{9.5cm}{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The two-loop structure is lost.}
                 \label{fig:noisy-eight-random-thresholds}
             \end{minipage}
             \hfill
-            \begin{minipage}[t]{0.48\linewidth}
+            \begin{minipage}[t]{0.305\linewidth}
                 \vspace{0pt}
-                {\color{posteraccent}\bfseries 3b. Spectrally selected thresholds}\par
+                {\color{posteraccent}\bfseries 3b. Spectral thresholds}\par
                 \vspace{0.18cm}
-                \posterimageframe{14cm}{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
+                \postercenteredimageframe{9.5cm}{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The two-loop structure is recovered.}
                 \label{fig:noisy-eight-spectral-thresholds}
