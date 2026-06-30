@@ -435,31 +435,49 @@ We try out different functionals of the form $f(K)=f_{\text{Top}}(K)\cdot f(K_{\
 
 \section{Geometric Approach}
 
-Motivated by the occurrence of loops when embedding sine curves, we ask what interesting topological/geometric features we can find in the point cloud $\mathcal{P}_k$. 
+In this section, we study how the geometry of the point cloud $\mathcal{P}_k\subseteq\mathbb{R}^{k}$ changes with increasing embedding dimension $k$. For simple innovation distributions, like uniform or normal, the point cloud $\mathcal{P}_k$ is characterized by well known convex--geometric objects. The question becomes if we can apply some convex--geometric functional $f$ to these well known objects and detect a transition at $k=p+1$, where $p$ is the AR order of the embedded time series.
 
-\todo[inline]{Describe Geometry for different kinds of innovations (normal, heavy-tailed)}
+In order to be able to talk about the \enquote{geometry of a point cloud} in a rigorous way, we first need to introduce some concepts from probability theory. Let $Y$ be a $d$-dimensional random vector with density $f_Y$. The \textit{support} of $Y$ is given by
+\begin{align*}
+    \operatorname{supp}(Y)=\{x\in\mathbb{R}^k:\mathbb{P}(Y\in B_r(x))>0\text{ for all }r>0\}
+\end{align*}
+In the case where $f_Y$ is continuous, it holds $\operatorname{supp}(Y)=\operatorname{cl}\{y\in\mathbb{R}^{k}:f_Y(y)>0\}$. The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
+\begin{align*}
+    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}
+\end{align*}
+The \textit{highest density region} $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
+\begin{align*}
+    C_{\alpha}&=C_{h_{\alpha}}\\
+    C_h&=\{x\in\mathbb{R}^{d}:f(x)\ge h\}\\
+    h_{\alpha}&=\sup\{h\in\mathbb{R}:\mathbb{P}(Y\in C_h)\ge 1-\alpha\}
+\end{align*}
+
+\todo[inline]{connect these concepts with each other}
+
+Let $X_t=\sum_{j=0}^{\infty}\psi_j Z_{t-j}$ be the MA($\infty$)-representation of an AR($p$) process, where $(Z_t)$ are the independent and identically distributed innovations with cumulative distribution function $F_0$ and where the sequence $(\psi_j)_{j\in\mathbb{N}_0}$ is defined recursively by $\psi_{-(p-1)}=\dots=\psi_{-1}=0$, $\psi_0=1$ and $\psi_j=\phi_1\psi_{j-1}+\dots+\phi_p\psi_{j-p}$ for all $j\ge 1$. Now each point $Y_t^{(k)}\in\mathcal{P}_k$ can be written as
+\begin{align*}
+    Y_{t}^{(k)}&=\begin{pmatrix}
+        X_t\\
+        X_{t+1}\\
+        \vdots\\
+        X_{t+k-1}
+    \end{pmatrix}=\sum_{j=-(k-1)}^{\infty}g_j^{(k)}Z_{t-j},
+\end{align*}
+where $g_j^{(k)}=(\psi_j,\psi_{j+1},\dots,\psi_{j+k-1})^{T}$. We have $\lim\limits_{j\to\infty}\psi_j=0$.
+
+\todo[inline]{Explain/ Prove convergence of $(\psi_j)$ give convergence speed result. Connect to stationarity/ causality, obtain some kind of upper bound for $|\psi_j|$}
+
+Consider the case $k\ge 
+p+1$. The AR relation allows us to write
+\begin{align}\label{eq:ar_relations}
+    X_{t-j}-\phi_1X_{t-j-1}-\dots-\phi_pX_{t-j-p}=Z_{t-j}, && j=0,1,\dots,k-p-1
+\end{align}
 
 \subsection{Uniformly distributed innovations}
 
-Now consider the AR($p$)-process as in Equation~\eqref{eq:ar(p)}. We want to give a geometrical interpretation of the point cloud obtained from a sliding window embedding of the AR($p$)-process. A single point $Y_t^{(k)}$ can be written as
-\begin{align*}
-    Y_t^{(k)}=\begin{pmatrix}
-        X_t\\
-        X_{t-1}\\
-        \vdots\\
-        X_{t-k+1}
-    \end{pmatrix}\in\mathbb{R}^{k}
-\end{align*}
-with $X_{t}=\phi_1X_{t-1}+\dots+\phi_pX_{t-p}+Z_{t}$, or, equivalently:
-\begin{align}\label{eq:ar_slab}
-    X_{t}-\phi_1X_{t-1}-\dots-\phi_pX_{t-p}=Z_{t}
-\end{align}
-Consider the case $k=p+1$. Since the innovations $(Z_t)$ are centered, the points $Y_t^{(k)}$ lie around the hyperplane $\{x_0-\phi_1x_{1}-\dots-\phi_px_p=0:(x_0,\dots,x_p)\in\mathbb{R}^{p+1}\}$. In the case of uniform innovations $Z_t\sim\mathcal{U}[a,b]$, $a<b$ the points also lie between the hyperplanes with the same forms as the central hyperplane, but with affine parts $a$ and $b$. See Figure~\ref{fig:3d_emb_ar2}.
+Let $(Z_t)\sim\mathcal{U}[-1,1]$. 
 
-The distance between the two restricting hyperplanes is given by the formula
-\begin{align*}
-    d=\frac{b-a}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
-\end{align*}
+Since the innovations $(Z_t)$ are centered, the points $Y_t^{(k)}$ lie around the hyperplane $\{x_0-\phi_1x_{1}-\dots-\phi_px_p=0:(x_0,\dots,x_p)\in\mathbb{R}^{p+1}\}$. In the case of uniform innovations $Z_t\sim\mathcal{U}[a,b]$, $a<b$ the points also lie between the hyperplanes with the same forms as the central hyperplane, but with affine parts $a$ and $b$. See Figure~\ref{fig:3d_emb_ar2}.
 
 \begin{figure}[ht]
     \centering
@@ -472,7 +490,7 @@ In fact, we can describe the support of $Y_t^{(p+1)}$ using the MA($\infty$)-rep
 \begin{align*}
     X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j},
 \end{align*}
-where $\psi_{-p}=\dots=\psi_{-1}=0$, $\psi_0=1$ and $\psi_j=\phi_1\psi_{j-1}+\dots+\phi_p\psi_{j-p}$. We have $\lim\limits_{j\to\infty}\psi_j=0$. Plugging this relation into each entry of $Y_t^{(p+1)}$ yields
+where $\psi_{-p}=\dots=\psi_{-1}=0$, $\psi_0=1$ and $\psi_j=\phi_1\psi_{j-1}+\dots+\phi_p\psi_{j-p}$. Plugging this relation into each entry of $Y_t^{(p+1)}$ yields
 \begin{align*}
     Y_t^{(p+1)}=\sum_{j=0}^{\infty}g_jZ_{t-j}, && g_j=\begin{pmatrix}
         \psi_{j}\\
@@ -482,10 +500,6 @@ where $\psi_{-p}=\dots=\psi_{-1}=0$, $\psi_0=1$ and $\psi_j=\phi_1\psi_{j-1}+\do
     \end{pmatrix}\in\mathbb{R}^{p+1}
 \end{align*}
 Since $Z_{t-j}\sim\mathcal{U}[-1,1]$, the support of $Y_t^{(k)}$ is given by $\mathcal{Z}=\sum_{j=0}^{\infty}g_j[-1,1]$, where the sum is understood as the Minkowski-sum. The object $\mathcal{Z}$ is known as a zonoid, which can be approximated arbitrarily closely by a zonotope, a special kind of convex polytope. Denote $\mathcal{Z}^{(n)}=\sum_{j=0}^{n}g_j[-1,1]$. This object has (at most) $2^{n+1}$ corner points. For visualization, see Figure~\ref{fig:zonotopes}.
-
-Here, the support of a random vector $Y$ with values in $\mathbb{R}^k$ is defined as $\operatorname{supp}(Y)=\{x\in\mathbb{R}^k:\mathbb{P}(Y\in B_r(x))>0\text{ for all }r>0\}$. 
-
-\todo[inline]{Explain/ Prove convergence of $(\psi_j)$ give convergence speed result. Connect to stationarity/ causality, obtain some kind of upper bound for $|\psi_j|$}
 
 \todo[inline]{Approximation in what sense (Hausdorff distance), give approximation quality statement which should connect to the sequence $\psi_j$}
 
@@ -536,11 +550,15 @@ Note that the intersection of the $k-p$ central hyperplanes can be written as
     L_k&:=\bigcap_{j=0}^{k-p-1}\left\{(x_0,\dots,x_{k-1})\in\mathbb{R}^k:x_j-\phi_1x_{j+1}-\dots-\phi_px_{j+p}=0\right\}\\&
     =\operatorname{Im}(A)
 \end{align*}
-where the $k\times p$-matrix $A$ has rank $p$. 
+where the $k\times p$-matrix $A$ has rank $p$.
 
-% So the intrinsic dimension of $L_k$ stops increasing for $k=p+1$.
+The distance between the two restricting hyperplanes is given by the formula
+\begin{align*}
+    d=\frac{b-a}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
+\end{align*}
 
-\subsection{Normally distributed residuals}
+
+\subsection{Normally distributed innovations}
 
 Next, we turn our attention to Gaussian innovations, which is often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
 \begin{align*}
@@ -556,26 +574,7 @@ The covariance matrix plays an important role in describing the geometry of the 
 \begin{align*}
     E_{c_{\alpha}}\in\arg\min\left\{\operatorname{Vol}(A):\mathbb{P}(Y\in A)\ge\alpha:A\subseteq\mathbb{R}^{k}\right\}
 \end{align*}
-That is the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$. 
-
-\subsection{Minumum Volume Sets and Highest Density Regions}
-
-Let $Y$ be a $d$-dimensional random vector with density $f$. The support of $Y$ is given by
-\begin{align*}
-    \operatorname{supp}(Y)=\{x\in\mathbb{R}^k:\mathbb{P}(Y\in B_r(x))>0\text{ for all }r>0\}
-\end{align*}
-
-The minimum volume set (compare~\cite{JMLR:v7:scott06a}) is defined by
-\begin{align*}
-    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}
-\end{align*}
-
-The highest density region $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
-\begin{align*}
-    C_{\alpha}&=C_{h_{\alpha}}\\
-    C_h&=\{x\in\mathbb{R}^{d}:f(x)\ge h\}\\
-    h_{\alpha}&=\sup\{h\in\mathbb{R}:\mathbb{P}(Y\in C_h)\ge 1-\alpha\}
-\end{align*}
+That is the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$.
 
 \subsection{Heavy-tailed innovations}
 
