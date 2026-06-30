@@ -482,24 +482,32 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     \posterblock{Case Study: COVID-19 Spread in the USA}{
         Glushakov et al.~\textbf{[2]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcasre variables. Here, spectral scale selection determines the local M$\alpha$N thresholds automatically.
 
-        \begin{itemize}
-            \item each node $x_i\in\mathbb{R}^{28}$ represents one of 3,142 US counties and county equivalents
-            \item first 14 entries encode 13 normalized three-day case aggregates and their log-total, the second 14 analogously encode deaths
-        \end{itemize}
-
         \noindent
         \begin{minipage}[t]{0.48\linewidth}
-            \textbf{chosen lens:} $\ell(x)=(\rho(x),c(x))$
+            \vspace{0pt}
+            \textbf{County representation}\par
+            Each node $x_i\in\mathbb{R}^{28}$ represents one of $3{,}142$ US counties and county equivalents.\par
+            \smallskip
+            The first 14 entries encode 13 normalized three-day case aggregates and their log-total; the second 14 analogously encode deaths.
         \end{minipage}
         \hfill
         \begin{minipage}[t]{0.48\linewidth}
-            \textbf{chosen cover:} overlapping rectangles: $U_{ij}=I_i^{(1)}\times I_j^{(2)}$
+            \vspace{0pt}
+            \textbf{Lens and cover}\par
+            \textbf{Lens:}\quad $\ell(x)=(\rho(x),c(x))$\par
+            \smallskip
+            \textbf{Cover:}\quad overlapping rectangles
+            $U_{ij}=I_i^{(1)}\times I_j^{(2)}$
         \end{minipage}
 
-        As distance measure we use a block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
+        \vspace{0.35cm}
+        \textbf{Similarity metric}\par
+        We use the block-wise Euclidean metric on $\mathbb{R}^{14}\times\mathbb{R}^{14}$:
         \posterequation{
             \begin{aligned}
-                d(x_i,x_j)=\|x_i[1\!:\!14]-x_j[1\!:\!14]\|_2+\|x_i[15\!:\!28]-x_j[15\!:\!28]\|_2
+                d(x_i,x_j)
+                &=\|x_i[1\!:\!14]-x_j[1\!:\!14]\|_2\\
+                &\quad+\|x_i[15\!:\!28]-x_j[15\!:\!28]\|_2
             \end{aligned}
         }
 
