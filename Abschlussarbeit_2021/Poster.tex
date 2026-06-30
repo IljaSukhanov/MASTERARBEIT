@@ -139,6 +139,7 @@
 \end{minipage}
 
 \vspace{1.9cm}
+\enlargethispage{5cm}
 
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
@@ -332,7 +333,12 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 \frac{1}{d_N}
 &
 -\frac{1}{d_N}
-\end{pmatrix}, \quad d_i=f(K_i)-f(K_{i-1}), i=2,\dots,N.
+\end{pmatrix}
+\end{aligned}
+}
+\posterequation{
+\begin{aligned}
+d_i=f(K_i)-f(K_{i-1}),\qquad i=2,\dots,N.
 \end{aligned}
 }
 
@@ -446,12 +452,26 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \hfill
             \begin{minipage}[t]{0.60\linewidth}
                 \vspace{0pt}
-                {\color{posteraccent}\bfseries 2. Select the local scales $\epsilon_i$}\par
+                {\color{posteraccent}\bfseries 2a. Select the local scales $\epsilon_i$}\par
                 \vspace{0.18cm}
                 \postercenteredimageframe{9.25cm}{Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto f(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\alpha_i$.}
                 \label{fig:local-scale-selection}
+            \end{minipage}
+        \end{center}
+
+        \vspace{0.25cm}
+        \begin{center}
+            \begin{minipage}[t]{0.50\linewidth}
+                \vspace{0pt}
+                \centering
+                {\color{posteraccent}\bfseries 2b. Stability under grid refinement}\par
+                \vspace{0.18cm}
+                \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png}
+                \par\vspace{0.18cm}
+                \captionof{figure}{Selected critical scale as the number $N$ of candidate scales increases.}
+                \label{fig:epsilon-critical-stability}
             \end{minipage}
         \end{center}
 
