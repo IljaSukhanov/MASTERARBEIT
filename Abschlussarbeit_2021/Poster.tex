@@ -113,9 +113,9 @@
     fonttitle=\fontsize{20}{24}\selectfont\bfseries,
     fontupper=\fontsize{13}{16}\selectfont
   ]
-    \textbf{[1]} F. Belch\'i, J. Brodzki, M. Burfitt, and M. Niranjan. \emph{A Numerical Measure of the Instability of Mapper-Type Algorithms}. Journal of Machine Learning Research, 2020.\par\smallskip
-    \textbf{[2]} S. Glushakov, I. Kotenko, and K. Drach. \emph{Understanding the Spread of COVID-19 in the United States Using Topology and Machine Learning for Time Series}. PHUSE EU Connect, 2020.\par\smallskip
-    \textbf{[3]} M. Schlather. \emph{An Algebraic Generalization of the Entropy and Its Application to Statistics}. arXiv:2404.05854, 2024.
+    \textbf{[1]} M. Schlather. \emph{An Algebraic Generalization of the Entropy and Its Application to Statistics}. arXiv:2404.05854, 2024.\par\smallskip
+    \textbf{[2]} F. Belch\'i, J. Brodzki, M. Burfitt, and M. Niranjan. \emph{A Numerical Measure of the Instability of Mapper-Type Algorithms}. Journal of Machine Learning Research, 2020.\par\smallskip
+    \textbf{[3]} S. Glushakov, I. Kotenko, and K. Drach. \emph{Understanding the Spread of COVID-19 in the United States Using Topology and Machine Learning for Time Series}. PHUSE EU Connect, 2020.
   \end{tcolorbox}
 }
 \begin{document}
@@ -138,7 +138,7 @@
   \includegraphics[width=0.85\linewidth]{logo_uulm_sw.png}
 \end{minipage}
 
-\vspace{1.9cm}
+\vspace{1.3cm}
 \enlargethispage{5cm}
 
 \begin{minipage}[t]{0.48\textwidth}
@@ -184,7 +184,7 @@
 }
 
 \posterblock{Spectral Scale Selection}{
-Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $\oplus$ be a commutative, binary operation on them. In what follows, we restrict attention to $\oplus=\cup$. Motivated by \textbf{[3]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
+Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $\oplus$ be a commutative, binary operation on them. In what follows, we restrict attention to $\oplus=\cup$. Motivated by \textbf{[1]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
 \posterequationpair{0.58}{0.39}
   {\langle K_i,K_j\rangle_f\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)}
   {\Sigma_N\coloneqq \bigl(\langle K_i,K_j\rangle_f\bigr)_{i,j=1}^{N}\in\mathbb{R}^{N\times N}.}
@@ -356,7 +356,7 @@ i=2,\dots,N
       \begin{minipage}[t]{0.48\linewidth}
         \vspace{0pt}
         \centering
-        \posterimageframe{10.2cm}{Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png}
+        \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png}
 
         \vspace{0.05em}
         \refstepcounter{figure}\label{fig:monotone-functional}%
@@ -366,7 +366,7 @@ i=2,\dots,N
       \begin{minipage}[t]{0.48\linewidth}
         \vspace{0pt}
         \centering
-        \posterimageframe{10.2cm}{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
+        \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
 
         \vspace{0.05em}
         \refstepcounter{figure}\label{fig:monotone-stationary-distribution}%
@@ -412,7 +412,7 @@ i=2,\dots,N
                 \centering
                 \posterimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
 
-                \captionof{figure}{Illustration of Mapper, taken from [1].}
+                \captionof{figure}{Illustration of Mapper, taken from [2].}
                 \label{fig:mapper-illustration}
             \end{minipage}
             \hfill
@@ -502,7 +502,7 @@ i=2,\dots,N
     \vspace{1.6cm}
 
     \posterblock{Case Study: COVID-19 Spread in the USA}{
-        Glushakov et al.~\textbf{[2]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcare variables. Here, spectral scale selection determines the local M$\alpha$N thresholds automatically, using the spectral scale selection with functional $f(K)=C(K)\cdot E(K)$.
+        Glushakov et al.~\textbf{[3]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcare variables. Here, spectral scale selection determines the local M$\alpha$N thresholds automatically, using the spectral scale selection with functional $f(K)=C(K)\cdot E(K)$.
 
         \noindent
         \begin{minipage}[t]{0.48\linewidth}

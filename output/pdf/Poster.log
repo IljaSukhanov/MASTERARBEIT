@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  30 JUN 2026 10:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  30 JUN 2026 10:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -774,7 +774,7 @@ aphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Strictly increasing 
 functional 2.png  used on input line 378.
-(pdftex.def)             Requested size: 431.6428pt x 290.2085pt.
+(pdftex.def)             Requested size: 389.32626pt x 261.75761pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 378.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -786,7 +786,7 @@ e (type png)
 <use Abschlussarbeit_2021/LaTeX/images/stationary distribution.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/stationary distribut
 ion.png  used on input line 378.
-(pdftex.def)             Requested size: 432.57286pt x 290.21483pt.
+(pdftex.def)             Requested size: 390.16269pt x 261.76167pt.
 LaTeX Font Info:    Calculating math sizes for size <24> on input line 430.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <24> on input line 430.
@@ -929,7 +929,7 @@ texlive/2024/texmf-dist/fonts/type1/public/lm/lmsso12.pfb></usr/local/texlive/2
 024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-
 dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on output/pdf/Poster.pdf (1 page, 11399690 bytes).
+Output written on output/pdf/Poster.pdf (1 page, 11399721 bytes).
 PDF statistics:
  144 PDF objects out of 1000 (max. 8388607)
  75 compressed objects within 1 object stream
