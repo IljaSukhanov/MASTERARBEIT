@@ -1,0 +1,237 @@
+Mapper Algorithm
+source: Frederic Chazal NerveUnionofBalls.pdf
+ Page 12
+source: Frederic Chazal NerveUnionofBalls.pdf Page13
+source: Frederic Chazal NerveUnionofBalls.pdf
+source: Frederic Chazal NerveUnionofBalls.pdf
+ Page 15
+source: Frederic Chazal NerveUnionofBalls.pdf Page 16
+source: Frederic Chazal NerveUnionofBalls.pdf Page 17
+Mapper Algorithm
+source: Frederic Chazal NerveUnionofBalls.pdf
+Page 18
+Mapper parameters: projection
+• data driven 
+• …
+Page 20 
+Mapper parameters: projection, cover
+• data driven 
+• …
+The resolution r = 
+maximum diameter 
+of an interval in U. 
+Number of intervals 
+N in the cover. 
+The gain g is the 
+percentage of 
+overlap between 
+intervals (when 
+they overlap)
+Page 21
+Multiscale α-neighboring (MαN) graph
+approach
+Each node represents one 
+subject
+Two nodes are connected 
+if they are similar, within projection 
+intervals, in terms of outcomes
+Graph-based TDA for 
+clinical data
+Page 28
+Building MαN graph
+
+Building MαN graph
+Building MαN graph
+Page 31
+Mapper MαN graph 
+Both use projection function and covering
+Page 32
+- Nodes correspond to original data points
+- Nodes correspond to clusters
+Both use projection function and covering
+Page 33
+Mapper MαN graph 
+- Nodes are connected iff similar (by metric distance)
+- Nodes are connected iff clusters intersect 
+Both use projection function and covering
+Page 34
+Mapper MαN graph 
+- Depends on selection of scale thresholds 
+- Depends on clustering algorithms 
+Both use projection function and covering
+Page 35
+Mapper MαN graph 
+- Generate lots of metric graphs then select the most 
+representative graph with robust geometry
+(local structure – Vietoris–Rips complex)
+- Grounds on the Nerve Theorem
+(global structure – Čech complex)
+Both use projection function and covering
+Page 36
+Mapper MαN graph 
+Community detection algorithms
+Community is a tightly-knit group of 
+nodes with high density of within-
+group edges and a lower density of 
+between-group edges
+Nodes within communities are likely 
+to share common properties 
+and/or play similar roles in the 
+graph
+Subgroup C
+Subgroup B
+Subgroup A
+Community detection
+Community detection
+- Girvan-Newman algorithm
+- Modularity maximization
+ Louvain method
+- Walk trap for random walks 
+- k-clique percolation
+- …
+Different algorithms
+2
+3 4
+8
+75
+0
+1
+9
+6
+Page 41
+U N D E R S T A N D I N G  T H E  S P R E A D  O F  C O V I D- 19 
+I N  T H E  U N I T E D  S T A T E S  U S I N G  
+G R A P H- B A S E D  D A T A  A N A LY S I S
+Understanding the spread of COVID-19 in the United States using topology and 
+machine learning for time series, PHUSE EU-Connect-2020, on-line, November 
+9-13, 2020. https://www.lexjansen.com/phuse/2020/rw/PAP_RW03.pdf
+Number of confirmed cases 451
+Day 47, March 8
+Data source: https://github.com/CSSEGISandData/COVID-19
+Number of confirmed cases 32,899
+Day 61, March 22
+Page 27
+Number of confirmed cases 1,151,933
+Day 103, May 3
+Page 28
+Start_day
+2nd confirmed case 
+in the county
+End_day
+Release from 
+stay-at-home order
+Interval=39 days
+Time series observation interval
+New York City
+Page 29
+Epidemic curves of confirmed cases
+1
+2
+3
+4
+5
+
+=
+28
+Page 30
+In our experiment:
+=
+• Each node corresponds to a county of the US
+• Outcomes: all time series are within the selected observation interval of 39 days 
+( )
+Confirmed cases, daily 
+(aggregated within sliding window 
+of 3 days, normalized) 
+,
+= , log(             +1)Total # of 
+Deaths
+Death cases, daily 
+(aggregated within sliding window 
+of 3 days, normalized)
+log(             +1)Total # of 
+Cases ,
+Total number of entries per each county is 39/3 + 1 + 39/3 + 1 = 28
+Thus, the relevant information about the spread of COVID19 
+in a county is encoded by a 28-dimensional row vector 
+(first 14 entries encode confirmed cases, 
+second 14 entries encode deaths)
+𝑥1 … 𝑥14 𝑥15 … 𝑥28
+Page 31
+• The function based on Euclidean distance is 
+used to measure the dissimilarity between 
+counties
+𝑥1 … 𝑥14 𝑥15 … 𝑥28
+In our experiment:
+• Stratifying bins arrange counties into several 
+overlapping groups. Bins are chosen based on density
+and centrality of nodes with respect to outcomes.
+• Similarity is then measured within each bin separately. 
+𝑦1 … 𝑦14 𝑦15 … 𝑦28
+𝑑 , = 𝑥1 − 𝑦1 2+. . . + 𝑥14 − 𝑦14 2 + 𝑥15 − 𝑦15 2+. . . + 𝑥28 − 𝑦28 2
+
+Page 32
+Graph-based model of COVID-19 spread 
+over the US
+ Each node on the graph corresponds to 
+one county of the United States (total 
+3,142 nodes)
+ Two nodes are connected with the edge if 
+they are similar in terms of predefined 
+outcomes
+ Outcomes integrate the number of 
+confirmed cases and deaths within a 39-
+day observation interval from the start of 
+the pandemic
+ Similarity is measured by a modified 
+Euclidean distance function between time 
+series of outcomes
+Page 33
+Major communities
+0 1 2 3
+
+Page 34
+Number of confirmed cases Number of deaths
+Epidemic curves on the graph
+1
+2
+3
+4
+5
+Page 35
+Page 36
+Population
+P-Value 1.4e-97
+Nodes Color:
+Logarithm Total_population_2019
+
+Page 37
+Urban Influence Code
+Nodes Color:
+Urban_influence_code_2013
+P-Value 1.5e-56
+
+Page 38
+Number of hospitals
+Nodes Color:
+Logarithm Hospitals_per_100000P-Value 0.002
+
+Page 39
+Number of General Practice Physicians
+Nodes Color:
+Number_of_Physicians_per_100000
+P-Value 1.1e-14
+
+The COVID-19 MαN graph 
+with spectral α-scale selection 
+MαN graph with spectral α-scale selection 
+of COVID-19 spread over the US
+ High clustering score
+(random walk mixing rate = 0.99997)
+ Visible 4 communities
+The min matrices used for 
+filtration and for establishing the 
+optimal scales are defined by a 
+functional |C|∙|E| 
+(|C| - number of components, |E| 
+number of edges) 
+The graph has also 
