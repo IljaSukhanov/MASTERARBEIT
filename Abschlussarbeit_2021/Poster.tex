@@ -427,7 +427,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
         Instead of clustering each $X_i$, connect two points $x,y\in X$ that belong to at least one common pullback set if and only if
         \posterequation{
             \begin{aligned}
-                d(x,y)\le2\max_{\substack{i\in I\\x,y\in X_i}}\epsilon_i.
+                d(x,y)\le\max\{\epsilon_i:i\in I,x,y\in X_i\}
             \end{aligned}
         }
 
@@ -480,7 +480,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     }
 
     \posterblock{Case Study: COVID-19 Spread in the USA}{
-        Glushakov et al.~\textbf{[2]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcasre variables. Here, spectral scale selection determines the local M$\alpha$N thresholds automatically.
+        Glushakov et al.~\textbf{[2]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcare variables. Here, spectral scale selection determines the local M$\alpha$N thresholds automatically, using the spectral scale selection with functional $f(K)=C(K)\cdot E(K)$.
 
         \begin{itemize}
             \item each node $x_i\in\mathbb{R}^{28}$ represents one of 3,142 US counties and county equivalents
