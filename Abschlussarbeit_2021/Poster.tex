@@ -25,8 +25,8 @@
 \newcommand{\posterauthor}{Ilja Sukhanov\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
 \newcommand{\posterinfo}{\textsuperscript{1} Universität Ulm, Germany \quad \textsuperscript{2} MISANU, Belgrade \quad \textsuperscript{3} Kharazin National University, Charkiw}
 
-\captionsetup{font=small,labelfont=bf,skip=0.18cm}
-\setlength{\parskip}{0.45em}
+\captionsetup{font=small,labelfont=bf,skip=0.22cm}
+\setlength{\parskip}{0.48em}
 \setlist[itemize]{leftmargin=1.1em,itemsep=0.1em,topsep=0.1em}
 \setlist[enumerate]{leftmargin=1.4em,itemsep=0.3em,topsep=0.3em}
 
@@ -36,14 +36,14 @@
     colframe=black!55,
     colbacktitle=white,
     coltitle=black,
-    fonttitle=\fontsize{22}{26}\selectfont\bfseries,
-    fontupper=\fontsize{15.5}{19.5}\selectfont,
-    boxrule=1pt,
+    fonttitle=\fontsize{24}{29}\selectfont\bfseries,
+    fontupper=\fontsize{17}{21.8}\selectfont,
+    boxrule=1.1pt,
     arc=0pt,
     left=0.7cm,
     right=0.7cm,
-    top=0.55cm,
-    bottom=0.65cm,
+    top=0.62cm,
+    bottom=0.72cm,
   }
 }
 
@@ -51,7 +51,7 @@
   \begin{tcolorbox}[posterblockstyle,title={#1}]
     #2
   \end{tcolorbox}
-  \vspace{0.85cm}
+  \vspace{0.95cm}
 }
 \newcommand{\posterequation}[1]{%
   \par\smallskip
@@ -110,8 +110,8 @@
   \begin{tcolorbox}[
     posterblockstyle,
     title={References},
-    fonttitle=\fontsize{18}{21}\selectfont\bfseries,
-    fontupper=\fontsize{11}{13.5}\selectfont
+    fonttitle=\fontsize{20}{24}\selectfont\bfseries,
+    fontupper=\fontsize{13}{16}\selectfont
   ]
     \textbf{[1]} F. Belch\'i, J. Brodzki, M. Burfitt, and M. Niranjan. \emph{A Numerical Measure of the Instability of Mapper-Type Algorithms}. Journal of Machine Learning Research, 2020.\par\smallskip
     \textbf{[2]} S. Glushakov, I. Kotenko, and K. Drach. \emph{Understanding the Spread of COVID-19 in the United States Using Topology and Machine Learning for Time Series}. PHUSE EU Connect, 2020.\par\smallskip
@@ -126,11 +126,11 @@
 \end{tikzpicture}
 
 \begin{minipage}[t]{0.68\textwidth}
-  {\fontsize{42}{48}\selectfont\bfseries\postertitle\par}
+  {\fontsize{46}{53}\selectfont\bfseries\postertitle\par}
   \vspace{0.65cm}
-  {\fontsize{20}{24}\selectfont\posterauthor\par}
+  {\fontsize{21}{26}\selectfont\posterauthor\par}
   \vspace{0.28cm}
-  {\fontsize{16}{20}\selectfont\posterinfo\par}
+  {\fontsize{17}{21}\selectfont\posterinfo\par}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.24\textwidth}
@@ -410,7 +410,7 @@ i=2,\dots,N
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
+                \posterimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
 
                 \captionof{figure}{Illustration of Mapper, taken from [1].}
                 \label{fig:mapper-illustration}
@@ -419,7 +419,7 @@ i=2,\dots,N
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
+                \posterimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
 
                 \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph.}
                 \label{fig:man-illustration}
@@ -428,6 +428,8 @@ i=2,\dots,N
 
         In addition to the lens and cover, the output of Mapper depends on the clustering algorithm used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{fig:mapper-illustration}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{fig:man-illustration}. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. The question becomes, by which rule to connect two nodes.
     }
+
+    \vspace{1.6cm}
 
     
 
@@ -446,7 +448,7 @@ i=2,\dots,N
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 1. Noisy input $X$}\par
                 \vspace{0.18cm}
-                \posterimageframe{9.25cm}{Abschlussarbeit_2021/LaTeX/images/eight_dataset.png}
+                \posterimageframe{10.8cm}{Abschlussarbeit_2021/LaTeX/images/eight_dataset.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The \enquote{Noisy 8} dataset.}
                 \label{fig:noisy-eight-data}
@@ -456,7 +458,7 @@ i=2,\dots,N
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 2a. Select the local scales $\epsilon_i$}\par
                 \vspace{0.18cm}
-                \postercenteredimageframe{9.25cm}{threshold_choice_exemplary.png}
+                \postercenteredimageframe{10.8cm}{threshold_choice_exemplary.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto f(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\epsilon_i$.}
                 \label{fig:local-scale-selection}
@@ -469,7 +471,7 @@ i=2,\dots,N
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 2b. Grid stability}\par
                 \vspace{0.18cm}
-                \postercenteredimageframe{9.5cm}{Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png}
+                \postercenteredimageframe{11.1cm}{Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{Critical scale as the number $N$ of candidate scales increases.}
                 \label{fig:epsilon-critical-stability}
@@ -479,7 +481,7 @@ i=2,\dots,N
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 3a. Random thresholds}\par
                 \vspace{0.18cm}
-                \postercenteredimageframe{9.5cm}{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
+                \postercenteredimageframe{11.1cm}{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The two-loop structure is lost.}
                 \label{fig:noisy-eight-random-thresholds}
@@ -489,13 +491,15 @@ i=2,\dots,N
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries 3b. Spectral thresholds}\par
                 \vspace{0.18cm}
-                \postercenteredimageframe{9.5cm}{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
+                \postercenteredimageframe{11.1cm}{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
                 \par\vspace{0.18cm}
                 \captionof{figure}{The two-loop structure is recovered.}
                 \label{fig:noisy-eight-spectral-thresholds}
             \end{minipage}
         \end{center}
     }
+
+    \vspace{1.6cm}
 
     \posterblock{Case Study: COVID-19 Spread in the USA}{
         Glushakov et al.~\textbf{[2]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcare variables. Here, spectral scale selection determines the local M$\alpha$N thresholds automatically, using the spectral scale selection with functional $f(K)=C(K)\cdot E(K)$.
@@ -535,7 +539,7 @@ i=2,\dots,N
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \posterimageframe{14cm}{COVID-projections_coloring.png}
+                \posterimageframe{16cm}{COVID-projections_coloring.png}
                 \captionof{figure}{Spectrally selected M$\alpha$N graph with continuous node coloring.}
                 \label{fig:covid-spectral-graph}
             \end{minipage}
@@ -543,7 +547,7 @@ i=2,\dots,N
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \posterimageframe{14cm}{COVID_Girvan-Newman_4communities.png}
+                \posterimageframe{16cm}{COVID_Girvan-Newman_4communities.png}
                 \captionof{figure}{Four communities obtained by Girvan--Newman; remaining nodes are shown in gray.}
                 \label{fig:covid-girvan-newman}
             \end{minipage}
@@ -593,6 +597,8 @@ i=2,\dots,N
     % \textbf{Conclusion.}
     % The spectrally selected M$\alpha$N graph reproduces the manually tuned communities from the original study and yields a partition that is supported by independent county-level characteristics.
     }
+
+    \vspace{2cm}
 
     \posterreferences
 

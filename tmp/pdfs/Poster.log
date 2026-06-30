@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  30 JUN 2026 09:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  30 JUN 2026 10:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -692,7 +692,7 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Calculating math sizes for size <20> on input line 131.
+LaTeX Font Info:    Calculating math sizes for size <21> on input line 131.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
 31.
 
@@ -718,11 +718,11 @@ LaTeX Font Info:    Trying to load font information for OMX+lmex on input line
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <20> on input line 131.
+(Font)              <21> on input line 131.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <13.99994> on input line 131.
+(Font)              <14.69994> on input line 131.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 131.
+(Font)              <10.5> on input line 131.
 LaTeX Font Info:    Trying to load font information for U+msa on input line 131
 .
 
@@ -735,13 +735,13 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 131
 (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Calculating math sizes for size <16> on input line 133.
+LaTeX Font Info:    Calculating math sizes for size <17> on input line 133.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <16> on input line 133.
+(Font)              <17> on input line 133.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11.19995> on input line 133.
+(Font)              <11.89995> on input line 133.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 133.
+(Font)              <8.5> on input line 133.
 <Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png, id=4, 285.9483pt x 81.1833
 pt>
 File: Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png Graphic file (type png
@@ -750,13 +750,6 @@ File: Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png Graphic file (type png
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png  us
 ed on input line 138.
 (pdftex.def)             Requested size: 460.29985pt x 130.6875pt.
-LaTeX Font Info:    Calculating math sizes for size <15.5> on input line 184.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <15.5> on input line 184.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.84995> on input line 184.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7.75> on input line 184.
 <Abschlussarbeit_2021/LaTeX/images/Functional scale choice 2.png, id=6, 1646.15
 pt x 962.59625pt>
 File: Abschlussarbeit_2021/LaTeX/images/Functional scale choice 2.png Graphic f
@@ -764,7 +757,7 @@ ile (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Functional scale choice 2.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Functional scale cho
 ice 2.png  used on input line 245.
-(pdftex.def)             Requested size: 745.55557pt x 435.96973pt.
+(pdftex.def)             Requested size: 745.41156pt x 435.88159pt.
 <Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 2.png,
  id=7, 1541.76pt x 1027.84pt>
 File: Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 2
@@ -773,7 +766,7 @@ File: Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 2
 png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Functional with mult
 iple equal maxima 2.png  used on input line 245.
-(pdftex.def)             Requested size: 745.55557pt x 497.02756pt.
+(pdftex.def)             Requested size: 745.41156pt x 496.93344pt.
 <Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png, id=8, 
 1534.73375pt x 1031.855pt>
 File: Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png Gr
@@ -794,13 +787,13 @@ e (type png)
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/stationary distribut
 ion.png  used on input line 378.
 (pdftex.def)             Requested size: 432.57286pt x 290.21483pt.
-LaTeX Font Info:    Calculating math sizes for size <22> on input line 430.
+LaTeX Font Info:    Calculating math sizes for size <24> on input line 430.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <22> on input line 430.
+(Font)              <24> on input line 430.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <15.39993> on input line 430.
+(Font)              <16.79993> on input line 430.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11> on input line 430.
+(Font)              <12> on input line 430.
 LaTeX Font Info:    Trying to load font information for TS1+lmss on input line 
 430.
 
@@ -814,7 +807,7 @@ File: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png Graphic file
 <use Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 
 3.png  used on input line 430.
-(pdftex.def)             Requested size: 487.08557pt x 217.19646pt.
+(pdftex.def)             Requested size: 486.9985pt x 217.15762pt.
 <Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png, id=11, 1667.22874pt x 
 950.55125pt>
 File: Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png Graphic file (type
@@ -822,7 +815,7 @@ File: Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png Graphic file (type
 <use Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png
   used on input line 430.
-(pdftex.def)             Requested size: 459.1126pt x 261.75775pt.
+(pdftex.def)             Requested size: 486.99466pt x 277.65439pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 430.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -833,57 +826,57 @@ File: Abschlussarbeit_2021/LaTeX/images/eight_dataset.png Graphic file (type pn
 g)
 <use Abschlussarbeit_2021/LaTeX/images/eight_dataset.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_dataset.png  u
-sed on input line 498.
-(pdftex.def)             Requested size: 263.15997pt x 263.15997pt.
+sed on input line 500.
+(pdftex.def)             Requested size: 307.27827pt x 307.27827pt.
 <Abschlussarbeit_2021/LaTeX/images/threshold_choice_exemplary.png, id=13, 859.2
 903pt x 267.399pt>
 File: Abschlussarbeit_2021/LaTeX/images/threshold_choice_exemplary.png Graphic 
 file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/threshold_choice_exemplary.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/threshold_choice_exe
-mplary.png  used on input line 498.
-(pdftex.def)             Requested size: 608.8941pt x 189.47923pt.
+mplary.png  used on input line 500.
+(pdftex.def)             Requested size: 608.7761pt x 189.44252pt.
 <Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png, id=14, 513.117pt x 3
 24.4923pt>
 File: Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png Graphic file (ty
 pe png)
 <use Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eps_crit stability.p
-ng  used on input line 498.
-(pdftex.def)             Requested size: 355.1864pt x 224.61786pt.
+ng  used on input line 500.
+(pdftex.def)             Requested size: 355.12376pt x 224.57826pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_fail.png, id=15, 3055.415pt x 3102.591
 25pt>
 File: Abschlussarbeit_2021/LaTeX/images/eight_fail.png Graphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/eight_fail.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_fail.png  used
- on input line 498.
-(pdftex.def)             Requested size: 266.16396pt x 270.27359pt.
+ on input line 500.
+(pdftex.def)             Requested size: 309.42902pt x 314.20667pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_proper.png, id=16, 3055.415pt x 3102.5
 9125pt>
 File: Abschlussarbeit_2021/LaTeX/images/eight_proper.png Graphic file (type png
 )
 <use Abschlussarbeit_2021/LaTeX/images/eight_proper.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_proper.png  us
-ed on input line 498.
-(pdftex.def)             Requested size: 266.16396pt x 270.27359pt.
+ed on input line 500.
+(pdftex.def)             Requested size: 309.42902pt x 314.20667pt.
 <Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png, id=17, 2258.
 4375pt x 1806.75pt>
 File: Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png Graphic 
 file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID-projections_co
-loring.png  used on input line 595.
-(pdftex.def)             Requested size: 487.07088pt x 389.65671pt.
+loring.png  used on input line 599.
+(pdftex.def)             Requested size: 486.9675pt x 389.574pt.
 <Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png, id=18,
  2030.58624pt x 1624.0675pt>
 File: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png Gr
 aphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_
-4communities.png  used on input line 595.
-(pdftex.def)             Requested size: 487.07181pt x 389.56114pt.
-LaTeX Font Info:    Font shape `OT1/lmss/m/it' in size <11> not available
-(Font)              Font shape `OT1/lmss/m/sl' tried instead on input line 597.
+4communities.png  used on input line 599.
+(pdftex.def)             Requested size: 486.97885pt x 389.48679pt.
+LaTeX Font Info:    Font shape `OT1/lmss/m/it' in size <13> not available
+(Font)              Font shape `OT1/lmss/m/sl' tried instead on input line 603.
 
  [1
 
@@ -911,39 +904,35 @@ L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 19683 strings out of 474116
- 403370 string characters out of 5743682
- 2052187 words of memory out of 5000000
- 41711 multiletter control sequences out of 15000+600000
- 685708 words of font info for 141 fonts, out of 8000000 for 9000
+ 19656 strings out of 474116
+ 402948 string characters out of 5743682
+ 2053187 words of memory out of 5000000
+ 41687 multiletter control sequences out of 15000+600000
+ 668199 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  83i,24n,87p,784b,757s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/lo
-cal/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texliv
-e/2024/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2024/tex
-mf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2024/texmf-dist/fon
-ts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/pu
-blic/lm/lmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmm
-i8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></us
-r/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/tex
-live/2024/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2024/t
-exmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2024/texmf-dist/fo
-nts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/pu
-blic/lm/lmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9
-.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr
-/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmss12.pfb></usr/local/tex
-live/2024/texmf-dist/fonts/type1/public/lm/lmss17.pfb></usr/local/texlive/2024/
-texmf-dist/fonts/type1/public/lm/lmss8.pfb></usr/local/texlive/2024/texmf-dist/
-fonts/type1/public/lm/lmss9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1
-/public/lm/lmssbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/
-lm/lmsso12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10
-.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/
-local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texli
-ve/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on tmp/pdfs/Poster.pdf (1 page, 11454958 bytes).
+cal/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texliv
+e/2024/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2024/texm
+f-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2024/texmf-dist/font
+s/type1/public/lm/lmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/pub
+lic/lm/lmmi9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr1
+2.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr
+/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texli
+ve/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texm
+f-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts
+/type1/public/lm/lmss12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/pub
+lic/lm/lmss17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lms
+s8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmss9.pfb></us
+r/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/
+texlive/2024/texmf-dist/fonts/type1/public/lm/lmsso12.pfb></usr/local/texlive/2
+024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-
+dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2024/texmf-dist/fonts/
+type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on tmp/pdfs/Poster.pdf (1 page, 11399690 bytes).
 PDF statistics:
- 169 PDF objects out of 1000 (max. 8388607)
- 90 compressed objects within 1 object stream
+ 144 PDF objects out of 1000 (max. 8388607)
+ 75 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
