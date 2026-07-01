@@ -182,6 +182,8 @@
     \end{center}
 }
 
+\vspace{-0.45cm}
+
 \posterblock{2. Spectral Scale Selection}{
 Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $\oplus$ be a commutative, binary operation on them. Motivated by \textbf{[1]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
 \posterequationpair{0.58}{0.39}
@@ -201,6 +203,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     }
     In this easy case, \textbf{nonnegativity} of the functional $f$ already implies its subadditivity along the filtration. The scale similarity matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$. Consequently, by \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus induces a ranking of the scales $\epsilon_i$ that incorporates their coupling to all other scales through $\Sigma_N$. 
 }
+
+\vspace{-0.45cm}
 
 \posterblock{3. Non-monotone Scale Selection}{
     The critical scale is chosen by the rule
@@ -236,6 +240,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 }
 
 
+\vspace{-0.45cm}
+
 \posterblock{4. Connection to Markov Chains}{
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequationpair{0.56}{0.39}
@@ -250,7 +256,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
     That is, the transition matrix $P$ is the \textbf{variationally optimal stochastic normalization} of the scale similarity matrix $\Sigma_N$.
 }
 
-\vspace{-0.5cm}
+\vspace{-0.45cm}
 
 \posterblock{5. Monotone Scale Selection}{
     The connection to Markov Chains inspires the following approach for strictly increasing functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
