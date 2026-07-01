@@ -71,7 +71,7 @@
     \begin{minipage}[c]{#1\linewidth}
       \centering\posterequationbox{#3}%
     \end{minipage}%
-    \hspace{0.25em},\hspace{0.25em}%
+    \hspace{0.5em}%
     \begin{minipage}[c]{#2\linewidth}
       \centering\posterequationbox{#4}%
     \end{minipage}%
@@ -185,7 +185,7 @@
 \posterblock{2. Spectral Scale Selection}{
 Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $\oplus$ be a commutative, binary operation on them. In what follows, we restrict attention to $\oplus=\cup$. Motivated by \textbf{[1]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
 \posterequationpair{0.58}{0.39}
-  {\langle K_i,K_j\rangle_f\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)}
+  {\langle K_i,K_j\rangle_f\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j),}
   {\Sigma_N\coloneqq \bigl(\langle K_i,K_j\rangle_f\bigr)_{i,j=1}^{N}\in\mathbb{R}^{N\times N}.}
 
     As functional $f$ we consider any combination of \textbf{topological or combinatorial features} like Betti numbers or face counts of certain dimension that is -in order for $\Sigma_N$ to be nonnegative- \textbf{subadditive} with respect to the operation $\oplus$. For example, we can choose
@@ -240,14 +240,14 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 \posterblock{3. Connection to Markov Chains and Monotone Scale Selection}{
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequationpair{0.56}{0.39}
-      {P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*}}
-      {\pi_i^{P}=\frac{(v_i^*)^2}{\|v^*\|_2^2}}
+      {P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*},}
+      {\pi_i^{P}=\frac{(v_i^*)^2}{\|v^*\|_2^2},}
     where $D_{v^*}=\text{diag}(v^*_1,\dots,v^*_N)$ and $\lambda^*>0$ the eigenvalue corresponding to the principal eigenvector $v^*$. The obtained transition matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional} over irreducible, row-stochastic matrices $Q$ with stationary distribution $\pi^{Q}$:
     \posterequationpair{0.57}{0.40}
-      {\mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}}}
+      {\mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}},}
       {P\in\arg\max\left\{\mathcal{F}(Q;\Sigma_N):
        \substack{Q\in\mathbb{R}^{N\times N}\\
-       \text{row-stochastic and irreducible}}\right\}}
+       \text{row-stochastic and irreducible}}\right\}.}
     That is, the transition matrix $P$ is the \textbf{variationally optimal stochastic normalization} of the scale similarity matrix $\Sigma_N$. The connection to Markov Chains inspires the following approach for strictly increasing functionals, that is, when $0<f(K_1)<\dots<f(K_N)$. In such a case, the scale similarity matrix is positive definite and the inverse $\Sigma_N^{-1}$ is tridiagonal. This allows us to see the \textbf{discrete Laplacian} $\mathcal{L}=f(K_1)^{-1}\text{diag}(1,0,\dots,0)-\Sigma_N^{-1}$ as the generator of a continuous-time birth-death chain on the state space $\{1,\dots,N\}$. It is given by
 \posterequationpair{0.72}{0.25}
 {
