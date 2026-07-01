@@ -204,7 +204,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \end{pmatrix}
         \end{aligned}
     }
-    In this easy case, \textbf{nonnegativity} of the functional $f$ already implies its subadditivity along the filtration and the scale similarity matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$. Consequently, by \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus induces a ranking of the scales $\epsilon_i$ that incorporates their coupling to all other scales through $\Sigma_N$. The critical scale is chosen by the rule
+    In this easy case, \textbf{nonnegativity} of the functional $f$ already implies its subadditivity along the filtration. The scale similarity matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$. Consequently, by \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling and thus induces a ranking of the scales $\epsilon_i$ that incorporates their coupling to all other scales through $\Sigma_N$. The critical scale is chosen by the rule
     \posterequation{
         \begin{aligned}
             i_{\text{crit}}\in\arg\max_iv^*_i, \quad\epsilon_{\text{crit}}=\epsilon_{i_{\text{crit}}}
@@ -367,7 +367,7 @@ i=2,\dots,N
 \vspace{0pt}
 
     \posterblock{4. The Mapper Algorithm vs. Multiscale $\alpha$-neighboring (M$\alpha$N) approach}{
-    Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{D}$ be the data at hand, equipped with a metric $d$. One must first choose a \textbf{lens function} $\ell:X\to\mathbb{R}^{m}$, typically $m\in\{1,2\}$ and a \textbf{finite cover} $\mathcal{U}=\{U_i\}_{i\in I}$ of $\ell(X)$, where $U_i\subseteq\mathbb{R}^{m}$. The pullback cover is $X_i=\ell^{-1}(U_i)$.
+    Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{D}$ be the data at hand, equipped with a metric $d$. Choose a \textbf{lens function} $\ell:X\to\mathbb{R}^{m}$, typically $m\in\{1,2\}$ and a \textbf{finite open cover} $\mathcal{U}=\{U_i\}_{i\in I}$ of $\ell(X)$. The pullback cover is $X_i=\ell^{-1}(U_i)$.
 
     \begin{center}
             \begin{minipage}[t]{0.47\linewidth}
@@ -405,7 +405,7 @@ i=2,\dots,N
             \end{minipage}
         \end{center}
 
-        In addition to the lens and cover, the output of Mapper \textbf{depends on the clustering algorithm} used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, as illustrated on the left. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), as illustrated for M$\alpha$N on the right. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. The question becomes, by which rule to connect two nodes.
+        In addition to the lens and cover, the output of Mapper \textbf{depends on the clustering algorithm} used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, as illustrated on the left. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), as illustrated for M$\alpha$N on the right. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. \textbf{The question becomes, by which rule to connect two nodes.}
     }
 
     \vspace{1.6cm}
@@ -420,7 +420,7 @@ i=2,\dots,N
             \end{aligned}
         }
 
-        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. \textcolor{red}{The local scale selection for one pullback set $X_i$ is shown below.} As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
+        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. The local scale selection for one pullback set $X_i$ is shown below. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
 
         \begin{center}
             \begin{minipage}[t]{0.36\linewidth}
