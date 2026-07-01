@@ -210,7 +210,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             i_{\text{crit}}\in\arg\max_iv^*_i, \quad\epsilon_{\text{crit}}=\epsilon_{i_{\text{crit}}}
         \end{aligned}
     }
-    Under the above assumptions, it can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima need not coincide, \textcolor{red}{as illustrated by the first plot below}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, \textcolor{red}{as illustrated by the second plot below}. For strictly monotone functionals $f$, the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
+    Under the above assumptions, it can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima need not coincide, as illustrated by the first plot below, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, as illustrated by the second plot below. For strictly monotone functionals $f$, the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
 
     \vspace{0.5em}
 
@@ -339,7 +339,7 @@ i=2,\dots,N
     \posterequationpair{0.40}{0.51}
       {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
       {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
-    \textcolor{red}{The plots below visualize the monotone functional and the corresponding stationary distribution.} Since $-\mathcal{L}_{ii}=d_i^{-1}+d_{i+1}^{-1}$ for interior scales $2\le i\le N-1$, minimizing $\pi_i^{\text{BD}}$ favors scales with two large consecutive increments.
+    The plots below visualize the monotone functional and the corresponding stationary distribution. Since $-\mathcal{L}_{ii}=d_i^{-1}+d_{i+1}^{-1}$ for interior scales $2\le i\le N-1$, minimizing $\pi_i^{\text{BD}}$ favors scales with two large consecutive increments.
 
     \vspace{0.4em}
 
@@ -358,8 +358,6 @@ i=2,\dots,N
 
       \end{minipage}
     \end{center}
-
-    % We can use the connection to Markov chains, to define an \textbf{\enquote{spectrally optimizable}} (admissible) triple $(f,\{K_i\},\oplus)$, namely if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$. 
 }
 
 
@@ -407,7 +405,7 @@ i=2,\dots,N
             \end{minipage}
         \end{center}
 
-        In addition to the lens and cover, the output of Mapper \textbf{depends on the clustering algorithm} used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, \textcolor{red}{as illustrated on the left}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), \textcolor{red}{as illustrated for M$\alpha$N on the right}. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. The question becomes, by which rule to connect two nodes.
+        In addition to the lens and cover, the output of Mapper \textbf{depends on the clustering algorithm} used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, as illustrated on the left. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), as illustrated for M$\alpha$N on the right. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. The question becomes, by which rule to connect two nodes.
     }
 
     \vspace{1.6cm}
@@ -422,7 +420,7 @@ i=2,\dots,N
             \end{aligned}
         }
 
-        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. \textcolor{red}{An exemplary local scale selection is shown below.} As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
+        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. An exemplary local scale selection is shown below. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
 
         \begin{center}
             \begin{minipage}[t]{0.36\linewidth}
@@ -499,7 +497,7 @@ i=2,\dots,N
             \end{aligned}
         }
 
-        \textcolor{red}{The application of the \textbf{Girvan--Newman algorithm} yielded four communities, shown on the right alongside the continuously colored graph on the left. In the left-hand graph, color indicates the value of the centrality projection $c(x)$, with darker colors representing higher values; in the right-hand graph, the four colors indicate the four communities.}
+        The application of the \textbf{Girvan--Newman algorithm} yielded four communities, shown on the right alongside the continuously colored graph on the left. In the left-hand graph, color indicates the value of the centrality projection $c(x)$, with darker colors representing higher values; in the right-hand graph, the four colors indicate the four communities.
 
         \begin{center}
             \begin{minipage}[t]{0.48\linewidth}
@@ -552,12 +550,7 @@ i=2,\dots,N
     }}
 \end{minipage}
 
-% $p\text{-values}<0.01$
-
     \medskip
-
-    % \textbf{Conclusion.}
-    % The spectrally selected M$\alpha$N graph reproduces the manually tuned communities from the original study and yields a partition that is supported by independent county-level characteristics.
     }
 
     \vspace{2cm}
