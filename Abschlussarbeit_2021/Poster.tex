@@ -420,7 +420,7 @@ i=2,\dots,N
             \end{aligned}
         }
 
-        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. An exemplary local scale selection is shown below. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
+        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. \textcolor{red}{The local scale selection for one pullback set $X_i$ is shown below.} As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
 
         \begin{center}
             \begin{minipage}[t]{0.36\linewidth}
@@ -434,7 +434,16 @@ i=2,\dots,N
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries Select the local scales $\epsilon_i$}\par
                 \vspace{0.18cm}
-                \postercenteredimageframe{10.8cm}{threshold_choice_exemplary.png}
+                \noindent
+                \begin{minipage}[t]{0.485\linewidth}
+                    \vspace{0pt}
+                    \postercenteredimageframe{10.8cm}{functional.png}
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.485\linewidth}
+                    \vspace{0pt}
+                    \postercenteredimageframe{10.8cm}{principal_eigenvector.png}
+                \end{minipage}
             \end{minipage}
         \end{center}
 
@@ -444,7 +453,7 @@ i=2,\dots,N
                 \vspace{0pt}
                 {\color{posteraccent}\bfseries Grid stability}\par
                 \vspace{0.18cm}
-                \postercenteredimageframe{11.1cm}{Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png}
+                \postercenteredimageframe{11.1cm}{threshold_stability.png}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.305\linewidth}
