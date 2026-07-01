@@ -114,7 +114,7 @@
     \textbf{[1]} M. Schlather. \emph{An Algebraic Generalization of the Entropy and Its Application to Statistics}. arXiv:2404.05854, 2024.\par\smallskip
     \textbf{[2]} F. Chazal and B. Michel. \emph{Covers and Nerves: Union of Balls, Geometric Inference and Mapper}. Introduction to Topological Data Analysis, Barcelona, 2016.\par\smallskip
     \textbf{[3]} S. Glushakov, I. Kotenko, and K. Drach. \emph{Understanding the Spread of COVID-19 in the United States Using Topology and Machine Learning for Time Series}. PHUSE EU Connect, 2020.\par\smallskip
-    \textcolor{red}{\textbf{[4]} M. Girvan and M. E. J. Newman. \emph{Community structure in social and biological networks}. Proceedings of the National Academy of Sciences 99(12), 7821--7826, 2002.}
+    \textbf{[4]} M. Girvan and M. E. J. Newman. \emph{Community structure in social and biological networks}. Proceedings of the National Academy of Sciences 99(12), 7821--7826, 2002.
   \end{tcolorbox}
 }
 \begin{document}
@@ -326,20 +326,20 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 \frac{1}{d_N}
 &
 -\frac{1}{d_N}
-\end{pmatrix}
+\end{pmatrix},
 \end{aligned}
 }
 {
 \begin{gathered}
 d_i=f(K_i)-f(K_{i-1})\\
-i=2,\dots,N
+i=2,\dots,N.
 \end{gathered}
 }
 
     The entries of the transition matrix $P^{\text{BD}}$ of the corresponding embedded discrete-time Markov chain are given by $P^{\text{BD}}_{ij}=-(1-\delta_{ij})\mathcal{L}_{ij}/\mathcal{L}_{ii}$. Its stationary distribution $\pi^{\text{BD}}$ can be used as a scale selection rule for strictly increasing functionals:
     \posterequationpair{0.40}{0.51}
-      {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
-      {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
+      {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}},}
+      {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}.}
     The plots below visualize the monotone functional and the corresponding stationary distribution. Since $-\mathcal{L}_{ii}=d_i^{-1}+d_{i+1}^{-1}$ for interior scales $2\le i\le N-1$, minimizing $\pi_i^{\text{BD}}$ favors scales with two large consecutive increments.
 
     \vspace{0.4em}
@@ -507,7 +507,7 @@ i=2,\dots,N
             \end{aligned}
         }
 
-        The application of the \textbf{Girvan--Newman algorithm}~\textcolor{red}{\textbf{[4]}} yielded four communities, shown on the right alongside the continuously colored graph on the left. In the left-hand graph, color indicates the value of the centrality projection $c(x)$, with darker colors representing higher values; in the right-hand graph, the four colors indicate the four communities.
+        The application of the \textbf{Girvan--Newman algorithm}~\textbf{[4]} yielded four communities, shown on the right alongside the continuously colored graph on the left. In the left-hand graph, color indicates the value of the centrality projection $c(x)$, with darker colors representing higher values; in the right-hand graph, the four colors indicate the four communities.
 
         \begin{center}
             \begin{minipage}[t]{0.48\linewidth}
