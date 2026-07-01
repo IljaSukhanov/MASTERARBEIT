@@ -143,7 +143,7 @@
 
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
-    \posterblock{Why Select One Scale}{
+    \posterblock{1. Why Select One Scale}{
     Persistent homology is scale-agnostic: the persistence diagram records topological features across all filtration scales simultaneously and thereby avoids committing to any single resolution. Nevertheless, a surprising number of problems in and around TDA reduce to the \textbf{choice of one filtration parameter}, and doing so in a theoretically justified way remains a longstanding methodological gap. We list four representative settings in which a topologically justified choice of scale is essential:
 
     \vspace{0.6em}
@@ -183,7 +183,7 @@
     \end{center}
 }
 
-\posterblock{Spectral Scale Selection}{
+\posterblock{2. Spectral Scale Selection}{
 Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $\oplus$ be a commutative, binary operation on them. In what follows, we restrict attention to $\oplus=\cup$. Motivated by \textbf{[1]}, we define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix} by
 \posterequationpair{0.58}{0.39}
   {\langle K_i,K_j\rangle_f\coloneqq f(K_i)+f(K_j)-f(K_i\oplus K_j)}
@@ -245,7 +245,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
 }
 
 
-\posterblock{Connection to Markov Chains and Monotone Scale Selection}{
+\posterblock{3. Connection to Markov Chains and Monotone Scale Selection}{
     The spectral scale choice can be motivated by the association of a \textbf{finite Markov chain} to the scale similarity matrix $\Sigma_N$ such that its stationary distribution is proportional to the squared coordinates of the principal eigenvector $v^*$. Construct the transition matrix $P$ using \textbf{Doob's $h$-Transform} and obtain the stationary distribution:
     \posterequationpair{0.56}{0.39}
       {P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*}}
@@ -383,7 +383,7 @@ i=2,\dots,N
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
 
-    \posterblock{The Mapper Algorithm vs. Multiscale $\alpha$-neighboring (M$\alpha$N) approach}{
+    \posterblock{4. The Mapper Algorithm vs. Multiscale $\alpha$-neighboring (M$\alpha$N) approach}{
     Let $X=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{D}$ be the data at hand, equipped with a metric $d$. One must first choose a \textbf{lens function} $\ell:X\to\mathbb{R}^{m}$, typically $m\in\{1,2\}$ and a \textbf{finite cover} $\mathcal{U}=\{U_i\}_{i\in I}$ of $\ell(X)$, where $U_i\subseteq\mathbb{R}^{m}$. The pullback cover is $X_i=\ell^{-1}(U_i)$.
 
     \begin{center}
@@ -433,7 +433,7 @@ i=2,\dots,N
 
     
 
-    \posterblock{M$\alpha$N graph approach: Synthetic dataset experiment}{
+    \posterblock{5. M$\alpha$N graph approach: Synthetic dataset experiment}{
         Instead of clustering each $X_i$, connect two points $x,y\in X$ that belong to at least one common pullback set if and only if
         \posterequation{
             \begin{aligned}
@@ -501,7 +501,7 @@ i=2,\dots,N
 
     \vspace{1.6cm}
 
-    \posterblock{Case Study: COVID-19 Spread in the USA}{
+    \posterblock{6. Case Study: COVID-19 Spread in the USA}{
         Glushakov et al.~\textbf{[3]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcare variables. Here, spectral scale selection determines the local M$\alpha$N thresholds automatically, using the spectral scale selection with functional $f(K)=C(K)\cdot E(K)$.
 
         \noindent
