@@ -138,7 +138,7 @@
 \end{minipage}
 
 \vspace{1.3cm}
-\enlargethispage{5cm}
+\enlargethispage{2cm}
 
 \begin{minipage}[t]{0.48\textwidth}
 \vspace{0pt}
@@ -191,7 +191,7 @@
 \posterblock{2. Spectral Scale Selection}{
 \begin{itemize}
     \item Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and $\oplus$ a commutative binary operation; below, $\oplus=\cup$.
-    \item The functional $f$ combines topological or combinatorial features and is \textbf{subadditive} with respect to $\oplus$.
+    \item $f$ combines topological or combinatorial features and is \textbf{subadditive} with respect to $\oplus$.
 \end{itemize}
 Motivated by \textbf{[1]}, define the \textbf{$f$-based divergence} and the \textbf{scale similarity matrix}:
 \posterequationpair{0.58}{0.39}
@@ -215,8 +215,8 @@ Motivated by \textbf{[1]}, define the \textbf{$f$-based divergence} and the \tex
         \end{aligned}
     }
     \begin{itemize}
-        \item Along the filtration, nonnegativity of $f$ already implies subadditivity.
-        \item The matrix $\Sigma_N$ is irreducible iff $f(K_1)>0$.
+        \item Along the filtration, nonnegativity of $f$ implies subadditivity.
+        \item $\Sigma_N$ is irreducible iff $f(K_1)>0$.
         \item By \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling; it ranks the scales $\epsilon_i$ through their coupling in $\Sigma_N$.
     \end{itemize}
 }
@@ -295,83 +295,14 @@ Motivated by \textbf{[1]}, define the \textbf{$f$-based divergence} and the \tex
     \end{itemize}
 \posterequationpair{0.72}{0.25}
 {
-\begin{aligned}
-\mathcal{L}
-&=
-\begin{pmatrix}
--\frac{1}{d_2}
-&
-\frac{1}{d_2}
-&
-0
-&
-\cdots
-&
-0
-&
-0
-\\[0.4em]
-\frac{1}{d_2}
-&
--\left(\frac{1}{d_2}+\frac{1}{d_3}\right)
-&
-\frac{1}{d_3}
-&
-\ddots
-&
-\vdots
-&
-\vdots
-\\[0.4em]
-0
-&
-\frac{1}{d_3}
-&
--\left(\frac{1}{d_3}+\frac{1}{d_4}\right)
-&
-\ddots
-&
-0
-&
-0
-\\[0.4em]
-\vdots
-&
-\ddots
-&
-\ddots
-&
-\ddots
-&
-\frac{1}{d_{N-1}}
-&
-0
-\\[0.4em]
-0
-&
-\cdots
-&
-0
-&
-\frac{1}{d_{N-1}}
-&
--\left(\frac{1}{d_{N-1}}+\frac{1}{d_N}\right)
-&
-\frac{1}{d_N}
-\\[0.4em]
-0
-&
-\cdots
-&
-0
-&
-0
-&
-\frac{1}{d_N}
-&
--\frac{1}{d_N}
-\end{pmatrix},
-\end{aligned}
+\begin{gathered}
+\mathcal L=(\mathcal L_{ij})_{i,j=1}^{N},\\
+\mathcal L_{i,i+1}=\mathcal L_{i+1,i}=d_{i+1}^{-1},
+\quad i=1,\dots,N-1,\\
+\mathcal L_{ii}=-\sum_{j\ne i}\mathcal L_{ij},
+\qquad
+\mathcal L_{ij}=0\quad\text{if }|i-j|>1,
+\end{gathered}
 }
 {
 \begin{gathered}
@@ -480,7 +411,7 @@ i=2,\dots,N.
             \end{aligned}
         }
 
-        The threshold $\epsilon_i$ is chosen by applying spectral scale selection to $X_i$ using
+        Choose $\epsilon_i$ by applying spectral scale selection to $X_i$ with
         \posterequation{
             \begin{aligned}
                 f(K)=C(K)\cdot E(K),
@@ -547,8 +478,7 @@ i=2,\dots,N.
 
     \posterblock{8. Case Study: COVID-19 Spread in the USA}{
         \begin{itemize}
-            \item Glushakov et al.~\textbf{[3]} constructed a county-level graph to identify similarities in early COVID-19 trajectories.
-            \item They revealed four major communities associated with demographic and healthcare variables.
+            \item Glushakov et al.~\textbf{[3]} constructed a county-level graph to identify similarities in early COVID-19 trajectories, revealing four major communities associated with demographic and healthcare variables.
             \item Here, spectral scale selection determines the local M$\alpha$N thresholds automatically using $f(K)=C(K)E(K)$.
         \end{itemize}
 
