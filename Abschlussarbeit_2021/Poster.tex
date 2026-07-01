@@ -11,7 +11,6 @@
 \usepackage{lmodern}
 
 \usepackage{amsmath, amssymb}
-\usepackage{caption}
 \usepackage{enumitem}
 
 \pagestyle{empty}
@@ -25,7 +24,6 @@
 \newcommand{\posterauthor}{Ilja Sukhanov\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
 \newcommand{\posterinfo}{\textsuperscript{1} Universität Ulm, Germany \quad \textsuperscript{2} MISANU, Belgrade \quad \textsuperscript{3} Kharazin National University, Charkiw}
 
-\captionsetup{font=small,labelfont=bf,skip=0.22cm}
 \setlength{\parskip}{0.48em}
 \setlist[itemize]{leftmargin=1.1em,itemsep=0.1em,topsep=0.1em}
 \setlist[enumerate]{leftmargin=1.4em,itemsep=0.3em,topsep=0.3em}
@@ -212,7 +210,7 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             i_{\text{crit}}\in\arg\max_iv^*_i, \quad\epsilon_{\text{crit}}=\epsilon_{i_{\text{crit}}}
         \end{aligned}
     }
-    Under the above assumptions, it can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima need not coincide, cf. Figure~\ref{fig:functional-scale-choice}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, cf. Figure~\ref{fig:functional-multiple-maxima}. For strictly monotone functionals $f$, the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
+    Under the above assumptions, it can be shown that the sequences $\{f(K_i)\}_{i=1}^{N}$ and $\{v^*_i\}_{i=1}^{N}$ have the same local monotonicity pattern, that is, $\text{sgn}(v_{i+1}^*-v_i^*)=\text{sgn}(f(K_{i+1})-f(K_i))$ for all $1\le i\le N-1$ and thus their \textbf{local maxima coincide}. For non-monotone functionals, this does not make the Perron vector redundant, since global maxima need not coincide, \textcolor{red}{as illustrated by the first plot below}, and the Perron vector can still serve as a \textbf{tiebreaker} between separated equal maxima, \textcolor{red}{as illustrated by the second plot below}. For strictly monotone functionals $f$, the Perron vector merely reflects the monotonicity and the critical scale will always lie at an endpoint.
 
     \vspace{0.5em}
 
@@ -223,8 +221,6 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \centering
             \makebox[\linewidth][c]{\includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional scale choice 2.png}}
 
-            \captionof{figure}{Non-maximal functional value selected.}
-            \label{fig:functional-scale-choice}
         \end{minipage}
 
         \vspace{0.55em}
@@ -234,13 +230,8 @@ Let $K_1,\dots,K_N$ be simplicial complexes on a common vertex set $X$ and let $
             \centering
             \makebox[\linewidth][c]{\includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 2.png}}
 
-            \captionof{figure}{Multiple equal maxima.}
-            \label{fig:functional-multiple-maxima}
         \end{minipage}
 
-        \vspace{0.4em}
-
-        {\small Examples illustrating how the Perron vector reweights local maxima and breaks ties between equal functional peaks.}
     \end{center}
 }
 
@@ -348,7 +339,7 @@ i=2,\dots,N
     \posterequationpair{0.40}{0.51}
       {i_{\text{crit}}\in\arg\min_i\pi_i^{\text{BD}}}
       {\pi_i^{\text{BD}}=\frac{\mathcal{L}_{ii}}{\sum_{j=1}^{N}\mathcal{L}_{jj}}}
-    A visual representation of the monotone scale selection rule is given in Figures~\ref{fig:monotone-functional} and~\ref{fig:monotone-stationary-distribution}. Since $-\mathcal{L}_{ii}=d_i^{-1}+d_{i+1}^{-1}$ for interior scales $2\le i\le N-1$, minimizing $\pi_i^{\text{BD}}$ favors scales with two large consecutive increments.
+    \textcolor{red}{The plots below visualize the monotone functional and the corresponding stationary distribution.} Since $-\mathcal{L}_{ii}=d_i^{-1}+d_{i+1}^{-1}$ for interior scales $2\le i\le N-1$, minimizing $\pi_i^{\text{BD}}$ favors scales with two large consecutive increments.
 
     \vspace{0.4em}
 
@@ -358,9 +349,6 @@ i=2,\dots,N
         \centering
         \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png}
 
-        \vspace{0.05em}
-        \refstepcounter{figure}\label{fig:monotone-functional}%
-        {\scriptsize Figure~\thefigure: Strictly increasing functional values $f(K_i)$.}
       \end{minipage}
       \hfill
       \begin{minipage}[t]{0.48\linewidth}
@@ -368,9 +356,6 @@ i=2,\dots,N
         \centering
         \posterimageframe{9.2cm}{Abschlussarbeit_2021/LaTeX/images/stationary distribution.png}
 
-        \vspace{0.05em}
-        \refstepcounter{figure}\label{fig:monotone-stationary-distribution}%
-        {\scriptsize Figure~\thefigure: Stationary distribution $\pi_i^{\mathrm{BD}}$ of the embedded jump chain.}
       \end{minipage}
     \end{center}
 
@@ -412,8 +397,6 @@ i=2,\dots,N
                 \centering
                 \posterimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
 
-                \captionof{figure}{Illustration of Mapper, taken from [2].}
-                \label{fig:mapper-illustration}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.48\linewidth}
@@ -421,12 +404,10 @@ i=2,\dots,N
                 \centering
                 \posterimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
 
-                \captionof{figure}{Illustration of the Multiscale $\alpha$-neighboring graph.}
-                \label{fig:man-illustration}
             \end{minipage}
         \end{center}
 
-        In addition to the lens and cover, the output of Mapper \textbf{depends on the clustering algorithm} used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, cf. Figure~\ref{fig:mapper-illustration}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), cf. Figure~\ref{fig:man-illustration}. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. The question becomes, by which rule to connect two nodes.
+        In addition to the lens and cover, the output of Mapper \textbf{depends on the clustering algorithm} used on each $X_i$. Afterwards, each cluster is seen as a node and an edge between two nodes is formed if the clusters overlap, \textcolor{red}{as illustrated on the left}. In some applications, like clinical studies or epidemiological analyses, one wishes to keep the interpretation of each node as a single subject (patient/county), \textcolor{red}{as illustrated for M$\alpha$N on the right}. M$\alpha$N removes clustering from graph construction, but community detection may still be applied afterward. The question becomes, by which rule to connect two nodes.
     }
 
     \vspace{1.6cm}
@@ -441,27 +422,21 @@ i=2,\dots,N
             \end{aligned}
         }
 
-        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. An exemplary scale selection is visualized in Figure~\ref{fig:local-scale-selection}. As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
+        The thresholds $\epsilon_i$ are chosen by applying the scale selection principle to $X_i$ using the functional $f(K)=C(K)\cdot E(K)$. This allows the graph to \textbf{adapt its scale locally} instead of imposing one global threshold. \textcolor{red}{An exemplary local scale selection is shown below.} As a first stress test, the M$\alpha$N approach was tested on a \textbf{\enquote{noisy 8}} dataset.
 
         \begin{center}
             \begin{minipage}[t]{0.36\linewidth}
                 \vspace{0pt}
-                {\color{posteraccent}\bfseries 1. Noisy input $X$}\par
+                {\color{posteraccent}\bfseries Noisy input $X$}\par
                 \vspace{0.18cm}
                 \posterimageframe{10.8cm}{Abschlussarbeit_2021/LaTeX/images/eight_dataset.png}
-                \par\vspace{0.18cm}
-                \captionof{figure}{The \enquote{Noisy 8} dataset.}
-                \label{fig:noisy-eight-data}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.60\linewidth}
                 \vspace{0pt}
-                {\color{posteraccent}\bfseries 2a. Select the local scales $\epsilon_i$}\par
+                {\color{posteraccent}\bfseries Select the local scales $\epsilon_i$}\par
                 \vspace{0.18cm}
                 \postercenteredimageframe{10.8cm}{threshold_choice_exemplary.png}
-                \par\vspace{0.18cm}
-                \captionof{figure}{Local scale selection on $X_i$: the functional profile $j\mapsto f(\mathrm{VR}_{\epsilon_j}(X_i))$ and the corresponding principal eigenvector identify the local threshold $\epsilon_i$.}
-                \label{fig:local-scale-selection}
             \end{minipage}
         \end{center}
 
@@ -469,32 +444,23 @@ i=2,\dots,N
         \begin{center}
             \begin{minipage}[t]{0.35\linewidth}
                 \vspace{0pt}
-                {\color{posteraccent}\bfseries 2b. Grid stability}\par
+                {\color{posteraccent}\bfseries Grid stability}\par
                 \vspace{0.18cm}
                 \postercenteredimageframe{11.1cm}{Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png}
-                \par\vspace{0.18cm}
-                \captionof{figure}{Critical scale as the number $N$ of candidate scales increases.}
-                \label{fig:epsilon-critical-stability}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.305\linewidth}
                 \vspace{0pt}
-                {\color{posteraccent}\bfseries 3a. Random thresholds}\par
+                {\color{posteraccent}\bfseries Random thresholds}\par
                 \vspace{0.18cm}
                 \postercenteredimageframe{11.1cm}{Abschlussarbeit_2021/LaTeX/images/eight_fail.png}
-                \par\vspace{0.18cm}
-                \captionof{figure}{The two-loop structure is lost.}
-                \label{fig:noisy-eight-random-thresholds}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.305\linewidth}
                 \vspace{0pt}
-                {\color{posteraccent}\bfseries 3b. Spectral thresholds}\par
+                {\color{posteraccent}\bfseries Spectral thresholds}\par
                 \vspace{0.18cm}
                 \postercenteredimageframe{11.1cm}{Abschlussarbeit_2021/LaTeX/images/eight_proper.png}
-                \par\vspace{0.18cm}
-                \captionof{figure}{The two-loop structure is recovered.}
-                \label{fig:noisy-eight-spectral-thresholds}
             \end{minipage}
         \end{center}
     }
@@ -533,23 +499,19 @@ i=2,\dots,N
             \end{aligned}
         }
 
-        The application of the \textbf{Girvan--Newman algorithm} yielded four communities, shown alongside the continuously colored graph in Figures~\ref{fig:covid-spectral-graph} and~\ref{fig:covid-girvan-newman}. The coloring in Figure~\ref{fig:covid-spectral-graph} indicates the value of the centrality projection $c(x)$, with darker colors representing higher values, whereas the four colors in Figure~\ref{fig:covid-girvan-newman} indicate the four communities.
+        \textcolor{red}{The application of the \textbf{Girvan--Newman algorithm} yielded four communities, shown on the right alongside the continuously colored graph on the left. In the left-hand graph, color indicates the value of the centrality projection $c(x)$, with darker colors representing higher values; in the right-hand graph, the four colors indicate the four communities.}
 
         \begin{center}
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
                 \posterimageframe{16cm}{COVID-projections_coloring.png}
-                \captionof{figure}{Spectrally selected M$\alpha$N graph with continuous node coloring.}
-                \label{fig:covid-spectral-graph}
             \end{minipage}
             \hfill
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
                 \posterimageframe{16cm}{COVID_Girvan-Newman_4communities.png}
-                \captionof{figure}{Four communities obtained by Girvan--Newman; remaining nodes are shown in gray.}
-                \label{fig:covid-girvan-newman}
             \end{minipage}
         \end{center}
 
