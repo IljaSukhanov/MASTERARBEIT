@@ -11,6 +11,7 @@
 \usepackage{lmodern}
 \usepackage[sfdefault,scaled=0.95]{FiraSans}
 \usepackage{ragged2e}
+\usepackage[percent]{overpic}
 
 \usepackage{amsmath, amssymb}
 \usepackage{enumitem}
@@ -124,6 +125,40 @@
         \vfill
         {\color{black!60}\fontsize{12}{14}\selectfont #3}\par
         \vspace{0.08cm}%
+      }%
+    }%
+  }%
+  \endgroup
+}
+\newcommand{\postermapperimageframecaption}[3]{%
+  \begingroup
+  \setlength{\fboxsep}{0pt}%
+  \makebox[\linewidth][c]{%
+    \fcolorbox{posterimageborder}{white}{%
+      \parbox[c][#1][s]{0.98\linewidth}{%
+        \centering
+        \vspace{0pt}\par\vfill
+        \begin{overpic}[width=\linewidth,height=\dimexpr#1-0.9cm\relax,keepaspectratio]{#2}
+          \put(51.5,23.7){\begingroup\setlength{\fboxsep}{0.08cm}\colorbox{white}{\fontsize{17}{19}\selectfont$\ell$}\endgroup}
+        \end{overpic}\par
+        \vfill
+        {\color{black!60}\fontsize{12}{14}\selectfont #3}\par
+        \vspace{0.08cm}%
+      }%
+    }%
+  }%
+  \endgroup
+}
+\newcommand{\postermalphaimageframe}[2]{%
+  \begingroup
+  \setlength{\fboxsep}{0pt}%
+  \makebox[\linewidth][c]{%
+    \fcolorbox{posterimageborder}{white}{%
+      \parbox[t][#1][t]{0.98\linewidth}{%
+        \vspace{0pt}\centering
+        \begin{overpic}[width=\linewidth,height=#1,keepaspectratio]{#2}
+          \put(46.6,47.9){\begingroup\setlength{\fboxsep}{0.08cm}\colorbox{white}{\fontsize{17}{19}\selectfont$\ell$}\endgroup}
+        \end{overpic}%
       }%
     }%
   }%
@@ -508,7 +543,7 @@ i=2,\dots,N.
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \postercenteredimageframecaption{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}{Mapper illustration taken from~\textbf{[2]}.}
+                \postermapperimageframecaption{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}{Mapper illustration taken from~\textbf{[2]}.}
                 % \posterrotatedimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
 
             \end{minipage}
@@ -516,7 +551,7 @@ i=2,\dots,N.
             \begin{minipage}[t]{0.48\linewidth}
                 \vspace{0pt}
                 \centering
-                \posterimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
+                \postermalphaimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png}
 
             \end{minipage}
         \end{center}

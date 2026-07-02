@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1782993589.21958 "Abschlussarbeit_2021/poster_new_colored.tex" "tmp/pdfs/poster-colored/poster_new_colored.pdf" "poster_new_colored" 1782993603.03532 0
+["pdflatex"] 1782994446.43539 "Abschlussarbeit_2021/poster_new_colored.tex" "tmp/pdfs/poster-colored/poster_new_colored.pdf" "poster_new_colored" 1782994455.3721 0
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/fira/fir_337jzs.enc" 1570828436 2952 6101deaf2e29800c3f438cc30978a854 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/fira/fir_d67aat.enc" 1570828436 3385 21a7e8c8dac3c39de5acda2c56e7bd7e ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
@@ -122,6 +122,7 @@
   "/usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.cfg" 1429144587 7068 06f8d141725d114847527a66439066b6 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.def" 1663185836 21994 2bc2a882df92d97dbce35c06bb1d3541 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.sty" 1663185836 62761 3c92d495a9e03d7254b9a3266aa17164 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/eepic/epic.sty" 1247274248 25873 0e813d2f6e266780f0cedef5eb5e2525 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/enumitem/enumitem.sty" 1561238569 51697 f8f08183cd2080d9d18a41432d651dfb ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/environ/environ.sty" 1399239813 4378 f429f0da968c278653359293040a8f52 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1579991033 13886 d1306dcf79a944f6988e688c1785f9ce ""
@@ -151,6 +152,7 @@
   "/usr/local/texlive/2024/texmf-dist/tex/latex/mathtools/mathtools.sty" 1710187076 62672 9ff036bc89365461cc2bd482cc1e4879 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/mathtools/mhsetup.sty" 1616101747 5582 a43dedf8e5ec418356f1e9dfe5d29fc3 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/mweights/mweights.sty" 1490909540 4953 67f29a12ea26221103fce6bae3433e60 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/overpic/overpic.sty" 1704662802 3571 09a53a0cf223b05eb160b7e9f4943762 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/parskip/parskip.sty" 1615762720 4288 94714aa7f535440f33181fec52a31963 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty" 1601326656 1090 bae35ef70b3168089ef166db3e66f5b2 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty" 1673816307 373 00b204b1d7d095b892ad31a7494b0373 ""
@@ -178,7 +180,7 @@
   "Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png" 1782897496 419726 ab22699ae270f10465c018a83469d59d ""
   "Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3.png" 1782903253.75862 221115 bddaab4cfc34ac048746d431ff3cf18b ""
   "Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png" 1782655945.33891 951885 e7fa6a46035591a55635cf0c1ac200b6 ""
-  "Abschlussarbeit_2021/LaTeX/images/Mapper illustration vertical(1).png" 1782993475.12873 592860 bc8c9fb6b5e17a74709cfd52d8500cca ""
+  "Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png" 1782595912.62035 152006 f2a53884b65cc0ba771c9f4bcd55f6d4 ""
   "Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png" 1782735762.46827 837723 0ac21c717a1e3d26016aa338c89cb061 ""
   "Abschlussarbeit_2021/LaTeX/images/eight_dataset.png" 1782677359.69949 1521974 a1a4302f7a3e003a8ee34fdff6caf367 ""
   "Abschlussarbeit_2021/LaTeX/images/eight_fail.png" 1782595912.63662 2794305 5e0b8cc8331739fd5d1a88f22c171d2f ""
@@ -188,8 +190,8 @@
   "Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png" 1782898509.96954 60595 b1a87b2d55646a418fe7dd55245661ed ""
   "Abschlussarbeit_2021/LaTeX/images/stationary distribution.png" 1782484297.18978 36439 c33ae621171fec8c8ef34cb6043d6c20 ""
   "Abschlussarbeit_2021/LaTeX/images/threshold_stability.png" 1782898512.10511 65005 7e02bd94dc78086d8bdc8e40c411faaa ""
-  "Abschlussarbeit_2021/poster_new_colored.tex" 1782993475.13047 23809 2c0fa886ead5c401ad4b46bca5b7450f ""
-  "tmp/pdfs/poster-colored/poster_new_colored.aux" 1782993602.76484 76 adb7640ab9826955e749fcec6032462f "pdflatex"
+  "Abschlussarbeit_2021/poster_new_colored.tex" 1782994446.14677 24958 7b097fa267cc1bdc085c9523ba8ed221 ""
+  "tmp/pdfs/poster-colored/poster_new_colored.aux" 1782994455.09623 76 adb7640ab9826955e749fcec6032462f "pdflatex"
   (generated)
   "tmp/pdfs/poster-colored/poster_new_colored.aux"
   "tmp/pdfs/poster-colored/poster_new_colored.log"
