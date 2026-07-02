@@ -348,6 +348,17 @@ INPUT ./Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png
 INPUT ./Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png
 INPUT ./Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Regular-osf-ot1.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/rm-lmr17.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/rm-lmr12.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/lmmi12.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/lmmi12.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/lmsy10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/lmsy10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Regular-osf-ot1.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Bold-osf-ot1.tfm
 INPUT ./Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png
 INPUT ./Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png
@@ -391,7 +402,6 @@ INPUT ./Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png
 INPUT ./Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Regular-osf-ot1.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Bold-osf-ot1.tfm
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Regular-osf-ot1.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Bold-osf-ot1.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Regular-osf-ot1.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fira/FiraSans-Bold-osf-ot1.tfm
