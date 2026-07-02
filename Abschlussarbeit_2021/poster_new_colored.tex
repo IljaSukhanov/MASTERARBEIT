@@ -25,6 +25,7 @@
 \colorlet{uulmlightgreen}{uulmgreen!18!white}
 \colorlet{posterline}{uulmgreen!35!white}
 \colorlet{posteraccent}{uulmdarkgreen}
+\definecolor{posterimageborder}{RGB}{125,154,170}
 
 \newcommand{\postertitle}{Spectral Scale Selection in Topological Data Analysis}
 \newcommand{\posterauthor}{\textbf{Ilja Sukhanov}\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
@@ -89,7 +90,7 @@
   \begingroup
   \setlength{\fboxsep}{0pt}%
   \makebox[\linewidth][c]{%
-    \fcolorbox{posterline}{white}{%
+    \fcolorbox{posterimageborder}{white}{%
       \parbox[t][#1][t]{0.98\linewidth}{%
         \vspace{0pt}\centering
         \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}%
@@ -102,7 +103,7 @@
   \begingroup
   \setlength{\fboxsep}{0pt}%
   \makebox[\linewidth][c]{%
-    \fcolorbox{posterline}{white}{%
+    \fcolorbox{posterimageborder}{white}{%
       \parbox[c][#1][c]{0.98\linewidth}{%
         \centering
         \includegraphics[width=\linewidth,height=#1,keepaspectratio]{#2}%
@@ -115,7 +116,7 @@
   \begingroup
   \setlength{\fboxsep}{0pt}%
   \makebox[\linewidth][c]{%
-    \fcolorbox{posterline}{white}{%
+    \fcolorbox{posterimageborder}{white}{%
       \parbox[c][#1][s]{0.98\linewidth}{%
         \centering
         \vspace{0pt}\par\vfill
@@ -146,7 +147,7 @@
   \begingroup
   \setlength{\fboxsep}{0pt}%
   \makebox[\linewidth][c]{%
-    \fcolorbox{posterline}{white}{%
+    \fcolorbox{posterimageborder}{white}{%
       \parbox[c][#1][c]{0.98\linewidth}{%
         \centering
         \rotatebox[origin=c]{90}{%
