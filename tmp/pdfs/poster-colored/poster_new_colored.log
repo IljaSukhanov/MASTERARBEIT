@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 12:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 12:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -876,17 +876,17 @@ LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <8.5> not availab
 le
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 316.
+put line 322.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 8.07497pt on input line 316.
+(Font)              scaled to size 8.07497pt on input line 322.
 <Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png, id=6, 1095.61
 32pt x 641.5167pt>
 File: Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png Graphic f
 ile (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Functional scale cho
-ice 3.png  used on input line 316.
-(pdftex.def)             Requested size: 745.41156pt x 436.48009pt.
+ice 3.png  used on input line 322.
+(pdftex.def)             Requested size: 744.61157pt x 436.01022pt.
 <Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3.png,
  id=7, 1097.5404pt x 642.2394pt>
 File: Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3
@@ -894,15 +894,15 @@ File: Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3
 <use Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3.
 png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Functional with mult
-iple equal maxima 3.png  used on input line 316.
-(pdftex.def)             Requested size: 745.41156pt x 436.19762pt.
+iple equal maxima 3.png  used on input line 322.
+(pdftex.def)             Requested size: 744.61157pt x 435.72723pt.
 <Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png, id=8, 
 1534.73375pt x 1031.855pt>
 File: Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png Gr
 aphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Strictly increasing 
-functional 2.png  used on input line 464.
+functional 2.png  used on input line 470.
 (pdftex.def)             Requested size: 389.32626pt x 261.75761pt.
 <Abschlussarbeit_2021/LaTeX/images/stationary distribution.png, id=9, 511.6716p
 t x 343.2825pt>
@@ -910,42 +910,42 @@ File: Abschlussarbeit_2021/LaTeX/images/stationary distribution.png Graphic fil
 e (type png)
 <use Abschlussarbeit_2021/LaTeX/images/stationary distribution.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/stationary distribut
-ion.png  used on input line 464.
+ion.png  used on input line 470.
 (pdftex.def)             Requested size: 390.16269pt x 261.76167pt.
-LaTeX Font Info:    Calculating math sizes for size <24> on input line 525.
+LaTeX Font Info:    Calculating math sizes for size <24> on input line 531.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <24> on input line 525.
+(Font)              <24> on input line 531.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <16.79993> on input line 525.
+(Font)              <16.79993> on input line 531.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 525.
+(Font)              <12> on input line 531.
 <Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png, id=10, 570.63188p
 t x 254.45062pt>
 File: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png Graphic file 
 (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 
-3.png  used on input line 525.
+3.png  used on input line 531.
 (pdftex.def)             Requested size: 486.9985pt x 217.15762pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <12> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 525.
+put line 531.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 11.39996pt on input line 525.
+(Font)              scaled to size 11.39996pt on input line 531.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <12> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 525.
+ line 531.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 11.39996pt on input line 525.
+(Font)              scaled to size 11.39996pt on input line 531.
 <Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png, id=11, 1667.22874pt x 
 950.55125pt>
 File: Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png Graphic file (type
  png)
 <use Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png
-  used on input line 525.
+  used on input line 531.
 (pdftex.def)             Requested size: 486.99466pt x 277.65439pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_dataset.png, id=12, 3385.64874pt x 338
 5.64874pt>
@@ -953,14 +953,14 @@ File: Abschlussarbeit_2021/LaTeX/images/eight_dataset.png Graphic file (type pn
 g)
 <use Abschlussarbeit_2021/LaTeX/images/eight_dataset.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_dataset.png  u
-sed on input line 600.
+sed on input line 606.
 (pdftex.def)             Requested size: 307.27827pt x 307.27827pt.
 <Abschlussarbeit_2021/LaTeX/images/functional.png, id=13, 903.375pt x 903.375pt
 >
 File: Abschlussarbeit_2021/LaTeX/images/functional.png Graphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/functional.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/functional.png  used
- on input line 600.
+ on input line 606.
 (pdftex.def)             Requested size: 295.24753pt x 295.24753pt.
 <Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png, id=14, 903.375pt 
 x 903.375pt>
@@ -968,7 +968,7 @@ File: Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png Graphic file
 (type png)
 <use Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/principal_eigenvecto
-r.png  used on input line 600.
+r.png  used on input line 606.
 (pdftex.def)             Requested size: 295.24753pt x 295.24753pt.
 <Abschlussarbeit_2021/LaTeX/images/threshold_stability.png, id=15, 903.375pt x 
 903.375pt>
@@ -976,14 +976,14 @@ File: Abschlussarbeit_2021/LaTeX/images/threshold_stability.png Graphic file (t
 ype png)
 <use Abschlussarbeit_2021/LaTeX/images/threshold_stability.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/threshold_stability.
-png  used on input line 600.
+png  used on input line 606.
 (pdftex.def)             Requested size: 315.82759pt x 315.82759pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_fail.png, id=16, 3055.415pt x 3102.591
 25pt>
 File: Abschlussarbeit_2021/LaTeX/images/eight_fail.png Graphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/eight_fail.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_fail.png  used
- on input line 600.
+ on input line 606.
 (pdftex.def)             Requested size: 309.42902pt x 314.20667pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_proper.png, id=17, 3055.415pt x 3102.5
 9125pt>
@@ -991,17 +991,17 @@ File: Abschlussarbeit_2021/LaTeX/images/eight_proper.png Graphic file (type png
 )
 <use Abschlussarbeit_2021/LaTeX/images/eight_proper.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_proper.png  us
-ed on input line 600.
+ed on input line 606.
 (pdftex.def)             Requested size: 309.42902pt x 314.20667pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 699--699
+Underfull \hbox (badness 10000) in paragraph at lines 705--705
 []\OT1/FiraSans-OsF/regular/n/17 each node $\OML/lmm/m/it/17 x[] \OMS/lmsy/m/n/
 17 2 \U/msb/m/n/17 R[]$ \OT1/FiraSans-OsF/regular/n/17 rep-re-sents one of $\OT
 1/lmr/m/n/17 3[]142$ \OT1/FiraSans-OsF/regular/n/17 US coun-ties and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 699--699
+Underfull \hbox (badness 10000) in paragraph at lines 705--705
 []\OT1/FiraSans-OsF/regular/n/17 first 14 en-tries: 13 nor-mal-ized three-day c
 ase ag-gre-gates and their
  []
@@ -1012,7 +1012,7 @@ File: Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png Graphic
 file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID-projections_co
-loring.png  used on input line 699.
+loring.png  used on input line 705.
 (pdftex.def)             Requested size: 486.9675pt x 389.574pt.
 <Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png, id=19,
  2030.58624pt x 1624.0675pt>
@@ -1020,50 +1020,50 @@ File: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png Gr
 aphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_
-4communities.png  used on input line 699.
+4communities.png  used on input line 705.
 (pdftex.def)             Requested size: 486.97885pt x 389.48679pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <14.4> not availa
 ble
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 699.
+put line 705.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 13.67995pt on input line 699.
+(Font)              scaled to size 13.67995pt on input line 705.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <14.4> not availa
 ble
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 699.
+ line 705.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 13.67995pt on input line 699.
+(Font)              scaled to size 13.67995pt on input line 705.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <20> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 703.
+put line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 18.99994pt on input line 703.
+(Font)              scaled to size 18.99994pt on input line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <20> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 703.
+ line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 18.99994pt on input line 703.
+(Font)              scaled to size 18.99994pt on input line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <13> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 703.
+put line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 12.34996pt on input line 703.
+(Font)              scaled to size 12.34996pt on input line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <13> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 703.
+ line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 12.34996pt on input line 703.
+(Font)              scaled to size 12.34996pt on input line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <13> not availab
 le
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 703.
+nput line 709.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 12.34996pt on input line 703.
+(Font)              scaled to size 12.34996pt on input line 709.
 [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
@@ -1094,7 +1094,7 @@ L3 programming layer <2024-02-20>
 Here is how much of TeX's memory you used:
  19272 strings out of 474116
  400355 string characters out of 5743682
- 2060187 words of memory out of 5000000
+ 2061187 words of memory out of 5000000
  41285 multiletter control sequences out of 15000+600000
  692499 words of font info for 120 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1111,8 +1111,8 @@ ublic/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lms
 y10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></u
 sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on tmp/pdfs/poster-colored/poster_new_colored.pdf (1 page, 93856
-99 bytes).
+Output written on tmp/pdfs/poster-colored/poster_new_colored.pdf (1 page, 93858
+02 bytes).
 PDF statistics:
  109 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream
