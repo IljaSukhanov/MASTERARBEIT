@@ -531,9 +531,7 @@ Let $(Z_t)\sim\mathcal{U}[-1,1]$. Then the support of $Y_t^{(k)}$ is given by a 
 
 \todo[inline]{Formula for corner points?}
 
-
-
-In the case of uniform innovations $Z_t\sim\mathcal{U}[a,b]$, $a<b$ the points also lie between the hyperplanes with the same forms as the central hyperplane, but with affine parts $a$ and $b$. See Figure~\ref{fig:3d_emb_ar2}.
+In the case of uniform innovations $Z_t\sim\mathcal{U}[-1,1]$ the points also lie between the hyperplanes with the same form as the central hyperplane, but with affine parts $-1$ and $1$. See Figure~\ref{fig:3d_emb_ar2}.
 
 \begin{figure}[ht]
     \centering
@@ -556,24 +554,46 @@ The distance between the two restricting hyperplanes is given by the formula
     d=\frac{b-a}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
 \end{align*}
 
+\begin{Def}[Support function]
+    Let $K\subseteq\mathbb{R}^{d}$ be a nonempty, convex set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in S^{d-1}\}$.
+\end{Def}
+
+The support function of a zonotope is particularly easy: $h_{\mathcal{Z}_n^{(k)}}(u)=\sum_{j=0}^{n}\langle g_j^{(k)},u\rangle$. The width in direction $u$ is given by
+\begin{align*}
+    w_k(u)=2h_{\mathcal{Z}_n^{(k)}}(u)
+\end{align*}
+We have
+\begin{align*}
+    \min_{u\in S^{k-1}}w_k(u)=
+\end{align*}
+attained at
+\begin{align*}
+    u=
+\end{align*}
+
+An empirical version is given by
+\begin{align*}
+    \hat{w}_k(u)=\max_{t}\langle u,Y_t^{(k)}\rangle-\min_{t}\langle u,Y_t^{(k)} \rangle
+\end{align*}
+
+\todo[inline]{Give some convergence result $\hat{w}_k(u)\to w_k(u)$}
+
+The idea is to minimize $\hat{w}_k(u)$ over all $u\in S^{k-1}$ and examine the relation $k\mapsto \min_{u\in S^{k-1}}\hat{w}_k(u)$
+
 
 \subsection{Normally distributed innovations}
 
-Next, we turn our attention to Gaussian innovations, which is often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
+Next, we turn our attention to Gaussian innovations, which is often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation, we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
 \begin{align*}
-    \Gamma_k=\sigma^2\sum_{j=0}^{\infty}g_jg_j^{T}, && g_j=\begin{pmatrix}
-        \psi_j\\
-        \psi_{j-1}\\
-        \vdots\\
-        \psi_{j-k+1}
-    \end{pmatrix}
+    \Gamma_k=\sigma^2\sum_{j=0}^{\infty}g_j^{(k)}(g_j^{(k)})^{T}
 \end{align*}
-The covariance matrix plays an important role in describing the geometry of the point cloud $\mathcal{P}_k$. Let $E_c=\{y\in\mathbb{R}^k:y^{T}\Gamma_k^{-1}y\le c\}$ be the ellipsoid of size $c>0$. Then for all $\alpha\in(0,1)$ we have that
-\todo{find reference}
+The covariance matrix plays an important role in describing the geometry of the point cloud $\mathcal{P}_k$. Let $E_c=\{y\in\mathbb{R}^k:y^{T}\Gamma_k^{-1}y\le c\}$ be the ellipsoid of size $c>0$. Then for all $\alpha\in(0,1)$ we have
 \begin{align*}
     E_{c_{\alpha}}\in\arg\min\left\{\operatorname{Vol}(A):\mathbb{P}(Y\in A)\ge\alpha:A\subseteq\mathbb{R}^{k}\right\}
 \end{align*}
-That is the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$.
+That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$.
+
+\todo[inline]{find reference or prove}
 
 \subsection{Heavy-tailed innovations}
 
@@ -628,8 +648,6 @@ We can choose $f=V_j$, $j=1,\dots,k$ as functional.
     \item compare with classical order selection
     \item finite sample stability $(X_1,\dots,X_T)$, $T=200,500,1000$
 \end{itemize}
-
-\subsection{AR(1)}
 
 
 
