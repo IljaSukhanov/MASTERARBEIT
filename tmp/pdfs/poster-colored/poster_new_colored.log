@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 12:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 12:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1112,7 +1112,7 @@ y10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></u
 sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
 Output written on tmp/pdfs/poster-colored/poster_new_colored.pdf (1 page, 93857
-58 bytes).
+62 bytes).
 PDF statistics:
  109 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream
