@@ -21,7 +21,7 @@
 \definecolor{posteraccent}{RGB}{0,104,125}
 
 \newcommand{\postertitle}{Spectral Scale Selection in Topological Data Analysis}
-\newcommand{\posterauthor}{Ilja Sukhanov\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
+\newcommand{\posterauthor}{\textbf{Ilja Sukhanov}\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
 \newcommand{\posterinfo}{\textsuperscript{1} Universität Ulm, Germany \quad \textsuperscript{2} MISANU, Belgrade \quad \textsuperscript{3} Kharazin National University, Charkiw}
 
 \setlength{\parskip}{0.48em}
@@ -117,6 +117,23 @@
     \textbf{[4]} M. Girvan and M. E. J. Newman. \emph{Community structure in social and biological networks}. Proceedings of the National Academy of Sciences 99(12), 7821--7826, 2002.
   \end{tcolorbox}
 }
+
+\newcommand{\posterrotatedimageframe}[2]{%
+  \begingroup
+  \setlength{\fboxsep}{0pt}%
+  \makebox[\linewidth][c]{%
+    \fcolorbox{posterline}{white}{%
+      \parbox[c][#1][c]{0.98\linewidth}{%
+        \centering
+        \rotatebox[origin=c]{90}{%
+          \includegraphics[width=#1]{#2}%
+        }%
+      }%
+    }%
+  }%
+  \endgroup
+}
+
 \begin{document}
 \begin{tikzpicture}[remember picture,overlay]
   \draw[posterline,line width=1.5pt]
@@ -211,12 +228,12 @@ Motivated by \textbf{[1]}, define the \textbf{$f$-based divergence} and the \tex
                 f(K_1) & f(K_2) & \cdots & f(K_2)\\
                 \vdots & \vdots & \ddots & \vdots\\
                 f(K_1) & f(K_2) & \cdots & f(K_N)
-            \end{pmatrix}
+            \end{pmatrix}.
         \end{aligned}
     }
     \begin{itemize}
         \item Along the filtration, nonnegativity of $f$ implies subadditivity.
-        \item $\Sigma_N$ is irreducible iff $f(K_1)>0$.
+        \item $\Sigma_N$ is irreducible if $f(K_1)>0$.
         \item By \textbf{Perron-Frobenius}, the principal eigenvector $v^*$ is positive and unique up to scaling; it ranks the scales $\epsilon_i$ through their coupling in $\Sigma_N$.
     \end{itemize}
 }
@@ -227,7 +244,7 @@ Motivated by \textbf{[1]}, define the \textbf{$f$-based divergence} and the \tex
     The critical scale is chosen by the rule
     \posterequation{
         \begin{aligned}
-            i_{\text{crit}}\in\arg\max_iv^*_i, \quad\epsilon_{\text{crit}}=\epsilon_{i_{\text{crit}}}
+            i_{\text{crit}}\in\arg\max_iv^*_i, \quad\epsilon_{\text{crit}}=\epsilon_{i_{\text{crit}}}.
         \end{aligned}
     }
     \begin{itemize}
@@ -273,7 +290,7 @@ Motivated by \textbf{[1]}, define the \textbf{$f$-based divergence} and the \tex
     \end{itemize}
     \posterequationpair{0.56}{0.39}
       {P=\frac{1}{\lambda^*}D_{v^*}^{-1}\Sigma_ND_{v^*},}
-      {\pi_i^{P}=\frac{(v_i^*)^2}{\|v^*\|_2^2},}
+      {\pi_i^{P}=\frac{(v_i^*)^2}{\|v^*\|_2^2}.}
     Here $D_{v^*}=\operatorname{diag}(v_1^*,\dots,v_N^*)$. The matrix $P$ maximizes the \textbf{Donsker-Varadhan free-energy functional} over irreducible, row-stochastic matrices:
     \posterequationpair{0.57}{0.40}
       {\mathcal{F}(Q;\Sigma_N)\coloneqq \sum_{i,j=1}^{N}\pi_i^{Q}q_{ij}\log{\frac{(\Sigma_N)_{ij}}{q_{ij}}},}
@@ -449,6 +466,7 @@ i=2,\dots,N.
                 \vspace{0pt}
                 \centering
                 \posterimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
+                % \posterrotatedimageframe{10.7cm}{Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png}
 
             \end{minipage}
             \hfill
@@ -583,7 +601,7 @@ i=2,\dots,N.
         }
 
         \begin{itemize}
-            \item The \textbf{Girvan--Newman algorithm}~\textbf{[4]} yielded four communities.
+            \item The \textbf{Girvan--Newman algorithm}~\textbf{[4]} yields four communities.
             \item \textbf{Left:} color indicates the centrality projection $c(x)$; darker colors represent higher values.
             \item \textbf{Right:} four colors indicate the four communities.
         \end{itemize}
@@ -611,8 +629,8 @@ i=2,\dots,N.
     \colorbox{gray!10}{
     \parbox{0.90\linewidth}{
         \centering
-        {\Large\textbf{4}}\\[-0.2em]
-        \textbf{major communities}\\[0.25em]
+        {\Large\textbf{}}\\[-0.2em]
+        \textbf{Four major communities}\\[0.25em]
         identified by Girvan--Newman
     }}
 \end{minipage}
@@ -623,7 +641,7 @@ i=2,\dots,N.
     \parbox{0.90\linewidth}{
         \centering
         {\Large\textbf{}}\\[-0.2em]
-        \textbf{statistically significant differences}\\[0.25em]
+        \textbf{Statistically significant differences}\\[0.25em]
         in several county-level predictors not used to build the graph
     }}
 \end{minipage}
@@ -634,7 +652,7 @@ i=2,\dots,N.
     \parbox{0.90\linewidth}{
         \centering
         {\Large\textbf{}}\\[-0.2em]
-        \textbf{spectrally selected thresholds}\\[0.25em]
+        \textbf{Spectrally selected thresholds}\\[0.25em]
         without manual tuning
     }}
 \end{minipage}
