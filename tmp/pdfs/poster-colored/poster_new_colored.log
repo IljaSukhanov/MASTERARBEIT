@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 14:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 14:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -665,7 +665,7 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 \enitdp@description=\count322
 )
 LaTeX Font Info:    Trying to load font information for OT1+FiraSans-OsF on inp
-ut line 198.
+ut line 197.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/fira/OT1FiraSans-OsF.fd
 File: OT1FiraSans-OsF.fd 2019/10/10 (autoinst) Font definitions for OT1/FiraSan
@@ -674,9 +674,9 @@ s-OsF.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <10> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 198.
+put line 197.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 9.49997pt on input line 198.
+(Font)              scaled to size 9.49997pt on input line 197.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
@@ -686,20 +686,20 @@ File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
 (tmp/pdfs/poster-colored/poster_new_colored.aux)
 \openout1 = `poster_new_colored.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 198.
-LaTeX Font Info:    ... okay on input line 198.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 198.
-LaTeX Font Info:    ... okay on input line 198.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 198.
-LaTeX Font Info:    ... okay on input line 198.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 198.
-LaTeX Font Info:    ... okay on input line 198.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 198.
-LaTeX Font Info:    ... okay on input line 198.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 198.
-LaTeX Font Info:    ... okay on input line 198.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 198.
-LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 197.
+LaTeX Font Info:    ... okay on input line 197.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 197.
+LaTeX Font Info:    ... okay on input line 197.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 197.
+LaTeX Font Info:    ... okay on input line 197.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 197.
+LaTeX Font Info:    ... okay on input line 197.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 197.
+LaTeX Font Info:    ... okay on input line 197.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 197.
+LaTeX Font Info:    ... okay on input line 197.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 197.
+LaTeX Font Info:    ... okay on input line 197.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -762,52 +762,52 @@ e
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <46> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 212.
+put line 211.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 43.69986pt on input line 212.
+(Font)              scaled to size 43.69986pt on input line 211.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <46> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 212.
+ line 211.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 43.69986pt on input line 212.
+(Font)              scaled to size 43.69986pt on input line 211.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
-12.
+11.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
-12.
+11.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-212.
+211.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-212.
+211.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 212.
+(Font)              <10> on input line 211.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 212.
+(Font)              <7> on input line 211.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 212.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 212
+(Font)              <5> on input line 211.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 211
 .
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 212
+LaTeX Font Info:    Trying to load font information for U+msb on input line 211
 .
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -816,69 +816,69 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <21> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 215.
+put line 214.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 19.94994pt on input line 215.
+(Font)              scaled to size 19.94994pt on input line 214.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <21> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 215.
+ line 214.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 19.94994pt on input line 215.
-LaTeX Font Info:    Calculating math sizes for size <21> on input line 215.
+(Font)              scaled to size 19.94994pt on input line 214.
+LaTeX Font Info:    Calculating math sizes for size <21> on input line 214.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <21> on input line 215.
+(Font)              <21> on input line 214.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.69994> on input line 215.
+(Font)              <14.69994> on input line 214.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.5> on input line 215.
+(Font)              <10.5> on input line 214.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <14.69994> not av
 ailable
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 215.
+put line 214.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 13.96489pt on input line 215.
+(Font)              scaled to size 13.96489pt on input line 214.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <17> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 217.
+put line 216.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 16.14995pt on input line 217.
-LaTeX Font Info:    Calculating math sizes for size <17> on input line 217.
+(Font)              scaled to size 16.14995pt on input line 216.
+LaTeX Font Info:    Calculating math sizes for size <17> on input line 216.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <17> on input line 217.
+(Font)              <17> on input line 216.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11.89995> on input line 217.
+(Font)              <11.89995> on input line 216.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8.5> on input line 217.
+(Font)              <8.5> on input line 216.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <11.89995> not av
 ailable
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 217.
+put line 216.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 11.3049pt on input line 217.
+(Font)              scaled to size 11.3049pt on input line 216.
 <Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png, id=4, 285.9483pt x 81.1833
 pt>
 File: Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png Graphic file (type png
 )
 <use Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png  us
-ed on input line 222.
+ed on input line 221.
 (pdftex.def)             Requested size: 514.44743pt x 146.06046pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <24> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 276.
+put line 275.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 22.79993pt on input line 276.
+(Font)              scaled to size 22.79993pt on input line 275.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <24> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 276.
+ line 275.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 22.79993pt on input line 276.
+(Font)              scaled to size 22.79993pt on input line 275.
 LaTeX Font Info:    Trying to load font information for TS1+FiraSans-OsF on inp
-ut line 276.
+ut line 275.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/fira/TS1FiraSans-OsF.fd
 File: TS1FiraSans-OsF.fd 2019/10/10 (autoinst) Font definitions for TS1/FiraSan
@@ -887,28 +887,28 @@ s-OsF.
 LaTeX Font Info:    Font shape `TS1/FiraSans-OsF/m/n' in size <17> not availabl
 e
 (Font)              Font shape `TS1/FiraSans-OsF/regular/n' tried instead on in
-put line 276.
+put line 275.
 LaTeX Font Info:    Font shape `TS1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 16.14995pt on input line 276.
+(Font)              scaled to size 16.14995pt on input line 275.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <17> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 276.
+ line 275.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 16.14995pt on input line 276.
+(Font)              scaled to size 16.14995pt on input line 275.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <8.5> not availab
 le
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 358.
+put line 357.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 8.07497pt on input line 358.
+(Font)              scaled to size 8.07497pt on input line 357.
 <Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png, id=6, 1095.61
 32pt x 641.5167pt>
 File: Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png Graphic f
 ile (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Functional scale cho
-ice 3.png  used on input line 358.
+ice 3.png  used on input line 357.
 (pdftex.def)             Requested size: 744.61157pt x 436.01022pt.
 <Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3.png,
  id=7, 1097.5404pt x 642.2394pt>
@@ -917,7 +917,7 @@ File: Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3
 <use Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3.
 png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Functional with mult
-iple equal maxima 3.png  used on input line 358.
+iple equal maxima 3.png  used on input line 357.
 (pdftex.def)             Requested size: 744.61157pt x 435.72723pt.
 <Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png, id=8, 
 1534.73375pt x 1031.855pt>
@@ -925,7 +925,7 @@ File: Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png Gr
 aphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Strictly increasing 
-functional 2.png  used on input line 506.
+functional 2.png  used on input line 505.
 (pdftex.def)             Requested size: 389.32626pt x 261.75761pt.
 <Abschlussarbeit_2021/LaTeX/images/stationary distribution.png, id=9, 511.6716p
 t x 343.2825pt>
@@ -933,53 +933,53 @@ File: Abschlussarbeit_2021/LaTeX/images/stationary distribution.png Graphic fil
 e (type png)
 <use Abschlussarbeit_2021/LaTeX/images/stationary distribution.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/stationary distribut
-ion.png  used on input line 506.
+ion.png  used on input line 505.
 (pdftex.def)             Requested size: 390.16269pt x 261.76167pt.
-LaTeX Font Info:    Calculating math sizes for size <24> on input line 567.
+LaTeX Font Info:    Calculating math sizes for size <24> on input line 566.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <24> on input line 567.
+(Font)              <24> on input line 566.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <16.79993> on input line 567.
+(Font)              <16.79993> on input line 566.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 567.
+(Font)              <12> on input line 566.
 <Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png, id=10, 570.63188p
 t x 254.45062pt>
 File: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png Graphic file 
 (type png)
 <use Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 
-3.png  used on input line 567.
+3.png  used on input line 566.
 (pdftex.def)             Requested size: 486.9985pt x 217.15762pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <20> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 567.
+put line 566.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 18.99994pt on input line 567.
-LaTeX Font Info:    Calculating math sizes for size <20> on input line 567.
+(Font)              scaled to size 18.99994pt on input line 566.
+LaTeX Font Info:    Calculating math sizes for size <20> on input line 566.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <20> on input line 567.
+(Font)              <20> on input line 566.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <13.99994> on input line 567.
+(Font)              <13.99994> on input line 566.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <12> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 567.
+put line 566.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 11.39996pt on input line 567.
+(Font)              scaled to size 11.39996pt on input line 566.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <12> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 567.
+ line 566.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 11.39996pt on input line 567.
+(Font)              scaled to size 11.39996pt on input line 566.
 <Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png, id=11, 1667.22874pt x 
 950.55125pt>
 File: Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png Graphic file (type
  png)
 <use Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png
-  used on input line 567.
+  used on input line 566.
 (pdftex.def)             Requested size: 486.99466pt x 277.65439pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_dataset.png, id=12, 3385.64874pt x 338
 5.64874pt>
@@ -987,14 +987,14 @@ File: Abschlussarbeit_2021/LaTeX/images/eight_dataset.png Graphic file (type pn
 g)
 <use Abschlussarbeit_2021/LaTeX/images/eight_dataset.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_dataset.png  u
-sed on input line 644.
+sed on input line 643.
 (pdftex.def)             Requested size: 307.27827pt x 307.27827pt.
 <Abschlussarbeit_2021/LaTeX/images/functional.png, id=13, 903.375pt x 903.375pt
 >
 File: Abschlussarbeit_2021/LaTeX/images/functional.png Graphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/functional.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/functional.png  used
- on input line 644.
+ on input line 643.
 (pdftex.def)             Requested size: 295.24753pt x 295.24753pt.
 <Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png, id=14, 903.375pt 
 x 903.375pt>
@@ -1002,7 +1002,7 @@ File: Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png Graphic file
 (type png)
 <use Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/principal_eigenvecto
-r.png  used on input line 644.
+r.png  used on input line 643.
 (pdftex.def)             Requested size: 295.24753pt x 295.24753pt.
 <Abschlussarbeit_2021/LaTeX/images/threshold_stability.png, id=15, 903.375pt x 
 903.375pt>
@@ -1010,14 +1010,14 @@ File: Abschlussarbeit_2021/LaTeX/images/threshold_stability.png Graphic file (t
 ype png)
 <use Abschlussarbeit_2021/LaTeX/images/threshold_stability.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/threshold_stability.
-png  used on input line 644.
+png  used on input line 643.
 (pdftex.def)             Requested size: 315.82759pt x 315.82759pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_fail.png, id=16, 3055.415pt x 3102.591
 25pt>
 File: Abschlussarbeit_2021/LaTeX/images/eight_fail.png Graphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/eight_fail.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_fail.png  used
- on input line 644.
+ on input line 643.
 (pdftex.def)             Requested size: 309.42902pt x 314.20667pt.
 <Abschlussarbeit_2021/LaTeX/images/eight_proper.png, id=17, 3055.415pt x 3102.5
 9125pt>
@@ -1025,17 +1025,17 @@ File: Abschlussarbeit_2021/LaTeX/images/eight_proper.png Graphic file (type png
 )
 <use Abschlussarbeit_2021/LaTeX/images/eight_proper.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_proper.png  us
-ed on input line 644.
+ed on input line 643.
 (pdftex.def)             Requested size: 309.42902pt x 314.20667pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 743--743
+Underfull \hbox (badness 10000) in paragraph at lines 742--742
 []\OT1/FiraSans-OsF/regular/n/17 each node $\OML/lmm/m/it/17 x[] \OMS/lmsy/m/n/
 17 2 \U/msb/m/n/17 R[]$ \OT1/FiraSans-OsF/regular/n/17 rep-re-sents one of $\OT
 1/lmr/m/n/17 3[]142$ \OT1/FiraSans-OsF/regular/n/17 US coun-ties and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 743--743
+Underfull \hbox (badness 10000) in paragraph at lines 742--742
 []\OT1/FiraSans-OsF/regular/n/17 first 14 en-tries: 13 nor-mal-ized three-day c
 ase ag-gre-gates and their
  []
@@ -1046,7 +1046,7 @@ File: Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png Graphic
 file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID-projections_co
-loring.png  used on input line 743.
+loring.png  used on input line 742.
 (pdftex.def)             Requested size: 486.9675pt x 389.574pt.
 <Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png, id=19,
  2030.58624pt x 1624.0675pt>
@@ -1054,44 +1054,44 @@ File: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png Gr
 aphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_
-4communities.png  used on input line 743.
+4communities.png  used on input line 742.
 (pdftex.def)             Requested size: 486.97885pt x 389.48679pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <14.4> not availa
 ble
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 743.
+put line 742.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 13.67995pt on input line 743.
+(Font)              scaled to size 13.67995pt on input line 742.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <14.4> not availa
 ble
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 743.
+ line 742.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 13.67995pt on input line 743.
+(Font)              scaled to size 13.67995pt on input line 742.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <20> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 747.
+ line 746.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 18.99994pt on input line 747.
+(Font)              scaled to size 18.99994pt on input line 746.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <13> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 747.
+put line 746.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 12.34996pt on input line 747.
+(Font)              scaled to size 12.34996pt on input line 746.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <13> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 747.
+ line 746.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 12.34996pt on input line 747.
+(Font)              scaled to size 12.34996pt on input line 746.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <13> not availab
 le
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 747.
+nput line 746.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 12.34996pt on input line 747.
+(Font)              scaled to size 12.34996pt on input line 746.
 [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
@@ -1140,7 +1140,7 @@ y10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></u
 sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
 Output written on tmp/pdfs/poster-colored/poster_new_colored.pdf (1 page, 93858
-80 bytes).
+73 bytes).
 PDF statistics:
  109 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream
