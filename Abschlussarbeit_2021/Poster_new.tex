@@ -113,12 +113,13 @@
   \setlength{\fboxsep}{0pt}%
   \makebox[\linewidth][c]{%
     \fcolorbox{posterline}{white}{%
-      \parbox[c][#1][c]{0.98\linewidth}{%
+      \parbox[c][#1][s]{0.98\linewidth}{%
         \centering
+        \vspace{0pt}\par\vfill
         \includegraphics[width=\linewidth,height=\dimexpr#1-0.9cm\relax,keepaspectratio]{#2}\par
-        \vspace{0.08cm}%
+        \vfill
         {\fontsize{12}{14}\selectfont #3}\par
-        \vspace{0.12cm}%
+        \vspace{0.08cm}%
       }%
     }%
   }%
