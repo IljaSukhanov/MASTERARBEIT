@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 12:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  2 JUL 2026 13:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -919,14 +919,14 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <16.79993> on input line 531.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <12> on input line 531.
-<Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png, id=10, 570.63188p
-t x 254.45062pt>
-File: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png Graphic file 
-(type png)
-<use Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png>
+<Abschlussarbeit_2021/LaTeX/images/Mapper illustration vertical(1).png, id=10, 
+747.79375pt x 1494.58376pt>
+File: Abschlussarbeit_2021/LaTeX/images/Mapper illustration vertical(1).png Gra
+phic file (type png)
+<use Abschlussarbeit_2021/LaTeX/images/Mapper illustration vertical(1).png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/Mapper illustration 
-3.png  used on input line 531.
-(pdftex.def)             Requested size: 486.9985pt x 217.15762pt.
+vertical(1).png  used on input line 531.
+(pdftex.def)             Requested size: 139.50352pt x 278.81982pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <12> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
@@ -1077,14 +1077,14 @@ sarbeit_2021/LaTeX/images/Functional scale choice 3.png> <./Abschlussarbeit_202
 1/LaTeX/images/Functional with multiple equal maxima 3.png> <./Abschlussarbeit_
 2021/LaTeX/images/Strictly increasing functional 2.png (PNG copy)> <./Abschluss
 arbeit_2021/LaTeX/images/stationary distribution.png> <./Abschlussarbeit_2021/L
-aTeX/images/Mapper illustration 3.png> <./Abschlussarbeit_2021/LaTeX/images/M_a
-lpha_N_image3.png (PNG copy)> <./Abschlussarbeit_2021/LaTeX/images/eight_datase
-t.png> <./Abschlussarbeit_2021/LaTeX/images/functional.png> <./Abschlussarbeit_
-2021/LaTeX/images/principal_eigenvector.png> <./Abschlussarbeit_2021/LaTeX/imag
-es/threshold_stability.png> <./Abschlussarbeit_2021/LaTeX/images/eight_fail.png
-> <./Abschlussarbeit_2021/LaTeX/images/eight_proper.png> <./Abschlussarbeit_202
-1/LaTeX/images/COVID-projections_coloring.png> <./Abschlussarbeit_2021/LaTeX/im
-ages/COVID_Girvan-Newman_4communities.png>]
+aTeX/images/Mapper illustration vertical(1).png> <./Abschlussarbeit_2021/LaTeX/
+images/M_alpha_N_image3.png (PNG copy)> <./Abschlussarbeit_2021/LaTeX/images/ei
+ght_dataset.png> <./Abschlussarbeit_2021/LaTeX/images/functional.png> <./Abschl
+ussarbeit_2021/LaTeX/images/principal_eigenvector.png> <./Abschlussarbeit_2021/
+LaTeX/images/threshold_stability.png> <./Abschlussarbeit_2021/LaTeX/images/eigh
+t_fail.png> <./Abschlussarbeit_2021/LaTeX/images/eight_proper.png> <./Abschluss
+arbeit_2021/LaTeX/images/COVID-projections_coloring.png> <./Abschlussarbeit_202
+1/LaTeX/images/COVID_Girvan-Newman_4communities.png>]
 (tmp/pdfs/poster-colored/poster_new_colored.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
@@ -1093,7 +1093,7 @@ L3 programming layer <2024-02-20>
  ) 
 Here is how much of TeX's memory you used:
  19272 strings out of 474116
- 400355 string characters out of 5743682
+ 400425 string characters out of 5743682
  2060187 words of memory out of 5000000
  41285 multiletter control sequences out of 15000+600000
  692499 words of font info for 120 fonts, out of 8000000 for 9000
@@ -1111,10 +1111,10 @@ ublic/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lms
 y10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></u
 sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on tmp/pdfs/poster-colored/poster_new_colored.pdf (1 page, 93857
-81 bytes).
+Output written on tmp/pdfs/poster-colored/poster_new_colored.pdf (1 page, 98272
+17 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
+ 108 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  88 words of extra memory for PDF output out of 10000 (max. 10000000)
