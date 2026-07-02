@@ -9,6 +9,8 @@
 \usepackage{mathtools}
 \usepackage[style=english]{csquotes}
 \usepackage{lmodern}
+\usepackage[sfdefault,scaled=0.95]{FiraSans}
+\usepackage{ragged2e}
 
 \usepackage{amsmath, amssymb}
 \usepackage{enumitem}
@@ -17,25 +19,27 @@
 \renewcommand{\familydefault}{\sfdefault}
 \graphicspath{{LaTeX/images/}{Abschlussarbeit_2021/LaTeX/images/}{Images/}}
 
-\definecolor{posterline}{RGB}{220,220,220}
-\definecolor{posteraccent}{RGB}{0,104,125}
+\definecolor{postergray}{RGB}{87,87,86}
+\definecolor{posterline}{RGB}{125,154,170}
+\definecolor{posteraccent}{RGB}{125,154,170}
 
 \newcommand{\postertitle}{Spectral Scale Selection in Topological Data Analysis}
 \newcommand{\posterauthor}{\textbf{Ilja Sukhanov}\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
 \newcommand{\posterinfo}{\textsuperscript{1} Universität Ulm, Germany \quad \textsuperscript{2} MISANU, Belgrade \quad \textsuperscript{3} Kharazin National University, Charkiw}
 
-\setlength{\parskip}{0.48em}
-\setlist[itemize]{leftmargin=1.1em,itemsep=0.1em,topsep=0.1em}
+\setlength{\parskip}{0.42em}
+\setlist[itemize]{leftmargin=1.1em,itemsep=0.05em,topsep=0.05em}
 \setlist[enumerate]{leftmargin=1.4em,itemsep=0.3em,topsep=0.3em}
 
 \tcbset{
   posterblockstyle/.style={
     colback=white,
-    colframe=black!55,
+    colframe=postergray,
     colbacktitle=white,
     coltitle=black,
     fonttitle=\fontsize{24}{29}\selectfont\bfseries,
-    fontupper=\fontsize{17}{21.8}\selectfont,
+    fontupper=\fontsize{17}{21}\selectfont,
+    before upper={\RaggedRight},
     boxrule=1.1pt,
     arc=0pt,
     left=0.7cm,
@@ -49,7 +53,7 @@
   \begin{tcolorbox}[posterblockstyle,title={#1}]
     #2
   \end{tcolorbox}
-  \vspace{0.95cm}
+  \vspace{0.65cm}
 }
 \newcommand{\posterequation}[1]{%
   \par\smallskip
@@ -151,7 +155,7 @@
 \hfill
 \begin{minipage}[t]{0.24\textwidth}
   \raggedleft
-  \includegraphics[width=0.85\linewidth]{logo_uulm_sw.png}
+  \includegraphics[width=0.95\linewidth]{logo_uulm_sw.png}
 \end{minipage}
 
 \vspace{1.3cm}
@@ -479,14 +483,14 @@ i=2,\dots,N.
         \end{center}
 
         \begin{itemize}
-            \item Mapper \textbf{depends on the clustering algorithm} used on each $X_i$.
+            \item The Mapper construction shown above follows \textbf{[2]} and \textbf{depends on the clustering algorithm} used on each $X_i$.
             \item Each cluster becomes a node; overlapping clusters are connected by an edge.
             \item M$\alpha$N retains each subject as a node and removes clustering from graph construction; community detection may still be applied afterward.
         \end{itemize}
         \textbf{The question becomes: by which rule should two nodes be connected?}
     }
 
-    \vspace{1cm}
+    \vspace{0.3cm}
 
     
 
@@ -561,7 +565,7 @@ i=2,\dots,N.
         \end{center}
     }
 
-    \vspace{1cm}
+    \vspace{0.3cm}
 
     \posterblock{8. Case Study: COVID-19 Spread in the USA}{
         \begin{itemize}
@@ -660,7 +664,7 @@ i=2,\dots,N.
     \medskip
     }
 
-    \vspace{0.8cm}
+    \vspace{0.3cm}
 
     \posterreferences
 
