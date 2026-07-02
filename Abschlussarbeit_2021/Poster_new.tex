@@ -141,8 +141,8 @@
 \begin{document}
 \begin{tikzpicture}[remember picture,overlay]
   \draw[posterline,line width=1.5pt]
-    ([xshift=2.4cm,yshift=-9.4cm]current page.north west) --
-    ([xshift=-2.4cm,yshift=-9.4cm]current page.north east);
+    ([xshift=2.4cm,yshift=-11.8cm]current page.north west) --
+    ([xshift=-2.4cm,yshift=-11.8cm]current page.north east);
 \end{tikzpicture}
 
 \begin{minipage}[t]{0.68\textwidth}
@@ -483,7 +483,7 @@ i=2,\dots,N.
         \end{center}
 
         \begin{itemize}
-            \item The Mapper construction shown above follows \textbf{[2]} and \textbf{depends on the clustering algorithm} used on each $X_i$.
+            \item Mapper \textbf{depends on the clustering algorithm} used on each $X_i$~\textbf{[2]}.
             \item Each cluster becomes a node; overlapping clusters are connected by an edge.
             \item M$\alpha$N retains each subject as a node and removes clustering from graph construction; community detection may still be applied afterward.
         \end{itemize}
