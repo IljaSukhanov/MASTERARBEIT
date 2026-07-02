@@ -20,11 +20,11 @@
 \graphicspath{{LaTeX/images/}{Abschlussarbeit_2021/LaTeX/images/}{Images/}}
 
 \definecolor{postergray}{RGB}{87,87,86}
-\definecolor{posterline}{RGB}{125,154,170}
-\definecolor{posteraccent}{RGB}{125,154,170}
 \definecolor{uulmgreen}{RGB}{86,170,28}
 \colorlet{uulmdarkgreen}{uulmgreen!70!black}
 \colorlet{uulmlightgreen}{uulmgreen!18!white}
+\colorlet{posterline}{uulmgreen!35!white}
+\colorlet{posteraccent}{uulmdarkgreen}
 
 \newcommand{\postertitle}{Spectral Scale Selection in Topological Data Analysis}
 \newcommand{\posterauthor}{\textbf{Ilja Sukhanov}\textsuperscript{1} \quad Djordje Baralic\textsuperscript{2} \quad Oleksandr Leonov\textsuperscript{3} \quad Liudmyla Polyakova\textsuperscript{3} \quad Evgeny Spodarev\textsuperscript{1}}
@@ -63,14 +63,14 @@
   \begin{center}
     \setlength{\fboxsep}{0.32cm}%
     \setlength{\fboxrule}{0.7pt}%
-    \fcolorbox{black!35}{black!4}{$\displaystyle #1$}%
+    \fcolorbox{uulmgreen!35!white}{uulmgreen!6!white}{$\displaystyle #1$}%
   \end{center}
   \smallskip
 }
 \newcommand{\posterequationbox}[1]{%
   \setlength{\fboxsep}{0.32cm}%
   \setlength{\fboxrule}{0.7pt}%
-  \fcolorbox{black!35}{black!4}{$\displaystyle #1$}%
+  \fcolorbox{uulmgreen!35!white}{uulmgreen!6!white}{$\displaystyle #1$}%
 }
 \newcommand{\posterequationpair}[4]{%
   \par\smallskip
@@ -663,7 +663,7 @@ i=2,\dots,N.
 
 \begin{minipage}[t]{0.31\linewidth}
     \centering
-    \colorbox{gray!10}{
+    \colorbox{uulmlightgreen}{
     \parbox{0.90\linewidth}{
         \centering
         {\Large\textbf{}}\\[-0.2em]
@@ -674,7 +674,7 @@ i=2,\dots,N.
 \hfill
 \begin{minipage}[t]{0.31\linewidth}
     \centering
-    \colorbox{gray!10}{
+    \colorbox{uulmlightgreen}{
     \parbox{0.90\linewidth}{
         \centering
         {\Large\textbf{}}\\[-0.2em]
@@ -685,7 +685,7 @@ i=2,\dots,N.
 \hfill
 \begin{minipage}[t]{0.31\linewidth}
     \centering
-    \colorbox{gray!10}{
+    \colorbox{uulmlightgreen}{
     \parbox{0.90\linewidth}{
         \centering
         {\Large\textbf{}}\\[-0.2em]
