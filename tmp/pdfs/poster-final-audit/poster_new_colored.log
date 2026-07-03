@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  3 JUL 2026 11:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.18)  3 JUL 2026 11:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1027,26 +1027,13 @@ File: Abschlussarbeit_2021/LaTeX/images/eight_proper.png Graphic file (type png
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/eight_proper.png  us
 ed on input line 643.
 (pdftex.def)             Requested size: 309.42902pt x 314.20667pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 742--742
-[]\OT1/FiraSans-OsF/regular/n/17 each node $\OML/lmm/m/it/17 x[] \OMS/lmsy/m/n/
-17 2 \U/msb/m/n/17 R[]$ \OT1/FiraSans-OsF/regular/n/17 rep-re-sents one of $\OT
-1/lmr/m/n/17 3[]142$ \OT1/FiraSans-OsF/regular/n/17 US coun-ties and
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 742--742
-[]\OT1/FiraSans-OsF/regular/n/17 first 14 en-tries: 13 nor-mal-ized three-day c
-ase ag-gre-gates and their
- []
-
 <Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png, id=18, 2258.
 4375pt x 1806.75pt>
 File: Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png Graphic 
 file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID-projections_co
-loring.png  used on input line 742.
+loring.png  used on input line 744.
 (pdftex.def)             Requested size: 486.9675pt x 389.574pt.
 <Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png, id=19,
  2030.58624pt x 1624.0675pt>
@@ -1054,45 +1041,45 @@ File: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png Gr
 aphic file (type png)
 <use Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png>
 Package pdftex.def Info: Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_
-4communities.png  used on input line 742.
+4communities.png  used on input line 744.
 (pdftex.def)             Requested size: 486.97885pt x 389.48679pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <14.4> not availa
 ble
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 742.
+put line 744.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 13.67995pt on input line 742.
+(Font)              scaled to size 13.67995pt on input line 744.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <14.4> not availa
 ble
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 742.
+ line 744.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 13.67995pt on input line 742.
+(Font)              scaled to size 13.67995pt on input line 744.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <20> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 746.
+ line 748.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 18.99994pt on input line 746.
+(Font)              scaled to size 18.99994pt on input line 748.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <13> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 746.
+put line 748.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 12.34996pt on input line 746.
+(Font)              scaled to size 12.34996pt on input line 748.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/b/n' in size <13> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/bold/n' tried instead on input
- line 746.
+ line 748.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 12.34996pt on input line 746.
+(Font)              scaled to size 12.34996pt on input line 748.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <13> not availab
 le
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 746.
+nput line 748.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 12.34996pt on input line 746.
-[1
+(Font)              scaled to size 12.34996pt on input line 748.
+ [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
 al/texlive/2024/texmf-dist/fonts/enc/dvips/fira/fir_337jzs.enc}{/usr/local/texl
@@ -1140,7 +1127,7 @@ y10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></u
 sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
 Output written on tmp/pdfs/poster-final-audit/poster_new_colored.pdf (1 page, 9
-385873 bytes).
+385854 bytes).
 PDF statistics:
  109 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream
