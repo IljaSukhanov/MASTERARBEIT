@@ -558,25 +558,38 @@ The distance between the two restricting hyperplanes is given by the formula
     Let $K\subseteq\mathbb{R}^{d}$ be a nonempty, convex set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in S^{d-1}\}$.
 \end{Def}
 
+A convex body is a compact nonempty convex set. 
+
+\begin{Lem}
+    Let $K,L\subseteq\mathbb{R}^d$ be two convex bodies. Then
+    \begin{align*}
+        d_H(K,L)=\sup_{u\in S^{d-1}}|h_{K}(u)-h_{L}(u)|.
+    \end{align*}
+\end{Lem}
+
 The support function of a zonotope is particularly easy: $h_{\mathcal{Z}_n^{(k)}}(u)=\sum_{j=0}^{n}\langle g_j^{(k)},u\rangle$. The width in direction $u$ is given by
 \begin{align*}
-    w_k(u)=2h_{\mathcal{Z}_n^{(k)}}(u)
+    w_k(u)=h_{\mathcal{Z}_n^{(k)}}(u)+h_{\mathcal{Z}_n^{(k)}}(-u)=2h_{\mathcal{Z}_n^{(k)}}(u)
 \end{align*}
-We have
+Consider the case $k\ge p+1$. We have
 \begin{align*}
-    \min_{u\in S^{k-1}}w_k(u)=
+    \min_{u\in S^{k-1}}w_k(u)=\frac{2}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
 \end{align*}
-attained at
+This minimum is attained at the finite set of points
 \begin{align*}
-    u=
+    \left\{\pm\frac{q_r^{(k)}}{\|q_{\phi}\|_2}:r=0,\dots,k-(p+1)\right\}
 \end{align*}
-
+where $q_{\phi}=(1,-\phi_1,\dots,-\phi_p)$ and
+\begin{align*}
+    q_r^{(k)}=(\underbrace{0,\dots,0}_{r},1,-\phi_1,\dots,-\phi_p,0,\dots,0)\in\mathbb{R}^{k}
+\end{align*}
 An empirical version is given by
 \begin{align*}
-    \hat{w}_k(u)=\max_{t}\langle u,Y_t^{(k)}\rangle-\min_{t}\langle u,Y_t^{(k)} \rangle
+    \hat{w}_k(u)&=\max_{t}\langle u,Y_t^{(k)}\rangle-\min_{t}\langle u,Y_t^{(k)} \rangle\\
+    \hat{m}_k&=\min_{u\in S^{k-1}}\hat{w}_k(u)
 \end{align*}
 
-\todo[inline]{Give some convergence result $\hat{w}_k(u)\to w_k(u)$}
+\todo[inline]{Give some convergence result $\hat{w}_k(u)\to w_k(u)$ or $m_k\to\hat{m}_k$}
 
 The idea is to minimize $\hat{w}_k(u)$ over all $u\in S^{k-1}$ and examine the relation $k\mapsto \min_{u\in S^{k-1}}\hat{w}_k(u)$
 
