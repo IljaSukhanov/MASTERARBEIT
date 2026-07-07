@@ -128,73 +128,40 @@ Takens' Theorem mainly serves as a theoretical justification or motivation for t
 
 Consider the sequence of point clouds $\mathcal{P}_k$ with increasing dimension $k\in\mathbb{N}$. Our goal is to apply the scale selection principle presented in Chapter~\ref{chap:methodology} to determine an \enquote{optimal} scale $k^{\star}\in\{1,\dots,k_{\max}\}$. In order to apply the scale selection, we need to construct a sequence (not necessarily a filtration) of simplicial complexes $\{L_k\}_{k=1}^{k_{\max}}$. Afterwards, we need to choose what kind of operation $\oplus$ we use to combine the simplicial complexes and the right type of functional (preferably of topological nature) to evaluate the simplicial complexes. In the end, we want to find a triple $(f,\{K_k\}_{k=1}^{k_{\max}},\oplus)$ that is spectrally optimizable.
 
-This optimal scale will serve as an estimation of the AR order $p$ that does not require the existence of the second moments of the innovations.
-
-% To do that in a meaningful way, the point clouds $\mathcal{P}_k$ first have to be lifted to a common ambient dimension $k_{\max}$, that is, apply some embedding $\phi_k:\mathbb{R}^{k}\to\mathbb{R}^{k_{\max}}$ to obtain the lifted point clouds $\mathcal{Q}_k=\phi_k(\mathcal{P}_k)$.
+\enquote{Optimality} of $k^{\star}$ should encompass $k^{\star}=p$ or at least $k^{\star}\approx p$ where the meaning of $\approx$ is specified. In particular, this \enquote{optimal} scale selection serves as an order estimation method without requiring the existence of (second) moments of the innovations.
 
 \subsection*{Dimension lift}
 
-\begin{itemize}
-    \item $X_{\text{train}}=(X_1,\dots,X_{T_{\text{train}}})$, $X_{\text{test}}=(X_{T_{\text{train}}+1},\dots,X_T)$
-\end{itemize}
-
-For $k\in\{1,\dots,k_{\max}\}$ we complete $Y_t^{(k)}\in\mathbb{R}^{k}$ to
+The first step is to lift the point clouds $\mathcal{P}_k$, $k=1,\dots,k_{\max}$ to a common ambient dimension. That is, transforming each $\mathcal{P}_k$ to $\mathcal{Q}_k\subseteq\mathcal{R}^{k_{\max}}$. In order to do this, we split the observed time series $X=(X_1,\dots,X_T)$ into a train and test part:
 \begin{align*}
-    p_t^{(k)}:=\begin{pmatrix}
+    X_{\text{train}}&=(X_1,\dots,X_{T'})\\
+    X_{\text{test}}&=(X_{T'+1},\dots,X_T)
+\end{align*}
+
+For $k\in\{1,\dots,k_{\max}\}$ we complete $Y_{t}^{(k)}=(X_t,X_{t+1},\dots,X_{t+k-1})^{T}\in\mathbb{R}^{k}$ to
+\begin{align*}
+    p_{t}^{(k)}&=\begin{pmatrix}
         I_k\\
-        A_k
-    \end{pmatrix}Y_{t}^{(k)}=\begin{pmatrix}
+        \hat{A}_k
+    \end{pmatrix}Y_t^{(k)}=\begin{pmatrix}
         Y_{t}^{(k)}\\
-        A_kY_{t}^{(k)}
-    \end{pmatrix}\in\mathbb{R}^{k_{\max}}, &&t=1,\dots,T-k_{\max}+1,
+        \hat{A}_kY_{t}^{(k)}
+    \end{pmatrix}\\
+    &=\begin{pmatrix}
+        X_t\\
+        X_{t+1}\\
+        \vdots\\
+        X_{t+k-1}\\
+        \hat{\alpha}_{1,1}^{(k)}X_t+\dots+\hat{\alpha}_{1,k}^{(k)}X_{t+k-1}\\
+        \vdots\\
+        \hat{\alpha}_{k_{\max}-k,1}^{(k)}X_{t}+\dots+\hat{\alpha}_{k_{\max}-k,k}^{(k)}X_{t+k-1}
+    \end{pmatrix}\in\mathbb{R}^{k_{\max}},\\
+    t&=T'+1,\dots,T-k_{\max}+1,
 \end{align*}
-where $I_k\in\mathbb{R}^{k\times k}$ is the identity matrix and $A_k\in\mathbb{R}^{(k_{\max}-k)\times k}$ a linear completion matrix with coefficients $\alpha_{i,j}^{(k)}$, $i=1,\dots,k_{\max}-k$, $j=1,\dots,k$. The completed part $A_kY_{t}^{(k)}$ should resemble $z_t^{(k)}=(X_{t+k},\dots,X_{t+k_{\max}-1})^{T}\in\mathbb{R}^{k_{\max}-k}$ (the next $k_{\max}-k$ observations after $Y_t^{(k)}$). That is, we determine
-\begin{align}\label{eq:ls_dimension_lift}
-    \hat{A}_k\in\arg\min\left\{\sum_{t=1}^{T-k_{\max}+1}\left\|z_t^{(k)}-AY_{t}^{(k)}\right\|_2^2:A\in\mathbb{R}^{(k_{\max}-k)\times k}\right\}.
-\end{align}
-This is an Ordinary Least Squares Problem with a vector valued response. See the book~\cite{Grey_1981} for information about this. The Problem~\eqref{eq:ls_dimension_lift} can be formulated in a more compact way using matrix notation. To this end we introduce the matrices
-\begin{align*}
-    Y_k&=\begin{pmatrix}
-        Y_{1}^{(k)} & \cdots & Y_{T-k_{\max}+1}^{(k)}
-    \end{pmatrix}\in\mathbb{R}^{k\times(T-k_{\max}+1)}\\
-    Z_k&=\begin{pmatrix}
-        z_{1}^{(k)} & \cdots & z_{T-k_{\max}+1}^{(k)}
-    \end{pmatrix}\in\mathbb{R}^{(k_{\max}-k)\times(T-k_{\max}+1)}
-\end{align*}
-and Problem~\eqref{eq:ls_dimension_lift} becomes
-\begin{align*}
-    \hat{A}_k\in\arg\min\left\{\operatorname{tr}\left((Z_k-AY_k)^{T}(Z_k-AY_k)\right):A\in\mathbb{R}^{(k_{\max}-k)\times k}\right\}
-\end{align*}
+where $I_k\in\mathbb{R}^{k\times k}$ is the identity matrix and $\hat{A}_k\in\mathbb{R}^{(k_{\max}-k)\times k}$ a linear completion matrix with coefficients $\hat{\alpha}_{i,j}^{(k)}$, $i=1,\dots,k_{\max}-k$, $j=1,\dots,k$. The completed part $\hat{A}_kY_{t}^{(k)}$ resembles $z_t^{(k)}=(X_{t+k},\dots,X_{t+k_{\max}-1})^{T}\in\mathbb{R}^{k_{\max}-k}$ (the next $k_{\max}-k$ observations after $Y_t^{(k)}$).
 
-The solution can be written down explicitly:
-\begin{align*}
-    \hat{A}_k&=Z_kY_k^{T}\left(Y_kY_k^{T}\right)^{-1}\\&
-    =\underbrace{\sum_{t=k_{\max}}^{T}z_t^{(k)}\left(Y_t^{(k)}\right)^T}_{=U}\left(\underbrace{\sum_{t=k_{\max}}^{T}Y_t^{(k)}\left(Y_t^{(k)}\right)^{T}}_{=V}\right)^{-1}
-\end{align*}
-Provided that $Y_kY_k^{T}$ is invertible. This is almost surely the case if the innovations have an absolute continuous distribution.
+We determine $\hat{A}_k$ by minimizing a functional $\Psi_k(A_k)$ that depends on the train data $X_{\text{train}}$. The kind of functional depends on the nature of the innovation distribution. For example, we might choose different $\Psi_k$ depending on whether the innovations are light tailed or heavy tailed. Afterwards, we set $\hat{z}_t^{k}=\hat{A}_kY_{t}^{(k)}$ and $p_t^{k}=(Y_{t}^{(k)},\hat{z}_t^{k})$. We denote the lifted point cloud by $\mathcal{Q}_k=\{p_t^{k}:t=k_{\max},\dots,T\}$.
 
-\todo[inline]{Prove $\mathbb{P}(Y_kY_k^{T}\text{ is invertible})=1$ explicitly}
-
-% cite Mityagin
-
-The entries of the matrices $U=(U_{ij})\in\mathbb{R}^{(k_{\max}-k)\times k}$ and $V=(V_{ij})\in\mathbb{R}^{k\times k}$ can be written as
-\begin{align*}
-    U_{ij}&=\sum_{t=k_{\max}}^{T}X_{t-k-i}X_{t-j}\\
-    V_{ij}&=\sum_{t=k_{\max}}^{T}X_{t-i}X_{t-j}
-\end{align*}
-
-Under normalization we could hope to have convergence by applying the ergodic theorem(??):
-\begin{align*}
-    \tilde{U}_{ij}&=\frac{1}{T-k_{\max}+1}U_{ij}\stackrel{T\to\infty}{\to}\mathbb{E}\left[X_{t-k-i}X_{t-j}\right]=\gamma(j-i-k)\\
-    \tilde{V}_{ij}&=\frac{1}{T-k_{\max}+1}V_{ij}\stackrel{T\to\infty}{\to}\mathbb{E}\left[X_{t-i}X_{t-j}\right]=\gamma(j-i)
-\end{align*}
-
-Thus we would have the following convergence, which is understood component wise:
-\begin{align*}
-    \hat{A}_k=UV^{-1}\stackrel{T\to\infty}{\to}\operatorname{Cov}\left[z_t^{(k)},Y_t^{(k)}\right]\left(\operatorname{Cov}\left[Y_t^{(k)}\right]\right)^{-1}
-\end{align*}
-
-Then we set $\hat{z}_t^{k}=\hat{A}_kY_{t}^{(k)}$ and $p_t^{k}=(Y_{t}^{(k)},\hat{z}_t^{k})$. We denote the lifted point cloud by $\mathcal{Q}_k=\{p_t^{k}:t=k_{\max},\dots,T\}$.
 
 We are interested in the geometry of the point cloud $\mathcal{Q}_k$. We write
 \begin{align*}
@@ -203,17 +170,81 @@ We are interested in the geometry of the point cloud $\mathcal{Q}_k$. We write
         \hat{\alpha}_{1,j}\\
         \vdots\\
         \hat{\alpha}_{k_{\max}-k,j}
-    \end{pmatrix}
+    \end{pmatrix},
 \end{align*}
 where $e_j$ is the $j$-th unit vector in $\mathbb{R}^{k}$. Note that the directions $h_1,\dots,h_k$ are independent of $t$. Therefore, $\mathcal{Q}_k$ is contained in a $k$-dimensional linear subspace of $\mathbb{R}^{k_{\max}}$, namely $\operatorname{span}\{h_1,\dots,h_k\}$.
 
 Note that we have the following equation:
-\begin{align*}
-    \left(p_t^{(k)}-p_s^{(k)}\right)^{T}\left(p_t^{(k)}-p_s^{(k)}\right)&=\left(Y_t^{(k)}-Y_s^{(k)}\right)^{T}\left(I_k+\hat{A}_k^{T}\hat{A}_k\right)\left(Y_t^{(k)}-Y_s^{(k)}\right)
-\end{align*}
+\begin{align}\label{eq:squared_2norm_of_lifted_points}
+    \left(p_t^{(k)}-p_s^{(k)}\right)^{T}\left(p_t^{(k)}-p_s^{(k)}\right)&=\left(Y_t^{(k)}-Y_s^{(k)}\right)^{T}\left(I_k+\hat{A}_k^{T}\hat{A}_k\right)\left(Y_t^{(k)}-Y_s^{(k)}\right).
+\end{align}
 % Linear completion changes metric according to how strongly observed coordinates predict missing coordinates
 
-\newpage
+We have
+\begin{align*}
+    M_t^{(k)}\cdot\begin{pmatrix}
+        X_T\\
+        \vdots\\
+        X_1
+    \end{pmatrix}=
+    p_t^{(k)},
+\end{align*}
+where the matrix $M_t^{(k)}\in\mathbb{R}^{k_{\max}\times T}$ is given by
+\begin{align*}
+    \begin{pmatrix}
+        \mathbf{0} & I_k & \mathbf{0}\\
+        \mathbf{0} & \hat{A}_k & \mathbf{0}
+    \end{pmatrix},
+\end{align*}
+with $\mathbf{0}$ being matrices of the right size that contain only zeros.
+
+\subsubsection*{Dimension lift via Least Squares (Light tailed case)}
+
+In case of light tailed innovations, we can determine the linear completion matrix by Ordinary Least Squares (see the book~\cite{Grey_1981} for information on OLS with a vector valued response). That is, we determine
+\begin{align}\label{eq:ls_dimension_lift}
+    \hat{A}_k\in\arg\min\left\{\sum_{t=1}^{T'-k_{\max}+1}\left\|z_t^{(k)}-AY_{t}^{(k)}\right\|_2^2:A\in\mathbb{R}^{(k_{\max}-k)\times k}\right\}.
+\end{align}
+The Problem~\eqref{eq:ls_dimension_lift} can be formulated in a more compact way using matrix notation. To this end, we introduce the matrices
+\begin{align*}
+    Y_k&=\begin{pmatrix}
+        Y_{1}^{(k)} & \cdots & Y_{T'-k_{\max}+1}^{(k)}
+    \end{pmatrix}\in\mathbb{R}^{k\times(T'-k_{\max}+1)}\\
+    Z_k&=\begin{pmatrix}
+        z_{1}^{(k)} & \cdots & z_{T'-k_{\max}+1}^{(k)}
+    \end{pmatrix}\in\mathbb{R}^{(k_{\max}-k)\times(T'-k_{\max}+1)}
+\end{align*}
+and Problem~\eqref{eq:ls_dimension_lift} becomes
+\begin{align*}
+    \hat{A}_k\in\arg\min\left\{\operatorname{tr}\left((Z_k-AY_k)^{T}(Z_k-AY_k)\right):A\in\mathbb{R}^{(k_{\max}-k)\times k}\right\}.
+\end{align*}
+
+
+
+The solution can be written down explicitly:
+\begin{align*}
+    \hat{A}_k&=Z_kY_k^{T}\left(Y_kY_k^{T}\right)^{-1}\\&
+    =\underbrace{\sum_{t=1}^{T'-k_{\max}+1}z_t^{(k)}\left(Y_t^{(k)}\right)^T}_{=U_k}\left(\underbrace{\sum_{t=1}^{T'-k_{\max}+1}Y_t^{(k)}\left(Y_t^{(k)}\right)^{T}}_{=V_k}\right)^{-1},
+\end{align*}
+provided that $V_k=Y_kY_k^{T}$ is invertible. This is almost surely the case if the innovations have an absolute continuous distribution.
+
+\todo[inline]{Prove $\mathbb{P}(Y_kY_k^{T}\text{ is invertible})=1$ explicitly}
+
+% cite Mityagin
+
+The entries of the matrices $U_k=(U_{ij}^{(k)})\in\mathbb{R}^{(k_{\max}-k)\times k}$ and $V_k=(V_{ij}^{(k)})\in\mathbb{R}^{k\times k}$ can be written as
+\begin{align*}
+    U_{ij}^{(k)}&=\sum_{t=1}^{T'-k_{\max}+1}X_{t+k+i-1}X_{t+j-1},\quad i=1,\dots,k_{\max}-k,j=1,\dots,k\\
+    V_{ij}^{(k)}&=\sum_{t=1}^{T'-k_{\max}+1}X_{t+i-1}X_{t+j-1},\quad i,j=1,\dots,k
+\end{align*}
+By the ergodic theorem (??) these entries converge and their limit is determined by the auto-covariance function $\gamma$ of the process $(X_t)$:
+\begin{align*}
+    \tilde{U}_{ij}^{(k)}&=\frac{1}{T-k_{\max}+1}U_{ij}^{(k)}\stackrel{T\to\infty}{\to}\mathbb{E}\left[X_{t+k+i-1}X_{t+j-1}\right]=\gamma(j-i-k)\\
+    \tilde{V}_{ij}^{(k)}&=\frac{1}{T-k_{\max}+1}V_{ij}^{(k)}\stackrel{T\to\infty}{\to}\mathbb{E}\left[X_{t+i-1}X_{t+j-1}\right]=\gamma(j-i)
+\end{align*}
+Thus we have the following convergence, which is understood component wise:
+\begin{align*}
+    \hat{A}_k=U_kV_k^{-1}\stackrel{T\to\infty}{\to}\operatorname{Cov}\left[z_t^{(k)},Y_t^{(k)}\right]\left(\operatorname{Cov}\left[Y_t^{(k)}\right]\right)^{-1}.
+\end{align*}
 
 
 The uncompleted part $z_t^{(k)}$ can be expressed as a linear function of $Y_t^{(k)}$ and innovations $Z=(Z_{t+k},\dots,Z_{t+k_{\max}-1})$ \textcolor{red}{once $k\ge p$}. That is, there exist matrices $B_k$ and $C_k$ such that $z_t^{(k)}=B_kY_t^{(k)}+C_kZ$. This is not surprising because linearity is already part of the AR process. Thus, our linear prediction $\hat{z}_t^{(k)}=\hat{A}_kY_t^{(k)}$ is a natural choice.
@@ -245,52 +276,9 @@ with
 \end{align*}
 and reconstruction matrix $B_k=-H_z^{-1}H_Y$, where $H_p^{(k)}=(H_Y H_z)$. Note that $H_z$ is in fact invertible since it is a lower triangular matrix with all diagonal elements being equal to $1$.
 
+\todo[inline]{What about a representation in the case $k<p$}
 
-\todo[inline]{Can we somehow estimate $B_k=-H_z^{-1}H_Y$ and $C_k=-H_z^{-1}$?}
-
-\todo[inline]{Use forward embedding and connect linear prediction to classical estimation methods for ARMA models??}
-
-In practice, both the order $p$ and the coefficients $\phi_1,\dots,\phi_p$ are not known. We can obtain estimates $\hat{\phi}_1,\dots,\hat{\phi}_r$ using known estimation methods and with fixed $r=1,\dots,r_{\max}$. Then we assemble the matrix
-\begin{align*}
-    \hat{H}_r^{(k)}=\begin{pmatrix}
-        0 & \cdots & 0 & \hat{\phi}_r & \hat{\phi}_{r-1} & \cdots & \hat{\phi}_1 & 1 & 0 & \cdots & 0\\
-        0 & \cdots & 0 & 0 & \hat{\phi}_r & \hat{\phi}_{r-1} & \cdots & \hat{\phi}_1 & 1 & \cdots & 0\\
-        \vdots & & \vdots & \vdots & \ddots & \ddots & \ddots & & \ddots & \ddots & \vdots\\
-        0 & \cdots & 0 & 0 & \cdots & 0 & \hat{\phi}_r & \hat{\phi}_{r-1} & \cdots & \hat{\phi}_1 & 1
-    \end{pmatrix}
-\end{align*}
-and also define the estimated reconstruction matrix $\hat{B}_r^{(k)}=-\hat{H}_z^{-1}\hat{H}_Y$, where $\hat{H}_r^{(k)}=(\hat{H}_Y \hat{H}_z)$. We can use the estimated reconstruction matrix to lift the point cloud $\mathcal{P}_k$ to $\mathbb{R}^{k_{\max}}$ by defining
-\begin{align*}
-    p_t^{(k,r)}&=\begin{pmatrix}
-        Y_t^{(k)}\\
-        \hat{B}_r^{(k)}Y_t^{(k)}
-    \end{pmatrix} && k\ge r\\
-    \mathcal{Q}_{k,r}&=\{p_t^{k,r}:t=1,\dots,T-k_{\max}+1\} && k\ge r
-\end{align*}
-
-\todo[inline]{interpretation of the lifted point cloud $\mathcal{Q}_{k,r}$: what does $r$ mean in this context}
-
-\todo[inline]{efficient computation of $\hat{B}_r^{(k)}$}
-
-We have
-\begin{align*}
-    M_t^{(k)}\cdot\begin{pmatrix}
-        X_T\\
-        \vdots\\
-        X_1
-    \end{pmatrix}=
-    p_t^{(k)},
-\end{align*}
-where the matrix $M_t^{(k)}\in\mathbb{R}^{k_{\max}\times T}$ is given by
-\begin{align*}
-    \begin{pmatrix}
-        \mathbf{0} & I_k & \mathbf{0}\\
-        \mathbf{0} & \hat{A}_k & \mathbf{0}
-    \end{pmatrix},
-\end{align*}
-with $\mathbf{0}$ being matrices of the right size that contain only zeros.
-
-\subsection*{Dimension lift via Excursion metric minimization}
+\subsubsection*{Dimension lift via Excursion metric minimization}
 
 We again have an observed time series $X=(X_{1},\dots,X_T)$ that is split up into $X_{\text{train}}=(X_1,\dots,X_{T_{\text{train}}})$ and $X_{\text{test}}=(X_{T_{\text{train}}+1},\dots,X_T)$. Define $X^{\text{test}}_t=X_{T_{\text{train}}+t}$ for $t=1,\dots,T-T_{\text{train}}$. The goal is to lift $Y_t^{(k)}$ for $t=T_{\text{train}}+1,\dots,T$ from $\mathbb{R}^k$ to $\mathbb{R}^{k_{\max}}$. Denote the lifted point by $p_t^{(k)}$. It is given by
 \begin{align*}
@@ -327,35 +315,17 @@ where $F_{\hat{\theta}}$ is the empirical cumulative distribution function fitte
 
 \subsection*{Simplicial complex construction}
 
-A general construction principle can be described in a graph theoretical way. Consider the set of vertices $V=\{1,\dots,T-k_{\max}+1\}$ or $V=\{T_{\text{train}}+1,\dots,T-k_{\max}+1\}$. Two distinct time indices $s$ and $t$ form an edge if $w_k(s,t)\le\tau$, where $w_k:V\times V\to\mathbb{R}_{\ge0}$ is a weight function and $\tau>0$ some threshold parameter. Information about linear dependence enters via the choice of the weight function $w_k$. By keeping $\tau$ fixed across $k$, we may hope to detect a transition at $k=p$. Let $E_k^{\tau}$ be the set of edges and $G_k^{\tau}=(V,E_k^{\tau})$ the resulting graph. 
-
-What if we take this approach: For a given functional $f$ what would be the correct choice of weight $w_k$. 
-
-\subsection*{Simplicial complex construction (old)}
-
-We obtain the point clouds $\mathcal{Q}_k=\{p_t^{k}:t=1,\dots,T-k_{\max}+1\}\subseteq\mathbb{R}^{k_{\max}}$, which can be regarded as geometric embeddings of the abstract vertex set $V=\{1,\dots,T-k_{\max}+1\}$ with embedding $V\to\mathbb{R}^{k_{\max}}$, $t\mapsto p_t^{k}$. We build a filtration of simplicial complexes on $V$ according to the following rule: connect $t_0,\dots,t_j\in V$ by a $j$-simplex for all $j=1,\dots,k-1$ if $\{t_0,\dots,t_j\}$ is a consecutive set of time indices. In particular, two indices $s$ and $t$ are connected by an edge if $|s-t|=1$. We write explicitly
-\begin{align*}
-    K_k=\left\{\sigma\subseteq V:
-    \begin{aligned}
-        &\sigma\subseteq\{r,\dots,r+j\}
-        \text{ for some } 0\le j\le k-1,\\
-        & r=1,\dots,T-k_{\max}+1-j
-    \end{aligned}\right\}.
-\end{align*}
-Note that $K_1=\{\{1\},\dots,\{T-k_{\max}+1\}\}$ is just the complex that contains all singletons. For $k\ge 2$, $K_k$ is the flag complex of the graph $G_k=(V,E_k)$ with $E_k=\{\{r,r+j\}:1\le j\le k-1,1\le r\le T-k_{\max}+1-j\}$.
-
 \todo[inline]{give precedence: ordered temporal simplex, simplex generated by a directed path through time}
 
-This construction preserves temporal information, but is trivial in the sense that it does not depend on the time series $X=(X_1,\dots,X_T)$. We can create a data-dependent subcomplex by considering a subgraph $H_k=(V,F_k)$, $F_k\subseteq E_k$ and forming the flag complex $L_k=\operatorname{Flag}(H_k)$.
+A general construction principle can be described in a graph theoretical way. Consider the set of vertices $V=\{T_{\text{train}}+1,\dots,T-k_{\max}+1\}$. Two distinct time indices $s$ and $t$ form an edge if $w_k(s,t)\le\tau$, where $w_k:V\times V\to\mathbb{R}_{\ge0}$ is a weight function and $\tau>0$ some threshold parameter. Information about linear dependence enters via the choice of the weight function $w_k$. Let $E_k^{\tau}$ be the set of edges and $G_k^{\tau}=(V,E_k^{\tau})$ the resulting graph.
 
-We can describe a general construction principle in the following way: make the graph $G_k$ weighted by introducing a weight function $w_k:E_k\to\mathbb{R}_{\ge0}$. Then consider the subset of edges $F_k^{\tau}=\{e\in E_k:w_k(e)\le\tau\}$. We obtain a subgraph $H_k=(V,F_k^{\tau})$ and consequently a sequence of (data-dependent) subcomplexes $L_k=\operatorname{Flag}(H_k)\subseteq K_k$. In order for $\{L_k\}_{k=1}^{k_{\max}}$ to be a filtration, we must require that
+Now we take the flag complex $L_k^{\tau}=\text{Flag}(G_k^{\tau})$ and obtain a sequence of complexes $\{L_k^{\tau}\}_{k=1}^{k_{\max}}$. In order for $\{L_k\}_{k=1}^{k_{\max}}$ to be a filtration, it must hold
 \begin{align*}
-    w_{k+1}(e)\le w_{k}(e),&&\forall e\in E_k\text{ and }k=1,\dots,k_{\max}-1
+    w_{k+1}(e)\le w_{k}(e),&&\forall e\in E_k\text{ and }k=1,\dots,k_{\max}-1.
 \end{align*}
+At the moment, it is not clear whether the specific weighting choices discussed below fulfill this property.
 
-\todo[inline]{Covariance idea}
-
-Compute the cross covariance matrix
+The first candidate for $w_k$ is a norm of the covariance matrix. To this end, compute the covariance matrix:
 \begin{align*}
     D_{s,t}^{(k)}=\operatorname{Cov}\left[p_t^{(k)},p_s^{(k)}\right]&=\begin{pmatrix}
         I_k\\
@@ -380,58 +350,60 @@ Compute the cross covariance matrix
     \end{pmatrix}
 \end{align*}
 
-\todo[inline]{autocovariance $\gamma(h)$ can be expressed via $\phi_1,\dots,\phi_p$ by using the Yule-Walker-Equations}
-
 We need a scalar summary:
 \begin{align*}
     &\rho_k(s,t)=\|C_{s,t}^{(k)}\|_F^2\\
     &\eta_k(s,t)=\|D_{s,t}^{(k)}\|_F^2=\left(k+\|\hat{A}_k\|_F^2\right)^2\|C_{s,t}^{(k)}\|_F^2
 \end{align*}
 
-\todo[inline]{Excursion metric idea}
+\todo[inline]{autocovariance $\gamma(h)$ can be expressed via $\phi_1,\dots,\phi_p$ by using the Yule-Walker-Equations}
 
-In cases where the second moment doesn't exist, the covariance is not viable anymore. We replace an entry $\mathbb{E}[X_sX_t]$ by the excursion metric $\mathbb{E}[|F_0(X_s)-F_0(X_t)|]$, where $F_0$ is the cumulative distribution function of $X_t$. We have $F_0(X_t)\sim\mathcal{U}[0,1]$.
-
-
-Such a rule should depend on the way the point cloud was lifted. The hope is that for $k<p$ the prediction quality is bad but increases for increasing $k$ and for $k\ge p$ it stabilizes. We can keep an edge $\{s,t\}$ if
-\begin{itemize}
-    \item both prediction errors are small simultaneously: $\|\hat{z}_t^{(k)}-z_t^{(k)}\|\le\tau$ and $\|\hat{z}_s^{(k)}-z_s^{(k)}\|\le\tau$
-    \item the prediction errors are of similar magnitude: $\|(\hat{z}_t^{(k)}-z_t^{(k)})-(\hat{z}_s^{(k)}-z_s^{(k)})\|\le\tau$
-\end{itemize}
-
-
-
-\subsection*{Operation on Simplicial Complexes}
-
-For a filtration $\{K_k\}_{k=1}^{k_{\max}}$ a natural operation is the union or intersection. In this case we have
+In cases where the second moment does not exist, the covariance is no longer viable. In such cases, we may use
 \begin{align*}
-    K_k\oplus K_l&=\begin{cases}
-        K_{k\vee l}, & \oplus=\cup\\
-        K_{k\wedge l}, & \oplus=\cap
-    \end{cases}
+    w_k(s,t)=(1+\|p_s^{(k)}-p_t^{(k)}\|_1)^{-1}.
 \end{align*}
 
-Does the operation $\oplus$ have an interpretation regarding the time dynamics?
+
+
+% We replace an entry $\mathbb{E}[X_sX_t]$ by the excursion metric $\mathbb{E}[|F_0(X_s)-F_0(X_t)|]$, where $F_0$ is the cumulative distribution function of $X_t$. We have $F_0(X_t)\sim\mathcal{U}[0,1]$.
+
+
+
+\subsection*{Assembly of the scale similarity matrix}
+
+We try out two different constructions:
+\begin{align*}
+    \langle L_i, L_j\rangle_f=f(L_i)+f(L_j)-f(L_i\cup L_j),
+\end{align*}
+where $f$ must be sub-additive, since $\{L_k\}_{k=1}^{k_{\max}}$ is not a filtration in general, and
+\begin{align*}
+    \langle L_i,L_j \rangle_f=f(L_i\cup L_j),
+\end{align*}
+where $f$ is non-negative. The scale similarity matrix becomes
+\begin{align*}
+    \Sigma_{k_{\max}}=\begin{pmatrix}
+        \langle L_1, L_1\rangle_f & \langle L_1, L_2\rangle_f & \dots & \langle L_1, L_{k_{\max}}\rangle_f\\
+        \langle L_1, L_2\rangle_f & \langle L_2, L_2\rangle_f & \cdots & \langle L_2, L_{k_{\max}}\rangle_f\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \langle L_1, L_{k_{\max}}\rangle_f & \langle L_2, L_{k_{\max}}\rangle_f & \dots & \langle L_{k_{\max}}, L_{k_{\max}}\rangle_f
+    \end{pmatrix}.
+\end{align*}
+Let $v^*=(v^*_1,\dots,v^*_{k_{\max}})$ be the principal eigenvector of $\Sigma_{k_{\max}}$. The \enquote{optimal} scale is set to $k^{*}\in\arg\max\{v^*_k:k=1,\dots,k_{\max}\}$.
 
 \subsection*{Choice of the Functional $f$}
 
-What functional $f$ do we choose to evaluate the complexes $\{L_i\oplus L_j\}_{i,j=1}^{k_{\max}}$?
-
-We define the scale similarity matrix $\Sigma_{k_{\max}}$ by
+As a simple starting point, we try functionals of the form
 \begin{align*}
-    \Sigma_{k_{\max}}=\begin{pmatrix}
-        f(L_1) & f(L_1\oplus L_2) & \cdots & f(L_1\oplus L_{k_{\max}})\\
-        f(L_1\oplus L_2) & f(L_2) & \cdots & f(L_2\oplus L_{k_{\max}})\\
-        \vdots & \vdots & \ddots & \vdots\\
-        f(L_1\oplus L_{k_{\max}}) & f(L_2\oplus L_{k_{\max}}) & \cdots & f(L_{k_{\max}})
-    \end{pmatrix}\in\mathbb{R}^{k_{\max}\times k_{\max}}
+    f(K)=\delta|C(K)|^{\alpha}|E(K)|^{\xi}
+\end{align*}
+or alternatively any transformation of $f$ that preserves monotonicity:
+\begin{align*}
+    \tilde{f}(K)&=\log{f(K)}=\tilde{\delta}+\alpha\log{\left(|C(K)|\right)}+\xi\log{\left(|E(K)|\right)}
 \end{align*}
 
-Let $v^*=(v^*_1,\dots,v^*_{k_{\max}})$ be the principal eigenvector of $\Sigma_{k_{\max}}$. Does $k^*=\arg\max\{v^*_k:k=1,\dots,k_{\max}\}$ coincide with the order $p$ of the autoregressive process?
-
-We try out different functionals of the form $f(K)=f_{\text{Top}}(K)\cdot f(K_{\text{Comb}})$.
-
 \todo[inline]{Some functional that measures the volume of the complex in some sense and detects the flatness}
+
+\newpage
 
 \section{Geometric Approach}
 
@@ -551,11 +523,11 @@ If $k>p+1$, the point $Y_t^{(k)}$ lies inside the intersection of multiple slabs
 
 The distance between the two restricting hyperplanes is given by the formula
 \begin{align*}
-    d=\frac{b-a}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
+    d=\frac{2}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
 \end{align*}
 
 \begin{Def}[Support function]
-    Let $K\subseteq\mathbb{R}^{d}$ be a nonempty, convex set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in S^{d-1}\}$.
+    Let $K\subseteq\mathbb{R}^{d}$ be a convex nonempty set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in S^{d-1}\}$.
 \end{Def}
 
 A convex body is a compact nonempty convex set. 
