@@ -127,6 +127,8 @@ where $D_{v^*}=\operatorname{diag}(v^*_1,\dots,v^*_N)$. The resulting Markov cha
 
 \section{Monotone scale selection}
 
+\todo[inline]{implement a function in Python that computes the stationary birth death distribution}
+
 We consider the case $0<c_1<\dots<c_N$. Define the discrete Laplacian:
 \begin{align*}
     \mathcal{L}=\frac{1}{c_1}\operatorname{diag}(1,0,\dots,0)-\Sigma^{-1}
@@ -234,3 +236,15 @@ This function serves as a building kit that lets us construct a polynomial-type 
 \begin{Def}
     A triple $(f,\{K_i\},\oplus)$ is said to be spectrally optimizable if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$ with transition probability matrix $Q=(q_{ij})$ and stationary distribution $\pi^Q=(\pi_1^Q,\dots,\pi_N^Q)$.
 \end{Def}
+
+\todo[inline]{Is there an alternative MC construction that favors \enquote{kink points}?}
+
+\section{General methodology beyond complexes}
+
+Above we have considered a sequence (filtration) of simplicial complexes $K_{\epsilon_i}$, $0<\epsilon_1<\dots<\epsilon_N$ and have constructed a similarity/ mutual information using a functional $f(K)$ by
+\begin{align*}
+    \langle K_1,K_2\rangle_f=f(K_1)+f(K_2)-f(K_1\oplus K_2)
+\end{align*}
+where $\oplus$ is some combining operation.
+
+How can we generalize this beyond complexes? For example for a sequence of kde's $f_{h_i}$, $0<h_1<\dots<h_N$ or a sequence of point clouds $\mathcal{P}_k\subseteq\mathbb{R}^{k}$, $k=1,\dots,k_{\max}$?

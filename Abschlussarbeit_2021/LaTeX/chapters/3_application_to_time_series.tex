@@ -65,29 +65,29 @@ For our experiments, we use random coefficients $\theta_1,\dots,\theta_q\sim\mat
 
 \todo[inline]{Find sufficient condition implementation}
 
-\section{Estimation methods}
+\todo[inline]{Discuss automatic coefficient selection}
 
+\section{Order selection methods}
 
+There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process. 
 
-Common estimation procedures for ARMA processes are:
+\begin{itemize}
+    \item Final Prediction Error (FPE) Criterion
+    \item Akaike Information Criterion (AIC)
+    \item Bayesian Information Criterion (BIC)
+\end{itemize}
+
+\todo[inline]{Are there any guarantees for the quality of such selectors?}
+
+\todo[inline]{order selection for heavy tailed innovations? Look for papers}
+
+Once the order has been chosen, the AR coefficients $\phi_1,\dots,\phi_{\hat{p}}$ can be estimated using one of the following classical procedures:
 \begin{itemize}
     \item Yule-Walker Estimation
     \item Burg's Algorithm
     \item The Hannan-Rissanen Algorithm
     \item Maximum Likelihood Estimation
 \end{itemize}
-
-There are several classical methods for the order selection, such as:
-\begin{itemize}
-    \item 
-\end{itemize}
-
-There are even order selection criteria for AR process with heavy tailed innovations:
-\begin{itemize}
-    \item 
-\end{itemize}
-
-We will compare our scale selection principle with the already established approaches mentioned above in Section~[].
 
 
 
@@ -122,7 +122,9 @@ Takens' Theorem mainly serves as a theoretical justification or motivation for t
     is an embedding, given that the pair $(\phi,y)$ is generic.
 \end{Thm}
 
+\todo[inline]{connect Takens' Theorem better, add interpretation}
 
+\todo[inline]{study time dynamics, formation of loops, $t$ vs number of loops until $t$, size of loops (how many time steps before loop closes)}
 
 \section{Scale Selection for the AR-process application}
 
@@ -360,12 +362,8 @@ We need a scalar summary:
 
 In cases where the second moment does not exist, the covariance is no longer viable. In such cases, we may use
 \begin{align*}
-    w_k(s,t)=(1+\|p_s^{(k)}-p_t^{(k)}\|_1)^{-1}.
+    w_k(s,t)=\|p_s^{(k)}-p_t^{(k)}\|_1.
 \end{align*}
-
-
-
-% We replace an entry $\mathbb{E}[X_sX_t]$ by the excursion metric $\mathbb{E}[|F_0(X_s)-F_0(X_t)|]$, where $F_0$ is the cumulative distribution function of $X_t$. We have $F_0(X_t)\sim\mathcal{U}[0,1]$.
 
 
 
@@ -403,7 +401,25 @@ or alternatively any transformation of $f$ that preserves monotonicity:
 
 \todo[inline]{Some functional that measures the volume of the complex in some sense and detects the flatness}
 
+\todo[inline]{graph functionals, mutual information from graph functionals}
+
+\section{Statistical Approach}
+
+We obtain estimates of the coefficients and consider the error
+\begin{align*}
+    \hat{\sigma}_k^2=\frac{1}{n}\sum_{t}\left(X_t-\sum_{j=1}^{k}\hat{\alpha}_j^{(k)}X_{t-j}\right)
+\end{align*}
+
+Define the function $f$ on the class $\mathcal{A}_k(\mathcal{D})$ of all AR processes of order $k$ with innovations coming from the distribution $\mathcal{D}$ by
+\begin{align*}
+    f(\mathcal{A}_k(\mathcal{D}))=\frac{n}{2}\hat{\sigma}_k^{2}+\lambda k
+\end{align*}
+
+
+
 \section{Numerical Experiments}
+
+
 
 Multiple questions arise:
 \begin{itemize}
@@ -530,13 +546,15 @@ If $k>p+1$, the point $Y_t^{(k)}$ lies inside the intersection of multiple slabs
     \bigcap_{j=0}^{k-p-1}\left\{(x_0,\dots,x_{k-1})\in\mathbb{R}^{k}:-1\le x_j-\phi_1x_{j+1}-\dots-\phi_px_{j+p}\le 1\right\}
 \end{align*}
 
+\todo[inline]{Set $p=1$ and $k=3$, visualize the intersection of slabs}
+
 The distance between the two restricting hyperplanes is given by the formula
 \begin{align*}
     d=\frac{2}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
 \end{align*}
 
 \begin{Def}[Support function]
-    Let $K\subseteq\mathbb{R}^{d}$ be a convex nonempty set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in S^{d-1}\}$.
+    Let $K\subseteq\mathbb{R}^{d}$ be a convex nonempty set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in K\}$.
 \end{Def}
 
 A convex body is a compact nonempty convex set. 
@@ -564,6 +582,9 @@ where $q_{\phi}=(1,-\phi_1,\dots,-\phi_p)$ and
 \begin{align*}
     q_r^{(k)}=(\underbrace{0,\dots,0}_{r},1,-\phi_1,\dots,-\phi_p,0,\dots,0)\in\mathbb{R}^{k}
 \end{align*}
+
+\todo[inline]{What about $k<p+1$? Is $\min w_k(u)>2^{-1}\sqrt{1+\phi_1^2+\dots+\phi_p^2}$}
+
 An empirical version is given by
 \begin{align*}
     \hat{w}_k(u)&=\max_{t}\langle u,Y_t^{(k)}\rangle-\min_{t}\langle u,Y_t^{(k)} \rangle\\
@@ -572,8 +593,13 @@ An empirical version is given by
 
 \todo[inline]{Give some convergence result $\hat{w}_k(u)\to w_k(u)$ or $m_k\to\hat{m}_k$}
 
-The idea is to minimize $\hat{w}_k(u)$ over all $u\in S^{k-1}$ and examine the relation $k\mapsto \min_{u\in S^{k-1}}\hat{w}_k(u)$
+The idea is to minimize $\hat{w}_k(u)$ over all $u\in S^{k-1}$ and examine the relation $k\mapsto \hat{m}_k$. \textcolor{red}{Unfortunately this minimization problem is very hard.}
 
+\todo[inline]{show numerical results for $p=1,2,3,\dots$}
+\todo[inline]{compare $k\mapsto\min w_k(u)$ and $k\mapsto\min\hat{w}_k(u)$}
+\todo[inline]{How should the scale similarity matrix be defined?}
+
+For such minimization problems viable methods exist, but the real problem is, that the points $Y_t^{(k)}$ do not fill the support $\mathcal{Z}_k$ well. Rigorously speaking, the convergence of the convex hull of $\mathcal{P}_k$ to $\mathcal{Z}_k$ is of the order $O((\frac{\log n}{n})^{2/(k+1)})$.
 
 \subsection{Normally distributed innovations}
 

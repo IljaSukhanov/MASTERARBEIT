@@ -1,0 +1,220 @@
+\chapter{Spectral Scale Selection for Kernel Density Estimation}
+
+In this chapter we apply the scale selection methodology from chapter~\ref{chap:methodology} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
+
+\todo[inline]{Can $\{\hat{f}_{h_i}\}_{i=1}^{N}$ be seen as a filtration?}
+
+\section{Preliminaries on Kernel Density Estimation}
+
+We have data $X_1,\dots,X_n\in\mathbb{R}^d$ sampled from an (unknown) distribution with density $f$. The kernel density function tries to estimate this unknown density. It is defined by
+\begin{align*}
+    \hat{f}_{h}(x)=\frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}^d.
+\end{align*}
+Common choices of the kernel $K\ge0$ are:
+\begin{itemize}
+    \item Epanechnikov: $K(u)=1\{-1\le u\le u\}\frac{3}{4}(1-u^2)$
+    \item Gaussian: $K(u)=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}u^2}$
+\end{itemize}
+
+The question of how to choose the bandwidth $h$ is widely known in the literature. The methods can be categorized by rule of thumb, plug in and cross validation.
+
+The optimal bandwidth should minimize the integrated squared error
+\begin{align*}
+    \operatorname{MISE}(h)=\mathbb{E}\left[\int\left(f(x)-f_h(x)\right)^2\,dx\right]
+\end{align*}
+
+Exact computations are generally not possible since the true density $f$ of the sampled data $X_1,\dots,X_n$ is not known. If $K$ is the Gaussian kernel and $f=\sum_mw_mp_m$ where $w_m>0$, $\sum_{m}w_m=1$ and $p_m\sim\mathcal{N}(0,\sigma_m^2)$ we can obtain an explicit formula for the $\operatorname{MISE}(h)$ which is due to \cite{10.1214/aos/1176348653}
+\begin{align*}
+    \operatorname{MISE}(h)&=\frac{1}{2\sqrt{\pi}nh}+\frac{n-1}{n}S(2h^2)-2S(h^2)+S(0)\\
+    S(a)&=\sum_{m,l}\frac{w_mw_l}{\sqrt{2\pi(\sigma_m^2+\sigma_l^2+a)}}
+\end{align*}
+
+Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
+
+
+
+\section{Assembly of Scale Similarity Matrices}
+
+A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ with $D(x,x)=0$ is called conditionally negative definite if
+\begin{align*}
+    \sum_{i,j=1}^{n}a_ia_jD(x_i,x_j)\le0
+\end{align*}
+for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=0$. A function $\phi:\mathbb{R}\to\mathbb{R}$ is called completely monotone if $\phi\in C^{\infty}(0,\infty)$ and $(-1)^{n}\phi^{(n)}(t)\ge 0$ for all $n\in\mathbb{N}_0$ and $t>0$.
+
+\begin{Thm}[Schoenberg]\label{thm:schoenberg}
+    Let $D:X\times X\to\mathbb{R}$ be conditionally negative. Let $x_1,\dots,x_n\in X$. Then the matrix $M=(M_{ij})$, $M_{ij}=\phi(D(x_i,x_j))$ is positive definite if and only if $\phi$ is completely monotone.
+    \todo[inline]{Find a source to cite}
+\end{Thm}
+
+Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some (statistical) divergence and $\phi$ a completely monotone function. There are some special kinds of divergences, where a transformation by a not necessarily completely monotone function is enough to obtain a positive definite similarity matrix.
+
+Write
+\begingroup
+\small
+\setlength{\arraycolsep}{3pt}
+
+\begin{equation*}
+    D=
+    \begin{pmatrix}
+        0 & D(x_1,x_2) & D(x_1,x_3) & \cdots
+          & D(x_1,x_{N-1}) & D(x_1,x_N)\\
+        D(x_2,x_1) & 0 & D(x_2,x_3) & \cdots
+          & D(x_2,x_{N-1}) & D(x_2,x_N)\\
+        D(x_3,x_1) & D(x_3,x_2) & 0 & \cdots
+          & D(x_3,x_{N-1}) & D(x_3,x_N)\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+        D(x_{N-1},x_1) & D(x_{N-1},x_2) & D(x_{N-1},x_3)
+          & \cdots & 0 & D(x_{N-1},x_N)\\
+        D(x_N,x_1) & D(x_N,x_2) & D(x_N,x_3)
+          & \cdots & D(x_N,x_{N-1}) & 0
+    \end{pmatrix}.
+\end{equation*}
+
+\endgroup
+
+\begin{Def}
+    A (symmetric) matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
+    \begin{align*}
+        i<j<k\implies D^{\pi}_{ik}\ge\max\{D^{\pi}_{ij},D^{\pi}_{jk}\}
+\end{align*}
+\end{Def}
+
+\todo[inline]{Extend definition for asymmetric matrices}
+
+\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix}
+
+The reason why we don't want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
+
+\todo[inline]{Find correct assumptions to prove the Lemma}
+
+\todo[inline]{The following Lemma is not correct yet but numerical experiments suggest that the Perron vector of distance or divergence matrices behaves not how we want}
+
+\begin{Lem}
+    Let $(M,d)$ be a geodesic metric space such that for every fixed point $y\in X$, the function $x\mapsto d(x,y)$ is geodesically convex. Let $X\subseteq M$ be a convex subset. Let $x_1,\dots,x_N\in X$ be finitely many points and define the distance matrix $D=(d(x_i,x_j))_{i,j=1}^{N}$. Let $v=(v_j)\in\mathbb{R}^{N}$ be the Perron vector of $D$. Then
+    \begin{align*}
+        \arg\max_{1\le j\le N}v_j\subseteq\{1,N\}.
+    \end{align*}
+\end{Lem}
+
+\begin{proof}
+    Define the function
+    \begin{align*}
+        F(x)=\sum_{j=1}^{N}d(x,x_j)v_j,\quad x\in X.
+    \end{align*}
+    Since $v$ is the Perron vector, we have $F(x_i)=\lambda v_i$. Thus
+    \begin{align*}
+        \arg\max_{1\le j\le N} v_j=\arg\max_{1\le j\le N}F(x_j).
+    \end{align*}
+\end{proof}
+
+\begin{Rem}
+    Every normed space $(V,\|\cdot\|)$ is a geodesic metric space. Consider for example the $L^{1}$ space. Then the subset $X$ of $L^{1}$ containing all probability densities is convex.
+\end{Rem}
+
+\subsection*{Examples of completely monotone functions}
+\begin{itemize}
+    \item $f(x)=e^{-\gamma x^{\alpha}}$, $\gamma\ge0$, $0<\alpha\le 1$
+    \item $f(x)=(a+bx)^{-\alpha}$, $a>0$, $b\ge0$, $\alpha>0$
+\end{itemize}
+
+\subsection*{Examples of divergences}
+
+\begin{itemize}
+    \item $\alpha$-divergence:
+    \begin{align*}
+        D_{\alpha}(p,q)=\frac{4}{1-\alpha^2}\left(1-\int p^{\frac{1-\alpha}{2}}q^{\frac{1+\alpha}{2}}\right)
+    \end{align*}
+    \item $D_0(p,q)=4 D_H(p,q)$, where $D_H(p,q)=\frac{1}{2}\int(p(x)-q(x))^2\,dx$ is the squared Hellinger distance
+\end{itemize}
+
+\begin{itemize}
+    \item Total variation: $d_{TV}(f,g)=\frac{1}{2}\int|f(x)-g(x)|\,dx$
+    \item $\|f-g\|_2^2=\int(f-g)^2=\int f^2+\int g^2-2\int fg$ (Bregman divergence)
+\end{itemize}
+The Jensen-Shannon divergence is defined by
+\begin{align*}
+    \text{JS}(f,g)&=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g)\\
+    H(f)&=-\int f(x)\log{f(x)}\,dx
+\end{align*}
+
+\subsection*{Divergences with (completely) monotone transformation}
+
+\begin{itemize}
+    \item $1-d_{TV}=\int\min\{f(x),g(x)\}\,dx$
+    \item $1-d_H(f,g)=\int\sqrt{f(x)g(x)}\,dx$
+    \item $S_{\gamma}(f,g)=\exp{(-\gamma\|f-g\|_2^2)}$
+\end{itemize}
+
+\subsection*{Explicit computations}
+
+Then $S_{\gamma}(\hat{f}_{h_i},\hat{f}_{h_j})$ can be computed explicitly by
+\begin{align*}
+    S_{\gamma}(\hat{f}_{h_i},\hat{f}_{h_j})&=\exp{(-\gamma D_{ij})}\\
+    D_{ij}&=I_{ii}+I_{jj}-2I_{ij}\\
+    I_{ij}&=\frac{1}{n^2}\frac{1}{\sqrt{2\pi(h_i^2+h_j^2)}}\sum_{k,l=1}^{n}\exp{\left(-\frac{(X_k-X_l)^{2}}{2(h_i^2+h_j^2)}\right)}
+\end{align*}
+
+\subsection*{Approximating integrals using quadrature}
+
+\todo[inline]{try/compare different rules, which one is the best?}
+
+Let $[a,b]$ be a real interval with $a<b$. Define an equidistant partition by $x_k=kh$, $k=0,1,\dots,n$. Here, $h=(b-a)/n$ is the length of a sub-interval and $n\ge 1$ controls the fineness of the partition. Write
+\begin{align*}
+    \int_a^bf(x)\,dx=\sum_{k=1}^{n}\underbrace{\int_{x_{k-1}}^{x_k}f(x)\,dx}_{=A_k(f)}
+\end{align*}
+and approximate each $A_k(f)$ by
+\begin{align*}
+    A_k(f)\approx\frac{h}{2}(f(x_{k-1})+f(x_k))
+\end{align*}
+We obtain
+\begin{align*}
+    \int_a^bf(x)\,dx\approx\frac{h}{2}\sum_{k=1}^{n}(f(x_{k-1})+f(x_k))=\frac{h}{2}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right)
+\end{align*}
+As approximation guarantee we have
+\begin{align*}
+    \left|\int_a^bf(x)\,dx-\sum_{k=1}^{n}A_k(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
+\end{align*}
+
+\section{Numerical Experiments}
+
+Let $0<h_1<\dots<h_N$. We will consider two types of grids:
+\begin{itemize}
+    \item linear grid: $h_j=h_{\min}+\frac{j-1}{N-1}(h_{\max}-h_{\min})$
+    \item geometric grid: $h_j=h_{\min}\left(\frac{h_{\max}}{h_{\min}}\right)^{\frac{j-1}{N-1}}$
+\end{itemize}
+
+Here, $0<h_{\min}<h_{\max}$ and $N\ge2$ is the number of grid points. We will increase $N$ to study grid stability.
+
+\todo[inline]{How to choose $h_{\min}$ and $h_{\max}$?}
+
+In the preliminary experiments we set $h_{\min}=10^{-2}$ and $h_{\max}=2$.
+
+\subsection*{Sample distributions}
+
+Let $X_1,\dots,X_n\sim f$. In our experiments we will test
+\begin{itemize}
+    \item $f$ standard normal $N(0,\sigma^2)$, $\sigma^2>0$
+    \item $f$ heavy tailed
+    \item $f$ multi-modal: $f=\sum_{i=1}^{n}w_if_i$, where $w_i\ge0$ and $\sum_iw_i=1$
+    \item $f$ skewed
+\end{itemize}
+
+The number of sampled points $n$ is an important parameter. In order to study consistency, we test $n=100,200,\dots,1000,\dots$
+
+\subsection*{Kernel choice}
+
+For now we will focus on the Gaussian kernel: $K(x)=(2\pi)^{-1/2}\exp{(-x^2/2)}$
+
+\subsection*{Scale similarity matrix}
+
+We will choose the four constructions described above:
+\begin{itemize}
+    \item $\int\min\{f,g\}$
+    \item $\int\sqrt{fg}$
+    \item $\exp{(-\gamma\|f-g\|_2^2)}$, $\gamma>0$
+    \item $1-\operatorname{JS}(f,g)/\log{2}$
+\end{itemize}
+
+\subsection*{Behavior under resampling}
+
+Let $X^{(i)}=(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ be multiple repeatedly drawn samples. We want to study the distribution of the chosen $h_{\text{crit}}$. Does the most often chosen $h_{\text{crit}}$ correspond with the \enquote{true} bandwidth?
