@@ -32,6 +32,25 @@ Exact computations are generally not possible since the true density $f$ of the 
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
 
+\subsection*{Constructing Mixture Models with multiple global MISE minima}
+
+For Gaussian kernels and Gaussian mixture densities, the integrated squared error can be evaluated in closed form. This makes it possible to construct examples where the oracle criterion has several competing minima. Consider, for example,
+\[
+f(x)
+=
+0.8181\,\varphi_{1}(x)
++
+0.0679\,\varphi_{0.00646}(x)
++
+0.1140\,\varphi_{0.2882}(x-0.6295),
+\]
+where \(\varphi_{\sigma}\) denotes the density of \(N(0,\sigma^2)\). For \(n=120\), the exact MISE curve of the Gaussian kernel density estimator has two numerically equal local minima at approximately
+\[
+h_1=0.0949,
+\qquad
+h_2=0.2616.
+\]
+This illustrates that the oracle bandwidth need not be unique. In multi-scale distributions, different bandwidths may resolve different features of the density, leading to several nearly optimal smoothing scales.
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -47,6 +66,8 @@ for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=
 \end{Thm}
 
 Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some (statistical) divergence and $\phi$ a completely monotone function. There are some special kinds of divergences, where a transformation by a not necessarily completely monotone function is enough to obtain a positive definite similarity matrix.
+
+In addition to being conditionally negative definite these special divergences are bounded which is why it is enough for the transformation $\phi$ to be only decreasing. 
 
 Write
 \begingroup
@@ -111,31 +132,73 @@ The reason why we don't want to work with the matrix $D$ and instead transform t
     Every normed space $(V,\|\cdot\|)$ is a geodesic metric space. Consider for example the $L^{1}$ space. Then the subset $X$ of $L^{1}$ containing all probability densities is convex.
 \end{Rem}
 
+\subsection*{Examples of divergences}
+
+Let $p$ and $q$ be two probability density functions.
+
+\subsubsection*{\texorpdfstring{$f$}{f}-divergences}
+
+Let $f:\mathbb{R}_{\ge0}\to\mathbb{R}\cup\{+\infty\}$ be a convex function. The $f$-divergence of $p$ from $q$ is defined as
+\begin{align*}
+    D_f(p\|q)=\int f\left(\frac{p(x)}{q(x)}\right)q(x)\,dx.
+\end{align*}
+
+Many prominent examples are $f$-divergences:
+
+\begin{itemize}
+    \item $\chi^{\alpha}$-divergence: $f(t)=\frac{1}{2}|t-1|^{\alpha}$, $\alpha\ge1$
+    \begin{itemize}
+        \item $\alpha=1$: $f(t)=\frac{1}{2}|t-1|\implies$ Total variation distance: $d_{\text{TV}}(p,q)=\frac{1}{2}\int|p-q|$
+    \end{itemize}
+    \item $\alpha$-divergence:
+    \begin{align*}
+        D_{\alpha}(p\| q)=\frac{4}{1-\alpha^2}\left(1-\int p^{\frac{1-\alpha}{2}}q^{\frac{1+\alpha}{2}}\right)
+    \end{align*}
+    \begin{itemize}
+        \item $\alpha=0$: $D_0(p\|q)=4D_{H}(p,q)$, where $D_H(p,q)=\frac{1}{2}\int(\sqrt{f}-\sqrt{g})^2$ is the squared Hellinger distance
+        \item $\alpha\to-1$: $D_{-1}(p\|q)=D_{\text{KL}}(p\|q)$ (Kullback-Leibler-divergence)
+        \item $\alpha\to1$: $D_{1}(p\|q)=D_{\text{KL}}(q\|p)$ (reverse Kullback-Leibler-divergence)
+    \end{itemize}
+    \item Jensen-Shannon divergence: $f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\left(\frac{t+1}{2}\right)}\right)\implies$
+    \begin{align*}
+        \text{JS}(f,g)&=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g)\\
+        H(f)&=-\int f(x)\log{f(x)}\,dx
+    \end{align*}
+\end{itemize}
+
+The only symmetric $\alpha$-divergence is the squared Hellinger distance. The only symmetric $\chi^{\alpha}$-divergence is the total variation distance. The JS-divergence is also symmetric.
+
+\todo[inline]{Establish condition on $f$ under which the $f$-divergence is symmetric}
+
+\subsubsection{Bregman divergences}
+
+Let $F\in C^{1}$ and convex. The Bregman convergence is
+\begin{align*}
+    D_F(p\| q)=F(p)-F(q)-\langle\nabla F(q),p-q\rangle.
+\end{align*}
+
+Of importance is the class of Bregman convergences defined by
+\begin{align*}
+    F_{\phi}(p)=\int\phi(p(x))\,dx
+\end{align*}
+for some convex function $\phi$. One example of such a function $\phi$ is
+\begin{align*}
+    \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(\beta+1)},\quad\beta\in\mathbb{R}\setminus\{0,1\}
+\end{align*}
+For $\beta=1$ we obtain
+\begin{align*}
+    D_{F_{\beta}}(p\|q)=\frac{1}{2}\|p-q\|_2^2,\quad F_{\beta}(p)=\int\phi_\beta\circ p
+\end{align*}
+
+That is, for $\beta=1$ we retrieve the squared $L^{2}$-norm. This is the only symmetric $\beta$-divergence.
+
+\todo[inline]{Condition on $F$ or $\phi$ under which Bregman divergence is symmetric}
+
 \subsection*{Examples of completely monotone functions}
 \begin{itemize}
     \item $f(x)=e^{-\gamma x^{\alpha}}$, $\gamma\ge0$, $0<\alpha\le 1$
     \item $f(x)=(a+bx)^{-\alpha}$, $a>0$, $b\ge0$, $\alpha>0$
 \end{itemize}
-
-\subsection*{Examples of divergences}
-
-\begin{itemize}
-    \item $\alpha$-divergence:
-    \begin{align*}
-        D_{\alpha}(p,q)=\frac{4}{1-\alpha^2}\left(1-\int p^{\frac{1-\alpha}{2}}q^{\frac{1+\alpha}{2}}\right)
-    \end{align*}
-    \item $D_0(p,q)=4 D_H(p,q)$, where $D_H(p,q)=\frac{1}{2}\int(p(x)-q(x))^2\,dx$ is the squared Hellinger distance
-\end{itemize}
-
-\begin{itemize}
-    \item Total variation: $d_{TV}(f,g)=\frac{1}{2}\int|f(x)-g(x)|\,dx$
-    \item $\|f-g\|_2^2=\int(f-g)^2=\int f^2+\int g^2-2\int fg$ (Bregman divergence)
-\end{itemize}
-The Jensen-Shannon divergence is defined by
-\begin{align*}
-    \text{JS}(f,g)&=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g)\\
-    H(f)&=-\int f(x)\log{f(x)}\,dx
-\end{align*}
 
 \subsection*{Divergences with (completely) monotone transformation}
 
@@ -143,6 +206,7 @@ The Jensen-Shannon divergence is defined by
     \item $1-d_{TV}=\int\min\{f(x),g(x)\}\,dx$
     \item $1-d_H(f,g)=\int\sqrt{f(x)g(x)}\,dx$
     \item $S_{\gamma}(f,g)=\exp{(-\gamma\|f-g\|_2^2)}$
+    \item $1-\operatorname{JS}(f,g)/\log{2}$
 \end{itemize}
 
 \subsection*{Explicit computations}
@@ -157,6 +221,10 @@ Then $S_{\gamma}(\hat{f}_{h_i},\hat{f}_{h_j})$ can be computed explicitly by
 \subsection*{Approximating integrals using quadrature}
 
 \todo[inline]{try/compare different rules, which one is the best?}
+
+\todo[inline]{Trapezoid or Simpson?}
+
+\todo[inline]{Approximation of infinite integral, control the truncation error}
 
 Let $[a,b]$ be a real interval with $a<b$. Define an equidistant partition by $x_k=kh$, $k=0,1,\dots,n$. Here, $h=(b-a)/n$ is the length of a sub-interval and $n\ge 1$ controls the fineness of the partition. Write
 \begin{align*}
