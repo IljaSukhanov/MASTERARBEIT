@@ -14,17 +14,31 @@ import sys
 import gudhi
 import numpy as np
 import pandas as pd
-from scipy.spatial.distance import pdist, squareform
 
 
-_FUNCTIONALS_PATH = Path(__file__).with_name("001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py")
+_FUNCTIONALS_PATH = next(
+    (
+        path
+        for path in (
+            Path(__file__).with_name("001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py"),
+            Path(__file__).resolve().parent.parent / "001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py",
+        )
+        if path.exists()
+    ),
+    None,
+)
+if _FUNCTIONALS_PATH is None:
+    raise FileNotFoundError("Could not find 001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py")
 _FUNCTIONALS_SPEC = importlib.util.spec_from_file_location(
     "simplicial_complex_functionals",
     _FUNCTIONALS_PATH,
 )
-simplicial_functionals = importlib.util.module_from_spec(_FUNCTIONALS_SPEC)
-sys.modules[_FUNCTIONALS_SPEC.name] = simplicial_functionals
-_FUNCTIONALS_SPEC.loader.exec_module(simplicial_functionals)
+if _FUNCTIONALS_SPEC.name in sys.modules:
+    simplicial_functionals = sys.modules[_FUNCTIONALS_SPEC.name]
+else:
+    simplicial_functionals = importlib.util.module_from_spec(_FUNCTIONALS_SPEC)
+    sys.modules[_FUNCTIONALS_SPEC.name] = simplicial_functionals
+    _FUNCTIONALS_SPEC.loader.exec_module(simplicial_functionals)
 
 beta_0 = simplicial_functionals.beta_0
 edge_count = simplicial_functionals.edge_count
@@ -41,7 +55,7 @@ class PipelineConfig:
     seed: int = 20260707
     pacf_first: float = 0.75
     pacf_decay: float = -0.50
-    weight_type: str = "l1"  # 'l1' or 'covariance'
+    weight_type: str = "covariance"
     tau: float = 2.0
     max_simplex_dimension: int = 2
     alpha: float = 1.0
@@ -54,8 +68,8 @@ class PipelineConfig:
             raise ValueError("p must be a positive integer.")
         if self.k_max < self.p:
             raise ValueError("k_max must be at least p.")
-        if self.weight_type not in {"l1", "covariance"}:
-            raise ValueError("weight_type must be 'l1' or 'covariance'.")
+        if self.weight_type != "covariance":
+            raise ValueError("Only 'covariance' weights remain in this module.")
         if self.tau <= 0:
             raise ValueError("tau must be strictly positive.")
 
@@ -100,6 +114,99 @@ def simulate_ar(phi: np.ndarray, n: int, burn_in: int, innovation_sd: float, rng
     return x[burn_in + p:]
 
 
+def simulate_ar_with_distribution(
+    phi: np.ndarray,
+    n: int,
+    burn_in: int,
+    innovation_distribution: str,
+    rng: np.random.Generator,
+) -> np.ndarray:
+    """Simulate a stationary AR process with N(0,1) or U[-1,1] innovations."""
+    phi = np.asarray(phi, dtype=float)
+    radius = companion_radius(phi)
+    if radius >= 1:
+        raise ValueError(
+            f"AR coefficients are not stationary (spectral radius={radius:.4f})."
+        )
+
+    distribution = innovation_distribution.strip().lower()
+    size = n + burn_in + len(phi)
+    if distribution == "gaussian":
+        innovations = rng.normal(0.0, 1.0, size)
+    elif distribution == "uniform":
+        innovations = rng.uniform(-1.0, 1.0, size)
+    else:
+        raise ValueError("innovation_distribution must be 'gaussian' or 'uniform'.")
+
+    p = len(phi)
+    x = np.zeros(size, dtype=float)
+    for t in range(p, size):
+        x[t] = phi @ x[t - np.arange(1, p + 1)] + innovations[t]
+    return x[burn_in + p:]
+
+
+def create_2d_trajectory_animation(
+    points: np.ndarray,
+    interval_ms: int = 40,
+):
+    """Create an accumulating animation of a two-dimensional trajectory."""
+    import matplotlib.pyplot as plt
+    from matplotlib.animation import FuncAnimation
+
+    points = np.asarray(points, dtype=float)
+    if points.ndim != 2 or points.shape[1] != 2 or len(points) < 2:
+        raise ValueError("points must have shape (n, 2) with n >= 2.")
+    if interval_ms <= 0:
+        raise ValueError("interval_ms must be positive.")
+
+    lower = points.min(axis=0)
+    upper = points.max(axis=0)
+    span = np.maximum(upper - lower, 1e-8)
+    margin = 0.08 * span
+
+    figure, axis = plt.subplots(figsize=(7, 7))
+    axis.set_xlim(lower[0] - margin[0], upper[0] + margin[0])
+    axis.set_ylim(lower[1] - margin[1], upper[1] + margin[1])
+    axis.set_aspect("equal", adjustable="box")
+    axis.set(
+        title="Ordered 2D sliding-window trajectory",
+        xlabel=r"$X_t$",
+        ylabel=r"$X_{t+1}$",
+    )
+    axis.grid(alpha=0.25)
+
+    trajectory, = axis.plot([], [], color="tab:blue", linewidth=1.2, alpha=0.8)
+    visited = axis.scatter([], [], s=18, color="tab:blue", alpha=0.55)
+    current, = axis.plot([], [], marker="o", color="tab:red", markersize=7)
+    time_label = axis.text(0.02, 0.97, "", transform=axis.transAxes, va="top")
+
+    def initialize():
+        trajectory.set_data([], [])
+        visited.set_offsets(np.empty((0, 2)))
+        current.set_data([], [])
+        time_label.set_text("")
+        return trajectory, visited, current, time_label
+
+    def update(frame):
+        shown = points[:frame]
+        trajectory.set_data(shown[:, 0], shown[:, 1])
+        visited.set_offsets(shown)
+        current.set_data([shown[-1, 0]], [shown[-1, 1]])
+        time_label.set_text(f"embedded point {frame}/{len(points)}")
+        return trajectory, visited, current, time_label
+
+    animation = FuncAnimation(
+        figure,
+        update,
+        frames=range(1, len(points) + 1),
+        init_func=initialize,
+        interval=interval_ms,
+        blit=True,
+        repeat=False,
+    )
+    return figure, animation
+
+
 def aligned_windows(x: np.ndarray, width: int) -> np.ndarray:
     if len(x) < width:
         raise ValueError(f"Need at least {width} observations, received {len(x)}.")
@@ -128,11 +235,6 @@ def build_lifted_clouds(train: np.ndarray, test: np.ndarray, k_max: int):
         clouds[k] = lift_test_cloud(test, k, k_max, completions[k])
         assert clouds[k].shape[1] == k_max
     return completions, clouds
-
-
-def l1_weight_matrices(clouds: Dict[int, np.ndarray]) -> Dict[int, np.ndarray]:
-    """Observed L1 dissimilarities between all lifted test points."""
-    return {k: squareform(pdist(points, metric="cityblock")) for k, points in clouds.items()}
 
 
 def estimate_autocovariance(x: np.ndarray, max_lag: int) -> np.ndarray:
@@ -194,15 +296,11 @@ def build_weight_matrices(
     clouds: Dict[int, np.ndarray],
     config: PipelineConfig,
 ) -> Dict[int, np.ndarray]:
-    if config.weight_type == "l1":
-        return l1_weight_matrices(clouds)
     n_vertices = next(iter(clouds.values())).shape[0]
     return covariance_weight_matrices(train, completions, n_vertices, config.k_max)
 
 
 def weight_axis_label(weight_type: str) -> str:
-    if weight_type == "l1":
-        return r"$w_k(s,t)=\|p_s^{(k)}-p_t^{(k)}\|_1$"
     return r"$w_k^{\mathrm{cov}}(s,t)$"
 
 
@@ -228,34 +326,6 @@ def union_complex(left: gudhi.SimplexTree, right: gudhi.SimplexTree) -> gudhi.Si
     return union
 
 
-def scale_similarity_matrix(complexes: Dict[int, gudhi.SimplexTree], config: PipelineConfig):
-    ks = sorted(complexes)
-    individual = {
-        k: log_component_edge_functional(
-            complexes[k],
-            config.alpha,
-            config.xi,
-            config.tilde_delta,
-        )
-        for k in ks
-    }
-    sigma = np.empty((len(ks), len(ks)))
-    for a, i in enumerate(ks):
-        for b in range(a, len(ks)):
-            j = ks[b]
-            f_union = log_component_edge_functional(
-                union_complex(complexes[i], complexes[j]),
-                config.alpha,
-                config.xi,
-                config.tilde_delta,
-            )
-            value = f_union if config.similarity_mode == "union" else individual[i] + individual[j] - f_union
-            sigma[a, b] = sigma[b, a] = value
-    if config.similarity_mode not in {"union", "overlap"}:
-        raise ValueError("similarity_mode must be 'union' or 'overlap'.")
-    return sigma, individual
-
-
 def principal_scale(sigma: np.ndarray, ks: Iterable[int]):
     eigenvalues, eigenvectors = np.linalg.eigh((sigma + sigma.T) / 2)
     vector = eigenvectors[:, -1]
@@ -268,111 +338,4 @@ def principal_scale(sigma: np.ndarray, ks: Iterable[int]):
     return int(ks[np.argmax(vector)]), eigenvalues, vector
 
 
-def run_pipeline(order: int, config: PipelineConfig, seed_offset: int = 0):
-    phi = automatic_ar_coefficients(order, config.pacf_first, config.pacf_decay)
-    rng = np.random.default_rng(config.seed + seed_offset)
-    x = simulate_ar(phi, config.n_observations, config.burn_in, config.innovation_sd, rng)
-    split = int(config.train_fraction * len(x))
-    train, test = x[:split], x[split:]
-    completions, clouds = build_lifted_clouds(train, test, config.k_max)
-    weights = build_weight_matrices(train, completions, clouds, config)
-    tau = float(config.tau)
-    complexes = {k: gudhi_flag_complex(w, tau, config.max_simplex_dimension) for k, w in weights.items()}
-    sigma, functionals = scale_similarity_matrix(complexes, config)
-    k_star, eigenvalues, eigenvector = principal_scale(sigma, sorted(complexes))
-    counts = {
-        k: (beta_0(complexes[k]), edge_count(complexes[k]))
-        for k in sorted(complexes)
-    }
-    return {
-        "order": order, "phi": phi, "series": x, "train": train, "test": test,
-        "completions": completions, "clouds": clouds, "weights": weights,
-        "weight_type": config.weight_type, "tau": tau, "complexes": complexes, "counts": counts,
-        "functionals": functionals, "sigma": sigma, "eigenvalues": eigenvalues,
-        "eigenvector": eigenvector, "k_star": k_star,
-    }
-
-
-def scan_tau_single_process(
-    order: int,
-    config: PipelineConfig,
-    tau_values: Iterable[float],
-    seed: int = 20260801,
-):
-    """Scan tau for one simulated AR process and retain every curve."""
-    tau_values = np.asarray(tuple(tau_values), dtype=float)
-    if tau_values.ndim != 1 or tau_values.size == 0 or np.any(tau_values <= 0):
-        raise ValueError("tau_values must be a nonempty sequence of positive numbers.")
-
-    phi = automatic_ar_coefficients(order, config.pacf_first, config.pacf_decay)
-    rng = np.random.default_rng(seed)
-    x = simulate_ar(phi, config.n_observations, config.burn_in, config.innovation_sd, rng)
-    split = int(config.train_fraction * len(x))
-    train, test = x[:split], x[split:]
-    completions, clouds = build_lifted_clouds(train, test, config.k_max)
-    weights = build_weight_matrices(train, completions, clouds, config)
-    ks = np.arange(1, config.k_max + 1)
-    n_vertices = next(iter(weights.values())).shape[0]
-    possible_edges = n_vertices * (n_vertices - 1) / 2
-
-    records = []
-    curves = {}
-    for tau_value in tau_values:
-        complexes = {
-            k: gudhi_flag_complex(weight_matrix, float(tau_value), max_dimension=1)
-            for k, weight_matrix in weights.items()
-        }
-        sigma, functionals = scale_similarity_matrix(complexes, config)
-        k_star, eigenvalues, eigenvector = principal_scale(sigma, ks)
-        leading = float(eigenvalues[-1])
-        relative_gap = (
-            float((eigenvalues[-1] - eigenvalues[-2]) / abs(leading))
-            if len(eigenvalues) > 1 and leading != 0
-            else np.nan
-        )
-        counts = {
-            k: (beta_0(complexes[k]), edge_count(complexes[k]))
-            for k in ks
-        }
-        beta_0_curve = np.array([counts[k][0] for k in ks], dtype=float)
-        edge_curve = np.array([counts[k][1] for k in ks], dtype=float)
-        beta_contribution = config.alpha * np.log(beta_0_curve)
-        edge_contribution = config.xi * np.log(np.maximum(1.0, edge_curve))
-        mean_edge_density = float(np.mean(edge_curve / possible_edges))
-        functional_curve = np.array([functionals[k] for k in ks])
-        if not np.allclose(
-            functional_curve,
-            config.tilde_delta + beta_contribution + edge_contribution,
-        ):
-            raise RuntimeError("Functional decomposition is inconsistent.")
-        curves[float(tau_value)] = {
-            "functional": functional_curve,
-            "perron": eigenvector,
-            "beta_0": beta_0_curve,
-            "edges": edge_curve,
-            "beta_contribution": beta_contribution,
-            "edge_contribution": edge_contribution,
-            "sigma": sigma,
-            "k_star": k_star,
-        }
-        records.append({
-            "tau": float(tau_value),
-            "k_star": k_star,
-            "correct": k_star == order,
-            "relative_spectral_gap": relative_gap,
-            "mean_edge_density": mean_edge_density,
-        })
-
-    return {
-        "order": order,
-        "phi": phi,
-        "series": x,
-        "completions": completions,
-        "clouds": clouds,
-        "weights": weights,
-        "weight_type": config.weight_type,
-        "results": pd.DataFrame.from_records(records),
-        "curves": curves,
-    }
-
-__all__ = ['PipelineConfig', 'pacf_to_ar', 'automatic_ar_coefficients', 'companion_radius', 'simulate_ar', 'aligned_windows', 'fit_completion_matrix', 'lift_test_cloud', 'build_lifted_clouds', 'l1_weight_matrices', 'estimate_autocovariance', 'lifted_covariance_scores', 'covariance_weight_matrices', 'build_weight_matrices', 'weight_axis_label', 'gudhi_flag_complex', 'union_complex', 'scale_similarity_matrix', 'principal_scale', 'run_pipeline', 'scan_tau_single_process']
+__all__ = ['PipelineConfig', 'pacf_to_ar', 'automatic_ar_coefficients', 'companion_radius', 'simulate_ar', 'simulate_ar_with_distribution', 'create_2d_trajectory_animation', 'aligned_windows', 'fit_completion_matrix', 'lift_test_cloud', 'build_lifted_clouds', 'estimate_autocovariance', 'lifted_covariance_scores', 'covariance_weight_matrices', 'build_weight_matrices', 'weight_axis_label', 'gudhi_flag_complex', 'union_complex', 'principal_scale']
