@@ -22,6 +22,7 @@ _FUNCTIONALS_PATH = next(
         for path in (
             Path(__file__).with_name("001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py"),
             Path(__file__).resolve().parent.parent / "001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py",
+            Path(__file__).resolve().parent.parent / "Code_general" / "001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py",
         )
         if path.exists()
     ),
