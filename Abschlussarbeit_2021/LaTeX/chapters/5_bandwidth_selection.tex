@@ -18,12 +18,12 @@ Common choices of the kernel $K\ge0$ are:
 
 The question of how to choose the bandwidth $h$ is widely known in the literature. The methods can be categorized by rule of thumb, plug in and cross validation.
 
-The optimal bandwidth should minimize the integrated squared error
+The optimal bandwidth minimizes the integrated squared error
 \begin{align*}
     \operatorname{MISE}(h)=\mathbb{E}\left[\int\left(f(x)-f_h(x)\right)^2\,dx\right]
 \end{align*}
 
-Exact computations are generally not possible since the true density $f$ of the sampled data $X_1,\dots,X_n$ is not known. If $K$ is the Gaussian kernel and $f=\sum_mw_mp_m$ where $w_m>0$, $\sum_{m}w_m=1$ and $p_m\sim\mathcal{N}(0,\sigma_m^2)$ we can obtain an explicit formula for the $\operatorname{MISE}(h)$ which is due to \cite{10.1214/aos/1176348653}
+Exact computations are generally not possible since the true density $f$ of the sampled data $X_1,\dots,X_n$ is not known. If $K$ is the Gaussian kernel and $f=\sum_lw_lp_l$ where $w_m>0$, $\sum_{m}w_m=1$ and $p_m\sim\mathcal{N}(0,\sigma_m^2)$ we can obtain an explicit formula for the $\operatorname{MISE}(h)$ which is due to \cite{10.1214/aos/1176348653}
 \begin{align*}
     \operatorname{MISE}(h)&=\frac{1}{2\sqrt{\pi}nh}+\frac{n-1}{n}S(2h^2)-2S(h^2)+S(0)\\
     S(a)&=\sum_{m,l}\frac{w_mw_l}{\sqrt{2\pi(\sigma_m^2+\sigma_l^2+a)}}
@@ -33,6 +33,10 @@ Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\t
 
 
 \subsection*{Constructing Mixture Models with multiple global MISE minima}
+
+\todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
+
+Since the optimal bandwidth minimizes the MISE, particularly interesting scenarios arise in cases, where the MISE has no unique minimum.
 
 For Gaussian kernels and Gaussian mixture densities, the integrated squared error can be evaluated in closed form. This makes it possible to construct examples where the oracle criterion has several competing minima. Consider, for example,
 \[
@@ -51,6 +55,30 @@ h_1=0.0949,
 h_2=0.2616.
 \]
 This illustrates that the oracle bandwidth need not be unique. In multi-scale distributions, different bandwidths may resolve different features of the density, leading to several nearly optimal smoothing scales.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/equal_minima_mixture_pdf_clean.png}
+        \caption{Gaussian mixture density.}
+        \label{fig:equal-minima-density}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/mise_equal_minima_three_component.png}
+        \caption{Exact MISE curve.}
+        \label{fig:equal-minima-mise}
+    \end{subfigure}
+
+    \caption{Example of a Gaussian mixture density whose exact MISE curve has two equal local minima.}
+    \label{fig:equal-minima-example}
+\end{figure}
+
+\subsection*{Heavy-tailed models}
+
+\subsection*{Skewed models}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -286,3 +314,5 @@ We will choose the four constructions described above:
 \subsection*{Behavior under resampling}
 
 Let $X^{(i)}=(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ be multiple repeatedly drawn samples. We want to study the distribution of the chosen $h_{\text{crit}}$. Does the most often chosen $h_{\text{crit}}$ correspond with the \enquote{true} bandwidth?
+
+\subsection*{Distribution of chosen bandwidths}
