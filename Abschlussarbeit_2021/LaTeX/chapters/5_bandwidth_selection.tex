@@ -1,5 +1,9 @@
 \chapter{Spectral Scale Selection for Kernel Density Estimation}
 
+\begin{itemize}
+    \item CLT?
+\end{itemize}
+
 In this chapter we apply the scale selection methodology from chapter~\ref{chap:methodology} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
 
 \todo[inline]{Can $\{\hat{f}_{h_i}\}_{i=1}^{N}$ be seen as a filtration?}
@@ -36,38 +40,26 @@ Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\t
 
 \todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
 
-Since the optimal bandwidth minimizes the MISE, particularly interesting scenarios arise in cases, where the MISE has no unique minimum.
+Since the optimal bandwidth minimizes the MISE, particularly interesting scenarios arise in cases, where the MISE has no unique minimum. Since for Gaussian kernels and Gaussian mixture densities the integrated squared error has a closed form, we can find $w_1,w_2,\mu_1,\mu_2,\sigma_1^2,\sigma_2^2$ such that there exist $h_1<h_2$ that are both (local) minima of the ISE curve. 
 
-For Gaussian kernels and Gaussian mixture densities, the integrated squared error can be evaluated in closed form. This makes it possible to construct examples where the oracle criterion has several competing minima. Consider, for example,
-\[
-f(x)
-=
-0.8181\,\varphi_{1}(x)
-+
-0.0679\,\varphi_{0.00646}(x)
-+
-0.1140\,\varphi_{0.2882}(x-0.6295),
-\]
-where \(\varphi_{\sigma}\) denotes the density of \(N(0,\sigma^2)\). For \(n=120\), the exact MISE curve of the Gaussian kernel density estimator has two numerically equal local minima at approximately
-\[
-h_1=0.0949,
-\qquad
-h_2=0.2616.
-\]
-This illustrates that the oracle bandwidth need not be unique. In multi-scale distributions, different bandwidths may resolve different features of the density, leading to several nearly optimal smoothing scales.
+\todo[inline]{add construction principle and example, there are different classes of local minima pairs}
+
+This serves as an easy example of a situation where the optimal bandwidth is not unique and thus is a particularly interesting test for spectrally selected bandwidths.
+
+Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density with two local MISE minima.
 
 \begin{figure}[htbp]
     \centering
     \begin{subfigure}{0.48\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/equal_minima_mixture_pdf_clean.png}
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/equal_minima_mixture_pdf_clean.png}
         \caption{Gaussian mixture density.}
         \label{fig:equal-minima-density}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.48\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/mise_equal_minima_three_component.png}
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/mise_equal_minima_constructed.png}
         \caption{Exact MISE curve.}
         \label{fig:equal-minima-mise}
     \end{subfigure}
