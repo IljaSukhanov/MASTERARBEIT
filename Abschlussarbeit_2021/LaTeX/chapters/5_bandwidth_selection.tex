@@ -89,6 +89,8 @@ Theorem~\ref{thm:schoenberg} gives a general construction principle for the scal
 
 In addition to being conditionally negative definite these special divergences are bounded which is why it is enough for the transformation $\phi$ to be only decreasing. 
 
+\subsection*{Why not work directly with \texorpdfstring{$D$}{D}?}
+
 Write
 \begingroup
 \small
@@ -277,6 +279,8 @@ Here, $0<h_{\min}<h_{\max}$ and $N\ge2$ is the number of grid points. We will in
 
 In the preliminary experiments we set $h_{\min}=10^{-2}$ and $h_{\max}=2$.
 
+\todo[inline]{grid must scale with $n$}
+
 \subsection*{Sample distributions}
 
 Let $X_1,\dots,X_n\sim f$. In our experiments we will test
@@ -299,7 +303,7 @@ We will choose the four constructions described above:
 \begin{itemize}
     \item $\int\min\{f,g\}$
     \item $\int\sqrt{fg}$
-    \item $\exp{(-\gamma\|f-g\|_2^2)}$, $\gamma>0$
+    \item $\exp{(-\|f-g\|_2^2)}$
     \item $1-\operatorname{JS}(f,g)/\log{2}$
 \end{itemize}
 
