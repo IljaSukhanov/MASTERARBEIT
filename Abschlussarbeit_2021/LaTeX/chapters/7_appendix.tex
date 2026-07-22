@@ -1,237 +1,336 @@
 \chapter{Appendix}
 
-\section{Geometric Approach}
+\section*{Scale Selection for the AR-process application}
 
-\todo[inline]{Explain why this idea is \enquote{dead}. Move to possible appendix because it is sill a nice connection between time series analysis and convex geometry?}
+Consider the sequence of point clouds $\mathcal{P}_k$ with increasing dimension $k\in\mathbb{N}$. Our goal is to apply the scale selection principle presented in Chapter~\ref{chap:methodology} to determine an \enquote{optimal} scale $k^{\star}\in\{1,\dots,k_{\max}\}$. In order to apply the scale selection, we need to construct a sequence (not necessarily a filtration) of simplicial complexes $\{L_k\}_{k=1}^{k_{\max}}$. Afterwards, we need to choose what kind of operation $\oplus$ we use to combine the simplicial complexes and the right type of functional (preferably of topological nature) to evaluate the simplicial complexes. In the end, we want to find a triple $(f,\{K_k\}_{k=1}^{k_{\max}},\oplus)$ that is spectrally optimizable.
 
-In this section, we study how the geometry of the point cloud $\mathcal{P}_k\subseteq\mathbb{R}^{k}$ changes with increasing embedding dimension $k$. For simple innovation distributions, like uniform or normal, the point cloud $\mathcal{P}_k$ is characterized by well known convex--geometric objects. The question becomes if we can apply some convex--geometric functional $f$ to these well known objects and detect a transition at $k=p+1$, where $p$ is the AR order of the embedded time series.
+\enquote{Optimality} of $k^{\star}$ should encompass $k^{\star}=p$ or at least $k^{\star}\approx p$ where the meaning of $\approx$ is specified. In particular, this \enquote{optimal} scale selection serves as an order estimation method without requiring the existence of (second) moments of the innovations.
 
-In order to be able to talk about the \enquote{geometry of a point cloud} in a rigorous way, we first need to introduce some concepts from probability theory. Let $Y$ be a $d$-dimensional random vector with density $f_Y$. The \textit{support} of $Y$ is given by
+\subsection*{Dimension lift}
+
+The first step is to lift the point clouds $\mathcal{P}_k$, $k=1,\dots,k_{\max}$ to a common ambient dimension. That is, transforming each $\mathcal{P}_k$ to $\mathcal{Q}_k\subseteq\mathcal{R}^{k_{\max}}$. In order to do this, we split the observed time series $X=(X_1,\dots,X_T)$ into a train and test part:
 \begin{align*}
-    \operatorname{supp}(Y)=\{x\in\mathbb{R}^k:\mathbb{P}(Y\in B_r(x))>0\text{ for all }r>0\}.
-\end{align*}
-In the case where $f_Y$ is continuous, it holds $\operatorname{supp}(Y)=\operatorname{cl}\{y\in\mathbb{R}^{k}:f_Y(y)>0\}$. The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
-\begin{align*}
-    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}.
-\end{align*}
-The \textit{highest density region} $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
-\begin{align*}
-    C_{\alpha}&=C_{h_{\alpha}}\\
-    C_h&=\{x\in\mathbb{R}^{d}:f(x)\ge h\}\\
-    h_{\alpha}&=\sup\{h\in\mathbb{R}:\mathbb{P}(Y\in C_h)\ge 1-\alpha\}
+    X_{\text{train}}&=(X_1,\dots,X_{T'})\\
+    X_{\text{test}}&=(X_{T'+1},\dots,X_T)
 \end{align*}
 
-\todo[inline]{connect these concepts with each other}
-
-Let $X_t=\sum_{j=0}^{\infty}\psi_j Z_{t-j}$ be the MA($\infty$)-representation of an AR($p$) process, where $(Z_t)$ are the independent and identically distributed innovations with cumulative distribution function $F_0$ and where the sequence $(\psi_j)_{j\in\mathbb{N}_0}$ is defined recursively by $\psi_{-(p-1)}=\dots=\psi_{-1}=0$, $\psi_0=1$ and $\psi_j=\phi_1\psi_{j-1}+\dots+\phi_p\psi_{j-p}$ for all $j\ge 1$. Now each point $Y_t^{(k)}\in\mathcal{P}_k$ can be written as
+For $k\in\{1,\dots,k_{\max}\}$ we complete $Y_{t}^{(k)}=(X_t,X_{t+1},\dots,X_{t+k-1})^{T}\in\mathbb{R}^{k}$ to
 \begin{align*}
-    Y_{t}^{(k)}&=\begin{pmatrix}
+    p_{t}^{(k)}&=\begin{pmatrix}
+        I_k\\
+        \hat{A}_k
+    \end{pmatrix}Y_t^{(k)}=\begin{pmatrix}
+        Y_{t}^{(k)}\\
+        \hat{A}_kY_{t}^{(k)}
+    \end{pmatrix}\\
+    &=\begin{pmatrix}
         X_t\\
-        X_{t-1}\\
+        X_{t+1}\\
         \vdots\\
-        X_{t-k+1}
-    \end{pmatrix}=\sum_{j=0}^{\infty}g_j^{(k)}Z_{t-j},
+        X_{t+k-1}\\
+        \hat{\alpha}_{1,1}^{(k)}X_t+\dots+\hat{\alpha}_{1,k}^{(k)}X_{t+k-1}\\
+        \vdots\\
+        \hat{\alpha}_{k_{\max}-k,1}^{(k)}X_{t}+\dots+\hat{\alpha}_{k_{\max}-k,k}^{(k)}X_{t+k-1}
+    \end{pmatrix}\in\mathbb{R}^{k_{\max}},\\
+    t&=T'+1,\dots,T-k_{\max}+1,
 \end{align*}
-where $g_j^{(k)}=(\psi_j,\psi_{j-1},\dots,\psi_{j-k+1})^{T}$. We have $\lim\limits_{j\to\infty}\psi_j=0$.
+where $I_k\in\mathbb{R}^{k\times k}$ is the identity matrix and $\hat{A}_k\in\mathbb{R}^{(k_{\max}-k)\times k}$ a linear completion matrix with coefficients $\hat{\alpha}_{i,j}^{(k)}$, $i=1,\dots,k_{\max}-k$, $j=1,\dots,k$. The completed part $\hat{A}_kY_{t}^{(k)}$ resembles $z_t^{(k)}=(X_{t+k},\dots,X_{t+k_{\max}-1})^{T}\in\mathbb{R}^{k_{\max}-k}$ (the next $k_{\max}-k$ observations after $Y_t^{(k)}$).
 
-\todo[inline]{Explain/ Prove convergence of $(\psi_j)$ give convergence speed result. Connect to stationarity/ causality, obtain some kind of upper bound for $|\psi_j|$}
+We determine $\hat{A}_k$ by minimizing a functional $\Psi_k(A_k)$ that depends on the train data $X_{\text{train}}$. The kind of functional depends on the nature of the innovation distribution. For example, we might choose different $\Psi_k$ depending on whether the innovations are light tailed or heavy tailed. Afterwards, we set $\hat{z}_t^{k}=\hat{A}_kY_{t}^{(k)}$ and $p_t^{k}=(Y_{t}^{(k)},\hat{z}_t^{k})$. We denote the lifted point cloud by $\mathcal{Q}_k=\{p_t^{k}:t=k_{\max},\dots,T\}$.
 
-Consider the case $k\ge 
-p+1$. The AR relation allows us to write
-\begin{align}\label{eq:ar_relations}
-    X_{t-j}-\phi_1X_{t-j-1}-\dots-\phi_pX_{t-j-p}=Z_{t-j}, && j=0,1,\dots,k-p-1
+
+We are interested in the geometry of the point cloud $\mathcal{Q}_k$. We write
+\begin{align*}
+    p_t^{(k)}&=\sum_{j=1}^{k}X_{t-j+1}\cdot h_j, & h_j=\begin{pmatrix}
+        e_j\\
+        \hat{\alpha}_{1,j}\\
+        \vdots\\
+        \hat{\alpha}_{k_{\max}-k,j}
+    \end{pmatrix},
+\end{align*}
+where $e_j$ is the $j$-th unit vector in $\mathbb{R}^{k}$. Note that the directions $h_1,\dots,h_k$ are independent of $t$. Therefore, $\mathcal{Q}_k$ is contained in a $k$-dimensional linear subspace of $\mathbb{R}^{k_{\max}}$, namely $\operatorname{span}\{h_1,\dots,h_k\}$.
+
+Note that we have the following equation:
+\begin{align}\label{eq:squared_2norm_of_lifted_points}
+    \left(p_t^{(k)}-p_s^{(k)}\right)^{T}\left(p_t^{(k)}-p_s^{(k)}\right)&=\left(Y_t^{(k)}-Y_s^{(k)}\right)^{T}\left(I_k+\hat{A}_k^{T}\hat{A}_k\right)\left(Y_t^{(k)}-Y_s^{(k)}\right).
 \end{align}
+% Linear completion changes metric according to how strongly observed coordinates predict missing coordinates
 
-Since innovations $(Z_t)$ are centered, the points $Y_t^{(k)}$ lie around the hyperplane $\{x_0-\phi_1x_{1}-\dots-\phi_px_p=0:(x_0,\dots,x_p)\in\mathbb{R}^{p+1}\}$. Note that the intersection of the $k-p$ central hyperplanes can be written as
+We have
 \begin{align*}
-    L_k&:=\bigcap_{j=0}^{k-p-1}\left\{(x_0,\dots,x_{k-1})\in\mathbb{R}^k:x_j-\phi_1x_{j+1}-\dots-\phi_px_{j+p}=0\right\}\\&
-    =\operatorname{Im}(A)
+    M_t^{(k)}\cdot\begin{pmatrix}
+        X_T\\
+        \vdots\\
+        X_1
+    \end{pmatrix}=
+    p_t^{(k)},
 \end{align*}
-where the $k\times p$-matrix $A$ has rank $p$.
-
-\subsection{Uniformly distributed innovations}
-
-\begin{Def}[Minkowski sum]
-    Let $A$ and $B$ be two subsets of a vector space $V$. Their Minkowski sum is given by the set $A+B=\{a+b:a\in A,b\in B\}$.
-\end{Def}
-
-\begin{Def}[Hausdorff distance]
-    Let $(M,d)$ be a metric space and $X,Y$ two nonempty subsets of $M$. The Hausdorff distance $d_H$ between $X$ and $Y$ is defined by
-    \begin{align*}
-        d_H(X,Y)=\sup_{w\in M}|d(w,X)-d(w,Y)|,
-    \end{align*}
-    where $d(w,X)=\inf\{d(w,x):x\in X\}$.
-\end{Def}
-
-\begin{Def}[Zonotope]
-    A zonotope is the Minkowski sum of finitely many line segments. It is said to be generated by $w_1,\dots,w_n\in\mathbb{R}^d$ if it has the form
-    \begin{align*}
-        \left\{a_1w_1+\dots+a_nw_n:0\le a_j\le 1\text{ for all }j\right\}
-    \end{align*}
-\end{Def}
-
-\begin{Def}[Zonoid]\label{def:zonoid}
-    Let $w=(w_n)_{n\in\mathbb{N}_0}$ be a sequence of vectors in $\mathbb{R}^d$. A set $\mathcal{Z}$ is called a zonoid generated by $w$ if $d_H(\mathcal{Z},\mathcal{Z}_n)\to0$ for $n\to\infty$, where $\mathcal{Z}_n$ is a zonotope generated by $w_0,w_1,\dots,w_n$.
-\end{Def}
-
-Let $(Z_t)\sim\mathcal{U}[-1,1]$. Then the support of $Y_t^{(k)}$ is given by a zonoid $\mathcal{Z}^{(k)}$ generated by $(g_j^{(k)})_{j\in\mathbb{N}_0}$. By Definition~\ref{def:zonoid} $\mathcal{Z}^{(k)}$ can be approximated arbitrarily closely by the zonotope $Z_n^{(k)}$ generated by $g_0^{(k)},\dots,g_n^{(k)}$. This object has (at most) $2^{n+1}$ corner points. For visualization, see Figure~\ref{fig:zonotopes}.
-
-\begin{figure}[ht]
-  \centering
-
-  \begin{minipage}[b]{0.32\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/zonotope_approximation_n3.pdf}
-  \end{minipage}\hfill
-  \begin{minipage}[b]{0.32\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/zonotope_approximation_n4.pdf}
-  \end{minipage}\hfill
-  \begin{minipage}[b]{0.32\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/zonotope_approximation_n5.pdf}
-  \end{minipage}
-
-  \caption{Zonotopes approximating the zonoid $\mathcal{Z}$, where $n=3$ (left), $n=4$ (center) and $n=5$ (right)}
-  \label{fig:zonotopes}
-\end{figure}
-
-\todo[inline]{give approximation quality statement which should connect to the sequence $\psi_j$}
-
-\todo[inline]{Formula for corner points?}
-
-In the case of uniform innovations $Z_t\sim\mathcal{U}[-1,1]$ the points also lie between the hyperplanes with the same form as the central hyperplane, but with affine parts $-1$ and $1$. See Figure~\ref{fig:3d_emb_ar2}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Abschlussarbeit_2021/LaTeX/images/3d_emb_ar2_cropped.png}
-    \caption{Sliding-window embedding ($k=3$) of an AR(2) process. The orange plane is the central plane (right side = 0), the two gray planes are the planes with affine parts -1 and 1 (due to the innovations being $\mathcal{U}[-1,1]$ distributed)}
-    \label{fig:3d_emb_ar2}
-\end{figure}
-
-If $k>p+1$, the point $Y_t^{(k)}$ lies inside the intersection of multiple slabs:
+where the matrix $M_t^{(k)}\in\mathbb{R}^{k_{\max}\times T}$ is given by
 \begin{align*}
-    &\left\{(x_0,\dots,x_{k-1})\in\mathbb{R}^{k}:\begin{array}{l}
-    -1\le x_j-\phi_1x_{j+1}-\dots-\phi_px_{j+p}\le 1,\\
-    j=0,\dots,k-p-1 
-    \end{array}\right\}\\&
-    \bigcap_{j=0}^{k-p-1}\left\{(x_0,\dots,x_{k-1})\in\mathbb{R}^{k}:-1\le x_j-\phi_1x_{j+1}-\dots-\phi_px_{j+p}\le 1\right\}
+    \begin{pmatrix}
+        \mathbf{0} & I_k & \mathbf{0}\\
+        \mathbf{0} & \hat{A}_k & \mathbf{0}
+    \end{pmatrix},
+\end{align*}
+with $\mathbf{0}$ being matrices of the right size that contain only zeros.
+
+\subsubsection*{Dimension lift via Least Squares (Light tailed case)}
+
+In case of light tailed innovations, we can determine the linear completion matrix by Ordinary Least Squares (see the book~\cite{Grey_1981} for information on OLS with a vector valued response). That is, we determine
+\begin{align}\label{eq:ls_dimension_lift}
+    \hat{A}_k\in\arg\min\left\{\sum_{t=1}^{T'-k_{\max}+1}\left\|z_t^{(k)}-AY_{t}^{(k)}\right\|_2^2:A\in\mathbb{R}^{(k_{\max}-k)\times k}\right\}.
+\end{align}
+The Problem~\eqref{eq:ls_dimension_lift} can be formulated in a more compact way using matrix notation. To this end, we introduce the matrices
+\begin{align*}
+    Y_k&=\begin{pmatrix}
+        Y_{1}^{(k)} & \cdots & Y_{T'-k_{\max}+1}^{(k)}
+    \end{pmatrix}\in\mathbb{R}^{k\times(T'-k_{\max}+1)}\\
+    Z_k&=\begin{pmatrix}
+        z_{1}^{(k)} & \cdots & z_{T'-k_{\max}+1}^{(k)}
+    \end{pmatrix}\in\mathbb{R}^{(k_{\max}-k)\times(T'-k_{\max}+1)}
+\end{align*}
+and Problem~\eqref{eq:ls_dimension_lift} becomes
+\begin{align*}
+    \hat{A}_k\in\arg\min\left\{\operatorname{tr}\left((Z_k-AY_k)^{T}(Z_k-AY_k)\right):A\in\mathbb{R}^{(k_{\max}-k)\times k}\right\}.
 \end{align*}
 
-\todo[inline]{Set $p=1$ and $k=3$, visualize the intersection of slabs}
 
-The distance between the two restricting hyperplanes is given by the formula
+
+The solution can be written down explicitly:
 \begin{align*}
-    d=\frac{2}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
+    \hat{A}_k&=Z_kY_k^{T}\left(Y_kY_k^{T}\right)^{-1}\\&
+    =\underbrace{\sum_{t=1}^{T'-k_{\max}+1}z_t^{(k)}\left(Y_t^{(k)}\right)^T}_{=U_k}\left(\underbrace{\sum_{t=1}^{T'-k_{\max}+1}Y_t^{(k)}\left(Y_t^{(k)}\right)^{T}}_{=V_k}\right)^{-1},
+\end{align*}
+provided that $V_k=Y_kY_k^{T}$ is invertible. This is almost surely the case if the innovations have an absolute continuous distribution.
+
+\todo[inline]{Prove $\mathbb{P}(Y_kY_k^{T}\text{ is invertible})=1$ explicitly. Use \cite{mityagin_zero_2015}}
+
+The entries of the matrices $U_k=(U_{ij}^{(k)})\in\mathbb{R}^{(k_{\max}-k)\times k}$ and $V_k=(V_{ij}^{(k)})\in\mathbb{R}^{k\times k}$ can be written as
+\begin{align*}
+    U_{ij}^{(k)}&=\sum_{t=1}^{T'-k_{\max}+1}X_{t+k+i-1}X_{t+j-1},\quad i=1,\dots,k_{\max}-k,j=1,\dots,k\\
+    V_{ij}^{(k)}&=\sum_{t=1}^{T'-k_{\max}+1}X_{t+i-1}X_{t+j-1},\quad i,j=1,\dots,k
+\end{align*}
+By the ergodic theorem (??) these entries converge and their limit is determined by the auto-covariance function $\gamma$ of the process $(X_t)$:
+\begin{align*}
+    \tilde{U}_{ij}^{(k)}&=\frac{1}{T-k_{\max}+1}U_{ij}^{(k)}\stackrel{T\to\infty}{\to}\mathbb{E}\left[X_{t+k+i-1}X_{t+j-1}\right]=\gamma(j-i-k)\\
+    \tilde{V}_{ij}^{(k)}&=\frac{1}{T-k_{\max}+1}V_{ij}^{(k)}\stackrel{T\to\infty}{\to}\mathbb{E}\left[X_{t+i-1}X_{t+j-1}\right]=\gamma(j-i)
+\end{align*}
+Thus we have the following convergence, which is understood component wise:
+\begin{align*}
+    \hat{A}_k=U_kV_k^{-1}\stackrel{T\to\infty}{\to}\operatorname{Cov}\left[z_t^{(k)},Y_t^{(k)}\right]\left(\operatorname{Cov}\left[Y_t^{(k)}\right]\right)^{-1}.
 \end{align*}
 
-\begin{Def}[Support function]
-    Let $K\subseteq\mathbb{R}^{d}$ be a convex nonempty set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in K\}$.
-\end{Def}
 
-A convex body is a compact nonempty convex set. 
+The uncompleted part $z_t^{(k)}$ can be expressed as a linear function of $Y_t^{(k)}$ and innovations $Z=(Z_{t+k},\dots,Z_{t+k_{\max}-1})$ \textcolor{red}{once $k\ge p$}. That is, there exist matrices $B_k$ and $C_k$ such that $z_t^{(k)}=B_kY_t^{(k)}+C_kZ$. This is not surprising because linearity is already part of the AR process. Thus, our linear prediction $\hat{z}_t^{(k)}=\hat{A}_kY_t^{(k)}$ is a natural choice.
 
-\begin{Lem}
-    Let $K,L\subseteq\mathbb{R}^d$ be two convex bodies. Then
-    \begin{align*}
-        d_H(K,L)=\sup_{u\in S^{d-1}}|h_{K}(u)-h_{L}(u)|.
-    \end{align*}
-\end{Lem}
-
-The support function of a zonotope is particularly easy: $h_{\mathcal{Z}_n^{(k)}}(u)=\sum_{j=0}^{n}|\langle g_j^{(k)},u\rangle|$. The width in direction $u$ is given by
+The matrices $B_k$ and $C_k$ can be determined by first writing
 \begin{align*}
-    w_k(u)=h_{\mathcal{Z}_n^{(k)}}(u)+h_{\mathcal{Z}_n^{(k)}}(-u)=2h_{\mathcal{Z}_n^{(k)}}(u)
+    &H_k\begin{pmatrix}
+        Y_{t}^{(k)}\\
+        z_t^{(k)}
+    \end{pmatrix}=\begin{pmatrix}
+        Z_{t+k}\\
+        \vdots\\
+        Z_{t+k_{\max}-1}
+    \end{pmatrix}\\&
+    z_t^{(k)}=-H_z^{-1}H_YY_t^{(k)}-H_z^{-1}\begin{pmatrix}
+        Z_{t+k}\\
+        \vdots\\
+        Z_{t+k_{\max}-1}
+    \end{pmatrix}
 \end{align*}
-Consider the case $k\ge p+1$. We have
+with
 \begin{align*}
-    m_k=\min_{u\in S^{k-1}}w_k(u)=\frac{2}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}
+    H_k=\begin{pmatrix}
+        0 & \cdots & 0 & \phi_p & \phi_{p-1} & \cdots & \phi_1 & 1 & 0 & \cdots & 0\\
+        0 & \cdots & 0 & 0 & \phi_p & \phi_{p-1} & \cdots & \phi_1 & 1 & \cdots & 0\\
+        \vdots & & \vdots & \vdots & \ddots & \ddots & \ddots & & \ddots & \ddots & \vdots\\
+        0 & \cdots & 0 & 0 & \cdots & 0 & \phi_p & \phi_{p-1} & \cdots & \phi_1 & 1
+    \end{pmatrix}
 \end{align*}
-This minimum is attained at the finite set of points
-\begin{align*}
-    \left\{\pm\frac{q_r^{(k)}}{\|q_{\phi}\|_2}:r=0,\dots,k-(p+1)\right\}
-\end{align*}
-where $q_{\phi}=(1,-\phi_1,\dots,-\phi_p)$ and
-\begin{align*}
-    q_r^{(k)}=(\underbrace{0,\dots,0}_{r},1,-\phi_1,\dots,-\phi_p,0,\dots,0)\in\mathbb{R}^{k}
-\end{align*}
+and reconstruction matrix $B_k=-H_z^{-1}H_Y$, where $H_p^{(k)}=(H_Y H_z)$. Note that $H_z$ is in fact invertible since it is a lower triangular matrix with all diagonal elements being equal to $1$.
 
-\todo[inline]{What about $k<p+1$? Is $\min w_k(u)>2^{-1}\sqrt{1+\phi_1^2+\dots+\phi_p^2}$}
+\todo[inline]{What about a representation in the case $k<p$}
 
-The relation $k\mapsto\min w_k(u)$ has a kink at $k=p+1$. The downside is that one needs to estimate the coefficients $\phi_1,\dots,\phi_r$ for different candidate orders $r$.
-
-An empirical version is given by
-\begin{align*}
-    w_k(u)&=\sup\{\langle x,u\rangle: x\in \mathcal{Z}_n^{(k)}\}-\inf\{\langle x,u\rangle:x\in\mathcal{Z}_n^{(k)}\}\\
-    \hat{w}_k(u)&=\max_{t}\langle u,Y_t^{(k)}\rangle-\min_{t}\langle u,Y_t^{(k)} \rangle=\max_{x\in\mathcal{P}_k}\langle u, x\rangle-\min_{x\in\mathcal{P}_k}\langle u,x\rangle\\
-    \hat{m}_k&=\min_{u\in S^{k-1}}\hat{w}_k(u)
-\end{align*}
-
-\todo[inline]{Give some convergence result $\hat{w}_k(u)\to w_k(u)$ or $m_k\to\hat{m}_k$}
-
-The idea is to minimize $\hat{w}_k(u)$ over all $u\in S^{k-1}$ and examine the relation $k\mapsto \hat{m}_k$.
-
-How is $\hat{w}_k(u)$ minimized? The naive idea is the following: sample many directions $u_1,\dots,u_M$ and set $\min\limits_{j=1,\dots,M}\hat{w}_k(u_j)\approx\hat{m}_k$.
-
-\cite{10.1145/1008731.1008736} give a method to construct a smaller subset $\mathcal{Q}_k\subseteq\mathcal{P}_k$ such that
-\begin{align*}
-    (1-\epsilon)\hat{w}_k(u)\le\max_{x\in\mathcal{Q}_k}\langle u, x\rangle-\min_{x\in\mathcal{Q}_k}\langle u,x\rangle \le\hat{w}_k(u)
-\end{align*}
-This gives a computational advantage, as we do not have to compute $\langle u,x\rangle$ for all $x\in\mathcal{P}_k$ but only for all $x\in\mathcal{Q}_k$.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/ar_min_width_four_curve_direction_bank_diagnostic_p123.pdf}
-    \caption{Caption}
-    \label{fig:placeholder}
-\end{figure}
-
-\todo[inline]{show numerical results for $p=1,2,3,\dots$}
-\todo[inline]{compare $k\mapsto\min w_k(u)$ and $k\mapsto\min\hat{w}_k(u)$}
-
-\subsection{Normally distributed innovations}
-
-Next, we turn our attention to Gaussian innovations, which is often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation, we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
-\begin{align*}
-    \Gamma_k=\sigma^2\sum_{j=0}^{\infty}g_j^{(k)}(g_j^{(k)})^{T}
-\end{align*}
-The covariance matrix plays an important role in describing the geometry of the point cloud $\mathcal{P}_k$. Let $E_c=\{y\in\mathbb{R}^k:y^{T}\Gamma_k^{-1}y\le c\}$ be the ellipsoid of size $c>0$. Then for all $\alpha\in(0,1)$ we have
-\begin{align*}
-    E_{c_{\alpha}}\in\arg\min\left\{\operatorname{Vol}(A):\mathbb{P}(Y\in A)\ge\alpha:A\subseteq\mathbb{R}^{k}\right\}
-\end{align*}
-That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$.
-
-\todo[inline]{find reference or prove}
-
-\subsection{Intrinsic Volumes}
-
-\todo[inline]{Handbook of Convex Geometry}
-
-We have a zonotope $Z^{(n)}_k=\sum_{j=0}^{n}g_j[-1,1]$ with \textcolor{red}{unknown} vectors $g_j\in\mathbb{R}^k$. Here, $k$ is the embedding dimension. The $j$-th quermassintegral of $Z^{(n)}_k$, denoted by $W_j(Z^{(n)})$ are defined as coefficients that fulfill
-\begin{align*}
-    \operatorname{Vol}(Z^{(n)}_k+tB)=\sum_{j=0}^{k}\binom{k}{j}W_j(Z^{(n)}_k)t^{j}
-\end{align*}
-where $B=B(0,1)=\{x\in\mathbb{R}^k:\|x\|\le1\}$. The $j$-th intrinsic volume is defined by
-\begin{align*}
-    V_j(Z^{(n)}_k)=\binom{k}{j}\frac{W_{k-j}(Z^{(n)}_k)}{\kappa_{k-j}}, && j=1,\dots,k
-\end{align*}
-It can be shown that the $j$-th intrinsic volume can by computed by the formula
-\begin{align*}
-    V_j(Z^{(n)}_k)=2^{j}\sum\limits_{I\subseteq\{0,\dots,n\},|I|=j}\sqrt{\det{(G_I^TG_I)}}
-\end{align*}
-
-\todo[inline]{Big Question: How to generalize this approach for a wide class of innovation distributions? We only get the nice zonotope formulas because of uniform innovations}
-
-\todo[inline]{Maybe find a class of distributions where the highest density region (or minimum volume set) has a nice geometric shape and compute the intrinsic volumes of that shape}
-
-
-
-
-
-\subsection{Numerical Results}
+\subsubsection*{Dimension lift via Excursion metric minimization}
 
 \begin{itemize}
-    \item AR($p$) for $p=1,2,3$
-    \item different innovations
-    \item compare with classical order selection
-    \item finite sample stability $(X_1,\dots,X_T)$, $T=200,500,1000$
+    \item $F_0\sim X_t$? Take empirical cdf
+    \item When is $X_t$ ergodic?
 \end{itemize}
+
+We again have an observed time series $X=(X_{1},\dots,X_T)$ that is split up into $X_{\text{train}}=(X_1,\dots,X_{T_{\text{train}}})$ and $X_{\text{test}}=(X_{T_{\text{train}}+1},\dots,X_T)$. Define $X^{\text{test}}_t=X_{T_{\text{train}}+t}$ for $t=1,\dots,T-T_{\text{train}}$. The goal is to lift $Y_t^{(k)}$ for $t=T_{\text{train}}+1,\dots,T$ from $\mathbb{R}^k$ to $\mathbb{R}^{k_{\max}}$. Denote the lifted point by $p_t^{(k)}$. It is given by
+\begin{align*}
+    p_t^{(k)}=\begin{pmatrix}
+        X_{t}\\
+        X_{t+1}\\
+        \vdots\\
+        X_{t+k-1}\\
+        \hat{X}_{t+k}\\
+        \vdots\\
+        \hat{X}_{t+k_{\max}-1}
+    \end{pmatrix}
+\end{align*}
+with
+\begin{align*}
+    \hat{X}_{t+k-1+m}=\sum_{j=1}^{k}\lambda_j^{(m)}X_{t+j-1}, && m=1,\dots,k_{\max}-k
+\end{align*}
+The coeficients $\lambda_j^{(m)}$ are determined by
+\begin{align*}
+    \hat{\lambda}^{(m)}&\in\arg\min\left\{\mathcal{E}(X_{t+k-1+m},\hat{X}_{t+k-1+m})\right\}
+\end{align*}
+We have
+\begin{align*}
+    \mathcal{E}(X_{t+k-1+m},\hat{X}_{t+k-1+m})&=2\mathbb{E}\left[F(X_{t+k-1+m})\vee F(\hat{X}_{t+k-1+m})\right]\\&
+    -\mathbb{E}\left[F(\hat{X}_{t+k-1+m})\right]-\frac{1}{2}
+\end{align*}
+
+The empirical version is
+\begin{align*}
+    \Phi(\lambda)&=\frac{2}{T_{\text{train}}-k_{\max}+1}\sum_{s=1}^{T_{\text{train}}-k_{\max}+1}F_{\hat{\theta}}\left(\sum_{j=1}^{k}\lambda_jX_{s-1+j}\right)\vee F_{\hat{\theta}}\left(X_{s+k-1+m}\right)\\&
+    -\frac{2}{T_{\text{train}}-k_{\max}+1}\sum_{s=1}^{T_{\text{train}}-k_{\max}+1}F_{\hat{\theta}}\left(\sum_{j=1}^{k}\lambda_jX_{s-1+j}\right)-\frac{1}{2}
+\end{align*}
+where $F_{\hat{\theta}}$ is the empirical cumulative distribution function fitted on the data $X_{\text{train}}$.
+
+\subsection*{Simplicial complex construction}
+
+\begin{itemize}
+    \item Temporal geometric complexes: $D_k(s,t)=\|Y_s^{(k)}-Y_t^{(k)}\|\le\epsilon_k$
+    \item $E_k=\{\{s,t\}:D_k(s,t)\le\epsilon_k\}$, $\Sigma_{kl}=|E_k\cap E_l|$, $\Sigma_{kl}=|E_k\cap E_l|/|E_k\cup E_l|$
+    \item $K_k=\operatorname{Flag}(V,E_k)$, $\Sigma_{kl}=f(K_k)+f(K_l)-f(K_k\cup K_l)$
+    \item build $K_k$ from prediction errors, excursion distances or dependence scores
+    \item $\oplus=\triangle$ (symmetric difference)
+    \item $w_k(s,t)=d(\mathcal{L}(X_{s+k}|Y_s^{(k)}),\mathcal{L}(X_{t+k}|Y_t^{(k)}))$
+\end{itemize}
+
+\todo[inline]{give precedence: ordered temporal simplex, simplex generated by a directed path through time}
+
+\todo[inline]{Does the clique closure performed by the flag complex preserve the information we care about? Many different weighted graphs can have exactly the same flag complex. We may actually lose information.}
+
+A general construction principle can be described in a graph theoretical way. Consider the set of vertices $V=\{T_{\text{train}}+1,\dots,T-k_{\max}+1\}$. Two distinct time indices $s$ and $t$ form an edge if $w_k(s,t)\le\tau$, where $w_k:V\times V\to\mathbb{R}_{\ge0}$ is a weight function and $\tau>0$ some threshold parameter. Information about linear dependence enters via the choice of the weight function $w_k$. Let $E_k^{\tau}$ be the set of edges and $G_k^{\tau}=(V,E_k^{\tau})$ the resulting graph.
+
+Now we take the flag complex $L_k^{\tau}=\text{Flag}(G_k^{\tau})$ and obtain a sequence of complexes $\{L_k^{\tau}\}_{k=1}^{k_{\max}}$. In order for $\{L_k\}_{k=1}^{k_{\max}}$ to be a filtration, it must hold
+\begin{align*}
+    w_{k+1}(e)\le w_{k}(e),&&\forall e\in E_k\text{ and }k=1,\dots,k_{\max}-1.
+\end{align*}
+At the moment, it is not clear whether the specific weighting choices discussed below fulfill this property.
+
+The first candidate for $w_k$ is a norm of the covariance matrix. To this end, compute the covariance matrix:
+\begin{align*}
+    D_{s,t}^{(k)}=\operatorname{Cov}\left[p_t^{(k)},p_s^{(k)}\right]&=\begin{pmatrix}
+        I_k\\
+        \hat{A}_k
+    \end{pmatrix}C_{s,t}^{(k)}\begin{pmatrix}
+        I_k & \hat{A}_k^{T}
+    \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+    C_{s,t}^{(k)}&=\operatorname{Cov}\left[Y_s^{(k)},Y_t^{(k)}\right]\\&=
+    \begin{pmatrix}
+        \mathbb{E}[X_sX_t] & \mathbb{E}[X_sX_{t+1}] & \cdots & \mathbb{E}[X_sX_{t+k-1}]\\
+        \vdots & \vdots & & \vdots\\
+        \mathbb{E}[X_{s+k-1}X_t] & \mathbb{E}[X_{s+k-1}X_{t+1}] & \cdots & \mathbb{E}[X_{s+k-1}X_{t+k-1}]
+    \end{pmatrix}\\&
+    =\begin{pmatrix}
+        \gamma(s-t) & \gamma(s-t-1) & \cdots & \gamma(s-t-k+1)\\
+        \gamma(s-t+1) & \gamma(s-t) & \cdots & \gamma(s-t-k+2)\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \gamma(s-t+k-1) & \gamma(s-t+k-2) & \cdots & \gamma(s-t)
+    \end{pmatrix}
+\end{align*}
+
+We need a scalar summary:
+\begin{align*}
+    &\rho_k(s,t)=\|C_{s,t}^{(k)}\|_F^2\\
+    &\eta_k(s,t)=\|D_{s,t}^{(k)}\|_F^2=\left(k+\|\hat{A}_k\|_F^2\right)^2\|C_{s,t}^{(k)}\|_F^2
+\end{align*}
+
+\todo[inline]{autocovariance $\gamma(h)$ can be expressed via $\phi_1,\dots,\phi_p$ by using the Yule-Walker-Equations}
+
+In cases where the second moment does not exist, the covariance is no longer viable. In such cases, we may use
+\begin{align*}
+    w_k(s,t)=\|p_s^{(k)}-p_t^{(k)}\|_1.
+\end{align*}
+
+
+
+\subsection*{Assembly of the scale similarity matrix}
+
+We try out two different constructions:
+\begin{align*}
+    \langle L_i, L_j\rangle_f=f(L_i)+f(L_j)-f(L_i\cup L_j),
+\end{align*}
+where $f$ must be sub-additive, since $\{L_k\}_{k=1}^{k_{\max}}$ is not a filtration in general, and
+\begin{align*}
+    \langle L_i,L_j \rangle_f=f(L_i\cup L_j),
+\end{align*}
+where $f$ is non-negative. The scale similarity matrix becomes
+\begin{align*}
+    \Sigma_{k_{\max}}=\begin{pmatrix}
+        \langle L_1, L_1\rangle_f & \langle L_1, L_2\rangle_f & \dots & \langle L_1, L_{k_{\max}}\rangle_f\\
+        \langle L_1, L_2\rangle_f & \langle L_2, L_2\rangle_f & \cdots & \langle L_2, L_{k_{\max}}\rangle_f\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \langle L_1, L_{k_{\max}}\rangle_f & \langle L_2, L_{k_{\max}}\rangle_f & \dots & \langle L_{k_{\max}}, L_{k_{\max}}\rangle_f
+    \end{pmatrix}.
+\end{align*}
+Let $v^*=(v^*_1,\dots,v^*_{k_{\max}})$ be the principal eigenvector of $\Sigma_{k_{\max}}$. The \enquote{optimal} scale is set to $k^{*}\in\arg\max\{v^*_k:k=1,\dots,k_{\max}\}$.
+
+\subsection*{Choice of the Functional $f$}
+
+As a simple starting point, we try functionals of the form
+\begin{align*}
+    f(K)=\delta|C(K)|^{\alpha}|E(K)|^{\xi}
+\end{align*}
+or alternatively any transformation of $f$ that preserves monotonicity:
+\begin{align*}
+    \tilde{f}(K)&=\log{f(K)}=\tilde{\delta}+\alpha\log{\left(|C(K)|\right)}+\xi\log{\left(|E(K)|\right)}
+\end{align*}
+
+\todo[inline]{Some functional that measures the volume of the complex in some sense and detects the flatness}
+
+\todo[inline]{graph functionals, mutual information from graph functionals}
+
+\section*{Statistical Approach}
+
+\begin{itemize}
+    \item Spectral scale selection on finite join-semilattices
+    \item statistical tests: $H_0:X=(X_1,\dots,X_T)$ is from $\mathcal{A}_k(\mathcal{D})$
+    \item distribution over orders $v=(v_{1},\dots,v_{k_{\max}})$
+    \item minimizing penalized loss
+    \item compare: $\hat{p}_{AIC}$, $\hat{p}_{BIC}$, $\arg\max v_k$, $\sum_kkv_k$, $\{k:v_k\text{ large}\}$
+    \item $P(\hat{p}=p_0)$, stability under bootstrap: $\text{Var}[\hat{p}]$
+    \item near cancellation AR processes, weak high order coefficients
+    \item ARMA processes fitted by AR models
+    \item Short times series (give more stable summary across bootstrap samples)
+    \item Comparing several datasets
+    \item small sample sizes, non-Gaussian innovations, near root processes
+    \item prove consistency, stability (use Perron-Frobenius, Davis-Kahan perturbation, perturbation theory)
+    \item stability: $\|\hat{v}-v\|\le C\|\hat{f}-f\|$
+\end{itemize}
+
+Define the set of all AR processes of order at most $k$ with independent and identically distributed innovations $\{Z_t\}\sim\mathcal{D}$ by
+\begin{align*}
+    \mathcal{A}_k(\mathcal{D})=\left\{\right\}
+\end{align*}
+
+We obtain estimates $\alpha_1^{(k)},\dots,\alpha_k^{(k)}$ and consider the residual variance
+\begin{align*}
+    \hat{\sigma}_k^2=\frac{1}{T-k}\sum_{t=k+1}^{T}\left(X_t-\sum_{j=1}^{k}\hat{\alpha}_j^{(k)}X_{t-j}\right)^2
+\end{align*}
+
+Now we define a functional $f$ on $\mathcal{A}_k(\mathcal{D})$ by
+\begin{align*}
+    f(\mathcal{A}_k(\mathcal{D}))=\frac{n}{2}\log{\hat{\sigma}^2_k}+\lambda k
+\end{align*}
+
+A natural combining operation is
+\begin{align*}
+    \mathcal{A}_k\oplus\mathcal{A}_l=\mathcal{A}_{k\vee l}
+\end{align*}
+
+We need to apply a monotone decreasing transform $\psi$ to $f(\mathcal{A}_k)$. A common example is $\psi(z)=\exp{(-\beta z)}$.
+
+\todo[inline]{Gibbs/Boltzmann from energy to weight}
+
+\todo[inline]{Examples where the Perron vector is smoother or more stable than the raw minimizer, especially under noise, small samples, or near-tied orders}
