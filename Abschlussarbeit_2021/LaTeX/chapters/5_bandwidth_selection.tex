@@ -192,6 +192,12 @@ The only symmetric $\alpha$-divergence is the squared Hellinger distance. The on
 
 \todo[inline]{Establish condition on $f$ under which the $f$-divergence is symmetric}
 
+The class of Rényi divergences is defined as
+\begin{align*}
+    R_{\alpha}(f\|g)=\frac{1}{\alpha-1}\log{\left(\int f(x)^{\alpha}g(x)^{1-\alpha}\,dx\right)}
+\end{align*}
+For $\alpha\to1$ this recovers the Jensen-Shannon divergence.
+
 \subsubsection{Bregman divergences}
 
 Let $F\in C^{1}$ and convex. The Bregman convergence is
