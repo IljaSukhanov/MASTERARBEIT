@@ -315,25 +315,35 @@ In our application, $f(x)=C_{\alpha}(p(x),q(x))=p(x)^{\alpha}q(x)^{1-\alpha}$. T
 
 \todo[inline]{Since upper bound is random because of $X_{\max}-X_{\min}$ maybe establish probabilistic upper bound?}
 
+\subsection*{Bandwidth grid}
+
+The choice of the correct bandwidth grid is essential. We set
+\begin{align*}
+    \mathcal{H}_n=\{h_1^{(n)},\dots,h_{N_n}^{(n)}\},
+\end{align*}
+where $n$ is the number of samples used to construct the kde's and $N_n$ is the number of bandwidth candidates the spectral selector chooses from. Sufficient conditions for consistency are
+\begin{align*}
+    \overline{h}_n\to0,\quad n\underline{h}_n^d\to+\infty,
+\end{align*}
+where $\overline{h}_n=\max\mathcal{H}_n$ and $\underline{h}_n=\min\mathcal{H}_n$.
+
+Define
+\begin{align*}
+    \Lambda_n=\{\lambda_1^{(n)},\dots,\lambda_{N_n}^{(n)}\},\quad\lambda_j^{(n)}=\lambda_{\min,n}\left(\frac{\lambda_{\max,n}}{\lambda_{\min,n}}\right)^{\frac{j-1}{N_n-1}}
+\end{align*}
+for some $0<\lambda_{\min,n}<\lambda_{\max,n}$ and $N_n\ge 2$. Furthermore, define a sample statistic $\hat{s}_n$ for which $\hat{s}_n\to s_f$.
+
+\todo[inline]{Argue why linear grid won't work}
+
+\todo[inline]{How to choose $\lambda_{\min,n}$ and $\lambda_{\max,n}$?}
+
+\todo[inline]{grid must scale with $n$? Explain why}
+
 \section{Numerical Experiments}
-
-Let $0<h_1<\dots<h_N$. We will consider two types of grids:
-\begin{itemize}
-    \item linear grid: $h_j=h_{\min}+\frac{j-1}{N-1}(h_{\max}-h_{\min})$
-    \item geometric grid: $h_j=h_{\min}\left(\frac{h_{\max}}{h_{\min}}\right)^{\frac{j-1}{N-1}}$
-\end{itemize}
-
-Here, $0<h_{\min}<h_{\max}$ and $N\ge2$ is the number of grid points. We will increase $N$ to study grid stability.
-
-\todo[inline]{How to choose $h_{\min}$ and $h_{\max}$?}
-
-In the preliminary experiments we set $h_{\min}=10^{-2}$ and $h_{\max}=2$.
-
-\todo[inline]{grid must scale with $n$?}
 
 \subsection*{Sample distributions}
 
-Let $X_1,\dots,X_n\sim f$. In our experiments we will test
+Let $X_1,\dots,X_n\sim f$. In our experiments, we test
 \begin{itemize}
     \item $f$ standard normal $N(0,\sigma^2)$, $\sigma^2>0$
     \item $f$ multi-modal: $f=\sum_{i=1}^{n}w_if_i$, where $w_i\ge0$ and $\sum_iw_i=1$
