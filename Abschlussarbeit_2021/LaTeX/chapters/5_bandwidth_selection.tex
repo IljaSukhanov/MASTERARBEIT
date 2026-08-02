@@ -2,30 +2,64 @@
 
 \begin{itemize}
     \item CLT?
+    \item divergence, similarity, mutual information
 \end{itemize}
 
-In this chapter we apply the scale selection methodology from chapter~\ref{chap:methodology} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
-
-\todo[inline]{Can $\{\hat{f}_{h_i}\}_{i=1}^{N}$ be seen as a filtration?}
+In this chapter, we apply the scale selection methodology from chapter~\ref{chap:methodology} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
 
 \section{Preliminaries on Kernel Density Estimation}
 
-We have data $X_1,\dots,X_n\in\mathbb{R}^d$ sampled from an (unknown) distribution with density $f$. The kernel density function tries to estimate this unknown density. It is defined by
+We have data $X_1,\dots,X_n\in\mathbb{R}^d$ sampled from an (unknown) distribution with density $f$. The kernel density function estimates this unknown density. It is defined by
 \begin{align*}
     \hat{f}_{h}(x)=\frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}^d.
 \end{align*}
-Common choices of the kernel $K\ge0$ are:
+Common kernel choices are:
 \begin{itemize}
-    \item Epanechnikov: $K(u)=1\{-1\le u\le u\}\frac{3}{4}(1-u^2)$
-    \item Gaussian: $K(u)=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}u^2}$
+    \item Epanechnikov kernel: $K(u)=1\{-1\le u\le u\}3(1-u^2)/4$
+    \item Gaussian kernel: $K(u)=(2\pi)^{-1/2}\exp\{-u^2/2\}$
 \end{itemize}
 
-The question of how to choose the bandwidth $h$ is widely known in the literature. The methods can be categorized by rule of thumb, plug in and cross validation.
+The question of how to choose the bandwidth $h$ is widely known in the literature. The methods can be categorized by rule of thumb, plug in, and cross validation.
 
-The optimal bandwidth minimizes the integrated squared error
+The optimal bandwidth minimizes the mean integrated squared error
 \begin{align*}
     \operatorname{MISE}(h)=\mathbb{E}\left[\int\left(f(x)-f_h(x)\right)^2\,dx\right]
 \end{align*}
+
+The bias-variance decomposition is
+\begin{align*}
+    \operatorname{MISE}(h)=\int\operatorname{Var}[\hat{f}_h(x)]\,dx+\int\operatorname{Bias}(\hat{f}_h(x))^{2}\,dx
+\end{align*}
+with
+\begin{align*}
+    \operatorname{IV}(h)&=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{R(K)}{nh^d}-\frac{R(K_h\star f)}{n}\\
+    \operatorname{ISB}(h)&=\int\operatorname{Bias}(\hat{f}_h(x))\,dx=R(K_h\star f-f)
+\end{align*}
+where $R(g)=\int g(x)^2\,dx$. This decomposition gives conditions on $h=h_n$ so that the kernel density estimation is consistent. Namely, it must hold $h_n\to0$ and $nh_n\to+\infty$. One example of such a sequence is $h_n=n^{-\alpha}$ with some $\alpha\in(0,1)$.
+
+The MISE can be we written as
+\begin{align*}
+    \operatorname{MISE}(h)=\underbrace{\frac{R(K)}{nh}+\frac{h^4}{4}\mu_2(K)^2R(f^{''})}_{=\operatorname{AMISE}(h)}+o\left(\frac{1}{nh}+h^{4}\right)
+\end{align*}
+Thus
+\begin{align*}
+    \frac{\operatorname{MISE}(h)-\operatorname{AMISE}(h)}{(nh)^{-1}+h^4}\to0
+\end{align*}
+Minimizing the AMISE leads to
+\begin{align}\label{eq:h_amise}
+    h_{\operatorname{AMISE}}=\left(\frac{R(K)}{n\mu_2(K)^2R(f^{''})}\right)^{1/5}
+\end{align}
+
+\todo[inline]{check for general dimension $d$}
+
+The optimal bandwidth thus behaves like $n^{-1/5}$.
+
+Many bandwidth selectors use Equation~\eqref{eq:h_amise} as starting point. Sliverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^{2})$. In this case, $R(f^{''})$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
+\begin{align*}
+    R(f^{''})=\frac{3}{8\sqrt{\pi}\sigma^5},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}.
+\end{align*}
+
+\todo[inline]{Mention plug-in and cross validation estimators, cite review article}
 
 Exact computations are generally not possible since the true density $f$ of the sampled data $X_1,\dots,X_n$ is not known. If $K$ is the Gaussian kernel and $f=\sum_lw_lp_l$ where $w_m>0$, $\sum_{m}w_m=1$ and $p_m\sim\mathcal{N}(0,\sigma_m^2)$ we can obtain an explicit formula for the $\operatorname{MISE}(h)$ which is due to \cite{10.1214/aos/1176348653}
 \begin{align*}
@@ -67,10 +101,6 @@ Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density wit
     \caption{Example of a Gaussian mixture density whose exact MISE curve has two equal local minima.}
     \label{fig:equal-minima-example}
 \end{figure}
-
-\subsection*{Heavy-tailed models}
-
-\subsection*{Skewed models}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -156,69 +186,70 @@ The reason why we don't want to work with the matrix $D$ and instead transform t
 
 \subsection*{Examples of divergences}
 
-Let $p$ and $q$ be two probability density functions.
+Let $p$ and $q$ be two probability density functions. The two most important classes of divergences are $f$-divergences and Bregman divergences.
 
-\subsubsection*{\texorpdfstring{$f$}{f}-divergences}
-
-Let $f:\mathbb{R}_{\ge0}\to\mathbb{R}\cup\{+\infty\}$ be a convex function. The $f$-divergence of $p$ from $q$ is defined as
+Let $f:\mathbb{R}_{\ge0}\to\mathbb{R}\cup\{+\infty\}$ be a convex function. The $f$-divergence is defined as
 \begin{align*}
-    D_f(p\|q)=\int f\left(\frac{p(x)}{q(x)}\right)q(x)\,dx.
+    D_f(p\|q)=\int f\left(\frac{p(x)}{q(x)}\right)q(x)\,dx
 \end{align*}
 
-Many prominent examples are $f$-divergences:
+A prominent parametrized family of $f$-divergences is the so called $\alpha$-divergence (see \cite{cichocki_families_2010}) where the function $f=f_{\alpha}$ is given by
+\begin{align*}
+    f_{\alpha}(t)=\frac{1}{\alpha(\alpha-1)}\left(t^{\alpha}-\alpha t-(1-\alpha)\right)
+\end{align*}
+The actual divergence is then given by
+\begin{align*}
+    D_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right)
+\end{align*}
 
-\begin{itemize}
-    \item $\chi^{\alpha}$-divergence: $f(t)=\frac{1}{2}|t-1|^{\alpha}$, $\alpha\ge1$
-    \begin{itemize}
-        \item $\alpha=1$: $f(t)=\frac{1}{2}|t-1|\implies$ Total variation distance: $d_{\text{TV}}(p,q)=\frac{1}{2}\int|p-q|$
-    \end{itemize}
-    \item $\alpha$-divergence:
-    \begin{align*}
-        D_{\alpha}(p\| q)=\frac{4}{1-\alpha^2}\left(1-\int p^{\frac{1-\alpha}{2}}q^{\frac{1+\alpha}{2}}\right)
-    \end{align*}
-    \begin{itemize}
-        \item $\alpha=0$: $D_0(p\|q)=4D_{H}(p,q)$, where $D_H(p,q)=\frac{1}{2}\int(\sqrt{f}-\sqrt{g})^2$ is the squared Hellinger distance
-        \item $\alpha\to-1$: $D_{-1}(p\|q)=D_{\text{KL}}(p\|q)$ (Kullback-Leibler-divergence)
-        \item $\alpha\to1$: $D_{1}(p\|q)=D_{\text{KL}}(q\|p)$ (reverse Kullback-Leibler-divergence)
-    \end{itemize}
-    \item Jensen-Shannon divergence: $f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\left(\frac{t+1}{2}\right)}\right)\implies$
-    \begin{align*}
-        \text{JS}(f,g)&=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g)\\
-        H(f)&=-\int f(x)\log{f(x)}\,dx
-    \end{align*}
-\end{itemize}
+By taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2$ is the squared Hellinger distance.
 
-The only symmetric $\alpha$-divergence is the squared Hellinger distance. The only symmetric $\chi^{\alpha}$-divergence is the total variation distance. The JS-divergence is also symmetric.
+Another class of divergences are the $\chi^{\alpha}$-divergences (see~[]). They are determined by $f_{\alpha}(t)=(1/2)|t-1|^{\alpha}$, where $\alpha\ge1$. Setting $\alpha=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q)=(1/2)\int|p-q|$.
 
-\todo[inline]{Establish condition on $f$ under which the $f$-divergence is symmetric}
+Another important divergence that belongs to the class of $f$-divergences is the Jensen Shannon divergence. The function $f$ is set to be
+\begin{align*}
+    f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right)
+\end{align*}
+The divergence is then given by
+\begin{align*}
+    \operatorname{JS}(f,g)=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g),
+\end{align*}
+where $H(f)=-\int f\log{f}$ is the Shannon entropy.
+
+The $f$-divergence is symmetric iff $f(t)=tf(1/t)+c(t-1)$ for some constant $c$. In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance). The only symmetric $\chi^{\alpha}$-divergence is the total variation distance. The JS-divergence is also symmetric.
+
+\todo[inline]{Cite or prove the symmetry characterization}
+
+\todo[inline]{Connect $f$-divergence to generalized entropy}
 
 The class of Rényi divergences is defined as
 \begin{align*}
-    R_{\alpha}(f\|g)=\frac{1}{\alpha-1}\log{\left(\int f(x)^{\alpha}g(x)^{1-\alpha}\,dx\right)}
+    R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
 \end{align*}
-For $\alpha\to1$ this recovers the Jensen-Shannon divergence.
+where $\alpha\in\mathbb{R}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
 
-\subsubsection{Bregman divergences}
-
-Let $F\in C^{1}$ and convex. The Bregman convergence is
+The Rényi divergence can be obtained by transforming the $\alpha$-divergence:
 \begin{align*}
-    D_F(p\| q)=F(p)-F(q)-\langle\nabla F(q),p-q\rangle.
+    R_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\log{\left(1+\alpha(\alpha-1)D_{\alpha}(p\|q)\right)}
 \end{align*}
 
-Of importance is the class of Bregman convergences defined by
+The second major class are Bregman divergences, which are defined by
+\begin{align*}
+    D_F(p\| q)=F(p)-F(q)-\langle\nabla F(q),p-q\rangle,
+\end{align*}
+where $F\in C^{1}$. A particular subclass is given by
 \begin{align*}
     F_{\phi}(p)=\int\phi(p(x))\,dx
 \end{align*}
-for some convex function $\phi$. One example of such a function $\phi$ is
+for some convex function $\phi$. An example of such a function $\phi$ is the class of $\beta$-divergences determined by
 \begin{align*}
-    \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(\beta+1)},\quad\beta\in\mathbb{R}\setminus\{0,1\}
-\end{align*}
-For $\beta=1$ we obtain
-\begin{align*}
-    D_{F_{\beta}}(p\|q)=\frac{1}{2}\|p-q\|_2^2,\quad F_{\beta}(p)=\int\phi_\beta\circ p
+    \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(\beta+1)},\quad\beta\in\mathbb{R}\setminus\{0,-1\}
 \end{align*}
 
-That is, for $\beta=1$ we retrieve the squared $L^{2}$-norm. This is the only symmetric $\beta$-divergence.
+Setting $\beta=1$ retrieves the squared $L^{2}$-norm, which is the only symmetric $\beta$-divergence:
+\begin{align*}
+    D_{F_2}(p\|q)=\frac{1}{2}\|p-q\|_2^2
+\end{align*}
 
 \todo[inline]{Condition on $F$ or $\phi$ under which Bregman divergence is symmetric}
 
