@@ -10,9 +10,9 @@
     \item do multiple samples and see if critical $\epsilon$ changes (stability under resampling)
 \end{itemize}
 
-For two simplicial complexes $K_1$ and $K_2$, we define a scalar product as 
+For two simplicial complexes $K_1$ and $K_2$, we define the $f$-based divergence as
 \begin{align*}
-    \langle K_1,K_2\rangle_f&:=f(K_1)+f(K_2)-f(K_1\cup K_2),
+    \langle K_1,K_2\rangle_f&:=f(K_1)+f(K_2)-f(K_1\oplus K_2),
 \end{align*}
 where $f$ is any nonnegative integer-valued (subadditive) function defined on simplicial complexes. For example $f(K)=\text{cat}(K)$. Due to the subadditivity of $f$, the scalar product is nonnegative. A stronger notion would be submodularity. Then it would hold $\left\langle K_1,K_2\right\rangle_f\ge f(K_1\cap K_2)\ge0$.
 

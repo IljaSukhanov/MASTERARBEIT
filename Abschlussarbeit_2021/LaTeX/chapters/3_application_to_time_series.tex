@@ -336,6 +336,16 @@ This gives a computational advantage, as we do not have to compute $\langle u,x\
 \todo[inline]{show numerical results for $p=1,2,3,\dots$}
 \todo[inline]{compare $k\mapsto\min w_k(u)$ and $k\mapsto\min\hat{w}_k(u)$}
 
+\todo[inline]{approximating zonotope?}
+
+\todo[inline]{True order is $p\in\{1,2\}$, compare $\mathcal{P}_{p}$ and $\mathcal{P}_{p+1}$}
+
+\todo[inline]{anisotropy?}
+
+\todo[inline]{plot $k$ vs $e_t^{(k)}=X_{t+k}-\hat{A}_kY_{t}^{(k)}$, for $k\ge p$ it should stabilize at $\operatorname{Var}[Z_t]$}
+
+\todo[inline]{consider the point clouds $\{(e_t^{(k)},e_{t+1}^{(k)}):t=\dots\}$, once $k\ge p$ the cloud becomes roughly square, can this be generalized to other innovation distributions??}
+
 \subsection{Normally distributed innovations}
 
 Next, we turn our attention to Gaussian innovations, which is often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation, we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
@@ -349,23 +359,6 @@ The covariance matrix plays an important role in describing the geometry of the 
 That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$.
 
 \todo[inline]{find reference or prove}
-
-\subsection{Intrinsic Volumes}
-
-\todo[inline]{Handbook of Convex Geometry}
-
-We have a zonotope $Z^{(n)}_k=\sum_{j=0}^{n}g_j[-1,1]$ with \textcolor{red}{unknown} vectors $g_j\in\mathbb{R}^k$. Here, $k$ is the embedding dimension. The $j$-th quermassintegral of $Z^{(n)}_k$, denoted by $W_j(Z^{(n)})$ are defined as coefficients that fulfill
-\begin{align*}
-    \operatorname{Vol}(Z^{(n)}_k+tB)=\sum_{j=0}^{k}\binom{k}{j}W_j(Z^{(n)}_k)t^{j}
-\end{align*}
-where $B=B(0,1)=\{x\in\mathbb{R}^k:\|x\|\le1\}$. The $j$-th intrinsic volume is defined by
-\begin{align*}
-    V_j(Z^{(n)}_k)=\binom{k}{j}\frac{W_{k-j}(Z^{(n)}_k)}{\kappa_{k-j}}, && j=1,\dots,k
-\end{align*}
-It can be shown that the $j$-th intrinsic volume can by computed by the formula
-\begin{align*}
-    V_j(Z^{(n)}_k)=2^{j}\sum\limits_{I\subseteq\{0,\dots,n\},|I|=j}\sqrt{\det{(G_I^TG_I)}}
-\end{align*}
 
 \todo[inline]{Big Question: How to generalize this approach for a wide class of innovation distributions? We only get the nice zonotope formulas because of uniform innovations}
 
