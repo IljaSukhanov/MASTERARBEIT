@@ -285,22 +285,35 @@ Then $S_{\gamma}(\hat{f}_{h_i},\hat{f}_{h_j})$ can be computed explicitly by
 
 \todo[inline]{Approximation of infinite integral, control the truncation error}
 
-Let $[a,b]$ be a real interval with $a<b$. Define an equidistant partition by $x_k=kh$, $k=0,1,\dots,n$. Here, $h=(b-a)/n$ is the length of a sub-interval and $n\ge 1$ controls the fineness of the partition. Write
+Computing divergences between densities amounts to evaluating certain parametrized integrals of the form $\int_{-\infty}^{\infty} C_{\alpha}(p,q)$, where for example in the case of the Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. In general, these integrals can't be computed explicitly and numerical procedures have to be applied. Prior to that, the integral has to be truncated. The truncation error can be bounded above:
 \begin{align*}
-    \int_a^bf(x)\,dx=\sum_{k=1}^{n}\underbrace{\int_{x_{k-1}}^{x_k}f(x)\,dx}_{=A_k(f)}
+    \left|\int\limits_{\mathbb{R}\setminus(a,b)}C_{\alpha}(p,q)\right|&=\left|\int\limits_{\mathbb{R}}C_{\alpha}(p,q)-\int\limits_{a}^{b}C_{\alpha}(p,q)\right|\\
+    &=\dots
 \end{align*}
-and approximate each $A_k(f)$ by
+
+We choose the interval boundaries $a=X_{\min}-Lh_{\max}$ and $b=X_{\max}+Lh_{\max}$. Using the upper bound for the truncation error above we choose $L$ such that $E_{\text{trunc}}\le\epsilon$.
+
+Afterwards, we use the composite trapezoidal rule to approximate the truncated integral:
 \begin{align*}
-    A_k(f)\approx\frac{h}{2}(f(x_{k-1})+f(x_k))
+    \int_{a}^{b}f(x)\approx\frac{h}{2}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right)=:Q_n(f),
 \end{align*}
-We obtain
+where $x_k=kh$, $k=0,1,\dots,n$ are equidistant points on the interval $[a,b]$.
+
+As an approximation guaranty, we have
 \begin{align*}
-    \int_a^bf(x)\,dx\approx\frac{h}{2}\sum_{k=1}^{n}(f(x_{k-1})+f(x_k))=\frac{h}{2}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right)
+    \left|\int_a^bf(x)\,dx-Q_n(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
 \end{align*}
-As approximation guarantee we have
+
+Adaptive quadrature rules might give better approximation results but are computationally more expensive.
+
+In our application, $f(x)=C_{\alpha}(p(x),q(x))=p(x)^{\alpha}q(x)^{1-\alpha}$. The approximation guaranty from Equation~[] then becomes
 \begin{align*}
-    \left|\int_a^bf(x)\,dx-\sum_{k=1}^{n}A_k(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
+    \dots
 \end{align*}
+
+\todo[inline]{Explain how error depends on $\alpha$, $X_{\max}-X_{\min}$ and the bandwidths $h_i$}
+
+\todo[inline]{Since upper bound is random because of $X_{\max}-X_{\min}$ maybe establish probabilistic upper bound?}
 
 \section{Numerical Experiments}
 
@@ -316,7 +329,7 @@ Here, $0<h_{\min}<h_{\max}$ and $N\ge2$ is the number of grid points. We will in
 
 In the preliminary experiments we set $h_{\min}=10^{-2}$ and $h_{\max}=2$.
 
-\todo[inline]{grid must scale with $n$}
+\todo[inline]{grid must scale with $n$?}
 
 \subsection*{Sample distributions}
 
