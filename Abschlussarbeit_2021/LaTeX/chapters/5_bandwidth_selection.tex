@@ -336,9 +336,7 @@ In the preliminary experiments we set $h_{\min}=10^{-2}$ and $h_{\max}=2$.
 Let $X_1,\dots,X_n\sim f$. In our experiments we will test
 \begin{itemize}
     \item $f$ standard normal $N(0,\sigma^2)$, $\sigma^2>0$
-    \item $f$ heavy tailed
     \item $f$ multi-modal: $f=\sum_{i=1}^{n}w_if_i$, where $w_i\ge0$ and $\sum_iw_i=1$
-    \item $f$ skewed
 \end{itemize}
 
 The number of sampled points $n$ is an important parameter. In order to study consistency, we test $n=100,200,\dots,1000,\dots$
@@ -346,16 +344,6 @@ The number of sampled points $n$ is an important parameter. In order to study co
 \subsection*{Kernel choice}
 
 For now we will focus on the Gaussian kernel: $K(x)=(2\pi)^{-1/2}\exp{(-x^2/2)}$
-
-\subsection*{Scale similarity matrix}
-
-We will choose the four constructions described above:
-\begin{itemize}
-    \item $\int\min\{f,g\}$
-    \item $\int\sqrt{fg}$
-    \item $\exp{(-\|f-g\|_2^2)}$
-    \item $1-\operatorname{JS}(f,g)/\log{2}$
-\end{itemize}
 
 \subsection*{Behavior under resampling}
 
