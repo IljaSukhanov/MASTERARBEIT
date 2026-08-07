@@ -1,14 +1,12 @@
 \chapter{Application to ARMA processes}
 
-The application of TDA to time series analysis is well established (\cite{perea_sliding_2015})\todo{cite papers about TDA for time series}. A prominent example that shows the connection between these two fields clearly are (noisy) sine curves: at the right scale, the two dimensional sliding window reveals a loop. See \cite{KARAN2021115326}
+\todo[inline]{new title}
 
-In the first section, we give an overview on the theory of time series needed for our purposes. Next we discuss the embedding of time series as point clouds in $\mathbb{R}^k$, where Takens' theorem will play an important role. Finally, we present our numerical results and interpret them.
+The original goal of this chapter was to apply the spectral scale selection developed in~[] to recover the order $p$ of autoregressive time series. Even though the scale selection principle is primarily developed for applications in TDA, the hope was to use the well known sliding window embedding as a bridge between TDA and time series analysis. In the process of studying this problem, an alternative convex-geometric direction emerged, while the TDA approach turned out to be unfruitful. This chapter presents a new AR order selection method using ideas from convex geometry.
 
-\todo[inline]{Main Question: Sequence of what?}
+In the first section, we give an overview of the theory of time series needed for our purposes. In particular, we briefly review classical order selection and AR coefficient estimation. Next we introduce the embedding of time series as point clouds in $\mathbb{R}^k$, where Takens' theorem will play an important role. We show consistency for different kinds of convex-geometric functionals that can recover the correct AR order $p$. A discussion of different kinds of innovation distributions is given. Finally, we present our numerical results and interpret them.
 
-\todo[inline]{TDA and Sliding window embedding not even needed?}
-
-\todo[inline]{Main goal: Prove consistency of spectrally selected order $k^{\star}$ to the true order $p$}
+\todo[inline]{Prove consistency of geometrically selected order $k^{\star}$ to the true order $p$}
 
 \section{Preliminaries on time series}
 
@@ -148,20 +146,7 @@ In order to be able to talk about the \enquote{geometry of a point cloud} in a r
 \begin{align*}
     \operatorname{supp}(Y)=\{x\in\mathbb{R}^k:\mathbb{P}(Y\in B_r(x))>0\text{ for all }r>0\}.
 \end{align*}
-In the case where $f_Y$ is continuous, it holds $\operatorname{supp}(Y)=\operatorname{cl}\{y\in\mathbb{R}^{k}:f_Y(y)>0\}$. The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
-\begin{align*}
-    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}.
-\end{align*}
-The \textit{highest density region} $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
-\begin{align*}
-    C_{\alpha}&=C_{h_{\alpha}}\\
-    C_h&=\{x\in\mathbb{R}^{d}:f(x)\ge h\}\\
-    h_{\alpha}&=\sup\{h\in\mathbb{R}:\mathbb{P}(Y\in C_h)\ge 1-\alpha\}
-\end{align*}
-
-\todo[inline]{connect these concepts with each other. For many distributions they are the same. Using minimum volume sets would remove dependence on having a smooth density}
-
-\todo[inline]{estimate HDR directly from the points $Y_t^{(k)}$; non parametric estimation, empirical HDR}
+In the case where $f_Y$ is continuous, it holds $\operatorname{supp}(Y)=\operatorname{cl}\{y\in\mathbb{R}^{k}:f_Y(y)>0\}$.
 
 Let $X_t=\sum_{j=0}^{\infty}\psi_j Z_{t-j}$ be the MA($\infty$)-representation of an AR($p$) process, where $(Z_t)$ are the independent and identically distributed innovations with cumulative distribution function $F_0$ and where the sequence $(\psi_j)_{j\in\mathbb{N}_0}$ is defined recursively by $\psi_{-(p-1)}=\dots=\psi_{-1}=0$, $\psi_0=1$ and $\psi_j=\phi_1\psi_{j-1}+\dots+\phi_p\psi_{j-p}$ for all $j\ge 1$. Now each point $Y_t^{(k)}\in\mathcal{P}_k$ can be written as
 \begin{align}\label{eq:sliding_window_point_representation}
@@ -275,7 +260,7 @@ A convex body is a compact nonempty convex set. As convex geometric functional o
     Let $K\subseteq\mathbb{R}^{d}$ be a convex nonempty set. The support function of $K$ is $h_K:\mathbb{R}^d\to\mathbb{R}$, $h_K(u)=\sup\{\langle x,u\rangle:x\in K\}$.
 \end{Def}
 
-\begin{Lem}
+\begin{Lem}\label{lem:hausdorff_distance_between_convex_bodies}
     Let $K,L\subseteq\mathbb{R}^d$ be two convex bodies. Then
     \begin{align*}
         d_H(K,L)=\sup_{u\in S^{d-1}}|h_{K}(u)-h_{L}(u)|.
@@ -326,9 +311,42 @@ An empirical version of the width $w_k(u)$ is obtained by inserting $\operatorna
 \end{align*}
 and $\hat{m}_k=\min\{\hat{w}_k(u):u\in S^{k-1}\}$.
 
-\todo[inline]{Give some convergence result $\hat{w}_k(u)\to w_k(u)$ or $m_k\to\hat{m}_k$}
+The next two results establish the consistency of the empirical minimum width, that is, $\hat{m}_k\to m_k$ for $T\to\infty$.
 
-\todo[inline]{Ergodicity for proving consistency?}
+\begin{Prop}\label{prop:hausdorff_convergence}
+    Let $\{Y_t\}_{t\ge1}$ be a $\mathbb{R}^{k}$ valued process and $\mathcal{P}_T=\{Y_1,\dots,Y_T\}$. Let $\mathcal{Z}\subseteq\mathbb{R}^{k}$ be nonempty, compact and convex (totally bounded). Assume
+    \begin{align*}
+        \mathbb{P}\left(\operatorname{cl}\{Y_t:t\ge1\}=\mathcal{Z}\right)=1
+    \end{align*}
+    Then
+    \begin{align*}
+        d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})\stackrel{T\to+\infty}{\to}0,\quad\text{almost surely}
+    \end{align*}
+\end{Prop}
+
+\begin{proof}
+    TBD
+\end{proof}
+
+\begin{Rem}
+    \todo[inline]{Apply above Proposition to specific case}
+    \todo[inline]{Ergodicity for proving consistency?}
+\end{Rem}
+
+\begin{Cor}
+    It holds $\hat{m}_k\to m_k$ for $T\to\infty$
+\end{Cor}
+
+\begin{proof}
+    By Lemma~\ref{lem:hausdorff_distance_between_convex_bodies} and Proposition~\ref{prop:hausdorff_convergence}
+    \begin{align*}
+        \sup_{u\in S^{k-1}}|\hat{w}_k(u)-w_k(u)|\le2d_H(\operatorname{conv}(\mathcal{P}_k),\mathcal{Z}^{(k)})\to 0
+    \end{align*}
+    It also holds that
+    \begin{align*}
+        |\hat{m}_k-m_k|=|\min_u\hat{w}_k(u)-\min_uw_k(u)|\le\sup_u|\hat{w}_k(u)-w_k(u)|
+    \end{align*}
+\end{proof}
 
 The idea now is to minimize $\hat{w}_k(u)$ over all $u\in S^{k-1}$ and examine the relation $k\mapsto \hat{m}_k$. The hope is that the theoretically established elbow point that occurs at $k=p+1$ will also be detectable at the empirical level.
 
@@ -339,22 +357,57 @@ Before discussing the minimization of $\hat{w}_k$ we collect some properties of 
         \item[1.] $\hat{w}_k$ is Lipschitz continuous on $S^{k-1}$ with Lipschitz constant $\operatorname{diam}(\mathcal{P}_k)=\max_{s,t}\|Y_s^{(k)}-Y_t^{(k)}\|$
         \item[2.] $\hat{w}_k$ is convex on $\mathbb{R}^{k}$
         \item[3.] $\hat{w}_k$ is piecewise linear and differentiable almost everywhere
-        \item[4.] The sub-gradient of $\hat{w}_k$ in direction $u$ is given by
+        \item[4.] The set of non-differentiable points is given by
+        \begin{align*}
+            \mathcal{N}=\bigcup_{(s,t)\ne(p,q)}\{u:\langle Y_s^{(k)}+Y_{q}^{(k)}-(Y_t^{(k)}+Y_p^{(k)})>,u\rangle=0\}
+        \end{align*}
+        \item[5.] The gradient of $\hat{w}_k$ in direction $u\notin\mathcal{N}$ is given by
+        \begin{align*}
+            \nabla_u\hat{w}_k=Y_{s_0(u)}^{(k)}-Y_{t_0(u)}^{(k)},\quad(s_0(u),t_0(u))=\arg\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle
+        \end{align*}
     \end{enumerate}
 \end{Prop}
 
 \begin{proof}
-    Let $u,v\in S^{k-1}$. Write
+    Let $u,v\in S^{k-1}$. Write $\hat{w}_k(u)=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and we obtain
     \begin{align*}
-        |\hat{w}_k(u)-\hat{w}_k(v)|
+        \hat{w}_k(u)-\hat{w}_k(v)&=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle-\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},v\rangle\\
+        &\le\max_{s,t}\left(\langle Y_s^{(k)}-Y_t^{(k)},u\rangle-\langle Y_s^{(k)}-Y_t^{(k)},v\rangle\right)\\
+        &=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u-v\rangle\\
+        &\le\left(\max_{s,t}\|Y_s^{(k)}-Y_t^{(k)}\|\right)\|u-v\|
     \end{align*}
+    for all $u,v\in\mathbb{R}^{k}$.
+
+    Convexity of $\hat{w}_k$ follows from convexity of linear functions and the pointwise maximum of convex functions. Piecewise linearity also follows directly from the standard fact, that the pointwise maximum of linear functions is piecewise linear. Differentiability almost everywhere follows directly from Rademacher's theorem (see e.g.~[]). The set of non-differentiable points is just the set of all points $u$ where two distinct linear functions $\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and $\langle Y_q^{(k)}-Y_p^{(k)},u\rangle$ coincide. The gradient of $\hat{w}_k$ in all directions $u\notin\mathcal{N}$ is obtained by straightforward differentiation.    
 \end{proof}
 
-The first minimization approach is to use projected sub-gradient descent, where the sub-gradient is provided in Proposition~\ref{prop:properties_empirical_width}.
+By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k-1}$.
 
-\todo[inline]{show pseudo algorithm}
+A classical minimization approach is the projected gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}.
+
+\begin{algorithm}[ht]
+    \caption{Projected gradient descent}
+    \label{alg:projected_gradient_descent}
+    \begin{algorithmic}[1]
+        \Require $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$, $u_0\in S^{d-1}$, $\{\eta_t\}_{t\ge 0}$
+        \Ensure $\hat{u}$
+        \State Initialize $\hat{w}\gets\hat{w}_k(u_0)$, $\hat{u}\gets u_0$
+        \For{$t=0,1,\dots$}
+            \State $(i_t,j_t)\gets\arg\max_{(i,j)}\langle x_i-x_j,u\rangle$
+            \State $g_t\gets x_{i_t}-x_{j_t}$
+            \State $\xi_t\gets(I-u_tu_t^{T})g_t$
+            \State $u_{t+1}\gets (u_t-\eta_t\xi_t)/\|u_t-\eta_t\xi_t\|$
+            \State if $\hat{w}_k(u_{t+1})<\hat{w}$, set $\hat{u}\gets u_{t+1}$
+        \EndFor
+        \State\Return $\hat{u}$
+    \end{algorithmic}
+\end{algorithm}
+
+\todo[inline]{Give result on convergence guaranty}
 
 \todo[inline]{discuss different optimization algorithms}
+
+The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
 \cite{10.1145/1008731.1008736} give a method to construct a smaller subset $\mathcal{Q}_k\subseteq\mathcal{P}_k$ such that
 \begin{align*}
@@ -362,13 +415,12 @@ The first minimization approach is to use projected sub-gradient descent, where 
 \end{align*}
 This gives a computational advantage, as we do not have to compute $\langle u,x\rangle$ for all $x\in\mathcal{P}_k$ but only for all $x\in\mathcal{Q}_k$.
 
-\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
-
 \subsection*{Numerical Results}
 
 \todo[inline]{show numerical results for $p=1,2,3,\dots$}
 \todo[inline]{When does it break down or becomes computationally to heavy?}
-\todo[inline]{compare $k\mapsto\min w_k(u)$ and $k\mapsto\min\hat{w}_k(u)$}
+\todo[inline]{compare $k\mapsto\min w_k(u)$ and $k\mapsto\min\hat{w}_k(u)$ and also $k\mapsto\min w_k(\hat{u})$}
+\todo[inline]{How large does $T$ have to be?}
 
 \subsection*{Normally distributed innovations}
 
@@ -386,19 +438,34 @@ That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, su
 
 \subsection*{Possible Generalizations}
 
+The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
+\begin{align*}
+    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}.
+\end{align*}
+The \textit{highest density region} $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
+\begin{align*}
+    C_{\alpha}&=C_{h_{\alpha}}\\
+    C_h&=\{x\in\mathbb{R}^{d}:f(x)\ge h\}\\
+    h_{\alpha}&=\sup\{h\in\mathbb{R}:\mathbb{P}(Y\in C_h)\ge 1-\alpha\}
+\end{align*}
+
+\todo[inline]{connect these concepts with each other. For many distributions they are the same. Using minimum volume sets would remove dependence on having a smooth density}
+
+\todo[inline]{estimate HDR directly from the points $Y_t^{(k)}$; non parametric estimation, empirical HDR}
+
+\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
+
+\todo[inline]{Big Question: How to generalize this approach for a wide class of innovation distributions? We only get the nice zonotope formulas because of uniform innovations}
+
+\todo[inline]{Maybe find a class of distributions where the highest density region (or minimum volume set) has a nice geometric shape and compute the intrinsic volumes of that shape}
+
+\todo[inline]{log concave give convex highest density regions; VERY INTERESTING}
+
 A probability density is log-concave if
 \begin{align*}
     f(x)=\frac{e^{-V(x)}}{\int e^{-V(u)}\,du}
 \end{align*}
 for some convex function $V$.
-
-\todo[inline]{log concave give convex highest density regions; VERY INTERESTING}
-
-\todo[inline]{Kubota formula $V_j(K)=\dots$}
-
-\todo[inline]{Big Question: How to generalize this approach for a wide class of innovation distributions? We only get the nice zonotope formulas because of uniform innovations}
-
-\todo[inline]{Maybe find a class of distributions where the highest density region (or minimum volume set) has a nice geometric shape and compute the intrinsic volumes of that shape}
 
 \todo[inline]{Probability integral transform (PIT)}
 
