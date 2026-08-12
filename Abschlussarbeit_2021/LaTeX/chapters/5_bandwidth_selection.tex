@@ -13,53 +13,77 @@ We have data $X_1,\dots,X_n\in\mathbb{R}^d$ sampled from an (unknown) distributi
 \begin{align*}
     \hat{f}_{h}(x)=\frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}^d.
 \end{align*}
-Common kernel choices are:
+
+Two common choices for the kernel $K$ are:
 \begin{itemize}
-    \item Epanechnikov kernel: $K(u)=1\{-1\le u\le u\}3(1-u^2)/4$
-    \item Gaussian kernel: $K(u)=(2\pi)^{-1/2}\exp\{-u^2/2\}$
+    \item the Epanechnikov kernel $K(u)=1\{-1\le u\le1\}3(1-u^2)/4$
+    \item the Gaussian kernel $K(u)=(2\pi)^{-1/2}\exp{(-u^2/2)}$
 \end{itemize}
 
-The question of how to choose the bandwidth $h$ is widely known in the literature. The methods can be categorized by rule of thumb, plug in, and cross validation.
+The question of how to choose the bandwidth $h$ is widely known in the literature. See reviews~[]. We present some of the most popular methods below, which we also use to compare with our newly developed spectral selector.
 
-The optimal bandwidth minimizes the mean integrated squared error
+Following the review~[], the bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. Both methods minimize some approximation of the (mean) integrated squared error.
+
+\begin{Def}
+    Let $f$ be a density and $\hat{f}_h$ its kernel density estimation. The integrated squared error (ISE) between $f$ and $\hat{f}_h$ is given by
+    \begin{align*}
+        \operatorname{ISE}(h)=\int\left(f(x)-\hat{f}_h(x)\right)^{2}\,dx
+    \end{align*}
+    The mean integrated squared error (MISE) is $\operatorname{MISE}(h)=\mathbb{E}\left[\operatorname{ISE}(h)\right]$.
+\end{Def}
+
+\subsection*{Cross-variance methods}
+
+The ISE can be written as
 \begin{align*}
-    \operatorname{MISE}(h)=\mathbb{E}\left[\int\left(f(x)-f_h(x)\right)^2\,dx\right]
+    \operatorname{ISE}(h)=\int\hat{f}_h(x)^2\,dx-2\mathbb{E}_{X\sim f}\left[\hat{f}_h(X)\right]+\int f(x)^2\,dx
 \end{align*}
 
-The bias-variance decomposition is
+The Ordinary Least Squares Cross-Variance estimator is given by
 \begin{align*}
-    \operatorname{MISE}(h)=\int\operatorname{Var}[\hat{f}_h(x)]\,dx+\int\operatorname{Bias}(\hat{f}_h(x))^{2}\,dx
+    \operatorname{CV}(h)=\int\hat{f}_h(x)\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i),\quad\hat{h}_{\operatorname{CV}}\in\arg\min\operatorname{CV}(h)
+\end{align*}
+Here, $\hat{f}_{h,-i}$ is the kernel density function where the observation $X_i$ is left out, that is,
+\begin{align*}
+    \hat{f}_{h,-i}(x)=\frac{1}{(n-1)h}\sum_{j\ne i}K\left(\frac{x-X_j}{h}\right)
+\end{align*}
+
+\subsection*{Plug-in methods}
+
+The bias-variance decomposition of the MISE is
+\begin{align*}
+    \operatorname{MISE}(h)=\int\operatorname{Var}[\hat{f}_h(x)]\,dx+\int\operatorname{Bias}(\hat{f}_h(x))\,dx
 \end{align*}
 with
 \begin{align*}
-    \operatorname{IV}(h)&=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{R(K)}{nh^d}-\frac{R(K_h\star f)}{n}\\
-    \operatorname{ISB}(h)&=\int\operatorname{Bias}(\hat{f}_h(x))\,dx=R(K_h\star f-f)
+    \operatorname{IV}(h)&=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{\|K\|_2^2}{nh^{d}}-\frac{\|K_h\ast f\|_2^2}{n},\quad\text{and}\\
+    \operatorname{ISB}(h)&=\int\operatorname{Bias}(\hat{f}_h(x))\,dx=\|K_h\ast f-f\|_2^2
 \end{align*}
-where $R(g)=\int g(x)^2\,dx$. This decomposition gives conditions on $h=h_n$ so that the kernel density estimation is consistent. Namely, it must hold $h_n\to0$ and $nh_n\to+\infty$. One example of such a sequence is $h_n=n^{-\alpha}$ with some $\alpha\in(0,1)$.
 
-The MISE can be we written as
+This decomposition gives conditions on $h=h_n$ so that the kernel density estimate $\hat{f}_{h_n}$ is consistent. Namely, it must hold $h_n\to0$ and $nh_n^d\to+\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
+
+The MISE can be written as
 \begin{align*}
-    \operatorname{MISE}(h)=\underbrace{\frac{R(K)}{nh}+\frac{h^4}{4}\mu_2(K)^2R(f^{''})}_{=\operatorname{AMISE}(h)}+o\left(\frac{1}{nh}+h^{4}\right)
+    \operatorname{MISE}(h)=\underbrace{\frac{\|K\|_2^2}{nh}+\frac{h^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h)}+o\left(\frac{1}{nh}+h^{4}\right)
 \end{align*}
-Thus
-\begin{align*}
-    \frac{\operatorname{MISE}(h)-\operatorname{AMISE}(h)}{(nh)^{-1}+h^4}\to0
-\end{align*}
+
 Minimizing the AMISE leads to
 \begin{align}\label{eq:h_amise}
-    h_{\operatorname{AMISE}}=\left(\frac{R(K)}{n\mu_2(K)^2R(f^{''})}\right)^{1/5}
+    h_{\operatorname{AMISE}}=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|f^{''}\|_2^2}\right)^{1/5}
 \end{align}
 
 \todo[inline]{check for general dimension $d$}
 
 The optimal bandwidth thus behaves like $n^{-1/5}$.
 
-Many bandwidth selectors use Equation~\eqref{eq:h_amise} as starting point. Sliverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^{2})$. In this case, $R(f^{''})$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
+Plug-in methods use Equation~\eqref{eq:h_amise} as starting point. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
 \begin{align*}
-    R(f^{''})=\frac{3}{8\sqrt{\pi}\sigma^5},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}.
+    \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}
 \end{align*}
 
-\todo[inline]{Mention plug-in and cross validation estimators, cite review article}
+\todo[inline]{introduce Sheather and Jones' plug in}
+
+\subsection*{Exact MISE representation for Gaussian mixture model}
 
 Exact computations are generally not possible since the true density $f$ of the sampled data $X_1,\dots,X_n$ is not known. If $K$ is the Gaussian kernel and $f=\sum_lw_lp_l$ where $w_m>0$, $\sum_{m}w_m=1$ and $p_m\sim\mathcal{N}(0,\sigma_m^2)$ we can obtain an explicit formula for the $\operatorname{MISE}(h)$ which is due to \cite{10.1214/aos/1176348653}
 \begin{align*}
@@ -74,7 +98,7 @@ Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\t
 
 \todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
 
-Since the optimal bandwidth minimizes the MISE, particularly interesting scenarios arise in cases, where the MISE has no unique minimum. Since for Gaussian kernels and Gaussian mixture densities the integrated squared error has a closed form, we can find $w_1,w_2,\mu_1,\mu_2,\sigma_1^2,\sigma_2^2$ such that there exist $h_1<h_2$ that are both (local) minima of the ISE curve. 
+Since the optimal bandwidth minimizes the MISE, particularly interesting scenarios arise in cases, where the MISE has no unique minimum. Since for Gaussian kernels and Gaussian mixture densities the integrated squared error has a closed form, we can find $w_1,w_2,\mu_1,\mu_2,\sigma_1^2,\sigma_2^2$ such that there exist $h_1<h_2$ that are both (local) minima of the MISE curve. 
 
 \todo[inline]{add construction principle and example, there are different classes of local minima pairs}
 
@@ -108,65 +132,46 @@ A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all 
 \begin{align*}
     \sum_{i,j=1}^{n}a_ia_jD(x_i,x_j)\le0
 \end{align*}
-for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=0$. A function $\phi:\mathbb{R}\to\mathbb{R}$ is called completely monotone if $\phi\in C^{\infty}(0,\infty)$ and $(-1)^{n}\phi^{(n)}(t)\ge 0$ for all $n\in\mathbb{N}_0$ and $t>0$.
+for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=0$. A function $\phi:(0.\infty)\to\mathbb{R}$ is called completely monotone if $\phi\in C^{\infty}(0,\infty)$ and $(-1)^{n}\phi^{(n)}(t)\ge 0$ for all $n\in\mathbb{N}_0$ and $t>0$.
+
+The most prominent example of a completely monotone function is $\phi(t)=e^{-\gamma t^{\alpha}}$, $\gamma\ge0$, $0<\alpha\le1$.
 
 \begin{Thm}[Schoenberg]\label{thm:schoenberg}
-    Let $D:X\times X\to\mathbb{R}$ be conditionally negative. Let $x_1,\dots,x_n\in X$. Then the matrix $M=(M_{ij})$, $M_{ij}=\phi(D(x_i,x_j))$ is positive definite if and only if $\phi$ is completely monotone.
+    Let $D:X\times X\to\mathbb{R}$ be conditionally negative. Let $x_1,\dots,x_n\in X$. If $\phi$ is completely monotone, then the matrix $\Sigma=(\Sigma_{ij})$, $\Sigma_{ij}=\phi(D(x_i,x_j))$ is positive definite.
     \todo[inline]{Find a source to cite}
 \end{Thm}
 
-Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some (statistical) divergence and $\phi$ a completely monotone function. There are some special kinds of divergences, where a transformation by a not necessarily completely monotone function is enough to obtain a positive definite similarity matrix.
+Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some divergence and $\phi$ a completely monotone function. 
 
-In addition to being conditionally negative definite these special divergences are bounded which is why it is enough for the transformation $\phi$ to be only decreasing. 
+There are some special kinds of divergences, where a transformation by a not necessarily completely monotone function is enough to obtain a positive definite similarity matrix.
 
-\subsection*{Why not work directly with \texorpdfstring{$D$}{D}?}
+\todo[inline]{add definition of divergence}
 
-Write
-\begingroup
-\small
-\setlength{\arraycolsep}{3pt}
+\todo[inline]{What is it about these special divergences that do not require a completely monotone transformation?}
 
-\begin{equation*}
-    D=
-    \begin{pmatrix}
-        0 & D(x_1,x_2) & D(x_1,x_3) & \cdots
-          & D(x_1,x_{N-1}) & D(x_1,x_N)\\
-        D(x_2,x_1) & 0 & D(x_2,x_3) & \cdots
-          & D(x_2,x_{N-1}) & D(x_2,x_N)\\
-        D(x_3,x_1) & D(x_3,x_2) & 0 & \cdots
-          & D(x_3,x_{N-1}) & D(x_3,x_N)\\
-        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
-        D(x_{N-1},x_1) & D(x_{N-1},x_2) & D(x_{N-1},x_3)
-          & \cdots & 0 & D(x_{N-1},x_N)\\
-        D(x_N,x_1) & D(x_N,x_2) & D(x_N,x_3)
-          & \cdots & D(x_N,x_{N-1}) & 0
-    \end{pmatrix}.
-\end{equation*}
+\subsection*{Why not use the divergence matrix for spectral scale selection?}
 
-\endgroup
+In this subsection, we want to briefly give an argument why it is not advisable to compute the Perron vector of the divergence matrix $D$ itself and thus motivate the above similarity transformation more.
 
-\begin{Def}
-    A (symmetric) matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
+\begin{Def}[Robinson matrix]
+    A matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called a Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
     \begin{align*}
-        i<j<k\implies D^{\pi}_{ik}\ge\max\{D^{\pi}_{ij},D^{\pi}_{jk}\}
-\end{align*}
+        D^{\pi}_{ik}\ge\max\{D^{\pi}_{ij},D^{\pi}_{jk}\}\text{ and }D_{ki}^{\pi}\ge\max\{D_{ji}^{\pi},D_{kj}^{\pi}\}
+    \end{align*}
+    whenever $i<j<k$.
 \end{Def}
 
-\todo[inline]{Extend definition for asymmetric matrices}
-
-\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix}
+\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix?}
 
 The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
-
-\todo[inline]{Find correct assumptions to prove the Lemma}
-
-\todo[inline]{The following Lemma is not correct yet but numerical experiments suggest that the Perron vector of distance or divergence matrices behaves not how we want}
 
 \begin{Lem}
     Let $(M,d)$ be a geodesic metric space such that for every fixed point $y\in X$, the function $x\mapsto d(x,y)$ is geodesically convex. Let $X\subseteq M$ be a convex subset. Let $x_1,\dots,x_N\in X$ be finitely many points and define the distance matrix $D=(d(x_i,x_j))_{i,j=1}^{N}$. Let $v=(v_j)\in\mathbb{R}^{N}$ be the Perron vector of $D$. Then
     \begin{align*}
         \arg\max_{1\le j\le N}v_j\subseteq\{1,N\}.
     \end{align*}
+    \todo[inline]{Find correct assumptions to prove the Lemma}
+    \todo[inline]{This Lemma is not correct yet but numerical experiments suggest that the Perron vector of divergence matrices behaves not how we want}
 \end{Lem}
 
 \begin{proof}
@@ -179,10 +184,6 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
         \arg\max_{1\le j\le N} v_j=\arg\max_{1\le j\le N}F(x_j).
     \end{align*}
 \end{proof}
-
-\begin{Rem}
-    Every normed space $(V,\|\cdot\|)$ is a geodesic metric space. Consider for example the $L^{1}$ space. Then the subset $X$ of $L^{1}$ containing all probability densities is convex.
-\end{Rem}
 
 \subsection*{Examples of divergences}
 
@@ -228,10 +229,15 @@ The class of Rényi divergences is defined as
 \end{align*}
 where $\alpha\in\mathbb{R}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
 
-The Rényi divergence can be obtained by transforming the $\alpha$-divergence:
+The Rény divergence and the $\alpha$-divergence are different transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
 \begin{align*}
-    R_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\log{\left(1+\alpha(\alpha-1)D_{\alpha}(p\|q)\right)}
+    R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t}\\
+    D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1)
 \end{align*}
+
+\todo[inline]{transformations in each other}
+
+By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$.
 
 The second major class are Bregman divergences, which are defined by
 \begin{align*}
@@ -253,12 +259,6 @@ Setting $\beta=1$ retrieves the squared $L^{2}$-norm, which is the only symmetri
 
 \todo[inline]{Condition on $F$ or $\phi$ under which Bregman divergence is symmetric}
 
-\subsection*{Examples of completely monotone functions}
-\begin{itemize}
-    \item $f(x)=e^{-\gamma x^{\alpha}}$, $\gamma\ge0$, $0<\alpha\le 1$
-    \item $f(x)=(a+bx)^{-\alpha}$, $a>0$, $b\ge0$, $\alpha>0$
-\end{itemize}
-
 \subsection*{Divergences with (completely) monotone transformation}
 
 \begin{itemize}
@@ -279,41 +279,62 @@ Then $S_{\gamma}(\hat{f}_{h_i},\hat{f}_{h_j})$ can be computed explicitly by
 
 \subsection*{Approximating integrals using quadrature}
 
-\todo[inline]{try/compare different rules, which one is the best?}
-
-\todo[inline]{Trapezoid or Simpson?}
-
-\todo[inline]{Approximation of infinite integral, control the truncation error}
-
-Computing divergences between densities amounts to evaluating certain parametrized integrals of the form $\int_{-\infty}^{\infty} C_{\alpha}(p,q)$, where for example in the case of the Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. In general, these integrals can't be computed explicitly and numerical procedures have to be applied. Prior to that, the integral has to be truncated. The truncation error can be bounded above:
+Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}C_{\alpha}(p,q)$, where, for example, in the case of the $\alpha$ or Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. Before that, the integral has to be truncated. The truncation error can be bounded above:
 \begin{align*}
-    \left|\int\limits_{\mathbb{R}\setminus(a,b)}C_{\alpha}(p,q)\right|&=\left|\int\limits_{\mathbb{R}}C_{\alpha}(p,q)-\int\limits_{a}^{b}C_{\alpha}(p,q)\right|\\
-    &=\dots
+    E_{\text{trunc}}=\int\limits_{\mathbb{R}\setminus(a,b)}C_{\alpha}(p,q)\le\left(\int\limits_{\mathbb{R}\setminus(a,b)}p\right)^{\alpha}\left(\int\limits_{\mathbb{R}\setminus(a,b)}q\right)^{1-\alpha}
 \end{align*}
 
-We choose the interval boundaries $a=X_{\min}-Lh_{\max}$ and $b=X_{\max}+Lh_{\max}$. Using the upper bound for the truncation error above we choose $L$ such that $E_{\text{trunc}}\le\epsilon$.
+We also have
+\begin{align*}
+    \int\limits_{\mathbb{R}\setminus(a,b)}\hat{f}_{h}=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
+\end{align*}
+
+Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
+\begin{align*}
+    \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)
+\end{align*}
+and thus $E_{\text{trunc}}\le 2\Phi(-L)$. Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
 
 Afterwards, we use the composite trapezoidal rule to approximate the truncated integral:
 \begin{align*}
-    \int_{a}^{b}f(x)\approx\frac{h}{2}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right)=:Q_n(f),
+    \int_a^bf(x)\,dx\approx Q_n(f)=\frac{b-a}{2n}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right),
 \end{align*}
-where $x_k=kh$, $k=0,1,\dots,n$ are equidistant points on the interval $[a,b]$.
+where $x_k=a+\frac{b-a}{n}k$, $k=0,1,\dots,n$ are the equidistant nodes.
+
+\todo[inline]{cite source for the approximation guaranty}
 
 As an approximation guaranty, we have
-\begin{align*}
+\begin{align}\label{eq:approx_error}
     \left|\int_a^bf(x)\,dx-Q_n(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
-\end{align*}
+\end{align}
 
 Adaptive quadrature rules might give better approximation results but are computationally more expensive.
 
-In our application, $f(x)=C_{\alpha}(p(x),q(x))=p(x)^{\alpha}q(x)^{1-\alpha}$. The approximation guaranty from Equation~[] then becomes
+In our application, $f(x)=C_{\alpha}(p(x),q(x))=p(x)^{\alpha}q(x)^{1-\alpha}$. The approximation guaranty of Equation~\eqref{eq:approx_error} then becomes
 \begin{align*}
-    \dots
+    \left|\int\limits_{X_{\min}-Lh_{\max}}^{X_{\max}+Lh_{\max}}C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})-Q_n(C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j}))\right|\le\frac{(X_{\max}-X_{\min}+2Lh_{\max})^3}{12n^2}M_{2,i,j}(\alpha),
+\end{align*}
+where
+\begin{align*}
+    M_{2,i,j}(\alpha)
+    &=\frac{1}{\sqrt{2\pi}h_i^{\alpha}h_j^{1-\alpha}}
+    \Bigg[
+    (X_{\max}-X_{\min}+Lh_{\max})^2
+    \left(\frac{\alpha}{h_i^2}+\frac{1-\alpha}{h_j^2}\right)^2\\
+    &\qquad
+    +\alpha\left(
+    \frac{1}{h_i^2}
+    +\frac{(X_{\max}-X_{\min})^2}{4h_i^4}
+    \right)\\
+    &\qquad
+    +(1-\alpha)\left(
+    \frac{1}{h_j^2}
+    +\frac{(X_{\max}-X_{\min})^2}{4h_j^4}
+    \right)
+    \Bigg].
 \end{align*}
 
 \todo[inline]{Explain how error depends on $\alpha$, $X_{\max}-X_{\min}$ and the bandwidths $h_i$}
-
-\todo[inline]{Since upper bound is random because of $X_{\max}-X_{\min}$ maybe establish probabilistic upper bound?}
 
 \subsection*{Bandwidth grid}
 
@@ -338,6 +359,17 @@ for some $0<\lambda_{\min,n}<\lambda_{\max,n}$ and $N_n\ge 2$. Furthermore, defi
 \todo[inline]{How to choose $\lambda_{\min,n}$ and $\lambda_{\max,n}$?}
 
 \todo[inline]{grid must scale with $n$? Explain why}
+
+\subsection*{Further considerations}
+
+We want to eliminate the centrality of each scale $i$ coming purely from its location on the grid. To this end we use the so called Toeplitz projection:
+\begin{align*}
+    S^{(0)}=(S^{(0)})_{ij},\quad S^{(0)}_{ij}=\overline{S}_{|i-j|},\quad\overline{S}_d=\frac{1}{N-d}\sum_{i=1}^{N-d}S_{i,i+d}
+\end{align*}
+Let $v^{(0)}$ be the Perron vector of $S^{(0)}$. Then $v^{(0)}_i$ is a centrality measure of the scale $i$ coming purely from the position in the grid. We define $s_i=v_i/v^{(0)}_i$ which is the null corrected scale centrality. Writing $\log{s_i}=\log{v_i}-\log{v^{(0)}_i}$, we can interpret $\log{v^{(0)}_i}$ as spectral grid penalty. This idea is closely analogous to normalization against a null model.
+
+
+\newpage
 
 \section{Numerical Experiments}
 

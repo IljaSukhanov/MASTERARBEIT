@@ -1,12 +1,8 @@
-\chapter{Application to ARMA processes}
+\chapter{Geometric order selection for autoregressive processes}
 
-\todo[inline]{new title}
-
-The original goal of this chapter was to apply the spectral scale selection developed in~[] to recover the order $p$ of autoregressive time series. Even though the scale selection principle is primarily developed for applications in TDA, the hope was to use the well known sliding window embedding as a bridge between TDA and time series analysis. In the process of studying this problem, an alternative convex-geometric direction emerged, while the TDA approach turned out to be unfruitful. This chapter presents a new AR order selection method using ideas from convex geometry.
+The original goal of this chapter was to apply the spectral scale selection developed in~\cite{Baralic2026} to recover the order $p$ of autoregressive time series. Even though the scale selection principle is primarily developed for applications in TDA, the hope was to use the well known sliding window embedding as a bridge between TDA and time series analysis. In the process of studying this problem, an alternative convex-geometric direction emerged, while the TDA approach turned out to be unfruitful. This chapter presents a new AR order selection method using ideas from convex geometry.
 
 In the first section, we give an overview of the theory of time series needed for our purposes. In particular, we briefly review classical order selection and AR coefficient estimation. Next we introduce the embedding of time series as point clouds in $\mathbb{R}^k$, where Takens' theorem will play an important role. We show consistency for different kinds of convex-geometric functionals that can recover the correct AR order $p$. A discussion of different kinds of innovation distributions is given. Finally, we present our numerical results and interpret them.
-
-\todo[inline]{Prove consistency of geometrically selected order $k^{\star}$ to the true order $p$}
 
 \section{Preliminaries on time series}
 
@@ -25,21 +21,6 @@ We consider a family of random variables $(Z_t)_{t\in\mathbb{Z}}$ that has the f
 \end{subequations}
 
 Later, we will drop the finite variance assumption~\eqref{eq:white-noise-variance} and replace the uncorrelated assumption~\eqref{eq:white-noise-uncorrelated} with independence.
-
-For the innovations $Z_t$, we will consider the following distributions:
-\begin{itemize}
-    \item Uniform: $Z_t\sim\mathcal{U}[-a,a]$ for some $a>0$ (variance: $\operatorname{Var}[Z_t]=a^2/3$)
-    \item Normal: $Z_t\sim\mathcal{N}(0,\sigma^2)$
-    \item Student-t: $Z_t\sim t_{\nu}$ for some degrees of freedom $\nu>0$ (the variance does not exist for $\nu\le2$)
-\end{itemize}
-
-The last distribution is part of a more general kind of distributions that fulfills
-\begin{align*}
-    \mathbb{P}(|Z|>x)=x^{-\alpha}L(x)
-\end{align*}
-for some $\alpha\in(0,2)$ and a slowly varying function $L$. 
-
-\todo[inline]{establish hierarchy: alpha stable, slowly varying property, heavy tails}
 
 \begin{Def}
     Let $(Z_t)_{t\in\mathbb{Z}}$ be a family of random variables satisfying the assumptions~\eqref{eq:white-noise-assumptions}. A process $(X_t)$ is an ARMA($p$, $q$) process if
@@ -60,16 +41,6 @@ It is well known that there exists a stationary process $(X_t)_{t\in\mathbb{Z}}$
 \todo[inline]{Discuss automatic coefficient selection}
 
 For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in a theoretically grounded way. Jones~\cite{jones_randomly_1987} gives one such approach.
-
-\begin{Def}
-    A process $\{X_t\}_{t\in\mathbb{Z}}$ is called strictly stationary if
-    \begin{align*}
-        (X_{t_1},\dots,X_{t_n})\stackrel{d}{=}(X_{t_1+\tau},\dots,X_{t_n+\tau})
-    \end{align*}
-    for all $n\in\mathbb{N}$, $t_1,\dots,t_n\in\mathbb{Z}$, $\tau\in\mathbb{Z}$. It is called ergodic if it is strictly stationary and for all measurable sets of trajectories $A\subseteq S=\{(x_t)_{t\in\mathbb{Z}}\}$ with $\mu(T^{-1}A)=\mu(A)$ it holds that $\mu(A)\in\{0,1\}$. Here, $T:S\to S$, $(x_t)\mapsto(x_{t+1})$ and $\mu(A)=\mathbb{P}((\dots,X_0,X_1,\dots)\in A)$.
-\end{Def}
-
-\todo[inline]{AR processes are ergodic}
 
 \section{Order selection methods}
 
@@ -101,16 +72,6 @@ for all information criteria $\operatorname{IC}$ whose penalty term sequence $a_
 
 \subsection{PACF cutoff}
 
-\section{Estimation methods}
-
-Once the order has been chosen, the AR coefficients $\phi_1,\dots,\phi_{\hat{p}}$ can be estimated using one of the following classical procedures:
-\begin{itemize}
-    \item Yule-Walker Estimation
-    \item Burg's Algorithm
-    \item The Hannan-Rissanen Algorithm
-    \item Maximum Likelihood Estimation
-\end{itemize}
-
 \section{Embedding of time series}
 
 In order to apply machinery from Topological Data Analysis to time series data, one has to embed the time series into $\mathbb{R}^k$ for some embedding dimension $k\in\mathbb{N}$. The main method for this is the so called sliding-window embedding (see~\cite{perea_sliding_2015}), which we will describe in detail now. Let $X=(X_1,\dots,X_T)$ be one realization of some univariate time series. Then we obtain a point cloud from $X$ by defining:
@@ -126,8 +87,6 @@ In order to apply machinery from Topological Data Analysis to time series data, 
 Here, $k\in\mathbb{N}$ is the dimensionality of the point cloud $\mathcal{P}_{k}$ and $k_{\max}$ a predetermined upper cap, that is, $k\in\{1,\dots,k_{\max}\}$.
 
 \todo[inline]{Give discussion why it does not matter if we consider the past or future $k$ observations for the geometry of the point cloud (forward versus backward embedding)}
-
-\todo[inline]{argue that $Y_t^{(k)}$ is ergodic given that $X_t$ is ergodic}
 
 Takens' Theorem mainly serves as a theoretical justification or motivation for the sliding-window embedding.
 
@@ -148,8 +107,6 @@ Takens' Theorem mainly serves as a theoretical justification or motivation for t
 
 \section{Geometric Approach}
 
-\todo[inline]{anisotropy?}
-
 In this section, we study how the geometry of the point cloud $\mathcal{P}_k\subseteq\mathbb{R}^{k}$ changes with increasing embedding dimension $k$. For simple innovation distributions, like uniform or normal, the point cloud $\mathcal{P}_k$ is characterized by well known convex--geometric objects. The question becomes if we can apply some convex--geometric functional $f$ to these well known objects and detect a transition at $k=p+1$, where $p$ is the AR order of the embedded time series.
 
 In order to be able to talk about the \enquote{geometry of a point cloud} in a rigorous way, we first need to introduce some concepts from probability theory. Let $Y$ be a $d$-dimensional random vector with density $f_Y$. The \textit{support} of $Y$ is given by
@@ -167,12 +124,11 @@ Let $X_t=\sum_{j=0}^{\infty}\psi_j Z_{t-j}$ be the MA($\infty$)-representation o
         X_{t-k+1}
     \end{pmatrix}=\sum_{j=0}^{\infty}g_j^{(k)}Z_{t-j},
 \end{align}
-where $g_j^{(k)}=(\psi_j,\psi_{j-1},\dots,\psi_{j-k+1})^{T}$. We have $\lim\limits_{j\to\infty}\psi_j=0$.
-
-\todo[inline]{Explain/ Prove convergence of $(\psi_j)$ give convergence speed result. Connect to stationarity/ causality, obtain some kind of upper bound for $|\psi_j|$}
+where $g_j^{(k)}=(\psi_j,\psi_{j-1},\dots,\psi_{j-k+1})^{T}$.
 
 \begin{Lem}\label{lem:upper_bound_psi_j}
-    There exist $C>0$ and $\rho\in(0,1)$ such that $|\psi_j|\le C\rho^{j}$.
+    There exist $C>0$ and $\rho\in(0,1)$ such that $|\psi_j|\le C\rho^{j}$. In particular, $\lim\limits_{j\to\infty}\psi_j=0$.
+    \todo[inline]{Prove or cite}
 \end{Lem}
 
 \subsection*{Uniformly distributed innovations}
@@ -186,10 +142,16 @@ We will start exploring the geometry of the sequence of point clouds $\{\mathcal
 \begin{Def}[Hausdorff distance]
     Let $(M,d)$ be a metric space and $X,Y$ two nonempty subsets of $M$. The Hausdorff distance $d_H$ between $X$ and $Y$ is defined by
     \begin{align*}
-        d_H(X,Y)=\sup_{w\in M}|d(w,X)-d(w,Y)|,
+        d_H(X,Y)=\max\left\{\sup_{x\in X}d(x,Y),\sup_{y\in Y}d(X,y)\right\},
     \end{align*}
-    where $d(w,X)=\inf\{d(w,x):x\in X\}$.
+    where $d(x,Y)=\inf\{d(x,y):y\in Y\}$.
 \end{Def}
+
+The following property of the Hausdorff distance will be important below.
+
+\begin{Lem}\label{lem:property_hausdorff_distance}
+    Let $A,B,Z\subseteq M$ with $A\subseteq B$. Then $d_H(B,Z)\le d_H(A,Z)$.
+\end{Lem}
 
 \begin{Def}[Zonotope]
     A zonotope is the Minkowski sum of finitely many line segments. It is said to be generated by $w_1,\dots,w_n\in\mathbb{R}^d$ if it has the form
@@ -287,8 +249,6 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
     The minimizing direction $u^{*}$ at $k=p+1$ serves as an estimate for the AR coefficients. Namely, $\hat{\phi}=-\|u^{*}\|_2u^{*}[2:p+1]$.
 \end{Rem}
 
-\todo[inline]{At $k=p+1$ it is the distance between the two bordering hyperplanes}
-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/comparison_P2_P3.png}
@@ -304,7 +264,7 @@ An empirical version of the width $w_k(u)$ is obtained by inserting $\operatorna
 \end{align*}
 and $\hat{m}_k=\min\{\hat{w}_k(u):u\in\mathbb{S}^{k-1}\}$.
 
-The next two results establish the consistency of the empirical minimum width, that is, $\hat{m}_k\to m_k$ for $T\to\infty$.
+The next results establish the consistency of the empirical minimum width, that is, $\hat{m}_k\to m_k$ for $T\to\infty$.
 
 \begin{Lem}\label{lem:hausdorff_convergence}
     Let $\{Y_t\}_{t\ge1}$ be a $\mathbb{R}^{k}$ valued process and $\mathcal{P}_T=\{Y_1,\dots,Y_T\}$. Let $\mathcal{Z}\subseteq\mathbb{R}^{k}$ be nonempty, compact and convex. Assume
@@ -318,53 +278,39 @@ The next two results establish the consistency of the empirical minimum width, t
 \end{Lem}
 
 \begin{proof}
-    Because $\{Y_t:t\ge1\}$ is dense in $\mathcal{Z}$, it holds $\mathcal{Z}\subseteq\bigcup_tB(Y_t,\epsilon)$ for every $\epsilon>0$. Because $\mathcal{Z}$ is compact, there exists a finite subcover $\mathcal{Z}\subseteq\bigcup_{j=1}^{m(\epsilon)}B(Y_{t_j(\epsilon)},\epsilon)$. Set $T_{\epsilon}=\max\{t_1(\epsilon),\dots,t_{m(\epsilon)}(\epsilon)\}$. For every $T\ge T_{\epsilon}$ now holds $\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$. Let $x\in\mathbb{R}^{k}$. Because $\mathcal{Z}$ is compact, there exists $z_x\in\mathcal{Z}$ such that $\|x-z_x\|=d(x,\mathcal{Z})$. Also, because $\mathcal{P}_T$ is dense in $\mathcal{Z}$, there exists $p\in\mathcal{P}_T$ with $\|z_x-p\|\le\epsilon$. Putting this together
-    \begin{align*}
-        d(x,\mathcal{P}_T)\le\|x-p\|\le\|x-z_x\|+\|z_x-p\|\le d(x,\mathcal{Z})+\epsilon
-    \end{align*}
-    Thus,
-    \begin{align*}
-        0\le d(x,\mathcal{P}_T)-d(x,\mathcal{Z})\le\epsilon
-    \end{align*}
-    Therefore,
-    \begin{align*}
-        d_H(\mathcal{P}_T,\mathcal{Z})=\sup_{x\in\mathbb{R}^{k}}|d(x,\mathcal{P}_T)-d(x,\mathcal{Z})|\le\epsilon
-    \end{align*}
-    Finally, since $\mathcal{P}_T\subseteq\operatorname{conv}(\mathcal{P}_T)\subseteq\mathcal{Z}$ by properties of Hausdorff distance
-    \begin{align*}
-        0\le d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})\le d_H(\mathcal{P}_T,\mathcal{Z})\to0
-    \end{align*}
+    Let $\epsilon>0$ be arbitrary. Because $\{Y_t:t\ge1\}$ is dense in $\mathcal{Z}$, it holds $\mathcal{Z}\subseteq\bigcup_tB(Y_t,\epsilon)$ and since $\mathcal{Z}$ is compact, there exists a finite sub-cover $\mathcal{Z}\subseteq\bigcup_{j=1}^{m(\epsilon)}B(Y_{t_j(\epsilon)},\epsilon)$. Set $T_{\epsilon}=\max\{t_1(\epsilon),\dots,t_{m(\epsilon)}(\epsilon)\}$. Now, let $z\in\mathcal{Z}$ be arbitrary. It follows that $d(z,\mathcal{P}_T)=\inf\{\|z-Y_t\|:t=1,\dots,T\}\le\epsilon$ for all $T\ge T_{\epsilon}$. Thus $\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$. Since $\mathcal{P}_T\subseteq\mathcal{Z}$, it also holds that $\sup_{y\in\mathcal{P}_T}d(y,\mathcal{Z})=0$. By definition of the Hausdorff distance we obtain $d_H(\mathcal{P}_T,\mathcal{Z})=\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$ and therefore $d_H(\mathcal{P}_T,\mathcal{Z})\to0$ for $T\to\infty$. By Lemma~\ref{lem:property_hausdorff_distance} we also get $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})\to0$ for $T\to\infty$.   
 \end{proof}
 
-\begin{Lem}
+\begin{Lem}\label{lem:ergodic_implies_dense}
     Let $\{Y_t\}$ be stationary and ergodic. Furthermore let $\mathcal{Z}=\operatorname{supp}(Y_t)$ be compact and convex. Then $\{Y_t:t\ge 1\}$ is dense in $\mathcal{Z}$ almost surely.
 \end{Lem}
 
 \begin{proof}
-    Consider the family $\mathcal{B}$ of open balls with rational centers and radii. This family is countable and covers $\mathbb{R}^{k}$. Define $\mathcal{B}_{\mathcal{Z}}=\{B\in\mathcal{B}:B\cap\mathcal{Z}\ne\emptyset\}$. Let $B\in\mathcal{B}_{\mathcal{Z}}$ and choose some $z\in B$. Since $B$ is an open ball, there exists $\delta>0$ with $B(z,\delta)\subseteq B$. Now since $z\in\mathcal{Z}=\operatorname{supp}(\mu)$, we have $\mu(B)\ge\mu(B(z,\delta))>0$. By Birkhoff's ergodic theorem
+    It is well known that the family $\mathcal{B}$ of open balls with rational centers $q\in\mathbb{Q}^{k}$ and radii $r\in\mathbb{Q}_{>0}$ forms a countable base for $\mathbb{R}^{k}$. That is, $\mathcal{B}$ is countable and for any open set $U\subseteq\mathbb{R}^k$ and every $x\in U$ there exists $B\in\mathcal{B}$ such that $x\in B\subseteq U$. Define $\mathcal{B}_{\mathcal{Z}}=\{B\in\mathcal{B}:B\cap\mathcal{Z}\ne\emptyset\}$. Let $B\in\mathcal{B}_{\mathcal{Z}}$ and choose some $z\in B$. Because $B$ is open, there exists $\delta>0$ with $B(z,\delta)\subseteq B$. Since $z\in\mathcal{Z}=\operatorname{supp}(Y_t)$, by the definition of the support, we have $\mathbb{P}(Y_t\in B)\ge\mathbb{P}(Y_t\in B(z,\delta))>0$. By Birkhoff's ergodic theorem
     \begin{align*}
-        \frac{1}{T}\sum_{t=1}^{T}1\{Y_t\in B\}\to\mu(B)>0
+        \frac{1}{T}\sum_{t=1}^{T}1\{Y_t\in B\}\stackrel{T\to\infty}{\to}\mathbb{P}(Y_t\in B)>0
     \end{align*}
-    This implies that $Y_t\in B$ for infinitely many $t\ge1$ almost surely.
+    This implies that $Y_t\in B$ for infinitely many $t\ge 1$ almost surely. In particular, there exists $t\ge1$ such that $Y_t\in B$. Let $z\in\mathcal{Z}$ and $\epsilon>0$ be arbitrary. There exists $B\in\mathcal{B}$ such that $z\in B\subseteq B(z,\epsilon)$. From above we also know that there exists $t\ge1$ such that $Y_t\in B$. Thus $\|Y_t-z\|\le\epsilon$
 \end{proof}
 
-\begin{Rem}
-    A causal AR process has the representation $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Such processes are stationary and ergodic. Furthermore, the embedded process $t\mapsto Y_t^{(k)}$ inherits the stationarity and ergodicity.
+\begin{Rem}\label{rem:ar_ergodic}
+    A causal AR process has the representation $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Such processes are stationary and ergodic given that the innovations $\{Z_t\}$ are stationary and ergodic. Furthermore, the embedded process $t\mapsto Y_t^{(k)}$ inherits the stationarity and ergodicity.
 \end{Rem}
 
 \begin{Cor}
-    It holds $\hat{m}_k\to m_k$ for $T\to\infty$
+    We have $\hat{m}_k\to m_k$ for $T\to\infty$.
 \end{Cor}
 
 \begin{proof}
-    By Lemma~\ref{lem:hausdorff_distance_between_convex_bodies} and Lemma~\ref{lem:hausdorff_convergence}
-    \begin{align*}
-        \sup_{u\in S^{k-1}}|\hat{w}_k(u)-w_k(u)|\le2d_H(\operatorname{conv}(\mathcal{P}_k),\mathcal{Z}^{(k)})\to 0
-    \end{align*}
-    It also holds that
+    For once we have
     \begin{align*}
         |\hat{m}_k-m_k|=|\min_u\hat{w}_k(u)-\min_uw_k(u)|\le\sup_u|\hat{w}_k(u)-w_k(u)|
     \end{align*}
+    By Lemma~\ref{lem:hausdorff_distance_between_convex_bodies} we have
+    \begin{align*}
+        \sup_{u\in S^{k-1}}|\hat{w}_k(u)-w_k(u)|\le2d_H(\operatorname{conv}(\mathcal{P}_k),\mathcal{Z}^{(k)})
+    \end{align*}
+    Finally applying Lemmas~\ref{lem:hausdorff_convergence} and~\ref{lem:ergodic_implies_dense} and Remark~\ref{rem:ar_ergodic} proves the statement.
 \end{proof}
 
 The idea now is to minimize $\hat{w}_k(u)$ over all $u\in\mathbb{S}^{k-1}$ and examine the relation $k\mapsto \hat{m}_k$. The hope is that the theoretically established elbow point that occurs at $k=p+1$ will also be detectable at the empirical level.
@@ -424,9 +370,9 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
 
 \todo[inline]{Give result on convergence guaranty}
 
-\todo[inline]{discuss different optimization algorithms}
-
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
+
+\todo[inline]{Prove consistency of geometrically selected order $k^{\star}$ to the true order $p$}
 
 \subsection*{Numerical Results}
 
