@@ -6,24 +6,10 @@ In the first section, we give an overview of the theory of time series needed fo
 
 \section{Preliminaries on time series}
 
-For information on autoregressive moving-average (ARMA) models, see Brockwell et al~\cite[Chapter~3]{brockwell2016introduction}. 
-
-We consider a family of random variables $(Z_t)_{t\in\mathbb{Z}}$ that has the following properties:
-\begin{subequations}\label{eq:white-noise-assumptions}
-    \begin{align}
-        \mathbb{E}[Z_t] &= 0,
-        && t\in\mathbb{Z}, \label{eq:white-noise-centered}\\
-        \operatorname{Var}[Z_t] &= \sigma^2\in(0,+\infty),
-        && t\in\mathbb{Z}, \label{eq:white-noise-variance}\\
-        \operatorname{Cov}[Z_t,Z_s] &= 0,
-        && t,s\in\mathbb{Z},\ t\neq s. \label{eq:white-noise-uncorrelated}
-    \end{align}
-\end{subequations}
-
-Later, we will drop the finite variance assumption~\eqref{eq:white-noise-variance} and replace the uncorrelated assumption~\eqref{eq:white-noise-uncorrelated} with independence.
+For information on autoregressive moving-average (ARMA) models, see Brockwell et al~\cite[Chapter~3]{brockwell2016introduction}.
 
 \begin{Def}
-    Let $(Z_t)_{t\in\mathbb{Z}}$ be a family of random variables satisfying the assumptions~\eqref{eq:white-noise-assumptions}. A process $(X_t)$ is an ARMA($p$, $q$) process if
+    Let $(Z_t)_{t\in\mathbb{Z}}$ be a family of independent and identically distributed random variables. A process $(X_t)$ is an ARMA($p$, $q$) process if
     \begin{align}\label{eq:def_arma}
         X_t=\sum_{i=1}^{p}\phi_iX_{t-i}+Z_t+\sum_{j=1}^{q}\theta_jZ_{t-j}, && t\in\mathbb{Z},
     \end{align}
@@ -45,8 +31,6 @@ For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in
 \section{Order selection methods}
 
 \todo[inline]{Are there any guarantees for the quality of such selectors?}
-
-\todo[inline]{order selection for heavy tailed innovations? Look for papers}
 
 There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process. These methods can be classified as information criteria methods, ...
 
@@ -76,17 +60,18 @@ for all information criteria $\operatorname{IC}$ whose penalty term sequence $a_
 
 In order to apply machinery from Topological Data Analysis to time series data, one has to embed the time series into $\mathbb{R}^k$ for some embedding dimension $k\in\mathbb{N}$. The main method for this is the so called sliding-window embedding (see~\cite{perea_sliding_2015}), which we will describe in detail now. Let $X=(X_1,\dots,X_T)$ be one realization of some univariate time series. Then we obtain a point cloud from $X$ by defining:
 \begin{align*}
-    Y_t^{(k)}&=\begin{pmatrix}
+    Y_t^{(k)}=\begin{pmatrix}
         X_{t}\\
-        X_{t+1}\\
+        X_{t-1}\\
         \vdots\\
-        X_{t+k-1}
-    \end{pmatrix}\in\mathbb{R}^k\\ 
-    \mathcal{P}_{k}&=\left\{Y_t^{(k)}:t=1,\dots,T-k_{\max}+1\right\}\subseteq\mathbb{R}^k
+        X_{t-k+1}
+    \end{pmatrix}\in\mathbb{R}^k,\quad\mathcal{P}_{k}=\left\{Y_t^{(k)}:t=K,\dots,T\right\}\subseteq\mathbb{R}^k
 \end{align*}
-Here, $k\in\mathbb{N}$ is the dimensionality of the point cloud $\mathcal{P}_{k}$ and $k_{\max}$ a predetermined upper cap, that is, $k\in\{1,\dots,k_{\max}\}$.
+Here, $k\in\mathbb{N}$ is the dimensionality of the point cloud $\mathcal{P}_{k}$ and $K$ a predetermined upper cap, that is, $k\in\{1,\dots,K\}$.
 
-\todo[inline]{Give discussion why it does not matter if we consider the past or future $k$ observations for the geometry of the point cloud (forward versus backward embedding)}
+We choose the \enquote{backward} embedding $Y_t^{(k)}$ over the \enquote{forward} embedding $\tilde{Y}_t^{(k)}=(X_t,X_{t+1},\dots,X_{t+k-1})^{T}$ for notational convenience throughout this chapter. Geometrically, the resulting point clouds are equivalent up to an orthogonal transformation and a time index shift, that is, $\tilde{Y}_t^{(k)}=R_kY_{t+k-1}^{(k)}$, where $R_k=\operatorname{adiag}(1,\dots,1)$.
+
+\todo[inline]{connect Takens' Theorem better, add interpretation}
 
 Takens' Theorem mainly serves as a theoretical justification or motivation for the sliding-window embedding.
 
@@ -102,8 +87,6 @@ Takens' Theorem mainly serves as a theoretical justification or motivation for t
     \end{align*}
     is an embedding, given that the pair $(\phi,y)$ is generic.
 \end{Thm}
-
-\todo[inline]{connect Takens' Theorem better, add interpretation}
 
 \section{Geometric Approach}
 
@@ -168,7 +151,7 @@ Using Equation~\eqref{eq:sliding_window_point_representation} we see that the su
 
 In fact, using Lemma~\ref{lem:upper_bound_psi_j}, we get
 \begin{align*}
-    d_H(\mathcal{Z}^{(k)}_n,\mathcal{Z}^{(k)})\le\sum_{j=n+1}^{\infty}\|g_j^{(k)}\|\le C\sqrt{\frac{1-\rho^{2k}}{1-\rho^2}}\frac{1}{1-\rho}\frac{1}{\rho^{k-2}}\rho^{n}
+    d_H(\mathcal{Z}^{(k)}_n,\mathcal{Z}^{(k)})\le\sum_{j=n+1}^{\infty}\|g_j^{(k)}\|\le C\frac{\sqrt{k}}{1-\rho}\frac{1}{\rho^{k-2}}\rho^{n}
 \end{align*}
 
 Thus $d_H(\mathcal{Z}^{(k)}_n,\mathcal{Z}^{(k)})=\mathcal{O}(\rho^{n})$. That is, $d_H(\mathcal{Z}^{(k)}_n,\mathcal{Z}^{(k)})\to0$ is exponentially fast.
@@ -242,12 +225,14 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
 \end{proof}
 
 \begin{Rem}\label{rem:young_convolution_equality}
-    We used a fact about when Young's convolution inequality becomes an equality. We quickly state a proof here.
+    We used a fact about when Young's convolution inequality becomes an equality. It holds that $\|q_{\phi}\ast a\|_2=\|q_{\phi}\|_2\|a\|_2$ iff $a=c\delta_r$ for some $c\ne0$ and $r\in\mathbb{Z}$.
 \end{Rem}
 
 \begin{Rem}[about Proposition~\ref{prop:minimum_width}]
     The minimizing direction $u^{*}$ at $k=p+1$ serves as an estimate for the AR coefficients. Namely, $\hat{\phi}=-\|u^{*}\|_2u^{*}[2:p+1]$.
 \end{Rem}
+
+\todo[inline]{redo Figure}
 
 \begin{figure}[ht]
     \centering
@@ -258,13 +243,13 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
 
 An empirical version of the width $w_k(u)$ is obtained by inserting $\operatorname{conv}(\mathcal{P}_k)$ in place of $\mathcal{Z}^{(k)}$. Consequently, we obtain
 \begin{align*}
-    \hat{w}_k(u)&=h_{\operatorname{conv}(\mathcal{P}_k)}(u)+h_{\operatorname{conv}(\mathcal{P}_k)}(-u)\\&
+    \hat{w}_{k,T}(u)&=h_{\operatorname{conv}(\mathcal{P}_k)}(u)+h_{\operatorname{conv}(\mathcal{P}_k)}(-u)\\&
     =\max_{x\in\mathcal{P}_k}\langle x,u\rangle-\min_{x\in\mathcal{P}_k}\langle x,u\rangle\\&
     =\max_t\langle Y_t^{(k)},u\rangle-\min_t\langle Y_t^{(k)},u\rangle
 \end{align*}
-and $\hat{m}_k=\min\{\hat{w}_k(u):u\in\mathbb{S}^{k-1}\}$.
+and $\hat{m}_{k,T}=\min\{\hat{w}_k(u):u\in\mathbb{S}^{k-1}\}$.
 
-The next results establish the consistency of the empirical minimum width, that is, $\hat{m}_k\to m_k$ for $T\to\infty$.
+The next results establish the consistency of the empirical minimum width, that is, $\hat{m}_{k.T}\to m_k$ for $T\to\infty$.
 
 \begin{Lem}\label{lem:hausdorff_convergence}
     Let $\{Y_t\}_{t\ge1}$ be a $\mathbb{R}^{k}$ valued process and $\mathcal{P}_T=\{Y_1,\dots,Y_T\}$. Let $\mathcal{Z}\subseteq\mathbb{R}^{k}$ be nonempty, compact and convex. Assume
@@ -298,24 +283,24 @@ The next results establish the consistency of the empirical minimum width, that 
 \end{Rem}
 
 \begin{Cor}
-    We have $\hat{m}_k\to m_k$ for $T\to\infty$.
+    We have $\hat{m}_{k,T}\to m_k$ for $T\to\infty$.
 \end{Cor}
 
 \begin{proof}
     For once we have
     \begin{align*}
-        |\hat{m}_k-m_k|=|\min_u\hat{w}_k(u)-\min_uw_k(u)|\le\sup_u|\hat{w}_k(u)-w_k(u)|
+        |\hat{m}_{k,T}-m_k|=|\min_u\hat{w}_{k,T}(u)-\min_uw_k(u)|\le\sup_u|\hat{w}_{k,T}(u)-w_k(u)|
     \end{align*}
     By Lemma~\ref{lem:hausdorff_distance_between_convex_bodies} we have
     \begin{align*}
-        \sup_{u\in S^{k-1}}|\hat{w}_k(u)-w_k(u)|\le2d_H(\operatorname{conv}(\mathcal{P}_k),\mathcal{Z}^{(k)})
+        \sup_{u\in S^{k-1}}|\hat{w}_{k,T}(u)-w_k(u)|\le2d_H(\operatorname{conv}(\mathcal{P}_k),\mathcal{Z}^{(k)})
     \end{align*}
-    Finally applying Lemmas~\ref{lem:hausdorff_convergence} and~\ref{lem:ergodic_implies_dense} and Remark~\ref{rem:ar_ergodic} proves the statement.
+    Finally, applying Lemmas~\ref{lem:hausdorff_convergence} and~\ref{lem:ergodic_implies_dense} and Remark~\ref{rem:ar_ergodic} proves the statement.
 \end{proof}
 
-The idea now is to minimize $\hat{w}_k(u)$ over all $u\in\mathbb{S}^{k-1}$ and examine the relation $k\mapsto \hat{m}_k$. The hope is that the theoretically established elbow point that occurs at $k=p+1$ will also be detectable at the empirical level.
+The idea now is to minimize $\hat{w}_{k,T}(u)$ over all $u\in\mathbb{S}^{k-1}$ and examine the relation $k\mapsto \hat{m}_{k,T}$. The hope is that the theoretically established elbow point that occurs at $k=p+1$ will also be detectable at the empirical level.
 
-Before discussing the minimization of $\hat{w}_k$ we collect some properties of this function.
+Before discussing the minimization of $\hat{w}_k=\hat{w}_{k,T}$ we collect some properties of this function.
 
 \begin{Prop}\label{prop:properties_empirical_width}
     \begin{enumerate}
@@ -378,9 +363,10 @@ Next, we show that our setting fulfills the assumptions stated in~\cite[Theorem 
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
-One option is the vanishing complexity penalty 
+One option is the tail-flatness selector
 \begin{align*}
-    \hat{k}_T=\arg\min_{1\le k\le K}\{\hat{m}_{k,T}+\lambda_Tk\}
+    \hat{D}_{k,T}&=\max_{k\le j\le K}\hat{m}_{j,T}-\min_{k\le j\le K}\hat{m}_{j,T}\\
+    \hat{k}_T&=\min\{k\in\{1,\dots,K\},\hat{D}_{k,T}\le a_T\}
 \end{align*}
 
 Under certain conditions on the penalty term sequence $\lambda_T$ this selector is consistent.

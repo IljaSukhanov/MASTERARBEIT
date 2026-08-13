@@ -1,49 +1,6 @@
-\chapter{Introduction and Methodology}
+\chapter{Introduction and Methodology}\label{chap:intro_meth}
 
 How can one choose a meaningful scale from a multiscale family of statistical objects?
-
-\section{Basics about Topology}
-
-\begin{itemize}
-    \item definition of continuous function in topological space 
-    \item contractible sets, LS-category, examples, homotopic functions
-    \item Closure, Star, Link
-    \item topolgical invariants (homotopy invariance)
-\end{itemize}
-
-\begin{Def}[Topological Space]
-    Let $X$ be any set. Let $\mathcal{T}\subseteq\mathcal{P}(X)$ be a collection of subsets of $X$ such that
-    \begin{itemize}
-        \item $\emptyset\in\mathcal{T}$ and $X\in\mathcal{T}$
-        \item $\bigcup_{i\in I}U_i\in\mathcal{T}$ for all $(U_i)_{i\in I}\subseteq\mathcal{T}$
-        \item $U_1\cap U_2\in\mathcal{T}$ for all $U_1,U_2\in\mathcal{T}$
-    \end{itemize}
-    Then the pair $(X,\mathcal{T})$ is called a topological space.
-\end{Def}
-
-\begin{Def}[contractible set]
-    Let $(X,\mathcal{T})$ be a topological space. A set $U\in\mathcal{T}$ is contractible in $X$ if there exists a (continuous) map $H:U\times[0,1]\to X$ and a point $x_0\in X$ such that $H(u,0)=u$ and $H(u,1)=x_0$ for all $u\in U$.
-\end{Def}
-
-\begin{Def}[Lusternik-Schnirelmann category]
-    Let $(X,\mathcal{T})$ be a topological space. The Lusternik-Schnirelman category (LS-category) of $X$ is the minimum number of open contractible sets $U_i$ that cover $X$. Formally speaking
-    \begin{align*}
-        \text{cat}(X)=\min\{n\in\mathbb{N}:\exists U_1,\dots,U_n\in\mathcal{T},U_j\ \text{is contractible in}\ X\}
-    \end{align*}
-\end{Def}
-
-The LS-category of a topological space can be interpreted as a measure for its complexity, i.e. a topological space has a more complex structure if we need more open and contractible sets to cover it.
-
-\begin{Prop}
-    Let $X_1,\mathcal{T}_1$ and $(X_2,\mathcal{T}_2)$ be topological spaces. Then the following properties hold:
-    \begin{enumerate}
-        \item[1.] Subadditivity: $\text{cat}(X_1\cup X_2)\le\text{cat}(X_1)+\text{cat}(X_2)$
-        \item[2.] Simple upper bound
-        \item[3.] Simple lower bound?
-        \item[4.] Homotopy invariance
-        \item[5.] $\text{cat}(X)=1\iff X$ is contractible
-    \end{enumerate}
-\end{Prop}
 
 
 
@@ -100,12 +57,6 @@ There exist different operations $\oplus:\mathcal{K}(V)\times\mathcal{K}(V)\to\m
 \todo[inline]{Give general discussion on operations $\oplus\in\{\cup,\dots\}$ with examples}
 
 \section{Topological Data Analysis}
-
-\begin{itemize}
-    \item persistance diagrams
-    \item betti numbers
-    \item homology
-\end{itemize}
 
 \todo[inline]{Cite papers about TDA intro}
 
@@ -294,12 +245,10 @@ In this section we present and discuss function defined on simplicial complexes 
 \textbf{Betti numbers.} Informally speaking, the $k$-th Betti number $\beta_k(K)$ of a simplicial complex $K$ represents the number of $k$-dimensional holes. In particular, $\beta_0(K)$ is the number of connected components of $K$. We could also consider the total Betti number (the sum of all Betti numbers): $\sum_{k}\beta_k(K)$.
 
 \textbf{Euler characteristic.} The Euler characteristic is given by
-\todo{motivation, proof}
+\todo[inline]{motivation, proof}
 \begin{align*}
     \chi(K)=\sum_{k=0}^{d}(-1)^{k}f_k(K)=\sum_{k=0}^{d}(-1)^{k}\beta_k(K)
 \end{align*}
-
-\textbf{Lusternik-Schnirelmann Category.} 
 
 \textbf{Vertex cover number.} The vertex cover number is defined as
 \begin{align*}
