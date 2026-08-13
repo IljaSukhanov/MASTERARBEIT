@@ -52,7 +52,7 @@ There are several established methods for choosing an order $\hat{p}$ given a re
 
 We will briefly review them below.
 
-\subsection{Information criteria}
+\subsection*{Information criteria}
 
 Let $f^{(k)}_{\theta_k}$ be the joint density of $X$ under the candidate model $\mathcal{M}_k$. Information criteria have the form
 \begin{align*}
@@ -70,7 +70,7 @@ Let $k_0$ be the true AR order and $\hat{k}=\arg\min\{\operatorname{IC}(k):k=0,1
 \end{align*}
 for all information criteria $\operatorname{IC}$ whose penalty term sequence $a_T$ satisfies $a_T\to\infty$ and $T^{-1}a_T\to0$.
 
-\subsection{PACF cutoff}
+\subsection*{PACF cutoff}
 
 \section{Embedding of time series}
 
@@ -370,7 +370,24 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
 
 \todo[inline]{Give result on convergence guaranty}
 
+Next, we show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the convergence of Algorithm~\ref{alg:projected_gradient_descent}. But first, we state this result in our notation.
+
+\begin{Thm}[{\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel}}]
+    Write something here
+\end{Thm}
+
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
+
+One option is the vanishing complexity penalty 
+\begin{align*}
+    \hat{k}_T=\arg\min_{1\le k\le K}\{\hat{m}_{k,T}+\lambda_Tk\}
+\end{align*}
+
+Under certain conditions on the penalty term sequence $\lambda_T$ this selector is consistent.
+
+\begin{Lem}
+    Define $e_T=\max_{1\le k\le K}|\hat{m}_{k,T}-m_k|$. If $\lambda_T\to0$ and $e_T=o(\lambda_T)$, then $\hat{k}_T\to p+1$ for $T\to\infty$.
+\end{Lem}
 
 \todo[inline]{Prove consistency of geometrically selected order $k^{\star}$ to the true order $p$}
 
@@ -380,6 +397,8 @@ The last step is to employ an elbow point selector with the property that it wou
 \todo[inline]{When does it break down or becomes computationally to heavy?}
 \todo[inline]{compare $k\mapsto\min w_k(u)$ and $k\mapsto\min\hat{w}_k(u)$ and also $k\mapsto\min w_k(\hat{u})$}
 \todo[inline]{How large does $T$ have to be?}
+
+\newpage
 
 \subsection*{Normally distributed innovations}
 
