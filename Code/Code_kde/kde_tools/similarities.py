@@ -94,126 +94,81 @@ def select_spectral_bandwidth(
     }
 
 
+# input: grid a=x_1<...<x_m=b, density_values: y_{jk}=\hat{f}_{h_j}(x_k)
+# computes quadrature integrals of the chosen symmetric divergences
 def quadrature_similarity_matrices(
         density_values: np.ndarray,
         x_grid: np.ndarray,
         similarity_name: str,
-        gamma: float | str = 1.0,
+        gamma: float = 1.0,
         eps: float = 1e-300,
-) -> dict[str, np.ndarray | float]:
+) -> np.ndarray:
     if similarity_name not in SIMILARITY_NAMES:
         raise ValueError(
             f"Unknown similarity {similarity_name!r}. Choose from {SIMILARITY_NAMES}."
         )
-    values = np.maximum(np.asarray(density_values, dtype=float), 0.0)
-
-
-###CHANGED
-def quadrature_similarity_matrices(
-    density_values: np.ndarray,
-    x_grid: np.ndarray,
-    similarity_name: str,
-    gamma: float | str = 1.0,
-    eps: float = 1e-300,
-) -> dict[str, np.ndarray | float]:
-    """Compute one requested KDE similarity matrix."""
-    if similarity_name not in SIMILARITY_NAMES:
-        raise ValueError(
-            f"Unknown similarity {similarity_name!r}. Choose from {SIMILARITY_NAMES}."
-        )
-
     values = np.maximum(np.asarray(density_values, dtype=float), 0.0)
     x_grid = np.asarray(x_grid, dtype=float)
 
-    diagnostics: dict[str, np.ndarray | float] = {}
     if similarity_name == "tv_overlap":
-        matrix = trapezoidal_integral(
-            np.minimum(values[:, None, :], values[None, :, :]), x_grid, axis=2
-        )
+        matrix = trapezoidal_integral(values=np.minimum(values[:, None, :], values[None, :, :]), x_grid=x_grid, axis=2)
     elif similarity_name == "hellinger_affinity":
-        matrix = trapezoidal_integral(
-            np.sqrt(values[:, None, :] * values[None, :, :]), x_grid, axis=2
-        )
+        matrix = trapezoidal_integral(values=np.sqrt(values[:, None, :] * values[None, :, :]), x_grid=x_grid, axis=2)
     elif similarity_name == "exponential_l2_similarity":
-        gram = trapezoidal_integral(
-            values[:, None, :] * values[None, :, :], x_grid, axis=2
-        )
-        l2_squared = squared_l2_distance_from_gram(gram)
-        gamma_value = 1.0 if gamma == "auto" else float(gamma)
-        matrix = np.exp(-gamma_value * l2_squared)
-        diagnostics = {"l2_squared": l2_squared, "gamma": gamma_value}
+        gram = trapezoidal_integral(values=values[:, None, :] * values[None, :, :], x_grid=x_grid, axis=2)
+        l2_squared = squared_l2_distance_from_gram(gram=gram)
+        d2 = 0.5 * l2_squared
+        matrix = np.exp(-gamma * d2)
     else:
-        entropy = -trapezoidal_integral(
-            values * np.log(np.maximum(values, eps)), x_grid, axis=1
-        )
+        entropy = - trapezoidal_integral(values=values*np.log(np.maximum(values, eps)), x_grid=x_grid, axis=1)
         mixtures = 0.5 * (values[:, None, :] + values[None, :, :])
-        mixture_entropy = -trapezoidal_integral(
-            mixtures * np.log(np.maximum(mixtures, eps)), x_grid, axis=2
-        )
-        js_divergence = np.maximum(
-            mixture_entropy - 0.5 * entropy[:, None] - 0.5 * entropy[None, :],
-            0.0,
-        )
+        mixture_entropy = -trapezoidal_integral(values=mixtures * np.log(np.maximum(mixtures, eps)), x_grid=x_grid, axis=2)
+        js_divergence = np.maximum(mixture_entropy - 0.5 * entropy[:, None] - 0.5 * entropy[None, :], 0.0)
         matrix = 1.0 - js_divergence / np.log(2.0)
-        diagnostics = {"js_divergence": js_divergence}
 
-    matrix = np.clip((matrix + matrix.T) / 2.0, 0.0, 1.0)
-    np.fill_diagonal(matrix, 1.0)
-    return {
-        similarity_name: matrix,
-        **diagnostics,
-        "density_values": values,
-    }
+    return matrix
 
 
-###CHANGED
 def compute_quadrature_similarity_matrices(
-    samples: np.ndarray,
-    h_grid: np.ndarray,
-    similarity_name: str,
-    x_grid: np.ndarray | None = None,
-    m_x: int = 2_001,
-    gamma: float | str = 1.0,
+        samples: np.ndarray,
+        h_grid: np.ndarray,
+        similarity_name: str,
+        x_grid: np.ndarray | None = None,
+        m_x: int = 2_001,
+        gamma: float = 1.0,
 ) -> dict[str, np.ndarray | float]:
-    """Evaluate Gaussian KDEs and one requested similarity matrix."""
     if x_grid is None:
-        x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
-    density_values = gaussian_kde_values(samples, h_grid, x_grid)
-    result = quadrature_similarity_matrices(
-        density_values,
-        x_grid,
-        similarity_name=similarity_name,
-        gamma=gamma,
-    )
+        x_grid = quadrature_grid_for_kdes(samples=samples, h_grid=h_grid, m_x=m_x)
+    density_values = gaussian_kde_values(samples=samples, h_grid=h_grid, x_grid=x_grid)
+    result = quadrature_similarity_matrices(density_values=density_values, x_grid=x_grid, similarity_name=similarity_name, gamma=gamma,)
     result["x_grid"] = x_grid
     return result
 
 
-###CHANGED
 def select_quadrature_similarity_bandwidths(
-    samples: np.ndarray,
-    h_grid: np.ndarray,
-    similarity_name: str,
-    x_grid: np.ndarray | None = None,
-    m_x: int = 2_001,
-    gamma: float | str = 1.0,
+        samples: np.ndarray,
+        h_grid: np.ndarray,
+        similarity_name: str,
+        x_grid: np.ndarray | None = None,
+        m_x: int = 2_001,
+        gamma: float = 1.0,
 ) -> dict[str, object]:
-    """Compute one similarity and select its Perron-vector bandwidth."""
     result = compute_quadrature_similarity_matrices(
-        samples,
-        h_grid,
+        samples=samples,
+        h_grid=h_grid,
         similarity_name=similarity_name,
         x_grid=x_grid,
         m_x=m_x,
         gamma=gamma,
     )
-    choice = spectral_choice_from_similarity(result[similarity_name])
+    choice = spectral_choice_from_similarity(similarity_matrix=result[similarity_name])
     result["choice"] = {
         **choice,
-        "selected_h": float(h_grid[int(choice["selected_index"])]),
+        "selected_h": float(h_grid[int(choice["selected_index"])])
     }
     return result
 
+# continue here
 
 def symmetrized_renyi_similarity(
     densities: np.ndarray,
@@ -243,7 +198,6 @@ def directional_kl_similarity(densities: np.ndarray, dx: float) -> np.ndarray:
     similarity = np.exp(-divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
-
 
 def toeplitz_projection(matrix: np.ndarray, symmetric: bool = True) -> np.ndarray:
     """Project a square matrix onto Toeplitz matrices by diagonal averaging."""
