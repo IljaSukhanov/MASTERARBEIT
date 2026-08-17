@@ -79,9 +79,19 @@ class SimilarityTests(unittest.TestCase):
             self.samples, self.bandwidths, self.x_grid
         )
 
+    ###CHANGED
     def test_similarity_invariants(self) -> None:
-        result = quadrature_similarity_matrices(self.densities, self.x_grid)
-        for name in ("tv_overlap", "hellinger_affinity", "rbf_l2", "js_similarity"):
+        for name in (
+            "tv_overlap",
+            "hellinger_affinity",
+            "exponential_l2_similarity",
+            "js_similarity",
+        ):
+            result = quadrature_similarity_matrices(
+                self.densities,
+                self.x_grid,
+                similarity_name=name,
+            )
             matrix = result[name]
             np.testing.assert_allclose(matrix, matrix.T, atol=1e-13)
             np.testing.assert_allclose(np.diag(matrix), 1.0, atol=1e-13)

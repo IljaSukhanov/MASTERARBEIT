@@ -10,9 +10,12 @@ from .density import (
 )
 
 
-
-
-SIMILARITY_NAMES = ("tv_overlap", "hellinger_affinity", "rbf_l2", "js_similarity")
+SIMILARITY_NAMES = (
+    "tv_overlap",
+    "hellinger_affinity",
+    "exponential_l2_similarity",
+    "js_similarity"
+)
 
 
 
@@ -75,129 +78,140 @@ def spectral_choice_from_similarity(
         "selected_weight": float(np.max(vector)),
     }
 
-
-# continue here
-
-
-def _auto_gamma(distance_matrix: np.ndarray) -> float:
-    positive = distance_matrix[distance_matrix > 0]
-    return 1.0 if len(positive) == 0 else float(1.0 / np.median(positive))
-
-
+# computes the l2 distance matrix D, similarity transformation S, Perron vector v of S, arg max v_i and max v_i
 def select_spectral_bandwidth(
-    samples: np.ndarray,
-    h_grid: np.ndarray,
-    gamma: float | str = "auto",
+        samples: np.ndarray,
+        h_grid: np.ndarray,
+        gamma: float | str = 1.0,
 ) -> dict[str, np.ndarray | int | float]:
-    """Select a Gaussian bandwidth from exact squared-L2 RBF similarities."""
-    gram = exact_gaussian_kde_l2_gram(samples, h_grid)
+    gram = exact_gaussian_kde_l2_gram(samples=samples, h_grid=h_grid)
     l2_squared = squared_l2_distance_from_gram(gram)
-    gamma_value = _auto_gamma(l2_squared) if gamma == "auto" else float(gamma)
-    similarity = np.exp(-gamma_value * l2_squared)
-    np.fill_diagonal(similarity, 1.0)
+    similarity = np.exp(-float(gamma) * l2_squared)
     return {
         **spectral_choice_from_similarity(similarity),
-        "gamma": gamma_value,
         "similarity_matrix": similarity,
         "l2_squared": l2_squared,
     }
 
 
 def quadrature_similarity_matrices(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+        similarity_name: str,
+        gamma: float | str = 1.0,
+        eps: float = 1e-300,
+) -> dict[str, np.ndarray | float]:
+    if similarity_name not in SIMILARITY_NAMES:
+        raise ValueError(
+            f"Unknown similarity {similarity_name!r}. Choose from {SIMILARITY_NAMES}."
+        )
+    values = np.maximum(np.asarray(density_values, dtype=float), 0.0)
+
+
+###CHANGED
+def quadrature_similarity_matrices(
     density_values: np.ndarray,
     x_grid: np.ndarray,
-    gamma: float | str = "auto",
+    similarity_name: str,
+    gamma: float | str = 1.0,
     eps: float = 1e-300,
 ) -> dict[str, np.ndarray | float]:
-    """Compute TV, Hellinger, squared-L2 RBF, and JS KDE similarities."""
+    """Compute one requested KDE similarity matrix."""
+    if similarity_name not in SIMILARITY_NAMES:
+        raise ValueError(
+            f"Unknown similarity {similarity_name!r}. Choose from {SIMILARITY_NAMES}."
+        )
+
     values = np.maximum(np.asarray(density_values, dtype=float), 0.0)
     x_grid = np.asarray(x_grid, dtype=float)
 
-    tv_overlap = trapezoidal_integral(
-        np.minimum(values[:, None, :], values[None, :, :]), x_grid, axis=2
-    )
-    hellinger_affinity = trapezoidal_integral(
-        np.sqrt(values[:, None, :] * values[None, :, :]), x_grid, axis=2
-    )
+    diagnostics: dict[str, np.ndarray | float] = {}
+    if similarity_name == "tv_overlap":
+        matrix = trapezoidal_integral(
+            np.minimum(values[:, None, :], values[None, :, :]), x_grid, axis=2
+        )
+    elif similarity_name == "hellinger_affinity":
+        matrix = trapezoidal_integral(
+            np.sqrt(values[:, None, :] * values[None, :, :]), x_grid, axis=2
+        )
+    elif similarity_name == "exponential_l2_similarity":
+        gram = trapezoidal_integral(
+            values[:, None, :] * values[None, :, :], x_grid, axis=2
+        )
+        l2_squared = squared_l2_distance_from_gram(gram)
+        gamma_value = 1.0 if gamma == "auto" else float(gamma)
+        matrix = np.exp(-gamma_value * l2_squared)
+        diagnostics = {"l2_squared": l2_squared, "gamma": gamma_value}
+    else:
+        entropy = -trapezoidal_integral(
+            values * np.log(np.maximum(values, eps)), x_grid, axis=1
+        )
+        mixtures = 0.5 * (values[:, None, :] + values[None, :, :])
+        mixture_entropy = -trapezoidal_integral(
+            mixtures * np.log(np.maximum(mixtures, eps)), x_grid, axis=2
+        )
+        js_divergence = np.maximum(
+            mixture_entropy - 0.5 * entropy[:, None] - 0.5 * entropy[None, :],
+            0.0,
+        )
+        matrix = 1.0 - js_divergence / np.log(2.0)
+        diagnostics = {"js_divergence": js_divergence}
 
-    gram = trapezoidal_integral(
-        values[:, None, :] * values[None, :, :], x_grid, axis=2
-    )
-    l2_squared = squared_l2_distance_from_gram(gram)
-    gamma_value = _auto_gamma(l2_squared) if gamma == "auto" else float(gamma)
-    rbf_l2 = np.exp(-gamma_value * l2_squared)
-
-    entropy = -trapezoidal_integral(
-        values * np.log(np.maximum(values, eps)), x_grid, axis=1
-    )
-    mixtures = 0.5 * (values[:, None, :] + values[None, :, :])
-    mixture_entropy = -trapezoidal_integral(
-        mixtures * np.log(np.maximum(mixtures, eps)), x_grid, axis=2
-    )
-    js_divergence = np.maximum(
-        mixture_entropy - 0.5 * entropy[:, None] - 0.5 * entropy[None, :], 0.0
-    )
-    js_similarity = 1.0 - js_divergence / np.log(2.0)
-
-    matrices = {
-        "tv_overlap": tv_overlap,
-        "hellinger_affinity": hellinger_affinity,
-        "rbf_l2": rbf_l2,
-        "js_similarity": js_similarity,
-    }
-    for name, matrix in matrices.items():
-        matrix = np.clip((matrix + matrix.T) / 2.0, 0.0, 1.0)
-        np.fill_diagonal(matrix, 1.0)
-        matrices[name] = matrix
-
+    matrix = np.clip((matrix + matrix.T) / 2.0, 0.0, 1.0)
+    np.fill_diagonal(matrix, 1.0)
     return {
-        **matrices,
-        "l2_squared": l2_squared,
-        "js_divergence": js_divergence,
-        "gamma": gamma_value,
+        similarity_name: matrix,
+        **diagnostics,
         "density_values": values,
     }
 
 
+###CHANGED
 def compute_quadrature_similarity_matrices(
     samples: np.ndarray,
     h_grid: np.ndarray,
+    similarity_name: str,
     x_grid: np.ndarray | None = None,
     m_x: int = 2_001,
-    gamma: float | str = "auto",
+    gamma: float | str = 1.0,
 ) -> dict[str, np.ndarray | float]:
-    """Evaluate Gaussian KDEs and their four standard similarity matrices."""
+    """Evaluate Gaussian KDEs and one requested similarity matrix."""
     if x_grid is None:
         x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     density_values = gaussian_kde_values(samples, h_grid, x_grid)
-    result = quadrature_similarity_matrices(density_values, x_grid, gamma=gamma)
+    result = quadrature_similarity_matrices(
+        density_values,
+        x_grid,
+        similarity_name=similarity_name,
+        gamma=gamma,
+    )
     result["x_grid"] = x_grid
     return result
 
 
+###CHANGED
 def select_quadrature_similarity_bandwidths(
     samples: np.ndarray,
     h_grid: np.ndarray,
+    similarity_name: str,
     x_grid: np.ndarray | None = None,
     m_x: int = 2_001,
-    gamma: float | str = "auto",
+    gamma: float | str = 1.0,
 ) -> dict[str, object]:
-    """Compute four similarities and select one bandwidth from every Perron vector."""
+    """Compute one similarity and select its Perron-vector bandwidth."""
     result = compute_quadrature_similarity_matrices(
         samples,
         h_grid,
+        similarity_name=similarity_name,
         x_grid=x_grid,
         m_x=m_x,
         gamma=gamma,
     )
-    choices = {}
-    for name in SIMILARITY_NAMES:
-        choice = spectral_choice_from_similarity(result[name])
-        choices[name] = {
-            **choice,
-            "selected_h": float(h_grid[int(choice["selected_index"])]),
-        }
-    result["choices"] = choices
+    choice = spectral_choice_from_similarity(result[similarity_name])
+    result["choice"] = {
+        **choice,
+        "selected_h": float(h_grid[int(choice["selected_index"])]),
+    }
     return result
 
 
