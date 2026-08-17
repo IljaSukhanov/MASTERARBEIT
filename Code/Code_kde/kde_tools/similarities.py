@@ -82,11 +82,12 @@ def spectral_choice_from_similarity(
 def select_spectral_bandwidth(
         samples: np.ndarray,
         h_grid: np.ndarray,
-        gamma: float | str = 1.0,
+        gamma: float = 1.0,
 ) -> dict[str, np.ndarray | int | float]:
     gram = exact_gaussian_kde_l2_gram(samples=samples, h_grid=h_grid)
     l2_squared = squared_l2_distance_from_gram(gram)
-    similarity = np.exp(-float(gamma) * l2_squared)
+    d2 = 0.5 * l2_squared
+    similarity = np.exp(-float(gamma) * d2)
     return {
         **spectral_choice_from_similarity(similarity),
         "similarity_matrix": similarity,
@@ -140,9 +141,11 @@ def compute_quadrature_similarity_matrices(
     if x_grid is None:
         x_grid = quadrature_grid_for_kdes(samples=samples, h_grid=h_grid, m_x=m_x)
     density_values = gaussian_kde_values(samples=samples, h_grid=h_grid, x_grid=x_grid)
-    result = quadrature_similarity_matrices(density_values=density_values, x_grid=x_grid, similarity_name=similarity_name, gamma=gamma,)
-    result["x_grid"] = x_grid
-    return result
+    matrix = quadrature_similarity_matrices(density_values=density_values, x_grid=x_grid, similarity_name=similarity_name, gamma=gamma,)
+    return {
+        similarity_name: matrix,
+        "x_grid": x_grid,
+    }
 
 
 def select_quadrature_similarity_bandwidths(
