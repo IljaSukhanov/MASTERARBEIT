@@ -24,37 +24,34 @@ where $\phi_i\in\mathbb{R}$ are the coefficients with $\phi_p\ne0$.
 
 It is well known that there exists a stationary process $(X_t)_{t\in\mathbb{Z}}$ that can be written in the form \eqref{eq:def_arma} if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert=1$. Another important property that we will need for the geometric interpretation of the embedded AR process is causality: An ARMA process $(X_t)$ is called causal if there exist constants $\psi_j$ with $\sum_j|\psi_j|<+\infty$, such that $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$ for all $t\in\mathbb{Z}$. It turns out that this property is stronger than stationarity, as an ARMA process is causal iff $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert\le1$. In what follows, we will exclusively work with causal ARMA processes.
 
-\todo[inline]{Discuss automatic coefficient selection}
-
-For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in a theoretically grounded way. Jones~\cite{jones_randomly_1987} gives one such approach.
+For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in a theoretically grounded way. Jones~\cite{jones_randomly_1987} gives one such approach. There, an algorithm is given which samples $\phi=(\phi_1,\dots,\phi_p)$ uniformly from
+\begin{align*}
+    C_p=\{\phi\in\mathbb{R}^p:1-\phi_1z-\dots-\phi_pz^p\ne0\text{ for all }z\in\mathbb{C},|z|\le 1\}
+\end{align*}
+This allows for fair and principled numerical experiments.
 
 \section{Order selection methods}
 
-\todo[inline]{Are there any guarantees for the quality of such selectors?}
+\todo[inline]{make more detailed and add motivation later}
 
-There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process. These methods can be classified as information criteria methods, ...
+There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process.
 
-We will briefly review them below.
-
-\subsection*{Information criteria}
-
-Let $f^{(k)}_{\theta_k}$ be the joint density of $X$ under the candidate model $\mathcal{M}_k$. Information criteria have the form
+For each candidate order $k=1,\dots,K$ obtain coefficient estimates $\hat{\phi}_1^{(k)},\dots,\hat{\phi}_k^{(k)}$. Let $\hat{\sigma}_k^2$ be the estimated innovation variance defined by
 \begin{align*}
-    \operatorname{IC}(k)=-2\log{f^{(k)}_{\theta_k}}+a_TN_k
+    \hat{\sigma}_k^2=\frac{1}{T-k}\sum_{t=k+1}^{T}\left(X_t-\sum_{j=1}^{k}\phi_j^{(k)}X_{t-j}\right)^2
 \end{align*}
-Common choices for $a_T$ include
-\begin{itemize}
-    \item AIC: $a_T=2$
-    \item BIC: $a_T=\log{T}$
-\end{itemize}
 
-Let $k_0$ be the true AR order and $\hat{k}=\arg\min\{\operatorname{IC}(k):k=0,1,\dots,K\}$, where $K\ge k_0$. Then it holds
+The class of information criteria selectors has the form
 \begin{align*}
-    \mathbb{P}(\hat{k}\to k_0)=1
+    \hat{p}_{\operatorname{IC}}=\arg\min_{1\le k\le K}\operatorname{IC}_T(k),
 \end{align*}
-for all information criteria $\operatorname{IC}$ whose penalty term sequence $a_T$ satisfies $a_T\to\infty$ and $T^{-1}a_T\to0$.
+where
+\begin{align*}
+    \operatorname{IC}_T(k)=\log{\hat{\sigma}_k^2}+\frac{kc_T}{T}
+\end{align*}
+Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature. We focus on $c_T=\log{T}$, which leads to the Bayesian information criterion (BIC). The BIC is consistent, that is, $\mathbb{P}(\hat{p}_{\operatorname{BIC}}\to p)=1$.
 
-\subsection*{PACF cutoff}
+Another approach that is often used is the so called partial autocorrelation function (PACF) cutoff. In this approach, the relation $k\mapsto\hat{\phi}_k^{(k)}$ is examined and the estimated order $\hat{p}$ is set as the last $k$ outside the approximate 95\% confidence band $\pm1.96/\sqrt{T}$.
 
 \section{Embedding of time series}
 
@@ -111,8 +108,11 @@ where $g_j^{(k)}=(\psi_j,\psi_{j-1},\dots,\psi_{j-k+1})^{T}$.
 
 \begin{Lem}\label{lem:upper_bound_psi_j}
     There exist $C>0$ and $\rho\in(0,1)$ such that $|\psi_j|\le C\rho^{j}$. In particular, $\lim\limits_{j\to\infty}\psi_j=0$.
-    \todo[inline]{Prove or cite}
 \end{Lem}
+
+\begin{proof}
+    Since $\{X_t\}$ is causal, $r_{\phi}=\min\{|z|:\phi(z)=0\}>1$. Let $R\in(1,r_{\phi})$ be arbitrary. From complex analysis, it follows that $1/\phi$ is analytical on some open neighborhood of $\{|z|\le R\}$. Its representation is given by $1/\phi(z)=\sum_{j=0}^{\infty}\psi_jz^{j}$. By Cauchy's integral formula~[], $|\psi_j|\le R^{-j}\max_{|z|=R}|1/\phi(z)|$. Setting $C=\max_{|z|=R}|1/\phi(z)|$ and $\rho=R^{-1}$ yields the statement.
+\end{proof}
 
 \subsection*{Uniformly distributed innovations}
 
@@ -232,14 +232,14 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
     The minimizing direction $u^{*}$ at $k=p+1$ serves as an estimate for the AR coefficients. Namely, $\hat{\phi}=-\|u^{*}\|_2u^{*}[2:p+1]$.
 \end{Rem}
 
-\todo[inline]{redo Figure}
+% \todo[inline]{redo Figure}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/comparison_P2_P3.png}
-    \caption{Comparison between the point clouds $\mathcal{P}_2$ and $\mathcal{P}_3$ and the corresponding approximating zonotopes $\mathcal{Z}^{2}_{2300}$ and $\mathcal{Z}^{(3)}_{3300}$. The true order of the underlying AR process is $p=2$.}
-    \label{fig:placeholder}
-\end{figure}
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/comparison_P2_P3.png}
+%     \caption{Comparison between the point clouds $\mathcal{P}_2$ and $\mathcal{P}_3$ and the corresponding approximating zonotopes $\mathcal{Z}^{2}_{2300}$ and $\mathcal{Z}^{(3)}_{3300}$. The true order of the underlying AR process is $p=2$.}
+%     \label{fig:placeholder}
+% \end{figure}
 
 An empirical version of the width $w_k(u)$ is obtained by inserting $\operatorname{conv}(\mathcal{P}_k)$ in place of $\mathcal{Z}^{(k)}$. Consequently, we obtain
 \begin{align*}
@@ -333,7 +333,7 @@ Before discussing the minimization of $\hat{w}_k=\hat{w}_{k,T}$ we collect some 
 
 By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k-1}$.
 
-A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties.
+A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties. We show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the convergence of Algorithm~\ref{alg:projected_gradient_descent}. But first, we state this result in our notation.
 
 \begin{algorithm}[ht]
     \caption{Projected gradient descent}
@@ -353,36 +353,86 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
     \end{algorithmic}
 \end{algorithm}
 
-\todo[inline]{Give result on convergence guaranty}
-
-Next, we show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the convergence of Algorithm~\ref{alg:projected_gradient_descent}. But first, we state this result in our notation.
-
 \begin{Thm}[{\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel}}]
-    Write something here
+    Consider the minimization problem
+    \begin{align*}
+        \min_{x\in\mathbb{S}^{n-1}}f(x),
+    \end{align*}
+    where $f$ is convex on $\mathbb{R}^n$ and Lipschitz-continuous with constant $L>0$. Let $\{x_k\}_{k\ge0}$ be the sequence obtained from Algorithm~\ref{alg:projected_gradient_descent}. Let $\mathcal{X}$ be the set of weak sharp minima with parameter $\alpha>0$. Define the sequence of step sizes by $\eta_t=\beta^t\gamma_0$, $t=0,1,\dots$, where $\beta_0$ and $\gamma$ satisfy
+    \begin{align*}
+        e_0&=\min\left\{\max\left\{\operatorname{dist}(x_0,\mathcal{X}),\frac{\alpha}{2L}\right\},\rho\right\}\\
+        \gamma_0&<\min\left\{\frac{2e_0(\alpha-Le_0)}{L^2},\frac{e_0}{2(\alpha-Le_0)}\right\}\\
+        \beta_{\min}&=\sqrt{1+2\left(L-\frac{\alpha}{e_0}\right)\gamma_0+\frac{L^2}{e_0^2}\gamma_0^2},\quad\beta_{\min}\le\beta<1
+    \end{align*}
+    If $x_0\in\mathbb{S}^{n-1}$ fulfills $\operatorname{dist}(x_0,\mathcal{X})<\min\{\alpha/L,\rho\}$, then
+    \begin{align*}
+        \operatorname{dist}(x_t,\mathcal{X})\le\beta^te_0
+    \end{align*}
+    for all $t\ge0$.
 \end{Thm}
+
+\todo[inline]{Apply this guaranty to my case and interpret}
+
+In practice, the parameters $\gamma$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
-One option is the tail-flatness selector
-\begin{align*}
-    \hat{D}_{k,T}&=\max_{k\le j\le K}\hat{m}_{j,T}-\min_{k\le j\le K}\hat{m}_{j,T}\\
-    \hat{k}_T&=\min\{k\in\{1,\dots,K\},\hat{D}_{k,T}\le a_T\}
-\end{align*}
+Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$, we can use a modified L-method, that is, fit an affine curve through the points $(1,\hat{m}_1),\dots,(q+1,\hat{m}_{q+1})$ and a constant line through $(q+1,\hat{m}_{q+1}),\dots,(K,\hat{m}_K)$ for all $q=1,\dots,K$ and select the $q$ with the best fit.
 
-Under certain conditions on the penalty term sequence $\lambda_T$ this selector is consistent.
-
-\begin{Lem}
-    Define $e_T=\max_{1\le k\le K}|\hat{m}_{k,T}-m_k|$. If $\lambda_T\to0$ and $e_T=o(\lambda_T)$, then $\hat{k}_T\to p+1$ for $T\to\infty$.
-\end{Lem}
-
-\todo[inline]{Prove consistency of geometrically selected order $k^{\star}$ to the true order $p$}
+\todo[inline]{compare different elbow selectors, maybe somehow establish consistency?}
 
 \subsection*{Numerical Results}
 
-\todo[inline]{show numerical results for $p=1,2,3,\dots$}
-\todo[inline]{When does it break down or becomes computationally to heavy?}
-\todo[inline]{compare $k\mapsto\min w_k(u)$ and $k\mapsto\min\hat{w}_k(u)$ and also $k\mapsto\min w_k(\hat{u})$}
-\todo[inline]{How large does $T$ have to be?}
+% \todo[inline]{How large does $T$ have to be?}
+
+Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$. Table~\ref{tab:geometric-bic-pacf-comparison} summarizes the results from 50 simulations for each true order $p\in\{1,2,3\}$.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR1_experiment.png}
+    \caption{Blue: $\hat{m}_k$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge1$)}
+    \label{fig:ar1_experiment}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR2_experiment.png}
+    \caption{Blue: $\hat{m}_k$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge2$)}
+    \label{fig:ar2_experiment}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR3_experiment.png}
+    \caption{Blue: $\hat{m}_k$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge3$)}
+    \label{fig:ar3_experiment}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{AR-order selections for 50 processes per true order.
+Each entry reports the number of exact selections, followed by
+(underselections/overselections).}
+\label{tab:geometric-bic-pacf-comparison}
+\begin{tabular}{lccc}
+\toprule
+Selector & AR(1) & AR(2) & AR(3) \\
+\midrule
+Empirical minimum width (L-method)
+& \shortstack{\textbf{49/50} \\ (0/1)}
+& \shortstack{36/50 \\ (14/0)}
+& \shortstack{14/50 \\ (29/7)} \\
+BIC
+& \shortstack{47/50 \\ (3/0)}
+& \shortstack{\textbf{46/50} \\ (4/0)}
+& \shortstack{\textbf{43/50} \\ (7/0)} \\
+PACF cutoff
+& \shortstack{31/50 \\ (1/18)}
+& \shortstack{34/50 \\ (1/15)}
+& \shortstack{33/50 \\ (3/14)} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \newpage
 
