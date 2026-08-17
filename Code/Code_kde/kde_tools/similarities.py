@@ -1,5 +1,3 @@
-"""Divergence matrices, similarity transforms, and spectral selection."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -11,28 +9,44 @@ from .density import (
     trapezoidal_integral,
 )
 
+
+
+
 SIMILARITY_NAMES = ("tv_overlap", "hellinger_affinity", "rbf_l2", "js_similarity")
 
 
+
+def squared_l2_distance_from_gram(gram: np.ndarray) -> np.ndarray:
+    diagonal = np.diag(gram)
+    return np.maximum(diagonal[:, None] + diagonal[None, :] - 2.0 * gram, 0.0)
+
+
+
+# compute the normalized Perron vector of a symmetric nonnegative matrix
 def perron_vector(matrix: np.ndarray) -> np.ndarray:
-    """Return the normalized principal vector of a symmetric nonnegative matrix."""
     matrix = np.asarray(matrix, dtype=float)
-    eigenvalues, eigenvectors = np.linalg.eigh((matrix + matrix.T) / 2.0)
-    vector = np.real(eigenvectors[:, int(np.argmax(eigenvalues))])
+
+    if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
+        raise ValueError("The matrix must be square.")
+
+    if not np.allclose(matrix, matrix.T, atol=1e-12):
+        raise ValueError("The matrix must be symmetric.")
+
+    if np.any(matrix < 0):
+        raise ValueError("The matrix must be nonnegative.")
+
+    eigenvalues, eigenvectors = np.linalg.eigh(matrix)
+    vector = eigenvectors[:, int(np.argmax(eigenvalues))]
     if np.sum(vector) < 0:
         vector = -vector
-    vector = np.maximum(vector, 0.0)
-    if np.sum(vector) == 0:
-        vector = np.abs(np.real(eigenvectors[:, int(np.argmax(eigenvalues))]))
     return vector / np.sum(vector)
 
-
+# computes the normalized Perron vector of a not necessarily symmetric nonnegative matrix using the power method
 def power_perron_vector(
     matrix: np.ndarray,
     tolerance: float = 1e-13,
     max_iterations: int = 10_000,
 ) -> np.ndarray:
-    """Return a right Perron vector by power iteration, including nonsymmetric cases."""
     matrix = np.asarray(matrix, dtype=float)
     vector = np.full(matrix.shape[0], 1.0 / matrix.shape[0])
     for _ in range(max_iterations):
@@ -44,11 +58,17 @@ def power_perron_vector(
     return vector
 
 
+def doob_stationary_mass(matrix: np.ndarray) -> np.ndarray:
+    right = power_perron_vector(matrix=matrix)
+    left = power_perron_vector(matrix=np.asarray(matrix).T)
+    mass = left * right
+    return mass / mass.sum()
+
+
 def spectral_choice_from_similarity(
-    similarity_matrix: np.ndarray,
+        similarity_matrix: np.ndarray,
 ) -> dict[str, np.ndarray | int | float]:
-    """Choose the index at which the normalized Perron vector is maximal."""
-    vector = perron_vector(similarity_matrix)
+    vector = perron_vector(matrix=similarity_matrix)
     return {
         "selected_index": int(np.argmax(vector)),
         "perron_vector": vector,
@@ -56,15 +76,12 @@ def spectral_choice_from_similarity(
     }
 
 
+# continue here
+
+
 def _auto_gamma(distance_matrix: np.ndarray) -> float:
     positive = distance_matrix[distance_matrix > 0]
     return 1.0 if len(positive) == 0 else float(1.0 / np.median(positive))
-
-
-def squared_l2_distance_from_gram(gram: np.ndarray) -> np.ndarray:
-    """Convert a Gram matrix to a matrix of squared Hilbert-space distances."""
-    diagonal = np.diag(gram)
-    return np.maximum(diagonal[:, None] + diagonal[None, :] - 2.0 * gram, 0.0)
 
 
 def select_spectral_bandwidth(
@@ -235,14 +252,6 @@ def toeplitz_projection(matrix: np.ndarray, symmetric: bool = True) -> np.ndarra
     for offset, value in lag_means.items():
         result[columns - rows == offset] = value
     return result
-
-
-def doob_stationary_mass(matrix: np.ndarray) -> np.ndarray:
-    """Return stationary mass proportional to left-times-right Perron vectors."""
-    right = power_perron_vector(matrix)
-    left = power_perron_vector(np.asarray(matrix).T)
-    mass = left * right
-    return mass / mass.sum()
 
 
 def toeplitz_corrected_choice(
