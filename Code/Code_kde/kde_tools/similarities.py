@@ -171,35 +171,32 @@ def select_quadrature_similarity_bandwidths(
     }
     return result
 
-# continue here
 
-
+# computes S=(S_{ij}), S_{ij}=exp{-D_{ij}}, D_{ij}=D_{KL}(\hat{f}_i,\hat{f}_j)
 def directional_kl_similarity(densities: np.ndarray, dx: float) -> np.ndarray:
-    """Return the directed matrix ``exp(-KL(p_i || p_j))``."""
-    densities = np.maximum(np.asarray(densities, dtype=float), np.finfo(float).tiny)
+    densities = np.maximum(np.asarray(densities, dtype=float), 1e-300)
     log_densities = np.log(densities)
-    own_log_density = dx * np.sum(densities * log_densities, axis=1)
-    cross_log_density = dx * (densities @ log_densities.T)
+    x_grid = np.arange(densities.shape[1] + 1, dtype=float) * float(dx)
+    periodic_densities = np.concatenate((densities, densities[:, :1]), axis=1)
+    periodic_log_densities = np.concatenate((log_densities, log_densities[:, :1]), axis=1)
+    own_log_density = trapezoidal_integral(values=periodic_densities * periodic_log_densities, x_grid=x_grid, axis=1)
+    cross_log_density = np.empty((len(densities), len(densities)), dtype=float)
+    for j, log_density in enumerate(periodic_log_densities):
+        cross_log_density[:, j] = trapezoidal_integral(values=periodic_densities * log_density[None, :], x_grid=x_grid, axis=1)
     divergence = np.maximum(own_log_density[:, None] - cross_log_density, 0.0)
     similarity = np.exp(-divergence)
-    np.fill_diagonal(similarity, 1.0)
     return similarity
 
-def toeplitz_projection(matrix: np.ndarray, symmetric: bool = True) -> np.ndarray:
-    """Project a square matrix onto Toeplitz matrices by diagonal averaging."""
+
+# computes Toeplitz projection S^{(0)} for any matrix S
+def toeplitz_projection(matrix: np.ndarray, symmetric: bool=True) -> np.ndarray:
     matrix = np.asarray(matrix, dtype=float)
     n = matrix.shape[0]
     indices = np.arange(n)
     if symmetric:
-        lag_means = np.array(
-            [np.diagonal((matrix + matrix.T) / 2.0, offset=d).mean() for d in range(n)]
-        )
+        lag_means = np.array([np.diagonal(matrix / 2.0, offset=d).mean() for d in range(n)])
         return lag_means[np.abs(indices[:, None] - indices[None, :])]
-
-    lag_means = {
-        offset: float(np.diagonal(matrix, offset=offset).mean())
-        for offset in range(-(n - 1), n)
-    }
+    lag_means = {offset: float(np.diagonal(matrix, offset=offset).mean()) for offset in range(-(n - 1), n)}
     result = np.empty_like(matrix)
     rows = indices[:, None]
     columns = indices[None, :]
@@ -209,12 +206,11 @@ def toeplitz_projection(matrix: np.ndarray, symmetric: bool = True) -> np.ndarra
 
 
 def toeplitz_corrected_choice(
-    similarity: np.ndarray,
-    bandwidths: np.ndarray,
-    directed: bool = False,
+        similarity: np.ndarray,
+        bandwidths: np.ndarray,
+        directed: bool = False,
 ) -> tuple[float, int, np.ndarray]:
-    """Select the maximum Perron score relative to a Toeplitz null matrix."""
-    null = toeplitz_projection(similarity, symmetric=not directed)
+    null = toeplitz_projection(matrix=similarity, symmetric=not directed)
     if directed:
         score = doob_stationary_mass(similarity) / doob_stationary_mass(null)
     else:
