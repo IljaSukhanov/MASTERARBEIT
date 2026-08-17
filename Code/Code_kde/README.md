@@ -3,8 +3,9 @@
 Start with `spectral_scale_selection_kde.ipynb`.  It is the main, explanatory
 notebook.  Numerical work used by that notebook lives in `kde_tools/`:
 
-- `density.py`: KDE evaluation, quadrature grids, FFT evaluation, and exact
+- `density.py`: direct KDE evaluation, quadrature grids, and exact
   Gaussian/Gaussian-mixture integrals.
+- `fft.py`: optional FFT evaluation for the large periodic-grid experiments.
 - `bandwidths.py`: bandwidth grids and the Silverman, LSCV, and plug-in rules.
 - `similarities.py`: divergence/similarity matrices, Perron vectors, Toeplitz
   corrections, and spectral selection.
@@ -17,7 +18,6 @@ The other notebooks are exploratory records:
 - `distance_matrix_perron_vector_tests.ipynb`: distance-versus-similarity and
   Perron/Doob investigations.
 - `renyi_divergence_doob_kde.ipynb`: Rényi and Doob-transform experiments.
-- `Untitled-1.ipynb`: mostly AR/zonotope work; it is not part of the KDE module.
 
 The two `run_*.py` files are reproducible command-line Monte Carlo experiments.
 They reuse `kde_tools` rather than maintaining separate numerical implementations.

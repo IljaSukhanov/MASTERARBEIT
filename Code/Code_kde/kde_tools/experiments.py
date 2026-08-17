@@ -15,8 +15,6 @@ from .density import (
     exact_mixture_ise_values,
     exact_oracle_ise_values,
     gaussian_kde_values,
-    normalize_density_rows,
-    quadrature_grid_for_gaussian_mixture_kdes,
     quadrature_grid_for_kdes,
     sample_gaussian_mixture,
 )
@@ -73,13 +71,9 @@ def run_one_all5_bandwidth_experiment(
     samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
     ise = exact_oracle_ise_values(samples, h_grid, sigma2)
     oracle_index = int(np.argmin(ise))
-    x_grid = quadrature_grid_for_kdes(samples, h_grid, sigma2=sigma2, m_x=m_x)
-    densities = normalize_density_rows(
-        gaussian_kde_values(samples, h_grid, x_grid), x_grid
-    )
-    similarities = quadrature_similarity_matrices(
-        densities, x_grid, gamma=gamma, renormalize=False
-    )
+    x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
+    densities = gaussian_kde_values(samples, h_grid, x_grid)
+    similarities = quadrature_similarity_matrices(densities, x_grid, gamma=gamma)
     indices = _spectral_indices(similarities)
     result: dict[str, float | int] = {
         "seed": seed,
@@ -116,13 +110,9 @@ def run_one_consistency_experiment(
     h_grid = bandwidth_grid_for_gaussian_experiment(n, sigma2, n_h=n_h)
     ise = exact_oracle_ise_values(samples, h_grid, sigma2)
     oracle_index = int(np.argmin(ise))
-    x_grid = quadrature_grid_for_kdes(samples, h_grid, sigma2=sigma2, m_x=m_x)
-    densities = normalize_density_rows(
-        gaussian_kde_values(samples, h_grid, x_grid), x_grid
-    )
-    similarities = quadrature_similarity_matrices(
-        densities, x_grid, gamma=gamma, renormalize=False
-    )
+    x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
+    densities = gaussian_kde_values(samples, h_grid, x_grid)
+    similarities = quadrature_similarity_matrices(densities, x_grid, gamma=gamma)
     hellinger_index = int(
         spectral_choice_from_similarity(similarities["hellinger_affinity"])[
             "selected_index"
@@ -166,15 +156,9 @@ def run_one_mixture_bandwidth_experiment(
     samples = sample_gaussian_mixture(rng, n, weights, means, sigmas)
     ise = exact_mixture_ise_values(samples, h_grid, weights, means, sigmas)
     oracle_index = int(np.argmin(ise))
-    x_grid = quadrature_grid_for_gaussian_mixture_kdes(
-        samples, h_grid, weights, means, sigmas, m_x=m_x
-    )
-    densities = normalize_density_rows(
-        gaussian_kde_values(samples, h_grid, x_grid), x_grid
-    )
-    similarities = quadrature_similarity_matrices(
-        densities, x_grid, gamma=gamma, renormalize=False
-    )
+    x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
+    densities = gaussian_kde_values(samples, h_grid, x_grid)
+    similarities = quadrature_similarity_matrices(densities, x_grid, gamma=gamma)
     indices = _spectral_indices(similarities)
 
     plugin_raw_h = direct_plugin_bandwidth(samples, x_grid)

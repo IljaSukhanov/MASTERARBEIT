@@ -14,11 +14,10 @@ from kde_tools.density import (
     exact_gaussian_kde_l2_gram,
     exact_mixture_ise_values,
     gaussian_kde_values,
-    kde_family_fft,
     mixture_density,
-    normalize_density_rows,
     trapezoidal_integral,
 )
+from kde_tools.fft import kde_family_fft
 from kde_tools.similarities import (
     quadrature_similarity_matrices,
     select_spectral_bandwidth,
@@ -35,8 +34,7 @@ class DensityTests(unittest.TestCase):
 
     def test_density_rows_have_unit_mass(self) -> None:
         densities = gaussian_kde_values(self.samples, self.bandwidths, self.x_grid)
-        normalized = normalize_density_rows(densities, self.x_grid)
-        masses = trapezoidal_integral(normalized, self.x_grid, axis=1)
+        masses = trapezoidal_integral(densities, self.x_grid, axis=1)
         np.testing.assert_allclose(masses, 1.0, atol=1e-12)
 
     def test_exact_gram_matches_fine_quadrature(self) -> None:
@@ -77,15 +75,12 @@ class SimilarityTests(unittest.TestCase):
         self.samples = rng.normal(size=30)
         self.bandwidths = bandwidth_grid_for_gaussian_experiment(30, 1.0, n_h=7)
         self.x_grid = np.linspace(-8.0, 8.0, 4001)
-        self.densities = normalize_density_rows(
-            gaussian_kde_values(self.samples, self.bandwidths, self.x_grid),
-            self.x_grid,
+        self.densities = gaussian_kde_values(
+            self.samples, self.bandwidths, self.x_grid
         )
 
     def test_similarity_invariants(self) -> None:
-        result = quadrature_similarity_matrices(
-            self.densities, self.x_grid, renormalize=False
-        )
+        result = quadrature_similarity_matrices(self.densities, self.x_grid)
         for name in ("tv_overlap", "hellinger_affinity", "rbf_l2", "js_similarity"):
             matrix = result[name]
             np.testing.assert_allclose(matrix, matrix.T, atol=1e-13)

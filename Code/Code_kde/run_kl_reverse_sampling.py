@@ -11,7 +11,7 @@ from time import perf_counter
 import numpy as np
 
 from kde_tools.bandwidths import gaussian_mise_oracle_bandwidth
-from kde_tools.density import kde_family_fft
+from kde_tools.fft import kde_family_fft
 from kde_tools.experiments import summarize
 from kde_tools.similarities import directional_kl_similarity, toeplitz_corrected_choice
 

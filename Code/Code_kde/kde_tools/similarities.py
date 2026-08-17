@@ -7,7 +7,6 @@ import numpy as np
 from .density import (
     exact_gaussian_kde_l2_gram,
     gaussian_kde_values,
-    normalize_density_rows,
     quadrature_grid_for_kdes,
     trapezoidal_integral,
 )
@@ -91,14 +90,11 @@ def quadrature_similarity_matrices(
     density_values: np.ndarray,
     x_grid: np.ndarray,
     gamma: float | str = "auto",
-    renormalize: bool = True,
     eps: float = 1e-300,
 ) -> dict[str, np.ndarray | float]:
     """Compute TV, Hellinger, squared-L2 RBF, and JS KDE similarities."""
     values = np.maximum(np.asarray(density_values, dtype=float), 0.0)
     x_grid = np.asarray(x_grid, dtype=float)
-    if renormalize:
-        values = normalize_density_rows(values, x_grid)
 
     tv_overlap = trapezoidal_integral(
         np.minimum(values[:, None, :], values[None, :, :]), x_grid, axis=2
@@ -150,18 +146,14 @@ def compute_quadrature_similarity_matrices(
     samples: np.ndarray,
     h_grid: np.ndarray,
     x_grid: np.ndarray | None = None,
-    sigma2: float | None = None,
     m_x: int = 2_001,
     gamma: float | str = "auto",
-    renormalize: bool = True,
 ) -> dict[str, np.ndarray | float]:
     """Evaluate Gaussian KDEs and their four standard similarity matrices."""
     if x_grid is None:
-        x_grid = quadrature_grid_for_kdes(samples, h_grid, sigma2=sigma2, m_x=m_x)
+        x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     density_values = gaussian_kde_values(samples, h_grid, x_grid)
-    result = quadrature_similarity_matrices(
-        density_values, x_grid, gamma=gamma, renormalize=renormalize
-    )
+    result = quadrature_similarity_matrices(density_values, x_grid, gamma=gamma)
     result["x_grid"] = x_grid
     return result
 
@@ -170,20 +162,16 @@ def select_quadrature_similarity_bandwidths(
     samples: np.ndarray,
     h_grid: np.ndarray,
     x_grid: np.ndarray | None = None,
-    sigma2: float | None = None,
     m_x: int = 2_001,
     gamma: float | str = "auto",
-    renormalize: bool = True,
 ) -> dict[str, object]:
     """Compute four similarities and select one bandwidth from every Perron vector."""
     result = compute_quadrature_similarity_matrices(
         samples,
         h_grid,
         x_grid=x_grid,
-        sigma2=sigma2,
         m_x=m_x,
         gamma=gamma,
-        renormalize=renormalize,
     )
     choices = {}
     for name in SIMILARITY_NAMES:
