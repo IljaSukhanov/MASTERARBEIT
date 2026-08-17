@@ -398,6 +398,9 @@ We want to eliminate the centrality of each scale $i$ coming purely from its loc
 \begin{align*}
     S^{(0)}=(S^{(0)})_{ij},\quad S^{(0)}_{ij}=\overline{S}_{|i-j|},\quad\overline{S}_d=\frac{1}{N-d}\sum_{i=1}^{N-d}S_{i,i+d}
 \end{align*}
+The Toeplitz projection $S^{(0)}$ of a matrix $S$ is a Toeplitz matrix where the entries of each diagonal is the mean of the corresponding diagonal of $S$. In fact, $S^{(0)}$ is closest to $S$ out of all Toeplitz matrices in terms of the Frobenius norm. See~\cite{kucerovsky_properties_2016}.
+
+
 Let $v^{(0)}$ be the Perron vector of $S^{(0)}$. Then $v^{(0)}_i$ is a centrality measure of the scale $i$ coming purely from the position in the grid. We define $s_i=v_i/v^{(0)}_i$ which is the null corrected scale centrality. Writing $\log{s_i}=\log{v_i}-\log{v^{(0)}_i}$, we can interpret $\log{v^{(0)}_i}$ as spectral grid penalty. This idea is closely analogous to normalization against a null model.
 
 The transformation $S_{ij}=\exp{\{-D_{ij}/\tau\}}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of the probability vector $p\in\mathbb{R}^{N}$. The quantity
