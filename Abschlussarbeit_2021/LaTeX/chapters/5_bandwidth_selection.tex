@@ -15,6 +15,8 @@ Two common choices for the kernel $K$ are:
     \item the Gaussian kernel $K(u)=(2\pi)^{-1/2}\exp{(-u^2/2)}$
 \end{itemize}
 
+From now on, we always work with the Gaussian kernel, if not indicated otherwise.
+
 The question of how to choose the bandwidth $h$ is widely known in the literature. See reviews~[]. We present some of the most popular methods below, which we also use to compare with our newly developed spectral selector. Following the review~\cite{heidenreich_bandwidth_2013}, bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. The methods of both classes minimize some approximation of the (mean) integrated squared error.
 
 \begin{Def}
@@ -426,10 +428,6 @@ Let $X_1,\dots,X_n\sim f$. In our experiments, we test
 \end{itemize}
 
 The number of sampled points $n$ is an important parameter. In order to study consistency, we test $n=100,200,\dots,1000,\dots$
-
-\subsection*{Kernel choice}
-
-For now we will focus on the Gaussian kernel: $K(x)=(2\pi)^{-1/2}\exp{(-x^2/2)}$
 
 \subsection*{Behavior under resampling}
 

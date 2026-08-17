@@ -108,7 +108,7 @@ We are now interested in $j_{\text{crit}}=\text{argmax}_{j=1,\dots,N}\{v^{\star}
 
 \todo[inline]{Discuss uniqueness of $j_{\text{crit}}$}
 
-\subsubsection*{Connection to Markov Chains}
+\section{Connection to Markov Chains}
 
 \todo[inline]{Doob $h$-transform}
 
@@ -121,6 +121,8 @@ where $D_{v^*}=\operatorname{diag}(v^*_1,\dots,v^*_N)$. The resulting Markov cha
     \pi_j=\frac{v^*_j}{\sum_{k=1}^{N}(v^*_k)^2}
 \end{align*}
 
+\todo[inline]{Stationary distribution construction for asymmetric scale similarity matrices}
+
 \begin{Rem}
     The Donsker-Varadhan free-energy functional $\mathcal{F}$ is known to be
     \begin{align*}
@@ -129,9 +131,15 @@ where $D_{v^*}=\operatorname{diag}(v^*_1,\dots,v^*_N)$. The resulting Markov cha
     where $Q=(q_{ij})$ is any positive, row-stochastic matrix with stationary distribution $\pi^{Q}$. It holds $\mathcal{F}(Q)\le\mathcal{F}(P)$ for any positive, row-stochastic matrix $Q$, where $P$ is the matrix introduced in Equation~[]. This fact serves as motivation for the replacement of our initial scale similarity matrix $\Sigma_N$ with the transition matrix $P$: we replace $\Sigma_N$ which is non-stochastic by the closest (in the above sense) stochastic matrix $P$.
 \end{Rem}
 
+\begin{Def}
+    A triple $(f,\{K_i\},\oplus)$ is said to be spectrally optimizable if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$ with transition probability matrix $Q=(q_{ij})$ and stationary distribution $\pi^Q=(\pi_1^Q,\dots,\pi_N^Q)$.
+\end{Def}
+
 \section{Monotone scale selection}
 
 \todo[inline]{implement a function in Python that computes the stationary birth death distribution}
+
+\todo[inline]{Is there an alternative MC construction that favors \enquote{kink points}?}
 
 We consider the case $0<c_1<\dots<c_N$. Define the discrete Laplacian:
 \begin{align*}
@@ -155,93 +163,6 @@ The critical scales are naturally identified as
 \begin{align*}
     j_{\text{crit}}\in\arg\min\{\pi^{\text{BD}}_j:j=1,\dots,N\}
 \end{align*}
-
-\section{Other combinatorial and topological features of simplicial complexes}
-
-In this section we present and discuss function defined on simplicial complexes that are non-negative, integer valued and sub-additive. Let $\mathcal{F}(K)$ denote the set of all facets of $K$, i.e. all simplices $\sigma\in K$ with $\dim\sigma=\dim K$.
-
-\textbf{$f$-vector.} The $f$-vector of a simplicial complex $K$ is $f(K)=(f_0,f_1,\dots,f_d)$, where $f_k$, $k=-1,0,\dots,d$ is the number of simplices in $K$ containing $k+1$ vertices. Using the $f$-vector, we can construct the $f$-polynomial:
-\begin{align*}
-    F_K(t)=\sum_{k=-1}^{d}f_kt^{k+1}=1+f_0t+f_1t^2+\dots+f_dt^{d+1}
-\end{align*}
-
-\textbf{Betti numbers.} Informally speaking, the $k$-th Betti number $\beta_k(K)$ of a simplicial complex $K$ represents the number of $k$-dimensional holes. In particular, $\beta_0(K)$ is the number of connected components of $K$. We could also consider the total Betti number (the sum of all Betti numbers): $\sum_{k}\beta_k(K)$.
-
-\textbf{Euler characteristic.} The Euler characteristic is given by
-\todo[inline]{motivation, proof}
-\begin{align*}
-    \chi(K)=\sum_{k=0}^{d}(-1)^{k}f_k(K)=\sum_{k=0}^{d}(-1)^{k}\beta_k(K)
-\end{align*}
-
-\textbf{Vertex cover number.} The vertex cover number is defined as
-\begin{align*}
-    \tau(K):=\min\{|C|:C\subseteq V(K),C\cap F\ne\emptyset\forall F\in\mathcal{F}(K)\}
-\end{align*}
-
-\textbf{Matching number.} The matching number is defined as
-\begin{align*}
-    \nu(K):=\max\{|M|:M\subseteq\mathcal{F}(K),F\cap F'=\emptyset\forall F,F'\in M, F\ne F'\}
-\end{align*}
-
-The matching number can be computed using the blossom algorithm.
-
-\textbf{Chain count.} The chain count of length $r\in\mathbb{N}$ is defined as
-\begin{align*}
-    c_r(K):=|\{(\sigma_0\nsubseteq\sigma_1\nsubseteq\dots\nsubseteq\sigma_r):\sigma_i\in K\}|
-\end{align*}
-
-\textbf{Degree-type counts.} The degree-type counts of dimension $t\in\mathbb{N}_0$ are defined as
-\begin{align*}
-    \Delta_t(K):=\max_{\tau\in K}|\{\sigma\in K:\tau\subseteq\sigma,\dim\sigma=t\}|
-\end{align*}
-
-% \begin{itemize}
-%     \item graph based descriptors of the 1-skeleton (graph-theoretic invariants): vertex cover number, number of connected components, arboricity, minimum spanning tree
-%     \item general construction?
-%     \item instead of $f$ vector count $k$ simplexes that are not part of $k+1$ simplexes
-%     \item integer linear programming?
-%     \item use persistence diagrams (distance between persistence diagrams), bar codes, birth and death intervals to construct matrix (persistence landscape norm, persistence entropy)
-%     \item $n_k(\epsilon)=\#\{(b,d)\in\text{PD}_k:b\le\epsilon<d\}$ or $L_k(\epsilon)=\sum_{(b,d)\in\text{PD}_k,b\le\epsilon<d}(d-b)$
-% \end{itemize}
-
-\begin{Rem}
-    Here we discuss how the functionals presented above simplify when the sampled points live on a line $\mathbb{R}^1$. Then there is only the $0$-th Betti number $\beta_0$ (the number of connected components). The $f$-vector only has one non-trivial component: the number of edges $f_1$.
-\end{Rem}
-
-
-We consider the following general form of the functional:
-\begin{align*}
-    f(K)=f_{\text{Top}}(K)\cdot f_{\text{Comb}}(K),
-\end{align*}
-where the topological part $f_{\text{Top}}$ is defined by
-% \begin{align*}
-%     f_{\text{Top}}(K)=\delta_{-1}+\sum_{j=0}^{d-1}\delta_j\beta_j^{\alpha_j}(K)+\delta_d\operatorname{cup}_R^{\alpha_d}(K)+\delta_{d+1}\operatorname{PC}^{\alpha_{d+1}}(K)
-% \end{align*}
-\begin{align*}
-    f_{\text{Top}}(K)=\delta_{-1}+\sum_{j=0}^{d-1}\delta_j\beta_j^{\alpha_j}(K)
-\end{align*}
-with coefficients $\delta_j\in\mathbb{R}$, $j=-1,0,\dots,d-1$ and $\alpha_j\in\mathbb{R}$, $j=0,\dots,d-1$. The combinatorial part $f_{\text{Comb}}$ is defined by
-% \begin{align*}
-%     f_{\text{Comb}}(K)&=\gamma_{-1}+\sum_{j=0}^{d}\gamma_jf_j^{\xi_j}(K)+\gamma_{d+1}\operatorname{CR}_{k,m}^{\xi_{d+1}}(K)+\gamma_{d+2}c_r^{\xi_{d+2}}(K)\\&
-%     +\gamma_{d+3}\Delta_t^{\xi_{d+3}}(K)+\gamma_{d+4}\tau^{\xi_{d+4}}(K)+\gamma_{d+5}\nu^{\xi_{d+5}}(K)
-% \end{align*}
-\begin{align*}
-    f_{\text{Comb}}(K)&=\gamma_{-1}+\sum_{j=0}^{d}\gamma_jf_j^{\xi_j}(K)
-\end{align*}
-with coefficients $\gamma_j\in\mathbb{R}$, $j=-1,0,\dots,d$ and $\xi_{j}\in\mathbb{R}$, $j=0,\dots,d$.
-
-This function serves as a building kit that lets us construct a polynomial-type combination of all the features that we introduced earlier. For example, setting $\delta_0=1$, $\delta_j=0$ for $j\ne 0$, $\gamma_1=1$, $\gamma_j=0$ for $j\ne1$ and $\alpha_j=\xi_j=1$ recovers the product $\beta_0f_1$ which is the number of edges $f_1$ multiplied by the number of connected components $\beta_0$ (see \cite{leonov-report}). If we consider a filtration $K_{\epsilon}$, then if $\epsilon$ increases, $f_1$ increases (more edges appear), but $\beta_0$ decreases (connected components merge), so this is a non-monotone kind of functional.
-
-\todo[inline]{Talk about how to recover the Euler characteristic using this functional}
-
-
-\begin{Def}
-    A triple $(f,\{K_i\},\oplus)$ is said to be spectrally optimizable if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$ with transition probability matrix $Q=(q_{ij})$ and stationary distribution $\pi^Q=(\pi_1^Q,\dots,\pi_N^Q)$.
-\end{Def}
-
-\todo[inline]{Is there an alternative MC construction that favors \enquote{kink points}?}
-
-\todo[inline]{Stationary distribution construction for asymmetric scale similarity matrices}
 
 \section{General methodology beyond complexes}
 
