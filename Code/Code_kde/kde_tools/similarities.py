@@ -173,23 +173,6 @@ def select_quadrature_similarity_bandwidths(
 
 # continue here
 
-def symmetrized_renyi_similarity(
-    densities: np.ndarray,
-    dx: float,
-    alpha: float,
-) -> np.ndarray:
-    """Return ``exp(-D)`` for the symmetrized Renyi divergence of gridded KDEs."""
-    if alpha <= 0 or np.isclose(alpha, 1.0):
-        raise ValueError("alpha must be positive and different from one.")
-    left = np.power(densities, alpha)
-    right = np.power(densities, 1.0 - alpha)
-    overlap = dx * (left @ right.T)
-    overlap = np.clip(overlap, np.finfo(float).tiny, 1.0)
-    divergence = (np.log(overlap) + np.log(overlap.T)) / (2.0 * (alpha - 1.0))
-    similarity = np.exp(-divergence)
-    np.fill_diagonal(similarity, 1.0)
-    return similarity
-
 
 def directional_kl_similarity(densities: np.ndarray, dx: float) -> np.ndarray:
     """Return the directed matrix ``exp(-KL(p_i || p_j))``."""
