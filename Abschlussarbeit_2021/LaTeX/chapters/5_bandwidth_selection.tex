@@ -87,10 +87,13 @@ A particularly broad and well studied class is that of Gaussian mixture models. 
 
 Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the MISE between a density $f$ of the Gaussian mixture model and its kernel density estimate with Gaussian kernel of order $r\in\mathbb{N}$. Here we state the formula for the special case $r=1$, that is, for the standard Gaussian kernel.
 
-\begin{align*}
-    \operatorname{MISE}(h)&=\frac{1}{2\sqrt{\pi}}\frac{1}{nh}+\left(1-\frac{1}{n}\right)\mathcal{K}(h,2)-2\mathcal{K}(h,1)+\mathcal{K}(h,0)\\
-    \mathcal{K}(h,q)&=\sum_{l,l'=1}^{L}\frac{w_lw_{l'}}{\sqrt{s_l^2+s_{l'}^2+qh^2}}\phi\left(\frac{m_l-m_{l'}}{\sqrt{s_l^2+s_{l'}^2+qh^2}}\right),\quad q\in\{0,1,2\}
-\end{align*}
+\begin{Prop}
+    The mean integrated squared error between a kernel density estimate $\hat{f}_h$ with Gaussian kernel and the density function $f$ of a Gaussian mixture model with weights $w_l$, variances $s_l^2$ and means $m_l$ is given by
+    \begin{align*}
+        \operatorname{MISE}(h)&=\frac{1}{2\sqrt{\pi}}\frac{1}{nh}+\left(1-\frac{1}{n}\right)\mathcal{K}(h,2)-2\mathcal{K}(h,1)+\mathcal{K}(h,0),\\
+        \mathcal{K}(h,q)&=\sum_{l,l'=1}^{L}\frac{w_lw_{l'}}{\sqrt{s_l^2+s_{l'}^2+qh^2}}\phi\left(\frac{m_l-m_{l'}}{\sqrt{s_l^2+s_{l'}^2+qh^2}}\right),\quad q\in\{0,1,2\}.
+    \end{align*}
+\end{Prop}
 
 
 
@@ -215,12 +218,21 @@ for some convex function $\phi$. An example of such a function $\phi$ is the cla
     \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(\beta+1)},\quad\beta\in\mathbb{R}\setminus\{0,-1\}
 \end{align*}
 
-Setting $\beta=1$ retrieves the squared $L^{2}$-norm, which is the only symmetric $\beta$-divergence:
+\todo[inline]{Condition on $F$ or $\phi$ under which Bregman divergence is symmetric}
+
+The $\beta$-divergence is thus given by
 \begin{align*}
-    D_{F_2}(p\|q)=\frac{1}{2}\|p-q\|_2^2
+    D_{\beta}(p,q)=\frac{1}{\beta(\beta-1)}\left(\int p^{\beta}+(\beta-1)\int q^{\beta}-\beta\int pq^{\beta-1}\right)
 \end{align*}
 
-\todo[inline]{Condition on $F$ or $\phi$ under which Bregman divergence is symmetric}
+If $\beta$ is a natural number, we can obtain an explicit formula for the $\beta$-divergence between Gaussian kernel density estimates. Let $k,l\in\mathbb{N}$ with $k+l=\beta$. Set $J_{k,l}(p,q)=\int p^kq^l$.
+
+\todo[inline]{State formula and prove or cite}
+
+Unfortunately, the computation cost is $\mathcal{O}(n^{\beta})$. Therefore, this formula is only computationally feasible for $\beta=2$. In this case, everything reduces to
+\begin{align*}
+    D_2(p,q)=\frac{1}{2}\|p-q\|_2^2
+\end{align*}
 
 
 \section{Assembly of Scale Similarity Matrices}
@@ -294,15 +306,6 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
     \item $S_{\gamma}(f,g)=\exp{(-\gamma\|f-g\|_2^2)}$
     \item $1-\operatorname{JS}(f,g)/\log{2}$
 \end{itemize}
-
-\subsection*{Explicit computations}
-
-Then $S_{\gamma}(\hat{f}_{h_i},\hat{f}_{h_j})$ can be computed explicitly by
-\begin{align*}
-    S_{\gamma}(\hat{f}_{h_i},\hat{f}_{h_j})&=\exp{(-\gamma D_{ij})}\\
-    D_{ij}&=I_{ii}+I_{jj}-2I_{ij}\\
-    I_{ij}&=\frac{1}{n^2}\frac{1}{\sqrt{2\pi(h_i^2+h_j^2)}}\sum_{k,l=1}^{n}\exp{\left(-\frac{(X_k-X_l)^{2}}{2(h_i^2+h_j^2)}\right)}
-\end{align*}
 
 \subsection*{Approximating integrals using quadrature}
 
