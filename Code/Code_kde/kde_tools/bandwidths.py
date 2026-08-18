@@ -2,9 +2,20 @@ from __future__ import annotations
 
 import numpy as np
 
-from .density import gaussian_mixture_mean_and_variance, trapezoidal_integral
+from .density import trapezoidal_integral
 
 # classical selectors
+
+def robust_scale_for_bandwidth(samples: np.ndarray) -> float:
+    """Return ``min(sample standard deviation, IQR / 1.349)``."""
+    samples = np.asarray(samples, dtype=float)
+    sample_std = float(np.std(samples, ddof=1)) if len(samples) > 1 else 1.0
+    q25, q75 = np.quantile(samples, [0.25, 0.75])
+    iqr_scale = float((q75 - q25) / 1.349) if q75 > q25 else sample_std
+    scale = min(sample_std, iqr_scale)
+    if not np.isfinite(scale) or scale <= 0:
+        scale = sample_std if sample_std > 0 else 1.0
+    return float(scale)
 
 def silverman_rule_of_thumb_bandwidth(samples: np.ndarray) -> float:
     """Silverman's robust rule of thumb, ``0.9 A n^(-1/5)``."""
@@ -97,52 +108,10 @@ def gaussian_mise_oracle_bandwidth(sample_size: int) -> float:
     return float((left + right) / 2.0)
 
 
-# continue here
-
-
-def bandwidth_grid_for_gaussian_experiment(
-    n: int,
-    sigma2: float,
-    n_h: int = 80,
-    h_min_factor: float = 0.25,
-    h_max_factor: float = 2.50,
-) -> np.ndarray:
-    """Return a logarithmic grid centered on the one-dimensional KDE rate."""
-    center = float(np.sqrt(sigma2)) * n ** (-1.0 / 5.0)
-    return np.geomspace(h_min_factor * center, h_max_factor * center, int(n_h))
-
-
-def bandwidth_grid_for_gaussian_mixture_experiment(
-    n: int,
-    weights: np.ndarray,
-    means: np.ndarray,
-    sigmas: np.ndarray,
-    n_h: int = 80,
-    h_min_factor: float = 0.08,
-    h_max_factor: float = 2.50,
-) -> np.ndarray:
-    """Return a logarithmic grid scaled by the target mixture variance."""
-    _, variance = gaussian_mixture_mean_and_variance(weights, means, sigmas)
-    center = np.sqrt(variance) * n ** (-1.0 / 5.0)
-    return np.geomspace(h_min_factor * center, h_max_factor * center, int(n_h))
-
-
+# for given h and grid h_1<...<h_N it finds i^* = argmin{|log h - log h_i|}
 def nearest_bandwidth_grid_index(h_value: float, h_grid: np.ndarray) -> int:
-    """Return the index nearest to a positive bandwidth on a logarithmic scale."""
     h_value = float(h_value)
     h_grid = np.asarray(h_grid, dtype=float)
     if not np.isfinite(h_value) or h_value <= 0:
         return int(len(h_grid) // 2)
     return int(np.argmin(np.abs(np.log(h_grid) - np.log(h_value))))
-
-
-def robust_scale_for_bandwidth(samples: np.ndarray) -> float:
-    """Return ``min(sample standard deviation, IQR / 1.349)``."""
-    samples = np.asarray(samples, dtype=float)
-    sample_std = float(np.std(samples, ddof=1)) if len(samples) > 1 else 1.0
-    q25, q75 = np.quantile(samples, [0.25, 0.75])
-    iqr_scale = float((q75 - q25) / 1.349) if q75 > q25 else sample_std
-    scale = min(sample_std, iqr_scale)
-    if not np.isfinite(scale) or scale <= 0:
-        scale = sample_std if sample_std > 0 else 1.0
-    return float(scale)

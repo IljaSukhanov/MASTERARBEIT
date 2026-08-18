@@ -5,7 +5,6 @@ from __future__ import annotations
 import numpy as np
 
 from .bandwidths import (
-    bandwidth_grid_for_gaussian_experiment,
     direct_plugin_bandwidth,
     least_squares_cv_bandwidth_index,
     nearest_bandwidth_grid_index,
@@ -120,14 +119,14 @@ def run_one_consistency_experiment(
     seed: int,
     n: int,
     sigma2: float,
-    n_h: int,
+    h_grid: np.ndarray,
     m_x: int,
     gamma: float | str = "auto",
 ) -> list[dict[str, float | int | str]]:
     """Run the oracle, Hellinger, and JS selectors for one consistency replicate."""
     rng = np.random.default_rng(seed)
     samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
-    h_grid = bandwidth_grid_for_gaussian_experiment(n, sigma2, n_h=n_h)
+    h_grid = np.asarray(h_grid, dtype=float)
     ise = exact_oracle_ise_values(samples, h_grid, sigma2)
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)

@@ -5,8 +5,6 @@ the individual modules when a notebook needs more control.
 """
 
 from .bandwidths import (
-    bandwidth_grid_for_gaussian_experiment,
-    bandwidth_grid_for_gaussian_mixture_experiment,
     direct_plugin_bandwidth,
     gaussian_mise_oracle_bandwidth,
     least_squares_cv_bandwidth_index,
@@ -39,8 +37,6 @@ from .similarities import (
 )
 
 __all__ = [
-    "bandwidth_grid_for_gaussian_experiment",
-    "bandwidth_grid_for_gaussian_mixture_experiment",
     "compute_quadrature_similarity_matrices",
     "direct_plugin_bandwidth",
     "directional_kl_similarity",

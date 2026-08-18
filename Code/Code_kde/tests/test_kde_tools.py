@@ -7,7 +7,6 @@ import unittest
 import numpy as np
 
 from kde_tools.bandwidths import (
-    bandwidth_grid_for_gaussian_experiment,
     gaussian_mise_oracle_bandwidth,
 )
 from kde_tools.density import (
@@ -73,7 +72,7 @@ class SimilarityTests(unittest.TestCase):
     def setUp(self) -> None:
         rng = np.random.default_rng(17)
         self.samples = rng.normal(size=30)
-        self.bandwidths = bandwidth_grid_for_gaussian_experiment(30, 1.0, n_h=7)
+        self.bandwidths = np.geomspace(0.15, 0.9, 7)
         self.x_grid = np.linspace(-8.0, 8.0, 4001)
         self.densities = gaussian_kde_values(
             self.samples, self.bandwidths, self.x_grid
