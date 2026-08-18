@@ -63,27 +63,14 @@ def direct_plugin_bandwidth(
     return float((kernel_roughness / (n * roughness)) ** (1.0 / 5.0))
 
 
-# continue here
-
-
-
-
+# computes h_oracle given that f ~ N(0,1) using nested intervals
 def gaussian_mise_oracle_bandwidth(sample_size: int) -> float:
-    """Finite-sample MISE-optimal bandwidth for Gaussian data and kernel.
-
-    The target distribution is standard normal.  Scale the returned bandwidth by
-    the target standard deviation for ``N(0, sigma2)`` data.
-    """
     root_pi = np.sqrt(np.pi)
 
     def mise(bandwidth: float) -> float:
         integrated_kernel_square = 1.0 / (2.0 * root_pi)
-        integrated_smoothed_square = 1.0 / (
-            2.0 * root_pi * np.sqrt(1.0 + bandwidth**2)
-        )
-        smoothed_truth_overlap = 1.0 / np.sqrt(
-            2.0 * np.pi * (2.0 + bandwidth**2)
-        )
+        integrated_smoothed_square = 1.0 / (2.0 * root_pi * np.sqrt(1.0 + bandwidth**2))
+        smoothed_truth_overlap = 1.0 / np.sqrt(2.0 * np.pi * (2.0 + bandwidth**2))
         integrated_truth_square = 1.0 / (2.0 * root_pi)
         return (
             integrated_kernel_square / (sample_size * bandwidth)
@@ -108,6 +95,9 @@ def gaussian_mise_oracle_bandwidth(sample_size: int) -> float:
             inner_right = left + golden_ratio * (right - left)
             value_right = mise(inner_right)
     return float((left + right) / 2.0)
+
+
+# continue here
 
 
 def bandwidth_grid_for_gaussian_experiment(

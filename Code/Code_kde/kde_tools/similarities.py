@@ -217,3 +217,203 @@ def toeplitz_corrected_choice(
         score = power_perron_vector(similarity) / power_perron_vector(null)
     index = int(np.argmax(score))
     return float(bandwidths[index]), index, score
+
+
+################################################################################
+# Rényi divergence and similarity functions
+################################################################################
+
+
+def _trapezoidal_weights(x_grid: np.ndarray) -> np.ndarray:
+    """Return composite-trapezoidal weights for a one-dimensional grid."""
+    x_grid = np.asarray(x_grid, dtype=float)
+    if x_grid.ndim != 1 or len(x_grid) < 2:
+        raise ValueError("x_grid must be one-dimensional with at least two nodes.")
+
+    steps = np.diff(x_grid)
+    if np.any(steps <= 0.0):
+        raise ValueError("x_grid must be strictly increasing.")
+
+    weights = np.empty_like(x_grid)
+    weights[0] = steps[0] / 2.0
+    weights[-1] = steps[-1] / 2.0
+    weights[1:-1] = (steps[:-1] + steps[1:]) / 2.0
+    return weights
+
+
+def _log_trapezoidal_integral(
+        log_values: np.ndarray,
+        x_grid: np.ndarray,
+        axis: int = -1,
+) -> np.ndarray:
+    """Evaluate a trapezoidal integral stably from logarithmic values."""
+    log_values = np.asarray(log_values, dtype=float)
+    axis = np.core.numeric.normalize_axis_index(axis, log_values.ndim)
+    weights = _trapezoidal_weights(x_grid)
+    if log_values.shape[axis] != len(weights):
+        raise ValueError("x_grid must match the selected integration axis.")
+
+    weight_shape = [1] * log_values.ndim
+    weight_shape[axis] = len(weights)
+    weighted_log_values = log_values + np.log(weights).reshape(weight_shape)
+    maximum = np.max(weighted_log_values, axis=axis, keepdims=True)
+    return np.squeeze(
+        maximum
+        + np.log(
+            np.sum(
+                np.exp(weighted_log_values - maximum),
+                axis=axis,
+                keepdims=True,
+            )
+        ),
+        axis=axis,
+    )
+
+
+def renyi_divergence_matrix(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+        alpha: float,
+        bandwidths: np.ndarray | None = None,
+        eps: float = 1e-300,
+) -> np.ndarray:
+    """Compute all directed Rényi divergences by stable quadrature.
+
+    Rows and columns correspond to densities, so entry ``(i, j)`` is
+    ``R_alpha(p_i || p_j)``. At ``alpha = 1`` the KL limit is used.
+    Supplying Gaussian-KDE bandwidths also detects divergent full-line pairs
+    when ``alpha > 1``.
+    """
+    alpha = float(alpha)
+    if alpha <= 0.0:
+        raise ValueError("alpha must be strictly positive.")
+    if eps <= 0.0:
+        raise ValueError("eps must be strictly positive.")
+
+    values = np.asarray(density_values, dtype=float)
+    x_grid = np.asarray(x_grid, dtype=float)
+    if values.ndim != 2:
+        raise ValueError("density_values must be a two-dimensional array.")
+    if values.shape[1] != len(x_grid):
+        raise ValueError("x_grid must match the density grid axis.")
+    if np.any(values < 0.0):
+        raise ValueError("Density values must be nonnegative.")
+
+    values = np.maximum(values, eps)
+    log_values = np.log(values)
+    number_of_densities = len(values)
+    divergence = np.empty((number_of_densities, number_of_densities), dtype=float)
+
+    if np.isclose(alpha, 1.0, rtol=0.0, atol=1e-12):
+        for i in range(number_of_densities):
+            divergence[i] = trapezoidal_integral(
+                values=values[i][None, :]
+                * (log_values[i][None, :] - log_values),
+                x_grid=x_grid,
+                axis=1,
+            )
+    else:
+        for i in range(number_of_densities):
+            log_integrands = (
+                alpha * log_values[i][None, :]
+                + (1.0 - alpha) * log_values
+            )
+            log_integrals = _log_trapezoidal_integral(
+                log_values=log_integrands,
+                x_grid=x_grid,
+                axis=1,
+            )
+            divergence[i] = log_integrals / (alpha - 1.0)
+
+    finite = np.isfinite(divergence)
+    divergence[finite] = np.maximum(divergence[finite], 0.0)
+    np.fill_diagonal(divergence, 0.0)
+
+    if alpha > 1.0 and bandwidths is not None:
+        bandwidths = np.asarray(bandwidths, dtype=float)
+        if bandwidths.ndim != 1 or len(bandwidths) != number_of_densities:
+            raise ValueError("bandwidths must contain one value per density.")
+        if np.any(bandwidths <= 0.0):
+            raise ValueError("Bandwidths must be strictly positive.")
+
+        h_i = bandwidths[:, None]
+        h_j = bandwidths[None, :]
+        divergent_tails = alpha / h_i**2 + (1.0 - alpha) / h_j**2 <= 0.0
+        divergence[divergent_tails] = np.inf
+
+    return divergence
+
+
+def symmetrized_renyi_divergence_matrix(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+        alpha: float,
+        bandwidths: np.ndarray | None = None,
+        eps: float = 1e-300,
+) -> np.ndarray:
+    """Return the arithmetic symmetrization of the directed Rényi matrix."""
+    divergence = renyi_divergence_matrix(
+        density_values=density_values,
+        x_grid=x_grid,
+        alpha=alpha,
+        bandwidths=bandwidths,
+        eps=eps,
+    )
+    return 0.5 * (divergence + divergence.T)
+
+
+def renyi_similarity_matrix(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+        alpha: float,
+        gamma: float = 1.0,
+        symmetrized: bool = False,
+        bandwidths: np.ndarray | None = None,
+        eps: float = 1e-300,
+) -> np.ndarray:
+    """Transform a directed or symmetrized Rényi matrix using ``exp(-gamma D)``."""
+    gamma = float(gamma)
+    if gamma <= 0.0:
+        raise ValueError("gamma must be strictly positive.")
+
+    divergence = renyi_divergence_matrix(
+        density_values=density_values,
+        x_grid=x_grid,
+        alpha=alpha,
+        bandwidths=bandwidths,
+        eps=eps,
+    )
+    if symmetrized:
+        divergence = 0.5 * (divergence + divergence.T)
+
+    similarity = np.exp(-gamma * divergence)
+    np.fill_diagonal(similarity, 1.0)
+    return similarity
+
+
+def symmetrized_renyi_similarity(
+        densities: np.ndarray,
+        dx: float,
+        alpha: float,
+        gamma: float = 1.0,
+        bandwidths: np.ndarray | None = None,
+        eps: float = 1e-300,
+) -> np.ndarray:
+    """Compute a symmetrized Rényi similarity on a periodic FFT grid."""
+    densities = np.asarray(densities, dtype=float)
+    if densities.ndim != 2:
+        raise ValueError("densities must be a two-dimensional array.")
+    if dx <= 0.0:
+        raise ValueError("dx must be strictly positive.")
+
+    x_grid = np.arange(densities.shape[1] + 1, dtype=float) * float(dx)
+    periodic_densities = np.concatenate((densities, densities[:, :1]), axis=1)
+    return renyi_similarity_matrix(
+        density_values=periodic_densities,
+        x_grid=x_grid,
+        alpha=alpha,
+        gamma=gamma,
+        symmetrized=True,
+        bandwidths=bandwidths,
+        eps=eps,
+    )
