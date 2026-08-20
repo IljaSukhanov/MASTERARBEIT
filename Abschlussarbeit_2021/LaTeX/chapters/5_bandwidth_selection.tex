@@ -155,10 +155,20 @@ The two most important classes of divergences are $f$-divergences and Bregman di
 
 \subsection{\texorpdfstring{$f$}{f}-divergences}
 
+\subsubsection*{Definition and Motivation}
+
+\todo[inline]{Connect $f$-divergence to generalized entropy}
+
 Let $f:\mathbb{R}_{\ge0}\to\mathbb{R}\cup\{+\infty\}$ be a convex function. The $f$-divergence is defined as
 \begin{align*}
     D_f(p\|q)=\int f\left(\frac{p(x)}{q(x)}\right)q(x)\,dx
 \end{align*}
+
+The $f$-divergence is symmetric iff $f(t)=tf(1/t)+c(t-1)$ for some constant $c$. In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance). The only symmetric $\chi^{\alpha}$-divergence is the total variation distance. The JS-divergence is also symmetric.
+
+\todo[inline]{Cite or prove the symmetry characterization}
+
+\subsubsection*{Amari alpha divergence}
 
 A prominent parametrized family of $f$-divergences is the so called $\alpha$-divergence (see \cite{cichocki_families_2010}) where the function $f=f_{\alpha}$ is given by
 \begin{align*}
@@ -173,7 +183,11 @@ By taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whe
 
 \todo[inline]{Mention two different parameterizations}
 
+\subsubsection*{chi squared divergence (total variance)}
+
 Another class of divergences are the $\chi^{\alpha}$-divergences (see~[]). They are determined by $f_{\alpha}(t)=(1/2)|t-1|^{\alpha}$, where $\alpha\ge1$. Setting $\alpha=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q)=(1/2)\int|p-q|$.
+
+\subsubsection*{JS divergence}
 
 Another important divergence that belongs to the class of $f$-divergences is the Jensen Shannon divergence. The function $f$ is set to be
 \begin{align*}
@@ -185,17 +199,13 @@ The divergence is then given by
 \end{align*}
 where $H(f)=-\int f\log{f}$ is the Shannon entropy.
 
-The $f$-divergence is symmetric iff $f(t)=tf(1/t)+c(t-1)$ for some constant $c$. In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance). The only symmetric $\chi^{\alpha}$-divergence is the total variation distance. The JS-divergence is also symmetric.
-
-\todo[inline]{Cite or prove the symmetry characterization}
-
-\todo[inline]{Connect $f$-divergence to generalized entropy}
-
 The class of Rényi divergences is defined as
 \begin{align*}
     R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
 \end{align*}
 where $\alpha\in\mathbb{R}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
+
+\subsubsection*{Renyi divergence}
 
 The Rény divergence and the $\alpha$-divergence are different transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
 \begin{align*}
@@ -424,13 +434,7 @@ Apply the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{
 
 \subsection*{Sample distributions}
 
-Let $X_1,\dots,X_n\sim f$. In our experiments, we test
-\begin{itemize}
-    \item $f$ standard normal $N(0,\sigma^2)$, $\sigma^2>0$
-    \item $f$ multi-modal: $f=\sum_{i=1}^{n}w_if_i$, where $w_i\ge0$ and $\sum_iw_i=1$
-\end{itemize}
-
-The number of sampled points $n$ is an important parameter. In order to study consistency, we test $n=100,200,\dots,1000,\dots$
+Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f(x)=\sigma^{-1}\phi(\sigma^{-1}x)$. That is, the data comes from the normal distribution with variance $\sigma^2>0$.
 
 \subsection*{Behavior under resampling}
 
