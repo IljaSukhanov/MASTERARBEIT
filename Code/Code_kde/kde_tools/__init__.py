@@ -25,9 +25,15 @@ from .density import (
     trapezoidal_integral,
 )
 from .similarities import (
+    beta2_divergence_matrix,
+    beta2_divergence_matrix_fft,
+    beta2_similarity_matrix,
+    beta2_similarity_matrix_fft,
     compute_quadrature_similarity_matrices,
     directional_kl_similarity,
+    first_order_perron_vector,
     perron_vector,
+    population_gaussian_beta2_divergence_matrix,
     quadrature_similarity_matrices,
     select_quadrature_similarity_bandwidths,
     select_spectral_bandwidth,
@@ -37,9 +43,14 @@ from .similarities import (
 )
 
 __all__ = [
+    "beta2_divergence_matrix",
+    "beta2_divergence_matrix_fft",
+    "beta2_similarity_matrix",
+    "beta2_similarity_matrix_fft",
     "compute_quadrature_similarity_matrices",
     "direct_plugin_bandwidth",
     "directional_kl_similarity",
+    "first_order_perron_vector",
     "exact_gaussian_kde_l2_gram",
     "exact_mixture_ise_values",
     "exact_oracle_ise_values",
@@ -51,6 +62,7 @@ __all__ = [
     "mixture_density",
     "nearest_bandwidth_grid_index",
     "perron_vector",
+    "population_gaussian_beta2_divergence_matrix",
     "quadrature_grid_for_kdes",
     "quadrature_similarity_matrices",
     "robust_scale_for_bandwidth",

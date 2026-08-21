@@ -18,6 +18,13 @@ from kde_tools.density import (
 )
 from kde_tools.fft import kde_family_fft
 from kde_tools.similarities import (
+    beta2_divergence_matrix,
+    beta2_divergence_matrix_fft,
+    beta2_similarity_matrix,
+    beta2_similarity_matrix_fft,
+    first_order_perron_vector,
+    perron_vector,
+    population_gaussian_beta2_divergence_matrix,
     quadrature_similarity_matrices,
     select_spectral_bandwidth,
     squared_l2_distance_from_gram,
@@ -102,6 +109,83 @@ class SimilarityTests(unittest.TestCase):
         expected = squared_l2_distance_from_gram(gram)
         np.testing.assert_allclose(result["l2_squared"], expected, atol=1e-14)
         self.assertIn(result["selected_index"], range(len(self.bandwidths)))
+
+    def test_exact_beta2_divergence_matches_fine_quadrature(self) -> None:
+        numerical = 0.5 * trapezoidal_integral(
+            (
+                self.densities[:, None, :]
+                - self.densities[None, :, :]
+            ) ** 2,
+            self.x_grid,
+            axis=2,
+        )
+        exact = beta2_divergence_matrix(self.samples, self.bandwidths)
+        np.testing.assert_allclose(exact, numerical, rtol=2e-9, atol=2e-11)
+        np.testing.assert_allclose(exact, exact.T, atol=1e-14)
+        np.testing.assert_allclose(np.diag(exact), 0.0, atol=1e-14)
+
+    def test_beta2_similarity_is_exponential_of_divergence(self) -> None:
+        divergence = beta2_divergence_matrix(self.samples, self.bandwidths)
+        similarity = beta2_similarity_matrix(
+            self.samples,
+            self.bandwidths,
+            tau=1.7,
+        )
+        np.testing.assert_allclose(similarity, np.exp(-1.7 * divergence))
+        np.testing.assert_allclose(np.diag(similarity), 1.0)
+
+    def test_fft_beta2_matches_exact_gaussian_kde_formula(self) -> None:
+        exact = beta2_divergence_matrix(self.samples, self.bandwidths)
+        fft = beta2_divergence_matrix_fft(
+            self.samples,
+            self.bandwidths,
+            half_width=12.0,
+            spatial_points=4096,
+        )
+        np.testing.assert_allclose(fft, exact, rtol=1e-10, atol=1e-12)
+
+        similarity = beta2_similarity_matrix_fft(
+            self.samples,
+            self.bandwidths,
+            tau=1.7,
+            half_width=12.0,
+            spatial_points=4096,
+        )
+        np.testing.assert_allclose(similarity, np.exp(-1.7 * exact), atol=1e-12)
+
+    def test_population_gaussian_beta2_matrix_matches_quadrature(self) -> None:
+        population = population_gaussian_beta2_divergence_matrix(
+            self.bandwidths,
+            target_sigma=1.0,
+        )
+        variances = 1.0 + self.bandwidths**2
+        population_densities = np.stack(
+            [
+                np.exp(-self.x_grid**2 / (2.0 * variance))
+                / np.sqrt(2.0 * np.pi * variance)
+                for variance in variances
+            ]
+        )
+        numerical = 0.5 * trapezoidal_integral(
+            (
+                population_densities[:, None, :]
+                - population_densities[None, :, :]
+            ) ** 2,
+            self.x_grid,
+            axis=2,
+        )
+        np.testing.assert_allclose(population, numerical, atol=1e-13)
+
+    def test_first_order_perron_vector_has_second_order_error(self) -> None:
+        divergence = population_gaussian_beta2_divergence_matrix(
+            self.bandwidths,
+            target_sigma=1.0,
+        )
+        tau = 1e-3
+        exact = perron_vector(np.exp(-tau * divergence))
+        approximation = first_order_perron_vector(divergence, tau=tau)
+        np.testing.assert_allclose(approximation.sum(), 1.0, atol=1e-15)
+        self.assertLess(np.max(np.abs(exact - approximation)), 1e-9)
 
     def test_standard_normal_mise_oracle_regression_value(self) -> None:
         self.assertAlmostEqual(gaussian_mise_oracle_bandwidth(200), 0.383039449, places=8)
