@@ -1,4 +1,4 @@
-\chapter{Geometric order selection for autoregressive processes}
+\chapter{Geometric Estimation of Autoregressive Processes}
 
 The original goal of this chapter was to apply the spectral scale selection developed in~\cite{Baralic2026} to recover the order $p$ of autoregressive time series. Even though the scale selection principle is primarily developed for applications in TDA, the hope was to use the well known sliding window embedding as a bridge between TDA and time series analysis. In the process of studying this problem, an alternative convex-geometric direction emerged, while the TDA approach turned out to be unfruitful. This chapter presents a new AR order selection method using ideas from convex geometry.
 
@@ -151,7 +151,7 @@ Using Equation~\eqref{eq:sliding_window_point_representation} we see that the su
 
 \todo[inline]{write approximation speed as new lemma}
 
-In fact, using Lemma~\ref{lem:upper_bound_psi_j}, we can derive the following converge speed result.
+In fact, using Lemma~\ref{lem:upper_bound_psi_j}, we can derive the following converge speed result. It tells out that the approximating zonotope converges to the zonoid faster if the underlying AR process is \enquote{more causal}.
 
 \begin{Prop}
     Let $\mathcal{Z}^{(k)}$ and $\mathcal{Z}^{(k)}_n$ be like above coming from an causal autoregressive process where the impulse sequence $\{\psi_j\}$ fulfills $|\psi_j|\le C\rho^{j}$ for some constants $C>0$ and $\rho\in(0,1)$. Then
@@ -178,14 +178,13 @@ In fact, using Lemma~\ref{lem:upper_bound_psi_j}, we can derive the following co
     \end{align*}
     Using Lemma~\ref{lem:upper_bound_psi_j} we obtain
     \begin{align*}
-        \|g_j^{(k)}\|=\sqrt{\sum_{r=0}^{k-1}|\psi_{j-r}|^2}\le\sqrt{\sum_{r=0}^{k-1}C^2\rho^{2j}\rho^{-2r}}=C\rho^{j}\dots
+        \|g_j^{(k)}\|=\sqrt{\sum_{r=0}^{k-1}|\psi_{j-r}|^2}\le\sqrt{\sum_{r=0}^{k-1}C^2\rho^{2j}\rho^{-2r}}=C\rho^{j-k+1}\sqrt{\frac{1-\rho^{2k}}{1-\rho^2}}\le C\sqrt{k}\rho^{j-k+1}
+    \end{align*}
+    In the end
+    \begin{align*}
+        d_H(\mathcal{Z}_n^{(k)},\mathcal{Z}^{(k)})\le\sum_{j=n+1}^{\infty}\|g_j^{(k)}\|\le C\sqrt{k}\frac{1}{\rho^{k-2}}\rho^{n}\sum_{j=0}^{\infty}\rho^{j}\le C\frac{\sqrt{k}}{1-\rho}\frac{1}{\rho^{k-2}}\rho^{n}
     \end{align*}
 \end{proof}
-
-we get
-\begin{align*}
-    d_H(\mathcal{Z}^{(k)}_n,\mathcal{Z}^{(k)})=\sup_{z\in\mathcal{Z}^{(k)}}d(\mathcal{Z}_n^{(k)},z)\le\sum_{j=n+1}^{\infty}\|g_j^{(k)}\|\le C\frac{\sqrt{k}}{1-\rho}\frac{1}{\rho^{k-2}}\rho^{n}
-\end{align*}
 
 A convex body is a compact nonempty convex set. As a convex geometric functional on a convex body $K$ we use its minimum width. For a rigorous notion of width, we introduce the support function.
 
