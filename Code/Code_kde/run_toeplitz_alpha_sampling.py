@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Monte Carlo experiment for Toeplitz-corrected spectral KDE bandwidths.
 
-The KDEs are evaluated by Fourier inversion on a fine periodic spatial grid.
-For each Rényi order, the divergence is symmetrized before constructing
+The KDEs are evaluated directly on an ordinary quadrature grid. For each
+Rényi order, the divergence is symmetrized before constructing
 S = exp(-D).  The selected bandwidth maximizes v / v0, where v is the Perron
 vector of S and v0 is the Perron vector of the symmetric Toeplitz projection.
 """
@@ -16,10 +16,10 @@ from time import perf_counter
 
 import numpy as np
 
-from kde_tools.fft import kde_family_fft
+from kde_tools.density import gaussian_kde_values, quadrature_grid_for_kdes
 from kde_tools.experiments import summarize
 from kde_tools.similarities import (
-    symmetrized_renyi_similarity,
+    renyi_similarity_matrix,
     toeplitz_corrected_choice,
 )
 
@@ -29,8 +29,8 @@ def main() -> None:
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--sample-size", type=int, default=200)
     parser.add_argument("--seed", type=int, default=20260816)
-    parser.add_argument("--spatial-points", type=int, default=8192)
-    parser.add_argument("--half-width", type=float, default=12.0)
+    parser.add_argument("--quadrature-points", type=int, default=4001)
+    parser.add_argument("--padding", type=float, default=8.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -46,12 +46,24 @@ def main() -> None:
     start = perf_counter()
     for run in range(args.runs):
         sample = rng.normal(size=args.sample_size)
-        densities, dx = kde_family_fft(sample, bandwidths, args.half_width, args.spatial_points)
+        x_grid = quadrature_grid_for_kdes(
+            sample,
+            bandwidths,
+            m_x=args.quadrature_points,
+            padding=args.padding,
+        )
+        densities = gaussian_kde_values(sample, bandwidths, x_grid)
 
         # Orders .25 and .75 share the same pair of directional overlaps;
         # constructing them separately keeps the implementation transparent.
         for alpha in alphas:
-            similarity = symmetrized_renyi_similarity(densities, dx, alpha)
+            similarity = renyi_similarity_matrix(
+                density_values=densities,
+                x_grid=x_grid,
+                alpha=alpha,
+                symmetrized=True,
+                bandwidths=bandwidths,
+            )
             choice, index, _ = toeplitz_corrected_choice(similarity, bandwidths)
             selected[str(alpha)].append(choice)
             selected_indices[str(alpha)].append(index)
@@ -74,8 +86,10 @@ def main() -> None:
             "similarity": "exp(-D)",
             "selection": "argmax(v/v0)",
             "seed": args.seed,
-            "spatial_points": args.spatial_points,
-            "spatial_domain": [-args.half_width, args.half_width],
+            "density_evaluation": "direct Gaussian KDE",
+            "integration": "composite trapezoidal quadrature",
+            "quadrature_points": args.quadrature_points,
+            "quadrature_padding": args.padding,
             "oracle_bandwidth": 0.383039449,
         },
         "summary": {alpha: summarize(np.asarray(values)) for alpha, values in selected.items()},

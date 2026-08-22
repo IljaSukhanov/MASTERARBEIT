@@ -68,9 +68,26 @@ def gaussian_kde_values(
     samples = np.asarray(samples, dtype=float)
     h_grid = np.asarray(h_grid, dtype=float)
     x_grid = np.asarray(x_grid, dtype=float)
-    z = (x_grid[None, None, :] - samples[None, :, None]) / h_grid[:, None, None] # z_{j,i,k} = (x_k - X_i) / h_j
-    kernels = np.exp(-0.5 * z**2) / np.sqrt(2.0 * np.pi)
-    return kernels.mean(axis=1) / h_grid[:, None]
+    if samples.ndim != 1 or len(samples) == 0:
+        raise ValueError("samples must be a nonempty one-dimensional array.")
+    if h_grid.ndim != 1 or len(h_grid) == 0:
+        raise ValueError("h_grid must be a nonempty one-dimensional array.")
+    if np.any(h_grid <= 0.0):
+        raise ValueError("bandwidths must be strictly positive.")
+    if x_grid.ndim != 1 or len(x_grid) < 2:
+        raise ValueError("x_grid must contain at least two points.")
+
+    # Work one bandwidth at a time.  The previous fully broadcasted form used
+    # an N-by-n-by-m temporary array, which made ordinary quadrature needlessly
+    # memory intensive for the main consistency experiments.
+    densities = np.empty((len(h_grid), len(x_grid)), dtype=float)
+    normalization = np.sqrt(2.0 * np.pi)
+    differences = x_grid[None, :] - samples[:, None]
+    for index, bandwidth in enumerate(h_grid):
+        z = differences / bandwidth
+        densities[index] = np.exp(-0.5 * z**2).mean(axis=0)
+        densities[index] /= normalization * bandwidth
+    return densities
 
 
 # computes grid on which to evaluate the KDEs: a=x_1<...<x_m=b, where a = min(samples) - padding * max(h_grid), b = max(samples) + padding * max(h_grid)
@@ -82,6 +99,14 @@ def quadrature_grid_for_kdes(
 ) -> np.ndarray:
     samples = np.asarray(samples, dtype=float)
     h_grid = np.asarray(h_grid, dtype=float)
+    if samples.ndim != 1 or len(samples) == 0:
+        raise ValueError("samples must be a nonempty one-dimensional array.")
+    if h_grid.ndim != 1 or len(h_grid) == 0 or np.any(h_grid <= 0.0):
+        raise ValueError("h_grid must contain strictly positive bandwidths.")
+    if int(m_x) < 2:
+        raise ValueError("m_x must be at least two.")
+    if padding <= 0.0:
+        raise ValueError("padding must be strictly positive.")
     left = float(np.min(samples)) - padding * float(np.max(h_grid))
     right = float(np.max(samples)) + padding * float(np.max(h_grid))
     return np.linspace(left, right, int(m_x))

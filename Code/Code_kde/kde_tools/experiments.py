@@ -36,6 +36,16 @@ def _spectral_indices(similarities: dict[str, np.ndarray | float]) -> dict[str, 
     }
 
 
+def _quadrature_gamma(gamma: float | str) -> float:
+    """Resolve the experiment-level ``auto`` setting for quadrature methods."""
+    if gamma == "auto":
+        return 1.0
+    value = float(gamma)
+    if value <= 0.0:
+        raise ValueError("gamma must be positive.")
+    return value
+
+
 def run_one_spectral_vs_oracle_experiment(
     seed: int,
     n: int,
@@ -48,7 +58,11 @@ def run_one_spectral_vs_oracle_experiment(
     samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
     ise = exact_oracle_ise_values(samples, h_grid, sigma2)
     oracle_index = int(np.argmin(ise))
-    spectral = select_spectral_bandwidth(samples, h_grid, gamma=gamma)
+    spectral = select_spectral_bandwidth(
+        samples,
+        h_grid,
+        gamma=_quadrature_gamma(gamma),
+    )
     spectral_index = int(spectral["selected_index"])
     return {
         "seed": seed,
@@ -62,7 +76,6 @@ def run_one_spectral_vs_oracle_experiment(
     }
 
 
-###CHANGED
 def run_one_all5_bandwidth_experiment(
     seed: int,
     n: int,
@@ -78,13 +91,14 @@ def run_one_all5_bandwidth_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
+    resolved_gamma = _quadrature_gamma(gamma)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,
             x_grid,
             similarity_name=name,
-            gamma=gamma,
-        )[name]
+            gamma=resolved_gamma,
+        )
         for name in (
             "tv_overlap",
             "hellinger_affinity",
@@ -98,7 +112,7 @@ def run_one_all5_bandwidth_experiment(
         "oracle_index": oracle_index,
         "oracle_h": float(h_grid[oracle_index]),
         "oracle_l2_error": float(np.sqrt(max(ise[oracle_index], 0.0))),
-        "gamma": 1.0 if gamma == "auto" else float(gamma),
+        "gamma": resolved_gamma,
     }
     key_prefix = {
         "tv_overlap": "tv",
@@ -114,7 +128,6 @@ def run_one_all5_bandwidth_experiment(
     return result
 
 
-###CHANGED
 def run_one_consistency_experiment(
     seed: int,
     n: int,
@@ -131,13 +144,14 @@ def run_one_consistency_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
+    resolved_gamma = _quadrature_gamma(gamma)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,
             x_grid,
             similarity_name=name,
-            gamma=gamma,
-        )[name]
+            gamma=resolved_gamma,
+        )
         for name in ("hellinger_affinity", "js_similarity")
     }
     hellinger_index = int(
@@ -168,7 +182,6 @@ def run_one_consistency_experiment(
     return rows
 
 
-###CHANGED
 def run_one_mixture_bandwidth_experiment(
     seed: int,
     n: int,
@@ -186,13 +199,14 @@ def run_one_mixture_bandwidth_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
+    resolved_gamma = _quadrature_gamma(gamma)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,
             x_grid,
             similarity_name=name,
-            gamma=gamma,
-        )[name]
+            gamma=resolved_gamma,
+        )
         for name in (
             "tv_overlap",
             "hellinger_affinity",
@@ -225,7 +239,7 @@ def run_one_mixture_bandwidth_experiment(
         "silverman_h": float(h_grid[silverman_index]),
         "silverman_raw_h": float(silverman_raw_h),
         "silverman_l2_error": float(np.sqrt(max(ise[silverman_index], 0.0))),
-        "gamma": 1.0 if gamma == "auto" else float(gamma),
+        "gamma": resolved_gamma,
     }
     key_prefix = {
         "tv_overlap": "tv",
@@ -244,10 +258,12 @@ def run_one_mixture_bandwidth_experiment(
 def summarize(values: np.ndarray) -> dict[str, float]:
     """Return the summary statistics shared by the command-line experiments."""
     values = np.asarray(values, dtype=float)
+    if values.ndim != 1 or len(values) == 0:
+        raise ValueError("values must be a nonempty one-dimensional array.")
     return {
         "mean": float(np.mean(values)),
         "median": float(np.median(values)),
-        "sd": float(np.std(values, ddof=1)),
+        "sd": float(np.std(values, ddof=1)) if len(values) > 1 else 0.0,
         "q05": float(np.quantile(values, 0.05)),
         "q95": float(np.quantile(values, 0.95)),
         "min": float(np.min(values)),

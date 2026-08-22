@@ -1,0 +1,53 @@
+"""Regression tests for the explicitly optional Fourier subpackage."""
+
+from __future__ import annotations
+
+import unittest
+
+import numpy as np
+
+from kde_tools.fourier import (
+    beta2_divergence_matrix_fft,
+    beta2_similarity_matrix_fft,
+    kde_family_fft,
+)
+from kde_tools.similarities import beta2_divergence_matrix
+
+
+class OptionalFourierTests(unittest.TestCase):
+    def setUp(self) -> None:
+        rng = np.random.default_rng(20260817)
+        self.samples = rng.normal(size=35)
+        self.bandwidths = np.geomspace(0.15, 0.9, 6)
+
+    def test_reconstructed_family_is_normalized(self) -> None:
+        densities, dx = kde_family_fft(
+            self.samples,
+            self.bandwidths,
+            half_width=12.0,
+            spatial_points=4096,
+        )
+        np.testing.assert_allclose(densities.sum(axis=1) * dx, 1.0, atol=1e-12)
+
+    def test_fft_beta2_matches_exact_gaussian_formula(self) -> None:
+        exact = beta2_divergence_matrix(self.samples, self.bandwidths)
+        approximate = beta2_divergence_matrix_fft(
+            self.samples,
+            self.bandwidths,
+            half_width=12.0,
+            spatial_points=4096,
+        )
+        np.testing.assert_allclose(approximate, exact, rtol=1e-10, atol=1e-12)
+
+        similarity = beta2_similarity_matrix_fft(
+            self.samples,
+            self.bandwidths,
+            tau=1.7,
+            half_width=12.0,
+            spatial_points=4096,
+        )
+        np.testing.assert_allclose(similarity, np.exp(-1.7 * exact), atol=1e-12)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""KL versus reverse-KL sampling experiment with Doob centrality."""
+"""KL versus reverse-KL experiment using ordinary KDE quadrature."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from time import perf_counter
 import numpy as np
 
 from kde_tools.bandwidths import gaussian_mise_oracle_bandwidth
-from kde_tools.fft import kde_family_fft
+from kde_tools.density import gaussian_kde_values, quadrature_grid_for_kdes
 from kde_tools.experiments import summarize
 from kde_tools.similarities import directional_kl_similarity, toeplitz_corrected_choice
 
@@ -21,8 +21,8 @@ def main() -> None:
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--sample-size", type=int, default=200)
     parser.add_argument("--seed", type=int, default=20260816)
-    parser.add_argument("--spatial-points", type=int, default=8192)
-    parser.add_argument("--half-width", type=float, default=12.0)
+    parser.add_argument("--quadrature-points", type=int, default=4001)
+    parser.add_argument("--padding", type=float, default=8.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -38,8 +38,14 @@ def main() -> None:
     start = perf_counter()
     for run in range(args.runs):
         sample = rng.normal(size=args.sample_size)
-        densities, dx = kde_family_fft(sample, bandwidths, args.half_width, args.spatial_points)
-        forward_similarity = directional_kl_similarity(densities, dx)
+        x_grid = quadrature_grid_for_kdes(
+            sample,
+            bandwidths,
+            m_x=args.quadrature_points,
+            padding=args.padding,
+        )
+        densities = gaussian_kde_values(sample, bandwidths, x_grid)
+        forward_similarity = directional_kl_similarity(densities, x_grid)
         similarities = {"KL": forward_similarity, "reverse_KL": forward_similarity.T}
         for name, similarity in similarities.items():
             choice, index, score = toeplitz_corrected_choice(
@@ -67,8 +73,10 @@ def main() -> None:
             "null": "signed-lag Toeplitz projection",
             "selection": "argmax(pi/pi0)",
             "seed": args.seed,
-            "spatial_points": args.spatial_points,
-            "spatial_domain": [-args.half_width, args.half_width],
+            "density_evaluation": "direct Gaussian KDE",
+            "integration": "composite trapezoidal quadrature",
+            "quadrature_points": args.quadrature_points,
+            "quadrature_padding": args.padding,
             "oracle_bandwidth": gaussian_mise_oracle_bandwidth(args.sample_size),
         },
         "summary": {name: summarize(np.asarray(values)) for name, values in selected.items()},

@@ -8,7 +8,6 @@ from .density import (
     quadrature_grid_for_kdes,
     trapezoidal_integral,
 )
-from .fft import kde_family_fft
 
 
 SIMILARITY_NAMES = (
@@ -51,50 +50,6 @@ def beta2_similarity_matrix(
     if tau <= 0.0:
         raise ValueError("tau must be positive.")
     divergence = beta2_divergence_matrix(samples=samples, h_grid=h_grid)
-    similarity = np.exp(-float(tau) * divergence)
-    np.fill_diagonal(similarity, 1.0)
-    return similarity
-
-
-def beta2_divergence_matrix_fft(
-        samples: np.ndarray,
-        h_grid: np.ndarray,
-        half_width: float = 12.0,
-        spatial_points: int = 8192,
-) -> np.ndarray:
-    """Approximate the beta=2 divergence matrix by periodic FFT quadrature.
-
-    The KDE family is evaluated once on a common spatial grid. Its L2 Gram
-    matrix is then obtained by the matrix product ``dx * densities @
-    densities.T``. This avoids the sample-pair sum in the analytic formula and
-    is substantially faster for large samples or bandwidth grids.
-    """
-    densities, dx = kde_family_fft(
-        samples=samples,
-        bandwidths=h_grid,
-        half_width=half_width,
-        spatial_points=spatial_points,
-    )
-    gram = float(dx) * (densities @ densities.T)
-    return 0.5 * squared_l2_distance_from_gram(gram)
-
-
-def beta2_similarity_matrix_fft(
-        samples: np.ndarray,
-        h_grid: np.ndarray,
-        tau: float = 1.0,
-        half_width: float = 12.0,
-        spatial_points: int = 8192,
-) -> np.ndarray:
-    """Return ``exp(-tau * D_2)`` using FFT-based beta=2 quadrature."""
-    if tau <= 0.0:
-        raise ValueError("tau must be positive.")
-    divergence = beta2_divergence_matrix_fft(
-        samples=samples,
-        h_grid=h_grid,
-        half_width=half_width,
-        spatial_points=spatial_points,
-    )
     similarity = np.exp(-float(tau) * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
@@ -239,26 +194,58 @@ def quadrature_similarity_matrices(
         raise ValueError(
             f"Unknown similarity {similarity_name!r}. Choose from {SIMILARITY_NAMES}."
         )
-    values = np.maximum(np.asarray(density_values, dtype=float), 0.0)
+    values = np.asarray(density_values, dtype=float)
     x_grid = np.asarray(x_grid, dtype=float)
+    if values.ndim != 2:
+        raise ValueError("density_values must be a two-dimensional array.")
+    if values.shape[1] != len(x_grid):
+        raise ValueError("x_grid must match the density grid axis.")
+    if np.any(values < 0.0):
+        raise ValueError("Density values must be nonnegative.")
+    if gamma <= 0.0:
+        raise ValueError("gamma must be strictly positive.")
+    if eps <= 0.0:
+        raise ValueError("eps must be strictly positive.")
+
+    number_of_densities = len(values)
+    weights = _trapezoidal_weights(x_grid)
 
     if similarity_name == "tv_overlap":
-        matrix = trapezoidal_integral(values=np.minimum(values[:, None, :], values[None, :, :]), x_grid=x_grid, axis=2)
+        matrix = np.empty((number_of_densities, number_of_densities), dtype=float)
+        for i in range(number_of_densities):
+            for j in range(i, number_of_densities):
+                value = float(np.dot(weights, np.minimum(values[i], values[j])))
+                matrix[i, j] = value
+                matrix[j, i] = value
     elif similarity_name == "hellinger_affinity":
-        matrix = trapezoidal_integral(values=np.sqrt(values[:, None, :] * values[None, :, :]), x_grid=x_grid, axis=2)
+        square_roots = np.sqrt(values)
+        matrix = (square_roots * weights[None, :]) @ square_roots.T
     elif similarity_name == "exponential_l2_similarity":
-        gram = trapezoidal_integral(values=values[:, None, :] * values[None, :, :], x_grid=x_grid, axis=2)
+        gram = (values * weights[None, :]) @ values.T
         l2_squared = squared_l2_distance_from_gram(gram=gram)
         d2 = 0.5 * l2_squared
         matrix = np.exp(-gamma * d2)
     else:
-        entropy = - trapezoidal_integral(values=values*np.log(np.maximum(values, eps)), x_grid=x_grid, axis=1)
-        mixtures = 0.5 * (values[:, None, :] + values[None, :, :])
-        mixture_entropy = -trapezoidal_integral(values=mixtures * np.log(np.maximum(mixtures, eps)), x_grid=x_grid, axis=2)
-        js_divergence = np.maximum(mixture_entropy - 0.5 * entropy[:, None] - 0.5 * entropy[None, :], 0.0)
-        matrix = 1.0 - js_divergence / np.log(2.0)
+        entropy = -np.sum(
+            weights[None, :] * values * np.log(np.maximum(values, eps)),
+            axis=1,
+        )
+        matrix = np.empty((number_of_densities, number_of_densities), dtype=float)
+        for i in range(number_of_densities):
+            for j in range(i, number_of_densities):
+                mixture = 0.5 * (values[i] + values[j])
+                mixture_entropy = -float(
+                    np.dot(weights, mixture * np.log(np.maximum(mixture, eps)))
+                )
+                divergence = max(
+                    mixture_entropy - 0.5 * entropy[i] - 0.5 * entropy[j],
+                    0.0,
+                )
+                value = 1.0 - divergence / np.log(2.0)
+                matrix[i, j] = value
+                matrix[j, i] = value
 
-    return matrix
+    return np.clip(matrix, 0.0, 1.0)
 
 
 def compute_quadrature_similarity_matrices(
@@ -303,19 +290,58 @@ def select_quadrature_similarity_bandwidths(
     return result
 
 
-# computes S=(S_{ij}), S_{ij}=exp{-D_{ij}}, D_{ij}=D_{KL}(\hat{f}_i,\hat{f}_j)
-def directional_kl_similarity(densities: np.ndarray, dx: float) -> np.ndarray:
-    densities = np.maximum(np.asarray(densities, dtype=float), 1e-300)
-    log_densities = np.log(densities)
-    x_grid = np.arange(densities.shape[1] + 1, dtype=float) * float(dx)
-    periodic_densities = np.concatenate((densities, densities[:, :1]), axis=1)
-    periodic_log_densities = np.concatenate((log_densities, log_densities[:, :1]), axis=1)
-    own_log_density = trapezoidal_integral(values=periodic_densities * periodic_log_densities, x_grid=x_grid, axis=1)
-    cross_log_density = np.empty((len(densities), len(densities)), dtype=float)
-    for j, log_density in enumerate(periodic_log_densities):
-        cross_log_density[:, j] = trapezoidal_integral(values=periodic_densities * log_density[None, :], x_grid=x_grid, axis=1)
+def directional_kl_divergence_matrix(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+        eps: float = 1e-300,
+) -> np.ndarray:
+    """Compute ``KL(p_i || p_j)`` by ordinary spatial quadrature."""
+    values = np.asarray(density_values, dtype=float)
+    x_grid = np.asarray(x_grid, dtype=float)
+    if values.ndim != 2:
+        raise ValueError("density_values must be a two-dimensional array.")
+    if values.shape[1] != len(x_grid):
+        raise ValueError("x_grid must match the density grid axis.")
+    if np.any(values < 0.0):
+        raise ValueError("Density values must be nonnegative.")
+    if eps <= 0.0:
+        raise ValueError("eps must be strictly positive.")
+
+    positive_values = np.maximum(values, eps)
+    log_values = np.log(positive_values)
+    own_log_density = trapezoidal_integral(
+        values=values * log_values,
+        x_grid=x_grid,
+        axis=1,
+    )
+    cross_log_density = np.empty((len(values), len(values)), dtype=float)
+    for j, log_density in enumerate(log_values):
+        cross_log_density[:, j] = trapezoidal_integral(
+            values=values * log_density[None, :],
+            x_grid=x_grid,
+            axis=1,
+        )
     divergence = np.maximum(own_log_density[:, None] - cross_log_density, 0.0)
-    similarity = np.exp(-divergence)
+    np.fill_diagonal(divergence, 0.0)
+    return divergence
+
+
+def directional_kl_similarity(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+        gamma: float = 1.0,
+        eps: float = 1e-300,
+) -> np.ndarray:
+    """Return ``exp(-gamma * KL(p_i || p_j))`` using spatial quadrature."""
+    if gamma <= 0.0:
+        raise ValueError("gamma must be strictly positive.")
+    divergence = directional_kl_divergence_matrix(
+        density_values=density_values,
+        x_grid=x_grid,
+        eps=eps,
+    )
+    similarity = np.exp(-float(gamma) * divergence)
+    np.fill_diagonal(similarity, 1.0)
     return similarity
 
 
@@ -520,31 +546,3 @@ def renyi_similarity_matrix(
     similarity = np.exp(-gamma * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
-
-
-def symmetrized_renyi_similarity(
-        densities: np.ndarray,
-        dx: float,
-        alpha: float,
-        gamma: float = 1.0,
-        bandwidths: np.ndarray | None = None,
-        eps: float = 1e-300,
-) -> np.ndarray:
-    """Compute a symmetrized Rényi similarity on a periodic FFT grid."""
-    densities = np.asarray(densities, dtype=float)
-    if densities.ndim != 2:
-        raise ValueError("densities must be a two-dimensional array.")
-    if dx <= 0.0:
-        raise ValueError("dx must be strictly positive.")
-
-    x_grid = np.arange(densities.shape[1] + 1, dtype=float) * float(dx)
-    periodic_densities = np.concatenate((densities, densities[:, :1]), axis=1)
-    return renyi_similarity_matrix(
-        density_values=periodic_densities,
-        x_grid=x_grid,
-        alpha=alpha,
-        gamma=gamma,
-        symmetrized=True,
-        bandwidths=bandwidths,
-        eps=eps,
-    )

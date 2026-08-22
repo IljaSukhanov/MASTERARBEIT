@@ -16,16 +16,15 @@ from kde_tools.density import (
     mixture_density,
     trapezoidal_integral,
 )
-from kde_tools.fft import kde_family_fft
 from kde_tools.similarities import (
     beta2_divergence_matrix,
-    beta2_divergence_matrix_fft,
     beta2_similarity_matrix,
-    beta2_similarity_matrix_fft,
+    directional_kl_divergence_matrix,
     first_order_perron_vector,
     perron_vector,
     population_gaussian_beta2_divergence_matrix,
     quadrature_similarity_matrices,
+    renyi_divergence_matrix,
     select_spectral_bandwidth,
     squared_l2_distance_from_gram,
 )
@@ -68,13 +67,6 @@ class DensityTests(unittest.TestCase):
         )
         np.testing.assert_allclose(numerical, exact, rtol=2e-9, atol=2e-11)
 
-    def test_fft_family_is_normalized(self) -> None:
-        densities, dx = kde_family_fft(
-            self.samples, self.bandwidths, half_width=12.0, spatial_points=4096
-        )
-        np.testing.assert_allclose(densities.sum(axis=1) * dx, 1.0, atol=1e-12)
-
-
 class SimilarityTests(unittest.TestCase):
     def setUp(self) -> None:
         rng = np.random.default_rng(17)
@@ -85,7 +77,6 @@ class SimilarityTests(unittest.TestCase):
             self.samples, self.bandwidths, self.x_grid
         )
 
-    ###CHANGED
     def test_similarity_invariants(self) -> None:
         for name in (
             "tv_overlap",
@@ -93,12 +84,11 @@ class SimilarityTests(unittest.TestCase):
             "exponential_l2_similarity",
             "js_similarity",
         ):
-            result = quadrature_similarity_matrices(
+            matrix = quadrature_similarity_matrices(
                 self.densities,
                 self.x_grid,
                 similarity_name=name,
             )
-            matrix = result[name]
             np.testing.assert_allclose(matrix, matrix.T, atol=1e-13)
             np.testing.assert_allclose(np.diag(matrix), 1.0, atol=1e-13)
             self.assertTrue(np.all((matrix >= 0.0) & (matrix <= 1.0)))
@@ -134,24 +124,24 @@ class SimilarityTests(unittest.TestCase):
         np.testing.assert_allclose(similarity, np.exp(-1.7 * divergence))
         np.testing.assert_allclose(np.diag(similarity), 1.0)
 
-    def test_fft_beta2_matches_exact_gaussian_kde_formula(self) -> None:
-        exact = beta2_divergence_matrix(self.samples, self.bandwidths)
-        fft = beta2_divergence_matrix_fft(
-            self.samples,
-            self.bandwidths,
-            half_width=12.0,
-            spatial_points=4096,
+    def test_directional_kl_quadrature_invariants(self) -> None:
+        divergence = directional_kl_divergence_matrix(
+            self.densities,
+            self.x_grid,
         )
-        np.testing.assert_allclose(fft, exact, rtol=1e-10, atol=1e-12)
+        self.assertEqual(divergence.shape, (len(self.bandwidths),) * 2)
+        np.testing.assert_allclose(np.diag(divergence), 0.0)
+        self.assertTrue(np.all(divergence >= 0.0))
 
-        similarity = beta2_similarity_matrix_fft(
-            self.samples,
-            self.bandwidths,
-            tau=1.7,
-            half_width=12.0,
-            spatial_points=4096,
+    def test_renyi_alpha_one_matches_kl_quadrature(self) -> None:
+        kl = directional_kl_divergence_matrix(self.densities, self.x_grid)
+        renyi = renyi_divergence_matrix(
+            self.densities,
+            self.x_grid,
+            alpha=1.0,
+            bandwidths=self.bandwidths,
         )
-        np.testing.assert_allclose(similarity, np.exp(-1.7 * exact), atol=1e-12)
+        np.testing.assert_allclose(renyi, kl, atol=1e-14)
 
     def test_population_gaussian_beta2_matrix_matches_quadrature(self) -> None:
         population = population_gaussian_beta2_divergence_matrix(
