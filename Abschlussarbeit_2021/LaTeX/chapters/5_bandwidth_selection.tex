@@ -245,9 +245,9 @@ For $\beta=2$ we get
 \end{align*}
 
 If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_h(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_2(\hat{f}_h,\hat{f}_s)$. We have
-\begin{align*}
+\begin{align}\label{eq:exact_l2_divergence}
     D_2(\hat{f}_h,\hat{f}_s)=\frac{1}{2n^2}\sum_{i,j}\left(\phi_{\sqrt{2}h}(X_i-X_j)+\phi_{\sqrt{2}s}(X_i-X_j)-\phi_{\sqrt{h^2+s^2}}(X_i-X_j)\right)
-\end{align*}
+\end{align}
 The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
 
 \subsubsection*{Relations between all presented divergences}
@@ -391,11 +391,35 @@ where
 
 \todo[inline]{Explain how error depends on $\alpha$, $X_{\max}-X_{\min}$ and the bandwidths $h_i$}
 
-\subsection*{Approximating integrals using Monte Carlo Estimation}
+\subsection*{Fast Fourier Transform}
 
-\todo[inline]{TBD}
+The computation of the divergence matrix $D$ using the exact formula in Equation~\eqref{eq:exact_l2_divergence} is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size. In order to speed up the computation of $D_{ij}=D(\hat{f}_{h_i},\hat{f}_{h_j})$, we make use of the Fast Fourier Transform (FFT). In the following we will briefly describe the approach by following the book~\cite{plonka_numerical_2018}.
 
-An advantage of Monte Carlo integration is that we dont need to truncate the integral.
+For any function $f\in L_1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform we obtain the Fourier transform of a kernel density function with Gaussian kernel:
+\begin{align*}
+    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=P_n(\omega)}\exp{(-h^2\omega^2)/2}
+\end{align*}
+Next we use Parseval's identity to get
+\begin{align*}
+    G_{r,s}=\int\hat{f}_{h_r}(x)\hat{f}_{h_s}(x)\,dx&=\frac{1}{2\pi}\int\mathcal{F}[\hat{f}_h](\omega)\overline{\mathcal{F}[\hat{f}_s](\omega)}\,d\omega\\&
+    =\frac{1}{2\pi}\int|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega\\&
+    =\frac{1}{\pi}\int_0^{\infty}|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega
+\end{align*}
+
+Truncate and apply composite trapezoidal rule
+\begin{align*}
+    \frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}
+\end{align*}
+
+The error is bounded above by
+\begin{align*}
+    \underbrace{\frac{1}{2\sqrt{\pi}h_{\min}}\operatorname{erfc}(h_{\min}\Omega)}_{\text{truncation error}}+\underbrace{\frac{M\Omega^3}{12\pi K^2}}_{\text{quadrature error}},
+\end{align*}
+where $M=(X_{\max}-X_{\min})^2+2(X_{\max}-X_{\min})h_{\max}\sqrt{2/e}+2h_{\max}^2$. Choose
+\begin{align*}
+    \Omega&\ge\frac{1}{h_{\min}}\operatorname{erfc}^{-1}(2\sqrt{\pi}h_{\min}\epsilon_{\text{trunc}})\\
+    K&\ge\sqrt{\frac{M\Omega^3}{12\pi\epsilon_{\text{quadr}}}}
+\end{align*}
 
 \subsection*{Bandwidth grid}
 
@@ -403,16 +427,16 @@ An advantage of Monte Carlo integration is that we dont need to truncate the int
 
 \todo[inline]{grid must scale with $n$? Explain why}
 
-The choice of the correct bandwidth grid is essential. Let
+The choice of the correct bandwidth grid is essential. Let $\mathcal{H}=\{h_1,\dots,h_N\}$ with $0<h_{\min}=h_1<\dots<h_N=h_{\max}$. We can choose between a linear or geometric grid, that is,
 \begin{align*}
-    \mathcal{H}=\{h_1,\dots,h_N\}
+    h_j=h_{\min}+\frac{j-1}{N-1}(h_{\max}-h_{\min})=h_{\min}+q_N(j-1),\quad q_N=\frac{h_{\max}-h_{\min}}{N-1}
 \end{align*}
-with $0<h_{\min}=h_1<\dots<h_N=h_{\max}$.
-
-We choose a geometric grid, that is
+or
 \begin{align*}
     h_j=h_{\min}\left(\frac{h_{\min}}{h_{\max}}\right)^{\frac{j-1}{N-1}}=h_{\min}q_N^{j-1},\quad q_N=\left(\frac{h_{\min}}{h_{\max}}\right)^{1/(N-1)}
 \end{align*}
+
+\todo[inline]{illustrative image comparing linear and geometric grid with ticks on an interval}
 
 \subsection*{Further considerations}
 
@@ -437,14 +461,12 @@ where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is,
 
 \section{Numerical Experiments}
 
-\subsection*{Sample distributions}
+Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f\sim N(0,\sigma^2)$.
 
-Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f(x)=\sigma^{-1}\phi(\sigma^{-1}x)$. That is, the data comes from the normal distribution with variance $\sigma^2>0$.
+Figure~[] shows the relation $i\mapsto\pi_i$, where $\pi$ is the stationary distribution. The left side represents the linear grid and the right side the geometric grid.
 
-\subsection*{Behavior under resampling}
+Figure~[] shows the stability with respect to the grid fineness $N$ both for linear and geometric grid. The samples $X_1,\dots,X_n$ were kept fixed.
 
-Let $X^{(i)}=(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ be multiple repeatedly drawn samples. We want to study the distribution of the chosen $h_{\text{crit}}$. Does the most often chosen $h_{\text{crit}}$ correspond with the \enquote{true} bandwidth?
+Of course one realization is meaningless and therefore we consequently study the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$. Figure~[] shows the results.
 
-\subsection*{Distribution of chosen bandwidths}
-
-Does the distribution become more concentrated for a larger sample size $n$?
+It is interesting to ask what happens to this distribution for increased sample size $n$. The answer is depicted in Figure~[]. The spectrally chosen bandwidths concentrate towards an deterministic interior scale $h^*$.
