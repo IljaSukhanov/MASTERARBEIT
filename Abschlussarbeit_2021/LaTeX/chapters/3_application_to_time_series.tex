@@ -296,7 +296,9 @@ The next results establish the consistency of the empirical minimum width, that 
     Let $\epsilon>0$ be arbitrary. Because $\{Y_t:t\ge1\}$ is dense in $\mathcal{Z}$, it holds $\mathcal{Z}\subseteq\bigcup_tB(Y_t,\epsilon)$ and since $\mathcal{Z}$ is compact, there exists a finite sub-cover $\mathcal{Z}\subseteq\bigcup_{j=1}^{m(\epsilon)}B(Y_{t_j(\epsilon)},\epsilon)$. Set $T_{\epsilon}=\max\{t_1(\epsilon),\dots,t_{m(\epsilon)}(\epsilon)\}$. Now, let $z\in\mathcal{Z}$ be arbitrary. It follows that $d(z,\mathcal{P}_T)=\inf\{\|z-Y_t\|:t=1,\dots,T\}\le\epsilon$ for all $T\ge T_{\epsilon}$. Thus $\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$. Since $\mathcal{P}_T\subseteq\mathcal{Z}$, it also holds that $\sup_{y\in\mathcal{P}_T}d(y,\mathcal{Z})=0$. By definition of the Hausdorff distance we obtain $d_H(\mathcal{P}_T,\mathcal{Z})=\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$ and therefore $d_H(\mathcal{P}_T,\mathcal{Z})\to0$ for $T\to\infty$. By Lemma~\ref{lem:property_hausdorff_distance} we also get $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})\to0$ for $T\to\infty$.   
 \end{proof}
 
-\todo[inline]{add remark that there exist papers that talk about the convergence speed of $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})$}
+There exists work that derive statements on the convergence speed of $a_T=d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})$ but only under certain assumptions on dependence structure of $Y_1,\dots,Y_T$. Brunel~\cite{brunel_uniform_2019} proves $a_T=\mathcal{O}(\dots)$ for independent and identically distributed $Y_t$. Louhichi~\cite{louhichi_sharp_2025} replaces the independence assumption with some weaker assumption and shows $a_T=\mathcal{O}(\dots)$.
+
+\todo[inline]{Can I show the assumptions for my setting (sliding windows)?}
 
 \begin{Lem}\label{lem:ergodic_implies_dense}
     Let $\{Y_t\}$ be stationary and ergodic. Furthermore let $\mathcal{Z}=\operatorname{supp}(Y_t)$ be compact and convex. Then $\{Y_t:t\ge 1\}$ is dense in $\mathcal{Z}$ almost surely.
@@ -407,11 +409,23 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
 
 In practice, the parameters $\gamma$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
 
+\todo[inline]{compare different elbow selectors, maybe somehow establish consistency?}
+
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
 Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$, we can use a modified L-method, that is, fit an affine curve through the points $(1,\hat{m}_1),\dots,(q+1,\hat{m}_{q+1})$ and a constant line through $(q+1,\hat{m}_{q+1}),\dots,(K,\hat{m}_K)$ for all $q=1,\dots,K$ and select the $q$ with the best fit.
 
-\todo[inline]{compare different elbow selectors, maybe somehow establish consistency?}
+Since we only now that $(p+1,m_{p+1},)\dots,(K,m_K)$ lie on a constant line, we can simply fit the points $(q+1,\hat{m}_{q+1}),\dots,(K,\hat{m}_K)$ to a constant line $c$ for all $q=1,\dots,K-1$ and then choose
+\begin{align*}
+    \hat{p}_T=\arg\min_{1\le q\le K-1}\left\{S_T(q)+\lambda_Tq\right\},
+\end{align*}
+where
+\begin{align*}
+    S_T(q)=\min_{c\in\mathbb{R}}\sum_{k=q+1}^{K}(\hat{m}_{k,T}-c)^2
+\end{align*}
+and $\lambda_T q$ is a penalty term because without it, larger orders would be preferred.
+
+Under the correct assumption on the penalty term sequence $\lambda_T$, it can even be established that $\hat{p}_T\to p$ almost surely.
 
 \subsection*{Numerical Results}
 
