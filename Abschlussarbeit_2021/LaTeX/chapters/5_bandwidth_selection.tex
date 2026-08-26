@@ -2,6 +2,10 @@
 
 In this chapter, we apply the scale selection methodology from chapter~\ref{chap:intro_meth} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
 
+\textbf{working hypothesis}
+
+Let $h^*_D=\arg\min\mathbb{E}[D(f,\hat{f}_h)]$ and let $S=\exp{(-D/\tau)}$. Does the peak of the Perron vector of $S$ relate to $h^*_D$?
+
 \section{Preliminaries on Kernel Density Estimation}
 
 We have data $X_1,\dots.X_n\in\mathbb{R}^{d}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
@@ -80,7 +84,7 @@ Plug-in methods use Equation~\eqref{eq:h_amise} as starting point. Silverman's r
 
 \todo[inline]{introduce (improved) Sheather and Jones' plug in}
 
-\subsection*{Exact MISE representation for Gaussian mixture model}
+\textbf{Exact MISE representation for Gaussian mixture model}
 
 Exact computations are generally not possible since the true density $f$ of the sampled data $X_1,\dots,X_n$ is not known. In simulation experiments, of course, we simulate the data ourselves and thus know the density $f$. For certain choices of the true density $f$, explicit formulas for the MISE exist.
 
@@ -101,8 +105,7 @@ Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the
 
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
-
-\subsection*{Constructing Mixture Models with multiple global MISE minima}
+\textbf{Constructing Mixture Models with multiple global MISE minima}
 
 \todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
 
@@ -140,7 +143,7 @@ Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density wit
 
 \section{Divergences between distributions}
 
-\todo[inline]{Introduce the general definition that uses manifolds}
+\todo[inline]{Introduce the general definition that uses manifolds ?}
 
 We follow the survey~\cite{nielsen_elementary_2020}.
 
@@ -199,6 +202,8 @@ The divergence is then given by
 \end{align*}
 where $H(f)=-\int f\log{f}$ is the Shannon entropy.
 
+\todo[inline]{add interpretations for JS divergence}
+
 \subsubsection*{Renyi divergence}
 
 The class of Rényi divergences is defined as
@@ -250,7 +255,7 @@ If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_
 \end{align}
 The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
 
-\subsubsection*{Relations between all presented divergences}
+\subsection{Relations between all presented divergences}
 
 \todo[inline]{Do all these divergences relate to each other?}
 
@@ -258,7 +263,78 @@ The derivation of the formula uses mainly the Gaussian convolution identity, tha
     Let $D$ be a divergence such that it is a $f$-divergence for some $f$ and simultaneously a Bregman divergence for some $F$. This is sufficient and necessary for $D$ to be the Kullback-Leibler divergence.
 \end{Prop}
 
+\subsection{Approximating integrals using quadrature}
+
+Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}C_{\alpha}(p,q)$, where, for example, in the case of the $\alpha$ or Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. Before that, the integral has to be truncated. The truncation error can be bounded above:
+\begin{align*}
+    E_{\text{trunc}}=\int\limits_{\mathbb{R}\setminus(a,b)}C_{\alpha}(p,q)\le\left(\int\limits_{\mathbb{R}\setminus(a,b)}p\right)^{\alpha}\left(\int\limits_{\mathbb{R}\setminus(a,b)}q\right)^{1-\alpha}
+\end{align*}
+
+We also have
+\begin{align*}
+    \int\limits_{\mathbb{R}\setminus(a,b)}\hat{f}_{h}=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
+\end{align*}
+
+Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
+\begin{align*}
+    \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)
+\end{align*}
+and thus $E_{\text{trunc}}\le 2\Phi(-L)$. Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
+
+Afterwards, we use the composite trapezoidal rule to approximate the truncated integral:
+\begin{align*}
+    \int_a^bf(x)\,dx\approx Q_n(f)=\frac{b-a}{2n}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right),
+\end{align*}
+where $x_k=a+\frac{b-a}{n}k$, $k=0,1,\dots,n$ are the equidistant nodes.
+
+\todo[inline]{cite source for the approximation guaranty}
+
+As an approximation guaranty, we have
+\begin{align}\label{eq:approx_error}
+    \left|\int_a^bf(x)\,dx-Q_n(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
+\end{align}
+
+Adaptive quadrature rules might give better approximation results but are computationally more expensive.
+
 \section{Assembly of Scale Similarity Matrices}
+
+\subsection{Why not use the divergence matrix for spectral scale selection?}
+
+In this subsection, we want to briefly give an argument why it is not advisable to compute the Perron vector of the divergence matrix $D$ itself and thus motivate the above similarity transformation more.
+
+\begin{Def}[Robinson matrix]
+    A matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called a Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
+    \begin{align*}
+        D^{\pi}_{ik}\ge\max\{D^{\pi}_{ij},D^{\pi}_{jk}\}\text{ and }D_{ki}^{\pi}\ge\max\{D_{ji}^{\pi},D_{kj}^{\pi}\}
+    \end{align*}
+    whenever $i<j<k$.
+\end{Def}
+
+\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix?}
+
+The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
+
+\begin{Lem}
+    Let $(M,d)$ be a geodesic metric space such that for every fixed point $y\in X$, the function $x\mapsto d(x,y)$ is geodesically convex. Let $X\subseteq M$ be a convex subset. Let $x_1,\dots,x_N\in X$ be finitely many points and define the distance matrix $D=(d(x_i,x_j))_{i,j=1}^{N}$. Let $v=(v_j)\in\mathbb{R}^{N}$ be the Perron vector of $D$. Then
+    \begin{align*}
+        \arg\max_{1\le j\le N}v_j\subseteq\{1,N\}.
+    \end{align*}
+    \todo[inline]{Find correct assumptions to prove the Lemma}
+    \todo[inline]{This Lemma is not correct yet but numerical experiments suggest that the Perron vector of divergence matrices behaves not how we want}
+\end{Lem}
+
+\begin{proof}
+    Define the function
+    \begin{align*}
+        F(x)=\sum_{j=1}^{N}d(x,x_j)v_j,\quad x\in X.
+    \end{align*}
+    Since $v$ is the Perron vector, we have $F(x_i)=\lambda v_i$. Thus
+    \begin{align*}
+        \arg\max_{1\le j\le N} v_j=\arg\max_{1\le j\le N}F(x_j).
+    \end{align*}
+\end{proof}
+
+\subsection{Similarity transformations}\label{sec:similarity_transformations}
 
 A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ with $D(x,x)=0$ is called conditionally negative definite if
 \begin{align*}
@@ -296,132 +372,7 @@ Apply the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{
     &=C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})^{\frac{\tau}{1-\alpha}}
 \end{align*}
 
-\subsection*{Why not use the divergence matrix for spectral scale selection?}
-
-In this subsection, we want to briefly give an argument why it is not advisable to compute the Perron vector of the divergence matrix $D$ itself and thus motivate the above similarity transformation more.
-
-\begin{Def}[Robinson matrix]
-    A matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called a Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
-    \begin{align*}
-        D^{\pi}_{ik}\ge\max\{D^{\pi}_{ij},D^{\pi}_{jk}\}\text{ and }D_{ki}^{\pi}\ge\max\{D_{ji}^{\pi},D_{kj}^{\pi}\}
-    \end{align*}
-    whenever $i<j<k$.
-\end{Def}
-
-\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix?}
-
-The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
-
-\begin{Lem}
-    Let $(M,d)$ be a geodesic metric space such that for every fixed point $y\in X$, the function $x\mapsto d(x,y)$ is geodesically convex. Let $X\subseteq M$ be a convex subset. Let $x_1,\dots,x_N\in X$ be finitely many points and define the distance matrix $D=(d(x_i,x_j))_{i,j=1}^{N}$. Let $v=(v_j)\in\mathbb{R}^{N}$ be the Perron vector of $D$. Then
-    \begin{align*}
-        \arg\max_{1\le j\le N}v_j\subseteq\{1,N\}.
-    \end{align*}
-    \todo[inline]{Find correct assumptions to prove the Lemma}
-    \todo[inline]{This Lemma is not correct yet but numerical experiments suggest that the Perron vector of divergence matrices behaves not how we want}
-\end{Lem}
-
-\begin{proof}
-    Define the function
-    \begin{align*}
-        F(x)=\sum_{j=1}^{N}d(x,x_j)v_j,\quad x\in X.
-    \end{align*}
-    Since $v$ is the Perron vector, we have $F(x_i)=\lambda v_i$. Thus
-    \begin{align*}
-        \arg\max_{1\le j\le N} v_j=\arg\max_{1\le j\le N}F(x_j).
-    \end{align*}
-\end{proof}
-
-\subsection*{Approximating integrals using quadrature}
-
-Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}C_{\alpha}(p,q)$, where, for example, in the case of the $\alpha$ or Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. Before that, the integral has to be truncated. The truncation error can be bounded above:
-\begin{align*}
-    E_{\text{trunc}}=\int\limits_{\mathbb{R}\setminus(a,b)}C_{\alpha}(p,q)\le\left(\int\limits_{\mathbb{R}\setminus(a,b)}p\right)^{\alpha}\left(\int\limits_{\mathbb{R}\setminus(a,b)}q\right)^{1-\alpha}
-\end{align*}
-
-We also have
-\begin{align*}
-    \int\limits_{\mathbb{R}\setminus(a,b)}\hat{f}_{h}=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
-\end{align*}
-
-Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
-\begin{align*}
-    \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)
-\end{align*}
-and thus $E_{\text{trunc}}\le 2\Phi(-L)$. Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
-
-Afterwards, we use the composite trapezoidal rule to approximate the truncated integral:
-\begin{align*}
-    \int_a^bf(x)\,dx\approx Q_n(f)=\frac{b-a}{2n}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right),
-\end{align*}
-where $x_k=a+\frac{b-a}{n}k$, $k=0,1,\dots,n$ are the equidistant nodes.
-
-\todo[inline]{cite source for the approximation guaranty}
-
-As an approximation guaranty, we have
-\begin{align}\label{eq:approx_error}
-    \left|\int_a^bf(x)\,dx-Q_n(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
-\end{align}
-
-Adaptive quadrature rules might give better approximation results but are computationally more expensive.
-
-In our application, $f(x)=C_{\alpha}(p(x),q(x))=p(x)^{\alpha}q(x)^{1-\alpha}$. The approximation guaranty of Equation~\eqref{eq:approx_error} then becomes
-\begin{align*}
-    \left|\int\limits_{X_{\min}-Lh_{\max}}^{X_{\max}+Lh_{\max}}C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})-Q_n(C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j}))\right|\le\frac{(X_{\max}-X_{\min}+2Lh_{\max})^3}{12n^2}M_{2,i,j}(\alpha),
-\end{align*}
-where
-\begin{align*}
-    M_{2,i,j}(\alpha)
-    &=\frac{1}{\sqrt{2\pi}h_i^{\alpha}h_j^{1-\alpha}}
-    \Bigg[
-    (X_{\max}-X_{\min}+Lh_{\max})^2
-    \left(\frac{\alpha}{h_i^2}+\frac{1-\alpha}{h_j^2}\right)^2\\
-    &\qquad
-    +\alpha\left(
-    \frac{1}{h_i^2}
-    +\frac{(X_{\max}-X_{\min})^2}{4h_i^4}
-    \right)\\
-    &\qquad
-    +(1-\alpha)\left(
-    \frac{1}{h_j^2}
-    +\frac{(X_{\max}-X_{\min})^2}{4h_j^4}
-    \right)
-    \Bigg].
-\end{align*}
-
-\todo[inline]{Explain how error depends on $\alpha$, $X_{\max}-X_{\min}$ and the bandwidths $h_i$}
-
-\subsection*{Fast Fourier Transform}
-
-The computation of the divergence matrix $D$ using the exact formula in Equation~\eqref{eq:exact_l2_divergence} is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size. In order to speed up the computation of $D_{ij}=D(\hat{f}_{h_i},\hat{f}_{h_j})$, we make use of the Fast Fourier Transform (FFT). In the following we will briefly describe the approach by following the book~\cite{plonka_numerical_2018}.
-
-For any function $f\in L_1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform we obtain the Fourier transform of a kernel density function with Gaussian kernel:
-\begin{align*}
-    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=P_n(\omega)}\exp{(-h^2\omega^2)/2}
-\end{align*}
-Next we use Parseval's identity to get
-\begin{align*}
-    G_{r,s}=\int\hat{f}_{h_r}(x)\hat{f}_{h_s}(x)\,dx&=\frac{1}{2\pi}\int\mathcal{F}[\hat{f}_h](\omega)\overline{\mathcal{F}[\hat{f}_s](\omega)}\,d\omega\\&
-    =\frac{1}{2\pi}\int|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega\\&
-    =\frac{1}{\pi}\int_0^{\infty}|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega
-\end{align*}
-
-Truncate and apply composite trapezoidal rule
-\begin{align*}
-    \frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}
-\end{align*}
-
-The error is bounded above by
-\begin{align*}
-    \underbrace{\frac{1}{2\sqrt{\pi}h_{\min}}\operatorname{erfc}(h_{\min}\Omega)}_{\text{truncation error}}+\underbrace{\frac{M\Omega^3}{12\pi K^2}}_{\text{quadrature error}},
-\end{align*}
-where $M=(X_{\max}-X_{\min})^2+2(X_{\max}-X_{\min})h_{\max}\sqrt{2/e}+2h_{\max}^2$. Choose
-\begin{align*}
-    \Omega&\ge\frac{1}{h_{\min}}\operatorname{erfc}^{-1}(2\sqrt{\pi}h_{\min}\epsilon_{\text{trunc}})\\
-    K&\ge\sqrt{\frac{M\Omega^3}{12\pi\epsilon_{\text{quadr}}}}
-\end{align*}
-
-\subsection*{Bandwidth grid}
+\subsection{Bandwidth grid}
 
 \todo[inline]{Argue why linear grid won't work}
 
@@ -438,6 +389,23 @@ or
 
 \todo[inline]{illustrative image comparing linear and geometric grid with ticks on an interval}
 
+Define
+\begin{align*}
+    s(K)=\left(\int x^2K(x)\,dx\right)^{1/2}
+\end{align*}
+
+We have $s(K_h)=hs(K)$. The bandwidth $h$ thus is a multiplicative scale parameter. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$.
+
+Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the factor $q_N$. At every step, the smoothing radius $s$ is multiplied by the same factor. On a high level, each step $j\to j+1$ applies the same increase in smoothing.
+
+For any $f$-divergence $D_f$ we have
+\begin{align*}
+    D_f(K_{h_i},K_{h_j})=\Tilde{\Psi}(j-1)
+\end{align*}
+for some function $\Tilde{\Psi}$.
+
+The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$ and the empirical distribution $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$. In symbols, $\hat{f}_h=K_h\ast P_n$. We have the pointwise expectation $\mathbb{E}[\hat{f}_h]=f\ast K_h$.
+
 \subsection*{Further considerations}
 
 \todo[inline]{Invent construction that removes the influence on the position in the grid}
@@ -451,25 +419,86 @@ The Toeplitz projection $S^{(0)}$ of a matrix $S$ is a Toeplitz matrix where the
 
 Let $v^{(0)}$ be the Perron vector of $S^{(0)}$. Then $v^{(0)}_i$ is a centrality measure of the scale $i$ coming purely from the position in the grid. We define $s_i=v_i/v^{(0)}_i$ which is the null corrected scale centrality. Writing $\log{s_i}=\log{v_i}-\log{v^{(0)}_i}$, we can interpret $\log{v^{(0)}_i}$ as spectral grid penalty. This idea is closely analogous to normalization against a null model.
 
-The fact that the similarity matrix $S$ is not symmetric in general is not a problem because the Doob h transform also works in this case. The resulting stationary distribution $\pi$ is given by
-\begin{align*}
-    \pi_i=\frac{l_ir_i}{\sum_{j=1}^{N}l_jr_j}
-\end{align*}
-where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is, $Sr=\lambda_{\max}r$ and $S^{T}l=\lambda_{\max}l$.
-
-\textbf{working hypothesis.} Let $h^*_D=\arg\min\mathbb{E}[D(f,\hat{f}_h)]$ and let $S=\exp{(-D/\tau)}$. Does the peak of the Perron vector of $S$ relate to $h^*_D$?
-
 \section{Numerical Experiments}
 
-Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f\sim N(0,\sigma^2)$.
+In our numerical experiments, we restrict ourselves to these five divergences:
+\begin{itemize}
+    \item $L_2$ divergence ($\beta=2$)
+    \item Total variation: $\operatorname{TV}(p,q)=1/2\int|p-q|$
+    \item Rényi ($\alpha=1/2$) or squared Hellinger: $H^2(p,q)=1-\int\sqrt{pq}$
+    \item Kullback-Leibler (as limit of Rényi for $\alpha\to1$): $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$
+    \item Jensen-Shannon $D_{\operatorname{JS}}(p,q)$
+\end{itemize}
 
-Figure~[] shows the relation $i\mapsto\pi_i$, where $\pi$ is the stationary distribution.
+In a later stage, we will study the influence of the parameter $\alpha$. We will start our explorations using the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We use the similarity transformation $S=\exp{(-\lambda D)}$ and vary the penalty parameter $\lambda$.
 
+Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f\sim N(0,\sigma^2)$, $\sigma^2>0$, starting with $\sigma^2=1$.
 
-Figure~[] shows the stability with respect to the grid fineness $N$. The samples $X_1,\dots,X_n$ were kept fixed.
+Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\pi_i$, where $\pi$ is the stationary distribution. Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the stability with respect to the grid fineness $N$. The samples $X_1,\dots,X_n$ were kept fixed. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$. It is interesting to ask what happens to this distribution for increased sample size $n$. The answer is depicted in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. The spectrally chosen bandwidths concentrate towards a deterministic interior scale $h^*$.
 
+\todo[inline]{Can the two peaks be described?}
 
-Figure~[] shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Abschlussarbeit_2021/LaTeX/images/stationary_distribution_plot_001.png}
+    \caption{}
+    \label{fig:stationary_distribution_plot_001}
+\end{figure}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Abschlussarbeit_2021/LaTeX/images/grid_fineness_chosen_bandwidths.png}
+    \caption{}
+    \label{fig:grid_fineness_chosen_bandwidths}
+\end{figure}
 
-It is interesting to ask what happens to this distribution for increased sample size $n$. The answer is depicted in Figure~[]. The spectrally chosen bandwidths concentrate towards a deterministic interior scale $h^*$.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Abschlussarbeit_2021/LaTeX/images/distribution_of_chosen_bandwidths.png}
+    \caption{}
+    \label{fig:distribution_of_chosen_bandwidths}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/distribution_of_chosen_bandwidths_n300.png}
+        \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/distribution_of_chosen_bandwidths_n400.png}
+        \caption{}
+    \end{subfigure}
+
+    \vspace{0.5em}
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/distribution_of_chosen_bandwidths_n500.png}
+        \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Abschlussarbeit_2021/LaTeX/images/distribution_of_chosen_bandwidths_n1000.png}
+        \caption{}
+    \end{subfigure}
+
+    \caption{}
+    \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
+\end{figure}
+
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\lambda$ as a penalty weight. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/chosen_bandwidth_vs_lambda.png}
+    \caption{Caption}
+    \label{fig:chosen_bandwidths_vs_lambda}
+\end{figure}
+
+\section{Explanation of the Results}\label{sec:res_2}
