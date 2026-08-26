@@ -29,11 +29,12 @@ def gaussian_mixture_mean_and_variance(
     return mean, second_moment - mean**2
 
 def trapezoidal_integral(
-        values: np.ndarray,
-        x_grid: np.ndarray,
-        axis: int = -1,
+    values: np.ndarray,
+    x_grid: np.ndarray,
+    axis: int = -1,
 ) -> np.ndarray:
-    return np.trapezoid(y=values, x=x_grid, axis=axis)
+    trapezoid = getattr(np, "trapezoid", np.trapz)
+    return trapezoid(y=values, x=x_grid, axis=axis)
 
 
 # input: x = (x_1, ..., x_n), mean, variance; output: phi_{mean,variance}(x)
