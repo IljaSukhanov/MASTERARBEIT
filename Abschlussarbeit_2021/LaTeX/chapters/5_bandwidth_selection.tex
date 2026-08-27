@@ -259,6 +259,11 @@ The derivation of the formula uses mainly the Gaussian convolution identity, tha
 
 \todo[inline]{Do all these divergences relate to each other?}
 
+The total variation and Hellinger distance are related by the chain of inequalities
+\begin{align*}
+    H^2(p,q)\le\operatorname{TV}(p,q)\le\sqrt{2}H(p,q).
+\end{align*}
+
 \begin{Prop}
     Let $D$ be a divergence such that it is a $f$-divergence for some $f$ and simultaneously a Bregman divergence for some $F$. This is sufficient and necessary for $D$ to be the Kullback-Leibler divergence.
 \end{Prop}
@@ -374,9 +379,7 @@ Apply the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{
 
 \subsection{Bandwidth grid}
 
-\todo[inline]{Argue why linear grid won't work}
-
-\todo[inline]{grid must scale with $n$? Explain why}
+\todo[inline]{grid must scale with $n$?}
 
 \todo[inline]{illustrative image comparing linear and geometric grid with ticks on an interval}
 
@@ -416,19 +419,6 @@ For any $f$-divergence $D_f$ we have
 for some function $\Tilde{\Psi}$.
 
 The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$ and the empirical distribution $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$. In symbols, $\hat{f}_h=K_h\ast P_n$. We have the pointwise expectation $\mathbb{E}[\hat{f}_h]=f\ast K_h$.
-
-\subsection*{Further considerations}
-
-\todo[inline]{Invent construction that removes the influence on the position in the grid}
-
-We want to eliminate the centrality of each scale $i$ coming purely from its location on the grid. To this end we use the so called Toeplitz projection:
-\begin{align*}
-    S^{(0)}=(S^{(0)})_{ij},\quad S^{(0)}_{ij}=\overline{S}_{|i-j|},\quad\overline{S}_d=\frac{1}{N-d}\sum_{i=1}^{N-d}S_{i,i+d}
-\end{align*}
-The Toeplitz projection $S^{(0)}$ of a matrix $S$ is a Toeplitz matrix where the entries of each diagonal is the mean of the corresponding diagonal of $S$. In fact, $S^{(0)}$ is closest to $S$ out of all Toeplitz matrices in terms of the Frobenius norm. See~\cite{kucerovsky_properties_2016}.
-
-
-Let $v^{(0)}$ be the Perron vector of $S^{(0)}$. Then $v^{(0)}_i$ is a centrality measure of the scale $i$ coming purely from the position in the grid. We define $s_i=v_i/v^{(0)}_i$ which is the null corrected scale centrality. Writing $\log{s_i}=\log{v_i}-\log{v^{(0)}_i}$, we can interpret $\log{v^{(0)}_i}$ as spectral grid penalty. This idea is closely analogous to normalization against a null model.
 
 \section{Numerical Experiments}
 
