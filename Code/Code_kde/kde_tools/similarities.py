@@ -702,6 +702,88 @@ def renyi_divergence_matrix(
     return divergence
 
 
+def alpha_divergence_matrix(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+        alpha: float,
+        bandwidths: np.ndarray | None = None,
+        eps: float = 1e-300,
+) -> np.ndarray:
+    """Compute the directed alpha-divergence matrix by stable quadrature.
+
+    This uses the convention
+
+        A_alpha(p, q) = (integral(p**alpha * q**(1-alpha)) - 1)
+                        / (alpha * (alpha - 1)).
+
+    At ``alpha = 1`` the continuous KL limit is returned.  Supplying Gaussian
+    KDE bandwidths preserves the full-line divergence detection used by
+    :func:`renyi_divergence_matrix` when ``alpha > 1``.
+    """
+    alpha = float(alpha)
+    if alpha <= 0.0:
+        raise ValueError("alpha must be strictly positive.")
+
+    renyi = renyi_divergence_matrix(
+        density_values=density_values,
+        x_grid=x_grid,
+        alpha=alpha,
+        bandwidths=bandwidths,
+        eps=eps,
+    )
+    if np.isclose(alpha, 1.0, rtol=0.0, atol=1e-12):
+        return renyi
+
+    with np.errstate(over="ignore", invalid="ignore"):
+        divergence = np.expm1((alpha - 1.0) * renyi)
+        divergence /= alpha * (alpha - 1.0)
+
+    finite = np.isfinite(divergence)
+    divergence[finite] = np.maximum(divergence[finite], 0.0)
+    np.fill_diagonal(divergence, 0.0)
+    return divergence
+
+
+def inverse_power_similarity_matrix(
+        divergence_matrix: np.ndarray,
+        offset: float = 1.0,
+        slope: float = 1.0,
+        power: float = 1.0,
+) -> np.ndarray:
+    """Transform nonnegative divergences using a normalized inverse power.
+
+    The transformation is
+
+        S = (offset / (offset + slope * D))**power,
+
+    which is the normalized form of ``(a + b D)**(-rho)`` with ``S(0) = 1``.
+    Positive infinite divergences map to zero similarity.
+    """
+    divergence = np.asarray(divergence_matrix, dtype=float)
+    if divergence.ndim != 2 or divergence.shape[0] != divergence.shape[1]:
+        raise ValueError("divergence_matrix must be square.")
+    if np.any(np.isnan(divergence)):
+        raise ValueError("divergence_matrix must not contain NaN values.")
+    if np.any(divergence < 0.0):
+        raise ValueError("divergence_matrix must be nonnegative.")
+    for name, value in (
+        ("offset", offset),
+        ("slope", slope),
+        ("power", power),
+    ):
+        if not np.isfinite(value) or value <= 0.0:
+            raise ValueError(f"{name} must be finite and positive.")
+
+    with np.errstate(over="ignore", invalid="ignore"):
+        similarity = (
+            float(offset)
+            / (float(offset) + float(slope) * divergence)
+        ) ** float(power)
+    similarity[np.isposinf(divergence)] = 0.0
+    np.fill_diagonal(similarity, 1.0)
+    return similarity
+
+
 def symmetrized_renyi_divergence_matrix(
         density_values: np.ndarray,
         x_grid: np.ndarray,

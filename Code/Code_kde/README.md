@@ -6,9 +6,11 @@ in `kde_tools/`:
 
 - `density.py`: direct KDE evaluation, quadrature grids, and exact
   Gaussian/Gaussian-mixture integrals.
-- `bandwidths.py`: bandwidth grids and the Silverman, LSCV, and plug-in rules.
-- `similarities.py`: divergence/similarity matrices, Perron vectors, Toeplitz
-  corrections, and spectral selection.
+- `bandwidths.py`: fixed and sample-scaled bandwidth grids plus the Silverman,
+  LSCV, and plug-in rules.
+- `similarities.py`: beta-2, KL, Rényi, and alpha-divergence matrices;
+  exponential and inverse-power similarities; Perron vectors; Toeplitz
+  corrections; and spectral selection.
 - `experiments.py`: one-repetition simulation runners.  Notebooks control the
   settings, repetition loops, summaries, and plots.
 
@@ -20,22 +22,13 @@ with, for example:
 from kde_tools.fourier import kde_family_fft
 ```
 
-The two `run_*.py` programs use direct Gaussian KDE evaluation followed by
-composite trapezoidal quadrature. The beta-2/L2 selector uses the exact analytic
-Gaussian formula by default.
-
-The notebooks are exploratory records. In particular,
-`spectral_scale_selection_kde.ipynb` contains historical and optional Fourier
-experiments; it is not the implementation used by the default runners.
+The main exploratory workflow is `spectral_scale_selection_kde.ipynb`. Its
+beta-2 experiments use the optional Fourier implementation explicitly, while
+the reusable numerical APIs remain in `kde_tools/`.
 
 - `100_kde_test.ipynb`: early KDE and similarity experiments.
 - `distance_matrix_perron_vector_tests.ipynb`: distance-versus-similarity and
   Perron/Doob investigations.
-- `renyi_divergence_doob_kde.ipynb`: Rényi and Doob-transform experiments.
-
-The two `run_*.py` files are reproducible command-line Monte Carlo experiments.
-They reuse the exact/quadrature helpers in `kde_tools` rather than maintaining
-separate numerical implementations.
 
 Run the lightweight checks from this directory with:
 

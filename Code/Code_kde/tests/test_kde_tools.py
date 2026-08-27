@@ -7,7 +7,9 @@ import unittest
 import numpy as np
 
 from kde_tools.bandwidths import (
+    estimate_sample_scale,
     gaussian_mise_oracle_bandwidth,
+    sample_scaled_bandwidth_grid,
 )
 from kde_tools.density import (
     exact_gaussian_kde_l2_gram,
@@ -17,12 +19,14 @@ from kde_tools.density import (
     trapezoidal_integral,
 )
 from kde_tools.similarities import (
+    alpha_divergence_matrix,
     beta2_divergence_matrix,
     beta2_similarity_matrix,
     centered_beta2_gram,
     centered_scale_transition_descriptors,
     directional_kl_divergence_matrix,
     first_order_perron_vector,
+    inverse_power_similarity_matrix,
     leading_centered_beta2_coordinate,
     leading_principal_determinants,
     principal_logdet_increments,
@@ -71,6 +75,40 @@ class DensityTests(unittest.TestCase):
             self.samples, h_grid, weights, means, sigmas
         )
         np.testing.assert_allclose(numerical, exact, rtol=2e-9, atol=2e-11)
+
+    def test_sample_scaled_bandwidth_grid_retains_normalized_coordinates(self) -> None:
+        samples = np.array([-2.0, -1.0, 0.0, 1.0, 2.0])
+        bandwidths, dimensionless, scale = sample_scaled_bandwidth_grid(
+            samples,
+            grid_size=5,
+            multiplier_min=0.1,
+            multiplier_max=1.6,
+            rate_exponent=0.2,
+            scale_method="iqr",
+        )
+        expected_scale = estimate_sample_scale(samples, method="iqr")
+        expected_dimensionless = (
+            np.geomspace(0.1, 1.6, 5) * len(samples) ** (-0.2)
+        )
+        self.assertAlmostEqual(scale, expected_scale)
+        np.testing.assert_allclose(dimensionless, expected_dimensionless)
+        np.testing.assert_allclose(bandwidths, scale * dimensionless)
+
+    def test_sample_scale_methods_use_gaussian_normalization(self) -> None:
+        samples = np.array([-2.0, -1.0, 0.0, 1.0, 2.0])
+        normal_quartile = 0.6744897501960817
+        self.assertAlmostEqual(
+            estimate_sample_scale(samples, method="iqr"),
+            1.0 / normal_quartile,
+        )
+        self.assertAlmostEqual(
+            estimate_sample_scale(samples, method="mad"),
+            1.0 / normal_quartile,
+        )
+        self.assertAlmostEqual(
+            estimate_sample_scale(samples, method="std"),
+            np.std(samples, ddof=1),
+        )
 
 class SimilarityTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -147,6 +185,70 @@ class SimilarityTests(unittest.TestCase):
             bandwidths=self.bandwidths,
         )
         np.testing.assert_allclose(renyi, kl, atol=1e-14)
+
+    def test_alpha_divergence_matches_power_integral(self) -> None:
+        alpha = 0.5
+        power_integrals = trapezoidal_integral(
+            self.densities[:, None, :] ** alpha
+            * self.densities[None, :, :] ** (1.0 - alpha),
+            self.x_grid,
+            axis=2,
+        )
+        expected = (power_integrals - 1.0) / (alpha * (alpha - 1.0))
+        expected = np.maximum(expected, 0.0)
+        np.fill_diagonal(expected, 0.0)
+        actual = alpha_divergence_matrix(
+            self.densities,
+            self.x_grid,
+            alpha=alpha,
+            bandwidths=self.bandwidths,
+        )
+        np.testing.assert_allclose(actual, expected, atol=2e-13)
+
+    def test_alpha_divergence_has_kl_limit(self) -> None:
+        kl = directional_kl_divergence_matrix(self.densities, self.x_grid)
+        alpha_one = alpha_divergence_matrix(
+            self.densities,
+            self.x_grid,
+            alpha=1.0,
+            bandwidths=self.bandwidths,
+        )
+        np.testing.assert_allclose(alpha_one, kl, atol=1e-14)
+
+    def test_alpha_divergence_detects_divergent_gaussian_kde_tails(self) -> None:
+        bandwidths = np.array([0.2, 1.0])
+        densities = gaussian_kde_values(
+            self.samples,
+            bandwidths,
+            self.x_grid,
+        )
+        divergence = alpha_divergence_matrix(
+            densities,
+            self.x_grid,
+            alpha=2.0,
+            bandwidths=bandwidths,
+        )
+        self.assertTrue(np.isinf(divergence[1, 0]))
+        self.assertTrue(np.isfinite(divergence[0, 1]))
+
+    def test_inverse_power_similarity_transform(self) -> None:
+        divergence = np.array(
+            [
+                [0.0, 0.5, np.inf],
+                [0.25, 0.0, 2.0],
+                [np.inf, 1.0, 0.0],
+            ]
+        )
+        similarity = inverse_power_similarity_matrix(
+            divergence,
+            offset=2.0,
+            slope=3.0,
+            power=1.5,
+        )
+        expected = (2.0 / (2.0 + 3.0 * divergence)) ** 1.5
+        np.fill_diagonal(expected, 1.0)
+        np.testing.assert_allclose(similarity, expected)
+        self.assertTrue(np.all((similarity >= 0.0) & (similarity <= 1.0)))
 
     def test_population_gaussian_beta2_matrix_matches_quadrature(self) -> None:
         population = population_gaussian_beta2_divergence_matrix(

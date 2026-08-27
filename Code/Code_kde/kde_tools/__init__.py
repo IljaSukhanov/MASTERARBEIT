@@ -6,10 +6,12 @@ the individual modules when a notebook needs more control.
 
 from .bandwidths import (
     direct_plugin_bandwidth,
+    estimate_sample_scale,
     gaussian_mise_oracle_bandwidth,
     least_squares_cv_bandwidth_index,
     nearest_bandwidth_grid_index,
     robust_scale_for_bandwidth,
+    sample_scaled_bandwidth_grid,
     silverman_rule_of_thumb_bandwidth,
 )
 from .density import (
@@ -25,6 +27,7 @@ from .density import (
     trapezoidal_integral,
 )
 from .similarities import (
+    alpha_divergence_matrix,
     beta2_divergence_matrix,
     beta2_similarity_matrix,
     centered_beta2_gram,
@@ -33,6 +36,7 @@ from .similarities import (
     directional_kl_divergence_matrix,
     directional_kl_similarity,
     first_order_perron_vector,
+    inverse_power_similarity_matrix,
     leading_centered_beta2_coordinate,
     leading_principal_determinants,
     principal_logdet_increments,
@@ -49,6 +53,7 @@ from .similarities import (
 )
 
 __all__ = [
+    "alpha_divergence_matrix",
     "beta2_divergence_matrix",
     "beta2_similarity_matrix",
     "centered_beta2_gram",
@@ -57,7 +62,9 @@ __all__ = [
     "direct_plugin_bandwidth",
     "directional_kl_divergence_matrix",
     "directional_kl_similarity",
+    "estimate_sample_scale",
     "first_order_perron_vector",
+    "inverse_power_similarity_matrix",
     "leading_centered_beta2_coordinate",
     "leading_principal_determinants",
     "principal_logdet_increments",
@@ -79,6 +86,7 @@ __all__ = [
     "renyi_similarity_matrix",
     "robust_scale_for_bandwidth",
     "sample_gaussian_mixture",
+    "sample_scaled_bandwidth_grid",
     "select_quadrature_similarity_bandwidths",
     "select_spectral_bandwidth",
     "silverman_rule_of_thumb_bandwidth",
