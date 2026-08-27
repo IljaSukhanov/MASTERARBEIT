@@ -378,7 +378,7 @@ Apply the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{
 
 \todo[inline]{grid must scale with $n$? Explain why}
 
-\todo[inline]{add general Box-Cox construction}
+\todo[inline]{illustrative image comparing linear and geometric grid with ticks on an interval}
 
 The choice of the correct bandwidth grid is essential. Let $\mathcal{H}=\{h_1,\dots,h_N\}$ with $0<h_{\min}=h_1<\dots<h_N=h_{\max}$. We can choose between a linear or geometric grid, that is,
 \begin{align*}
@@ -389,7 +389,16 @@ or
     h_j=h_{\min}\left(\frac{h_{\min}}{h_{\max}}\right)^{\frac{j-1}{N-1}}=h_{\min}q_N^{j-1},\quad q_N=\left(\frac{h_{\min}}{h_{\max}}\right)^{1/(N-1)}
 \end{align*}
 
-\todo[inline]{illustrative image comparing linear and geometric grid with ticks on an interval}
+\begin{Def}\label{def:linear_in_psi_beta}
+    Let $\psi_{\beta}$ be defined by $\psi_{\beta}(h)=(h^{1-\beta/2}-1)/(1-\beta/2)$. A grid $0<h_1<\dots<h_N$ is said to be linear in $\psi_{\beta}$ if
+    \begin{align*}
+        \psi_{\beta}(h_j)=\psi_{\beta}(h_1)+\frac{j-1}{N-1}(\psi_{\beta}(h_N)-\psi_{\beta}(h_1)),\quad j=1,\dots,N
+    \end{align*}
+\end{Def}
+
+Definition~\ref{def:linear_in_psi_beta} smoothly connects a linear and a geometric grid. A linear grid is a grid linear in $\psi_0$. A geometric grid is a grid linear in $\psi_2$.
+
+\textbf{Motivation for why a geometric grid is the natural choice}
 
 Define
 \begin{align*}
