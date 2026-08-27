@@ -18,7 +18,9 @@ from .density import (
     sample_gaussian_mixture,
 )
 from .similarities import (
+    quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
+    resolve_exponential_similarity_scale,
     select_spectral_bandwidth,
     spectral_choice_from_similarity,
 )
@@ -36,14 +38,14 @@ def _spectral_indices(similarities: dict[str, np.ndarray | float]) -> dict[str, 
     }
 
 
-def _quadrature_gamma(gamma: float | str) -> float:
-    """Resolve the experiment-level ``auto`` setting for quadrature methods."""
-    if gamma == "auto":
-        return 1.0
-    value = float(gamma)
-    if value <= 0.0:
-        raise ValueError("gamma must be positive.")
-    return value
+def _quadrature_gamma(
+    gamma: float | str,
+    densities: np.ndarray,
+    x_grid: np.ndarray,
+) -> float:
+    """Resolve ``gamma`` from the quadrature beta-2 divergence matrix."""
+    divergence = quadrature_beta2_divergence_matrix(densities, x_grid)
+    return resolve_exponential_similarity_scale(divergence, gamma)
 
 
 def run_one_spectral_vs_oracle_experiment(
@@ -61,7 +63,7 @@ def run_one_spectral_vs_oracle_experiment(
     spectral = select_spectral_bandwidth(
         samples,
         h_grid,
-        gamma=_quadrature_gamma(gamma),
+        gamma=gamma,
     )
     spectral_index = int(spectral["selected_index"])
     return {
@@ -91,7 +93,7 @@ def run_one_all5_bandwidth_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
-    resolved_gamma = _quadrature_gamma(gamma)
+    resolved_gamma = _quadrature_gamma(gamma, densities, x_grid)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,
@@ -144,13 +146,11 @@ def run_one_consistency_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
-    resolved_gamma = _quadrature_gamma(gamma)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,
             x_grid,
             similarity_name=name,
-            gamma=resolved_gamma,
         )
         for name in ("hellinger_affinity", "js_similarity")
     }
@@ -199,7 +199,7 @@ def run_one_mixture_bandwidth_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
-    resolved_gamma = _quadrature_gamma(gamma)
+    resolved_gamma = _quadrature_gamma(gamma, densities, x_grid)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,

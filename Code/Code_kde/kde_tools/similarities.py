@@ -366,20 +366,78 @@ def spectral_choice_from_similarity(
         "selected_weight": float(np.max(vector)),
     }
 
-# computes the l2 distance matrix D, similarity transformation S, Perron vector v of S, arg max v_i and max v_i
+
+def resolve_exponential_similarity_scale(
+        divergence_matrix: np.ndarray,
+        gamma: float | str = "auto",
+) -> float:
+    """Resolve the scale in ``exp(-gamma * D)``.
+
+    With ``gamma="auto"``, the median strictly positive divergence is mapped
+    to ``exp(-1)``. A matrix containing only zeros has no identifiable scale,
+    so the neutral fallback ``gamma=1`` is used.
+    """
+    divergence = np.asarray(divergence_matrix, dtype=float)
+    if divergence.ndim != 2 or divergence.shape[0] != divergence.shape[1]:
+        raise ValueError("divergence_matrix must be square.")
+    if not np.all(np.isfinite(divergence)):
+        raise ValueError("divergence_matrix must contain only finite values.")
+    if np.any(divergence < -1e-14):
+        raise ValueError("divergence_matrix must be nonnegative.")
+
+    if isinstance(gamma, str):
+        if gamma != "auto":
+            raise ValueError('gamma must be positive or equal to "auto".')
+        positive = divergence[divergence > 0.0]
+        if len(positive) == 0:
+            return 1.0
+        return 1.0 / float(np.median(positive))
+
+    value = float(gamma)
+    if not np.isfinite(value) or value <= 0.0:
+        raise ValueError("gamma must be strictly positive.")
+    return value
+
+
+# computes the beta-2 distance matrix D, similarity transformation S, Perron vector v of S, arg max v_i and max v_i
 def select_spectral_bandwidth(
         samples: np.ndarray,
         h_grid: np.ndarray,
-        gamma: float = 1.0,
+        gamma: float | str = 1.0,
 ) -> dict[str, np.ndarray | int | float]:
     d2 = beta2_divergence_matrix(samples=samples, h_grid=h_grid)
+    resolved_gamma = resolve_exponential_similarity_scale(d2, gamma)
     l2_squared = 2.0 * d2
-    similarity = np.exp(-float(gamma) * d2)
+    similarity = np.exp(-resolved_gamma * d2)
+    np.fill_diagonal(similarity, 1.0)
     return {
         **spectral_choice_from_similarity(similarity),
         "similarity_matrix": similarity,
+        "beta2_divergence": d2,
         "l2_squared": l2_squared,
+        "gamma": resolved_gamma,
     }
+
+
+def quadrature_beta2_divergence_matrix(
+        density_values: np.ndarray,
+        x_grid: np.ndarray,
+) -> np.ndarray:
+    """Return ``D_2 = 0.5 * integral (p_i - p_j)^2`` by quadrature."""
+    values = np.asarray(density_values, dtype=float)
+    x_grid = np.asarray(x_grid, dtype=float)
+    if values.ndim != 2:
+        raise ValueError("density_values must be a two-dimensional array.")
+    if values.shape[1] != len(x_grid):
+        raise ValueError("x_grid must match the density grid axis.")
+    if np.any(values < 0.0):
+        raise ValueError("Density values must be nonnegative.")
+
+    weights = _trapezoidal_weights(x_grid)
+    gram = (values * weights[None, :]) @ values.T
+    divergence = 0.5 * squared_l2_distance_from_gram(gram=gram)
+    np.fill_diagonal(divergence, 0.0)
+    return divergence
 
 
 # input: grid a=x_1<...<x_m=b, density_values: y_{jk}=\hat{f}_{h_j}(x_k)
@@ -388,7 +446,7 @@ def quadrature_similarity_matrices(
         density_values: np.ndarray,
         x_grid: np.ndarray,
         similarity_name: str,
-        gamma: float = 1.0,
+        gamma: float | str = 1.0,
         eps: float = 1e-300,
 ) -> np.ndarray:
     if similarity_name not in SIMILARITY_NAMES:
@@ -403,8 +461,6 @@ def quadrature_similarity_matrices(
         raise ValueError("x_grid must match the density grid axis.")
     if np.any(values < 0.0):
         raise ValueError("Density values must be nonnegative.")
-    if gamma <= 0.0:
-        raise ValueError("gamma must be strictly positive.")
     if eps <= 0.0:
         raise ValueError("eps must be strictly positive.")
 
@@ -422,10 +478,9 @@ def quadrature_similarity_matrices(
         square_roots = np.sqrt(values)
         matrix = (square_roots * weights[None, :]) @ square_roots.T
     elif similarity_name == "exponential_l2_similarity":
-        gram = (values * weights[None, :]) @ values.T
-        l2_squared = squared_l2_distance_from_gram(gram=gram)
-        d2 = 0.5 * l2_squared
-        matrix = np.exp(-gamma * d2)
+        d2 = quadrature_beta2_divergence_matrix(values, x_grid)
+        resolved_gamma = resolve_exponential_similarity_scale(d2, gamma)
+        matrix = np.exp(-resolved_gamma * d2)
     else:
         entropy = -np.sum(
             weights[None, :] * values * np.log(np.maximum(values, eps)),
@@ -455,7 +510,7 @@ def compute_quadrature_similarity_matrices(
         similarity_name: str,
         x_grid: np.ndarray | None = None,
         m_x: int = 2_001,
-        gamma: float = 1.0,
+        gamma: float | str = 1.0,
 ) -> dict[str, np.ndarray | float]:
     if x_grid is None:
         x_grid = quadrature_grid_for_kdes(samples=samples, h_grid=h_grid, m_x=m_x)
@@ -473,7 +528,7 @@ def select_quadrature_similarity_bandwidths(
         similarity_name: str,
         x_grid: np.ndarray | None = None,
         m_x: int = 2_001,
-        gamma: float = 1.0,
+        gamma: float | str = 1.0,
 ) -> dict[str, object]:
     result = compute_quadrature_similarity_matrices(
         samples=samples,

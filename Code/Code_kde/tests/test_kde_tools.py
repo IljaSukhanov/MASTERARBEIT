@@ -32,11 +32,14 @@ from kde_tools.similarities import (
     principal_logdet_increments,
     perron_vector,
     population_gaussian_beta2_divergence_matrix,
+    quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
     renyi_divergence_matrix,
+    resolve_exponential_similarity_scale,
     select_spectral_bandwidth,
     squared_l2_distance_from_gram,
 )
+from kde_tools.experiments import run_one_spectral_vs_oracle_experiment
 
 
 class DensityTests(unittest.TestCase):
@@ -142,6 +145,51 @@ class SimilarityTests(unittest.TestCase):
         expected = squared_l2_distance_from_gram(gram)
         np.testing.assert_allclose(result["l2_squared"], expected, atol=1e-14)
         self.assertIn(result["selected_index"], range(len(self.bandwidths)))
+
+    def test_auto_gamma_maps_median_beta2_divergence_to_exp_minus_one(self) -> None:
+        divergence = beta2_divergence_matrix(self.samples, self.bandwidths)
+        positive = divergence[divergence > 0.0]
+        expected_gamma = 1.0 / float(np.median(positive))
+
+        result = select_spectral_bandwidth(
+            self.samples,
+            self.bandwidths,
+            gamma="auto",
+        )
+
+        self.assertAlmostEqual(result["gamma"], expected_gamma)
+        self.assertAlmostEqual(
+            np.exp(-result["gamma"] * np.median(positive)),
+            np.exp(-1.0),
+        )
+        np.testing.assert_allclose(
+            result["similarity_matrix"],
+            np.exp(-expected_gamma * divergence),
+        )
+
+    def test_quadrature_auto_gamma_uses_quadrature_beta2_divergence(self) -> None:
+        divergence = quadrature_beta2_divergence_matrix(
+            self.densities,
+            self.x_grid,
+        )
+        gamma = resolve_exponential_similarity_scale(divergence, "auto")
+        similarity = quadrature_similarity_matrices(
+            self.densities,
+            self.x_grid,
+            similarity_name="exponential_l2_similarity",
+            gamma="auto",
+        )
+        np.testing.assert_allclose(similarity, np.exp(-gamma * divergence))
+
+    def test_spectral_vs_oracle_runner_reports_resolved_gamma(self) -> None:
+        result = run_one_spectral_vs_oracle_experiment(
+            seed=123,
+            n=20,
+            sigma2=1.0,
+            h_grid=np.geomspace(0.1, 1.0, 8),
+            gamma="auto",
+        )
+        self.assertGreater(result["gamma"], 0.0)
 
     def test_exact_beta2_divergence_matches_fine_quadrature(self) -> None:
         numerical = 0.5 * trapezoidal_integral(
