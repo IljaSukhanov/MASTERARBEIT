@@ -1,49 +1,10 @@
-"""Reusable functions for the AR scale-selection notebook.
-
-This module is loaded by ``01_AR_SCALE_SELECTION.ipynb``.  The numerical and
-GUDHI implementation lives here so the notebook contains only controls,
-execution, tables, and plots.
-"""
+"""Reusable numerical functions for archived AR experiments."""
 
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Dict, Iterable
-import importlib.util
-import sys
 
-import gudhi
 import numpy as np
 import pandas as pd
-
-
-_FUNCTIONALS_PATH = next(
-    (
-        path
-        for path in (
-            Path(__file__).with_name("001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py"),
-            Path(__file__).resolve().parent.parent / "001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py",
-            Path(__file__).resolve().parent.parent / "Code_general" / "001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py",
-        )
-        if path.exists()
-    ),
-    None,
-)
-if _FUNCTIONALS_PATH is None:
-    raise FileNotFoundError("Could not find 001_SIMPLICIAL_COMPLEX_FUNCTIONALS.py")
-_FUNCTIONALS_SPEC = importlib.util.spec_from_file_location(
-    "simplicial_complex_functionals",
-    _FUNCTIONALS_PATH,
-)
-if _FUNCTIONALS_SPEC.name in sys.modules:
-    simplicial_functionals = sys.modules[_FUNCTIONALS_SPEC.name]
-else:
-    simplicial_functionals = importlib.util.module_from_spec(_FUNCTIONALS_SPEC)
-    sys.modules[_FUNCTIONALS_SPEC.name] = simplicial_functionals
-    _FUNCTIONALS_SPEC.loader.exec_module(simplicial_functionals)
-
-beta_0 = simplicial_functionals.beta_0
-edge_count = simplicial_functionals.edge_count
-log_component_edge_functional = simplicial_functionals.log_component_edge_functional
 
 @dataclass(frozen=True)
 class PipelineConfig:
@@ -57,12 +18,6 @@ class PipelineConfig:
     pacf_first: float = 0.75
     pacf_decay: float = -0.50
     weight_type: str = "covariance"
-    tau: float = 2.0
-    max_simplex_dimension: int = 2
-    alpha: float = 1.0
-    xi: float = 1.0
-    tilde_delta: float = 0.0
-    similarity_mode: str = "union"  # 'union' or 'overlap'
 
     def __post_init__(self):
         if self.p < 1:
@@ -71,8 +26,6 @@ class PipelineConfig:
             raise ValueError("k_max must be at least p.")
         if self.weight_type != "covariance":
             raise ValueError("Only 'covariance' weights remain in this module.")
-        if self.tau <= 0:
-            raise ValueError("tau must be strictly positive.")
 
 
 def pacf_to_ar(partial_autocorrelations: Iterable[float]) -> np.ndarray:
@@ -305,28 +258,6 @@ def weight_axis_label(weight_type: str) -> str:
     return r"$w_k^{\mathrm{cov}}(s,t)$"
 
 
-def gudhi_flag_complex(weight_matrix: np.ndarray, tau: float, max_dimension: int = 2) -> gudhi.SimplexTree:
-    n = weight_matrix.shape[0]
-    complex_ = gudhi.SimplexTree()
-    for vertex in range(n):
-        complex_.insert([vertex], filtration=0.0)
-    rows, cols = np.where(np.triu(weight_matrix <= tau, k=1))
-    for i, j in zip(rows, cols):
-        complex_.insert([int(i), int(j)], filtration=float(weight_matrix[i, j]))
-    complex_.expansion(max_dimension)
-    complex_.make_filtration_non_decreasing()
-    return complex_
-
-
-def union_complex(left: gudhi.SimplexTree, right: gudhi.SimplexTree) -> gudhi.SimplexTree:
-    union = gudhi.SimplexTree()
-    for tree in (left, right):
-        for simplex, filtration in tree.get_filtration():
-            union.insert(simplex, filtration=filtration)
-    union.make_filtration_non_decreasing()
-    return union
-
-
 def principal_scale(sigma: np.ndarray, ks: Iterable[int]):
     eigenvalues, eigenvectors = np.linalg.eigh((sigma + sigma.T) / 2)
     vector = eigenvectors[:, -1]
@@ -339,4 +270,4 @@ def principal_scale(sigma: np.ndarray, ks: Iterable[int]):
     return int(ks[np.argmax(vector)]), eigenvalues, vector
 
 
-__all__ = ['PipelineConfig', 'pacf_to_ar', 'automatic_ar_coefficients', 'companion_radius', 'simulate_ar', 'simulate_ar_with_distribution', 'create_2d_trajectory_animation', 'aligned_windows', 'fit_completion_matrix', 'lift_test_cloud', 'build_lifted_clouds', 'estimate_autocovariance', 'lifted_covariance_scores', 'covariance_weight_matrices', 'build_weight_matrices', 'weight_axis_label', 'gudhi_flag_complex', 'union_complex', 'principal_scale']
+__all__ = ['PipelineConfig', 'pacf_to_ar', 'automatic_ar_coefficients', 'companion_radius', 'simulate_ar', 'simulate_ar_with_distribution', 'create_2d_trajectory_animation', 'aligned_windows', 'fit_completion_matrix', 'lift_test_cloud', 'build_lifted_clouds', 'estimate_autocovariance', 'lifted_covariance_scores', 'covariance_weight_matrices', 'build_weight_matrices', 'weight_axis_label', 'principal_scale']

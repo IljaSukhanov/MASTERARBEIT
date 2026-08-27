@@ -8,9 +8,8 @@ in `kde_tools/`:
   Gaussian/Gaussian-mixture integrals.
 - `bandwidths.py`: fixed and sample-scaled bandwidth grids plus the Silverman,
   LSCV, and plug-in rules.
-- `similarities.py`: beta-2, KL, Rényi, and alpha-divergence matrices;
-  exponential and inverse-power similarities; Perron vectors; Toeplitz
-  corrections; and spectral selection.
+- `similarities.py`: beta-2 and KL divergence matrices; exponential
+  similarities; Perron vectors; and spectral selection.
 - `experiments.py`: one-repetition simulation runners.  Notebooks control the
   settings, repetition loops, summaries, and plots.
 

@@ -10,7 +10,6 @@ from .similarities import (
     beta2_divergence_matrix_fft,
     beta2_similarity_matrix_fft,
     directional_kl_similarity_fft,
-    symmetrized_renyi_similarity_fft,
 )
 
 __all__ = [
@@ -18,5 +17,4 @@ __all__ = [
     "beta2_similarity_matrix_fft",
     "directional_kl_similarity_fft",
     "kde_family_fft",
-    "symmetrized_renyi_similarity_fft",
 ]

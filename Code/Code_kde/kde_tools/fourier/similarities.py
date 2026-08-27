@@ -5,10 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from ..density import trapezoidal_integral
-from ..similarities import (
-    renyi_similarity_matrix,
-    squared_l2_distance_from_gram,
-)
+from ..similarities import squared_l2_distance_from_gram
 from .reconstruction import kde_family_fft
 
 
@@ -92,24 +89,3 @@ def directional_kl_similarity_fft(
     similarity = np.exp(-float(gamma) * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
-
-
-def symmetrized_renyi_similarity_fft(
-    densities: np.ndarray,
-    dx: float,
-    alpha: float,
-    gamma: float = 1.0,
-    bandwidths: np.ndarray | None = None,
-    eps: float = 1e-300,
-) -> np.ndarray:
-    """Compute a symmetrized Rényi similarity on a periodic FFT grid."""
-    values, x_grid = _closed_periodic_grid(densities, dx)
-    return renyi_similarity_matrix(
-        density_values=values,
-        x_grid=x_grid,
-        alpha=alpha,
-        gamma=gamma,
-        symmetrized=True,
-        bandwidths=bandwidths,
-        eps=eps,
-    )

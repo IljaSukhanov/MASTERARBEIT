@@ -19,14 +19,12 @@ from kde_tools.density import (
     trapezoidal_integral,
 )
 from kde_tools.similarities import (
-    alpha_divergence_matrix,
     beta2_divergence_matrix,
     beta2_similarity_matrix,
     centered_beta2_gram,
     centered_scale_transition_descriptors,
     directional_kl_divergence_matrix,
     first_order_perron_vector,
-    inverse_power_similarity_matrix,
     leading_centered_beta2_coordinate,
     leading_principal_determinants,
     principal_logdet_increments,
@@ -34,7 +32,6 @@ from kde_tools.similarities import (
     population_gaussian_beta2_divergence_matrix,
     quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
-    renyi_divergence_matrix,
     resolve_exponential_similarity_scale,
     select_spectral_bandwidth,
     squared_l2_distance_from_gram,
@@ -223,80 +220,6 @@ class SimilarityTests(unittest.TestCase):
         self.assertEqual(divergence.shape, (len(self.bandwidths),) * 2)
         np.testing.assert_allclose(np.diag(divergence), 0.0)
         self.assertTrue(np.all(divergence >= 0.0))
-
-    def test_renyi_alpha_one_matches_kl_quadrature(self) -> None:
-        kl = directional_kl_divergence_matrix(self.densities, self.x_grid)
-        renyi = renyi_divergence_matrix(
-            self.densities,
-            self.x_grid,
-            alpha=1.0,
-            bandwidths=self.bandwidths,
-        )
-        np.testing.assert_allclose(renyi, kl, atol=1e-14)
-
-    def test_alpha_divergence_matches_power_integral(self) -> None:
-        alpha = 0.5
-        power_integrals = trapezoidal_integral(
-            self.densities[:, None, :] ** alpha
-            * self.densities[None, :, :] ** (1.0 - alpha),
-            self.x_grid,
-            axis=2,
-        )
-        expected = (power_integrals - 1.0) / (alpha * (alpha - 1.0))
-        expected = np.maximum(expected, 0.0)
-        np.fill_diagonal(expected, 0.0)
-        actual = alpha_divergence_matrix(
-            self.densities,
-            self.x_grid,
-            alpha=alpha,
-            bandwidths=self.bandwidths,
-        )
-        np.testing.assert_allclose(actual, expected, atol=2e-13)
-
-    def test_alpha_divergence_has_kl_limit(self) -> None:
-        kl = directional_kl_divergence_matrix(self.densities, self.x_grid)
-        alpha_one = alpha_divergence_matrix(
-            self.densities,
-            self.x_grid,
-            alpha=1.0,
-            bandwidths=self.bandwidths,
-        )
-        np.testing.assert_allclose(alpha_one, kl, atol=1e-14)
-
-    def test_alpha_divergence_detects_divergent_gaussian_kde_tails(self) -> None:
-        bandwidths = np.array([0.2, 1.0])
-        densities = gaussian_kde_values(
-            self.samples,
-            bandwidths,
-            self.x_grid,
-        )
-        divergence = alpha_divergence_matrix(
-            densities,
-            self.x_grid,
-            alpha=2.0,
-            bandwidths=bandwidths,
-        )
-        self.assertTrue(np.isinf(divergence[1, 0]))
-        self.assertTrue(np.isfinite(divergence[0, 1]))
-
-    def test_inverse_power_similarity_transform(self) -> None:
-        divergence = np.array(
-            [
-                [0.0, 0.5, np.inf],
-                [0.25, 0.0, 2.0],
-                [np.inf, 1.0, 0.0],
-            ]
-        )
-        similarity = inverse_power_similarity_matrix(
-            divergence,
-            offset=2.0,
-            slope=3.0,
-            power=1.5,
-        )
-        expected = (2.0 / (2.0 + 3.0 * divergence)) ** 1.5
-        np.fill_diagonal(expected, 1.0)
-        np.testing.assert_allclose(similarity, expected)
-        self.assertTrue(np.all((similarity >= 0.0) & (similarity <= 1.0)))
 
     def test_population_gaussian_beta2_matrix_matches_quadrature(self) -> None:
         population = population_gaussian_beta2_divergence_matrix(

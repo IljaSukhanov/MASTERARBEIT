@@ -27,7 +27,6 @@ from .density import (
     trapezoidal_integral,
 )
 from .similarities import (
-    alpha_divergence_matrix,
     beta2_divergence_matrix,
     beta2_similarity_matrix,
     centered_beta2_gram,
@@ -36,7 +35,6 @@ from .similarities import (
     directional_kl_divergence_matrix,
     directional_kl_similarity,
     first_order_perron_vector,
-    inverse_power_similarity_matrix,
     leading_centered_beta2_coordinate,
     leading_principal_determinants,
     principal_logdet_increments,
@@ -44,18 +42,13 @@ from .similarities import (
     population_gaussian_beta2_divergence_matrix,
     quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
-    renyi_divergence_matrix,
-    renyi_similarity_matrix,
     resolve_exponential_similarity_scale,
     select_quadrature_similarity_bandwidths,
     select_spectral_bandwidth,
     spectral_choice_from_similarity,
-    symmetrized_renyi_divergence_matrix,
-    toeplitz_projection,
 )
 
 __all__ = [
-    "alpha_divergence_matrix",
     "beta2_divergence_matrix",
     "beta2_similarity_matrix",
     "centered_beta2_gram",
@@ -66,7 +59,6 @@ __all__ = [
     "directional_kl_similarity",
     "estimate_sample_scale",
     "first_order_perron_vector",
-    "inverse_power_similarity_matrix",
     "leading_centered_beta2_coordinate",
     "leading_principal_determinants",
     "principal_logdet_increments",
@@ -85,8 +77,6 @@ __all__ = [
     "quadrature_beta2_divergence_matrix",
     "quadrature_grid_for_kdes",
     "quadrature_similarity_matrices",
-    "renyi_divergence_matrix",
-    "renyi_similarity_matrix",
     "resolve_exponential_similarity_scale",
     "robust_scale_for_bandwidth",
     "sample_gaussian_mixture",
@@ -95,7 +85,5 @@ __all__ = [
     "select_spectral_bandwidth",
     "silverman_rule_of_thumb_bandwidth",
     "spectral_choice_from_similarity",
-    "symmetrized_renyi_divergence_matrix",
-    "toeplitz_projection",
     "trapezoidal_integral",
 ]
