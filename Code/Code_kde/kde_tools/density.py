@@ -102,6 +102,7 @@ def exact_gaussian_kde_l2_gram(
             gram[j, i] = value
     return gram
 
+# 0
 # this function computes the true integrated squared error between \hat{f}_h and f, where f is the density of N(0,sigma2) for a given grid of bandwidths h_grid.
 def exact_oracle_ise_values(
     samples: np.ndarray,
