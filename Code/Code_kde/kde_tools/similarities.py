@@ -18,6 +18,7 @@ SIMILARITY_NAMES = (
 
 # 0 ... worked through
 # 1 ... inspect later
+# 2 ... quadrature related (put in new .py called quadrature?)
 
 
 # 0
@@ -177,27 +178,29 @@ def spectral_choice_from_similarity(
 
 # continue here
 
-# computes the beta-2 distance matrix D, similarity transformation S, Perron vector v of S, arg max v_i and max v_i
+# Compute the beta-2 divergence matrix, its similarity transformation,
+# the Perron vector, and the selected bandwidth index.
 def select_spectral_bandwidth(
         samples: np.ndarray,
         h_grid: np.ndarray,
         gamma: float = 1.0,
-) -> dict[str, np.ndarray | int | float]:
+) -> dict[str, np.ndarray | int]:
     gamma = float(gamma)
     if not np.isfinite(gamma) or gamma <= 0.0:
         raise ValueError("gamma must be finite and strictly positive.")
     d2 = beta2_divergence_matrix(samples=samples, h_grid=h_grid)
-    l2_squared = 2.0 * d2
     similarity = np.exp(-gamma * d2)
     np.fill_diagonal(similarity, 1.0)
+    vector = perron_vector(matrix=similarity)
     return {
-        **spectral_choice_from_similarity(similarity),
+        "selected_index": int(np.argmax(vector)),
+        "perron_vector": vector,
         "similarity_matrix": similarity,
         "beta2_divergence": d2,
-        "l2_squared": l2_squared,
-        "gamma": gamma,
     }
 
+
+# 2
 def quadrature_beta2_divergence_matrix(
         density_values: np.ndarray,
         x_grid: np.ndarray,
@@ -219,6 +222,7 @@ def quadrature_beta2_divergence_matrix(
     return divergence
 
 
+# 2
 # input: grid a=x_1<...<x_m=b, density_values: y_{jk}=\hat{f}_{h_j}(x_k)
 # computes quadrature integrals of the chosen symmetric divergences
 def quadrature_similarity_matrices(
@@ -284,7 +288,7 @@ def quadrature_similarity_matrices(
 
     return np.clip(matrix, 0.0, 1.0)
 
-
+# 2
 def compute_quadrature_similarity_matrices(
         samples: np.ndarray,
         h_grid: np.ndarray,
@@ -302,7 +306,7 @@ def compute_quadrature_similarity_matrices(
         "x_grid": x_grid,
     }
 
-
+#2
 def select_quadrature_similarity_bandwidths(
         samples: np.ndarray,
         h_grid: np.ndarray,
@@ -326,7 +330,7 @@ def select_quadrature_similarity_bandwidths(
     }
     return result
 
-
+# 2
 def _trapezoidal_weights(x_grid: np.ndarray) -> np.ndarray:
     """Return composite-trapezoidal weights for a one-dimensional grid."""
     x_grid = np.asarray(x_grid, dtype=float)

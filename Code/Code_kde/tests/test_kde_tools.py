@@ -132,8 +132,12 @@ class SimilarityTests(unittest.TestCase):
     def test_exact_selector_uses_exact_l2_distances(self) -> None:
         result = select_spectral_bandwidth(self.samples, self.bandwidths)
         gram = exact_gaussian_kde_l2_gram(self.samples, self.bandwidths)
-        expected = squared_l2_distance_from_gram(gram)
-        np.testing.assert_allclose(result["l2_squared"], expected, atol=1e-14)
+        expected = 0.5 * squared_l2_distance_from_gram(gram)
+        np.testing.assert_allclose(
+            result["beta2_divergence"],
+            expected,
+            atol=1e-14,
+        )
         self.assertIn(result["selected_index"], range(len(self.bandwidths)))
 
     def test_exact_selector_uses_supplied_gamma(self) -> None:
@@ -146,7 +150,6 @@ class SimilarityTests(unittest.TestCase):
             gamma=gamma,
         )
 
-        self.assertAlmostEqual(result["gamma"], gamma)
         np.testing.assert_allclose(
             result["similarity_matrix"],
             np.exp(-gamma * divergence),

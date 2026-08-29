@@ -61,7 +61,7 @@ def run_one_spectral_vs_oracle_experiment(
         "spectral_h": float(h_grid[spectral_index]),
         "oracle_l2_error": float(np.sqrt(max(ise[oracle_index], 0.0))),
         "spectral_l2_error": float(np.sqrt(max(ise[spectral_index], 0.0))),
-        "gamma": float(spectral["gamma"]),
+        "gamma": float(gamma),
     }
 
 
