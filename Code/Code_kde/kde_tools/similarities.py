@@ -6,7 +6,6 @@ from .density import (
     exact_gaussian_kde_l2_gram,
     gaussian_kde_values,
     quadrature_grid_for_kdes,
-    trapezoidal_integral,
 )
 
 
@@ -176,6 +175,8 @@ def spectral_choice_from_similarity(
     }
 
 
+# continue here
+
 # computes the beta-2 distance matrix D, similarity transformation S, Perron vector v of S, arg max v_i and max v_i
 def select_spectral_bandwidth(
         samples: np.ndarray,
@@ -192,8 +193,6 @@ def select_spectral_bandwidth(
         "beta2_divergence": d2,
         "l2_squared": l2_squared,
     }
-
-# continue here
 
 def quadrature_beta2_divergence_matrix(
         density_values: np.ndarray,
@@ -320,61 +319,6 @@ def select_quadrature_similarity_bandwidths(
         "selected_h": float(h_grid[int(choice["selected_index"])])
     }
     return result
-
-
-def directional_kl_divergence_matrix(
-        density_values: np.ndarray,
-        x_grid: np.ndarray,
-        eps: float = 1e-300,
-) -> np.ndarray:
-    """Compute ``KL(p_i || p_j)`` by ordinary spatial quadrature."""
-    values = np.asarray(density_values, dtype=float)
-    x_grid = np.asarray(x_grid, dtype=float)
-    if values.ndim != 2:
-        raise ValueError("density_values must be a two-dimensional array.")
-    if values.shape[1] != len(x_grid):
-        raise ValueError("x_grid must match the density grid axis.")
-    if np.any(values < 0.0):
-        raise ValueError("Density values must be nonnegative.")
-    if eps <= 0.0:
-        raise ValueError("eps must be strictly positive.")
-
-    positive_values = np.maximum(values, eps)
-    log_values = np.log(positive_values)
-    own_log_density = trapezoidal_integral(
-        values=values * log_values,
-        x_grid=x_grid,
-        axis=1,
-    )
-    cross_log_density = np.empty((len(values), len(values)), dtype=float)
-    for j, log_density in enumerate(log_values):
-        cross_log_density[:, j] = trapezoidal_integral(
-            values=values * log_density[None, :],
-            x_grid=x_grid,
-            axis=1,
-        )
-    divergence = np.maximum(own_log_density[:, None] - cross_log_density, 0.0)
-    np.fill_diagonal(divergence, 0.0)
-    return divergence
-
-
-def directional_kl_similarity(
-        density_values: np.ndarray,
-        x_grid: np.ndarray,
-        gamma: float = 1.0,
-        eps: float = 1e-300,
-) -> np.ndarray:
-    """Return ``exp(-gamma * KL(p_i || p_j))`` using spatial quadrature."""
-    if gamma <= 0.0:
-        raise ValueError("gamma must be strictly positive.")
-    divergence = directional_kl_divergence_matrix(
-        density_values=density_values,
-        x_grid=x_grid,
-        eps=eps,
-    )
-    similarity = np.exp(-float(gamma) * divergence)
-    np.fill_diagonal(similarity, 1.0)
-    return similarity
 
 
 def _trapezoidal_weights(x_grid: np.ndarray) -> np.ndarray:

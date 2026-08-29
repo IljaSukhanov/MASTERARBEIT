@@ -17,10 +17,10 @@ from kde_tools.density import (
     trapezoidal_integral,
 )
 from kde_tools.gaussian_mixtures import exact_mixture_ise_values, mixture_density
+from kde_tools.kullback_leibler import directional_kl_divergence_matrix
 from kde_tools.similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,
-    directional_kl_divergence_matrix,
     first_order_perron_vector,
     perron_vector,
     population_gaussian_beta2_divergence_matrix,

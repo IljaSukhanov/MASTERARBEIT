@@ -28,12 +28,14 @@ from .gaussian_mixtures import (
     mixture_density,
     sample_gaussian_mixture,
 )
+from .kullback_leibler import (
+    directional_kl_divergence_matrix,
+    directional_kl_similarity,
+)
 from .similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,
     compute_quadrature_similarity_matrices,
-    directional_kl_divergence_matrix,
-    directional_kl_similarity,
     first_order_perron_vector,
     perron_vector,
     population_gaussian_beta2_divergence_matrix,
