@@ -246,13 +246,17 @@ The $\beta$-divergence is thus given by
 
 For $\beta=2$ we get
 \begin{align*}
-    D_2(p,q)=\frac{1}{2}\int(p-q)^2=\frac{1}{2}\|p-q\|_2^2
+    D_2(p,q)=\frac{1}{2}\int(p-q)^2=\frac{1}{2}\|p-q\|_2^2=\frac{1}{2}\langle p,p\rangle_{L^2}+\frac{1}{2}\langle q,q\rangle_{L^2}-\langle p,q\rangle_{L^2}
 \end{align*}
 
 If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_h(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_2(\hat{f}_h,\hat{f}_s)$. We have
-\begin{align}\label{eq:exact_l2_divergence}
-    D_2(\hat{f}_h,\hat{f}_s)=\frac{1}{2n^2}\sum_{i,j}\left(\phi_{\sqrt{2}h}(X_i-X_j)+\phi_{\sqrt{2}s}(X_i-X_j)-\phi_{\sqrt{h^2+s^2}}(X_i-X_j)\right)
-\end{align}
+\begin{align*}
+    D_2(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},
+\end{align*}
+where
+\begin{align*}
+    G_{hs}=\langle\hat{f}_{h},\hat{f}_s\rangle_{L^2}=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{h^2+s^2}}\left(X_i-X_j\right)
+\end{align*}
 The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
 
 \subsection{Relations between all presented divergences}
@@ -270,7 +274,51 @@ The total variation and Hellinger distance are related by the chain of inequalit
 
 \subsection{Approximating integrals using quadrature}
 
-Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}C_{\alpha}(p,q)$, where, for example, in the case of the $\alpha$ or Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. Before that, the integral has to be truncated. The truncation error can be bounded above:
+Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. Let $a=X_{\min}-Lh_{\max}$ and $b=X_{\max}+Lh_{\max}$. We aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f_{\kappa}(p(x),q(x))\,dx|$, where $f_{\kappa}$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are Gaussian kernel density estimates. It holds
+\begin{align*}
+    \int_{A^c}\hat{f}_h\le 2\Phi(-L)=:\delta_L
+\end{align*}
+for any $h\le h_{\max}$.
+
+\textbf{Hellinger}
+
+$f_{\kappa}(y,z)=\sqrt{yz}$
+
+\begin{align*}
+    \int_{A^c}\sqrt{pq}\stackrel{\text{C.S.}}{\le}\sqrt{\int_{A^c}p}\sqrt{\int_{A^c}q}\le\delta_L
+\end{align*}
+
+\textbf{Total Variation}
+
+$f_{\kappa}(y,z)=(1/2)|y-z|$
+
+\begin{align*}
+    \int_{A^c}\frac{1}{2}|p-q|\le\frac{1}{2}\int p+\frac{1}{2}\int q\le\delta_L
+\end{align*}
+
+\textbf{Jensen-Shannon}
+
+\begin{align*}
+    \int_{A^c}\dots\le\delta_L\log{2}\le\delta_L
+\end{align*}
+
+\textbf{$L^2$ distance}
+
+$f_{\kappa}(y,z)=(y-z)^2/2$
+
+\begin{align*}
+    \int_{A^c}\frac{1}{2}(p-q)^2\le\frac{\delta_L}{\sqrt{2\pi}h_{\min}}
+\end{align*}
+
+\textbf{KL divergence}
+
+Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}C_{\alpha}(p,q)$, where, for example, in the case of the $\alpha$ or Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. 
+
+In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. 
+
+Before that, the integral has to be truncated. 
+
+The truncation error can be bounded above:
 \begin{align*}
     E_{\text{trunc}}=\int\limits_{\mathbb{R}\setminus(a,b)}C_{\alpha}(p,q)\le\left(\int\limits_{\mathbb{R}\setminus(a,b)}p\right)^{\alpha}\left(\int\limits_{\mathbb{R}\setminus(a,b)}q\right)^{1-\alpha}
 \end{align*}
@@ -284,13 +332,25 @@ Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min
 \begin{align*}
     \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)
 \end{align*}
-and thus $E_{\text{trunc}}\le 2\Phi(-L)$. Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
+and thus $E_{\text{trunc}}\le 2\Phi(-L)$. 
+
+Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
+
+\textbf{numerical integration}
 
 Afterwards, we use the composite trapezoidal rule to approximate the truncated integral:
 \begin{align*}
-    \int_a^bf(x)\,dx\approx Q_n(f)=\frac{b-a}{2n}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right),
+    \int_a^bf(x)\,dx\approx Q_n(f)&=\frac{b-a}{2n}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right)\\&
+    =\Delta x\sum_{k=0}^{n}c_kf(x_k)
 \end{align*}
-where $x_k=a+\frac{b-a}{n}k$, $k=0,1,\dots,n$ are the equidistant nodes.
+where $x_k=a+\frac{b-a}{n}k$, $k=0,1,\dots,n$ are the equidistant nodes, $\Delta x=(b-a)/n$ and
+\begin{align*}
+    c_k=\begin{cases}
+        1/2 & ,k=0,n\\
+        1 & , k=1,\dots,n-1
+    \end{cases}
+\end{align*}
+are the quadrature weights.
 
 \todo[inline]{cite source for the approximation guaranty}
 
