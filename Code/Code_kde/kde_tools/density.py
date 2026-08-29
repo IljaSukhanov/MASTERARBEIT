@@ -2,7 +2,12 @@ from __future__ import annotations
 
 import numpy as np
 
+# 0 ... worked through
+# 1 ... inspect later
+# 3 ... create new py file all about Gaussian mixture models
 
+
+# 3
 # sample n points from a Gaussian mixture with given weights, means, and sigmas
 def sample_gaussian_mixture(
         rng: np.random.Generator,
@@ -15,6 +20,7 @@ def sample_gaussian_mixture(
     return rng.normal(loc=np.asarray(means)[component_indices], scale=np.asarray(sigmas)[component_indices])
 
 
+# 3
 # compute the mean and variance of a Gaussian mixture with given weights, means, and sigmas
 def gaussian_mixture_mean_and_variance(
         weights: np.ndarray,
@@ -28,6 +34,8 @@ def gaussian_mixture_mean_and_variance(
     second_moment = float(np.sum(normalized_weights * (sigmas**2 + means**2)))
     return mean, second_moment - mean**2
 
+
+# 1
 def trapezoidal_integral(
     values: np.ndarray,
     x_grid: np.ndarray,
@@ -37,6 +45,7 @@ def trapezoidal_integral(
     return trapezoid(y=values, x=x_grid, axis=axis)
 
 
+# 1
 # input: x = (x_1, ..., x_n), mean, variance; output: phi_{mean,variance}(x)
 def gaussian_density_with_variance(
         x: np.ndarray | float,
@@ -47,6 +56,7 @@ def gaussian_density_with_variance(
     return np.exp(-0.5 * (x - mean) ** 2 / variance) / np.sqrt(2.0 * np.pi * variance)
 
 
+# 3
 # input: x = (x_1, ..., x_n), weights, means, sigmas; output: f(x) = sum_i weights[i] * phi_{means[i],sigmas[i]^2}(x)
 def mixture_density(
         x: np.ndarray,
@@ -59,6 +69,7 @@ def mixture_density(
         density += weight * gaussian_density_with_variance(x=x, mean=mean, variance=sigma**2)
     return density
 
+# continue here
 
 # computes \hat{f}_{h_j}(x_k) for all j and k
 def gaussian_kde_values(
@@ -113,6 +124,7 @@ def quadrature_grid_for_kdes(
     return np.linspace(left, right, int(m_x))
 
 
+# 0
 def exact_gaussian_kde_l2_gram(
         samples: np.ndarray,
         h_grid: np.ndarray,
