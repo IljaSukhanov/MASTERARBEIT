@@ -105,6 +105,11 @@ Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the
 
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
+The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is given by
+\begin{align*}
+    \operatorname{ISE}(h)=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{2}h}(X_i-X_j)-\frac{2}{n}\sum_{i=1}^{n}\phi_{\sqrt{h^2+\sigma^2}}(X_i)+\phi_{\sqrt{2}\sigma}(0)
+\end{align*}
+
 \textbf{Constructing Mixture Models with multiple global MISE minima}
 
 \todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
@@ -274,18 +279,22 @@ The total variation and Hellinger distance are related by the chain of inequalit
 
 \subsection{Approximating integrals using quadrature}
 
-Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. Let $a=X_{\min}-Lh_{\max}$ and $b=X_{\max}+Lh_{\max}$. We aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f_{\kappa}(p(x),q(x))\,dx|$, where $f_{\kappa}$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are Gaussian kernel density estimates. It holds
+Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f_{\kappa}(p(x),q(x))\,dx|$, where $f_{\kappa}$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are Gaussian kernel density estimates. It holds
 \begin{align*}
-    \int_{A^c}\hat{f}_h\le 2\Phi(-L)=:\delta_L
+    \tau_h:=\int_{A^c}\hat{f}_h=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
 \end{align*}
-for any $h\le h_{\max}$.
+Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
+\begin{align*}
+    \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)=:\delta_L
+\end{align*}
+and thus $\tau_h\le 2\Phi(-L)$ for any $h\le h_{\max}$.
 
 \textbf{Hellinger}
 
-$f_{\kappa}(y,z)=\sqrt{yz}$
+$f_{\kappa}(y,z)=y^{\kappa}z^{1-\kappa}$
 
 \begin{align*}
-    \int_{A^c}\sqrt{pq}\stackrel{\text{C.S.}}{\le}\sqrt{\int_{A^c}p}\sqrt{\int_{A^c}q}\le\delta_L
+    \int_{A^c}p^{\kappa}q^{1-\kappa}\stackrel{\text{Hölder}}{\le}\left(\int_{A^c}p\right)^{\kappa}\left(\int_{A^c}q\right)^{1-\kappa}\le\delta_L
 \end{align*}
 
 \textbf{Total Variation}
@@ -317,22 +326,6 @@ Computing divergences between densities amounts to evaluating integrals of the f
 In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. 
 
 Before that, the integral has to be truncated. 
-
-The truncation error can be bounded above:
-\begin{align*}
-    E_{\text{trunc}}=\int\limits_{\mathbb{R}\setminus(a,b)}C_{\alpha}(p,q)\le\left(\int\limits_{\mathbb{R}\setminus(a,b)}p\right)^{\alpha}\left(\int\limits_{\mathbb{R}\setminus(a,b)}q\right)^{1-\alpha}
-\end{align*}
-
-We also have
-\begin{align*}
-    \int\limits_{\mathbb{R}\setminus(a,b)}\hat{f}_{h}=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
-\end{align*}
-
-Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
-\begin{align*}
-    \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)
-\end{align*}
-and thus $E_{\text{trunc}}\le 2\Phi(-L)$. 
 
 Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
 
