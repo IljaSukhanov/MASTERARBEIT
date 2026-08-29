@@ -16,7 +16,6 @@ from .bandwidths import (
 )
 from .density import (
     exact_gaussian_kde_l2_gram,
-    exact_mixture_ise_values,
     exact_oracle_ise_values,
     gaussian_density_with_variance,
     gaussian_kde_values,
@@ -24,6 +23,7 @@ from .density import (
     trapezoidal_integral,
 )
 from .gaussian_mixtures import (
+    exact_mixture_ise_values,
     gaussian_mixture_mean_and_variance,
     mixture_density,
     sample_gaussian_mixture,

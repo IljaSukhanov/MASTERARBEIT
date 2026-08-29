@@ -51,3 +51,55 @@ def mixture_density(
             variance=sigma**2,
         )
     return density
+
+
+def exact_mixture_ise_values(
+        samples: np.ndarray,
+        h_grid: np.ndarray,
+        weights: np.ndarray,
+        means: np.ndarray,
+        sigmas: np.ndarray,
+) -> np.ndarray:
+    samples = np.asarray(samples, dtype=float)
+    h_grid = np.asarray(h_grid, dtype=float)
+    weights = np.asarray(weights, dtype=float) / np.sum(weights)
+    means = np.asarray(means, dtype=float)
+    sigmas = np.asarray(sigmas, dtype=float)
+    n = len(samples)
+    squared_differences = (samples[:, None] - samples[None, :]) ** 2
+
+    kde_squared_integrals = []
+    cross_integrals = []
+    for h in h_grid:
+        variance = 2.0 * h**2
+        kde_squared = np.exp(-squared_differences / (2.0 * variance)).sum()
+        kde_squared /= n**2 * np.sqrt(2.0 * np.pi * variance)
+        kde_squared_integrals.append(kde_squared)
+
+        cross = 0.0
+        for weight, mean, sigma in zip(weights, means, sigmas):
+            cross += weight * gaussian_density_with_variance(
+                x=samples,
+                mean=mean,
+                variance=h**2 + sigma**2,
+            ).mean()
+        cross_integrals.append(cross)
+
+    target_squared_integral = 0.0
+    for weight_a, mean_a, sigma_a in zip(weights, means, sigmas):
+        for weight_b, mean_b, sigma_b in zip(weights, means, sigmas):
+            target_squared_integral += (
+                weight_a
+                * weight_b
+                * gaussian_density_with_variance(
+                    x=mean_a,
+                    mean=mean_b,
+                    variance=sigma_a**2 + sigma_b**2,
+                )
+            )
+
+    return (
+        np.asarray(kde_squared_integrals)
+        - 2.0 * np.asarray(cross_integrals)
+        + target_squared_integral
+    )

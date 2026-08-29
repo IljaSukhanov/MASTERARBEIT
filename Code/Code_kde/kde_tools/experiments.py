@@ -11,12 +11,11 @@ from .bandwidths import (
     silverman_rule_of_thumb_bandwidth,
 )
 from .density import (
-    exact_mixture_ise_values,
     exact_oracle_ise_values,
     gaussian_kde_values,
     quadrature_grid_for_kdes,
 )
-from .gaussian_mixtures import sample_gaussian_mixture
+from .gaussian_mixtures import exact_mixture_ise_values, sample_gaussian_mixture
 from .similarities import (
     quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
