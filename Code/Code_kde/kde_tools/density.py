@@ -7,16 +7,6 @@ import numpy as np
 
 
 # 1
-def trapezoidal_integral(
-    values: np.ndarray,
-    x_grid: np.ndarray,
-    axis: int = -1,
-) -> np.ndarray:
-    trapezoid = getattr(np, "trapezoid", np.trapz)
-    return trapezoid(y=values, x=x_grid, axis=axis)
-
-
-# 1
 # input: x = (x_1, ..., x_n), mean, variance; output: phi_{mean,variance}(x)
 def gaussian_density_with_variance(
         x: np.ndarray | float,
@@ -57,29 +47,6 @@ def gaussian_kde_values(
         densities[index] = np.exp(-0.5 * z**2).mean(axis=0)
         densities[index] /= normalization * bandwidth
     return densities
-
-
-# 1
-# computes grid on which to evaluate the KDEs: a=x_1<...<x_m=b, where a = min(samples) - padding * max(h_grid), b = max(samples) + padding * max(h_grid)
-def quadrature_grid_for_kdes(
-        samples: np.ndarray,
-        h_grid: np.ndarray,
-        m_x: int = 2_001,
-        padding: float = 6.0,
-) -> np.ndarray:
-    samples = np.asarray(samples, dtype=float)
-    h_grid = np.asarray(h_grid, dtype=float)
-    if samples.ndim != 1 or len(samples) == 0:
-        raise ValueError("samples must be a nonempty one-dimensional array.")
-    if h_grid.ndim != 1 or len(h_grid) == 0 or np.any(h_grid <= 0.0):
-        raise ValueError("h_grid must contain strictly positive bandwidths.")
-    if int(m_x) < 2:
-        raise ValueError("m_x must be at least two.")
-    if padding <= 0.0:
-        raise ValueError("padding must be strictly positive.")
-    left = float(np.min(samples)) - padding * float(np.max(h_grid))
-    right = float(np.max(samples)) + padding * float(np.max(h_grid))
-    return np.linspace(left, right, int(m_x))
 
 
 # 0

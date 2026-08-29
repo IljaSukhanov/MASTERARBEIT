@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from .density import trapezoidal_integral
+from .quadrature import trapezoidal_integral
 
 # classical selectors
 

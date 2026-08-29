@@ -13,11 +13,13 @@ from .bandwidths import (
 from .density import (
     exact_oracle_ise_values,
     gaussian_kde_values,
-    quadrature_grid_for_kdes,
 )
 from .gaussian_mixtures import exact_mixture_ise_values, sample_gaussian_mixture
-from .similarities import (
+from .quadrature import (
+    quadrature_grid_for_kdes,
     quadrature_similarity_matrices,
+)
+from .similarities import (
     select_spectral_bandwidth,
     spectral_choice_from_similarity,
 )

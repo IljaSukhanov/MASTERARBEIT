@@ -19,8 +19,6 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_density_with_variance,
     gaussian_kde_values,
-    quadrature_grid_for_kdes,
-    trapezoidal_integral,
 )
 from .gaussian_mixtures import (
     exact_mixture_ise_values,
@@ -32,16 +30,20 @@ from .kullback_leibler import (
     directional_kl_divergence_matrix,
     directional_kl_similarity,
 )
+from .quadrature import (
+    compute_quadrature_similarity_matrices,
+    quadrature_beta2_divergence_matrix,
+    quadrature_grid_for_kdes,
+    quadrature_similarity_matrices,
+    select_quadrature_similarity_bandwidths,
+    trapezoidal_integral,
+)
 from .similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,
-    compute_quadrature_similarity_matrices,
     first_order_perron_vector,
     perron_vector,
     population_gaussian_beta2_divergence_matrix,
-    quadrature_beta2_divergence_matrix,
-    quadrature_similarity_matrices,
-    select_quadrature_similarity_bandwidths,
     select_spectral_bandwidth,
     spectral_choice_from_similarity,
 )

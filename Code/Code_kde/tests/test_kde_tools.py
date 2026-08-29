@@ -14,18 +14,20 @@ from kde_tools.bandwidths import (
 from kde_tools.density import (
     exact_gaussian_kde_l2_gram,
     gaussian_kde_values,
-    trapezoidal_integral,
 )
 from kde_tools.gaussian_mixtures import exact_mixture_ise_values, mixture_density
 from kde_tools.kullback_leibler import directional_kl_divergence_matrix
+from kde_tools.quadrature import (
+    quadrature_beta2_divergence_matrix,
+    quadrature_similarity_matrices,
+    trapezoidal_integral,
+)
 from kde_tools.similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,
     first_order_perron_vector,
     perron_vector,
     population_gaussian_beta2_divergence_matrix,
-    quadrature_beta2_divergence_matrix,
-    quadrature_similarity_matrices,
     select_spectral_bandwidth,
     squared_l2_distance_from_gram,
 )
