@@ -19,7 +19,7 @@ SIMILARITY_NAMES = (
 
 # 0 ... worked through
 # 1 ... inspect later
-# 2 ... do I stll need?
+# 2 ... remove
 
 
 # 0
@@ -119,213 +119,7 @@ def first_order_perron_vector(
     return approximation / approximation.sum()
 
 
-# 2
-def centered_beta2_gram(divergence_matrix: np.ndarray) -> np.ndarray:
-    """Recover the centered L2 Gram matrix from beta=2 divergences.
-
-    If ``D_ij = 0.5 * ||f_i - f_j||_2**2`` and
-    ``H = I - 11.T / N``, classical multidimensional scaling gives the exact
-    centered Gram matrix ``B = -H D H``.
-    """
-    divergence = np.asarray(divergence_matrix, dtype=float)
-    if divergence.ndim != 2 or divergence.shape[0] != divergence.shape[1]:
-        raise ValueError("divergence_matrix must be square.")
-    if not np.allclose(divergence, divergence.T, atol=1e-12):
-        raise ValueError("divergence_matrix must be symmetric.")
-
-    number_of_scales = divergence.shape[0]
-    centering = (
-        np.eye(number_of_scales)
-        - np.ones((number_of_scales, number_of_scales))
-        / number_of_scales
-    )
-    gram = -centering @ divergence @ centering
-    return 0.5 * (gram + gram.T)
-
-
-# 2
-def leading_centered_beta2_coordinate(
-        divergence_matrix: np.ndarray,
-        bandwidths: np.ndarray,
-) -> dict[str, np.ndarray | float]:
-    """Return the leading centered beta=2 principal scale coordinate.
-
-    The eigenvector sign is oriented to have nonnegative covariance with
-    ``log(bandwidths)``. The principal coordinate is ``sqrt(lambda) * v``.
-    """
-    bandwidths = np.asarray(bandwidths, dtype=float)
-    if bandwidths.ndim != 1 or np.any(bandwidths <= 0.0):
-        raise ValueError("bandwidths must be a positive one-dimensional array.")
-
-    gram = centered_beta2_gram(divergence_matrix)
-    if gram.shape[0] != len(bandwidths):
-        raise ValueError("bandwidths must match the divergence-matrix size.")
-
-    eigenvalues, eigenvectors = np.linalg.eigh(gram)
-    leading_eigenvalue = float(eigenvalues[-1])
-    if leading_eigenvalue < -1e-10:
-        raise ValueError("The centered beta=2 Gram matrix is not positive semidefinite.")
-    leading_eigenvalue = max(leading_eigenvalue, 0.0)
-    eigenvector = eigenvectors[:, -1]
-    centered_log_bandwidths = np.log(bandwidths)
-    centered_log_bandwidths -= centered_log_bandwidths.mean()
-    if float(eigenvector @ centered_log_bandwidths) < 0.0:
-        eigenvector = -eigenvector
-
-    coordinate = np.sqrt(leading_eigenvalue) * eigenvector
-    return {
-        "centered_gram": gram,
-        "eigenvalue": leading_eigenvalue,
-        "eigenvector": eigenvector,
-        "coordinate": coordinate,
-    }
-
-
-# 2
-def centered_scale_transition_descriptors(
-        coordinate: np.ndarray,
-        bandwidths: np.ndarray,
-        edge_exclusion: int = 1,
-) -> dict[str, int | float]:
-    """Extract zero-crossing, maximum-slope, and maximum-curvature scales."""
-    coordinate = np.asarray(coordinate, dtype=float)
-    bandwidths = np.asarray(bandwidths, dtype=float)
-    if coordinate.ndim != 1 or bandwidths.ndim != 1:
-        raise ValueError("coordinate and bandwidths must be one-dimensional.")
-    if len(coordinate) != len(bandwidths) or len(coordinate) < 3:
-        raise ValueError("coordinate and bandwidths must have the same length >= 3.")
-    if np.any(bandwidths <= 0.0) or np.any(np.diff(bandwidths) <= 0.0):
-        raise ValueError("bandwidths must be positive and strictly increasing.")
-    if edge_exclusion < 0 or 2 * edge_exclusion >= len(bandwidths) - 1:
-        raise ValueError("edge_exclusion leaves too few interior grid points.")
-
-    log_bandwidths = np.log(bandwidths)
-    slopes = np.diff(coordinate) / np.diff(log_bandwidths)
-    pair_indices = np.arange(len(bandwidths) - 1)
-    eligible_pairs = pair_indices[
-        (pair_indices >= edge_exclusion)
-        & (pair_indices < len(bandwidths) - 1 - edge_exclusion)
-    ]
-    crossing_indices = eligible_pairs[
-        coordinate[eligible_pairs] * coordinate[eligible_pairs + 1] <= 0.0
-    ]
-    if len(crossing_indices):
-        zero_crossing_index = int(
-            crossing_indices[np.argmax(np.abs(slopes[crossing_indices]))]
-        )
-    else:
-        zero_crossing_index = int(
-            eligible_pairs[
-                np.argmin(
-                    np.minimum(
-                        np.abs(coordinate[eligible_pairs]),
-                        np.abs(coordinate[eligible_pairs + 1]),
-                    )
-                )
-            ]
-        )
-
-    maximum_slope_index = int(
-        eligible_pairs[np.argmax(np.abs(slopes[eligible_pairs]))]
-    )
-    first_derivative = np.gradient(coordinate, log_bandwidths)
-    second_derivative = np.gradient(first_derivative, log_bandwidths)
-    point_indices = np.arange(edge_exclusion, len(bandwidths) - edge_exclusion)
-    maximum_curvature_index = int(
-        point_indices[np.argmax(np.abs(second_derivative[point_indices]))]
-    )
-
-    return {
-        "zero_crossing_index": zero_crossing_index,
-        "zero_crossing_h": float(
-            np.sqrt(
-                bandwidths[zero_crossing_index]
-                * bandwidths[zero_crossing_index + 1]
-            )
-        ),
-        "maximum_slope_index": maximum_slope_index,
-        "maximum_slope_h": float(
-            np.sqrt(
-                bandwidths[maximum_slope_index]
-                * bandwidths[maximum_slope_index + 1]
-            )
-        ),
-        "maximum_curvature_index": maximum_curvature_index,
-        "maximum_curvature_h": float(bandwidths[maximum_curvature_index]),
-    }
-
-
-# 2
-def principal_logdet_increments(
-        similarity_matrix: np.ndarray,
-        regularization: float = 1e-12,
-        reverse: bool = False,
-) -> np.ndarray:
-    """Return incremental log-determinants of nested principal submatrices.
-
-    For a similarity matrix with unit diagonal, a numerically regularized
-    correlation matrix is formed as ``(S + eps I) / (1 + eps)``. If
-    ``S_l`` denotes its leading ``l`` by ``l`` principal submatrix, the
-    returned forward increment is
-
-        Delta_l = log(det(S_l)) - log(det(S_{l-1})).
-
-    A single Cholesky factorization gives ``Delta_l = 2 log(L_ll)``. With
-    ``reverse=True`` the bandwidth order is reversed before factorization and
-    the result is mapped back to the original index order. Thus entry ``i``
-    then measures the contribution of node ``i`` conditional on nodes with
-    larger original indices.
-    """
-    similarity = np.asarray(similarity_matrix, dtype=float)
-    if similarity.ndim != 2 or similarity.shape[0] != similarity.shape[1]:
-        raise ValueError("similarity_matrix must be square.")
-    if not np.all(np.isfinite(similarity)):
-        raise ValueError("similarity_matrix must contain only finite values.")
-    if not np.allclose(similarity, similarity.T, atol=1e-12):
-        raise ValueError("similarity_matrix must be symmetric.")
-    if not np.allclose(np.diag(similarity), 1.0, atol=1e-12):
-        raise ValueError("similarity_matrix must have unit diagonal.")
-    if regularization <= 0.0:
-        raise ValueError("regularization must be positive.")
-
-    number_of_nodes = similarity.shape[0]
-    regularized = (
-        similarity + float(regularization) * np.eye(number_of_nodes)
-    ) / (1.0 + float(regularization))
-    if reverse:
-        regularized = regularized[::-1, ::-1]
-    try:
-        cholesky = np.linalg.cholesky(regularized)
-    except np.linalg.LinAlgError as error:
-        raise ValueError(
-            "The regularized similarity matrix is not positive definite."
-        ) from error
-
-    increments = 2.0 * np.log(np.diag(cholesky))
-    return increments[::-1] if reverse else increments
-
-
-# 2
-def leading_principal_determinants(matrix: np.ndarray) -> np.ndarray:
-    """Return raw determinants of all leading principal submatrices.
-
-    Entry ``l - 1`` is computed directly as ``det(S[:l, :l])``. For a dense,
-    nearly singular similarity matrix these floating-point values can change
-    sign through roundoff and eventually underflow to zero; this function
-    intentionally returns those raw numerical determinants without correction.
-    """
-    values = np.asarray(matrix, dtype=float)
-    if values.ndim != 2 or values.shape[0] != values.shape[1]:
-        raise ValueError("matrix must be square.")
-    if not np.all(np.isfinite(values)):
-        raise ValueError("matrix must contain only finite values.")
-    return np.array([
-        np.linalg.det(values[:size, :size])
-        for size in range(1, len(values) + 1)
-    ])
-
-# continue here
-
+# 0
 # compute the normalized Perron vector of a symmetric nonnegative matrix
 def perron_vector(matrix: np.ndarray) -> np.ndarray:
     matrix = np.asarray(matrix, dtype=float)
@@ -345,6 +139,7 @@ def perron_vector(matrix: np.ndarray) -> np.ndarray:
         vector = -vector
     return vector / np.sum(vector)
 
+# 1
 # computes the normalized Perron vector of a not necessarily symmetric nonnegative matrix using the power method
 def power_perron_vector(
     matrix: np.ndarray,
@@ -362,6 +157,7 @@ def power_perron_vector(
     return vector
 
 
+# 1
 def doob_stationary_mass(matrix: np.ndarray) -> np.ndarray:
     right = power_perron_vector(matrix=matrix)
     left = power_perron_vector(matrix=np.asarray(matrix).T)
@@ -369,6 +165,7 @@ def doob_stationary_mass(matrix: np.ndarray) -> np.ndarray:
     return mass / mass.sum()
 
 
+# 0
 def spectral_choice_from_similarity(
         similarity_matrix: np.ndarray,
 ) -> dict[str, np.ndarray | int | float]:
@@ -379,7 +176,7 @@ def spectral_choice_from_similarity(
         "selected_weight": float(np.max(vector)),
     }
 
-
+# 2
 def resolve_exponential_similarity_scale(
         divergence_matrix: np.ndarray,
         gamma: float | str = "auto",
@@ -412,6 +209,7 @@ def resolve_exponential_similarity_scale(
     return value
 
 
+# 2
 # computes the beta-2 distance matrix D, similarity transformation S, Perron vector v of S, arg max v_i and max v_i
 def select_spectral_bandwidth(
         samples: np.ndarray,
@@ -431,6 +229,7 @@ def select_spectral_bandwidth(
         "gamma": resolved_gamma,
     }
 
+# continue here
 
 def quadrature_beta2_divergence_matrix(
         density_values: np.ndarray,

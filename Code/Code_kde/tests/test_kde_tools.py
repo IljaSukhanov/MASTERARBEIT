@@ -21,13 +21,8 @@ from kde_tools.density import (
 from kde_tools.similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,
-    centered_beta2_gram,
-    centered_scale_transition_descriptors,
     directional_kl_divergence_matrix,
     first_order_perron_vector,
-    leading_centered_beta2_coordinate,
-    leading_principal_determinants,
-    principal_logdet_increments,
     perron_vector,
     population_gaussian_beta2_divergence_matrix,
     quadrature_beta2_divergence_matrix,
@@ -254,100 +249,6 @@ class SimilarityTests(unittest.TestCase):
         approximation = first_order_perron_vector(divergence, tau=tau)
         np.testing.assert_allclose(approximation.sum(), 1.0, atol=1e-15)
         self.assertLess(np.max(np.abs(exact - approximation)), 1e-9)
-
-    def test_centered_beta2_gram_recovers_centered_l2_gram(self) -> None:
-        gram = exact_gaussian_kde_l2_gram(self.samples, self.bandwidths)
-        divergence = 0.5 * squared_l2_distance_from_gram(gram)
-        number_of_scales = len(self.bandwidths)
-        centering = (
-            np.eye(number_of_scales)
-            - np.ones((number_of_scales, number_of_scales))
-            / number_of_scales
-        )
-        expected = centering @ gram @ centering
-        recovered = centered_beta2_gram(divergence)
-        np.testing.assert_allclose(recovered, expected, atol=1e-14)
-
-        result = leading_centered_beta2_coordinate(
-            divergence,
-            self.bandwidths,
-        )
-        np.testing.assert_allclose(result["coordinate"].sum(), 0.0, atol=1e-14)
-        np.testing.assert_allclose(
-            np.dot(result["coordinate"], result["coordinate"]),
-            result["eigenvalue"],
-            atol=1e-14,
-        )
-        self.assertGreaterEqual(
-            np.dot(
-                result["eigenvector"],
-                np.log(self.bandwidths) - np.log(self.bandwidths).mean(),
-            ),
-            0.0,
-        )
-        descriptors = centered_scale_transition_descriptors(
-            result["coordinate"],
-            self.bandwidths,
-            edge_exclusion=1,
-        )
-        self.assertIn(
-            descriptors["zero_crossing_index"],
-            range(1, len(self.bandwidths) - 2),
-        )
-        self.assertGreater(descriptors["zero_crossing_h"], 0.0)
-
-    def test_principal_logdet_increments_match_nested_determinants(self) -> None:
-        similarity = np.array(
-            [
-                [1.0, 0.4, 0.2],
-                [0.4, 1.0, 0.3],
-                [0.2, 0.3, 1.0],
-            ]
-        )
-        regularization = 1e-10
-        regularized = (
-            similarity + regularization * np.eye(len(similarity))
-        ) / (1.0 + regularization)
-
-        forward = principal_logdet_increments(
-            similarity,
-            regularization=regularization,
-        )
-        expected_forward_logdets = np.array([
-            np.linalg.slogdet(regularized[:size, :size])[1]
-            for size in range(1, len(similarity) + 1)
-        ])
-        np.testing.assert_allclose(
-            np.cumsum(forward),
-            expected_forward_logdets,
-            atol=1e-14,
-        )
-
-        backward = principal_logdet_increments(
-            similarity,
-            regularization=regularization,
-            reverse=True,
-        )
-        expected_backward_logdets = np.array([
-            np.linalg.slogdet(regularized[index:, index:])[1]
-            for index in range(len(similarity))
-        ])
-        np.testing.assert_allclose(
-            np.cumsum(backward[::-1])[::-1],
-            expected_backward_logdets,
-            atol=1e-14,
-        )
-
-        raw_determinants = leading_principal_determinants(similarity)
-        expected_raw_determinants = np.array([
-            np.linalg.det(similarity[:size, :size])
-            for size in range(1, len(similarity) + 1)
-        ])
-        np.testing.assert_allclose(
-            raw_determinants,
-            expected_raw_determinants,
-            atol=1e-15,
-        )
 
     def test_standard_normal_mise_oracle_regression_value(self) -> None:
         self.assertAlmostEqual(gaussian_mise_oracle_bandwidth(200), 0.383039449, places=8)
