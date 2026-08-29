@@ -50,14 +50,15 @@ def directional_kl_similarity(
         eps: float = 1e-300,
 ) -> np.ndarray:
     """Return ``exp(-gamma * KL(p_i || p_j))`` using spatial quadrature."""
-    if gamma <= 0.0:
-        raise ValueError("gamma must be strictly positive.")
+    gamma = float(gamma)
+    if not np.isfinite(gamma) or gamma <= 0.0:
+        raise ValueError("gamma must be finite and strictly positive.")
     divergence = directional_kl_divergence_matrix(
         density_values=density_values,
         x_grid=x_grid,
         eps=eps,
     )
-    similarity = np.exp(-float(gamma) * divergence)
+    similarity = np.exp(-gamma * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
 
@@ -83,8 +84,9 @@ def directional_kl_similarity_fft(
         eps: float = 1e-300,
 ) -> np.ndarray:
     """Compute directional KL similarities on a periodic FFT grid."""
-    if gamma <= 0.0:
-        raise ValueError("gamma must be strictly positive.")
+    gamma = float(gamma)
+    if not np.isfinite(gamma) or gamma <= 0.0:
+        raise ValueError("gamma must be finite and strictly positive.")
     values, x_grid = _closed_periodic_grid(densities, dx)
     values = np.maximum(values, eps)
     log_values = np.log(values)
@@ -101,6 +103,6 @@ def directional_kl_similarity_fft(
             axis=1,
         )
     divergence = np.maximum(own_log_density[:, None] - cross_log_density, 0.0)
-    similarity = np.exp(-float(gamma) * divergence)
+    similarity = np.exp(-gamma * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity

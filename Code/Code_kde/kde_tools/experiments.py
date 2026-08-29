@@ -17,9 +17,7 @@ from .density import (
 )
 from .gaussian_mixtures import exact_mixture_ise_values, sample_gaussian_mixture
 from .similarities import (
-    quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
-    resolve_exponential_similarity_scale,
     select_spectral_bandwidth,
     spectral_choice_from_similarity,
 )
@@ -37,22 +35,12 @@ def _spectral_indices(similarities: dict[str, np.ndarray | float]) -> dict[str, 
     }
 
 
-def _quadrature_gamma(
-    gamma: float | str,
-    densities: np.ndarray,
-    x_grid: np.ndarray,
-) -> float:
-    """Resolve ``gamma`` from the quadrature beta-2 divergence matrix."""
-    divergence = quadrature_beta2_divergence_matrix(densities, x_grid)
-    return resolve_exponential_similarity_scale(divergence, gamma)
-
-
 def run_one_spectral_vs_oracle_experiment(
     seed: int,
     n: int,
     sigma2: float,
     h_grid: np.ndarray,
-    gamma: float | str = "auto",
+    gamma: float = 1.0,
 ) -> dict[str, float | int]:
     """Compare the exact squared-L2 spectral selector with a normal-target oracle."""
     rng = np.random.default_rng(seed)
@@ -83,7 +71,7 @@ def run_one_all5_bandwidth_experiment(
     sigma2: float,
     h_grid: np.ndarray,
     m_x: int,
-    gamma: float | str = "auto",
+    gamma: float = 1.0,
 ) -> dict[str, float | int]:
     """Run the oracle and four spectral selectors for one normal sample."""
     rng = np.random.default_rng(seed)
@@ -92,13 +80,12 @@ def run_one_all5_bandwidth_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
-    resolved_gamma = _quadrature_gamma(gamma, densities, x_grid)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,
             x_grid,
             similarity_name=name,
-            gamma=resolved_gamma,
+            gamma=gamma,
         )
         for name in (
             "tv_overlap",
@@ -113,7 +100,7 @@ def run_one_all5_bandwidth_experiment(
         "oracle_index": oracle_index,
         "oracle_h": float(h_grid[oracle_index]),
         "oracle_l2_error": float(np.sqrt(max(ise[oracle_index], 0.0))),
-        "gamma": resolved_gamma,
+        "gamma": float(gamma),
     }
     key_prefix = {
         "tv_overlap": "tv",
@@ -135,7 +122,7 @@ def run_one_consistency_experiment(
     sigma2: float,
     h_grid: np.ndarray,
     m_x: int,
-    gamma: float | str = "auto",
+    gamma: float = 1.0,
 ) -> list[dict[str, float | int | str]]:
     """Run the oracle, Hellinger, and JS selectors for one consistency replicate."""
     rng = np.random.default_rng(seed)
@@ -189,7 +176,7 @@ def run_one_mixture_bandwidth_experiment(
     means: np.ndarray,
     sigmas: np.ndarray,
     m_x: int,
-    gamma: float | str = "auto",
+    gamma: float = 1.0,
 ) -> dict[str, float | int]:
     """Run oracle, spectral, plug-in, LSCV, and Silverman selectors once."""
     rng = np.random.default_rng(seed)
@@ -198,13 +185,12 @@ def run_one_mixture_bandwidth_experiment(
     oracle_index = int(np.argmin(ise))
     x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
     densities = gaussian_kde_values(samples, h_grid, x_grid)
-    resolved_gamma = _quadrature_gamma(gamma, densities, x_grid)
     similarities = {
         name: quadrature_similarity_matrices(
             densities,
             x_grid,
             similarity_name=name,
-            gamma=resolved_gamma,
+            gamma=gamma,
         )
         for name in (
             "tv_overlap",
@@ -238,7 +224,7 @@ def run_one_mixture_bandwidth_experiment(
         "silverman_h": float(h_grid[silverman_index]),
         "silverman_raw_h": float(silverman_raw_h),
         "silverman_l2_error": float(np.sqrt(max(ise[silverman_index], 0.0))),
-        "gamma": resolved_gamma,
+        "gamma": float(gamma),
     }
     key_prefix = {
         "tv_overlap": "tv",
