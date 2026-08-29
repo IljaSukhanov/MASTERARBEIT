@@ -15,9 +15,9 @@ from kde_tools.density import (
     exact_gaussian_kde_l2_gram,
     exact_mixture_ise_values,
     gaussian_kde_values,
-    mixture_density,
     trapezoidal_integral,
 )
+from kde_tools.gaussian_mixtures import mixture_density
 from kde_tools.similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,

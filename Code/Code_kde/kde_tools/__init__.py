@@ -20,11 +20,13 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_density_with_variance,
     gaussian_kde_values,
+    quadrature_grid_for_kdes,
+    trapezoidal_integral,
+)
+from .gaussian_mixtures import (
     gaussian_mixture_mean_and_variance,
     mixture_density,
-    quadrature_grid_for_kdes,
     sample_gaussian_mixture,
-    trapezoidal_integral,
 )
 from .similarities import (
     beta2_divergence_matrix,

@@ -15,8 +15,8 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_kde_values,
     quadrature_grid_for_kdes,
-    sample_gaussian_mixture,
 )
+from .gaussian_mixtures import sample_gaussian_mixture
 from .similarities import (
     quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,

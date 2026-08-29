@@ -4,35 +4,6 @@ import numpy as np
 
 # 0 ... worked through
 # 1 ... inspect later
-# 3 ... create new py file all about Gaussian mixture models
-
-
-# 3
-# sample n points from a Gaussian mixture with given weights, means, and sigmas
-def sample_gaussian_mixture(
-        rng: np.random.Generator,
-        n: int,
-        weights: np.ndarray,
-        means: np.ndarray,
-        sigmas: np.ndarray,
-) -> np.ndarray:
-    component_indices = rng.choice(len(weights), size=n, p=weights / np.sum(weights))
-    return rng.normal(loc=np.asarray(means)[component_indices], scale=np.asarray(sigmas)[component_indices])
-
-
-# 3
-# compute the mean and variance of a Gaussian mixture with given weights, means, and sigmas
-def gaussian_mixture_mean_and_variance(
-        weights: np.ndarray,
-        means: np.ndarray,
-        sigmas: np.ndarray,
-) -> tuple[float, float]:
-    normalized_weights = np.asarray(weights, dtype=float) / np.sum(weights)
-    means = np.asarray(means, dtype=float)
-    sigmas = np.asarray(sigmas, dtype=float)
-    mean = float(np.sum(normalized_weights * means))
-    second_moment = float(np.sum(normalized_weights * (sigmas**2 + means**2)))
-    return mean, second_moment - mean**2
 
 
 # 1
@@ -56,21 +27,7 @@ def gaussian_density_with_variance(
     return np.exp(-0.5 * (x - mean) ** 2 / variance) / np.sqrt(2.0 * np.pi * variance)
 
 
-# 3
-# input: x = (x_1, ..., x_n), weights, means, sigmas; output: f(x) = sum_i weights[i] * phi_{means[i],sigmas[i]^2}(x)
-def mixture_density(
-        x: np.ndarray,
-        weights: np.ndarray,
-        means: np.ndarray,
-        sigmas: np.ndarray,
-) -> np.ndarray:
-    density = np.zeros_like(np.asarray(x, dtype=float), dtype=float)
-    for weight, mean, sigma in zip(weights, means, sigmas):
-        density += weight * gaussian_density_with_variance(x=x, mean=mean, variance=sigma**2)
-    return density
-
-# continue here
-
+# 1
 # computes \hat{f}_{h_j}(x_k) for all j and k
 def gaussian_kde_values(
         samples: np.ndarray,
@@ -102,6 +59,7 @@ def gaussian_kde_values(
     return densities
 
 
+# 1
 # computes grid on which to evaluate the KDEs: a=x_1<...<x_m=b, where a = min(samples) - padding * max(h_grid), b = max(samples) + padding * max(h_grid)
 def quadrature_grid_for_kdes(
         samples: np.ndarray,
@@ -144,7 +102,7 @@ def exact_gaussian_kde_l2_gram(
             gram[j, i] = value
     return gram
 
-
+# 3
 def exact_mixture_ise_values(
         samples: np.ndarray,
         h_grid: np.ndarray,
@@ -183,7 +141,6 @@ def exact_mixture_ise_values(
 
 
 # this function computes the true integrated squared error between \hat{f}_h and f, where f is the density of N(0,sigma2) for a given grid of bandwidths h_grid.
-
 def exact_oracle_ise_values(
     samples: np.ndarray,
     h_grid: np.ndarray,
