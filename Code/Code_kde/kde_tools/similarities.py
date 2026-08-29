@@ -17,13 +17,18 @@ SIMILARITY_NAMES = (
     "js_similarity"
 )
 
+# 0 ... worked through
+# 1 ... inspect later
+# 2 ... do I stll need?
 
 
+# 0
 def squared_l2_distance_from_gram(gram: np.ndarray) -> np.ndarray:
     diagonal = np.diag(gram)
     return np.maximum(diagonal[:, None] + diagonal[None, :] - 2.0 * gram, 0.0)
 
 
+# 0
 def beta2_divergence_matrix(
         samples: np.ndarray,
         h_grid: np.ndarray,
@@ -41,6 +46,7 @@ def beta2_divergence_matrix(
     return 0.5 * squared_l2_distance_from_gram(gram)
 
 
+# 0
 def beta2_similarity_matrix(
         samples: np.ndarray,
         h_grid: np.ndarray,
@@ -55,6 +61,7 @@ def beta2_similarity_matrix(
     return similarity
 
 
+# 1
 def population_gaussian_beta2_divergence_matrix(
         h_grid: np.ndarray,
         target_sigma: float = 1.0,
@@ -79,6 +86,7 @@ def population_gaussian_beta2_divergence_matrix(
     return 0.5 * squared_l2_distance_from_gram(gram)
 
 
+# 1
 def first_order_perron_vector(
         divergence_matrix: np.ndarray,
         tau: float = 1.0,
@@ -111,6 +119,7 @@ def first_order_perron_vector(
     return approximation / approximation.sum()
 
 
+# 2
 def centered_beta2_gram(divergence_matrix: np.ndarray) -> np.ndarray:
     """Recover the centered L2 Gram matrix from beta=2 divergences.
 
@@ -134,6 +143,7 @@ def centered_beta2_gram(divergence_matrix: np.ndarray) -> np.ndarray:
     return 0.5 * (gram + gram.T)
 
 
+# 2
 def leading_centered_beta2_coordinate(
         divergence_matrix: np.ndarray,
         bandwidths: np.ndarray,
@@ -171,6 +181,7 @@ def leading_centered_beta2_coordinate(
     }
 
 
+# 2
 def centered_scale_transition_descriptors(
         coordinate: np.ndarray,
         bandwidths: np.ndarray,
@@ -244,6 +255,7 @@ def centered_scale_transition_descriptors(
     }
 
 
+# 2
 def principal_logdet_increments(
         similarity_matrix: np.ndarray,
         regularization: float = 1e-12,
@@ -293,6 +305,7 @@ def principal_logdet_increments(
     return increments[::-1] if reverse else increments
 
 
+# 2
 def leading_principal_determinants(matrix: np.ndarray) -> np.ndarray:
     """Return raw determinants of all leading principal submatrices.
 
@@ -311,7 +324,7 @@ def leading_principal_determinants(matrix: np.ndarray) -> np.ndarray:
         for size in range(1, len(values) + 1)
     ])
 
-
+# continue here
 
 # compute the normalized Perron vector of a symmetric nonnegative matrix
 def perron_vector(matrix: np.ndarray) -> np.ndarray:
