@@ -4,7 +4,9 @@ import numpy as np
 
 from .quadrature import trapezoidal_integral
 
-# classical selectors
+################################################
+### classical selectors (work through later) ###
+################################################
 
 _STANDARD_NORMAL_UPPER_QUARTILE = 0.6744897501960817
 
@@ -151,6 +153,10 @@ def direct_plugin_bandwidth(
     kernel_roughness = 1.0 / (2.0 * np.sqrt(np.pi))
     return float((kernel_roughness / (n * roughness)) ** (1.0 / 5.0))
 
+
+#############################################
+### oracle bandwidth (ultimate benchmark) ###
+#############################################
 
 # computes h_oracle given that f ~ N(0,1) using nested intervals
 def gaussian_mise_oracle_bandwidth(sample_size: int) -> float:

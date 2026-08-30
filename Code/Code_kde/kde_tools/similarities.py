@@ -163,8 +163,7 @@ def spectral_choice_from_similarity(
     }
 
 
-# continue here
-
+# 0
 # Compute the beta-2 divergence matrix, its similarity transformation,
 # the Perron vector, and the selected bandwidth index.
 def select_spectral_bandwidth(
