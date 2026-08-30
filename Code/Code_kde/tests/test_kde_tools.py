@@ -35,7 +35,11 @@ from kde_tools.similarities import (
     select_spectral_bandwidth,
     squared_l2_distance_from_gram,
 )
-from kde_tools.experiments import run_one_spectral_vs_oracle_experiment
+from kde_tools.experiments import (
+    exact_beta2_bandwidth_selection_counts,
+    quadrature_beta2_bandwidth_selection_counts,
+    run_one_spectral_vs_oracle_experiment,
+)
 
 
 class DensityTests(unittest.TestCase):
@@ -221,6 +225,59 @@ class SimilarityTests(unittest.TestCase):
             result["similarity_matrix"],
             np.exp(-gamma * divergence),
         )
+
+    def test_exact_beta2_bandwidth_selection_counts(self) -> None:
+        n = 20
+        repetitions = 6
+        tau = 2.3
+        seed = 1234
+        counts = exact_beta2_bandwidth_selection_counts(
+            n=n,
+            h_grid=self.bandwidths,
+            M=repetitions,
+            sigma2=1.0,
+            tau=tau,
+            seed=seed,
+        )
+
+        rng = np.random.default_rng(seed)
+        expected = np.zeros(len(self.bandwidths), dtype=int)
+        for _ in range(repetitions):
+            samples = rng.normal(0.0, 1.0, size=n)
+            selection = select_spectral_bandwidth(
+                samples=samples,
+                h_grid=self.bandwidths,
+                gamma=tau,
+            )
+            expected[int(selection["selected_index"])] += 1
+
+        np.testing.assert_array_equal(counts, expected)
+        self.assertEqual(counts.shape, self.bandwidths.shape)
+        self.assertEqual(int(counts.sum()), repetitions)
+
+    def test_quadrature_beta2_bandwidth_selection_counts(self) -> None:
+        counts = quadrature_beta2_bandwidth_selection_counts(
+            n=20,
+            h_grid=self.bandwidths,
+            M=4,
+            m_x=501,
+            sigma2=1.0,
+            tau=2.3,
+            seed=1234,
+        )
+        repeated = quadrature_beta2_bandwidth_selection_counts(
+            n=20,
+            h_grid=self.bandwidths,
+            M=4,
+            m_x=501,
+            sigma2=1.0,
+            tau=2.3,
+            seed=1234,
+        )
+
+        np.testing.assert_array_equal(counts, repeated)
+        self.assertEqual(counts.shape, self.bandwidths.shape)
+        self.assertEqual(int(counts.sum()), 4)
 
     def test_quadrature_similarity_uses_supplied_gamma(self) -> None:
         divergence = quadrature_beta2_divergence_matrix(

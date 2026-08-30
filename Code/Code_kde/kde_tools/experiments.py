@@ -11,6 +11,7 @@ from .density import (
 from .quadrature import (
     quadrature_grid_for_kdes,
     quadrature_similarity_matrices,
+    select_quadrature_similarity_bandwidths,
 )
 from .similarities import (
     select_spectral_bandwidth,
@@ -18,16 +19,109 @@ from .similarities import (
 )
 
 
-def _spectral_indices(similarities: dict[str, np.ndarray | float]) -> dict[str, int]:
-    return {
-        name: int(spectral_choice_from_similarity(similarities[name])["selected_index"])
-        for name in (
-            "tv_overlap",
-            "hellinger_affinity",
-            "exponential_l2_similarity",
-            "js_similarity",
+def _validate_bandwidth_selection_count_inputs(
+    n: int,
+    h_grid: np.ndarray,
+    M: int,
+    sigma2: float,
+    tau: float,
+) -> tuple[int, np.ndarray, int, float, float]:
+    if isinstance(n, (bool, np.bool_)) or not isinstance(n, (int, np.integer)):
+        raise ValueError("n must be a positive integer.")
+    if n < 1:
+        raise ValueError("n must be a positive integer.")
+    if isinstance(M, (bool, np.bool_)) or not isinstance(M, (int, np.integer)):
+        raise ValueError("M must be a positive integer.")
+    if M < 1:
+        raise ValueError("M must be a positive integer.")
+
+    h_grid = np.asarray(h_grid, dtype=float)
+    if h_grid.ndim != 1 or len(h_grid) == 0:
+        raise ValueError("h_grid must be a nonempty one-dimensional array.")
+    if not np.all(np.isfinite(h_grid)) or np.any(h_grid <= 0.0):
+        raise ValueError("bandwidths must be finite and strictly positive.")
+
+    sigma2 = float(sigma2)
+    if not np.isfinite(sigma2) or sigma2 <= 0.0:
+        raise ValueError("sigma2 must be finite and strictly positive.")
+    tau = float(tau)
+    if not np.isfinite(tau) or tau <= 0.0:
+        raise ValueError("tau must be finite and strictly positive.")
+
+    return int(n), h_grid, int(M), sigma2, tau
+
+
+def exact_beta2_bandwidth_selection_counts(
+    n: int,
+    h_grid: np.ndarray,
+    M: int,
+    sigma2: float = 1.0,
+    tau: float = 1.0,
+    seed: int | None = None,
+) -> np.ndarray:
+    """Count exact beta-2 spectral bandwidth selections over ``M`` samples."""
+    n, h_grid, M, sigma2, tau = _validate_bandwidth_selection_count_inputs(
+        n=n,
+        h_grid=h_grid,
+        M=M,
+        sigma2=sigma2,
+        tau=tau,
+    )
+    rng = np.random.default_rng(seed)
+    counts = np.zeros(len(h_grid), dtype=int)
+
+    for _ in range(M):
+        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
+        selection = select_spectral_bandwidth(
+            samples=samples,
+            h_grid=h_grid,
+            gamma=tau,
         )
-    }
+        counts[int(selection["selected_index"])] += 1
+
+    return counts
+
+
+def quadrature_beta2_bandwidth_selection_counts(
+    n: int,
+    h_grid: np.ndarray,
+    M: int,
+    m_x: int = 1_001,
+    sigma2: float = 1.0,
+    tau: float = 1.0,
+    seed: int | None = None,
+) -> np.ndarray:
+    """Count quadrature beta-2 spectral selections over ``M`` samples."""
+    n, h_grid, M, sigma2, tau = _validate_bandwidth_selection_count_inputs(
+        n=n,
+        h_grid=h_grid,
+        M=M,
+        sigma2=sigma2,
+        tau=tau,
+    )
+    if isinstance(m_x, (bool, np.bool_)) or not isinstance(
+        m_x,
+        (int, np.integer),
+    ):
+        raise ValueError("m_x must be an integer of at least two.")
+    if m_x < 2:
+        raise ValueError("m_x must be an integer of at least two.")
+
+    rng = np.random.default_rng(seed)
+    counts = np.zeros(len(h_grid), dtype=int)
+
+    for _ in range(M):
+        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
+        result = select_quadrature_similarity_bandwidths(
+            samples=samples,
+            h_grid=h_grid,
+            similarity_name="exponential_l2_similarity",
+            m_x=int(m_x),
+            gamma=tau,
+        )
+        counts[int(result["choice"]["selected_index"])] += 1
+
+    return counts
 
 
 def run_one_spectral_vs_oracle_experiment(
@@ -58,57 +152,6 @@ def run_one_spectral_vs_oracle_experiment(
         "spectral_l2_error": float(np.sqrt(max(ise[spectral_index], 0.0))),
         "gamma": float(gamma),
     }
-
-
-def run_one_all5_bandwidth_experiment(
-    seed: int,
-    n: int,
-    sigma2: float,
-    h_grid: np.ndarray,
-    m_x: int,
-    gamma: float = 1.0,
-) -> dict[str, float | int]:
-    """Run the oracle and four spectral selectors for one normal sample."""
-    rng = np.random.default_rng(seed)
-    samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
-    ise = exact_oracle_ise_values(samples, h_grid, sigma2)
-    oracle_index = int(np.argmin(ise))
-    x_grid = quadrature_grid_for_kdes(samples, h_grid, m_x=m_x)
-    densities = gaussian_kde_values(samples, h_grid, x_grid)
-    similarities = {
-        name: quadrature_similarity_matrices(
-            densities,
-            x_grid,
-            similarity_name=name,
-            gamma=gamma,
-        )
-        for name in (
-            "tv_overlap",
-            "hellinger_affinity",
-            "exponential_l2_similarity",
-            "js_similarity",
-        )
-    }
-    indices = _spectral_indices(similarities)
-    result: dict[str, float | int] = {
-        "seed": seed,
-        "oracle_index": oracle_index,
-        "oracle_h": float(h_grid[oracle_index]),
-        "oracle_l2_error": float(np.sqrt(max(ise[oracle_index], 0.0))),
-        "gamma": float(gamma),
-    }
-    key_prefix = {
-        "tv_overlap": "tv",
-        "hellinger_affinity": "hellinger",
-        "exponential_l2_similarity": "exponential_l2_similarity",
-        "js_similarity": "js",
-    }
-    for name, index in indices.items():
-        prefix = key_prefix[name]
-        result[f"{prefix}_index"] = index
-        result[f"{prefix}_h"] = float(h_grid[index])
-        result[f"{prefix}_l2_error"] = float(np.sqrt(max(ise[index], 0.0)))
-    return result
 
 
 def run_one_consistency_experiment(
