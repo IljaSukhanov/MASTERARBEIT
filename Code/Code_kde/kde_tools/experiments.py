@@ -19,38 +19,6 @@ from .similarities import (
 )
 
 
-def _validate_bandwidth_selection_count_inputs(
-    n: int,
-    h_grid: np.ndarray,
-    M: int,
-    sigma2: float,
-    tau: float,
-) -> tuple[int, np.ndarray, int, float, float]:
-    if isinstance(n, (bool, np.bool_)) or not isinstance(n, (int, np.integer)):
-        raise ValueError("n must be a positive integer.")
-    if n < 1:
-        raise ValueError("n must be a positive integer.")
-    if isinstance(M, (bool, np.bool_)) or not isinstance(M, (int, np.integer)):
-        raise ValueError("M must be a positive integer.")
-    if M < 1:
-        raise ValueError("M must be a positive integer.")
-
-    h_grid = np.asarray(h_grid, dtype=float)
-    if h_grid.ndim != 1 or len(h_grid) == 0:
-        raise ValueError("h_grid must be a nonempty one-dimensional array.")
-    if not np.all(np.isfinite(h_grid)) or np.any(h_grid <= 0.0):
-        raise ValueError("bandwidths must be finite and strictly positive.")
-
-    sigma2 = float(sigma2)
-    if not np.isfinite(sigma2) or sigma2 <= 0.0:
-        raise ValueError("sigma2 must be finite and strictly positive.")
-    tau = float(tau)
-    if not np.isfinite(tau) or tau <= 0.0:
-        raise ValueError("tau must be finite and strictly positive.")
-
-    return int(n), h_grid, int(M), sigma2, tau
-
-
 def exact_beta2_bandwidth_selection_counts(
     n: int,
     h_grid: np.ndarray,
@@ -60,13 +28,11 @@ def exact_beta2_bandwidth_selection_counts(
     seed: int | None = None,
 ) -> np.ndarray:
     """Count exact beta-2 spectral bandwidth selections over ``M`` samples."""
-    n, h_grid, M, sigma2, tau = _validate_bandwidth_selection_count_inputs(
-        n=n,
-        h_grid=h_grid,
-        M=M,
-        sigma2=sigma2,
-        tau=tau,
-    )
+    n = int(n)
+    h_grid = np.asarray(h_grid, dtype=float)
+    M = int(M)
+    sigma2 = float(sigma2)
+    tau = float(tau)
     rng = np.random.default_rng(seed)
     counts = np.zeros(len(h_grid), dtype=int)
 
@@ -92,13 +58,11 @@ def quadrature_beta2_bandwidth_selection_counts(
     seed: int | None = None,
 ) -> np.ndarray:
     """Count quadrature beta-2 spectral selections over ``M`` samples."""
-    n, h_grid, M, sigma2, tau = _validate_bandwidth_selection_count_inputs(
-        n=n,
-        h_grid=h_grid,
-        M=M,
-        sigma2=sigma2,
-        tau=tau,
-    )
+    n = int(n)
+    h_grid = np.asarray(h_grid, dtype=float)
+    M = int(M)
+    sigma2 = float(sigma2)
+    tau = float(tau)
     if isinstance(m_x, (bool, np.bool_)) or not isinstance(
         m_x,
         (int, np.integer),
