@@ -146,6 +146,8 @@ Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density wit
 %     \label{fig:equal-minima-example}
 % \end{figure}
 
+\todo[inline]{Is oracle bandwidth unique for $N(0,1)$?}
+
 \section{Divergences between distributions}
 
 \todo[inline]{Introduce the general definition that uses manifolds ?}
@@ -279,7 +281,13 @@ The total variation and Hellinger distance are related by the chain of inequalit
 
 \subsection{Approximating integrals using quadrature}
 
-Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f_{\kappa}(p(x),q(x))\,dx|$, where $f_{\kappa}$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are Gaussian kernel density estimates. It holds
+Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}f_{\kappa}(p,q)$, where, for example, in the case of the $\alpha$-divergence, $f_{\kappa}(p,q)=p^{\kappa}q^{1-\kappa}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}. We decide to use the classical quadrature formula
+\begin{align*}
+    \int_a^bf(x)\,dx\approx Q_M(f)=(b-a)\sum_{m=0}^{M}w_mf(x_m)
+\end{align*}
+where $w_m$ are the quadrature weights and $x_m$ the (equidistant) quadrature nodes. As quadrature weights we choose $w_m=1/(2M)$ for $m=0,M$ and $w_m=1/M$ for $m=1,\dots,M-1$. This choice corresponds to the composite trapezoidal rule.
+
+Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We first aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f_{\kappa}(p(x),q(x))\,dx|$, where $f_{\kappa}$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are kernel density estimates with a Gaussian kernel. It holds
 \begin{align*}
     \tau_h:=\int_{A^c}\hat{f}_h=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
 \end{align*}
@@ -288,6 +296,8 @@ Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min
     \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)=:\delta_L
 \end{align*}
 and thus $\tau_h\le 2\Phi(-L)$ for any $h\le h_{\max}$.
+
+Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
 
 \textbf{Hellinger}
 
@@ -321,30 +331,6 @@ $f_{\kappa}(y,z)=(y-z)^2/2$
 
 \textbf{KL divergence}
 
-Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}C_{\alpha}(p,q)$, where, for example, in the case of the $\alpha$ or Rényi divergence, $C_{\alpha}(p,q)=p^{\alpha}q^{1-\alpha}$. 
-
-In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. 
-
-Before that, the integral has to be truncated. 
-
-Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
-
-\textbf{numerical integration}
-
-Afterwards, we use the composite trapezoidal rule to approximate the truncated integral:
-\begin{align*}
-    \int_a^bf(x)\,dx\approx Q_n(f)&=\frac{b-a}{2n}\left(f(a)+2\sum_{k=1}^{n-1}f(x_k)+f(b)\right)\\&
-    =\Delta x\sum_{k=0}^{n}c_kf(x_k)
-\end{align*}
-where $x_k=a+\frac{b-a}{n}k$, $k=0,1,\dots,n$ are the equidistant nodes, $\Delta x=(b-a)/n$ and
-\begin{align*}
-    c_k=\begin{cases}
-        1/2 & ,k=0,n\\
-        1 & , k=1,\dots,n-1
-    \end{cases}
-\end{align*}
-are the quadrature weights.
-
 \todo[inline]{cite source for the approximation guaranty}
 
 As an approximation guaranty, we have
@@ -353,6 +339,36 @@ As an approximation guaranty, we have
 \end{align}
 
 Adaptive quadrature rules might give better approximation results but are computationally more expensive.
+
+\textbf{Fast Fourier Transform}
+
+The computation of the divergence matrix $D$ using the exact formula in Equation~\eqref{eq:exact_l2_divergence} is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size. In order to speed up the computation of $D_{ij}=D(\hat{f}_{h_i},\hat{f}_{h_j})$, we make use of the Fast Fourier Transform (FFT). In the following we will briefly describe the approach by following the book~\cite{plonka_numerical_2018}.
+
+For any function $f\in L_1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform we obtain the Fourier transform of a kernel density function with Gaussian kernel:
+\begin{align*}
+    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=P_n(\omega)}\exp{(-h^2\omega^2)/2}
+\end{align*}
+Next we use Parseval's identity to get
+\begin{align*}
+    G_{r,s}=\int\hat{f}_{h_r}(x)\hat{f}_{h_s}(x)\,dx&=\frac{1}{2\pi}\int\mathcal{F}[\hat{f}_h](\omega)\overline{\mathcal{F}[\hat{f}_s](\omega)}\,d\omega\\&
+    =\frac{1}{2\pi}\int|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega\\&
+    =\frac{1}{\pi}\int_0^{\infty}|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega
+\end{align*}
+
+Truncate and apply composite trapezoidal rule
+\begin{align*}
+    \frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}
+\end{align*}
+
+The error is bounded above by
+\begin{align*}
+    \underbrace{\frac{1}{2\sqrt{\pi}h_{\min}}\operatorname{erfc}(h_{\min}\Omega)}_{\text{truncation error}}+\underbrace{\frac{M\Omega^3}{12\pi K^2}}_{\text{quadrature error}},
+\end{align*}
+where $M=(X_{\max}-X_{\min})^2+2(X_{\max}-X_{\min})h_{\max}\sqrt{2/e}+2h_{\max}^2$. Choose
+\begin{align*}
+    \Omega&\ge\frac{1}{h_{\min}}\operatorname{erfc}^{-1}(2\sqrt{\pi}h_{\min}\epsilon_{\text{trunc}})\\
+    K&\ge\sqrt{\frac{M\Omega^3}{12\pi\epsilon_{\text{quadr}}}}
+\end{align*}
 
 \section{Assembly of Scale Similarity Matrices}
 
