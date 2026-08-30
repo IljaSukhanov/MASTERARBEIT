@@ -15,7 +15,11 @@ from kde_tools.density import (
     exact_gaussian_kde_l2_gram,
     gaussian_kde_values,
 )
-from kde_tools.gaussian_mixtures import exact_mixture_ise_values, mixture_density
+from kde_tools.gaussian_mixtures import (
+    exact_mixture_ise_values,
+    exact_mixture_mise_values,
+    mixture_density,
+)
 from kde_tools.kullback_leibler import directional_kl_divergence_matrix
 from kde_tools.quadrature import (
     quadrature_beta2_divergence_matrix,
@@ -70,6 +74,67 @@ class DensityTests(unittest.TestCase):
             self.samples, h_grid, weights, means, sigmas
         )
         np.testing.assert_allclose(numerical, exact, rtol=2e-9, atol=2e-11)
+
+    def test_exact_mixture_mise_matches_quadrature(self) -> None:
+        weights = np.array([0.6, 0.4])
+        means = np.array([-1.5, 2.0])
+        sigmas = np.array([0.5, 1.1])
+        h_grid = np.array([0.2, 0.5, 0.9])
+        n = len(self.samples)
+        target = mixture_density(self.x_grid, weights, means, sigmas)
+        smoothed_targets = np.asarray(
+            [
+                mixture_density(
+                    self.x_grid,
+                    weights,
+                    means,
+                    np.sqrt(sigmas**2 + h**2),
+                )
+                for h in h_grid
+            ]
+        )
+        integrated_bias_squared = trapezoidal_integral(
+            (smoothed_targets - target[None, :]) ** 2,
+            self.x_grid,
+            axis=1,
+        )
+        integrated_variance = (
+            1.0 / (2.0 * np.sqrt(np.pi) * n * h_grid)
+            - trapezoidal_integral(
+                smoothed_targets**2,
+                self.x_grid,
+                axis=1,
+            )
+            / n
+        )
+        numerical = integrated_variance + integrated_bias_squared
+        exact = exact_mixture_mise_values(
+            n,
+            h_grid,
+            weights,
+            means,
+            sigmas,
+        )
+        np.testing.assert_allclose(numerical, exact, rtol=2e-9, atol=2e-11)
+
+    def test_exact_mixture_mise_contains_standard_normal_case(self) -> None:
+        h_grid = np.array([0.2, 0.5, 0.9])
+        n = 35
+        exact = exact_mixture_mise_values(
+            n=n,
+            h_grid=h_grid,
+            weights=np.array([1.0]),
+            means=np.array([0.0]),
+            sigmas=np.array([1.0]),
+        )
+        expected = (
+            1.0 / (2.0 * np.sqrt(np.pi) * n * h_grid)
+            + (1.0 - 1.0 / n)
+            / (2.0 * np.sqrt(np.pi) * np.sqrt(1.0 + h_grid**2))
+            - 2.0 / np.sqrt(2.0 * np.pi * (2.0 + h_grid**2))
+            + 1.0 / (2.0 * np.sqrt(np.pi))
+        )
+        np.testing.assert_allclose(exact, expected, atol=1e-15)
 
     def test_sample_scaled_bandwidth_grid_retains_normalized_coordinates(self) -> None:
         samples = np.array([-2.0, -1.0, 0.0, 1.0, 2.0])

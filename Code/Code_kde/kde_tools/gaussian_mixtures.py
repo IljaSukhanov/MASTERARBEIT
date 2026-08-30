@@ -116,6 +116,85 @@ def exact_mixture_ise_values(
     )
 
 
+def exact_mixture_mise_values(
+        n: int,
+        h_grid: np.ndarray,
+        weights: np.ndarray,
+        means: np.ndarray,
+        sigmas: np.ndarray,
+) -> np.ndarray:
+    """Return the exact Gaussian-kernel MISE for a Gaussian-mixture target."""
+    h_grid = np.asarray(h_grid, dtype=float)
+    weights = np.asarray(weights, dtype=float)
+    means = np.asarray(means, dtype=float)
+    sigmas = np.asarray(sigmas, dtype=float)
+
+    if int(n) != n or n < 1:
+        raise ValueError("n must be a positive integer.")
+    if h_grid.ndim != 1 or len(h_grid) == 0:
+        raise ValueError("h_grid must be a nonempty one-dimensional array.")
+    if not np.all(np.isfinite(h_grid)) or np.any(h_grid <= 0.0):
+        raise ValueError("bandwidths must be finite and strictly positive.")
+    if weights.ndim != 1 or len(weights) == 0:
+        raise ValueError("weights must be a nonempty one-dimensional array.")
+    if means.shape != weights.shape or sigmas.shape != weights.shape:
+        raise ValueError("weights, means, and sigmas must have the same shape.")
+    if not np.all(np.isfinite(weights)) or np.any(weights < 0.0):
+        raise ValueError("weights must be finite and nonnegative.")
+    if np.sum(weights) <= 0.0:
+        raise ValueError("at least one mixture weight must be positive.")
+    if not np.all(np.isfinite(means)):
+        raise ValueError("means must be finite.")
+    if not np.all(np.isfinite(sigmas)) or np.any(sigmas <= 0.0):
+        raise ValueError("sigmas must be finite and strictly positive.")
+
+    n = int(n)
+    weights = weights / np.sum(weights)
+    pair_weights = weights[:, None] * weights[None, :]
+    squared_mean_differences = (means[:, None] - means[None, :]) ** 2
+    component_variances = sigmas[:, None] ** 2 + sigmas[None, :] ** 2
+
+    h_squared = h_grid[:, None, None] ** 2
+
+    smoothed_square_variances = component_variances[None, :, :] + 2.0 * h_squared
+    integrated_smoothed_square = np.sum(
+        pair_weights[None, :, :]
+        * np.exp(
+            -squared_mean_differences[None, :, :]
+            / (2.0 * smoothed_square_variances)
+        )
+        / np.sqrt(2.0 * np.pi * smoothed_square_variances),
+        axis=(1, 2),
+    )
+
+    overlap_variances = component_variances[None, :, :] + h_squared
+    smoothed_truth_overlap = np.sum(
+        pair_weights[None, :, :]
+        * np.exp(
+            -squared_mean_differences[None, :, :]
+            / (2.0 * overlap_variances)
+        )
+        / np.sqrt(2.0 * np.pi * overlap_variances),
+        axis=(1, 2),
+    )
+
+    integrated_truth_square = float(
+        np.sum(
+            pair_weights
+            * np.exp(-squared_mean_differences / (2.0 * component_variances))
+            / np.sqrt(2.0 * np.pi * component_variances)
+        )
+    )
+
+    integrated_kernel_square = 1.0 / (2.0 * np.sqrt(np.pi))
+    return (
+        integrated_kernel_square / (n * h_grid)
+        + (1.0 - 1.0 / n) * integrated_smoothed_square
+        - 2.0 * smoothed_truth_overlap
+        + integrated_truth_square
+    )
+
+
 def run_one_mixture_bandwidth_experiment(
     seed: int,
     n: int,

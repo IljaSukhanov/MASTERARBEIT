@@ -22,6 +22,7 @@ from .density import (
 )
 from .gaussian_mixtures import (
     exact_mixture_ise_values,
+    exact_mixture_mise_values,
     gaussian_mixture_mean_and_variance,
     mixture_density,
     sample_gaussian_mixture,
@@ -59,6 +60,7 @@ __all__ = [
     "first_order_perron_vector",
     "exact_gaussian_kde_l2_gram",
     "exact_mixture_ise_values",
+    "exact_mixture_mise_values",
     "exact_oracle_ise_values",
     "gaussian_density_with_variance",
     "gaussian_kde_values",
