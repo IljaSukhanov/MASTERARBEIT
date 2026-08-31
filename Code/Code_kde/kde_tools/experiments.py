@@ -10,6 +10,7 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_kde_values,
 )
+from .fourier import beta2_similarity_matrix_fft
 from .quadrature import (
     quadrature_grid_for_kdes,
     quadrature_similarity_matrices,
@@ -19,6 +20,9 @@ from .similarities import (
     select_spectral_bandwidth,
     spectral_choice_from_similarity,
 )
+
+
+
 
 
 def exact_beta2_bandwidth_selection_counts(
@@ -88,6 +92,93 @@ def quadrature_beta2_bandwidth_selection_counts(
         counts[int(result["choice"]["selected_index"])] += 1
 
     return counts
+
+
+def fourier_beta2_bandwidth_selection_counts(
+    n: int,
+    h_grid: np.ndarray,
+    M: int,
+    sigma2: float = 1.0,
+    tau: float = 1.0,
+    half_width: float = 12.0,
+    spatial_points: int = 2_048,
+    seed: int | None = None,
+) -> np.ndarray:
+    """Count Fourier beta-2 spectral bandwidth selections over ``M`` samples."""
+    n = int(n)
+    h_grid = np.asarray(h_grid, dtype=float)
+    M = int(M)
+    sigma2 = float(sigma2)
+    tau = float(tau)
+    half_width = float(half_width)
+    spatial_points = int(spatial_points)
+    rng = np.random.default_rng(seed)
+    counts = np.zeros(len(h_grid), dtype=int)
+
+    for _ in range(M):
+        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
+        similarity = beta2_similarity_matrix_fft(
+            samples=samples,
+            h_grid=h_grid,
+            tau=tau,
+            half_width=half_width,
+            spatial_points=spatial_points,
+        )
+        choice = spectral_choice_from_similarity(similarity)
+        counts[int(choice["selected_index"])] += 1
+
+    return counts
+
+
+def beta2_bandwidth_selection_counts(
+    n: int,
+    h_grid: np.ndarray,
+    M: int,
+    method: str = "exact",
+    sigma2: float = 1.0,
+    tau: float = 1.0,
+    seed: int | None = None,
+    m_x: int = 1_001,
+    half_width: float = 12.0,
+    spatial_points: int = 2_048,
+) -> np.ndarray:
+    """Count beta-2 selections using the requested computational method."""
+    if method == "exact":
+        return exact_beta2_bandwidth_selection_counts(
+            n=n,
+            h_grid=h_grid,
+            M=M,
+            sigma2=sigma2,
+            tau=tau,
+            seed=seed,
+        )
+
+    if method == "quadrature":
+        return quadrature_beta2_bandwidth_selection_counts(
+            n=n,
+            h_grid=h_grid,
+            M=M,
+            m_x=m_x,
+            sigma2=sigma2,
+            tau=tau,
+            seed=seed,
+        )
+
+    if method == "fourier":
+        return fourier_beta2_bandwidth_selection_counts(
+            n=n,
+            h_grid=h_grid,
+            M=M,
+            sigma2=sigma2,
+            tau=tau,
+            half_width=half_width,
+            spatial_points=spatial_points,
+            seed=seed,
+        )
+
+    raise ValueError(
+        'method must be "exact", "quadrature", or "fourier".'
+    )
 
 
 def run_one_spectral_vs_oracle_experiment(
