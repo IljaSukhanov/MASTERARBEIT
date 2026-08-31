@@ -6,6 +6,7 @@ import unittest
 
 import numpy as np
 
+from kde_tools.bandwidths import bandwidth_grid_linear_in_psi_beta
 from kde_tools.fourier import (
     beta2_divergence_matrix_fft,
     beta2_similarity_matrix_fft,
@@ -18,7 +19,12 @@ class OptionalFourierTests(unittest.TestCase):
     def setUp(self) -> None:
         rng = np.random.default_rng(20260817)
         self.samples = rng.normal(size=35)
-        self.bandwidths = np.geomspace(0.15, 0.9, 6)
+        self.bandwidths = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.15,
+            h_max=0.9,
+            beta=2.0,
+            grid_size=6,
+        )
 
     def test_reconstructed_family_is_normalized(self) -> None:
         densities, dx = kde_family_fft(

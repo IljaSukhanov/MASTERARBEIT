@@ -11,6 +11,42 @@ from .quadrature import trapezoidal_integral
 _STANDARD_NORMAL_UPPER_QUARTILE = 0.6744897501960817
 
 
+def bandwidth_grid_linear_in_psi_beta(
+    h_min: float = 0.01,
+    h_max: float = 2.0,
+    beta: float = 2.0,
+    grid_size: int = 201,
+) -> np.ndarray:
+    """Return a bandwidth grid that is linear in ``psi_beta``.
+
+    Here ``psi_beta(h) = (h**(1 - beta / 2) - 1) / (1 - beta / 2)``.
+    Its continuous limit at ``beta=2`` is ``log(h)``, so the default is a
+    geometric grid.  The case ``beta=0`` gives an ordinary linear grid.
+    """
+    h_min = float(h_min)
+    h_max = float(h_max)
+    beta = float(beta)
+    grid_size = int(grid_size)
+
+    if not 0.0 < h_min < h_max:
+        raise ValueError("Require 0 < h_min < h_max.")
+    if not np.isfinite(beta):
+        raise ValueError("beta must be finite.")
+    if grid_size < 2:
+        raise ValueError("grid_size must be at least two.")
+
+    exponent = 1.0 - beta / 2.0
+    if np.isclose(exponent, 0.0, rtol=0.0, atol=1e-12):
+        return np.geomspace(h_min, h_max, grid_size)
+
+    transformed_grid = np.linspace(
+        h_min**exponent,
+        h_max**exponent,
+        grid_size,
+    )
+    return transformed_grid ** (1.0 / exponent)
+
+
 def estimate_sample_scale(
     samples: np.ndarray,
     method: str = "iqr",
@@ -55,10 +91,12 @@ def sample_scaled_bandwidth_grid(
     multiplier_max: float = 2.0,
     rate_exponent: float = 1.0 / 5.0,
     scale_method: str = "iqr",
+    beta: float = 2.0,
 ) -> tuple[np.ndarray, np.ndarray, float]:
     """Construct ``H_n = scale_hat * n**(-rate_exponent) * C``.
 
-    ``C`` is a geometric grid from ``multiplier_min`` to ``multiplier_max``.
+    ``C`` is linear in ``psi_beta`` from ``multiplier_min`` to
+    ``multiplier_max``.
     The return value is ``(bandwidths, dimensionless_grid, scale_hat)`` so an
     experiment can retain both the data-unit bandwidths and their normalized
     coordinates.
@@ -79,10 +117,11 @@ def sample_scaled_bandwidth_grid(
         raise ValueError("rate_exponent must be finite and positive.")
 
     scale = estimate_sample_scale(samples, method=scale_method)
-    dimensionless_grid = np.geomspace(
-        multiplier_min,
-        multiplier_max,
-        grid_size,
+    dimensionless_grid = bandwidth_grid_linear_in_psi_beta(
+        h_min=multiplier_min,
+        h_max=multiplier_max,
+        beta=beta,
+        grid_size=grid_size,
     ) * len(samples) ** (-float(rate_exponent))
     return scale * dimensionless_grid, dimensionless_grid, scale
 

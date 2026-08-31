@@ -7,6 +7,7 @@ import unittest
 import numpy as np
 
 from kde_tools.bandwidths import (
+    bandwidth_grid_linear_in_psi_beta,
     estimate_sample_scale,
     gaussian_mise_oracle_bandwidth,
     sample_scaled_bandwidth_grid,
@@ -46,13 +47,52 @@ class DensityTests(unittest.TestCase):
     def setUp(self) -> None:
         self.rng = np.random.default_rng(20260817)
         self.samples = self.rng.normal(size=35)
-        self.bandwidths = np.geomspace(0.15, 0.9, 6)
+        self.bandwidths = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.15,
+            h_max=0.9,
+            beta=2.0,
+            grid_size=6,
+        )
         self.x_grid = np.linspace(-9.0, 9.0, 12_001)
 
     def test_density_rows_have_unit_mass(self) -> None:
         densities = gaussian_kde_values(self.samples, self.bandwidths, self.x_grid)
         masses = trapezoidal_integral(densities, self.x_grid, axis=1)
         np.testing.assert_allclose(masses, 1.0, atol=1e-12)
+
+    def test_psi_beta_bandwidth_grid_special_cases(self) -> None:
+        geometric = bandwidth_grid_linear_in_psi_beta(grid_size=7)
+        np.testing.assert_allclose(
+            geometric,
+            np.geomspace(0.01, 2.0, 7),
+        )
+
+        linear = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.1,
+            h_max=1.6,
+            beta=0.0,
+            grid_size=7,
+        )
+        np.testing.assert_allclose(linear, np.linspace(0.1, 1.6, 7))
+
+    def test_psi_beta_bandwidth_grid_is_linear_in_transformed_scale(self) -> None:
+        beta = 1.0
+        grid = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.1,
+            h_max=2.0,
+            beta=beta,
+            grid_size=9,
+        )
+        exponent = 1.0 - beta / 2.0
+        transformed = (grid**exponent - 1.0) / exponent
+
+        self.assertAlmostEqual(grid[0], 0.1)
+        self.assertAlmostEqual(grid[-1], 2.0)
+        self.assertTrue(np.all(np.diff(grid) > 0.0))
+        np.testing.assert_allclose(
+            np.diff(transformed),
+            np.diff(transformed)[0],
+        )
 
     def test_exact_gram_matches_fine_quadrature(self) -> None:
         densities = gaussian_kde_values(self.samples, self.bandwidths, self.x_grid)
@@ -68,7 +108,12 @@ class DensityTests(unittest.TestCase):
         weights = np.array([0.6, 0.4])
         means = np.array([-1.5, 2.0])
         sigmas = np.array([0.5, 1.1])
-        h_grid = np.array([0.2, 0.5, 0.9])
+        h_grid = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.2,
+            h_max=0.9,
+            beta=2.0,
+            grid_size=3,
+        )
         target = mixture_density(self.x_grid, weights, means, sigmas)
         densities = gaussian_kde_values(self.samples, h_grid, self.x_grid)
         numerical = trapezoidal_integral(
@@ -83,7 +128,12 @@ class DensityTests(unittest.TestCase):
         weights = np.array([0.6, 0.4])
         means = np.array([-1.5, 2.0])
         sigmas = np.array([0.5, 1.1])
-        h_grid = np.array([0.2, 0.5, 0.9])
+        h_grid = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.2,
+            h_max=0.9,
+            beta=2.0,
+            grid_size=3,
+        )
         n = len(self.samples)
         target = mixture_density(self.x_grid, weights, means, sigmas)
         smoothed_targets = np.asarray(
@@ -122,7 +172,12 @@ class DensityTests(unittest.TestCase):
         np.testing.assert_allclose(numerical, exact, rtol=2e-9, atol=2e-11)
 
     def test_exact_mixture_mise_contains_standard_normal_case(self) -> None:
-        h_grid = np.array([0.2, 0.5, 0.9])
+        h_grid = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.2,
+            h_max=0.9,
+            beta=2.0,
+            grid_size=3,
+        )
         n = 35
         exact = exact_mixture_mise_values(
             n=n,
@@ -178,7 +233,12 @@ class SimilarityTests(unittest.TestCase):
     def setUp(self) -> None:
         rng = np.random.default_rng(17)
         self.samples = rng.normal(size=30)
-        self.bandwidths = np.geomspace(0.15, 0.9, 7)
+        self.bandwidths = bandwidth_grid_linear_in_psi_beta(
+            h_min=0.15,
+            h_max=0.9,
+            beta=2.0,
+            grid_size=7,
+        )
         self.x_grid = np.linspace(-8.0, 8.0, 4001)
         self.densities = gaussian_kde_values(
             self.samples, self.bandwidths, self.x_grid
@@ -299,7 +359,12 @@ class SimilarityTests(unittest.TestCase):
             seed=123,
             n=20,
             sigma2=1.0,
-            h_grid=np.geomspace(0.1, 1.0, 8),
+            h_grid=bandwidth_grid_linear_in_psi_beta(
+                h_min=0.1,
+                h_max=1.0,
+                beta=2.0,
+                grid_size=8,
+            ),
             gamma=gamma,
         )
         self.assertAlmostEqual(result["gamma"], gamma)

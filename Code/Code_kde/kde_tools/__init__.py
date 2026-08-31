@@ -5,6 +5,7 @@ the individual modules when a notebook needs more control.
 """
 
 from .bandwidths import (
+    bandwidth_grid_linear_in_psi_beta,
     direct_plugin_bandwidth,
     estimate_sample_scale,
     gaussian_mise_oracle_bandwidth,
@@ -50,6 +51,7 @@ from .similarities import (
 )
 
 __all__ = [
+    "bandwidth_grid_linear_in_psi_beta",
     "beta2_divergence_matrix",
     "beta2_similarity_matrix",
     "compute_quadrature_similarity_matrices",
