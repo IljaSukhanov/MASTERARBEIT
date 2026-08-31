@@ -20,6 +20,7 @@ def plot_perron_vector(
         ax: Axes | None = None,
         label: str | None = None,
         maximum_label: str | None = None,
+        marker_size: float = 3.5,
 ) -> Axes:
     vector = np.asarray(vector, dtype=float)
     if plot_type == "perron":
@@ -37,7 +38,13 @@ def plot_perron_vector(
     if ax is None:
         _, ax = plt.subplots()
 
-    ax.plot(h_grid, plotted_values, marker="o", label=label)
+    ax.plot(
+        h_grid,
+        plotted_values,
+        marker="o",
+        markersize=marker_size,
+        label=label,
+    )
     ax.axvline(
         h_grid[maximum_index],
         color="red",
