@@ -20,6 +20,7 @@ from kde_tools.gaussian_mixtures import (
     mixture_density,
 )
 from kde_tools.kullback_leibler import directional_kl_divergence_matrix
+from kde_tools.plotting_functions import plot_bandwidth_distributions
 from kde_tools.quadrature import (
     quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
@@ -404,6 +405,21 @@ class SimilarityTests(unittest.TestCase):
 
     def test_standard_normal_mise_oracle_regression_value(self) -> None:
         self.assertAlmostEqual(gaussian_mise_oracle_bandwidth(200), 0.383039449, places=8)
+
+
+class PlottingTests(unittest.TestCase):
+    def test_bandwidth_distribution_plot_normalizes_and_uses_grid_indices(self) -> None:
+        h_grid = np.geomspace(0.1, 1.0, 4)
+        figure = plot_bandwidth_distributions(
+            h_grid=h_grid,
+            distributions={"method": np.array([0, 2, 1, 0])},
+        )
+
+        np.testing.assert_array_equal(figure.data[0].x, np.array([1, 2]))
+        np.testing.assert_allclose(figure.data[0].y, np.array([2 / 3, 1 / 3]))
+        np.testing.assert_allclose(figure.data[0].customdata, h_grid[[1, 2]])
+        self.assertEqual(figure.layout.xaxis.range, (-0.5, 3.5))
+        self.assertEqual(figure.layout.yaxis.tickformat, ".0%")
 
 
 if __name__ == "__main__":
