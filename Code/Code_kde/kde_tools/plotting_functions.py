@@ -10,9 +10,10 @@ from matplotlib.axes import Axes
 ##########################
 
 def plot_perron_vector(
-        h_grid: np.ndarray,
-        vector: np.ndarray,
-        plot_type: str = "perron",
+    h_grid: np.ndarray,
+    vector: np.ndarray,
+    beta: float = 2.0,  # ### CHANGED
+    plot_type: str = "perron",
         ax: Axes | None = None,
         label: str | None = None,
         maximum_label: str | None = None,
@@ -40,7 +41,24 @@ def plot_perron_vector(
         linestyle="--",
         label=maximum_label,
     )
-    ax.set_xscale("log")
+    exponent = 1.0 - beta / 2.0  # ### CHANGED
+    if np.isclose(exponent, 0.0, rtol=0.0, atol=1e-12):  # ### CHANGED
+        ax.set_xscale("log")  # ### CHANGED
+    elif np.isclose(beta, 0.0, rtol=0.0, atol=1e-12):  # ### CHANGED
+        ax.set_xscale("linear")  # ### CHANGED
+    else:  # ### CHANGED
+        def forward(h: np.ndarray) -> np.ndarray:  # ### CHANGED
+            h = np.asarray(h, dtype=float)  # ### CHANGED
+            return (h**exponent - 1.0) / exponent  # ### CHANGED
+
+        def inverse(value: np.ndarray) -> np.ndarray:  # ### CHANGED
+            value = np.asarray(value, dtype=float)  # ### CHANGED
+            return (1.0 + exponent * value) ** (1.0 / exponent)  # ### CHANGED
+
+        ax.set_xscale(  # ### CHANGED
+            "function",  # ### CHANGED
+            functions=(forward, inverse),  # ### CHANGED
+        )  # ### CHANGED
     ax.set_xlabel("Bandwidth h")
     ax.set_ylabel(y_label)
     ax.grid(alpha=0.3)
