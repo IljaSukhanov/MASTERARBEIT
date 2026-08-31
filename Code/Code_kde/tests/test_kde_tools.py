@@ -20,7 +20,10 @@ from kde_tools.gaussian_mixtures import (
     mixture_density,
 )
 from kde_tools.kullback_leibler import directional_kl_divergence_matrix
-from kde_tools.plotting_functions import plot_bandwidth_distributions
+from kde_tools.plotting_functions import (
+    plot_bandwidth_distributions,
+    plot_bandwidth_grid_stability,
+)
 from kde_tools.quadrature import (
     quadrature_beta2_divergence_matrix,
     quadrature_similarity_matrices,
@@ -420,6 +423,47 @@ class PlottingTests(unittest.TestCase):
         np.testing.assert_allclose(figure.data[0].customdata, h_grid[[1, 2]])
         self.assertEqual(figure.layout.xaxis.range, (-0.5, 3.5))
         self.assertEqual(figure.layout.yaxis.tickformat, ".0%")
+
+    def test_grid_stability_plot_reports_selected_grid_positions(self) -> None:
+        grid_sizes = np.array([11, 21, 31])
+        selected_indices = np.array([5, 10, 15])
+        selected_bandwidths = np.array([0.2, 0.21, 0.205])
+        figure = plot_bandwidth_grid_stability(
+            grid_sizes=grid_sizes,
+            selected_bandwidths=selected_bandwidths,
+            selected_indices=selected_indices,
+            show_envelope_fits=False,
+        )
+
+        self.assertEqual(len(figure.data), 1)
+        np.testing.assert_array_equal(figure.data[0].x, grid_sizes)
+        np.testing.assert_allclose(figure.data[0].y, selected_bandwidths)
+        np.testing.assert_allclose(
+            figure.data[0].customdata,
+            np.column_stack((selected_indices, np.full(3, 0.5))),
+        )
+        self.assertEqual(
+            figure.layout.xaxis.title.text,
+            "number of bandwidth candidates N",
+        )
+
+    def test_grid_stability_envelope_fits_start_at_complete_peak_pair(self) -> None:
+        grid_sizes = np.arange(11, 47, 5)
+        selected_bandwidths = np.array(
+            [1.0, 1.2, 0.9, 1.15, 0.95, 1.1, 0.98, 1.05]
+        )
+        selected_indices = np.arange(4, 12)
+        figure = plot_bandwidth_grid_stability(
+            grid_sizes=grid_sizes,
+            selected_bandwidths=selected_bandwidths,
+            selected_indices=selected_indices,
+        )
+
+        self.assertEqual(len(figure.data), 5)
+        self.assertEqual(figure.data[1].name, "upper-envelope fit")
+        self.assertEqual(figure.data[2].name, "lower-envelope fit")
+        self.assertEqual(figure.data[1].x[0], grid_sizes[2])
+        self.assertEqual(figure.data[2].x[0], grid_sizes[2])
 
 
 if __name__ == "__main__":

@@ -250,3 +250,218 @@ def plot_bandwidth_distributions(
         margin=dict(t=40, b=150),
     )
     return figure
+
+
+#####################################
+### Bandwidth-grid stability plot ###
+#####################################
+
+def plot_bandwidth_grid_stability(
+    grid_sizes: np.ndarray,
+    selected_bandwidths: np.ndarray,
+    selected_indices: np.ndarray,
+    show_envelope_fits: bool = True,
+    tick_values: np.ndarray | None = None,
+    width: int = 1050,
+    height: int = 550,
+) -> go.Figure:
+    """Plot how the selected bandwidth changes with bandwidth-grid size.
+
+    If requested, upper and lower local peaks are fitted in log-bandwidth
+    coordinates using ``log(h) = c + b / (N - 1)`` with a shared limiting
+    value ``c``.  The fitted curves start at the first complete upper/lower
+    peak pair so extrapolation does not compress the vertical scale.
+    """
+    grid_sizes = np.asarray(grid_sizes)
+    selected_bandwidths = np.asarray(selected_bandwidths, dtype=float)
+    selected_indices = np.asarray(selected_indices)
+
+    if grid_sizes.ndim != 1 or len(grid_sizes) < 2:
+        raise ValueError("grid_sizes must be a one-dimensional array of length two or more.")
+    if np.any(grid_sizes < 2) or not np.all(np.isfinite(grid_sizes)):
+        raise ValueError("grid_sizes must contain finite values of at least two.")
+    if not np.all(grid_sizes == np.floor(grid_sizes)):
+        raise ValueError("grid_sizes must contain integers.")
+    grid_sizes = grid_sizes.astype(int)
+    if np.any(np.diff(grid_sizes) <= 0):
+        raise ValueError("grid_sizes must be strictly increasing.")
+
+    if selected_bandwidths.shape != grid_sizes.shape:
+        raise ValueError("selected_bandwidths must have the same shape as grid_sizes.")
+    if not np.all(np.isfinite(selected_bandwidths)) or np.any(
+        selected_bandwidths <= 0.0
+    ):
+        raise ValueError("selected_bandwidths must contain finite, positive values.")
+
+    if selected_indices.shape != grid_sizes.shape:
+        raise ValueError("selected_indices must have the same shape as grid_sizes.")
+    if not np.all(np.isfinite(selected_indices)) or not np.all(
+        selected_indices == np.floor(selected_indices)
+    ):
+        raise ValueError("selected_indices must contain finite integers.")
+    selected_indices = selected_indices.astype(int)
+    if np.any(selected_indices < 0) or np.any(selected_indices >= grid_sizes):
+        raise ValueError("Each selected index must lie on its corresponding grid.")
+
+    if not isinstance(show_envelope_fits, (bool, np.bool_)):
+        raise ValueError("show_envelope_fits must be boolean.")
+
+    normalized_indices = selected_indices / (grid_sizes - 1)
+    customdata = np.column_stack((selected_indices, normalized_indices))
+
+    middle_bandwidths = selected_bandwidths[1:-1]
+    upper_peak_positions = np.flatnonzero(
+        (middle_bandwidths > selected_bandwidths[:-2])
+        & (middle_bandwidths >= selected_bandwidths[2:])
+    ) + 1
+    lower_peak_positions = np.flatnonzero(
+        (middle_bandwidths <= selected_bandwidths[:-2])
+        & (middle_bandwidths < selected_bandwidths[2:])
+    ) + 1
+    can_fit_envelopes = (
+        show_envelope_fits
+        and len(upper_peak_positions) > 0
+        and len(lower_peak_positions) > 0
+        and len(upper_peak_positions) + len(lower_peak_positions) >= 3
+    )
+
+    figure = go.Figure(
+        go.Scatter(
+            x=grid_sizes,
+            y=selected_bandwidths,
+            customdata=customdata,
+            mode="lines+markers",
+            line=dict(color="#1f77b4", width=2.5),
+            marker=dict(size=7),
+            name="selected bandwidth",
+            showlegend=can_fit_envelopes,
+            hovertemplate=(
+                "N=%{x}"
+                "<br>chosen bandwidth h=%{y:.6g}"
+                "<br>chosen grid index=%{customdata[0]:.0f}"
+                "<br>normalized index=%{customdata[1]:.6f}"
+                "<extra></extra>"
+            ),
+        )
+    )
+
+    if can_fit_envelopes:
+        upper_inverse_spacing = 1.0 / (
+            grid_sizes[upper_peak_positions] - 1.0
+        )
+        lower_inverse_spacing = 1.0 / (
+            grid_sizes[lower_peak_positions] - 1.0
+        )
+        envelope_design = np.vstack(
+            (
+                np.column_stack(
+                    (
+                        np.ones_like(upper_inverse_spacing),
+                        upper_inverse_spacing,
+                        np.zeros_like(upper_inverse_spacing),
+                    )
+                ),
+                np.column_stack(
+                    (
+                        np.ones_like(lower_inverse_spacing),
+                        np.zeros_like(lower_inverse_spacing),
+                        lower_inverse_spacing,
+                    )
+                ),
+            )
+        )
+        envelope_response = np.log(
+            np.concatenate(
+                (
+                    selected_bandwidths[upper_peak_positions],
+                    selected_bandwidths[lower_peak_positions],
+                )
+            )
+        )
+        limit_log_h, upper_slope, lower_slope = np.linalg.lstsq(
+            envelope_design,
+            envelope_response,
+            rcond=None,
+        )[0]
+
+        fit_start_position = max(
+            int(upper_peak_positions[0]),
+            int(lower_peak_positions[0]),
+        )
+        fit_grid_sizes = grid_sizes[fit_start_position:]
+        inverse_spacing = 1.0 / (fit_grid_sizes - 1.0)
+        upper_fit = np.exp(limit_log_h + upper_slope * inverse_spacing)
+        lower_fit = np.exp(limit_log_h + lower_slope * inverse_spacing)
+
+        figure.add_trace(
+            go.Scatter(
+                x=fit_grid_sizes,
+                y=upper_fit,
+                mode="lines",
+                line=dict(color="#d62728", width=2, dash="dash"),
+                name="upper-envelope fit",
+            )
+        )
+        figure.add_trace(
+            go.Scatter(
+                x=fit_grid_sizes,
+                y=lower_fit,
+                mode="lines",
+                line=dict(color="#2ca02c", width=2, dash="dash"),
+                name="lower-envelope fit",
+            )
+        )
+        figure.add_trace(
+            go.Scatter(
+                x=grid_sizes[upper_peak_positions],
+                y=selected_bandwidths[upper_peak_positions],
+                mode="markers",
+                marker=dict(color="#d62728", size=8),
+                name="upper peaks",
+                showlegend=False,
+            )
+        )
+        figure.add_trace(
+            go.Scatter(
+                x=grid_sizes[lower_peak_positions],
+                y=selected_bandwidths[lower_peak_positions],
+                mode="markers",
+                marker=dict(color="#2ca02c", size=8),
+                name="lower peaks",
+                showlegend=False,
+            )
+        )
+
+    if tick_values is None:
+        tick_positions = np.unique(
+            np.linspace(0, len(grid_sizes) - 1, min(10, len(grid_sizes)), dtype=int)
+        )
+        tick_values = grid_sizes[tick_positions]
+    else:
+        tick_values = np.asarray(tick_values)
+        if tick_values.ndim != 1 or not np.all(np.isfinite(tick_values)):
+            raise ValueError("tick_values must be a one-dimensional array of finite values.")
+
+    figure.update_xaxes(
+        title_text="number of bandwidth candidates N",
+        tickmode="array",
+        tickvals=tick_values,
+    )
+    figure.update_yaxes(
+        title_text="chosen bandwidth h",
+        tickformat=".4f",
+    )
+    figure.update_layout(
+        width=int(width),
+        height=int(height),
+        template="plotly_white",
+        legend=dict(
+            orientation="h",
+            x=0.5,
+            xanchor="center",
+            y=1.02,
+            yanchor="bottom",
+        ),
+        margin=dict(t=80, b=100),
+    )
+    return figure
