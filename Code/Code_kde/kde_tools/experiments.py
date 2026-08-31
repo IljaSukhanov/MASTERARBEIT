@@ -1,6 +1,6 @@
-"""Single-repetition runners used by the spectral KDE notebooks."""
-
 from __future__ import annotations
+
+# continue here
 
 import numpy as np
 
