@@ -7,7 +7,7 @@ import unittest
 import numpy as np
 
 from kde_tools.bandwidths import bandwidth_grid_linear_in_psi_beta
-from kde_tools.experiments import fourier_beta2_bandwidth_selection_counts
+from kde_tools.experiments import beta2_bandwidth_selection_counts
 from kde_tools.fourier import (
     beta2_divergence_matrix_fft,
     beta2_similarity_matrix_fft,
@@ -64,10 +64,11 @@ class OptionalFourierTests(unittest.TestCase):
         tau = 1.7
         seed = 1234
         spatial_points = 2_048
-        counts = fourier_beta2_bandwidth_selection_counts(
+        counts = beta2_bandwidth_selection_counts(
             n=n,
             h_grid=self.bandwidths,
             M=repetitions,
+            method="fourier",
             sigma2=1.0,
             tau=tau,
             half_width=12.0,

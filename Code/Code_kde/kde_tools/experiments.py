@@ -25,111 +25,6 @@ from .similarities import (
 
 
 
-def exact_beta2_bandwidth_selection_counts(
-    n: int,
-    h_grid: np.ndarray,
-    M: int,
-    sigma2: float = 1.0,
-    tau: float = 1.0,
-    seed: int | None = None,
-) -> np.ndarray:
-    """Count exact beta-2 spectral bandwidth selections over ``M`` samples."""
-    n = int(n)
-    h_grid = np.asarray(h_grid, dtype=float)
-    M = int(M)
-    sigma2 = float(sigma2)
-    tau = float(tau)
-    rng = np.random.default_rng(seed)
-    counts = np.zeros(len(h_grid), dtype=int)
-
-    for _ in range(M):
-        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
-        selection = select_spectral_bandwidth(
-            samples=samples,
-            h_grid=h_grid,
-            gamma=tau,
-        )
-        counts[int(selection["selected_index"])] += 1
-
-    return counts
-
-
-def quadrature_beta2_bandwidth_selection_counts(
-    n: int,
-    h_grid: np.ndarray,
-    M: int,
-    m_x: int = 1_001,
-    sigma2: float = 1.0,
-    tau: float = 1.0,
-    seed: int | None = None,
-) -> np.ndarray:
-    """Count quadrature beta-2 spectral selections over ``M`` samples."""
-    n = int(n)
-    h_grid = np.asarray(h_grid, dtype=float)
-    M = int(M)
-    sigma2 = float(sigma2)
-    tau = float(tau)
-    if isinstance(m_x, (bool, np.bool_)) or not isinstance(
-        m_x,
-        (int, np.integer),
-    ):
-        raise ValueError("m_x must be an integer of at least two.")
-    if m_x < 2:
-        raise ValueError("m_x must be an integer of at least two.")
-
-    rng = np.random.default_rng(seed)
-    counts = np.zeros(len(h_grid), dtype=int)
-
-    for _ in range(M):
-        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
-        result = select_quadrature_similarity_bandwidths(
-            samples=samples,
-            h_grid=h_grid,
-            similarity_name="exponential_l2_similarity",
-            m_x=int(m_x),
-            gamma=tau,
-        )
-        counts[int(result["choice"]["selected_index"])] += 1
-
-    return counts
-
-
-def fourier_beta2_bandwidth_selection_counts(
-    n: int,
-    h_grid: np.ndarray,
-    M: int,
-    sigma2: float = 1.0,
-    tau: float = 1.0,
-    half_width: float = 12.0,
-    spatial_points: int = 2_048,
-    seed: int | None = None,
-) -> np.ndarray:
-    """Count Fourier beta-2 spectral bandwidth selections over ``M`` samples."""
-    n = int(n)
-    h_grid = np.asarray(h_grid, dtype=float)
-    M = int(M)
-    sigma2 = float(sigma2)
-    tau = float(tau)
-    half_width = float(half_width)
-    spatial_points = int(spatial_points)
-    rng = np.random.default_rng(seed)
-    counts = np.zeros(len(h_grid), dtype=int)
-
-    for _ in range(M):
-        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
-        similarity = beta2_similarity_matrix_fft(
-            samples=samples,
-            h_grid=h_grid,
-            tau=tau,
-            half_width=half_width,
-            spatial_points=spatial_points,
-        )
-        choice = spectral_choice_from_similarity(similarity)
-        counts[int(choice["selected_index"])] += 1
-
-    return counts
-
-
 def beta2_bandwidth_selection_counts(
     n: int,
     h_grid: np.ndarray,
@@ -143,42 +38,67 @@ def beta2_bandwidth_selection_counts(
     spatial_points: int = 2_048,
 ) -> np.ndarray:
     """Count beta-2 selections using the requested computational method."""
-    if method == "exact":
-        return exact_beta2_bandwidth_selection_counts(
-            n=n,
-            h_grid=h_grid,
-            M=M,
-            sigma2=sigma2,
-            tau=tau,
-            seed=seed,
+    n = int(n)
+    h_grid = np.asarray(h_grid, dtype=float)
+    M = int(M)
+    sigma2 = float(sigma2)
+    tau = float(tau)
+    method = str(method).lower()
+
+    if method not in {"exact", "quadrature", "fourier"}:
+        raise ValueError(
+            'method must be "exact", "quadrature", or "fourier".'
         )
 
     if method == "quadrature":
-        return quadrature_beta2_bandwidth_selection_counts(
-            n=n,
-            h_grid=h_grid,
-            M=M,
-            m_x=m_x,
-            sigma2=sigma2,
-            tau=tau,
-            seed=seed,
-        )
+        if isinstance(m_x, (bool, np.bool_)) or not isinstance(
+            m_x,
+            (int, np.integer),
+        ):
+            raise ValueError("m_x must be an integer of at least two.")
+        if m_x < 2:
+            raise ValueError("m_x must be an integer of at least two.")
 
-    if method == "fourier":
-        return fourier_beta2_bandwidth_selection_counts(
-            n=n,
-            h_grid=h_grid,
-            M=M,
-            sigma2=sigma2,
-            tau=tau,
-            half_width=half_width,
-            spatial_points=spatial_points,
-            seed=seed,
-        )
+    half_width = float(half_width)
+    spatial_points = int(spatial_points)
+    rng = np.random.default_rng(seed)
+    counts = np.zeros(len(h_grid), dtype=int)
 
-    raise ValueError(
-        'method must be "exact", "quadrature", or "fourier".'
-    )
+    for _ in range(M):
+        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
+
+        if method == "exact":
+            selection = select_spectral_bandwidth(
+                samples=samples,
+                h_grid=h_grid,
+                gamma=tau,
+            )
+            selected_index = int(selection["selected_index"])
+
+        elif method == "quadrature":
+            selection = select_quadrature_similarity_bandwidths(
+                samples=samples,
+                h_grid=h_grid,
+                similarity_name="exponential_l2_similarity",
+                m_x=int(m_x),
+                gamma=tau,
+            )
+            selected_index = int(selection["choice"]["selected_index"])
+
+        else:
+            similarity = beta2_similarity_matrix_fft(
+                samples=samples,
+                h_grid=h_grid,
+                tau=tau,
+                half_width=half_width,
+                spatial_points=spatial_points,
+            )
+            choice = spectral_choice_from_similarity(similarity)
+            selected_index = int(choice["selected_index"])
+
+        counts[selected_index] += 1
+
+    return counts
 
 
 def run_one_spectral_vs_oracle_experiment(

@@ -37,8 +37,7 @@ from kde_tools.similarities import (
     squared_l2_distance_from_gram,
 )
 from kde_tools.experiments import (
-    exact_beta2_bandwidth_selection_counts,
-    quadrature_beta2_bandwidth_selection_counts,
+    beta2_bandwidth_selection_counts,
     run_one_spectral_vs_oracle_experiment,
 )
 
@@ -291,10 +290,11 @@ class SimilarityTests(unittest.TestCase):
         repetitions = 6
         tau = 2.3
         seed = 1234
-        counts = exact_beta2_bandwidth_selection_counts(
+        counts = beta2_bandwidth_selection_counts(
             n=n,
             h_grid=self.bandwidths,
             M=repetitions,
+            method="exact",
             sigma2=1.0,
             tau=tau,
             seed=seed,
@@ -316,19 +316,21 @@ class SimilarityTests(unittest.TestCase):
         self.assertEqual(int(counts.sum()), repetitions)
 
     def test_quadrature_beta2_bandwidth_selection_counts(self) -> None:
-        counts = quadrature_beta2_bandwidth_selection_counts(
+        counts = beta2_bandwidth_selection_counts(
             n=20,
             h_grid=self.bandwidths,
             M=4,
+            method="quadrature",
             m_x=501,
             sigma2=1.0,
             tau=2.3,
             seed=1234,
         )
-        repeated = quadrature_beta2_bandwidth_selection_counts(
+        repeated = beta2_bandwidth_selection_counts(
             n=20,
             h_grid=self.bandwidths,
             M=4,
+            method="quadrature",
             m_x=501,
             sigma2=1.0,
             tau=2.3,
