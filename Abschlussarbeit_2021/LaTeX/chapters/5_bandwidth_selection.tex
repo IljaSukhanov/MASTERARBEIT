@@ -281,6 +281,8 @@ The total variation and Hellinger distance are related by the chain of inequalit
 
 \subsection{Approximating integrals using quadrature}
 
+\todo[inline]{cite source for the approximation guaranty}
+
 Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}f_{\kappa}(p,q)$, where, for example, in the case of the $\alpha$-divergence, $f_{\kappa}(p,q)=p^{\kappa}q^{1-\kappa}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}. We decide to use the classical quadrature formula
 \begin{align*}
     \int_a^bf(x)\,dx\approx Q_M(f)=(b-a)\sum_{m=0}^{M}w_mf(x_m)
@@ -315,11 +317,9 @@ $f_{\kappa}(y,z)=(1/2)|y-z|$
     \int_{A^c}\frac{1}{2}|p-q|\le\frac{1}{2}\int p+\frac{1}{2}\int q\le\delta_L
 \end{align*}
 
-\textbf{Jensen-Shannon}
+\textbf{KL divergence and Jensen-Shannon}
 
-\begin{align*}
-    \int_{A^c}\dots\le\delta_L\log{2}\le\delta_L
-\end{align*}
+For KL and JS divergence it is natural to use Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$.
 
 \textbf{$L^2$ distance}
 
@@ -329,16 +329,10 @@ $f_{\kappa}(y,z)=(y-z)^2/2$
     \int_{A^c}\frac{1}{2}(p-q)^2\le\frac{\delta_L}{\sqrt{2\pi}h_{\min}}
 \end{align*}
 
-\textbf{KL divergence}
-
-\todo[inline]{cite source for the approximation guaranty}
-
 As an approximation guaranty, we have
 \begin{align}\label{eq:approx_error}
     \left|\int_a^bf(x)\,dx-Q_n(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
 \end{align}
-
-Adaptive quadrature rules might give better approximation results but are computationally more expensive.
 
 \textbf{Fast Fourier Transform}
 
@@ -418,14 +412,12 @@ for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=
 
 \todo[inline]{Which divergencies are conditionally negative definite and which not; Jensen Shannon? (Fuglede and Topsøe)}
 
-The most prominent example of a completely monotone function is $\phi(t)=e^{-\gamma t^{\alpha}}$, $\gamma\ge0$, $0<\alpha\le1$.
+The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
 
 \begin{Thm}[Schoenberg]\label{thm:schoenberg}
     Let $D:X\times X\to\mathbb{R}$ be conditionally negative. Let $x_1,\dots,x_n\in X$. If $\phi$ is completely monotone, then the matrix $\Sigma=(\Sigma_{ij})$, $\Sigma_{ij}=\phi(D(x_i,x_j))$ is positive definite.
-    \todo[inline]{Find a source to cite}
+    \todo[inline]{Find a source to cite (Harmonic Analysis on Semigroups, Berg, Christensen, Ressel)}
 \end{Thm}
-
-\todo[inline]{connect to Bernstein–Widder}
 
 Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some divergence and $\phi$ a completely monotone function. 
 
@@ -439,11 +431,11 @@ The transformation $S_{ij}=\exp{\{-D_{ij}/\tau\}}$ can be motivated as follows. 
 \end{align*}
 is minimized by $p_i=(p_{i1},\dots,p_{iN})$, where $p_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. In that sense, $\tau$ can be interpreted as a penalty weight. This is another instance of the Donsker–Varadhan variational principle. See~\cite{anantharam_variational_2017} for reference.
 
-Apply the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{\alpha}$ yields
+Applying the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{\alpha}$ yields
 \begin{align*}
-    S_{ij}&=\exp{(-\tau D_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j}))}\\
-    &=\exp{\left\{\frac{\tau}{1-\alpha}\log{C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})}\right\}}\\
-    &=C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})^{\frac{\tau}{1-\alpha}}
+    S_{ij}&=\exp{(-D_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})/\tau)}\\
+    &=\exp{\left\{\frac{1}{(1-\alpha)\tau}\log{C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})}\right\}}\\
+    &=C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})^{(1-\alpha)^{-1}\tau^{-1}}
 \end{align*}
 
 \subsection{Bandwidth grid}
@@ -452,23 +444,23 @@ Apply the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{
 
 \todo[inline]{illustrative image comparing linear and geometric grid with ticks on an interval}
 
-The choice of the correct bandwidth grid is essential. Let $\mathcal{H}=\{h_1,\dots,h_N\}$ with $0<h_{\min}=h_1<\dots<h_N=h_{\max}$. We can choose between a linear or geometric grid, that is,
-\begin{align*}
-    h_j=h_{\min}+\frac{j-1}{N-1}(h_{\max}-h_{\min})=h_{\min}+q_N(j-1),\quad q_N=\frac{h_{\max}-h_{\min}}{N-1}
-\end{align*}
-or
-\begin{align*}
-    h_j=h_{\min}\left(\frac{h_{\min}}{h_{\max}}\right)^{\frac{j-1}{N-1}}=h_{\min}q_N^{j-1},\quad q_N=\left(\frac{h_{\min}}{h_{\max}}\right)^{1/(N-1)}
-\end{align*}
+The choice of the correct bandwidth grid is essential. Let $\mathcal{H}_N=\{h_1,\dots,h_N\}$ with $0<h_{\min}=h_1<\dots<h_N=h_{\max}$. The next definition gives a general construction principle for such a bandwidth grid.
 
 \begin{Def}\label{def:linear_in_psi_beta}
-    Let $\psi_{\beta}$ be defined by $\psi_{\beta}(h)=(h^{1-\beta/2}-1)/(1-\beta/2)$. A grid $0<h_1<\dots<h_N$ is said to be linear in $\psi_{\beta}$ if
+    Let $\beta\in[0,2]$ and $\psi_{\beta}$ be defined by $\psi_{\beta}(h)=(h^{1-\beta/2}-1)/(1-\beta/2)$. A grid $0<h_1<\dots<h_N$ is said to be linear in $\psi_{\beta}$ if
     \begin{align*}
-        \psi_{\beta}(h_j)=\psi_{\beta}(h_1)+\frac{j-1}{N-1}(\psi_{\beta}(h_N)-\psi_{\beta}(h_1)),\quad j=1,\dots,N
+        \psi_{\beta}(h_j)=\psi_{\beta}(h_1)+\frac{j-1}{N-1}(\psi_{\beta}(h_N)-\psi_{\beta}(h_1)),\quad j=1,\dots,N.
     \end{align*}
 \end{Def}
 
-Definition~\ref{def:linear_in_psi_beta} smoothly connects a linear and a geometric grid. A linear grid is a grid linear in $\psi_0$. A geometric grid is a grid linear in $\psi_2$.
+Definition~\ref{def:linear_in_psi_beta} smoothly connects a linear and a geometric grid. A linear grid is a grid linear in $\psi_0$. A geometric grid is a grid linear in $\psi_2$. In particular, a linear grid is given by
+\begin{align*}
+    h_j=h_{\min}+\frac{j-1}{N-1}(h_{\max}-h_{\min})=h_{\min}+q_N(j-1),\quad q_N=\frac{h_{\max}-h_{\min}}{N-1}
+\end{align*}
+and a geometric grid is given by
+\begin{align*}
+    h_j=h_{\min}\left(\frac{h_{\max}}{h_{\min}}\right)^{\frac{j-1}{N-1}}=h_{\min}q_N^{j-1},\quad q_N=\left(\frac{h_{\max}}{h_{\min}}\right)^{1/(N-1)}
+\end{align*}
 
 \textbf{Motivation for why a geometric grid is the natural choice}
 
