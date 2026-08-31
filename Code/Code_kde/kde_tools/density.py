@@ -7,17 +7,6 @@ import numpy as np
 
 
 # 1
-# input: x = (x_1, ..., x_n), mean, variance; output: phi_{mean,variance}(x)
-def gaussian_density_with_variance(
-        x: np.ndarray | float,
-        mean: float,
-        variance: float,
-) -> np.ndarray:
-    x = np.asarray(x, dtype=float)
-    return np.exp(-0.5 * (x - mean) ** 2 / variance) / np.sqrt(2.0 * np.pi * variance)
-
-
-# 1
 # computes \hat{f}_{h_j}(x_k) for all j and k
 def gaussian_kde_values(
         samples: np.ndarray,

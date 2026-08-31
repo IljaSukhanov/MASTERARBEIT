@@ -8,9 +8,7 @@ import numpy as np
 
 from kde_tools.bandwidths import (
     bandwidth_grid_linear_in_psi_beta,
-    estimate_sample_scale,
     gaussian_mise_oracle_bandwidth,
-    sample_scaled_bandwidth_grid,
 )
 from kde_tools.density import (
     exact_gaussian_kde_l2_gram,
@@ -193,40 +191,6 @@ class DensityTests(unittest.TestCase):
             + 1.0 / (2.0 * np.sqrt(np.pi))
         )
         np.testing.assert_allclose(exact, expected, atol=1e-15)
-
-    def test_sample_scaled_bandwidth_grid_retains_normalized_coordinates(self) -> None:
-        samples = np.array([-2.0, -1.0, 0.0, 1.0, 2.0])
-        bandwidths, dimensionless, scale = sample_scaled_bandwidth_grid(
-            samples,
-            grid_size=5,
-            multiplier_min=0.1,
-            multiplier_max=1.6,
-            rate_exponent=0.2,
-            scale_method="iqr",
-        )
-        expected_scale = estimate_sample_scale(samples, method="iqr")
-        expected_dimensionless = (
-            np.geomspace(0.1, 1.6, 5) * len(samples) ** (-0.2)
-        )
-        self.assertAlmostEqual(scale, expected_scale)
-        np.testing.assert_allclose(dimensionless, expected_dimensionless)
-        np.testing.assert_allclose(bandwidths, scale * dimensionless)
-
-    def test_sample_scale_methods_use_gaussian_normalization(self) -> None:
-        samples = np.array([-2.0, -1.0, 0.0, 1.0, 2.0])
-        normal_quartile = 0.6744897501960817
-        self.assertAlmostEqual(
-            estimate_sample_scale(samples, method="iqr"),
-            1.0 / normal_quartile,
-        )
-        self.assertAlmostEqual(
-            estimate_sample_scale(samples, method="mad"),
-            1.0 / normal_quartile,
-        )
-        self.assertAlmostEqual(
-            estimate_sample_scale(samples, method="std"),
-            np.std(samples, ddof=1),
-        )
 
 class SimilarityTests(unittest.TestCase):
     def setUp(self) -> None:

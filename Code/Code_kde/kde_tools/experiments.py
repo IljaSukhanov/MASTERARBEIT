@@ -22,22 +22,23 @@ from .similarities import (
 )
 
 
-
+###########################################################
+### bandwidth selection experiment (M repeated samples) ###
+###########################################################
 
 
 def beta2_bandwidth_selection_counts(
-    n: int,
-    h_grid: np.ndarray,
-    M: int,
-    method: str = "exact",
-    sigma2: float = 1.0,
-    tau: float = 1.0,
-    seed: int | None = None,
-    m_x: int = 1_001,
-    half_width: float = 12.0,
-    spatial_points: int = 2_048,
+        n: int,
+        h_grid: np.ndarray,
+        M: int,
+        method: str = "exact",
+        sigma2: float = 1.0,
+        tau: float = 1.0,
+        seed: int | None = None,
+        m_x: int = 1_001,
+        half_width: float = 12.0,
+        spatial_points: int = 2_048,
 ) -> np.ndarray:
-    """Count beta-2 selections using the requested computational method."""
     n = int(n)
     h_grid = np.asarray(h_grid, dtype=float)
     M = int(M)
@@ -47,7 +48,7 @@ def beta2_bandwidth_selection_counts(
 
     if method not in {"exact", "quadrature", "fourier"}:
         raise ValueError(
-            'method must be "exact", "quadrature", or "fourier".'
+            'method nust be "exact", "quadrature", or "fourier".'
         )
 
     if method == "quadrature":
@@ -58,14 +59,13 @@ def beta2_bandwidth_selection_counts(
             raise ValueError("m_x must be an integer of at least two.")
         if m_x < 2:
             raise ValueError("m_x must be an integer of at least two.")
-
     half_width = float(half_width)
     spatial_points = int(spatial_points)
     rng = np.random.default_rng(seed)
     counts = np.zeros(len(h_grid), dtype=int)
 
     for _ in range(M):
-        samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
+        samples = rng.normal(loc=0.0, scale=np.sqrt(sigma2), size=n)
 
         if method == "exact":
             selection = select_spectral_bandwidth(
@@ -74,17 +74,15 @@ def beta2_bandwidth_selection_counts(
                 gamma=tau,
             )
             selected_index = int(selection["selected_index"])
-
         elif method == "quadrature":
             selection = select_quadrature_similarity_bandwidths(
                 samples=samples,
                 h_grid=h_grid,
                 similarity_name="exponential_l2_similarity",
-                m_x=int(m_x),
+                m_x=m_x,
                 gamma=tau,
             )
             selected_index = int(selection["choice"]["selected_index"])
-
         else:
             similarity = beta2_similarity_matrix_fft(
                 samples=samples,
@@ -93,11 +91,9 @@ def beta2_bandwidth_selection_counts(
                 half_width=half_width,
                 spatial_points=spatial_points,
             )
-            choice = spectral_choice_from_similarity(similarity)
+            choice = spectral_choice_from_similarity(similarity_matrix=similarity)
             selected_index = int(choice["selected_index"])
-
         counts[selected_index] += 1
-
     return counts
 
 

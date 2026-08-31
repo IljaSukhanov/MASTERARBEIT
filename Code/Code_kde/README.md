@@ -6,8 +6,8 @@ in `kde_tools/`:
 
 - `density.py`: direct KDE evaluation, quadrature grids, and exact
   Gaussian/Gaussian-mixture integrals.
-- `bandwidths.py`: fixed and sample-scaled bandwidth grids plus the Silverman,
-  LSCV, and plug-in rules.
+- `bandwidths.py`: fixed bandwidth grids plus the Silverman, LSCV, and plug-in
+  rules.
 - `similarities.py`: beta-2 and KL divergence matrices; exponential
   similarities; Perron vectors; and spectral selection.
 - `experiments.py`: one-repetition simulation runners.  Notebooks control the

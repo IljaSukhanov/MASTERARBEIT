@@ -7,23 +7,21 @@ the individual modules when a notebook needs more control.
 from .bandwidths import (
     bandwidth_grid_linear_in_psi_beta,
     direct_plugin_bandwidth,
-    estimate_sample_scale,
     gaussian_mise_oracle_bandwidth,
     least_squares_cv_bandwidth_index,
     nearest_bandwidth_grid_index,
     robust_scale_for_bandwidth,
-    sample_scaled_bandwidth_grid,
     silverman_rule_of_thumb_bandwidth,
 )
 from .density import (
     exact_gaussian_kde_l2_gram,
     exact_oracle_ise_values,
-    gaussian_density_with_variance,
     gaussian_kde_values,
 )
 from .gaussian_mixtures import (
     exact_mixture_ise_values,
     exact_mixture_mise_values,
+    gaussian_density_with_variance,
     gaussian_mixture_mean_and_variance,
     mixture_density,
     sample_gaussian_mixture,
@@ -58,7 +56,6 @@ __all__ = [
     "direct_plugin_bandwidth",
     "directional_kl_divergence_matrix",
     "directional_kl_similarity",
-    "estimate_sample_scale",
     "first_order_perron_vector",
     "exact_gaussian_kde_l2_gram",
     "exact_mixture_ise_values",
@@ -78,7 +75,6 @@ __all__ = [
     "quadrature_similarity_matrices",
     "robust_scale_for_bandwidth",
     "sample_gaussian_mixture",
-    "sample_scaled_bandwidth_grid",
     "select_quadrature_similarity_bandwidths",
     "select_spectral_bandwidth",
     "silverman_rule_of_thumb_bandwidth",

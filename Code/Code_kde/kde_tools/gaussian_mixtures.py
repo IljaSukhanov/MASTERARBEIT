@@ -10,12 +10,24 @@ from .bandwidths import (
     nearest_bandwidth_grid_index,
     silverman_rule_of_thumb_bandwidth,
 )
-from .density import gaussian_density_with_variance, gaussian_kde_values
+from .density import gaussian_kde_values
 from .quadrature import (
     quadrature_grid_for_kdes,
     quadrature_similarity_matrices,
 )
 from .similarities import spectral_choice_from_similarity
+
+
+# input: x = (x_1, ..., x_n), mean, variance; output: phi_{mean,variance}(x)
+def gaussian_density_with_variance(
+        x: np.ndarray | float,
+        mean: float,
+        variance: float,
+) -> np.ndarray:
+    x = np.asarray(x, dtype=float)
+    return np.exp(-0.5 * (x - mean) ** 2 / variance) / np.sqrt(
+        2.0 * np.pi * variance
+    )
 
 
 # sample n points from a Gaussian mixture with given weights, means, and sigmas

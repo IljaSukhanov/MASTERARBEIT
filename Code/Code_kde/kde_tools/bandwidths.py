@@ -8,9 +8,6 @@ from .quadrature import trapezoidal_integral
 ### classical selectors (work through later) ###
 ################################################
 
-_STANDARD_NORMAL_UPPER_QUARTILE = 0.6744897501960817
-
-
 def bandwidth_grid_linear_in_psi_beta(
     h_min: float = 0.01,
     h_max: float = 2.0,
@@ -46,84 +43,6 @@ def bandwidth_grid_linear_in_psi_beta(
     )
     return transformed_grid ** (1.0 / exponent)
 
-
-def estimate_sample_scale(
-    samples: np.ndarray,
-    method: str = "iqr",
-) -> float:
-    """Estimate a sample's physical scale without selecting a KDE bandwidth.
-
-    ``method`` may be ``"iqr"``, ``"mad"``, or ``"std"``.  The IQR and MAD
-    estimates are normalized to equal the standard deviation for Gaussian
-    data.
-    """
-    samples = np.asarray(samples, dtype=float)
-    if samples.ndim != 1 or len(samples) < 2:
-        raise ValueError(
-            "samples must be a one-dimensional array with at least two entries."
-        )
-    if not np.all(np.isfinite(samples)):
-        raise ValueError("samples must contain only finite values.")
-
-    if method == "iqr":
-        q25, q75 = np.quantile(samples, [0.25, 0.75])
-        scale = (q75 - q25) / (2.0 * _STANDARD_NORMAL_UPPER_QUARTILE)
-    elif method == "mad":
-        median = np.median(samples)
-        scale = (
-            np.median(np.abs(samples - median))
-            / _STANDARD_NORMAL_UPPER_QUARTILE
-        )
-    elif method == "std":
-        scale = np.std(samples, ddof=1)
-    else:
-        raise ValueError('method must be "iqr", "mad", or "std".')
-
-    if not np.isfinite(scale) or scale <= 0.0:
-        raise ValueError("The estimated sample scale must be finite and positive.")
-    return float(scale)
-
-
-def sample_scaled_bandwidth_grid(
-    samples: np.ndarray,
-    grid_size: int,
-    multiplier_min: float = 0.01,
-    multiplier_max: float = 2.0,
-    rate_exponent: float = 1.0 / 5.0,
-    scale_method: str = "iqr",
-    beta: float = 2.0,
-) -> tuple[np.ndarray, np.ndarray, float]:
-    """Construct ``H_n = scale_hat * n**(-rate_exponent) * C``.
-
-    ``C`` is linear in ``psi_beta`` from ``multiplier_min`` to
-    ``multiplier_max``.
-    The return value is ``(bandwidths, dimensionless_grid, scale_hat)`` so an
-    experiment can retain both the data-unit bandwidths and their normalized
-    coordinates.
-    """
-    samples = np.asarray(samples, dtype=float)
-    if samples.ndim != 1 or len(samples) < 2:
-        raise ValueError(
-            "samples must be a one-dimensional array with at least two entries."
-        )
-    if isinstance(grid_size, (bool, np.bool_)) or int(grid_size) != grid_size:
-        raise ValueError("grid_size must be an integer.")
-    grid_size = int(grid_size)
-    if grid_size < 2:
-        raise ValueError("grid_size must be at least two.")
-    if not 0.0 < multiplier_min < multiplier_max:
-        raise ValueError("Require 0 < multiplier_min < multiplier_max.")
-    if not np.isfinite(rate_exponent) or rate_exponent <= 0.0:
-        raise ValueError("rate_exponent must be finite and positive.")
-
-    scale = estimate_sample_scale(samples, method=scale_method)
-    dimensionless_grid = bandwidth_grid_linear_in_psi_beta(
-        h_min=multiplier_min,
-        h_max=multiplier_max,
-        beta=beta,
-        grid_size=grid_size,
-    ) * len(samples) ** (-float(rate_exponent))
-    return scale * dimensionless_grid, dimensionless_grid, scale
 
 def robust_scale_for_bandwidth(samples: np.ndarray) -> float:
     """Return ``min(sample standard deviation, IQR / 1.349)``."""
