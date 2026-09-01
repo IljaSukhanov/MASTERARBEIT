@@ -152,7 +152,7 @@ Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density wit
 
 \todo[inline]{Introduce divergences directly on space of probability distribution functions (convex subspace of $L^1$)}
 
-We follow the survey~\cite{nielsen_elementary_2020}.
+For information about information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}.
 
 Let $\mathcal{P}$ be the set of all absolutely continuous probability distributions on $(\mathbb{R}^d,\mathcal{B}(\mathbb{R}^d))$. That is,
 \begin{align*}
@@ -165,18 +165,27 @@ The two most important classes of divergences are $f$-divergences and Bregman di
 
 \subsection{\texorpdfstring{$f$}{f}-divergences}
 
-\subsubsection*{Definition and Motivation}
+We take material on $f$-divergences mainly from \cite[Chapter 7]{polyanskiy_information_2025}. There, divergences are defined between two probability distributions $P$ and $Q$. For our purposes, it is enough to define them directly between probability density functions (Lebesgue integral).
 
-\todo[inline]{Connect $f$-divergence to generalized entropy}
+\begin{Def}
+    Let $f:\mathbb{R}_{>0}\to\mathbb{R}$ be a convex function with $f(1)=0$. The $f$-divergence is defined as
+    \begin{align*}
+        D_f(p\|q)\coloneqq\int q(x)f\left(\frac{p(x)}{q(x)}\right)\,dx.
+    \end{align*}
+\end{Def}
 
-Let $f:\mathbb{R}_{\ge0}\to\mathbb{R}\cup\{+\infty\}$ be a convex function. The $f$-divergence is defined as
-\begin{align*}
-    D_f(p\|q)=\int f\left(\frac{p(x)}{q(x)}\right)q(x)\,dx
-\end{align*}
+The $f$-divergence has the following invariance property: it holds $D_f(p\| q)=D_g(p\|q)$ whenever $f(x)-g(x)=c(x-1)$ for some constant $c\in\mathbb{R}$. We will write $f\sim g$ in short.
 
-The $f$-divergence is symmetric iff $f(t)=tf(1/t)+c(t-1)$ for some constant $c$. In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance). The only symmetric $\chi^{\alpha}$-divergence is the total variation distance. The JS-divergence is also symmetric.
+Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Proposition~\ref{prop:f_divergence_symmetric} yields the answer.
 
-\todo[inline]{Cite or prove the symmetry characterization}
+\begin{Prop}\label{prop:f_divergence_symmetric}
+    The $f$-divergence is symmetric iff $f\sim\Tilde{f}$, where $\Tilde{f}$ is defined by $\Tilde{f}(x)=xf(1/x)$.
+\end{Prop}
+
+\begin{proof}
+    We make use of \cite[Proposition 7.2]{polyanskiy_information_2025}
+    \todo[inline]{prove the symmetry characterization}
+\end{proof}
 
 \subsubsection*{Amari alpha divergence}
 
@@ -185,17 +194,38 @@ A prominent parametrized family of $f$-divergences is the so called $\alpha$-div
     f_{\alpha}(t)=\frac{1}{\alpha(\alpha-1)}\left(t^{\alpha}-\alpha t-(1-\alpha)\right)
 \end{align*}
 The actual divergence is then given by
-\begin{align*}
+\begin{align}\label{eq:alpha_divergence1}
     D_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right)
-\end{align*}
+\end{align}
 
 By taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2$ is the squared Hellinger distance.
 
+By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$.
+
+In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance).
+
 \todo[inline]{Mention two different parameterizations}
 
-\subsubsection*{chi squared divergence (total variance)}
+\begin{Rem}[Rényi divergence]
+    The class of Rényi divergences is defined as
+    \begin{align*}
+        R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
+    \end{align*}
+    where $\alpha\in\mathbb{R}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
+
+    The Rényi divergence is not a $f$-divergence but Rényi and Amari divergences are both strictly increasing transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
+    \begin{align*}
+        R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t}\\
+        D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1)
+    \end{align*}
+    Thus, Rényi and Amari divergences can be transformed into each other by using a strictly increasing function.
+\end{Rem}
+
+\subsubsection*{\texorpdfstring{$\chi^{\alpha}$}{chi-alpha}-divergences (total variation)}
 
 Another class of divergences are the $\chi^{\alpha}$-divergences (see~[]). They are determined by $f_{\alpha}(t)=(1/2)|t-1|^{\alpha}$, where $\alpha\ge1$. Setting $\alpha=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q)=(1/2)\int|p-q|$.
+
+The only symmetric $\chi^{\alpha}$-divergence is the total variation distance.
 
 \subsubsection*{JS divergence}
 
@@ -209,61 +239,54 @@ The divergence is then given by
 \end{align*}
 where $H(f)=-\int f\log{f}$ is the Shannon entropy.
 
+The JS-divergence is also symmetric.
+
 \todo[inline]{add interpretations for JS divergence}
-
-\subsubsection*{Renyi divergence}
-
-The class of Rényi divergences is defined as
-\begin{align*}
-    R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
-\end{align*}
-where $\alpha\in\mathbb{R}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
-
-The Rény divergence and the $\alpha$-divergence are different transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
-\begin{align*}
-    R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t}\\
-    D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1)
-\end{align*}
-
-\todo[inline]{transformations in each other}
-
-By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$.
 
 \subsection{Bregman divergences}
 
-The second major class are Bregman divergences, which are defined by
+The second major class are Bregman divergences. We give a general definition below in order to show that this concept of distance applies not just to probability densities.
+
+\begin{Def}
+    Let $(V,\langle\cdot,\cdot\rangle)$ be an inner product space and $C\subseteq V$ a convex subset. Let $F:C\to\mathbb{R}$ be strictly convex and differentiable. The Bregman divergence between $x\in C$ and $y\in C$ is defined by
+    \begin{align*}
+        D_F(x\|y)\coloneqq F(x)-F(y)-\langle x-y,\nabla F(y)\rangle.
+    \end{align*}
+\end{Def}
+
+Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\rangle_2)$ with convex subset $\mathcal{P}$ and functions $F$ of the form $F_{\phi}(p)=\int\phi(p(x))\,dx$. Here, $\phi$ is a differentiable and strictly convex function. Under this setting, the Bregman divergence becomes
 \begin{align*}
-    D_F(p\| q)=F(p)-F(q)-\langle\nabla F(q),p-q\rangle,
-\end{align*}
-where $F\in C^{1}$. A particular subclass is given by
-\begin{align*}
-    F_{\phi}(p)=\int\phi(p(x))\,dx
-\end{align*}
-for some convex function $\phi$. An example of such a function $\phi$ is the class of $\beta$-divergences determined by
-\begin{align*}
-    \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(\beta+1)},\quad\beta\in\mathbb{R}\setminus\{0,-1\}
+    D_{\phi}(p\|q)=\int\left[\phi(p(x))-\phi(q(x))-(p(x)-q(x))\phi'(q(x))\right]\,dx.
 \end{align*}
 
-\todo[inline]{Condition on $F$ or $\phi$ under which Bregman divergence is symmetric}
+Similarly to $f$-divergences we have the invariance $D_{\phi}=D_{\Tilde{\phi}}$ whenever $\phi-\Tilde{\phi}$ is affine and $D_{\phi}$ is symmetric iff $\phi$ is a quadratic function.
 
-The $\beta$-divergence is thus given by
+\todo[inline]{State invariance properties for $F$ and carry over to $\phi$}
+
+
+An example of such a function $\phi$ is the class of $\beta$-divergences determined by
 \begin{align*}
-    D_{\beta}(p,q)=\frac{1}{\beta(\beta-1)}\left(\int p^{\beta}+(\beta-1)\int q^{\beta}-\beta\int pq^{\beta-1}\right)
+    \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(1+\beta)},\quad\beta>0.
 \end{align*}
 
-For $\beta=2$ we get
+The $\beta$-divergence $D_{\beta}\coloneqq D_{\phi_{\beta}}$ is thus given by
 \begin{align*}
-    D_2(p,q)=\frac{1}{2}\int(p-q)^2=\frac{1}{2}\|p-q\|_2^2=\frac{1}{2}\langle p,p\rangle_{L^2}+\frac{1}{2}\langle q,q\rangle_{L^2}-\langle p,q\rangle_{L^2}
+    D_{\beta}(p\|q)=\frac{1}{\beta(1+\beta)}\left(\int\left(p(x)^{1+\beta}-(1+\beta)p(x)q(x)^{\beta}+\beta q(x)^{1+\beta}\right)\,dx\right)
 \end{align*}
 
-If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_h(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_2(\hat{f}_h,\hat{f}_s)$. We have
+For $\beta=1$ we get
 \begin{align*}
-    D_2(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},
+    D_1(p\|q)=\frac{1}{2}\int(p(x)-q(x))^2\,dx=\frac{1}{2}\|p-q\|_2^2=\frac{1}{2}\langle p,p\rangle_{L^2}+\frac{1}{2}\langle q,q\rangle_{L^2}-\langle p,q\rangle_{L^2}
 \end{align*}
+
+If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_h(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_1(\hat{f}_h,\hat{f}_s)$. We have
+\begin{align}\label{eq:beta2_exact_formula01}
+    D_1(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},
+\end{align}
 where
-\begin{align*}
+\begin{align}\label{eq:beta2_exact_formula02}
     G_{hs}=\langle\hat{f}_{h},\hat{f}_s\rangle_{L^2}=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{h^2+s^2}}\left(X_i-X_j\right)
-\end{align*}
+\end{align}
 The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
 
 \subsection{Relations between all presented divergences}
@@ -281,15 +304,15 @@ The total variation and Hellinger distance are related by the chain of inequalit
 
 \subsection{Approximating integrals using quadrature}
 
-\todo[inline]{cite source for the approximation guaranty}
-
-Computing divergences between densities amounts to evaluating integrals of the form $\int_{-\infty}^{+\infty}f_{\kappa}(p,q)$, where, for example, in the case of the $\alpha$-divergence, $f_{\kappa}(p,q)=p^{\kappa}q^{1-\kappa}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}. We decide to use the classical quadrature formula
+Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}. We decide to use the classical quadrature formula
 \begin{align*}
     \int_a^bf(x)\,dx\approx Q_M(f)=(b-a)\sum_{m=0}^{M}w_mf(x_m)
 \end{align*}
 where $w_m$ are the quadrature weights and $x_m$ the (equidistant) quadrature nodes. As quadrature weights we choose $w_m=1/(2M)$ for $m=0,M$ and $w_m=1/M$ for $m=1,\dots,M-1$. This choice corresponds to the composite trapezoidal rule.
 
-Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We first aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f_{\kappa}(p(x),q(x))\,dx|$, where $f_{\kappa}$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are kernel density estimates with a Gaussian kernel. It holds
+Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We first aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f(p(x),q(x))\,dx|$, where $f$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are kernel density estimates with a Gaussian kernel. 
+
+It holds
 \begin{align*}
     \tau_h:=\int_{A^c}\hat{f}_h=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
 \end{align*}
@@ -297,48 +320,27 @@ Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min
 \begin{align*}
     \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)=:\delta_L
 \end{align*}
-and thus $\tau_h\le 2\Phi(-L)$ for any $h\le h_{\max}$.
+and thus $\tau_h\le 2\Phi(-L)$ for any $h\le h_{\max}$. Using the upper bound for the above truncation error, we choose $L$ such that $\delta_L\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
 
-Using the upper bound for the above truncation error, we choose $L$ such that $E_{\text{trunc}}\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
-
-\textbf{Hellinger}
-
-$f_{\kappa}(y,z)=y^{\kappa}z^{1-\kappa}$
-
+Replacing $\int p^{\alpha}q^{1-\alpha}$ in Equation~\eqref{eq:alpha_divergence1} with the truncated integral $\int_a^bp^{\alpha}q^{1-\alpha}$ leads to the truncation error
 \begin{align*}
-    \int_{A^c}p^{\kappa}q^{1-\kappa}\stackrel{\text{Hölder}}{\le}\left(\int_{A^c}p\right)^{\kappa}\left(\int_{A^c}q\right)^{1-\kappa}\le\delta_L
+    E_{\text{trunc}}=\frac{1}{\alpha(1-\alpha)}\int_{A^c}p^{\alpha}q^{1-\alpha}\stackrel{\text{Hölder}}{\le}\frac{1}{\alpha(1-\alpha)}\left(\int_{A^c}p\right)^{\alpha}\left(\int_{A^c}q\right)^{1-\alpha}\le\frac{\delta_L}{\alpha(1-\alpha)}
 \end{align*}
 
-\textbf{Total Variation}
-
-$f_{\kappa}(y,z)=(1/2)|y-z|$
-
+Truncating the total variation yields
 \begin{align*}
-    \int_{A^c}\frac{1}{2}|p-q|\le\frac{1}{2}\int p+\frac{1}{2}\int q\le\delta_L
+    \frac{1}{2}\int_{A^c}|p-q|\le\frac{1}{2}\int_{A^c}p+\frac{1}{2}\int_{A^c}q\le\delta_L
 \end{align*}
 
 \textbf{KL divergence and Jensen-Shannon}
 
-For KL and JS divergence it is natural to use Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$.
+For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$.
 
-\textbf{$L^2$ distance}
+\todo[inline]{TBD}
 
-$f_{\kappa}(y,z)=(y-z)^2/2$
+The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Even though an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
-\begin{align*}
-    \int_{A^c}\frac{1}{2}(p-q)^2\le\frac{\delta_L}{\sqrt{2\pi}h_{\min}}
-\end{align*}
-
-As an approximation guaranty, we have
-\begin{align}\label{eq:approx_error}
-    \left|\int_a^bf(x)\,dx-Q_n(f)\right|\le\frac{(b-a)^3}{12}\|f^{''}\|_{\infty}n^{-2}
-\end{align}
-
-\textbf{Fast Fourier Transform}
-
-The computation of the divergence matrix $D$ using the exact formula in Equation~\eqref{eq:exact_l2_divergence} is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size. In order to speed up the computation of $D_{ij}=D(\hat{f}_{h_i},\hat{f}_{h_j})$, we make use of the Fast Fourier Transform (FFT). In the following we will briefly describe the approach by following the book~\cite{plonka_numerical_2018}.
-
-For any function $f\in L_1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform we obtain the Fourier transform of a kernel density function with Gaussian kernel:
+In the following, we will briefly describe the approach by following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform we obtain the Fourier transform of a kernel density function with Gaussian kernel:
 \begin{align*}
     \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=P_n(\omega)}\exp{(-h^2\omega^2)/2}
 \end{align*}
@@ -354,6 +356,8 @@ Truncate and apply composite trapezoidal rule
     \frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}
 \end{align*}
 
+\todo[inline]{Check the error bounds!}
+
 The error is bounded above by
 \begin{align*}
     \underbrace{\frac{1}{2\sqrt{\pi}h_{\min}}\operatorname{erfc}(h_{\min}\Omega)}_{\text{truncation error}}+\underbrace{\frac{M\Omega^3}{12\pi K^2}}_{\text{quadrature error}},
@@ -363,6 +367,8 @@ where $M=(X_{\max}-X_{\min})^2+2(X_{\max}-X_{\min})h_{\max}\sqrt{2/e}+2h_{\max}^
     \Omega&\ge\frac{1}{h_{\min}}\operatorname{erfc}^{-1}(2\sqrt{\pi}h_{\min}\epsilon_{\text{trunc}})\\
     K&\ge\sqrt{\frac{M\Omega^3}{12\pi\epsilon_{\text{quadr}}}}
 \end{align*}
+
+\todo[inline]{Compare exact, quadrature and Fourier in terms of speed and accuracy}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -410,6 +416,8 @@ A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all 
 \end{align*}
 for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=0$. A function $\phi:(0.\infty)\to\mathbb{R}$ is called completely monotone if $\phi\in C^{\infty}(0,\infty)$ and $(-1)^{n}\phi^{(n)}(t)\ge 0$ for all $n\in\mathbb{N}_0$ and $t>0$.
 
+Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite.
+
 \todo[inline]{Which divergencies are conditionally negative definite and which not; Jensen Shannon? (Fuglede and Topsøe)}
 
 The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
@@ -430,13 +438,6 @@ The transformation $S_{ij}=\exp{\{-D_{ij}/\tau\}}$ can be motivated as follows. 
     \sum_{j=1}^{N}p_jD_{ij}-\tau H(p)
 \end{align*}
 is minimized by $p_i=(p_{i1},\dots,p_{iN})$, where $p_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. In that sense, $\tau$ can be interpreted as a penalty weight. This is another instance of the Donsker–Varadhan variational principle. See~\cite{anantharam_variational_2017} for reference.
-
-Applying the transformation $\exp{(-\tau D_{\alpha})}$ to the Renyi divergence $D_{\alpha}$ yields
-\begin{align*}
-    S_{ij}&=\exp{(-D_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})/\tau)}\\
-    &=\exp{\left\{\frac{1}{(1-\alpha)\tau}\log{C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})}\right\}}\\
-    &=C_{\alpha}(\hat{f}_{h_i},\hat{f}_{h_j})^{(1-\alpha)^{-1}\tau^{-1}}
-\end{align*}
 
 \subsection{Bandwidth grid}
 
@@ -466,7 +467,7 @@ and a geometric grid is given by
 
 Define
 \begin{align*}
-    s(K)=\left(\int x^2K(x)\,dx\right)^{1/2}
+    s(K)=\sqrt{\mu_2(K)}=\left(\int x^2K(x)\,dx\right)^{1/2}
 \end{align*}
 
 We have $s(K_h)=hs(K)$. The bandwidth $h$ thus is a multiplicative scale parameter. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$.
@@ -497,8 +498,6 @@ In a later stage, we will study the influence of the parameter $\alpha$. We will
 Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f\sim N(0,\sigma^2)$, $\sigma^2>0$, starting with $\sigma^2=1$.
 
 Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\pi_i$, where $\pi$ is the stationary distribution. Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the stability with respect to the grid fineness $N$. The samples $X_1,\dots,X_n$ were kept fixed. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$. It is interesting to ask what happens to this distribution for increased sample size $n$. The answer is depicted in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. The spectrally chosen bandwidths concentrate towards a deterministic interior scale $h^*$.
-
-\todo[inline]{Can the two peaks be described?}
 
 \begin{figure}
     \centering
@@ -550,11 +549,14 @@ Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\p
         \caption{}
     \end{subfigure}
 
-    \caption{}
+    \caption{\todo[inline]{Can the two peaks be described?}}
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
 \end{figure}
 
 In Section~\ref{sec:similarity_transformations} we established the interpretation of $\lambda$ as a penalty weight. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
+
+
+Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-15}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
 
 \begin{figure}
     \centering
@@ -564,3 +566,5 @@ In Section~\ref{sec:similarity_transformations} we established the interpretatio
 \end{figure}
 
 \section{Explanation of the Results}\label{sec:res_2}
+
+\todo[inline]{study joint limit $\lambda\to\infty$, $q_N\to0$}
