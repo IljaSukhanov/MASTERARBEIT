@@ -148,7 +148,7 @@ Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density wit
 
 \todo[inline]{Is oracle bandwidth unique for $N(0,1)$?}
 
-\section{Divergences between distributions}
+\section{Divergences between distributions}\label{sec:divergences}
 
 \todo[inline]{Introduce divergences directly on space of probability distribution functions (convex subspace of $L^1$)}
 
@@ -384,6 +384,8 @@ In this subsection, we want to briefly give an argument why it is not advisable 
     whenever $i<j<k$.
 \end{Def}
 
+Robinson matrices are generalizations of of Min matrices. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices.
+
 \todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix?}
 
 The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
@@ -393,8 +395,8 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
     \begin{align*}
         \arg\max_{1\le j\le N}v_j\subseteq\{1,N\}.
     \end{align*}
-    \todo[inline]{Find correct assumptions to prove the Lemma}
     \todo[inline]{This Lemma is not correct yet but numerical experiments suggest that the Perron vector of divergence matrices behaves not how we want}
+    \todo[inline]{Find correct assumptions to prove the Lemma}
 \end{Lem}
 
 \begin{proof}
@@ -418,7 +420,7 @@ for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=
 
 Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite.
 
-\todo[inline]{Which divergencies are conditionally negative definite and which not; Jensen Shannon? (Fuglede and Topsøe)}
+\todo[inline]{Which divergencies are conditionally negative definite and which not}
 
 The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
 
@@ -427,23 +429,44 @@ The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\
     \todo[inline]{Find a source to cite (Harmonic Analysis on Semigroups, Berg, Christensen, Ressel)}
 \end{Thm}
 
-Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some divergence and $\phi$ a completely monotone function. 
+Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
 
-There are some special kinds of divergences, where a transformation by a not necessarily completely monotone function is enough to obtain a positive definite similarity matrix.
+Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$. It can be interpreted as an uncertainty or concentration measure. $H(p)$ is large if $p$ is close to the discrete uniform distribution and maximal for $p=(N^{-1},\dots,N^{-1})$ (maximal uncertainty and minimal concentration). It is small if $p$ is concentrated on some entry and maximal for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$ (minimal uncertainty and maximal concentration).
 
-\todo[inline]{What is it about these special divergences that do not require a completely monotone transformation?}
-
-The transformation $S_{ij}=\exp{\{-D_{ij}/\tau\}}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of the probability vector $p\in\mathbb{R}^{N}$. The quantity
+The quantity
 \begin{align*}
-    \sum_{j=1}^{N}p_jD_{ij}-\tau H(p)
+    \sum_{j=1}^{N}p_jD_{ij}-\tau H(p)=\sum_{j=1}^{N}p_jD_{ij}+\tau\sum_{j=1}^{N}p_j\log{p_j}
 \end{align*}
-is minimized by $p_i=(p_{i1},\dots,p_{iN})$, where $p_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. In that sense, $\tau$ can be interpreted as a penalty weight. This is another instance of the Donsker–Varadhan variational principle. See~\cite{anantharam_variational_2017} for reference.
+is minimized by $\hat{p}_i=(\hat{p}_{i1},\dots,\hat{p}_{iN})$, where $\hat{p}_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. See~\cite{anantharam_variational_2017} for reference.
+
+The minimization of the first term $D_ip=\sum_jp_jD_{ij}$ ($D_i\in\mathbb{R}^{1\times N}$ is the $i$-th row of $D$) leads to probability vectors that concentrate on the $i$-th component since $\min_jD_{ij}=D_{ii}=0$ (the largest probability weights is put on a bandwidth that is closest to bandwidth $h_i$ with respect to the divergence $D$). The penalty term $\sum_jp_j\log{p_j}$ counteracts this concentration by penalizing it, where $\tau$ controls the amount of penalization. In that sense, $\tau$ can be interpreted as a penalty weight. 
+
+This is another instance of the Donsker–Varadhan variational principle.
+
+Taking the limit $\tau\to+\infty$ yields $S=11^{T}$, which corresponds to maximal penalization on concentration. Taking the limit $\tau\to0$ gives $S=I_N$, which corresponds to no penalization on concentration.
+
+For bounded divergences, we can use a more straightforward transformation approach. For example, the total variation divergence can be written as
+\begin{align*}
+    d_{\text{TV}}(p,q)&=\frac{1}{2}\int|p-q|=1-1+\frac{1}{2}\int|p-q|\\&
+    =1-\frac{1}{2}\int p-\frac{1}{2}\int q+\frac{1}{2}\int|p-q|\\&
+    =1-\int\frac{p+q-|p-q|}{2}\\&
+    =1-\int\min\{p,q\}
+\end{align*}
+Thus, $1-d_{\text{TV}}(p,q)=\int\min\{p,q\}$ is a similarity measure between $p$ and $q$.
+
+Similarly for the squared Hellinger distance we can write
+\begin{align*}
+    H^2(p,q)=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2=1-\int\sqrt{pq}
+\end{align*}
+So again $1-H^2(p,q)=\int\sqrt{pq}$ is a similarity measure between $p$ and $q$.
+
+For total variation we use the $\min$ kernel and for squared Hellinger Bhattacharyya kernel (see~\cite{jebara_probability_nodate}).
+
+\todo[inline]{Is there a general construction principle behind this?}
 
 \subsection{Bandwidth grid}
 
 \todo[inline]{grid must scale with $n$?}
-
-\todo[inline]{illustrative image comparing linear and geometric grid with ticks on an interval}
 
 The choice of the correct bandwidth grid is essential. Let $\mathcal{H}_N=\{h_1,\dots,h_N\}$ with $0<h_{\min}=h_1<\dots<h_N=h_{\max}$. The next definition gives a general construction principle for such a bandwidth grid.
 
@@ -452,6 +475,7 @@ The choice of the correct bandwidth grid is essential. Let $\mathcal{H}_N=\{h_1,
     \begin{align*}
         \psi_{\beta}(h_j)=\psi_{\beta}(h_1)+\frac{j-1}{N-1}(\psi_{\beta}(h_N)-\psi_{\beta}(h_1)),\quad j=1,\dots,N.
     \end{align*}
+    \todo[inline]{add source that motivates the $\psi_{\beta}$ definition}
 \end{Def}
 
 Definition~\ref{def:linear_in_psi_beta} smoothly connects a linear and a geometric grid. A linear grid is a grid linear in $\psi_0$. A geometric grid is a grid linear in $\psi_2$. In particular, a linear grid is given by
@@ -462,6 +486,8 @@ and a geometric grid is given by
 \begin{align*}
     h_j=h_{\min}\left(\frac{h_{\max}}{h_{\min}}\right)^{\frac{j-1}{N-1}}=h_{\min}q_N^{j-1},\quad q_N=\left(\frac{h_{\max}}{h_{\min}}\right)^{1/(N-1)}
 \end{align*}
+
+Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
 \textbf{Motivation for why a geometric grid is the natural choice}
 
@@ -486,14 +512,14 @@ The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$
 
 In our numerical experiments, we restrict ourselves to these five divergences:
 \begin{itemize}
-    \item $L_2$ divergence ($\beta=2$)
+    \item $L_2$ divergence ($\beta=1$)
     \item Total variation: $\operatorname{TV}(p,q)=1/2\int|p-q|$
     \item Rényi ($\alpha=1/2$) or squared Hellinger: $H^2(p,q)=1-\int\sqrt{pq}$
     \item Kullback-Leibler (as limit of Rényi for $\alpha\to1$): $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$
     \item Jensen-Shannon $D_{\operatorname{JS}}(p,q)$
 \end{itemize}
 
-In a later stage, we will study the influence of the parameter $\alpha$. We will start our explorations using the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We use the similarity transformation $S=\exp{(-\lambda D)}$ and vary the penalty parameter $\lambda$.
+In a later stage, we will study the influence of the parameter $\alpha$. We will start our explorations using the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We use the similarity transformation $S=\exp{(-D/\tau)}$ and vary the penalty parameter $\tau$.
 
 Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f\sim N(0,\sigma^2)$, $\sigma^2>0$, starting with $\sigma^2=1$.
 
