@@ -525,21 +525,21 @@ Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\p
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.png}
-    \caption{}
+    \caption{$X_i\sim N(0,1)$, $n=200$, $N=191$, $h_{\min}=0.01$, $h_{\max}=2$, $\tau=1$, geometric bandwidth grid; the red line indicates $h_{\text{crit}}=0.08803$ and the blue line $h_{\text{oracle}}=0.38304$}
     \label{fig:stationary_distribution_plot_001}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.png}
-    \caption{}
+    \caption{For a fixed sample $X=(X_1,\dots,X_{200})$ the spectral bandwidth selection pipeline was repeated for $N=11,16,21,\dots,1001$; $\tau=1$; the fitted lines are $h_{\text{upper}}(N)=0.0876262\exp{(1.968246/(N-1))}$ and $h_{\text{lower}}(N)=0.0876262\exp{(3.074005/(N-1))}$}
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.png}
-    \caption{}
+    \caption{Distribution of spectrally chosen bandwidths for $M=1000$ repeatedly drawn $N(0,1)$ samples ($n=200$); $N=191$, $\tau=1$}
     \label{fig:distribution_of_chosen_bandwidths}
 \end{figure}
 
@@ -549,13 +549,13 @@ Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\p
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.png}
-        \caption{}
+        \caption{$n=300$}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.png}
-        \caption{}
+        \caption{$n=400$}
     \end{subfigure}
 
     \vspace{0.5em}
@@ -563,20 +563,21 @@ Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\p
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.png}
-        \caption{}
+        \caption{$n=500$}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.png}
-        \caption{}
+        \caption{$n=1000$}
     \end{subfigure}
 
-    \caption{\todo[inline]{Can the two peaks be described?}}
+    \caption{Distribution of chosen bandwidths changes for increasing sample size $n$. A clear transition between two regimes is visible. For $n=1000$ the chosen bandwidths show a strong concentration around $0.441811$
+    \todo[inline]{Can the two peaks be described?}}
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
 \end{figure}
 
-In Section~\ref{sec:similarity_transformations} we established the interpretation of $\lambda$ as a penalty weight. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
 
 
 Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-15}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
@@ -584,7 +585,7 @@ Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda.png}
-    \caption{Caption}
+    \caption{}
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
 
