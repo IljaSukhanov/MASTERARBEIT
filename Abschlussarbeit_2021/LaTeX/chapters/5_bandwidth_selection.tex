@@ -1,6 +1,6 @@
 \chapter{Spectral Scale Selection for Kernel Density Estimation}
 
-In this chapter, we apply the scale selection methodology from chapter~\ref{chap:intro_meth} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
+In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
 
 \textbf{working hypothesis}
 
@@ -422,6 +422,8 @@ Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shan
 
 \todo[inline]{Which divergencies are conditionally negative definite and which not}
 
+\todo[inline]{What about $L^2$ divergence?}
+
 The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
 
 \begin{Thm}[Schoenberg]\label{thm:schoenberg}
@@ -491,14 +493,9 @@ Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
 \textbf{Motivation for why a geometric grid is the natural choice}
 
-Define
-\begin{align*}
-    s(K)=\sqrt{\mu_2(K)}=\left(\int x^2K(x)\,dx\right)^{1/2}
-\end{align*}
+The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the area under the curve the same. We can measure the width of a kernel $K$, for example, by $s(K)\coloneqq\sqrt{\mu_2(K)}=(\int x^2K(x)\,dx)^{1/2}$. The width of the stretched kernel is $s(K_h)=hs(K)$. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$. Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the same factor $q_N$. Thus, each step stretches the kernel by the same factor.
 
-We have $s(K_h)=hs(K)$. The bandwidth $h$ thus is a multiplicative scale parameter. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$.
-
-Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the factor $q_N$. At every step, the smoothing radius $s$ is multiplied by the same factor. On a high level, each step $j\to j+1$ applies the same increase in smoothing.
+\todo[inline]{Continue here, cite some paper by Nielsen}
 
 For any $f$-divergence $D_f$ we have
 \begin{align*}
@@ -512,7 +509,7 @@ The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$
 
 In our numerical experiments, we restrict ourselves to these five divergences:
 \begin{itemize}
-    \item $L_2$ divergence ($\beta=1$)
+    \item $L_2$ divergence ($\beta$-divergence, $\beta=1$)
     \item Total variation: $\operatorname{TV}(p,q)=1/2\int|p-q|$
     \item Rényi ($\alpha=1/2$) or squared Hellinger: $H^2(p,q)=1-\int\sqrt{pq}$
     \item Kullback-Leibler (as limit of Rényi for $\alpha\to1$): $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$
