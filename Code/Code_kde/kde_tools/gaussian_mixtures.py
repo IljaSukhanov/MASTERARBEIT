@@ -217,7 +217,7 @@ def run_one_mixture_bandwidth_experiment(
     m_x: int,
     gamma: float = 1.0,
 ) -> dict[str, float | int]:
-    """Run oracle, spectral, plug-in, LSCV, and Silverman selectors once."""
+    """Run oracle, non-L2 spectral, plug-in, LSCV, and Silverman selectors."""
     rng = np.random.default_rng(seed)
     samples = sample_gaussian_mixture(rng, n, weights, means, sigmas)
     ise = exact_mixture_ise_values(samples, h_grid, weights, means, sigmas)
@@ -234,7 +234,6 @@ def run_one_mixture_bandwidth_experiment(
         for name in (
             "tv_overlap",
             "hellinger_affinity",
-            "exponential_l2_similarity",
             "js_similarity",
         )
     }
@@ -273,7 +272,6 @@ def run_one_mixture_bandwidth_experiment(
     key_prefix = {
         "tv_overlap": "tv",
         "hellinger_affinity": "hellinger",
-        "exponential_l2_similarity": "exponential_l2_similarity",
         "js_similarity": "js",
     }
     for name, index in indices.items():
