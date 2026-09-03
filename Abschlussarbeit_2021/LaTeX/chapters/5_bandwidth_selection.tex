@@ -507,14 +507,12 @@ The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$
 
 \section{Numerical Experiments}
 
-\todo[inline]{study joint limit $\lambda\to\infty$, $q_N\to0$}
-
 In our numerical experiments, we restrict ourselves to these five divergences:
 \begin{itemize}
     \item $L_2$ divergence ($\beta$-divergence, $\beta=1$)
-    \item Total variation: $\operatorname{TV}(p,q)=1/2\int|p-q|$
-    \item Rényi ($\alpha=1/2$) or squared Hellinger: $H^2(p,q)=1-\int\sqrt{pq}$
-    \item Kullback-Leibler (as limit of Rényi for $\alpha\to1$): $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$
+    \item Total variation: $1-\operatorname{TV}(p,q)=\int\min\{p,q\}$
+    \item squared Hellinger: $1-H^2(p,q)=\int\sqrt{pq}$
+    \item Kullback-Leibler: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$)
     \item Jensen-Shannon $D_{\operatorname{JS}}(p,q)$
 \end{itemize}
 
@@ -579,18 +577,18 @@ Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\p
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
 \end{figure}
 
-In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. 
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below.
 
-Henceforth we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to less and less concentration penalization.
+\todo[inline]{study joint limit $\lambda\to\infty$, $q_N\to0$}
 
-Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below.
+After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$.
 
 % Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-1/5}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.png}
-    \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($M=1$, $n=200$) as $\lambda$ increases; $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$.}
+    \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($n=200$) as $\lambda$ increases; $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$.}
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
 
