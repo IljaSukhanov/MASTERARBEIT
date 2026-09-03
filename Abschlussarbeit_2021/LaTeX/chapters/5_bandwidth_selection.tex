@@ -510,10 +510,10 @@ The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$
 In our numerical experiments, we restrict ourselves to these five divergences:
 \begin{itemize}
     \item $L_2$ divergence ($\beta$-divergence, $\beta=1$)
-    \item Total variation: $1-\operatorname{TV}(p,q)=\int\min\{p,q\}$
-    \item squared Hellinger: $1-H^2(p,q)=\int\sqrt{pq}$
-    \item Kullback-Leibler: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$)
-    \item Jensen-Shannon $D_{\operatorname{JS}}(p,q)$
+    \item Total variation: $1-\operatorname{TV}(p,q)=\int\min\{p,q\}$ \textcolor{red}{TBD}
+    \item squared Hellinger: $1-H^2(p,q)=\int\sqrt{pq}$ \textcolor{red}{TBD}
+    \item Kullback-Leibler: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$) \textcolor{red}{TBD}
+    \item Jensen-Shannon $D_{\operatorname{JS}}(p,q)$ \textcolor{red}{TBD}
 \end{itemize}
 
 In a later stage, we will study the influence of the parameter $\alpha$. We will start our explorations using the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We use the similarity transformation $S=\exp{(-D/\tau)}$ and vary the penalty parameter $\tau$.
