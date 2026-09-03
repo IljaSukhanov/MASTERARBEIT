@@ -579,8 +579,6 @@ Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\p
 
 In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below.
 
-\todo[inline]{study joint limit $\lambda\to\infty$, $q_N\to0$}
-
 After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$.
 
 % Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-1/5}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
@@ -590,6 +588,13 @@ After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
     \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($n=200$) as $\lambda$ increases; $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$.}
     \label{fig:chosen_bandwidths_vs_lambda}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf}
+    \caption{For $N\to\infty$ the chosen bandwidth approaches a limit $h_{\infty}=0.2418$, for all $\alpha>0$. The convergence is slow for $\alpha=1/2$, a little faster for $\alpha=1$ and even faster for $\alpha>1$}
+    \label{fig:N_lambda_joint_limit_for_different_alpha}
 \end{figure}
 
 \section{Explanation of the Results}\label{sec:res_2}
