@@ -583,18 +583,14 @@ In Section~\ref{sec:similarity_transformations} we established the interpretatio
 
 Henceforth we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to less and less concentration penalization.
 
-Figure~[] shows the chosen bandwidth for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~[] below.
-
-Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
-
-
+Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below.
 
 % Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-1/5}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda.png}
-    \caption{}
+    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.png}
+    \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($M=1$, $n=200$) as $\lambda$ increases; $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$.}
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
 
