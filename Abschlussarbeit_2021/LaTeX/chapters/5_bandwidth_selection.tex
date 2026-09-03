@@ -583,10 +583,13 @@ In Section~\ref{sec:similarity_transformations} we established the interpretatio
 
 Henceforth we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to less and less concentration penalization.
 
+Figure~[] shows the chosen bandwidth for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~[] below.
+
 Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
 
 
-Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-1/5}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
+
+% Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-1/5}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
 
 \begin{figure}
     \centering
@@ -597,7 +600,50 @@ Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N
 
 \section{Explanation of the Results}\label{sec:res_2}
 
+To explain the results, we need concepts from functional analysis. In particular, the generalized Taylor expansion in Banach spaces. A good book is Zeidler~\cite{zeidler_applied_1995}.
+
 Introduce
 \begin{align*}
-    \hat{Q}_{n,\beta}\coloneqq h^{\beta}\int\left(\partial_h\hat{f}_h(x)\right)^2\,dx
+    \hat{Q}_{n,\beta}(h)\coloneqq h^{\beta}\int\left(\partial_h\hat{f}_h(x)\right)^2\,dx=h^{\beta}\|\hat{f}_h'\|_{L^2}^2
 \end{align*}
+
+Consider the operator $\Psi:\mathbb{R}_{>0}\to L^2(\mathbb{R})$, $h\mapsto\hat{f}_h$. Write the Taylor expansion of $\Psi$ around some fixed but arbitrary $h>0$:
+\begin{align*}
+    \hat{f}_h=\hat{f}_{h+\delta}+\hat{f}_h'\delta+R_2,
+\end{align*}
+where $\hat{f}_h'$ as an element of $L^2(\mathbb{R})$ such that
+\begin{align*}
+    \|\frac{\hat{f}_{h+\delta}-\hat{f}_{h}}{\delta}-\hat{f}'_h\|_{L^2}\to0,\quad \delta\to0
+\end{align*}
+and
+\begin{align*}
+    R_2=\int_0^1(1-\tau)\hat{f}_{h+\tau\delta}''\delta^2\,d\tau
+\end{align*}
+is the remainder term.
+
+In fact, the Fréchet derivative $\hat{f}'_h$ is given by
+\begin{align*}
+    \hat{f}'_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K'\left(\frac{x-X_j}{h}\right)\right),\quad x\in\mathbb{R}
+\end{align*}
+
+We obtain
+\begin{align*}
+    \|\hat{f}_{h+\delta}-\hat{f}_h\|_{L^2}^2=\delta^2\|\hat{f}_h'\|_{L^2}^2+\mathbf{o}(\delta^2)
+\end{align*}
+
+Now let $h_1<\dots<h_N$ be a grid linear in $\psi_{\beta}$ and let $h_{j+1}-h_j=\delta$. We have
+\begin{align*}
+    D(\hat{f}_{h_j},\hat{f}_{h_{j+1}})=\|\hat{f}_{h_j+\delta}-\hat{f}_{h_j}\|_{L^2}^2=\delta^2h^{\beta}\|\hat{f}'_h\|_{L^2}^2+\mathbf{o}(\delta^2)=\delta^2\hat{Q}_{n,\beta}(h_j)+\mathbf{o}(\delta^2)
+\end{align*}
+
+Thus, for nearby bandwidths $h_i$ and $h_i+\delta$ on a fine grid
+\begin{align*}
+    S_{ij}\approx\exp{(-\lambda\delta^2\hat{Q}_{n,\beta}(h_i))}
+\end{align*}
+
+Integrating
+\begin{align*}
+    \int\exp{(-\lambda\delta^2)\hat{Q}_{n,\beta}(h_i)}\,d\delta=\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}}
+\end{align*}
+
+Thus, a bandwidth $h_i$ has a high similarity mass if $\hat{Q}_{n,\beta}(h_i)$ is small. Therefore, the peak of Perron vector corresponds to the minimizer of $\hat{Q}_{n,\beta}$. That is the Perron vectors weights such bandwidths highest at which the curve $h\mapsto\hat{f}_h$ changes slowest. 
