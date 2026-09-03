@@ -33,7 +33,7 @@ The question of how to choose the bandwidth $h$ is widely known in the literatur
 
 
 
-\subsection*{Cross-variance methods}
+\subsection*{Cross-validation methods}
 
 The ISE can be written as
 \begin{align*}
@@ -507,6 +507,8 @@ The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$
 
 \section{Numerical Experiments}
 
+\todo[inline]{study joint limit $\lambda\to\infty$, $q_N\to0$}
+
 In our numerical experiments, we restrict ourselves to these five divergences:
 \begin{itemize}
     \item $L_2$ divergence ($\beta$-divergence, $\beta=1$)
@@ -520,7 +522,7 @@ In a later stage, we will study the influence of the parameter $\alpha$. We will
 
 Let $X_1,\dots,X_n\sim f$. In our experiments, we focus primarily on the case $f\sim N(0,\sigma^2)$, $\sigma^2>0$, starting with $\sigma^2=1$.
 
-Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\pi_i$, where $\pi$ is the stationary distribution. Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the stability with respect to the grid fineness $N$. The samples $X_1,\dots,X_n$ were kept fixed. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$. It is interesting to ask what happens to this distribution for increased sample size $n$. The answer is depicted in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. The spectrally chosen bandwidths concentrate towards a deterministic interior scale $h^*$.
+Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\pi_i$, where $\pi$ is the stationary distribution. Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the stability with respect to the grid fineness $N$. The samples $X_1,\dots,X_n$ were kept fixed. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$. It is interesting to ask what happens to this distribution for increased sample size $n$. The answer is depicted in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. The spectrally chosen bandwidths concentrate towards a deterministic interior scale $h^*\approx441811$, above the oracle bandwidth $h_{\text{oracle}}=0.38304$.
 
 \begin{figure}
     \centering
@@ -577,10 +579,14 @@ Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto\p
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
 \end{figure}
 
-In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. 
+
+Henceforth we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to less and less concentration penalization.
+
+Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the median of the chosen bandwidths ($M=200$) for increasing $\lambda$. The blue curve does not converge towards the oracle bandwidth, but rather towards some other bandwidth $h^{\ast}$. We will explain this behavior in Section~\ref{sec:res_2} below.
 
 
-Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-15}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
+Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-1/5}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
 
 \begin{figure}
     \centering
@@ -591,4 +597,7 @@ Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N
 
 \section{Explanation of the Results}\label{sec:res_2}
 
-\todo[inline]{study joint limit $\lambda\to\infty$, $q_N\to0$}
+Introduce
+\begin{align*}
+    \hat{Q}_{n,\beta}\coloneqq h^{\beta}\int\left(\partial_h\hat{f}_h(x)\right)^2\,dx
+\end{align*}
