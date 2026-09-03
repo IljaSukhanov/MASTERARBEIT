@@ -38,6 +38,10 @@ from .quadrature import (
     select_quadrature_similarity_bandwidths,
     trapezoidal_integral,
 )
+from .pdf_export import (
+    disable_automatic_pdf_saving,
+    enable_automatic_pdf_saving,
+)
 from .similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,
@@ -54,6 +58,7 @@ __all__ = [
     "beta2_similarity_matrix",
     "compute_quadrature_similarity_matrices",
     "direct_plugin_bandwidth",
+    "disable_automatic_pdf_saving",
     "directional_kl_divergence_matrix",
     "directional_kl_similarity",
     "first_order_perron_vector",
@@ -61,6 +66,7 @@ __all__ = [
     "exact_mixture_ise_values",
     "exact_mixture_mise_values",
     "exact_oracle_ise_values",
+    "enable_automatic_pdf_saving",
     "gaussian_density_with_variance",
     "gaussian_kde_values",
     "gaussian_mise_oracle_bandwidth",
