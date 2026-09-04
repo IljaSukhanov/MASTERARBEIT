@@ -53,19 +53,37 @@ Here, $\hat{f}_{h,-i}$ is the kernel density function where the observation $X_i
 
 The bias-variance decomposition of the MISE is
 \begin{align*}
-    \operatorname{MISE}(h)=\int\operatorname{Var}[\hat{f}_h(x)]\,dx+\int\operatorname{Bias}(\hat{f}_h(x))\,dx
+    \operatorname{MISE}(h)=\int\operatorname{Var}[\hat{f}_h(x)]\,dx+\int\operatorname{Bias}(\hat{f}_h(x))^2\,dx
 \end{align*}
 with
 \begin{align*}
-    \operatorname{IV}(h)&=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{\|K\|_2^2}{nh^{d}}-\frac{\|K_h\ast f\|_2^2}{n},\quad\text{and}\\
+    \operatorname{IV}(h)&=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{\|K\|_2^2}{nh}-\frac{\|K_h\ast f\|_2^2}{n},\quad\text{and}\\
     \operatorname{ISB}(h)&=\int\operatorname{Bias}(\hat{f}_h(x))\,dx=\|K_h\ast f-f\|_2^2
 \end{align*}
 
-This decomposition gives conditions on $h=h_n$ so that the kernel density estimate $\hat{f}_{h_n}$ is consistent. Namely, it must hold $h_n\to0$ and $nh_n^d\to+\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
+This decomposition gives conditions on $h=h_n$ so that the kernel density estimate $\hat{f}_{h_n}$ is consistent. Namely, it must hold $h_n\to0$ and $nh_n\to+\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
+
+Note that $\|K_h\|_1=\int K_h(x)\,dx=\int K(x)\,dx=1$ for every $h>0$. By Young's convolution inequality $\|K_{h_n}\ast f\|\le\|K_{h_n}\|_1\|f\|_2=\|f\|_2$. Therefore
+\begin{align*}
+    \frac{\frac{\|K_{h_n}\ast f\|_2^2}{n}}{\frac{\|K\|_2^2}{nh_n}}=\frac{h_n\|K_{h_n}\ast f\|_2^2}{\|K\|_2^2}\le h_n\frac{\|f\|_2^2}{\|K\|_2^2}\to 0
+\end{align*}
+and thus $-n^{-1}\|K_{h_n}\ast f\|_2^2=\mathbf{o}((nh_n)^{-1}\|K\|_2^2)$. We therefore may omit the term $-n^{-1}\|K_{h_n}\ast f\|_2^2$ as it is asymptotically negligible.
+
+For the $\operatorname{ISB}(h)$ term we get
+\begin{align*}
+    \operatorname{ISB}(h)=\frac{h_n^4}{4}\mu_2(K)^2R(f^{''})+\mathbf{o}(h_n^4)
+\end{align*}
+
+
 
 The MISE can be written as
 \begin{align*}
-    \operatorname{MISE}(h)=\underbrace{\frac{\|K\|_2^2}{nh}+\frac{h^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h)}+o\left(\frac{1}{nh}+h^{4}\right)
+    \operatorname{MISE}(h_n)=\underbrace{\frac{\|K\|_2^2}{nh_n}+\frac{h_n^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h_n)}+o\left(\frac{1}{nh_n}+h_n^{4}\right)
+\end{align*}
+
+We have found scaling sequences $a_n$ and $b_n$ such that $a_n\operatorname{MISE}(b_nt)\to G(t)$, namely
+\begin{align*}
+    n^{4/5}\operatorname{MISE}(n^{-1/5})=\frac{R(K)}{t}+\frac{\mu_2(K)^2R(f^{''})}{4}t^4
 \end{align*}
 
 Minimizing the AMISE leads to
@@ -75,12 +93,16 @@ Minimizing the AMISE leads to
 
 \todo[inline]{check for general dimension $d$}
 
+\todo[inline]{Does $h_{\operatorname{AMISE}}\to h_{\text{oracle}}$?}
+
 The optimal bandwidth thus behaves like $n^{-1/5}$.
 
-Plug-in methods use Equation~\eqref{eq:h_amise} as starting point. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
+Plug in methods use Equation~\eqref{eq:h_amise} as a starting point. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
 \begin{align*}
     \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}
 \end{align*}
+
+Among the many other more sophisticated plug in methods, we present the (improved) Sheather and Jones' plug in selector
 
 \todo[inline]{introduce (improved) Sheather and Jones' plug in}
 
@@ -652,23 +674,24 @@ In fact, the Fréchet-derivative $d\Psi(h)$ is given by $d\Psi(h)[\tau]=\tau\par
     \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K'\left(\frac{x-X_j}{h}\right)\right),\quad x\in\mathbb{R}
 \end{align*}
 
-Now, let $h_1<\dots<h_N$ be a grid that is linear in $\psi_{\beta}$. The difference between two consecutive bandwidths is
+Now, let $h_1<\dots<h_N$ be a grid that is linear in $\psi_{\beta}$. The difference between two bandwidths $h_i<h_j$ is
 \begin{align*}
-    h_{j+1}-h_j=h_j\left(\left(1+\frac{(1-\beta/2)\Delta_{\psi}}{h_j^{1-\beta/2}}\right)^{\frac{1}{1-\beta/2}}-1\right)
+    h_j-h_i&=h_i\left(\left(1+\frac{(1-\beta/2)(j-i)\Delta_{\psi}}{h_i^{1-\beta/2}}\right)^{\frac{1}{1-\beta/2}}-1\right)\\&
+    =h_i^{\beta/2}+\mathbf{o}((j-i)\Delta_{\psi})
 \end{align*}
 
 Write
 \begin{align*}
-    \hat{f}_{h_{j+1}}-\hat{f}_{h_j}=(h_{j+1}-h_j)\partial_h\hat{f}_{h_j}+\mathbf{o}(h_{j+1}-h_j)
+    \hat{f}_{h_j}-\hat{f}_{h_i}=(h_j-h_i)\partial_h\hat{f}_{h_i}+\mathbf{o}(h_j-h_i)
 \end{align*}
 and consequently
 \begin{align*}
-    D_{j,j+1}=\frac{1}{2}\|\hat{f}_{h_{j+1}}-\hat{f}_{h_j}\|_{L^2}^2=\frac{1}{2}(h_{j+1}-h_j)^2(\partial_h\hat{f}_{h_j})^2+\mathbf{o}((h_{j+1}-h_j)^2)
+    D_{i,j}=\frac{1}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_{L^2}^2=\frac{1}{2}(h_j-h_i)^2\|\partial_h\hat{f}_{h_i}\|^2+\mathbf{o}((h_j-h_i)^2)
 \end{align*}
 
-It holds $h_{j+1}-h_j=h_j^{\beta/2}\Delta_{\psi}+\mathbf{o}(\Delta_{\psi})$. Using this we obtain
+It holds $h_j-h_i=h_i^{\beta/2}\Delta_{\psi}+\mathbf{o}((j-i)\Delta_{\psi})$. Using this we obtain
 \begin{align*}
-    D_{j,j+1}=\frac{1}{2}h_j^{\beta}\Delta_{\psi}^2\|\partial_h\hat{f}_{h_j}\|^2+\mathbf{o}(\Delta_{\psi}^2)+\mathbf{o}((h_{j+1}-h_j)^2)
+    D_{i,j}=\frac{1}{2}h_i^{\beta}\Delta_{\psi}^2\|\partial_h\hat{f}_{h_i}\|^2+\mathbf{o}((j-i)^2\Delta_{\psi}^2)
 \end{align*}
 
 Introduce
@@ -678,28 +701,36 @@ Introduce
 
 We obtain
 \begin{align*}
-    D_{j,j+1}=\Delta_{\psi}^2\hat{Q}_{n,\beta}(h_j)+\mathbf{o}
+    D_{ij}=\Delta_{\psi}^2(j-i)^2\hat{Q}_{n,\beta}(h_i)+\mathbf{o}((j-i)^2\Delta_{\psi}^2)
 \end{align*}
 
-Thus, for nearby bandwidths $h_i$ and $h_j$ on a fine grid
+Thus,
+\begin{align}\label{eq:similarity_approximation}
+    S_{ij}=\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,\beta}(h_i))}(1+\mathbf{o}(\delta_{ij}^2)),
+\end{align}
+where we have set $\delta_{ij}=(j-i)\Delta_{\psi}$. This means that for nearby bandwidths $h_i$ and $h_j$ the similarity between the kernel density estimates $\hat{f}_{h_i}$ and $\hat{f}_{h_j}$ is approximately given by $\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,\beta}(h_i))}$. 
+
+Let $R_i=\sum_jS_{ij}$ be the $i$-th row sum of $S$. Then
 \begin{align*}
-    S_{ij}\approx\exp{(-\lambda\Delta_{\psi}^2\hat{Q}_{n,\beta}(h_i))}
+    \Delta_{\psi}R_i&=\sum_{j=1}^{N}\Delta_{\psi}S_{ij}\approx\sum_{j=1}^{N}\underbrace{(\delta_{i,j+1}-\delta_{i,j})}_{=\Delta_{\psi}}g_i(\delta_{ij})\\&
+    \approx\int\limits_{\mathbb{R}}\underbrace{\exp{(-\lambda\delta^2\hat{Q}_{n,\beta}(h_i))}}_{=g_i(\delta)}\,d\delta=\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}},
 \end{align*}
+where the first approximation is due to Equation~\eqref{eq:similarity_approximation} and the second one is the Riemann sum approximation. Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.
 
-Integrating
-\begin{align*}
-    \int\exp{(-\lambda\delta^2)\hat{Q}_{n,\beta}(h_i)}\,d\delta=\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}}
-\end{align*}
+\todo[inline]{Establish connection to the Perron vector of $S$}
 
-Thus, a bandwidth $h_i$ has a high similarity mass if $\hat{Q}_{n,\beta}(h_i)$ is small. Therefore, the peak of Perron vector corresponds to the minimizer of $\hat{Q}_{n,\beta}$. That is the Perron vectors weights such bandwidths highest at which the curve $h\mapsto\hat{f}_h$ changes slowest. 
+% Let $v$ be the Perron vector of $S$, that is,
+% \begin{align*}
+%     \sum_{j=1}^{N}S_{ij}v_j=\theta_{\max}v_i,\quad\forall i=1,\dots,N
+% \end{align*}
 
 
 Taking the expectation of $\hat{Q}_{n,\beta}$ yields
 \begin{align*}
     \mathbb{E}[\hat{Q}_{n,\beta}]&=h^{\beta}\left(\frac{1}{n}\|\partial_hK_h\|_2^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_2^2\right)\\&
-    =\frac{R(L)}{n}h^{\beta-3}+\left(1-\frac{1}{n}\right)\mu_2(K)^2R(f^{''})h^{\beta+2}+\mathbf{O}(h^{\beta+4})
+    =\frac{R(L)}{n}h^{\beta-3}+\left(1-\frac{1}{n}\right)\mu_2(K)^2R(f^{''})h^{\beta+2}+\mathbf{o}(h^{\beta+2}),
 \end{align*}
-with leading approximation
+where $L$ is defined by $L(x)=-K(x)-xK'(x)$ and leading approximation
 \begin{align*}
     \operatorname{AMQ}_{n,\beta}(h)=\frac{R(L)}{n}h^{\beta-3}+\left(1-\frac{1}{n}\right)\mu_2(K)^2R(f^{''})h^{\beta+2},
 \end{align*}
