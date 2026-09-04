@@ -1,1 +1,52 @@
 \chapter{Outlook}
+
+\textbf{Geometric Estimation of Autoregressive processes}
+
+\todo[inline]{Big Question: How to generalize this approach for a wide class of innovation distributions? We only get the nice zonotope formulas because of uniform innovations}
+
+A vital question is how to generalize the approach developed above to a broader class of innovation distributions. The main difficulty to overcome is that $\operatorname{supp}(Y_t^{(k)})$ is generally not compact but usually unbounded. Thus, the minimum width is infinite.
+
+\todo[inline]{Probability integral transform (PIT)}
+
+\todo[inline]{linear filter, Wold representation}
+
+The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
+\begin{align*}
+    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}.
+\end{align*}
+The \textit{highest density region} $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
+\begin{align*}
+    C_{\alpha}&=C_{h_{\alpha}}\\
+    C_h&=\{x\in\mathbb{R}^{d}:f(x)\ge h\}\\
+    h_{\alpha}&=\sup\{h\in\mathbb{R}:\mathbb{P}(Y\in C_h)\ge 1-\alpha\}
+\end{align*}
+
+\todo[inline]{connect these concepts with each other. For many distributions they are the same. Using minimum volume sets would remove dependence on having a smooth density}
+
+\todo[inline]{estimate HDR directly from the points $Y_t^{(k)}$; non parametric estimation, empirical HDR}
+
+\todo[inline]{Maybe find a class of distributions where the highest density region (or minimum volume set) has a nice geometric shape and compute the intrinsic volumes of that shape}
+
+\todo[inline]{log concave distributed innovations give convex highest density regions; VERY INTERESTING}
+
+A probability density is log concave if
+\begin{align*}
+    f(x)=\frac{e^{-V(x)}}{\int e^{-V(u)}\,du}
+\end{align*}
+for some convex function $V$.
+
+\textbf{Normally distributed innovations}
+
+Next, we turn our attention to Gaussian innovations, which is often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation, we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
+\begin{align*}
+    \Gamma_k=\sigma^2\sum_{j=0}^{\infty}g_j^{(k)}(g_j^{(k)})^{T}
+\end{align*}
+The covariance matrix plays an important role in describing the geometry of the point cloud $\mathcal{P}_k$. Let $E_c=\{y\in\mathbb{R}^k:y^{T}\Gamma_k^{-1}y\le c\}$ be the ellipsoid of size $c>0$. Then for all $\alpha\in(0,1)$ we have
+\begin{align*}
+    E_{c_{\alpha}}\in\arg\min\left\{\operatorname{Vol}(A):\mathbb{P}(Y\in A)\ge\alpha:A\subseteq\mathbb{R}^{k}\right\}
+\end{align*}
+That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$.
+
+\todo[inline]{find reference or prove}
+
+\textbf{Spectral Scale Selection for Kernel Density Estimation}
