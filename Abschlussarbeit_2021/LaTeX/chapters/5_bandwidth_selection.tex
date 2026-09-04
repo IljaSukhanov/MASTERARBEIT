@@ -583,6 +583,39 @@ After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref
 
 Next, we take $N=1000$, $\lambda=1000$ and again study the distribution under repeated samples for increasing sample size $n$. The difference to the experiments done in Figures~\ref{fig:distribution_of_chosen_bandwidths} and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} is that we now take $N$ and $\lambda_N$ motivated by the experiments in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}.
 
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/004_sampling_distribution_of_the_spectral_selector_n_300_n_1000_lambda_1000.pdf}
+        \caption{$n=300$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/005_sampling_distribution_of_the_spectral_selector_n_400_n_1000_lambda_1000.pdf}
+        \caption{$n=400$}
+    \end{subfigure}
+
+    \vspace{0.5em}
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/006_sampling_distribution_of_the_spectral_selector_n_500_n_1000_lambda_1000.pdf}
+        \caption{$n=500$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/011_sampling_distribution_of_the_spectral_selector_n_1000_n_1000_lambda_1000.pdf}
+        \caption{$n=1000$}
+    \end{subfigure}
+
+    \caption{Sampling distributions of the spectrally selected bandwidth for increasing sample size $n$. In every panel, $M=1000$, $N=1000$, and $\lambda=1000$.}
+    \label{fig:spectral_bandwidth_histograms_increasing_n}
+\end{figure}
+
 % Next we investigate the consistency of the spectral selector $\hat{h}_{\lambda,N}$ and compare it to the known asymptotic behavior of $h_{\text{AMISE}}=C_{K,f}n^{-1/5}$, where the constant $C_{K,f}$ is given by $C_{K,f}=R(K)^{1/5}\mu_2(K)^{-2/5}R(f^{''})^{-1/5}$.
 
 \begin{figure}
