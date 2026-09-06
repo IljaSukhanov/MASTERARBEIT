@@ -1,10 +1,11 @@
-"""Kullback--Leibler divergence and similarity calculations."""
-
 from __future__ import annotations
 
 import numpy as np
 
 from .quadrature import trapezoidal_integral
+
+
+# instead of composite trapezoidal, implement Gauss-Hermite
 
 
 def directional_kl_divergence_matrix(

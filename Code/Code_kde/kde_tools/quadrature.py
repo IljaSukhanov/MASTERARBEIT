@@ -1,5 +1,3 @@
-"""Numerical-quadrature helpers for KDE divergences and similarities."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -19,6 +17,7 @@ SIMILARITY_NAMES = (
 )
 
 
+# is this function needed?
 def trapezoidal_integral(
     values: np.ndarray,
     x_grid: np.ndarray,
@@ -27,14 +26,13 @@ def trapezoidal_integral(
     trapezoid = getattr(np, "trapezoid", np.trapz)
     return trapezoid(y=values, x=x_grid, axis=axis)
 
-
+### construct the quadrature nodes to approximate int \hat{f}_h dx for a given grid of bandwidths h_grid and samples X_i ###
 def quadrature_grid_for_kdes(
     samples: np.ndarray,
     h_grid: np.ndarray,
     m_x: int = 2_001,
     padding: float = 6.0,
 ) -> np.ndarray:
-    """Construct an integration grid covering the Gaussian KDE tails."""
     samples = np.asarray(samples, dtype=float)
     h_grid = np.asarray(h_grid, dtype=float)
     if samples.ndim != 1 or len(samples) == 0:
@@ -50,11 +48,11 @@ def quadrature_grid_for_kdes(
     return np.linspace(left, right, int(m_x))
 
 
+### is this function still needed when we have a faster Fourier-based method? ###
 def quadrature_beta2_divergence_matrix(
-    density_values: np.ndarray,
-    x_grid: np.ndarray,
+    density_values: np.ndarray, # matrix F of shape (len(h_grid), len(x_grid)) with entries F[j, k] = \hat{f}_{h_j}(x_k)
+    x_grid: np.ndarray,         # x_grid [x_0, x_1, ..., x_{m-1}] constructed by quadrature_grid_for_kdes
 ) -> np.ndarray:
-    """Return ``D_2 = 0.5 * integral (p_i - p_j)^2`` by quadrature."""
     values = np.asarray(density_values, dtype=float)
     x_grid = np.asarray(x_grid, dtype=float)
     if values.ndim != 2:
@@ -64,13 +62,14 @@ def quadrature_beta2_divergence_matrix(
     if np.any(values < 0.0):
         raise ValueError("Density values must be nonnegative.")
 
-    weights = _trapezoidal_weights(x_grid)
-    gram = (values * weights[None, :]) @ values.T
+    weights = _trapezoidal_weights(x_grid)          # trapezoidal weights [w_0, w_1, ..., w_{m-1}]
+    gram = (values * weights[None, :]) @ values.T   # gram[j, k] = \sum_{l=0}^{m-1}w_l \hat{f}_{h_j}(x_l) \hat{f}_{h_k}(x_l) \approx \int \hat{f}_{h_j}(x) \hat{f}_{h_k}(x) dx
     divergence = 0.5 * squared_l2_distance_from_gram(gram=gram)
     np.fill_diagonal(divergence, 0.0)
     return divergence
 
 
+### inspect later ###
 def quadrature_similarity_matrices(
     density_values: np.ndarray,
     x_grid: np.ndarray,
@@ -136,6 +135,7 @@ def quadrature_similarity_matrices(
     return np.clip(matrix, 0.0, 1.0)
 
 
+### inspect later ###
 def compute_quadrature_similarity_matrices(
     samples: np.ndarray,
     h_grid: np.ndarray,
@@ -167,6 +167,7 @@ def compute_quadrature_similarity_matrices(
     }
 
 
+### inspect later ###
 def select_quadrature_similarity_bandwidths(
     samples: np.ndarray,
     h_grid: np.ndarray,
@@ -193,8 +194,9 @@ def select_quadrature_similarity_bandwidths(
     return result
 
 
+# can we make it a regular function instead of a private one?
+### gives the trapezoidal weights w_k = (x_{k+1} - x_{k-1}) / 2 for k = 1, ..., m-2 and w_0 = (x_1 - x_0) / 2, w_{m-1} = (x_{m-1} - x_{m-2}) / 2 ###
 def _trapezoidal_weights(x_grid: np.ndarray) -> np.ndarray:
-    """Return composite-trapezoidal weights for a one-dimensional grid."""
     x_grid = np.asarray(x_grid, dtype=float)
     if x_grid.ndim != 1 or len(x_grid) < 2:
         raise ValueError("x_grid must be one-dimensional with at least two nodes.")
