@@ -2,7 +2,7 @@
 
 In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$.
 
-Goal: Develop spectral bandwidth ranking pipeline
+Goal: Develop spectral bandwidth ranking pipeline, explain why the spectral construction selects what it selects
 
 \textbf{working hypothesis}
 
@@ -90,7 +90,7 @@ We have found scaling sequences $a_n$ and $b_n$ such that $a_n\operatorname{MISE
 
 Minimizing the AMISE leads to
 \begin{align}\label{eq:h_amise}
-    h_{\operatorname{AMISE}}=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|f^{''}\|_2^2}\right)^{1/5}
+    h_{\operatorname{AMISE}}(n)=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|f^{''}\|_2^2}\right)^{1/5}
 \end{align}
 
 \todo[inline]{check for general dimension $d$}
@@ -546,9 +546,9 @@ In our experiments, we focus first on the case $f\sim N(0,1)$, that is, normally
 
 \subsection{Fixed sample experiments}
 
-For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$ and study the influence of the grid fineness $N$ and the concentration penalty $\lambda=\lambda_N$.
+For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$, $n=200$ and study the influence of the grid fineness $N$ and the concentration penalty $\lambda=\lambda_N$.
 
-\todo[inline]{Once a fixed sample is drawn, show also plots of (mean) integrated squared error}
+\todo[inline]{Once a fixed sample is drawn, show also plots of mise and ise}
 
 \todo[inline]{add mise and ise bandwidths in figure 3.1}
 
@@ -561,6 +561,7 @@ We see that the Perron vector has a flat plateau which means that many bandwidth
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
     \caption{$X_i\sim N(0,1)$, $n=200$, $N=191$, $h_{\min}=0.01$, $h_{\max}=2$, $\lambda=1$, geometric bandwidth grid; the red line indicates $h_{\text{crit}}=0.08803$ and the blue line $h_{\text{oracle}}=0.38304$}
     \label{fig:stationary_distribution_plot_001}
+    \todo[inline]{add Perron vector for different $\lambda$}
 \end{figure}
 
 Of course, a single such image tells us not much and does not give us hints about a possible connection between the oracle bandwidth and the spectrally chosen bandwidth.
@@ -582,6 +583,7 @@ In Section~\ref{sec:similarity_transformations} we established the interpretatio
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
     \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($n=200$) as $\lambda$ increases; $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$.}
     \label{fig:chosen_bandwidths_vs_lambda}
+    \todo[inline]{add vertically: mise, ise, speed}
 \end{figure}
 
 After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. For $\alpha>0$ the chosen bandwidth seems to converge towards some bandwidth $h_{\infty}=0.2418$.
@@ -602,9 +604,10 @@ Now we draw repeated samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ and st
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf}
     \caption{Distribution of spectrally chosen bandwidths for $M=1000$ repeatedly drawn $N(0,1)$ samples ($n=200$); $N=191$, $\lambda=1$}
     \label{fig:distribution_of_chosen_bandwidths}
+    \todo[inline]{make y-axis clean}
+    \todo[inline]{add distributions of ise and speed}
+    \todo[inline]{add mise straight line}
 \end{figure}
-
-We repeat the experiment in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} for different $\beta$ and under repeated sampling.
 
 \subsection{Increasing sample size experiments}
 
@@ -641,9 +644,10 @@ It is interesting to ask what happens to this distribution for increased sample 
         \caption{$n=1000$}
     \end{subfigure}
 
-    \caption{Distribution of chosen bandwidths changes for increasing sample size $n$. A clear transition between two regimes is visible. For $n=1000$ the chosen bandwidths show a strong concentration around $0.441811$
-    \todo[inline]{Can the two peaks be described?}}
+    \caption{Distribution of chosen bandwidths changes for increasing sample size $n$. A clear transition between two regimes is visible. For $n=1000$ the chosen bandwidths show a strong concentration around $0.441811$}
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
+    \todo[inline]{Can the two peaks be described?}
+    \todo[inline]{add distributions for ise and speed}
 \end{figure}
 
 The spectrally chosen bandwidths concentrate towards a deterministic interior scale $h^*\approx441811$, above the oracle bandwidth $h_{\text{oracle}}=0.38304$.
@@ -653,6 +657,8 @@ The spectrally chosen bandwidths concentrate towards a deterministic interior sc
 \todo[inline]{Make argument rigorous}
 
 To explain the results, we need concepts from functional analysis. In particular, the generalized Taylor expansion in Banach spaces. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.5 therein.
+
+The subsequent derivations will lead to Proposition~\ref{prop:argmax_perron_argmin_hat_Q} below.
 
 Consider the operator $\Psi:\mathbb{R}_{>0}\to L^2(\mathbb{R})$, $h\mapsto\hat{f}_h$. Then $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ is the Fréchet-derivative of $\Psi$ at $h>0$ if it is a bounded linear operator and there exists $\epsilon>0$ such that
 \begin{align*}
@@ -689,9 +695,9 @@ It holds $h_j-h_i=h_i^{\beta/2}\Delta_{\psi}+\mathbf{o}((j-i)\Delta_{\psi})$. Us
 \end{align*}
 
 Introduce
-\begin{align*}
+\begin{align}\label{eq:hat_Q_n_beta}
     \hat{Q}_{n,\beta}(h)\coloneqq \frac{1}{2}h^{\beta}\int\left(\partial_h\hat{f}_h(x)\right)^2\,dx=\frac{1}{2}h^{\beta}\|\partial_h\hat{f}_h\|_{L^2}^2
-\end{align*}
+\end{align}
 
 We obtain
 \begin{align*}
@@ -705,61 +711,77 @@ Thus,
 where we have set $\delta_{ij}=(j-i)\Delta_{\psi}$. This means that for nearby bandwidths $h_i$ and $h_j$ the similarity between the kernel density estimates $\hat{f}_{h_i}$ and $\hat{f}_{h_j}$ is approximately given by $\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,\beta}(h_i))}$. 
 
 Let $R_i=\sum_jS_{ij}$ be the $i$-th row sum of $S$. Then
-\begin{align*}
-    \Delta_{\psi}R_i&=\sum_{j=1}^{N}\Delta_{\psi}S_{ij}\approx\sum_{j=1}^{N}\underbrace{(\delta_{i,j+1}-\delta_{i,j})}_{=\Delta_{\psi}}g_i(\delta_{ij})\\&
-    \approx\int\limits_{\mathbb{R}}\underbrace{\exp{(-\lambda\delta^2\hat{Q}_{n,\beta}(h_i))}}_{=g_i(\delta)}\,d\delta=\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}},
-\end{align*}
+\begin{equation}\label{eq:row_sum_connection_to_hat_Q}
+\begin{aligned}
+    \Delta_{\psi}R_i
+    &=\sum_{j=1}^{N}\Delta_{\psi}S_{ij}
+    \approx\sum_{j=1}^{N}
+    \underbrace{(\delta_{i,j+1}-\delta_{i,j})}_{=\Delta_{\psi}}
+    g_i(\delta_{ij})\\
+    &\approx\int_{\mathbb{R}}
+    \underbrace{\exp\left(-\lambda\delta^2\hat{Q}_{n,\beta}(h_i)\right)}_{=g_i(\delta)}
+    \,d\delta
+    =\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}}.
+\end{aligned}
+\end{equation}
 where the first approximation is due to Equation~\eqref{eq:similarity_approximation} and the second one is the Riemann sum approximation. Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.
 
-\todo[inline]{Establish connection to the Perron vector of $S$}
+Let $v$ be the Perron vector of $S$, that is,
+\begin{align}\label{eq:perron_vector003}
+    \sum_{j=1}^{N}S_{ij}v_j=\theta_{\max}v_i,\quad\forall i=1,\dots,N
+\end{align}
 
-% Let $v$ be the Perron vector of $S$, that is,
-% \begin{align*}
-%     \sum_{j=1}^{N}S_{ij}v_j=\theta_{\max}v_i,\quad\forall i=1,\dots,N
-% \end{align*}
+\todo[inline]{Somehow establish connection to the Perron vector of $S$ trough the row sums $R_i$ and Equations~\eqref{eq:row_sum_connection_to_hat_Q} and~\eqref{eq:perron_vector003}}
 
+\begin{Prop}\label{prop:argmax_perron_argmin_hat_Q}
+    Let $v^{(\lambda)}$ be the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\lambda D(\hat{f}_{h_i},\hat{f}_{h_j}))}$, where $D$ is the $L^2$-divergence. Let $\hat{Q}_{n,\beta}(h)$ be like in Equation~\eqref{eq:hat_Q_n_beta}. Then,
+    \begin{align*}
+        \arg\max_{1\le i\le N} v_i^{(\lambda)}=\arg\min_h\hat{Q}_{n,\beta}(h),
+    \end{align*}
+    for $N\to\infty$, $\lambda_N\to\infty$, \textcolor{red}{$\lambda_N/N^2\to\infty$}.
+\end{Prop}
 
-Taking the expectation of $\hat{Q}_{n,\beta}$ yields
-\begin{align*}
-    \mathbb{E}[\hat{Q}_{n,\beta}]&=\frac{1}{2}h^{\beta}\left(\frac{1}{n}\|\partial_hK_h\|_2^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_2^2\right)
-\end{align*}
-
-Similarly to the $\operatorname{AMISE}$ we do a leading term approximation:
-\begin{align*}
-    \|\partial_hK_h\|_2^2=h^{-3}R(L),\quad L(u)=-K(u)-uK^{'}(u)
-\end{align*}
-and
-\begin{align*}
-    \|\partial_h(K_h\ast f)\|_2^2=\mu_2(K)^2R(f^{''})h^2+\mathbf{o}(h^2)
-\end{align*}
-Putting together gives
-\begin{align*}
-    \mathbb{E}[\hat{Q}_{n,\beta}(h)]=\frac{1}{2n}h^{\beta-3}R(L)+\frac{n-1}{2n}h^{2+\beta}\mu_2(K)^2R(f^{''})+\mathbf{o}(h^{2+\beta})
-\end{align*}
-
-Denote the leading term by
-\begin{align*}
-    \operatorname{AMQ}_{n,\beta}(h)=\frac{1}{2n}h^{\beta-3}R(L)+\frac{n-1}{2n}h^{2+\beta}\mu_2(K)^2R(f^{''})
-\end{align*}
-whose minimizer is
-\begin{align*}
-    h_{\operatorname{AMQ},\beta}(n)=\left(\frac{3-\beta}{2+\beta}\frac{R(L)}{(n-1)\mu_2(K)^2R(f^{''})}\right)^{1/5}
-\end{align*}
+The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_{n,\beta}(h)]$ to the asymptotic minimizer of $\operatorname{MISE}(h)$.
 
 \begin{Prop}
-    Let $K$ be the Gaussian kernel. Then
+    Let $h_{\operatorname{AMQ}}(n)$ be the asymptotic minimizer of $\mathbb{E}[\hat{Q}_{n,\beta}]$ and $h_{\operatorname{AMISE}}(n)$ the asymptotic minimizer of the mean integrated squared error from Equation~\eqref{eq:h_amise}. Then
     \begin{align*}
         \frac{h_{\operatorname{AMQ},\beta}(n)}{h_{\operatorname{AMISE}}(n)}\to\left(\frac{3-\beta}{2+\beta}\frac{R(L)}{R(K)}\right)^{1/5},\quad n\to\infty
     \end{align*}
-    In particular, for $\beta=1/7$, $h_{\operatorname{AMQ}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent.
+    In particular, for $K$ Gaussian kernel and $\beta=1/7$, $h_{\operatorname{AMQ}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent.
 \end{Prop}
 
-
-\todo[inline]{$R(f^{''})$ estimation?}
-
+\begin{proof}
+    Taking the expectation of $\hat{Q}_{n,\beta}$ yields
+    \begin{align*}
+        \mathbb{E}[\hat{Q}_{n,\beta}]&=\frac{1}{2}h^{\beta}\left(\frac{1}{n}\|\partial_hK_h\|_2^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_2^2\right)
+    \end{align*}
+    Similarly to the $\operatorname{AMISE}$ we do a leading term approximation:
+    \begin{align*}
+        \|\partial_hK_h\|_2^2=h^{-3}R(L),\quad L(u)=-K(u)-uK^{'}(u)
+    \end{align*}
+    and
+    \begin{align*}
+        \|\partial_h(K_h\ast f)\|_2^2=\mu_2(K)^2R(f^{''})h^2+\mathbf{o}(h^2)
+    \end{align*}
+    Putting together gives
+    \begin{align*}
+        \mathbb{E}[\hat{Q}_{n,\beta}(h)]=\frac{1}{2n}h^{\beta-3}R(L)+\frac{n-1}{2n}h^{2+\beta}\mu_2(K)^2R(f^{''})+\mathbf{o}(h^{2+\beta})
+    \end{align*}
+    Denote the leading term by
+    \begin{align*}
+        \operatorname{AMQ}_{n,\beta}(h)=\frac{1}{2n}h^{\beta-3}R(L)+\frac{n-1}{2n}h^{2+\beta}\mu_2(K)^2R(f^{''})
+    \end{align*}
+    whose minimizer is
+    \begin{align*}
+        h_{\operatorname{AMQ},\beta}(n)=\left(\frac{3-\beta}{2+\beta}\frac{R(L)}{(n-1)\mu_2(K)^2R(f^{''})}\right)^{1/5}
+    \end{align*}
+\end{proof}
 
 \section*{Additional notes}
 
 \begin{itemize}
     \item The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalised curvature-energy criterion
 \end{itemize}
+
+% \todo[inline]{$R(f^{''})$ estimation?}
