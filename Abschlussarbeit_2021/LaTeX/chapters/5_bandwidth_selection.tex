@@ -562,9 +562,8 @@ We see that the Perron vector has a flat plateau which means that many bandwidth
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
-    \caption{$X_i\sim N(0,1)$, $n=200$, $N=191$, $h_{\min}=0.01$, $h_{\max}=2$, $\lambda=1$, geometric bandwidth grid; the red line indicates $h_{\text{crit}}=0.08803$ and the blue line $h_{\text{oracle}}=0.38304$}
+    \caption{$X_i\sim N(0,1)$, $n=200$, $N=191$, $h_{\min}=0.01$, $h_{\max}=2$, $\lambda\in\{10^k:k=0,1,2,3\}$, geometric bandwidth grid; the blue line indicates $h_{\text{oracle}}=0.38304$}
     \label{fig:stationary_distribution_plot_001}
-    \todo[inline]{add Perron vector for different $\lambda$}
 \end{figure}
 
 Of course, a single such image tells us not much and does not give us hints about a possible connection between the oracle bandwidth and the spectrally chosen bandwidth.
