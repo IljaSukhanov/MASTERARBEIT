@@ -141,35 +141,6 @@ where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is,
     A triple $(f,\{K_i\},\oplus)$ is said to be spectrally optimizable if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$ with transition probability matrix $Q=(q_{ij})$ and stationary distribution $\pi^Q=(\pi_1^Q,\dots,\pi_N^Q)$.
 \end{Def}
 
-\section{Monotone scale selection}
-
-\todo[inline]{implement a function in Python that computes the stationary birth death distribution}
-
-\todo[inline]{Is there an alternative MC construction that favors \enquote{kink points}?}
-
-We consider the case $0<c_1<\dots<c_N$. Define the discrete Laplacian:
-\begin{align*}
-    \mathcal{L}=\frac{1}{c_1}\operatorname{diag}(1,0,\dots,0)-\Sigma^{-1}
-\end{align*}
-which acts as the generator of a birth-death chain on the state space $\{1,\dots,N\}$ with transition rates...
-
-The normalized stationary distribution of the embedded birth-death chain is given by
-\begin{align*}
-    \pi^{\text{BD}}&=(\pi^{\text{BD}}_1,\dots,\pi^{\text{BD}}_N)\\
-    \pi^{\text{BD}}_j&=\frac{r_j}{\overline{r}}\\
-    r_j&=\begin{cases}
-        \frac{1}{c_2-c_1}, & j=1\\
-        \frac{1}{c_j-c_{j-1}}+\frac{1}{c_{j+1}-{c_j}}, & j=2,\dots,N-1\\
-        \frac{1}{c_N-c_{N-1}}, & j=N
-    \end{cases}\\
-    \overline{r}&=\sum_{j=1}^{N}r_j
-\end{align*}
-
-The critical scales are naturally identified as
-\begin{align*}
-    j_{\text{crit}}\in\arg\min\{\pi^{\text{BD}}_j:j=1,\dots,N\}
-\end{align*}
-
 \section{General methodology beyond complexes}
 
 Above we have considered a sequence (filtration) of simplicial complexes $K_{\epsilon_i}$, $0<\epsilon_1<\dots<\epsilon_N$ and have constructed a similarity/ mutual information using a functional $f(K)$ by
