@@ -11,10 +11,30 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import linprog, minimize_scalar
 
+if __package__:
+    from .functions import (
+        jones_ar_coefficients,
+        simulate_uniform_ar,
+        sliding_window_point_cloud,
+    )
+else:
+    from functions import (
+        jones_ar_coefficients,
+        simulate_uniform_ar,
+        sliding_window_point_cloud,
+    )
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 NOTEBOOK_PATH = Path(__file__).with_name("ar_order_minimum_width.ipynb")
 OUTPUT_DIR = PROJECT_ROOT / "output" / "figures" / "five_ar2_examples"
+CSV_OUTPUT_DIR = (
+    Path(__file__).resolve().parent
+    / "outputs"
+    / "csv"
+    / "order_selection"
+    / "ar2"
+)
 
 
 def load_notebook_functions(names: set[str]) -> dict[str, object]:
@@ -82,19 +102,13 @@ def population_minimizing_ar2_direction(phi: np.ndarray, k: int) -> np.ndarray:
 
 FUNCTIONS = load_notebook_functions(
     {
-        "jones_ar_coefficients",
-        "simulate_uniform_ar",
         "ar_impulse_response",
-        "sliding_window_point_cloud",
         "batched_geometric_width_curves",
         "theoretical_ar_width_in_direction",
         "horizontal_tail_lad_selector",
     }
 )
-JONES_AR_COEFFICIENTS = FUNCTIONS["jones_ar_coefficients"]
-SIMULATE_UNIFORM_AR = FUNCTIONS["simulate_uniform_ar"]
 AR_IMPULSE_RESPONSE = FUNCTIONS["ar_impulse_response"]
-SLIDING_WINDOW_POINT_CLOUD = FUNCTIONS["sliding_window_point_cloud"]
 BATCHED_GEOMETRIC_WIDTH_CURVES = FUNCTIONS["batched_geometric_width_curves"]
 THEORETICAL_AR_WIDTH_IN_DIRECTION = FUNCTIONS["theoretical_ar_width_in_direction"]
 HORIZONTAL_TAIL_LAD_SELECTOR = FUNCTIONS["horizontal_tail_lad_selector"]
@@ -103,8 +117,8 @@ HORIZONTAL_TAIL_LAD_SELECTOR = FUNCTIONS["horizontal_tail_lad_selector"]
 def generate_process(seed: int, replication: int) -> dict[str, object]:
     k_values = np.arange(1, 11)
     generator = np.random.default_rng(np.random.SeedSequence([seed, replication, 0]))
-    phi = JONES_AR_COEFFICIENTS(2, rng=generator)
-    series = SIMULATE_UNIFORM_AR(phi, 2_000, 1_000, 1.0, rng=generator)
+    phi = jones_ar_coefficients(2, rng=generator)
+    series = simulate_uniform_ar(phi, 2_000, 1_000, 1.0, rng=generator)
     _, widths, _, empirical_directions = BATCHED_GEOMETRIC_WIDTH_CURVES(
         series,
         k_values,
@@ -127,7 +141,7 @@ def generate_process(seed: int, replication: int) -> dict[str, object]:
     empirical_at_population_min = []
     for k in k_values:
         direction = population_minimizing_ar2_direction(phi, int(k))
-        cloud = SLIDING_WINDOW_POINT_CLOUD(series, int(k))
+        cloud = sliding_window_point_cloud(series, int(k))
         empirical_at_population_min.append(np.ptp(cloud @ direction))
 
     return {
@@ -244,6 +258,7 @@ def draw_plot(axis: plt.Axes, result: dict[str, object], *, compact: bool = Fals
 def main() -> None:
     plt.style.use("seaborn-v0_8-whitegrid")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    CSV_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     seed = 20260819
     results = [generate_process(seed, replication) for replication in range(1, 6)]
 
@@ -288,7 +303,7 @@ def main() -> None:
     plt.close(overview)
 
     summary = pd.DataFrame(summary_rows)
-    summary.to_csv(OUTPUT_DIR / "summary.csv", index=False)
+    summary.to_csv(CSV_OUTPUT_DIR / "five_ar2_examples_summary.csv", index=False)
     print(summary.to_string(index=False))
 
 
