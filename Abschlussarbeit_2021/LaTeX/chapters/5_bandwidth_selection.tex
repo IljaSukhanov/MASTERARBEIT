@@ -461,7 +461,7 @@ Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shan
 
 Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
 
-Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$. It can be interpreted as an uncertainty or concentration measure. $H(p)$ is large if $p$ is close to the discrete uniform distribution and maximal for $p=(N^{-1},\dots,N^{-1})$ (maximal uncertainty and minimal concentration). It is small if $p$ is concentrated on some entry and \textcolor{red}{minimal} for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$ (minimal uncertainty and maximal concentration).
+Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$. It can be interpreted as an uncertainty or concentration measure. $H(p)$ is large if $p$ is close to the discrete uniform distribution and maximal for $p=(N^{-1},\dots,N^{-1})$ (maximal uncertainty and minimal concentration). It is small if $p$ is concentrated on some entry and minimal for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$ (minimal uncertainty and maximal concentration).
 
 The quantity
 \begin{align*}
@@ -643,7 +643,6 @@ It is interesting to ask what happens to this distribution for increased sample 
     \caption{Distribution of chosen bandwidths changes for increasing sample size $n$. A clear transition between two regimes is visible. For $n=1000$ the chosen bandwidths show a strong concentration around $0.441811$}
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
     \todo[inline]{Can the two peaks be described?}
-    \todo[inline]{add distributions for ise and speed}
 \end{figure}
 
 The spectrally chosen bandwidths concentrate towards a deterministic interior scale $h^*\approx441811$, above the oracle bandwidth $h_{\text{oracle}}=0.38304$.
