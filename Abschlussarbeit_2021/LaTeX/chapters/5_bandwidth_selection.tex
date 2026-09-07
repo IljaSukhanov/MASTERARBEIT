@@ -10,9 +10,11 @@ Let $h^*_D=\arg\min\mathbb{E}[D(f,\hat{f}_h)]$ and let $S=\exp{(-D/\tau)}$. Does
 
 \section{Preliminaries on Kernel Density Estimation}
 
-We have data $X_1,\dots.X_n\in\mathbb{R}^{d}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
+\todo[inline]{generalize to dimension $d$ later}
+
+We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
-    \hat{f}_h(x)\coloneqq \frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}^d.
+    \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
 \end{align*}
 
 Two common choices for the kernel $K$ are:
@@ -44,7 +46,7 @@ The ISE can be written as
 
 The Ordinary Least Squares Cross-Variance estimator is given by
 \begin{align*}
-    \operatorname{CV}(h)=\int\hat{f}_h(x)\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i),\quad\hat{h}_{\operatorname{CV}}\in\arg\min\operatorname{CV}(h)
+    \operatorname{CV}(h)=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i),\quad\hat{h}_{\operatorname{CV}}\in\arg\min\operatorname{CV}(h)
 \end{align*}
 Here, $\hat{f}_{h,-i}$ is the kernel density function where the observation $X_i$ is left out, that is,
 \begin{align*}
@@ -60,7 +62,7 @@ The bias-variance decomposition of the MISE is
 with
 \begin{align*}
     \operatorname{IV}(h)&=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{\|K\|_2^2}{nh}-\frac{\|K_h\ast f\|_2^2}{n},\quad\text{and}\\
-    \operatorname{ISB}(h)&=\int\operatorname{Bias}(\hat{f}_h(x))\,dx=\|K_h\ast f-f\|_2^2
+    \operatorname{ISB}(h)&=\int\operatorname{Bias}(\hat{f}_h(x))^2\,dx=\|K_h\ast f-f\|_2^2
 \end{align*}
 
 This decomposition gives conditions on $h=h_n$ so that the kernel density estimate $\hat{f}_{h_n}$ is consistent. Namely, it must hold $h_n\to0$ and $nh_n\to+\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
@@ -85,7 +87,7 @@ The MISE can be written as
 
 We have found scaling sequences $a_n$ and $b_n$ such that $a_n\operatorname{MISE}(b_nt)\to G(t)$, namely
 \begin{align*}
-    n^{4/5}\operatorname{MISE}(n^{-1/5})=\frac{R(K)}{t}+\frac{\mu_2(K)^2R(f^{''})}{4}t^4
+    n^{4/5}\operatorname{MISE}(n^{-1/5}t)=\frac{R(K)}{t}+\frac{\mu_2(K)^2R(f^{''})}{4}t^4
 \end{align*}
 
 Minimizing the AMISE leads to
@@ -224,7 +226,7 @@ The actual divergence is then given by
 
 By taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2$ is the squared Hellinger distance.
 
-By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$.
+By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
 In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance).
 
@@ -303,7 +305,7 @@ For $\beta=1$ we get
     D_1(p\|q)=\frac{1}{2}\int(p(x)-q(x))^2\,dx=\frac{1}{2}\|p-q\|_2^2=\frac{1}{2}\langle p,p\rangle_{L^2}+\frac{1}{2}\langle q,q\rangle_{L^2}-\langle p,q\rangle_{L^2}
 \end{align*}
 
-If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_h(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_1(\hat{f}_h,\hat{f}_s)$. We have
+If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_s(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_1(\hat{f}_h,\hat{f}_s)$. We have
 \begin{align}\label{eq:beta2_exact_formula01}
     D_1(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},
 \end{align}
@@ -324,6 +326,7 @@ The total variation and Hellinger distance are related by the chain of inequalit
 
 \begin{Prop}
     Let $D$ be a divergence such that it is a $f$-divergence for some $f$ and simultaneously a Bregman divergence for some $F$. This is sufficient and necessary for $D$ to be the Kullback-Leibler divergence.
+    \todo[inline]{cite or prove}
 \end{Prop}
 
 \subsection{Approximating integrals using quadrature}
@@ -448,17 +451,18 @@ Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shan
     The following statements are equivalent.
     \begin{enumerate}
         \item[(a)] $D:X\times X\to\mathbb{R}$ is conditionally negative definite and $D(x,x)=0$ for all $x\in X$
-        \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive (semi-) definite for all completely monotone functions $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$.
+        \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive semidefinite for all completely monotone functions $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$.
         \item[(c)] There exists some Hilbert space embedding $\Phi:X\to\mathcal{H}$ such that $D(x,y)=\|\Phi(x)-\Phi(y)\|_{\mathcal{H}}^{2}$.
     \end{enumerate}
     \todo[inline]{Find a source to cite}
+    \todo[inline]{Additional conditions for positive definite}
 \end{Thm}
 
 % (Harmonic Analysis on Semigroups, Berg, Christensen, Ressel)
 
 Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
 
-Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$. It can be interpreted as an uncertainty or concentration measure. $H(p)$ is large if $p$ is close to the discrete uniform distribution and maximal for $p=(N^{-1},\dots,N^{-1})$ (maximal uncertainty and minimal concentration). It is small if $p$ is concentrated on some entry and maximal for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$ (minimal uncertainty and maximal concentration).
+Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$. It can be interpreted as an uncertainty or concentration measure. $H(p)$ is large if $p$ is close to the discrete uniform distribution and maximal for $p=(N^{-1},\dots,N^{-1})$ (maximal uncertainty and minimal concentration). It is small if $p$ is concentrated on some entry and \textcolor{red}{minimal} for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$ (minimal uncertainty and maximal concentration).
 
 The quantity
 \begin{align*}
@@ -520,15 +524,15 @@ Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
 The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the area under the curve the same. We can measure the width of a kernel $K$, for example, by $s(K)\coloneqq\sqrt{\mu_2(K)}=(\int x^2K(x)\,dx)^{1/2}$. The width of the stretched kernel is $s(K_h)=hs(K)$. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$. Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the same factor $q_N$. Thus, each step stretches the kernel by the same factor.
 
-\todo[inline]{Continue here, cite some paper by Nielsen}
+% \todo[inline]{Continue here, cite some paper by Nielsen}
 
-For any $f$-divergence $D_f$ we have
-\begin{align*}
-    D_f(K_{h_i},K_{h_j})=\Tilde{\Psi}(j-1)
-\end{align*}
-for some function $\Tilde{\Psi}$.
+% For any $f$-divergence $D_f$ we have
+% \begin{align*}
+%     D_f(K_{h_i},K_{h_j})=\Tilde{\Psi}(j-1)
+% \end{align*}
+% for some function $\Tilde{\Psi}$.
 
-The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$ and the empirical distribution $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$. In symbols, $\hat{f}_h=K_h\ast P_n$. We have the pointwise expectation $\mathbb{E}[\hat{f}_h]=f\ast K_h$.
+% The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$ and the empirical distribution $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$. In symbols, $\hat{f}_h=K_h\ast P_n$. We have the pointwise expectation $\mathbb{E}[\hat{f}_h]=f\ast K_h$.
 
 \section{Numerical Experiments}
 
