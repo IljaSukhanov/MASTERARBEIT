@@ -442,18 +442,19 @@ A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all 
 \end{align*}
 for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=0$. A function $\phi:(0.\infty)\to\mathbb{R}$ is called completely monotone if $\phi\in C^{\infty}(0,\infty)$ and $(-1)^{n}\phi^{(n)}(t)\ge 0$ for all $n\in\mathbb{N}_0$ and $t>0$.
 
-Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite.
-
-\todo[inline]{Which divergencies are conditionally negative definite and which not}
-
-\todo[inline]{What about $L^2$ divergence?}
-
-The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
+Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite. In fact, using Schoenberg's theorem below, we can also include $L^2$-divergence, squared Hellinger, and Total Variation in the class of conditionally negative definite divergences. The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
 
 \begin{Thm}[Schoenberg]\label{thm:schoenberg}
-    Let $D:X\times X\to\mathbb{R}$ be conditionally negative. Let $x_1,\dots,x_n\in X$. If $\phi$ is completely monotone, then the matrix $\Sigma=(\Sigma_{ij})$, $\Sigma_{ij}=\phi(D(x_i,x_j))$ is positive definite.
-    \todo[inline]{Find a source to cite (Harmonic Analysis on Semigroups, Berg, Christensen, Ressel)}
+    The following statements are equivalent.
+    \begin{enumerate}
+        \item[(a)] $D:X\times X\to\mathbb{R}$ is conditionally negative definite and $D(x,x)=0$ for all $x\in X$
+        \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive (semi-) definite for all completely monotone functions $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$.
+        \item[(c)] There exists some Hilbert space embedding $\Phi:X\to\mathcal{H}$ such that $D(x,y)=\|\Phi(x)-\Phi(y)\|_{\mathcal{H}}^{2}$.
+    \end{enumerate}
+    \todo[inline]{Find a source to cite}
 \end{Thm}
+
+% (Harmonic Analysis on Semigroups, Berg, Christensen, Ressel)
 
 Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
 
