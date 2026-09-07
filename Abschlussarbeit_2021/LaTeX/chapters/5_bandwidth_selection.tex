@@ -87,7 +87,7 @@ The MISE can be written as
 
 We have found scaling sequences $a_n$ and $b_n$ such that $a_n\operatorname{MISE}(b_nt)\to G(t)$, namely
 \begin{align*}
-    n^{4/5}\operatorname{MISE}(n^{-1/5}t)=\frac{R(K)}{t}+\frac{\mu_2(K)^2R(f^{''})}{4}t^4
+    n^{4/5}\operatorname{MISE}(n^{-1/5}t)\to\frac{R(K)}{t}+\frac{\mu_2(K)^2R(f^{''})}{4}t^4,\quad n\to\infty
 \end{align*}
 
 Minimizing the AMISE leads to
@@ -150,7 +150,7 @@ Since for Gaussian kernels and Gaussian mixture densities the mean integrated sq
 
 This serves as an easy example of a situation where the optimal bandwidth is not unique and thus is a particularly interesting test for spectrally selected bandwidths.
 
-Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density with two local MISE minima.
+% Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density with two local MISE minima.
 
 % \begin{figure}[htbp]
 %     \centering
@@ -180,9 +180,9 @@ Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density wit
 
 For information about information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}.
 
-Let $\mathcal{P}$ be the set of all absolutely continuous probability distributions on $(\mathbb{R}^d,\mathcal{B}(\mathbb{R}^d))$. That is,
+Let $L^1$ be the set of all absolutely integrable functions $f:\mathbb{R}\to\mathbb{R}$ and $\mathcal{P}\subseteq L^1$ be the set of all absolutely continuous probability distributions. That is,
 \begin{align*}
-    \mathcal{P}=\{\mu:\exists f:\mathbb{R}\to\mathbb{R}\text{ measurable},f\ge0,\mu(F)=\int_Ff\,d\lambda\}
+    \mathcal{P}=\left\{f\in L^1:f\ge0,\int f(x)\,dx=1\right\}
 \end{align*}
 
 A divergence is a map $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ such that $D(p,q)=0$ if and only if $p=q$.
@@ -237,9 +237,9 @@ In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger 
     \begin{align*}
         R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
     \end{align*}
-    where $\alpha\in\mathbb{R}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
+    where $\alpha\in\mathbb{R}_{>0}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
 
-    The Rényi divergence is not a $f$-divergence but Rényi and Amari divergences are both strictly increasing transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
+    The Rényi divergence is not a $f$-divergence but Rényi and Amari divergences are both strictly \textcolor{red}{decreasing} transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
     \begin{align*}
         R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t}\\
         D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1)
