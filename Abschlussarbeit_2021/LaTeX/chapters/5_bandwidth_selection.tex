@@ -553,8 +553,6 @@ In our experiments, we focus first on the case $f\sim N(0,1)$, that is, normally
 
 For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$, $n=200$ and study the influence of the grid fineness $N$ and the concentration penalty $\lambda=\lambda_N$.
 
-\todo[inline]{add mise and ise bandwidths in figure 3.1}
-
 Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$, $\lambda=1$. 
 
 We see that the Perron vector has a flat plateau which means that many bandwidths are considered central. Increasing $\lambda$ leads to the Perron vector having a more pronounced peak, which is consistent with the interpretation of $\tau=\lambda^{-1}$ being a penalty for how much the Perron vector concentrates.
@@ -582,7 +580,7 @@ In Section~\ref{sec:similarity_transformations} we established the interpretatio
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
-    \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($n=200$) as $\lambda$ increases; $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$.}
+    \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($n=200$) as $\lambda$ increases; $N=201$, $h_{\min}=0.01$, and $h_{\max}=2$.}
     \label{fig:chosen_bandwidths_vs_lambda}
     \todo[inline]{add vertically: mise, ise, speed}
 \end{figure}
