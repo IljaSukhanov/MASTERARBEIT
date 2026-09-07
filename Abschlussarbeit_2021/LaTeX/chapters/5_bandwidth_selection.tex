@@ -587,13 +587,14 @@ In Section~\ref{sec:similarity_transformations} we established the interpretatio
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
 
-After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. For $\alpha>0$ the chosen bandwidth seems to converge towards some bandwidth $h_{\infty}=0.2418$. In Section~\ref{sec:res_2} we explain that this is the minimizer of $\hat{Q}_{200,2}(h)=(h^2/2)\|\partial_h\hat{f}_h\|_2^2$.
+After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. For $\alpha>1/2$ the chosen bandwidth seems to converge towards some bandwidth $h_{\infty}=0.1764$. In Section~\ref{sec:res_2} we explain that this is the minimizer of $\hat{Q}_{200,2}(h)=(h^2/2)\|\partial_h\hat{f}_h\|_2^2$.
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf}
-    \caption{For $N\to\infty$ the chosen bandwidth approaches a limit $h_{\infty}=0.2418$, for all $\alpha>0$. The convergence is slow for $\alpha=1/2$, a little faster for $\alpha=1$ and even faster for $\alpha>1$}
+    \caption{For $N\to\infty$ the chosen bandwidth approaches a limit $h_{\infty}=0.1764$, for all $\alpha>1/2$. The convergence is slow for $\alpha=1$ and faster for $\alpha=3/2$}
     \label{fig:N_lambda_joint_limit_for_different_alpha}
+    \todo[inline]{explain $N^2$ and $N^3$ behavior}
 \end{figure}
 
 \subsection{Repeated sampling experiments}
@@ -729,11 +730,16 @@ Let $v$ be the Perron vector of $S$, that is,
 \todo[inline]{Somehow establish connection to the Perron vector of $S$ trough the row sums $R_i$ and Equations~\eqref{eq:row_sum_connection_to_hat_Q} and~\eqref{eq:perron_vector003}}
 
 \begin{conjecture}\label{conjecture:argmax_perron_argmin_hat_Q}
-    Let $v^{(\lambda)}$ be the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\lambda D(\hat{f}_{h_i},\hat{f}_{h_j}))}$, where $D$ is the $L^2$-divergence. Let $\hat{Q}_{n,\beta}(h)$ be like in Equation~\eqref{eq:hat_Q_n_beta}. Then,
+    Let $v^{(\lambda)}$ be the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\lambda D(\hat{f}_{h_i},\hat{f}_{h_j}))}$, where $D$ is the $L^2$-divergence. Let $\hat{Q}_{n,\beta}(h)$ be like in Equation~\eqref{eq:hat_Q_n_beta}. Let $i^*_{N,\lambda_N}=\arg\max_{1\le i\le N} v_i^{(\lambda)}$ be the index where the Perron vector has its largest entry. Then,
     \begin{align*}
-        \arg\max_{1\le i\le N} v_i^{(\lambda)}=\arg\min_h\hat{Q}_{n,\beta}(h),
+        \operatorname{dist}\!\left(
+        h_{i^*_{N,\lambda_N}},
+        \operatorname*{arg\,min}_{h\in[h_{\min},h_{\max}]}
+        \hat{Q}_{n,\beta}(h)
+        \right)
+        \to 0.
     \end{align*}
-    for $N\to\infty$, $\lambda_N\to\infty$, \textcolor{red}{$\lambda_N/N^2\to0$}.
+    for $N\to\infty$, $\lambda_N\to\infty$, $\lambda_N/N^2\to0$.
 \end{conjecture}
 
 The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_{n,\beta}(h)]$ to the asymptotic minimizer of $\operatorname{MISE}(h)$.
