@@ -553,8 +553,6 @@ In our experiments, we focus first on the case $f\sim N(0,1)$, that is, normally
 
 For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$, $n=200$ and study the influence of the grid fineness $N$ and the concentration penalty $\lambda=\lambda_N$.
 
-\todo[inline]{Once a fixed sample is drawn, show also plots of mise and ise}
-
 \todo[inline]{add mise and ise bandwidths in figure 3.1}
 
 Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$, $\lambda=1$. 
@@ -663,7 +661,7 @@ The spectrally chosen bandwidths concentrate towards a deterministic interior sc
 
 To explain the results, we need concepts from functional analysis. In particular, the generalized Taylor expansion in Banach spaces. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.5 therein.
 
-The subsequent derivations will lead to Proposition~\ref{prop:argmax_perron_argmin_hat_Q} below, which states that under the correct joint limit $N\to\infty$, $\lambda_N\to\infty$ and $\lambda_N/N^2\to0$, the Perron vector peaks at the bandwidth $h$ at which the $L^2$-curve $h\mapsto\hat{f}_h$ change slowest.
+The subsequent derivations will lead to Conjecture~\ref{conjecture:argmax_perron_argmin_hat_Q} below, which states that under the correct joint limit $N\to\infty$, $\lambda_N\to\infty$ and $\lambda_N/N^2\to0$, the Perron vector peaks at the bandwidth $h$ at which the $L^2$-curve $h\mapsto\hat{f}_h$ change slowest.
 
 Consider the operator $\Psi:\mathbb{R}_{>0}\to L^2(\mathbb{R})$, $h\mapsto\hat{f}_h$. Then $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ is the Fréchet-derivative of $\Psi$ at $h>0$ if it is a bounded linear operator and there exists $\epsilon>0$ such that
 \begin{align*}
@@ -738,13 +736,13 @@ Let $v$ be the Perron vector of $S$, that is,
 
 \todo[inline]{Somehow establish connection to the Perron vector of $S$ trough the row sums $R_i$ and Equations~\eqref{eq:row_sum_connection_to_hat_Q} and~\eqref{eq:perron_vector003}}
 
-\begin{Prop}\label{prop:argmax_perron_argmin_hat_Q}
+\begin{conjecture}\label{conjecture:argmax_perron_argmin_hat_Q}
     Let $v^{(\lambda)}$ be the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\lambda D(\hat{f}_{h_i},\hat{f}_{h_j}))}$, where $D$ is the $L^2$-divergence. Let $\hat{Q}_{n,\beta}(h)$ be like in Equation~\eqref{eq:hat_Q_n_beta}. Then,
     \begin{align*}
         \arg\max_{1\le i\le N} v_i^{(\lambda)}=\arg\min_h\hat{Q}_{n,\beta}(h),
     \end{align*}
     for $N\to\infty$, $\lambda_N\to\infty$, \textcolor{red}{$\lambda_N/N^2\to0$}.
-\end{Prop}
+\end{conjecture}
 
 The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_{n,\beta}(h)]$ to the asymptotic minimizer of $\operatorname{MISE}(h)$.
 
