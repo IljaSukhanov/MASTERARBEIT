@@ -557,7 +557,7 @@ For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\si
 
 \todo[inline]{add mise and ise bandwidths in figure 3.1}
 
-Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|)}$, $\lambda=1$. 
+Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$, $\lambda=1$. 
 
 We see that the Perron vector has a flat plateau which means that many bandwidths are considered central. Increasing $\lambda$ leads to the Perron vector having a more pronounced peak, which is consistent with the interpretation of $\tau=\lambda^{-1}$ being a penalty for how much the Perron vector concentrates.
 
@@ -682,7 +682,7 @@ In fact, the Fréchet-derivative $d\Psi(h)$ is given by $d\Psi(h)[\tau]=\tau\par
 Now, let $h_1<\dots<h_N$ be a grid that is linear in $\psi_{\beta}$. The difference between two bandwidths $h_i<h_j$ is
 \begin{align*}
     h_j-h_i&=h_i\left(\left(1+\frac{(1-\beta/2)(j-i)\Delta_{\psi}}{h_i^{1-\beta/2}}\right)^{\frac{1}{1-\beta/2}}-1\right)\\&
-    =h_i^{\beta/2}+\mathbf{o}((j-i)\Delta_{\psi})
+    =h_i^{\beta/2}(j-i)\Delta_{\psi}+\mathbf{o}((j-i)\Delta_{\psi})
 \end{align*}
 
 Write
@@ -696,7 +696,7 @@ and consequently
 
 It holds $h_j-h_i=h_i^{\beta/2}\Delta_{\psi}+\mathbf{o}((j-i)\Delta_{\psi})$. Using this we obtain
 \begin{align*}
-    D_{i,j}=\frac{1}{2}h_i^{\beta}\Delta_{\psi}^2\|\partial_h\hat{f}_{h_i}\|^2+\mathbf{o}((j-i)^2\Delta_{\psi}^2)
+    D_{i,j}=\frac{1}{2}h_i^{\beta}(j-i)^2\Delta_{\psi}^2\|\partial_h\hat{f}_{h_i}\|^2+\mathbf{o}((j-i)^2\Delta_{\psi}^2)
 \end{align*}
 
 Introduce
@@ -743,7 +743,7 @@ Let $v$ be the Perron vector of $S$, that is,
     \begin{align*}
         \arg\max_{1\le i\le N} v_i^{(\lambda)}=\arg\min_h\hat{Q}_{n,\beta}(h),
     \end{align*}
-    for $N\to\infty$, $\lambda_N\to\infty$, \textcolor{red}{$\lambda_N/N^2\to\infty$}.
+    for $N\to\infty$, $\lambda_N\to\infty$, \textcolor{red}{$\lambda_N/N^2\to0$}.
 \end{Prop}
 
 The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_{n,\beta}(h)]$ to the asymptotic minimizer of $\operatorname{MISE}(h)$.
