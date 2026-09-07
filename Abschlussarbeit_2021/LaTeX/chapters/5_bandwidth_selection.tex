@@ -575,7 +575,6 @@ Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the stability with respec
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
     \caption{For a fixed sample $X=(X_1,\dots,X_{200})$ the spectral bandwidth selection pipeline was repeated for $N=11,16,21,\dots,1001$; $\lambda=1$}
     \label{fig:grid_fineness_chosen_bandwidths}
-    \todo[inline]{add same plot for multiple $\lambda$}
 \end{figure}
 
 In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below.
