@@ -70,23 +70,6 @@ Here, $k\in\mathbb{N}$ is the dimensionality of the point cloud $\mathcal{P}_{k}
 
 We choose the \enquote{backward} embedding $Y_t^{(k)}$ over the \enquote{forward} embedding $\tilde{Y}_t^{(k)}=(X_t,X_{t+1},\dots,X_{t+k-1})^{T}$ for notational convenience throughout this chapter. Geometrically, the resulting point clouds are equivalent up to an orthogonal transformation and a time index shift, that is, $\tilde{Y}_t^{(k)}=R_kY_{t+k-1}^{(k)}$, where $R_k=\operatorname{adiag}(1,\dots,1)$.
 
-\todo[inline]{connect Takens' Theorem better, add interpretation}
-
-Takens' Theorem mainly serves as a theoretical justification or motivation for the sliding-window embedding.
-
-\begin{Thm}[Takens]
-    Let $\mathcal{M}$ be a compact manifold of dimension $m$. Let $\phi\in\operatorname{Diff}^2(\mathcal{M})$ and $y\in C^2(\mathcal{M},\mathbb{R})$. Then the map $\Phi_{(\phi,y)}:\mathcal{M}\to\mathbb{R}^{2m+1}$ defined by
-    \begin{align*}
-        \Phi_{(\phi,y)}(x)=\begin{pmatrix}
-            y(x)\\
-            y(\phi(x))\\
-            \vdots\\
-            y(\phi^{2m}(x))
-        \end{pmatrix}
-    \end{align*}
-    is an embedding, given that the pair $(\phi,y)$ is generic.
-\end{Thm}
-
 \section{Geometric Approach}
 
 In this section, we study how the geometry of the point cloud $\mathcal{P}_k\subseteq\mathbb{R}^{k}$ changes with increasing embedding dimension $k$. For simple innovation distributions, like uniform or normal, the point cloud $\mathcal{P}_k$ is characterized by well known convex--geometric objects. The question becomes if we can apply some convex--geometric functional $f$ to these well known objects and detect a transition at $k=p+1$, where $p$ is the AR order of the embedded time series.
