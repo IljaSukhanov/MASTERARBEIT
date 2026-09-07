@@ -78,12 +78,11 @@ For the $\operatorname{ISB}(h)$ term we get
     \operatorname{ISB}(h)=\frac{h_n^4}{4}\mu_2(K)^2R(f^{''})+\mathbf{o}(h_n^4)
 \end{align*}
 
-
-
 The MISE can be written as
 \begin{align*}
-    \operatorname{MISE}(h_n)=\underbrace{\frac{\|K\|_2^2}{nh_n}+\frac{h_n^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h_n)}+o\left(\frac{1}{nh_n}+h_n^{4}\right)
+    \operatorname{MISE}(h_n)=\underbrace{\frac{\|K\|_2^2}{nh_n}+\frac{h_n^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h_n)}+o\left(\frac{1}{nh_n}+h_n^{4}\right),
 \end{align*}
+which is the first non-vanishing asymptotic approximation.
 
 We have found scaling sequences $a_n$ and $b_n$ such that $a_n\operatorname{MISE}(b_nt)\to G(t)$, namely
 \begin{align*}
@@ -582,7 +581,7 @@ In Section~\ref{sec:similarity_transformations} we established the interpretatio
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
     \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($n=200$) as $\lambda$ increases; $N=201$, $h_{\min}=0.01$, and $h_{\max}=2$.}
     \label{fig:chosen_bandwidths_vs_lambda}
-    \todo[inline]{add vertically: mise, ise, speed}
+    \todo[inline]{add vertically: speed}
 \end{figure}
 
 After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. For $\alpha>0$ the chosen bandwidth seems to converge towards some bandwidth $h_{\infty}=0.2418$.
