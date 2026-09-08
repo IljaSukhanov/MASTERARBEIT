@@ -2,111 +2,24 @@
 
 How can one choose a meaningful scale from a multiscale family of statistical objects?
 
-\section{Methodology}
+\section{General methodology beyond complexes}
 
-\begin{itemize}
-    \item Mutual information, information theory:
-    \begin{align*}
-        I(X,Y)=H(X)+H(Y)-H(X,Y)
-    \end{align*}
-    where $H$ is the entropy (measure of complexity)
-    \item Green matrix, Min-/Meet-matrix
-    \item do multiple samples and see if critical $\epsilon$ changes (stability under resampling)
-\end{itemize}
-
-For two simplicial complexes $K_1$ and $K_2$, we define the $f$-based divergence as
+Above we have considered a sequence (filtration) of simplicial complexes $K_{\epsilon_i}$, $0<\epsilon_1<\dots<\epsilon_N$ and have constructed a similarity/ mutual information using a functional $f(K)$ by
 \begin{align*}
-    \langle K_1,K_2\rangle_f&:=f(K_1)+f(K_2)-f(K_1\oplus K_2),
+    \langle K_1,K_2\rangle_f=f(K_1)+f(K_2)-f(K_1\oplus K_2)
 \end{align*}
-where $f$ is any nonnegative integer-valued (subadditive) function defined on simplicial complexes. For example $f(K)=\text{cat}(K)$. Due to the subadditivity of $f$, the scalar product is nonnegative. A stronger notion would be submodularity. Then it would hold $\left\langle K_1,K_2\right\rangle_f\ge f(K_1\cap K_2)\ge0$.
+where $\oplus$ is some combining operation.
 
-\todo[inline]{add discussion about $\langle K_1,K_2\rangle_f=0\iff$??}
-
-For a finite sequence of filtration values $\epsilon_1,\dots,\epsilon_N$ we can define a matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$ by
-\begin{align*}
-    \Sigma^{(N)}_{ij}:=\left\langle K_{\epsilon_i}(X),K_{\epsilon_j}(X)\right\rangle_f,\quad i,j=1,\dots,N.
-\end{align*}
-Since we consider a filtration $K_{\epsilon_1}\subseteq\dots\subseteq K_{\epsilon_{N}}$, the scalar product is just given by $\left\langle K_{\epsilon_i},K_{\epsilon_j}\right\rangle_f=f(K_{\epsilon_i}\cap K_{\epsilon_j})=f(K_{\epsilon_{i\wedge j}})$, where $i\wedge j:=\min\{i,j\}$. This means that the subadditivity of $f$ is not needed for the nonnegativity of the scalar product when considering a filtration. Setting $c_i=f(K_{\epsilon_i})$, the scale similarity matrix has the following form:
-\begin{align}\label{eq:Sigma_form}
-    \Sigma^{(N)}=\begin{pmatrix}
-        c_1 & c_1 & \dots & c_1\\
-        c_1 & c_2 & \dots & c_2\\
-        \vdots & \vdots & \ddots & \vdots\\
-        c_1 & c_2 & \dots & c_N
-    \end{pmatrix}
-\end{align}
-
-The following lemma shows that the local extrema of the vector $c=(c_1,\dots,c_N)$ and the principal eigenvector $v^*$ of $\Sigma^{(N)}$ coincide. In particular, choosing a functional $f$ such that $i\mapsto f(K_{\epsilon_i})$ is monotone might not be a good idea, since the entries of the principal eigenvector will merely reflect the monotone behavior of $f$. This suggests that we need to choose a functional $f$ such that $i\mapsto f(K_{\epsilon_i})$ is non-monotone.
-
-% The following lemma shows that using the $\min$ kernel might not be a good idea, as we do not gain any advantages from computing the principal eigenvector $v^*$ of $\Sigma^{(N)}$. Concretely, the entries of any eigenvector of $\Sigma^{(N)}$ have the same behavior as the map $i\mapsto f(K_{{\epsilon_i}})$.
-
-\begin{Lem}
-    Let $\Sigma\in\mathbb{R}^{N\times N}$ be defined by $\Sigma_{ij}=f(K_{\epsilon_{i\wedge j}})$ and denote $c_i:=f(K_{\epsilon_i})$ for $i=1,\dots,N$. Then for the principal eigenvector $v$ of $\Sigma$ it holds that
-    \begin{align*}
-        \operatorname{sgn}(v_{i+1}-v_i)=\operatorname{sgn}(c_{i+1}-c_i),\quad\forall i=1,\dots,N-1.
-    \end{align*}
-\end{Lem}
-\begin{proof}
-    Let $\lambda$ be the largest eigenvalue of $\Sigma$ with corresponding (principal) eigenvector $v$. Then $\Sigma v=\lambda v$. By Perron-Frobenius $\lambda>0$. We remember that the matrix $\Sigma$ has the form~\eqref{eq:Sigma_form} and compute
-    \begin{align*}
-        \lambda(v_{i+1}-v_i)&=\lambda v_{i+1}-\lambda v_i\\&
-        =(\Sigma v)_{i+1}-(\Sigma v)_i\\&
-        =\left(c_1v_1+\dots+c_{i}v_{i}+c_{i+1}\sum_{l=i+1}^{N}v_l\right)\\&-\left(c_1v_1+\dots+c_{i-1}v_{i-1}+c_i\sum_{l=i}^{N}v_l\right)\\&
-        =c_{i+1}\sum_{l=i+1}^{N}v_l-c_i\sum_{l=i+1}^{N}v_l\\&
-        =(c_{i+1}-c_i)\sum_{l=i+1}^{N}v_l.
-    \end{align*}
-    Since by Perron-Frobenius all entries of $v$ are positive, we have $\sum_{l=i+1}^{N}v_l>0$ in addition to $\lambda>0$. It follows that $\text{sgn}(v_{i+1}-v_i)=\text{sgn}(c_{i+1}-c_i)$ which is the claim.
-\end{proof}
-
-An interesting question arises concerning the global extrema of $c$ and $v^*$. Do they coincide as well? If not, how would counterexamples look like?
-\todo[inline]{add discussion about global extrema}
-
-\begin{Prop}[Properties of the Min-matrix]\label{prop:properties_of_min_matrix}
-    Let $\Sigma=(\Sigma_{ij})\in\mathbb{R}^{N\times N}$ with $\Sigma_{ij}=\min\{c_i,c_j\}$ for some constants $c_1,\dots,c_N\in\mathbb{R}_{\ge0}$.
-    \begin{enumerate}
-        \item[1.] $\Sigma$ is positive semi-definite iff $0\le c_1\le\dots\le c_N$
-        \item[2.] $\Sigma$ is positive definite iff $0<c_1<\dots<c_N$
-        \item[3.] The determinant of $\Sigma$ is given by $\operatorname{det}(\Sigma)=c_1(c_2-c_1)\cdots(c_N-c_{N-1})$
-        \item[4.] The inverse of $\Sigma$ exists iff $c_{i+1}-c_{i}\ne0$ for all $i=1,\dots,N-1$ and is given by $\Sigma^{-1}=(\Sigma^{-1}_{ij})$ with
-        \begin{align*}
-            \Sigma^{-1}_{ii}&=\begin{cases}
-                \frac{1}{c_i-c_{i-1}}+\frac{1}{c_{i+1}-c_i} & ,i=1,\dots,N-1\\
-                \frac{1}{c_{N}-c_{N-1}} & ,i=N
-            \end{cases}\\
-            \Sigma^{-1}_{i,i+1}&=\Sigma^{-1}_{i+1,i}=-\frac{1}{c_{i+1}-c_i},i=1,\dots,N-1
-        \end{align*}
-    \end{enumerate}
-\end{Prop}
-\begin{proof}
-    \todo[inline]{Prove in appendix or cite}
-\end{proof}
-
-% Question: under which conditions on $f$ is $\Sigma$ positive definite or positive semi-definite
-
-\begin{Rem}
-    From Proposition~\ref{prop:properties_of_min_matrix} it follows that the scale similarity matrix $\Sigma$ is positive definite iff $i\mapsto f(K_{\epsilon_i})$ is monotonously strictly increasing and positive.
-\end{Rem}
+How can we generalize this beyond complexes? For example for a sequence of kde's $f_{h_i}$, $0<h_1<\dots<h_N$ or a sequence of point clouds $\mathcal{P}_k\subseteq\mathbb{R}^{k}$, $k=1,\dots,k_{\max}$?
 
 A matrix $\Sigma=(\Sigma_{ij})\in\mathbb{R}^{N\times N}$ is called nonnegative (positive) if $\Sigma_{ij}\ge0$ ($\Sigma_{ij}>0$) for all $i,j=1,\dots,N$. It is called primitive if it is nonnegative and there exists a natural number $m$ such that $\Sigma^{m}$ is positive. The spectrum $\sigma(\Sigma)$ is the (multi-)set of all eigenvalues of $\Sigma$: $\sigma(\Sigma)=\{\lambda\in\mathbb{C}:\exists v\in\mathbb{C}^N,v\ne0:\Sigma v=\lambda v\}$.
 
 \todo[inline]{add definition of irreducible matrix}
 \todo[inline]{discuss conditions on matrices}
 
-% \todo[inline]{algebraic multiplicity = 1 $\implies$ geometric multiplicity = 1 $\implies$ eigenvector is unique up to scaling}
-
 \begin{Thm}[Perron-Frobenius]
     Let $\Sigma=(\Sigma_{ij})\in\mathbb{R}^{N\times N}$ be a primitive matrix. Then there exist $\lambda^*>0$ and $v^*=(v^*_1,\dots,v^*_N)\in\mathbb{R}^{N}_{>0}$ such that $\lambda^*\in\sigma(\Sigma)$, $\lambda^*>|\lambda|$ for all $\lambda\in\sigma(\Sigma),\lambda\ne\lambda^*$. Furthermore, $v^*$ is the corresponding eigenvector that is unique up to scaling.
 \end{Thm}
-
-\begin{Rem}
-    Analogously to classical PCA, we can study the spectral gap ratio: $\frac{\lambda_N-|\lambda_N|}{\lambda_N}$
-\end{Rem}
-
-\subsubsection*{critical scale choice}
-
-We are now interested in $j_{\text{crit}}=\text{argmax}_{j=1,\dots,N}\{v^{\star}_j\}$. We pick $\epsilon_{\text{crit}}=\epsilon_{j_{\text{crit}}}$ and consider all vertices that are isolated in $\text{VR}_{\epsilon_{\text{crit}}}(X)$ as noise.
-
-\todo[inline]{Discuss uniqueness of $j_{\text{crit}}$}
 
 \section{Connection to Markov Chains}
 
@@ -140,16 +53,6 @@ where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is,
 \begin{Def}
     A triple $(f,\{K_i\},\oplus)$ is said to be spectrally optimizable if it generates a finite irreducible discrete time Markov chain on the state space $\{1,\dots,N\}$ with transition probability matrix $Q=(q_{ij})$ and stationary distribution $\pi^Q=(\pi_1^Q,\dots,\pi_N^Q)$.
 \end{Def}
-
-\section{General methodology beyond complexes}
-
-Above we have considered a sequence (filtration) of simplicial complexes $K_{\epsilon_i}$, $0<\epsilon_1<\dots<\epsilon_N$ and have constructed a similarity/ mutual information using a functional $f(K)$ by
-\begin{align*}
-    \langle K_1,K_2\rangle_f=f(K_1)+f(K_2)-f(K_1\oplus K_2)
-\end{align*}
-where $\oplus$ is some combining operation.
-
-How can we generalize this beyond complexes? For example for a sequence of kde's $f_{h_i}$, $0<h_1<\dots<h_N$ or a sequence of point clouds $\mathcal{P}_k\subseteq\mathbb{R}^{k}$, $k=1,\dots,k_{\max}$?
 
 \section{Notes on practical computation of (principal) eigenvectors}
 
