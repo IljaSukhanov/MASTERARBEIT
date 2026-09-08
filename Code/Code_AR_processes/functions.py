@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike, NDArray
-from scipy.optimize import linprog, minimize_scalar
+from scipy.optimize import minimize_scalar
 
 __all__ = [
     "jones_ar_coefficients",
@@ -18,7 +18,7 @@ __all__ = [
     "batched_geometric_width_curves",
     "theoretical_ar_width_in_direction",
     "population_minimizing_ar2_direction",
-    "horizontal_tail_lad_selector",
+    "vanishing_tie_breaking_selector",
     "aic_bic_ar_order",
     "yule_walker_pacf",
     "pacf_cutoff_order",
@@ -473,53 +473,51 @@ def population_minimizing_ar2_direction(phi, k, history=10_000):
     return np.array([np.cos(best_angle), np.sin(best_angle)])
 
 
-def horizontal_tail_lad_selector(k_values, widths):
-    """Fit c + s(q-k)_+ by LAD for each q, subject to s >= 0."""
+def vanishing_tie_breaking_selector(k_values, widths, sample_size_T):
+    """Select a positive AR order using widths and a vanishing penalty."""
     k_values = np.asarray(k_values, dtype=float)
     widths = np.asarray(widths, dtype=float)
-    candidate_rows = []
-
-    for selected_q in k_values[1:-1].astype(int):
-        hinge = np.maximum(selected_q - k_values, 0.0)
-        sample_count = len(widths)
-        identity = np.eye(sample_count)
-        objective = np.concatenate(([0.0, 0.0], np.ones(sample_count)))
-        constraints = np.vstack((
-            np.column_stack((-np.ones(sample_count), -hinge, -identity)),
-            np.column_stack((np.ones(sample_count), hinge, -identity)),
-        ))
-        bounds = [(None, None), (0.0, None)] + [(0.0, None)] * sample_count
-        fit = linprog(
-            objective,
-            A_ub=constraints,
-            b_ub=np.concatenate((-widths, widths)),
-            bounds=bounds,
-            method="highs",
+    if k_values.ndim != 1 or widths.ndim != 1:
+        raise ValueError("k_values and widths must be one-dimensional.")
+    if len(k_values) != len(widths) or len(k_values) < 2:
+        raise ValueError(
+            "k_values and widths must have the same length of at least two."
         )
-        if not fit.success:
-            raise RuntimeError(
-                f"LAD fit failed for q={selected_q}: {fit.message}"
-            )
-        level, slope = fit.x[:2]
-        fitted_values = level + slope * hinge
-        candidate_rows.append({
-            "selected_q": selected_q,
-            "score": float(np.sum(np.abs(widths - fitted_values))),
-            "level": float(level),
-            "slope": float(slope),
-            "fitted_values": fitted_values,
-        })
+    if not np.all(np.isfinite(k_values)) or not np.all(np.isfinite(widths)):
+        raise ValueError("k_values and widths must contain only finite values.")
+    if not np.all(np.diff(k_values) > 0):
+        raise ValueError("k_values must be strictly increasing.")
+    if k_values[0] != 1 or not np.all(np.diff(k_values) == 1):
+        raise ValueError(
+            "k_values must be consecutive embedding dimensions starting at one."
+        )
+    if not isinstance(sample_size_T, (int, np.integer)) or sample_size_T < 1:
+        raise ValueError("sample_size_T must be a positive integer.")
 
-    best = min(
-        candidate_rows,
-        key=lambda row: (row["score"], row["selected_q"]),
+    width_range = float(np.ptp(widths))
+    if width_range <= np.finfo(float).eps:
+        normalized_widths = np.zeros_like(widths)
+    else:
+        normalized_widths = (widths - np.min(widths)) / width_range
+
+    lambda_T = float(sample_size_T ** (-0.25))
+    normalized_indices = (
+        (k_values - k_values[0]) / (k_values[-1] - k_values[0])
     )
+    criterion = normalized_widths + lambda_T * normalized_indices
+
+    # The first admissible plateau onset is q=2, corresponding to AR order p=1.
+    candidate_indices = np.arange(1, len(k_values))
+    selected_index = candidate_indices[
+        np.argmin(criterion[candidate_indices])
+    ]
+    selected_q = int(k_values[selected_index])
     return {
-        **best,
-        "selected_order": best["selected_q"] - 1,
-        "candidate_scores": pd.DataFrame(candidate_rows).drop(
-            columns="fitted_values"
-        ),
+        "selected_q": selected_q,
+        "selected_order": selected_q - 1,
+        "lambda_T": lambda_T,
+        "criterion": criterion,
+        "normalized_widths": normalized_widths,
     }
 
 
