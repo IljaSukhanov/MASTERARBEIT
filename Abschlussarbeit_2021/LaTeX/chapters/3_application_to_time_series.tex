@@ -80,7 +80,7 @@ We choose the \enquote{backward} embedding $Y_t^{(k)}$ over the \enquote{forward
 
 \section{Geometric Approach}
 
-In this section, we study how the geometry of the point cloud $\mathcal{P}_k\subseteq\mathbb{R}^{k}$ changes with increasing embedding dimension $k$. For simple innovation distributions, like uniform or normal, the point cloud $\mathcal{P}_k$ is characterized by well known convex--geometric objects. The question becomes if we can apply some convex--geometric functional $f$ to these well known objects and detect a transition at $k=p+1$, where $p$ is the AR order of the embedded time series.
+In this section, we study how the geometry of the point cloud $\mathcal{P}_k\subseteq\mathbb{R}^{k}$ changes with increasing embedding dimension $k$. For bounded innovation distributions, like uniform or beta, the point cloud $\mathcal{P}_k$ is characterized by a well known convex--geometric object. The question becomes if we can apply some convex--geometric functional $f$ to these well known objects and detect a transition at $k=p+1$, where $p$ is the AR order of the embedded time series.
 
 In order to be able to talk about the \enquote{geometry of a point cloud} in a rigorous way, we first need to introduce some concepts from probability theory. Let $Y$ be a $d$-dimensional random vector with density $f_Y$. The \textit{support} of $Y$ is given by
 \begin{align*}
@@ -106,6 +106,13 @@ where $g_j^{(k)}=(\psi_j,\psi_{j-1},\dots,\psi_{j-k+1})^{T}$.
 \begin{proof}
     Since $\{X_t\}$ is causal, $r_{\phi}=\min\{|z|:\phi(z)=0\}>1$. Let $R\in(1,r_{\phi})$ be arbitrary. From complex analysis, it follows that $1/\phi$ is analytical on some open neighborhood of $\{|z|\le R\}$. Its representation is given by $1/\phi(z)=\sum_{j=0}^{\infty}\psi_jz^{j}$. By Cauchy's integral formula~[], $|\psi_j|\le R^{-j}\max_{|z|=R}|1/\phi(z)|$. Setting $C=\max_{|z|=R}|1/\phi(z)|$ and $\rho=R^{-1}$ yields the statement.
 \end{proof}
+
+Bounded innovation distributions lead to $Y_t^{(k)}$ having compact support. Thus, in our work, we focus on innovations $Z_t$ that have support $[a,b]$. Possible ideas for extending our approach to innovation distributions with unbounded support are given in the outlook chapter~\ref{chap:outlook}. The most prominent example is the uniform distribution $\mathcal{U}[a,b]$. More generally, we can consider the Beta distribution. A random variable $X$ follows the Beta distribution $\text{Beta}(\alpha,\beta)$ if its density is given by
+\begin{align*}
+    f_{\alpha,\beta}(x)=\frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1},\quad\alpha,\beta>0,
+\end{align*}
+where $B(\alpha,\beta)=\Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha+\beta)$ and $\Gamma$ is the Gamma function. For $\alpha=\beta=1$ we have $\text{Beta}(\alpha,\beta)=\text{Beta}(1,1)=\mathcal{U}[0,1]$.
+
 
 \subsection*{Uniformly distributed innovations}
 
@@ -503,11 +510,3 @@ PACF cutoff
     r_j&=\|g_j^{(k)}\|
 \end{align*}
 $P_n^{(k)}$ are the normalized Gegenbauer polynomials.
-
-\textbf{Extension to Beta distributed innovations}
-
-The beta distribution is a generalization of the uniform distribution, which has also bounded support. A random variable $X$ follows the Beta distribution $\text{Beta}(\alpha,\beta)$ if its density is given by
-\begin{align*}
-    f_{\alpha,\beta}(x)=\frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1},\quad\alpha,\beta>0,
-\end{align*}
-where $B(\alpha,\beta)=\Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha+\beta)$ and $\Gamma$ is the Gamma function. For $\alpha=\beta=1$ we have $\text{Beta}(\alpha,\beta)=\text{Beta}(1,1)=\mathcal{U}[0,1]$.
