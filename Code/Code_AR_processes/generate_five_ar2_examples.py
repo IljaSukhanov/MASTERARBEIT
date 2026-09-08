@@ -1,32 +1,36 @@
-"""Generate five reproducible AR(2) pipeline plots using the thesis notebook code."""
+"""Generate five reproducible AR(2) pipeline plots using shared utilities."""
 
 from __future__ import annotations
 
-import ast
-import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.optimize import linprog, minimize_scalar
 
 if __package__:
     from .functions import (
         jones_ar_coefficients,
         simulate_uniform_ar,
         sliding_window_point_cloud,
+        batched_geometric_width_curves,
+        theoretical_ar_width_in_direction,
+        population_minimizing_ar2_direction,
+        horizontal_tail_lad_selector,
     )
 else:
     from functions import (
         jones_ar_coefficients,
         simulate_uniform_ar,
         sliding_window_point_cloud,
+        batched_geometric_width_curves,
+        theoretical_ar_width_in_direction,
+        population_minimizing_ar2_direction,
+        horizontal_tail_lad_selector,
     )
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-NOTEBOOK_PATH = Path(__file__).with_name("ar_order_minimum_width.ipynb")
 OUTPUT_DIR = PROJECT_ROOT / "output" / "figures" / "five_ar2_examples"
 CSV_OUTPUT_DIR = (
     Path(__file__).resolve().parent
@@ -37,89 +41,12 @@ CSV_OUTPUT_DIR = (
 )
 
 
-def load_notebook_functions(names: set[str]) -> dict[str, object]:
-    """Load selected functions verbatim from the thesis notebook."""
-    notebook = json.loads(NOTEBOOK_PATH.read_text(encoding="utf-8"))
-    namespace: dict[str, object] = {
-        "np": np,
-        "pd": pd,
-        "linprog": linprog,
-    }
-    remaining = set(names)
-    for cell in notebook["cells"]:
-        if cell.get("cell_type") != "code":
-            continue
-        source = "".join(cell.get("source", []))
-        try:
-            tree = ast.parse(source)
-        except SyntaxError:
-            continue
-        definitions = [
-            node
-            for node in tree.body
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-            and node.name in remaining
-        ]
-        if not definitions:
-            continue
-        module = ast.Module(body=definitions, type_ignores=[])
-        exec(compile(module, str(NOTEBOOK_PATH), "exec"), namespace)
-        remaining.difference_update(node.name for node in definitions)
-    if remaining:
-        raise RuntimeError(f"Functions not found in notebook: {sorted(remaining)}")
-    return namespace
-
-
-def population_minimizing_ar2_direction(phi: np.ndarray, k: int) -> np.ndarray:
-    """Return a population-minimizing direction for the AR(2) example."""
-    if k == 1:
-        return np.ones(1)
-    if k >= 3:
-        direction = np.r_[1.0, -phi, np.zeros(k - 3)]
-        return direction / np.linalg.norm(direction)
-
-    psi = AR_IMPULSE_RESPONSE(phi, maximum_lag=10_000)
-    lagged_psi = np.r_[0.0, psi[:-1]]
-
-    def width_from_angle(angle: float) -> float:
-        projections = np.cos(angle) * psi + np.sin(angle) * lagged_psi
-        return float(2.0 * np.sum(np.abs(projections)))
-
-    angle_grid = np.linspace(0.0, np.pi, 4_097)
-    grid_widths = np.asarray([width_from_angle(angle) for angle in angle_grid])
-    best_index = int(np.argmin(grid_widths))
-    lower_index = max(0, best_index - 1)
-    upper_index = min(len(angle_grid) - 1, best_index + 1)
-    local_fit = minimize_scalar(
-        width_from_angle,
-        bounds=(angle_grid[lower_index], angle_grid[upper_index]),
-        method="bounded",
-        options={"xatol": 1e-12},
-    )
-    best_angle = float(local_fit.x) if local_fit.success else float(angle_grid[best_index])
-    return np.array([np.cos(best_angle), np.sin(best_angle)])
-
-
-FUNCTIONS = load_notebook_functions(
-    {
-        "ar_impulse_response",
-        "batched_geometric_width_curves",
-        "theoretical_ar_width_in_direction",
-        "horizontal_tail_lad_selector",
-    }
-)
-AR_IMPULSE_RESPONSE = FUNCTIONS["ar_impulse_response"]
-BATCHED_GEOMETRIC_WIDTH_CURVES = FUNCTIONS["batched_geometric_width_curves"]
-THEORETICAL_AR_WIDTH_IN_DIRECTION = FUNCTIONS["theoretical_ar_width_in_direction"]
-HORIZONTAL_TAIL_LAD_SELECTOR = FUNCTIONS["horizontal_tail_lad_selector"]
-
-
 def generate_process(seed: int, replication: int) -> dict[str, object]:
     k_values = np.arange(1, 11)
     generator = np.random.default_rng(np.random.SeedSequence([seed, replication, 0]))
     phi = jones_ar_coefficients(2, rng=generator)
     series = simulate_uniform_ar(phi, 2_000, 1_000, 1.0, rng=generator)
-    _, widths, _, empirical_directions = BATCHED_GEOMETRIC_WIDTH_CURVES(
+    _, widths, _, empirical_directions = batched_geometric_width_curves(
         series,
         k_values,
         seed=seed,
@@ -130,11 +57,11 @@ def generate_process(seed: int, replication: int) -> dict[str, object]:
         geometric_decay=0.99,
         return_directions=True,
     )
-    selection = HORIZONTAL_TAIL_LAD_SELECTOR(k_values, widths)
+    selection = horizontal_tail_lad_selector(k_values, widths)
     population_width = 2.0 / np.linalg.norm(np.r_[1.0, -phi])
     population_at_empirical_min = np.asarray(
         [
-            THEORETICAL_AR_WIDTH_IN_DIRECTION(phi, direction, half_width=1.0)
+            theoretical_ar_width_in_direction(phi, direction, half_width=1.0)
             for direction in empirical_directions
         ]
     )
