@@ -113,8 +113,9 @@ Bounded innovation distributions lead to $Y_t^{(k)}$ having compact support. Thu
 \end{align*}
 where $B(\alpha,\beta)=\Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha+\beta)$ and $\Gamma$ is the Gamma function. For $\alpha=\beta=1$ we have $\text{Beta}(\alpha,\beta)=\text{Beta}(1,1)=\mathcal{U}[0,1]$.
 
+% \textbf{Uniformly distributed innovations}
 
-\subsection*{Uniformly distributed innovations}
+\subsection{Convex--Geometric Definitions and Connection to sliding-window support}
 
 We will start exploring the geometry of the sequence of point clouds $\{\mathcal{P}_k\}_{k=1}^{K}$ by considering the case where the innovations are uniformly distributed, that is, $Z_t\sim\mathcal{U}[-1,1]$. To this end, we first introduce some common definitions from convex geometry. A good survey on convex geometry is the book~\cite{gruber1993handbook}.
 
@@ -209,6 +210,8 @@ where $\rho_{\mathcal{Z}}$ is a unique positive even measure on $\mathbb{S}^{k-1
 \end{proof}
 
 The width of a convex body $K\subseteq\mathbb{R}^{d}$ in direction $u$ is given by $w_K(u)=h_K(u)+h_K(-u)$ and if $K$ is centrally symmetric, then $w_K(u)=2h_K(u)$. The minimum width is $m(K)=\min\{w_K(u):u\in\mathbb{S}^{d-1}\}$. We write $w_k(u)=w_{\mathcal{Z}^{(k)}}(u)$ and $m_k=m(\mathcal{Z}^{(k)})$ for the width in direction $u$ and the minimum width of the zonoid $\mathcal{Z}^{(k)}$, respectively.
+
+\subsection{Consistency of the empirical minimum width}
 
 Next, we formulate a result that states that the relation $k\mapsto m_k$ has an elbow point at $k=p+1$.
 
@@ -337,6 +340,8 @@ There exists work that derive statements on the convergence speed of $a_T=d_H(\o
     Finally, applying Lemmas~\ref{lem:hausdorff_convergence} and~\ref{lem:ergodic_implies_dense} and Remark~\ref{rem:ar_ergodic} proves the statement.
 \end{proof}
 
+\subsection{Minimization via Projected sub-gradient descent}
+
 The idea now is to minimize $\hat{w}_{k,T}(u)$ over all $u\in\mathbb{S}^{k-1}$ and examine the relation $k\mapsto \hat{m}_{k,T}$. The hope is that the theoretically established elbow point that occurs at $k=p+1$ will also be detectable at the empirical level.
 
 Before discussing the minimization of $\hat{w}_k=\hat{w}_{k,T}$ we collect some properties of this function.
@@ -370,9 +375,13 @@ Before discussing the minimization of $\hat{w}_k=\hat{w}_{k,T}$ we collect some 
     Convexity of $\hat{w}_k$ follows from convexity of linear functions and the pointwise maximum of convex functions. Piecewise linearity also follows directly from the standard fact, that the pointwise maximum of linear functions is piecewise linear. Differentiability almost everywhere follows directly from Rademacher's theorem (see e.g.~[]). The set of non-differentiable points is just the set of all points $u$ where two distinct linear functions $\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and $\langle Y_q^{(k)}-Y_p^{(k)},u\rangle$ coincide. The gradient of $\hat{w}_k$ in all directions $u\notin\mathcal{N}$ is obtained by straightforward differentiation.    
 \end{proof}
 
-By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k-1}$.
+By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k-1}$. The set of minimizers
+\begin{align}\label{eq:set_of_minimizers}
+    \mathcal{X}_k=\arg\min\{\hat{w}_k(u):u\in\mathbb{S}^{k-1}\}
+\end{align}
+is not empty.
 
-A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties. We show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the convergence of Algorithm~\ref{alg:projected_gradient_descent}. But first, we state this result in our notation.
+A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties. We show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the \textcolor{red}{linear} convergence of Algorithm~\ref{alg:projected_gradient_descent} if the initial point $u_0$ is close to $\mathcal{X}_k$. But first, we state this result in our notation.
 
 \begin{algorithm}[ht]
     \caption{Projected gradient descent}
@@ -393,11 +402,11 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
 \end{algorithm}
 
 \begin{Thm}[{\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel}}]
-    Consider the minimization problem
-    \begin{align*}
-        \min_{x\in\mathbb{S}^{n-1}}f(x),
-    \end{align*}
-    where $f$ is convex on $\mathbb{R}^n$ and Lipschitz-continuous with constant $L>0$. Let $\{x_k\}_{k\ge0}$ be the sequence obtained from Algorithm~\ref{alg:projected_gradient_descent}. Let $\mathcal{X}$ be the set of weak sharp minima with parameter $\alpha>0$. Define the sequence of step sizes by $\eta_t=\beta^t\gamma_0$, $t=0,1,\dots$, where $\beta_0$ and $\gamma$ satisfy
+    Consider the minimization problem of the form $\min f(x)$, $x\in\mathbb{S}^{n-1}$, where $f$ is convex on $\mathbb{R}^n$ and Lipschitz-continuous with constant $L>0$. Let $\{x_k\}_{k\ge0}$ be the sequence obtained from Algorithm~\ref{alg:projected_gradient_descent}. Let $\mathcal{X}=\arg\min\{f(x):x\in\mathbb{S}^{n-1}\}$ be the set of minimizers of $f$ and let $f^*$ be the minimum of $f$ over $\mathbb{S}^{n-1}$. Assume the weak sharp minima condition holds, that is,
+    \begin{align}\label{eq:weak_sharp_minima_condition}
+        \exists\alpha,\rho>0\text{ such that }\forall x\in\mathbb{S}^{n-1},\operatorname{dist}(x,\mathcal{X})<\rho:f(x)-f^*\ge\alpha\operatorname{dist}(x,\mathcal{X})
+    \end{align}
+    Define the sequence of step sizes by $\eta_t=\beta^t\gamma_0$, $t=0,1,\dots$, where $\beta_0$ and $\gamma$ satisfy
     \begin{align*}
         e_0&=\min\left\{\max\left\{\operatorname{dist}(x_0,\mathcal{X}),\frac{\alpha}{2L}\right\},\rho\right\}\\
         \gamma_0&<\min\left\{\frac{2e_0(\alpha-Le_0)}{L^2},\frac{e_0}{2(\alpha-Le_0)}\right\}\\
@@ -410,11 +419,23 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
     for all $t\ge0$.
 \end{Thm}
 
-\todo[inline]{Apply this guaranty to my case and interpret}
+We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ in Proposition~\ref{prop:properties_empirical_width}. It turns out that the weak sharp minima condition from Equation~\eqref{eq:weak_sharp_minima_condition} is also fulfilled in our setting. We record this fact in the following Lemma.
 
-In practice, the parameters $\gamma$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
+\begin{Lem}
+    There exist $\alpha>0$ and $\rho>0$ such that
+    \begin{align*}
+        \hat{w}_k(u)-\hat{m}_k\ge\alpha\operatorname{dist}(u,\mathcal{X}_k)
+    \end{align*}
+    for all $u\in\mathbb{S}^{k-1}$ with $\operatorname{dist}(u,\mathcal{X}_k)<\rho$.
+\end{Lem}
 
-\textbf{Elbow point selection}
+\begin{proof}
+    \todo[inline]{TBD}
+\end{proof}
+
+In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
+
+\subsection{Elbow point selection}
 
 \todo[inline]{compare different elbow selectors, maybe somehow establish consistency?}
 
@@ -433,6 +454,25 @@ where
 and $\lambda_T q$ is a penalty term because without it, larger orders would be preferred.
 
 Under the correct assumption on the penalty term sequence $\lambda_T$, it can even be established that $\hat{p}_T\to p$ almost surely.
+
+\subsection{Other convex--geometric functionals}
+
+Besides the minimum width $m_k$ we can ask if other convex--geometric functionals can be used. A natural candidate would be the mean width, given by integrating $w_k(u)$ over $\mathbb{S}^{k-1}$:
+\begin{align*}
+    \overline{w}_k=\int_{\mathbb{S}^{k-1}}w_k(u)\,d\sigma(u).
+\end{align*}
+
+\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
+
+\todo[inline]{Minkowsi functional?}
+
+\begin{align*}
+    Q_n(u)&=\lambda_{n,k}N(k,n)\sum_{j=0}^{\infty}r_jP_n^{(k)}(\langle u,v_j\rangle)\\
+    N(k,n)&=\binom{k+n-1}{n}-\binom{k+n-3}{n-2}\\
+    v_j&=g_j^{(k)}/\|g_j^{(k)}\|\\
+    r_j&=\|g_j^{(k)}\|
+\end{align*}
+$P_n^{(k)}$ are the normalized Gegenbauer polynomials.
 
 \section{Numerical Results}
 
@@ -494,19 +534,3 @@ PACF cutoff
 \todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
 
 \section{Literature Positioning}
-
-\section*{Additional Notes}
-
-\textbf{Other convex geometric functionals}
-
-\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
-
-\todo[inline]{Minkowsi functional?}
-
-\begin{align*}
-    Q_n(u)&=\lambda_{n,k}N(k,n)\sum_{j=0}^{\infty}r_jP_n^{(k)}(\langle u,v_j\rangle)\\
-    N(k,n)&=\binom{k+n-1}{n}-\binom{k+n-3}{n-2}\\
-    v_j&=g_j^{(k)}/\|g_j^{(k)}\|\\
-    r_j&=\|g_j^{(k)}\|
-\end{align*}
-$P_n^{(k)}$ are the normalized Gegenbauer polynomials.
