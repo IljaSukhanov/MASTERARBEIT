@@ -9,6 +9,8 @@ from scipy.optimize import linprog, minimize_scalar
 
 __all__ = [
     "jones_ar_coefficients",
+    "centered_beta_support",
+    "simulate_beta_ar",
     "simulate_uniform_ar",
     "sliding_window_point_cloud",
     "ar_impulse_response",
@@ -59,6 +61,84 @@ def jones_ar_coefficients(
     return phi
 
 
+def centered_beta_support(
+    alpha: float = 1.0,
+    beta: float = 1.0,
+    support_width: float = 2.0,
+) -> tuple[float, float]:
+    """Return the support bounds of a mean-zero scaled Beta distribution."""
+    if not np.isfinite(alpha) or alpha <= 0:
+        raise ValueError("alpha must be a positive finite number")
+    if not np.isfinite(beta) or beta <= 0:
+        raise ValueError("beta must be a positive finite number")
+    if not np.isfinite(support_width) or support_width <= 0:
+        raise ValueError("support_width must be a positive finite number")
+
+    beta_mean = alpha / (alpha + beta)
+    return (
+        float(-support_width * beta_mean),
+        float(support_width * (1.0 - beta_mean)),
+    )
+
+
+def simulate_beta_ar(
+    phi: ArrayLike,
+    sample_size: int,
+    burnin: int = 500,
+    support_width: float = 2.0,
+    alpha: float = 1.0,
+    beta: float = 1.0,
+    rng: np.random.Generator | int | None = None,
+    *,
+    intercept: float = 0.0,
+) -> NDArray[np.float64]:
+    """Simulate an AR process with centered, scaled Beta innovations.
+
+    If ``B ~ Beta(alpha, beta)``, the innovations are
+    ``support_width * (B - E[B])``. Their mean is zero and their support has
+    total width ``support_width``. The defaults use the original
+    ``Uniform[-1, 1]`` generator path, preserving seeded uniform experiments.
+    """
+    phi = np.asarray(phi, dtype=float)
+    if phi.ndim != 1 or len(phi) == 0 or not np.all(np.isfinite(phi)):
+        raise ValueError("phi must be a nonempty finite one-dimensional vector")
+    if not isinstance(sample_size, (int, np.integer)) or sample_size < 1:
+        raise ValueError("sample_size must be a positive integer")
+    if not isinstance(burnin, (int, np.integer)) or burnin < 0:
+        raise ValueError("burnin must be a non-negative integer")
+    if not np.isfinite(intercept):
+        raise ValueError("intercept must be finite")
+
+    innovation_lower, innovation_upper = centered_beta_support(
+        alpha=alpha,
+        beta=beta,
+        support_width=support_width,
+    )
+
+    generator = np.random.default_rng(rng)
+    order = len(phi)
+    total_length = burnin + order + sample_size
+    if alpha == 1.0 and beta == 1.0:
+        innovations = generator.uniform(
+            innovation_lower,
+            innovation_upper,
+            size=total_length,
+        )
+    else:
+        beta_draws = generator.beta(alpha, beta, size=total_length)
+        innovations = support_width * (
+            beta_draws - alpha / (alpha + beta)
+        )
+    series = np.empty(total_length, dtype=float)
+    series[:order] = intercept / (1.0 - np.sum(phi))
+
+    for time_index in range(order, total_length):
+        recent_values = series[time_index - np.arange(1, order + 1)]
+        series[time_index] = intercept + phi @ recent_values + innovations[time_index]
+
+    return series[burnin + order:]
+
+
 def simulate_uniform_ar(
     phi: ArrayLike,
     sample_size: int,
@@ -68,31 +148,19 @@ def simulate_uniform_ar(
     *,
     intercept: float = 0.0,
 ) -> NDArray[np.float64]:
-    """Simulate a stationary AR process with Uniform[-a, a] innovations."""
-    phi = np.asarray(phi, dtype=float)
-    if phi.ndim != 1 or len(phi) == 0 or not np.all(np.isfinite(phi)):
-        raise ValueError("phi must be a nonempty finite one-dimensional vector")
-    if not isinstance(sample_size, (int, np.integer)) or sample_size < 1:
-        raise ValueError("sample_size must be a positive integer")
-    if not isinstance(burnin, (int, np.integer)) or burnin < 0:
-        raise ValueError("burnin must be a non-negative integer")
+    """Simulate an AR process with Uniform[-half_width, half_width] noise."""
     if not np.isfinite(half_width) or half_width <= 0:
         raise ValueError("half_width must be a positive finite number")
-    if not np.isfinite(intercept):
-        raise ValueError("intercept must be finite")
-
-    generator = np.random.default_rng(rng)
-    order = len(phi)
-    total_length = burnin + order + sample_size
-    innovations = generator.uniform(-half_width, half_width, size=total_length)
-    series = np.empty(total_length, dtype=float)
-    series[:order] = intercept / (1.0 - np.sum(phi))
-
-    for time_index in range(order, total_length):
-        recent_values = series[time_index - np.arange(1, order + 1)]
-        series[time_index] = intercept + phi @ recent_values + innovations[time_index]
-
-    return series[burnin + order:]
+    return simulate_beta_ar(
+        phi=phi,
+        sample_size=sample_size,
+        burnin=burnin,
+        support_width=2.0 * half_width,
+        alpha=1.0,
+        beta=1.0,
+        rng=rng,
+        intercept=intercept,
+    )
 
 
 def sliding_window_point_cloud(

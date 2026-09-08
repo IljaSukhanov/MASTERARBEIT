@@ -11,7 +11,13 @@ __all__ = ["plot_time_series", "plot_embedding_k2", "plot_embedding_k3"]
 plt.style.use("seaborn-v0_8-whitegrid")
 
 
-def plot_time_series(x, phi, max_plot_points=10000):
+def plot_time_series(
+    x,
+    phi,
+    max_plot_points=10000,
+    *,
+    innovation_label=r"Uniform$[-1,1]$ innovations",
+):
     fig, ax = plt.subplots(figsize=(12, 3.6))
     plot_indices = np.linspace(
         0,
@@ -29,7 +35,7 @@ def plot_time_series(x, phi, max_plot_points=10000):
         label="sample mean",
     )
     ax.set(
-        title=f"AR({len(phi)}) process — bounded uniform innovations",
+        title=f"AR({len(phi)}) process — {innovation_label}",
         xlabel="time $t$",
         ylabel="$X_t$",
     )
@@ -41,7 +47,29 @@ def plot_time_series(x, phi, max_plot_points=10000):
     plt.show()
 
 
-def plot_embedding_k2(cloud, phi, intercept, innovation_half_width):
+def plot_embedding_k2(
+    cloud,
+    phi,
+    intercept,
+    innovation_half_width=1.0,
+    *,
+    innovation_bounds=None,
+):
+    if innovation_bounds is None:
+        innovation_lower = -innovation_half_width
+        innovation_upper = innovation_half_width
+    else:
+        innovation_bounds = np.asarray(innovation_bounds, dtype=float)
+        if (
+            innovation_bounds.shape != (2,)
+            or not np.all(np.isfinite(innovation_bounds))
+            or innovation_bounds[0] >= innovation_bounds[1]
+        ):
+            raise ValueError(
+                "innovation_bounds must contain finite lower and upper bounds"
+            )
+        innovation_lower, innovation_upper = innovation_bounds
+
     fig, ax = plt.subplots(figsize=(7.2, 7.0))
     time_color = np.arange(len(cloud))
     points = ax.scatter(
@@ -59,10 +87,16 @@ def plot_embedding_k2(cloud, phi, intercept, innovation_half_width):
     grid = np.linspace(lo, hi, 300)
     if len(phi) <= 1:
         middle = intercept + phi[0] * grid
-        ax.plot(grid, middle, color="black", lw=2.2, label="middle AR hyperplane")
         ax.plot(
             grid,
-            middle + innovation_half_width,
+            middle,
+            color="black",
+            lw=2.2,
+            label="mean-innovation AR hyperplane",
+        )
+        ax.plot(
+            grid,
+            middle + innovation_upper,
             color="#d1495b",
             lw=2,
             ls="--",
@@ -70,7 +104,7 @@ def plot_embedding_k2(cloud, phi, intercept, innovation_half_width):
         )
         ax.plot(
             grid,
-            middle - innovation_half_width,
+            middle + innovation_lower,
             color="#d1495b",
             lw=2,
             ls="--",
@@ -101,7 +135,29 @@ def plot_embedding_k2(cloud, phi, intercept, innovation_half_width):
     plt.show()
 
 
-def plot_embedding_k3(cloud, phi, intercept, innovation_half_width):
+def plot_embedding_k3(
+    cloud,
+    phi,
+    intercept,
+    innovation_half_width=1.0,
+    *,
+    innovation_bounds=None,
+):
+    if innovation_bounds is None:
+        innovation_lower = -innovation_half_width
+        innovation_upper = innovation_half_width
+    else:
+        innovation_bounds = np.asarray(innovation_bounds, dtype=float)
+        if (
+            innovation_bounds.shape != (2,)
+            or not np.all(np.isfinite(innovation_bounds))
+            or innovation_bounds[0] >= innovation_bounds[1]
+        ):
+            raise ValueError(
+                "innovation_bounds must contain finite lower and upper bounds"
+            )
+        innovation_lower, innovation_upper = innovation_bounds
+
     fig = go.Figure()
     fig.add_trace(
         go.Scatter3d(
@@ -132,16 +188,16 @@ def plot_embedding_k3(cloud, phi, intercept, innovation_half_width):
                 x=g0,
                 y=g1,
                 z=middle,
-                name="middle AR hyperplane",
+                name="mean-innovation AR hyperplane",
                 showscale=False,
                 opacity=0.34,
                 colorscale=[[0, "#222222"], [1, "#222222"]],
-                hovertemplate="middle AR hyperplane<extra></extra>",
+                hovertemplate="mean-innovation AR hyperplane<extra></extra>",
             )
         )
         for offset, label in [
-            (innovation_half_width, "upper support boundary"),
-            (-innovation_half_width, "lower support boundary"),
+            (innovation_upper, "upper support boundary"),
+            (innovation_lower, "lower support boundary"),
         ]:
             fig.add_trace(
                 go.Surface(
