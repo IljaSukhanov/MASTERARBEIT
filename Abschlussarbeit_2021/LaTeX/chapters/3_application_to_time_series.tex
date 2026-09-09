@@ -443,7 +443,6 @@ In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is 
 
 \begin{itemize}
     \item consistent elbow selectors need a penalty term $\lambda_T$
-    \item something based on incremens $\hat{m}_{k+1}-\hat{m}_k$
 \end{itemize}
 
 \todo[inline]{compare different elbow selectors, maybe somehow establish consistency?}
@@ -468,6 +467,27 @@ where
 \end{align*}
 and $\lambda_T q$ is a penalty term because without it, larger orders would be preferred.
 
+\textbf{something based on increments}
+
+\begin{align*}
+    \Delta_k=m_k-m_{k+1}\begin{cases}
+        >0 & ,k\le p\\
+        =0 & ,k\ge p+1
+    \end{cases}
+\end{align*}
+
+\begin{align*}
+    p=\max\{k:\Delta_k>0\}
+\end{align*}
+
+\begin{align*}
+    \hat{p}_T=\max\{k:\hat{m}_{k,T}-\hat{m}_{k+1,T}>\tau_T\}
+\end{align*}
+
+\begin{align*}
+    \tau_T\to0,\quad e_T=\max_{1\le k\le K}|\hat{m}_{k,T}-m_k|,\quad e_T=\mathbf{o}(\tau_T)
+\end{align*}
+
 Under the correct assumption on the penalty term sequence $\lambda_T$, it can even be established that $\hat{p}_T\to p$ almost surely.
 
 \subsection{Other convex--geometric functionals}
@@ -482,6 +502,8 @@ Besides the minimum width $m_k$ we can ask if other convex--geometric functional
 \begin{align*}
     \overline{w}_k=\int_{\mathbb{S}^{k-1}}w_k(u)\,d\sigma(u).
 \end{align*}
+
+
 
 \section{Numerical Results}
 
