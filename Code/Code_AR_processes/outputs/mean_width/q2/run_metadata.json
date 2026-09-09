@@ -1,0 +1,102 @@
+{
+  "normalization": "Q2 is a half-width component; probability measure on the sphere",
+  "process_specs": [
+    {
+      "p": 1,
+      "seed": 20260813,
+      "replication": 0,
+      "figure": "2.1",
+      "expected_phi": [
+        -0.5634983697098442
+      ],
+      "expected_first3": [
+        -0.45139989803512726,
+        0.052297660837431315,
+        -0.7839590751217724
+      ]
+    },
+    {
+      "p": 2,
+      "seed": 20260814,
+      "replication": 1,
+      "figure": "2.2",
+      "expected_phi": [
+        0.8699580024754807,
+        -0.6377860428851445
+      ],
+      "expected_first3": [
+        -1.1956691233560368,
+        -0.5126562095851637,
+        -0.2490656618562122
+      ]
+    },
+    {
+      "p": 3,
+      "seed": 20260816,
+      "replication": 9,
+      "figure": "2.3",
+      "expected_phi": [
+        0.6976038172777832,
+        -0.8139939996478192,
+        0.6426157574018554
+      ],
+      "expected_first3": [
+        0.5454010194632091,
+        -1.031345110136436,
+        -0.4055141841529146
+      ]
+    }
+  ],
+  "T_main": 2000,
+  "burnin": 1000,
+  "half_width": 1.0,
+  "seed": 20260911,
+  "k_values": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "main_M_per_bank": 32768,
+  "main_banks": 3,
+  "mc_M_grid": [
+    128,
+    512,
+    2048,
+    8192,
+    32768
+  ],
+  "mc_repetitions": 8,
+  "sample_M": 8192,
+  "sample_replications": 6,
+  "sample_T_grid": [
+    500,
+    2000,
+    8000,
+    16000
+  ],
+  "sample_process_seed": 20260910,
+  "history": 2048,
+  "history_check_max_matrix_error": 0.0,
+  "checks": {
+    "quadratic_projection_error": 2.7949409857725205e-14,
+    "population_angular_matrix_error": 2.8050118514693066e-08,
+    "known_signal_mc_mean_error": 0.005487668533448919,
+    "centered_constant_offset_error": 8.776746167228564e-16
+  },
+  "estimator": "unbiased centered covariance for iid uniform directions; direct comparator retained",
+  "reference": "analytic truncated population; independent pooled MC for the empirical matrix",
+  "versions": {
+    "python": "3.12.5",
+    "numpy": "2.3.1",
+    "scipy": "1.16.0",
+    "matplotlib": "3.10.3",
+    "pandas": "2.3.1"
+  },
+  "elapsed_seconds": 47.99438912500045
+}
