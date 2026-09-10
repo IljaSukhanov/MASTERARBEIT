@@ -16,9 +16,11 @@ __all__ = [
     "ar_impulse_response",
     "projected_subgradient_empirical_width",
     "batched_geometric_width_curves",
+    "batched_riemannian_adam_width_curves",
     "theoretical_ar_width_in_direction",
     "population_minimizing_ar2_direction",
-    "vanishing_tie_breaking_selector",
+    "two_affine_l_method_selector",
+    "affine_constant_l_method_selector",
     "aic_bic_ar_order",
     "yule_walker_pacf",
     "pacf_cutoff_order",
@@ -406,6 +408,135 @@ def batched_geometric_width_curves(
     return standard_result
 
 
+def batched_riemannian_adam_width_curves(
+    series,
+    k_values,
+    *,
+    seed,
+    replication,
+    starts=3,
+    iterations=150,
+    initial_step=0.2,
+    geometric_decay=0.97,
+    beta_1=0.9,
+    beta_2=0.999,
+    epsilon=1e-8,
+    return_directions=False,
+):
+    """Minimize width using sphere-aware Adam with a scalar second moment.
+
+    The active width subgradient and first moment are projected onto the
+    tangent space. A scalar second moment keeps the update invariant under
+    rotations of the point cloud. The update is retracted to the sphere by
+    normalization and uses ``initial_step * geometric_decay**iteration``.
+    """
+    if not isinstance(starts, (int, np.integer)) or starts < 1:
+        raise ValueError("starts must be a positive integer.")
+    if not isinstance(iterations, (int, np.integer)) or iterations < 1:
+        raise ValueError("iterations must be a positive integer.")
+    if not np.isfinite(initial_step) or initial_step <= 0.0:
+        raise ValueError("initial_step must be positive and finite.")
+    if not 0.0 < geometric_decay < 1.0:
+        raise ValueError("geometric_decay must lie strictly between zero and one.")
+    if not 0.0 <= beta_1 < 1.0:
+        raise ValueError("beta_1 must lie in [0, 1).")
+    if not 0.0 <= beta_2 < 1.0:
+        raise ValueError("beta_2 must lie in [0, 1).")
+    if not np.isfinite(epsilon) or epsilon <= 0.0:
+        raise ValueError("epsilon must be positive and finite.")
+
+    single_widths, best_widths, best_projections = [], [], []
+    best_directions = []
+    for k in k_values:
+        cloud_k = sliding_window_point_cloud(series, int(k))
+        if k == 1:
+            initial_directions = [np.ones(1)]
+        else:
+            covariance_k = np.cov(cloud_k, rowvar=False)
+            _, eigenvectors_k = np.linalg.eigh(covariance_k)
+            initial_directions = [eigenvectors_k[:, 0]]
+        initial_generator = np.random.default_rng(
+            np.random.SeedSequence([seed, replication, int(k), 20])
+        )
+        initial_directions.extend(
+            initial_generator.normal(size=int(k))
+            for _ in range(starts - 1)
+        )
+        directions = np.asarray(initial_directions, dtype=float)
+        directions /= np.linalg.norm(directions, axis=1, keepdims=True)
+
+        first_moments = np.zeros_like(directions)
+        second_moments = np.zeros(starts)
+        best_start_widths = np.full(starts, np.inf)
+        best_start_directions = directions.copy()
+
+        for iteration in range(iterations):
+            projections = cloud_k @ directions.T
+            maximum_indices = np.argmax(projections, axis=0)
+            minimum_indices = np.argmin(projections, axis=0)
+            current_widths = (
+                projections[maximum_indices, np.arange(starts)]
+                - projections[minimum_indices, np.arange(starts)]
+            )
+            improved = current_widths < best_start_widths
+            best_start_widths[improved] = current_widths[improved]
+            best_start_directions[improved] = directions[improved]
+
+            subgradients = cloud_k[maximum_indices] - cloud_k[minimum_indices]
+            tangent_subgradients = subgradients - (
+                np.sum(directions * subgradients, axis=1, keepdims=True)
+                * directions
+            )
+
+            # Projecting the previous moment is a vector transport into the
+            # current tangent space of the sphere.
+            first_moments -= (
+                np.sum(directions * first_moments, axis=1, keepdims=True)
+                * directions
+            )
+            first_moments = (
+                beta_1 * first_moments
+                + (1.0 - beta_1) * tangent_subgradients
+            )
+            second_moments = (
+                beta_2 * second_moments
+                + (1.0 - beta_2)
+                * np.sum(tangent_subgradients**2, axis=1)
+            )
+
+            bias_corrected_first = first_moments / (
+                1.0 - beta_1 ** (iteration + 1)
+            )
+            bias_corrected_second = second_moments / (
+                1.0 - beta_2 ** (iteration + 1)
+            )
+            step = initial_step * geometric_decay**iteration
+            adaptive_direction = bias_corrected_first / (
+                np.sqrt(bias_corrected_second)[:, None] + epsilon
+            )
+            candidates = directions - step * adaptive_direction
+            directions = candidates / np.linalg.norm(
+                candidates,
+                axis=1,
+                keepdims=True,
+            )
+
+        single_widths.append(best_start_widths[0])
+        best_start = int(np.argmin(best_start_widths))
+        best_widths.append(best_start_widths[best_start])
+        best_projections.append(cloud_k @ best_start_directions[best_start])
+        best_directions.append(best_start_directions[best_start].copy())
+
+    standard_result = (
+        np.asarray(single_widths),
+        np.asarray(best_widths),
+        best_projections,
+    )
+    if return_directions:
+        return (*standard_result, best_directions)
+    return standard_result
+
+
 def theoretical_ar_width_in_direction(
     phi,
     direction,
@@ -473,15 +604,16 @@ def population_minimizing_ar2_direction(phi, k, history=10_000):
     return np.array([np.cos(best_angle), np.sin(best_angle)])
 
 
-def vanishing_tie_breaking_selector(k_values, widths, sample_size_T):
-    """Select a positive AR order using widths and a vanishing penalty."""
+def _validated_elbow_data(k_values, widths, minimum_length=4):
+    """Validate an embedding-dimension width curve for elbow fitting."""
     k_values = np.asarray(k_values, dtype=float)
     widths = np.asarray(widths, dtype=float)
     if k_values.ndim != 1 or widths.ndim != 1:
         raise ValueError("k_values and widths must be one-dimensional.")
-    if len(k_values) != len(widths) or len(k_values) < 2:
+    if len(k_values) != len(widths) or len(k_values) < minimum_length:
         raise ValueError(
-            "k_values and widths must have the same length of at least two."
+            "k_values and widths must have the same length of at least "
+            f"{minimum_length}."
         )
     if not np.all(np.isfinite(k_values)) or not np.all(np.isfinite(widths)):
         raise ValueError("k_values and widths must contain only finite values.")
@@ -491,33 +623,136 @@ def vanishing_tie_breaking_selector(k_values, widths, sample_size_T):
         raise ValueError(
             "k_values must be consecutive embedding dimensions starting at one."
         )
-    if not isinstance(sample_size_T, (int, np.integer)) or sample_size_T < 1:
-        raise ValueError("sample_size_T must be a positive integer.")
+    return k_values, widths
 
-    width_range = float(np.ptp(widths))
-    if width_range <= np.finfo(float).eps:
-        normalized_widths = np.zeros_like(widths)
-    else:
-        normalized_widths = (widths - np.min(widths)) / width_range
 
-    lambda_T = float(sample_size_T ** (-0.25))
-    normalized_indices = (
-        (k_values - k_values[0]) / (k_values[-1] - k_values[0])
+def _affine_fit(x_values, y_values):
+    """Return intercept, slope, predictions, and RMSE for an affine fit."""
+    design = np.column_stack((np.ones(len(x_values)), x_values))
+    coefficients, *_ = np.linalg.lstsq(design, y_values, rcond=None)
+    fitted_values = design @ coefficients
+    rmse = float(np.sqrt(np.mean((y_values - fitted_values) ** 2)))
+    return (
+        float(coefficients[0]),
+        float(coefficients[1]),
+        fitted_values,
+        rmse,
     )
-    criterion = normalized_widths + lambda_T * normalized_indices
 
-    # The first admissible plateau onset is q=2, corresponding to AR order p=1.
-    candidate_indices = np.arange(1, len(k_values))
-    selected_index = candidate_indices[
-        np.argmin(criterion[candidate_indices])
-    ]
-    selected_q = int(k_values[selected_index])
+
+def two_affine_l_method_selector(k_values, widths):
+    """Classical L-method based on two disjoint affine least-squares fits.
+
+    Each candidate puts at least two observations in both segments. The
+    standard segment-size-weighted RMSE chooses the boundary, and the selected
+    AR order is the last embedding dimension in the left segment. Consequently
+    this classical construction cannot select AR order one.
+    """
+    k_values, widths = _validated_elbow_data(k_values, widths)
+    candidate_rows = []
+    candidate_fits = []
+    point_count = len(k_values)
+
+    for split_index in range(1, point_count - 2):
+        left_k = k_values[: split_index + 1]
+        left_widths = widths[: split_index + 1]
+        right_k = k_values[split_index + 1 :]
+        right_widths = widths[split_index + 1 :]
+        left_intercept, left_slope, left_fit, left_rmse = _affine_fit(
+            left_k, left_widths
+        )
+        right_intercept, right_slope, right_fit, right_rmse = _affine_fit(
+            right_k, right_widths
+        )
+        score = (
+            len(left_k) * left_rmse + len(right_k) * right_rmse
+        ) / point_count
+        selected_order = int(k_values[split_index])
+        selected_q = selected_order + 1
+        candidate_rows.append({
+            "selected_order": selected_order,
+            "selected_q": selected_q,
+            "score": float(score),
+            "left_intercept": left_intercept,
+            "left_slope": left_slope,
+            "right_intercept": right_intercept,
+            "right_slope": right_slope,
+        })
+        candidate_fits.append({
+            "left_k": left_k.copy(),
+            "left_fitted_values": left_fit,
+            "right_k": right_k.copy(),
+            "right_fitted_values": right_fit,
+        })
+
+    best_index = min(
+        range(len(candidate_rows)),
+        key=lambda index: (
+            candidate_rows[index]["score"],
+            candidate_rows[index]["selected_order"],
+        ),
+    )
     return {
-        "selected_q": selected_q,
-        "selected_order": selected_q - 1,
-        "lambda_T": lambda_T,
-        "criterion": criterion,
-        "normalized_widths": normalized_widths,
+        **candidate_rows[best_index],
+        **candidate_fits[best_index],
+        "candidate_scores": pd.DataFrame(candidate_rows),
+    }
+
+
+def affine_constant_l_method_selector(k_values, widths):
+    """Modified L-method with an affine head and a constant tail.
+
+    The candidate plateau onset q is included in both fits. This overlap gives
+    the affine head two observations when q=2, so AR order one remains
+    admissible. The objective is the segment-size-weighted RMSE and contains no
+    order or dimension penalty.
+    """
+    k_values, widths = _validated_elbow_data(k_values, widths)
+    candidate_rows = []
+    candidate_fits = []
+
+    for breakpoint_index in range(1, len(k_values) - 1):
+        head_k = k_values[: breakpoint_index + 1]
+        head_widths = widths[: breakpoint_index + 1]
+        tail_k = k_values[breakpoint_index:]
+        tail_widths = widths[breakpoint_index:]
+
+        head_intercept, head_slope, head_fit, head_rmse = _affine_fit(
+            head_k, head_widths
+        )
+        tail_level = float(np.mean(tail_widths))
+        tail_fit = np.full(len(tail_k), tail_level)
+        tail_rmse = float(np.sqrt(np.mean((tail_widths - tail_level) ** 2)))
+        score = (
+            len(head_k) * head_rmse + len(tail_k) * tail_rmse
+        ) / (len(head_k) + len(tail_k))
+        selected_q = int(k_values[breakpoint_index])
+        candidate_rows.append({
+            "selected_order": selected_q - 1,
+            "selected_q": selected_q,
+            "score": float(score),
+            "head_intercept": head_intercept,
+            "head_slope": head_slope,
+            "tail_level": tail_level,
+        })
+        candidate_fits.append({
+            "head_k": head_k.copy(),
+            "head_fitted_values": head_fit,
+            "tail_k": tail_k.copy(),
+            "tail_fitted_values": tail_fit,
+        })
+
+    best_index = min(
+        range(len(candidate_rows)),
+        key=lambda index: (
+            candidate_rows[index]["score"],
+            candidate_rows[index]["selected_q"],
+        ),
+    )
+    return {
+        **candidate_rows[best_index],
+        **candidate_fits[best_index],
+        "candidate_scores": pd.DataFrame(candidate_rows),
     }
 
 
