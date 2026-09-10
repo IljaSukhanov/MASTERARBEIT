@@ -9,7 +9,8 @@ in `kde_tools/`:
 - `bandwidths.py`: fixed bandwidth grids plus the Silverman, LSCV, and plug-in
   rules.
 - `similarities.py`: beta-2 and KL divergence matrices; exponential
-  similarities; Perron vectors; and spectral selection.
+  similarities parameterized as `exp(-lambda_value * D)`, where the thesis
+  notation is $\lambda=1/\tau$; Perron vectors; and spectral selection.
 - `experiments.py`: one-repetition simulation runners.  Notebooks control the
   settings, repetition loops, summaries, and plots.
 

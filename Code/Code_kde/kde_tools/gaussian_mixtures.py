@@ -215,7 +215,6 @@ def run_one_mixture_bandwidth_experiment(
     means: np.ndarray,
     sigmas: np.ndarray,
     m_x: int,
-    gamma: float = 1.0,
 ) -> dict[str, float | int]:
     """Run oracle, non-L2 spectral, plug-in, LSCV, and Silverman selectors."""
     rng = np.random.default_rng(seed)
@@ -229,7 +228,6 @@ def run_one_mixture_bandwidth_experiment(
             densities,
             x_grid,
             similarity_name=name,
-            gamma=gamma,
         )
         for name in (
             "tv_overlap",
@@ -267,7 +265,6 @@ def run_one_mixture_bandwidth_experiment(
         "silverman_h": float(h_grid[silverman_index]),
         "silverman_raw_h": float(silverman_raw_h),
         "silverman_l2_error": float(np.sqrt(max(ise[silverman_index], 0.0))),
-        "gamma": float(gamma),
     }
     key_prefix = {
         "tv_overlap": "tv",

@@ -36,13 +36,13 @@ def beta2_divergence_matrix(
 def beta2_similarity_matrix(
         samples: np.ndarray,
         h_grid: np.ndarray,
-        tau: float = 1.0,
+        lambda_value: float = 1.0,
 ) -> np.ndarray:
-    """Return ``exp(-tau * D_2)`` using the exact beta=2 divergence."""
-    if tau <= 0.0:
-        raise ValueError("tau must be positive.")
+    """Return ``exp(-lambda * D_2)`` using the exact beta=2 divergence."""
+    if lambda_value <= 0.0:
+        raise ValueError("lambda_value must be positive.")
     divergence = beta2_divergence_matrix(samples=samples, h_grid=h_grid)
-    similarity = np.exp(-float(tau) * divergence)
+    similarity = np.exp(-float(lambda_value) * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
 
@@ -75,14 +75,14 @@ def population_gaussian_beta2_divergence_matrix(
 # 1
 def first_order_perron_vector(
         divergence_matrix: np.ndarray,
-        tau: float = 1.0,
+        lambda_value: float = 1.0,
 ) -> np.ndarray:
     """Return the sum-normalized first-order Perron approximation.
 
-    For ``S_ij = exp(-tau * D_ij)``, the expansion around the uniform Perron
+    For ``S_ij = exp(-lambda * D_ij)``, the expansion around the uniform Perron
     vector of the all-ones matrix is
 
-        v_i = 1/N - tau * (r_i - mean(r)) / N**2 + O(tau**2),
+        v_i = 1/N - lambda * (r_i - mean(r)) / N**2 + O(lambda**2),
 
     where ``r_i = sum_j D_ij``.
     """
@@ -91,14 +91,14 @@ def first_order_perron_vector(
         raise ValueError("divergence_matrix must be square.")
     if not np.allclose(divergence, divergence.T, atol=1e-12):
         raise ValueError("divergence_matrix must be symmetric.")
-    if tau < 0.0:
-        raise ValueError("tau must be nonnegative.")
+    if lambda_value < 0.0:
+        raise ValueError("lambda_value must be nonnegative.")
 
     number_of_scales = divergence.shape[0]
     row_sums = divergence.sum(axis=1)
     approximation = (
         np.full(number_of_scales, 1.0 / number_of_scales)
-        - float(tau)
+        - float(lambda_value)
         * (row_sums - row_sums.mean())
         / number_of_scales**2
     )
@@ -169,13 +169,13 @@ def spectral_choice_from_similarity(
 def select_spectral_bandwidth(
         samples: np.ndarray,
         h_grid: np.ndarray,
-        gamma: float = 1.0,
+        lambda_value: float = 1.0,
 ) -> dict[str, np.ndarray | int]:
-    gamma = float(gamma)
-    if not np.isfinite(gamma) or gamma <= 0.0:
-        raise ValueError("gamma must be finite and strictly positive.")
+    lambda_value = float(lambda_value)
+    if not np.isfinite(lambda_value) or lambda_value <= 0.0:
+        raise ValueError("lambda_value must be finite and strictly positive.")
     d2 = beta2_divergence_matrix(samples=samples, h_grid=h_grid)
-    similarity = np.exp(-gamma * d2)
+    similarity = np.exp(-lambda_value * d2)
     np.fill_diagonal(similarity, 1.0)
     vector = perron_vector(matrix=similarity)
     return {

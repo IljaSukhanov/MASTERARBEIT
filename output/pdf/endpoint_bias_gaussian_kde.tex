@@ -1,0 +1,385 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\definecolor{ink}{HTML}{162033}
+\definecolor{accent}{HTML}{245A78}
+\definecolor{soft}{HTML}{EEF4F7}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  citecolor=accent,
+  urlcolor=accent,
+  pdftitle={Why not use the divergence matrix for spectral scale selection?}
+}
+\color{ink}
+
+\newtheoremstyle{clean}
+  {9pt}{9pt}{\itshape}{}{}{.}{.5em}{}
+\theoremstyle{clean}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\e}{\mathrm{e}}
+
+\title{\vspace{-14mm}\textbf{Why not use the divergence matrix for\\spectral scale selection?}}
+\author{A corrected endpoint argument and its Gaussian-KDE specialization}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note makes precise the endpoint bias that arises when the Perron vector is
+computed from a dissimilarity matrix rather than from a similarity matrix.  The
+ambient convexity assumptions in the original proposed lemma are insufficient:
+the observations must also be ordered along a common geodesic.  After proving
+the corrected geodesic statement, we give a result tailored to Gaussian kernel
+density estimators.  For increasing bandwidths, the squared $L^2$ divergence
+matrix is a strict Robinson dissimilarity, and its Perron vector attains its
+maximum only at one or both extreme bandwidths.  Thus the divergence matrix
+systematically rewards extremeness in this setting, whereas a decreasing
+similarity transform reverses the direction of comparison.
+\end{abstract}
+
+\section{What is missing from the original lemma?}
+
+The conclusion cannot follow merely from convexity of the ambient set.  The
+indices $1$ and $N$ have no geometric meaning unless the sample is assumed to
+lie, in that order, on a single curve joining $x_1$ to $x_N$.
+
+\begin{remark}[A counterexample to the original assumptions]
+Let $M=\R^2$ with the Euclidean distance and let $x_1,x_2,x_3$ be the vertices
+of an equilateral triangle.  Distance to a fixed point is convex along every
+Euclidean geodesic, and the convex hull of the three points is convex.  However,
+the distance matrix is
+\[
+  D=\begin{pmatrix}0&1&1\\1&0&1\\1&1&0\end{pmatrix},
+\]
+whose Perron vector is proportional to $(1,1,1)^\mathsf{T}$.  Hence
+$\argmax_i v_i=\{1,2,3\}$, not a subset of $\{1,3\}$.  The missing assumption is
+that all sampled points lie on a common geodesic, with $x_1$ and $x_N$ as its
+sampled endpoints.
+\end{remark}
+
+The following version also applies to a possibly asymmetric divergence.  For
+such a matrix, ``Perron vector'' means the positive right Perron vector.
+
+\begin{lemma}[Ordered-geodesic endpoint lemma]\label{lem:geodesic}
+Let $\gamma:[0,1]\to M$ be a nonconstant geodesic and let
+\[
+  0=t_1<t_2<\cdots<t_N=1,\qquad x_i=\gamma(t_i).
+\]
+Let $\Delta:M\times M\to[0,\infty)$ satisfy
+$\Delta(x,y)=0$ if and only if $x=y$.  Assume that, for every $y\in M$, the map
+\[
+  t\longmapsto \Delta(\gamma(t),y)
+\]
+is convex.  Set $D_{ij}=\Delta(x_i,x_j)$, and let $v>0$ satisfy
+$Dv=\rho v$ for the Perron root $\rho$.  Then
+\[
+  \argmax_{1\leq i\leq N}v_i\subseteq\{1,N\}.
+\]
+More precisely, every interior index $i$ satisfies
+$v_i<\max\{v_1,v_N\}$.
+\end{lemma}
+
+\begin{proof}
+Because the points are distinct, every off-diagonal entry of $D$ is positive.
+Thus $D$ is irreducible, $\rho>0$, and Perron--Frobenius gives a vector $v>0$.
+Define
+\[
+  F(x)=\sum_{j=1}^N \Delta(x,x_j)v_j.
+\]
+The restriction $F\circ\gamma$ is convex.  At every sampled point,
+\[
+  F(x_i)=\sum_{j=1}^N D_{ij}v_j=(Dv)_i=\rho v_i.      \tag{1}
+\]
+For an interior index $i$, convexity of each summand gives
+\[
+  F(x_i)\leq (1-t_i)F(x_1)+t_iF(x_N).
+\]
+This inequality is strict.  Indeed, the summand with $j=i$ has value zero at
+$x_i$, while its endpoint chord has the strictly positive value
+\[
+  (1-t_i)\Delta(x_1,x_i)v_i+t_i\Delta(x_N,x_i)v_i>0.
+\]
+Consequently,
+\[
+  \rho v_i=F(x_i)
+  <(1-t_i)F(x_1)+t_iF(x_N)
+  \leq\max\{F(x_1),F(x_N)\}.
+\]
+Using (1) and dividing by $\rho>0$ yields
+$v_i<\max\{v_1,v_N\}$.
+\end{proof}
+
+\begin{remark}
+For a metric $d$, the hypotheses of Lemma~\ref{lem:geodesic} hold whenever
+distance to every fixed point is geodesically convex along $\gamma$.  The
+essential addition to the original statement is the ordered representation
+$x_i=\gamma(t_i)$.  Convexity of a larger set containing unrelated points does
+not provide the endpoint comparison used in the proof.
+\end{remark}
+
+\section{An acute-chain theorem for squared Hilbert distances}
+
+The Gaussian-KDE path is generally not a straight $L^2$ geodesic, so
+Lemma~\ref{lem:geodesic} cannot simply be invoked for that path.  A different
+geometric property supplies the desired conclusion.
+
+\begin{definition}[Strictly acute chain]
+Let $H$ be a real Hilbert space and let $x_1,\ldots,x_N\in H$ be distinct.  Put
+$\delta_k=x_{k+1}-x_k$ for $k=1,\ldots,N-1$.  The ordered family is called a
+strictly acute chain if
+\[
+  \ip{\delta_k}{\delta_\ell}>0
+  \qquad\text{for all }k,\ell\in\{1,\ldots,N-1\}.
+\]
+\end{definition}
+
+\begin{theorem}[Perron endpoint theorem for an acute chain]
+\label{thm:acute}
+Let $x_1,\ldots,x_N$ be a strictly acute chain in a real Hilbert space and set
+\[
+  D_{ij}=\frac12\norm{x_i-x_j}^2.
+\]
+If $v>0$ is the Perron vector of $D$, then
+\[
+  \argmax_{1\leq i\leq N}v_i\subseteq\{1,N\}.
+\]
+\end{theorem}
+
+\begin{proof}
+Write $V=\sum_jv_j$, $w_j=v_j/V$, and
+\[
+  \mu=\sum_{j=1}^Nw_jx_j,
+  \qquad
+  \sigma^2=\sum_{j=1}^Nw_j\norm{x_j-\mu}^2.
+\]
+The variance decomposition gives, for every $i$,
+\begin{align*}
+  (Dv)_i
+  &=\frac12\sum_{j=1}^Nv_j\norm{x_i-x_j}^2\\
+  &=\frac{V}{2}\bigl(\norm{x_i-\mu}^2+\sigma^2\bigr).
+                                                        \tag{2}
+\end{align*}
+Since $(Dv)_i=\rho v_i$ and $\rho>0$, equation (2) shows that the ordering of
+the entries $v_i$ is exactly the ordering of the squared distances
+$\norm{x_i-\mu}^2$.
+
+It remains to show that no interior $x_i$ is farthest from $\mu$.  The
+barycenter has the increment representation
+\[
+  \mu=x_1+\sum_{k=1}^{N-1}a_k\delta_k,
+  \qquad
+  a_k=\sum_{j=k+1}^Nw_j.
+\]
+Strict positivity of the $w_j$ implies
+\[
+  1>a_1>a_2>\cdots>a_{N-1}>0.                 \tag{3}
+\]
+For $2\leq i\leq N-1$, set
+\[
+  P_i=\sum_{k<i}(1-a_k)\delta_k,
+  \qquad
+  Q_i=\sum_{k\geq i}a_k\delta_k.
+\]
+Then $x_i-\mu=P_i-Q_i$.  Both vectors are nonzero, all their coefficients are
+positive, and the acute-chain assumption gives $\ip{P_i}{Q_i}>0$.  Therefore
+\[
+  \norm{x_i-\mu}^2
+  =\norm{P_i-Q_i}^2
+  <\norm{P_i+Q_i}^2.                           \tag{4}
+\]
+
+The Gram matrix $(\ip{\delta_k}{\delta_\ell})_{k,\ell}$ has nonnegative
+entries.  Hence the norm of a nonnegative linear combination of the
+$\delta_k$ is monotone in each coefficient.  If $a_{i-1}\geq\tfrac12$, then,
+by (3), $1-a_k\leq a_k$ for every $k<i$.  Thus
+\[
+  \norm{P_i+Q_i}
+  \leq\norm{\sum_{k=1}^{N-1}a_k\delta_k}
+  =\norm{\mu-x_1}.
+\]
+If $a_{i-1}<\tfrac12$, then $a_k<\tfrac12$ for every $k\geq i$, and hence
+$a_k\leq1-a_k$ there.  Consequently,
+\[
+  \norm{P_i+Q_i}
+  \leq\norm{\sum_{k=1}^{N-1}(1-a_k)\delta_k}
+  =\norm{x_N-\mu}.
+\]
+Combining either inequality with the strict inequality (4) proves
+\[
+  \norm{x_i-\mu}
+  <\max\{\norm{x_1-\mu},\norm{x_N-\mu}\}.
+\]
+The ordering equivalence from (2) completes the proof.
+\end{proof}
+
+\section{Gaussian KDEs with squared \texorpdfstring{$L^2$}{L2} divergence}
+
+\begin{definition}[Robinson dissimilarity \cite{carmona2024}]
+A symmetric dissimilarity matrix $D$ is Robinson in the displayed order if,
+whenever $i<j<k$,
+\[
+  D_{ik}\geq\max\{D_{ij},D_{jk}\}.
+\]
+It is \emph{strict Robinson} if the inequality is strict for every such triple.
+Equivalently, entries do not decrease when one moves away from the diagonal in
+any row or column.
+\end{definition}
+
+Let $\nu$ be a probability measure on $\R^d$; in the empirical KDE setting,
+$\nu=n^{-1}\sum_{r=1}^n\delta_{X_r}$.  For $h>0$, let
+\[
+  p_h=\nu*\varphi_h,
+  \qquad
+  \varphi_h(x)=(2\pi h^2)^{-d/2}
+  \exp\!\left(-\frac{\norm{x}^2}{2h^2}\right).
+\]
+Consider the squared $L^2$ divergence
+\[
+  \mathcal D_2(p,q)=\frac12\norm{p-q}_{L^2(\R^d)}^2.
+\]
+
+\begin{proposition}[Gaussian smoothing produces a strictly acute chain]
+\label{prop:gaussian-acute}
+For $0<h_1<\cdots<h_N$, the ordered family
+$p_{h_1},\ldots,p_{h_N}$ is a strictly acute chain in $L^2(\R^d)$.
+\end{proposition}
+
+\begin{proof}
+Use the Fourier convention
+$\widehat f(\omega)=\int_{\R^d}f(x)\e^{-\mathrm{i}x\cdot\omega}\,dx$.
+Then
+\[
+  \widehat p_h(\omega)
+  =\widehat\nu(\omega)\exp\!\left(-\frac{h^2\norm{\omega}^2}{2}\right).
+\]
+For $\delta_k=p_{h_{k+1}}-p_{h_k}$, define
+\[
+  b_k(\omega)=
+  \exp\!\left(-\frac{h_{k+1}^2\norm{\omega}^2}{2}\right)
+  -\exp\!\left(-\frac{h_k^2\norm{\omega}^2}{2}\right).
+\]
+For $\omega\neq0$, every $b_k(\omega)$ is strictly negative.  Plancherel's
+identity therefore yields
+\[
+  \ip{\delta_k}{\delta_\ell}_{L^2}
+  =\frac{1}{(2\pi)^d}\int_{\R^d}
+    |\widehat\nu(\omega)|^2 b_k(\omega)b_\ell(\omega)\,d\omega>0.       \tag{5}
+\]
+To justify strictness, note that $\widehat\nu$ is continuous and
+$\widehat\nu(0)=1$, so it is nonzero on a neighborhood of the origin.  On that
+neighborhood, away from the single point $\omega=0$, the integrand in (5) is
+strictly positive on a set of positive Lebesgue measure.
+\end{proof}
+
+\begin{corollary}[Robinson property and endpoint bias]
+\label{cor:main}
+Let $0<h_1<\cdots<h_N$ and define
+\[
+  D_{ij}=\mathcal D_2(p_{h_i},p_{h_j})
+  =\frac12\norm{p_{h_i}-p_{h_j}}_2^2.
+\]
+Then:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.3em]
+  \item $D$ is a strict Robinson dissimilarity in the natural bandwidth order:
+  for every $i<j<k$,
+  \[
+    D_{ik}>\max\{D_{ij},D_{jk}\};
+  \]
+  \item if $v$ is the Perron vector of $D$, then
+  \[
+    \argmax_{1\leq i\leq N}v_i\subseteq\{1,N\}.
+  \]
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+For $i<j<k$, write
+\[
+  p_{h_k}-p_{h_i}=A+B,
+  \quad
+  A=p_{h_j}-p_{h_i},
+  \quad
+  B=p_{h_k}-p_{h_j}.
+\]
+Proposition~\ref{prop:gaussian-acute} gives $\ip{A}{B}>0$, since each is a
+positive sum of consecutive increments.  Hence
+\[
+  \norm{A+B}^2
+  =\norm A^2+\norm B^2+2\ip AB
+  >\max\{\norm A^2,\norm B^2\},
+\]
+which proves (i).  Part (ii) follows directly from
+Theorem~\ref{thm:acute}.
+\end{proof}
+
+\begin{remark}[Scope of the Gaussian claim]
+The conclusion concerns the squared $L^2$ divergence between Gaussian-smoothed
+versions of the same base measure.  The Gaussian kernel alone does not imply
+the Robinson property for an arbitrary divergence.  A separate monotonicity
+argument would be required for each other divergence.
+\end{remark}
+
+\section{Implication for spectral scale selection}
+
+The eigenvector equation for a dissimilarity matrix reads
+\[
+  \rho v_i=\sum_{j=1}^N D_{ij}v_j.
+\]
+It therefore rewards a scale for being far from scales that already carry high
+weight.  Corollary~\ref{cor:main} makes this precise for Gaussian KDEs and the
+squared $L^2$ divergence: the maximal Perron entry must occur at the smallest or
+largest bandwidth, regardless of whether an interior bandwidth is statistically
+preferable.
+
+By contrast, a decreasing entrywise transform such as
+\[
+  S_{ij}=\exp\!\left(-\frac{D_{ij}}{\tau}\right),\qquad \tau>0,
+\]
+assigns large affinity to nearby scales and small affinity to distant scales.
+Its Perron vector measures weighted similarity rather than weighted
+dissimilarity.  This is the precise reason to apply the similarity
+transformation before using Perron-based spectral scale selection.
+
+\paragraph{Thesis-ready conclusion.}
+For an ordered family lying on a common geodesic, geodesic convexity of the
+divergence forces the Perron maximum of the divergence matrix to an endpoint.
+For Gaussian KDEs with squared $L^2$ divergence, the bandwidth path is instead
+a strictly acute Hilbert-space chain; this stronger structure both makes the
+matrix a strict Robinson dissimilarity and yields the same endpoint conclusion.
+Thus using $D$ itself creates a provable boundary bias in the setting relevant
+to Gaussian-kernel $L^2$ scale selection.
+
+\begin{thebibliography}{1}
+\bibitem{carmona2024}
+M.~Carmona, V.~Chepoi, G.~Naves, and P.~Pr\'ea,
+\newblock Two simple but efficient algorithms to recognize Robinson
+dissimilarities,
+\newblock \emph{Journal of Classification} 41 (2024), 455--479.
+\newblock \href{https://doi.org/10.1007/s00357-023-09446-y}
+{doi:10.1007/s00357-023-09446-y}.
+\end{thebibliography}
+
+\end{document}

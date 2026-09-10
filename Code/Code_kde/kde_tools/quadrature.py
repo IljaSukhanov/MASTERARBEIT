@@ -74,7 +74,7 @@ def quadrature_similarity_matrices(
     density_values: np.ndarray,
     x_grid: np.ndarray,
     similarity_name: str,
-    gamma: float = 1.0,
+    lambda_value: float = 1.0,
     eps: float = 1e-300,
 ) -> np.ndarray:
     """Compute a similarity matrix from densities evaluated on a grid."""
@@ -92,9 +92,9 @@ def quadrature_similarity_matrices(
         raise ValueError("Density values must be nonnegative.")
     if eps <= 0.0:
         raise ValueError("eps must be strictly positive.")
-    gamma = float(gamma)
-    if not np.isfinite(gamma) or gamma <= 0.0:
-        raise ValueError("gamma must be finite and strictly positive.")
+    lambda_value = float(lambda_value)
+    if not np.isfinite(lambda_value) or lambda_value <= 0.0:
+        raise ValueError("lambda_value must be finite and strictly positive.")
 
     number_of_densities = len(values)
     weights = _trapezoidal_weights(x_grid)
@@ -111,7 +111,7 @@ def quadrature_similarity_matrices(
         matrix = (square_roots * weights[None, :]) @ square_roots.T
     elif similarity_name == "exponential_l2_similarity":
         d2 = quadrature_beta2_divergence_matrix(values, x_grid)
-        matrix = np.exp(-gamma * d2)
+        matrix = np.exp(-lambda_value * d2)
     else:
         entropy = -np.sum(
             weights[None, :] * values * np.log(np.maximum(values, eps)),
@@ -142,7 +142,7 @@ def compute_quadrature_similarity_matrices(
     similarity_name: str,
     x_grid: np.ndarray | None = None,
     m_x: int = 2_001,
-    gamma: float = 1.0,
+    lambda_value: float = 1.0,
 ) -> dict[str, np.ndarray | float]:
     if x_grid is None:
         x_grid = quadrature_grid_for_kdes(
@@ -159,7 +159,7 @@ def compute_quadrature_similarity_matrices(
         density_values=density_values,
         x_grid=x_grid,
         similarity_name=similarity_name,
-        gamma=gamma,
+        lambda_value=lambda_value,
     )
     return {
         similarity_name: matrix,
@@ -174,7 +174,7 @@ def select_quadrature_similarity_bandwidths(
     similarity_name: str,
     x_grid: np.ndarray | None = None,
     m_x: int = 2_001,
-    gamma: float = 1.0,
+    lambda_value: float = 1.0,
 ) -> dict[str, object]:
     result = compute_quadrature_similarity_matrices(
         samples=samples,
@@ -182,7 +182,7 @@ def select_quadrature_similarity_bandwidths(
         similarity_name=similarity_name,
         x_grid=x_grid,
         m_x=m_x,
-        gamma=gamma,
+        lambda_value=lambda_value,
     )
     choice = spectral_choice_from_similarity(
         similarity_matrix=result[similarity_name]

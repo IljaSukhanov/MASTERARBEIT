@@ -28,19 +28,19 @@ def beta2_divergence_matrix_fft(
 def beta2_similarity_matrix_fft(
     samples: np.ndarray,
     h_grid: np.ndarray,
-    tau: float = 1.0,
+    lambda_value: float = 1.0,
     half_width: float = 12.0,
     spatial_points: int = 8192,
 ) -> np.ndarray:
-    """Return ``exp(-tau * D_2)`` using periodic FFT reconstruction."""
-    if tau <= 0.0:
-        raise ValueError("tau must be positive.")
+    """Return ``exp(-lambda * D_2)`` using periodic FFT reconstruction."""
+    if lambda_value <= 0.0:
+        raise ValueError("lambda_value must be positive.")
     divergence = beta2_divergence_matrix_fft(
         samples=samples,
         h_grid=h_grid,
         half_width=half_width,
         spatial_points=spatial_points,
     )
-    similarity = np.exp(-float(tau) * divergence)
+    similarity = np.exp(-float(lambda_value) * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity

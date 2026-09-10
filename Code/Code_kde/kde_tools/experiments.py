@@ -33,7 +33,7 @@ def beta2_bandwidth_selection_counts(
         M: int,
         method: str = "exact",
         sigma2: float = 1.0,
-        tau: float = 1.0,
+        lambda_value: float = 1.0,
         seed: int | None = None,
         m_x: int = 1_001,
         half_width: float = 12.0,
@@ -43,7 +43,7 @@ def beta2_bandwidth_selection_counts(
     h_grid = np.asarray(h_grid, dtype=float)
     M = int(M)
     sigma2 = float(sigma2)
-    tau = float(tau)
+    lambda_value = float(lambda_value)
     method = str(method).lower()
 
     if method not in {"exact", "quadrature", "fourier"}:
@@ -71,7 +71,7 @@ def beta2_bandwidth_selection_counts(
             selection = select_spectral_bandwidth(
                 samples=samples,
                 h_grid=h_grid,
-                gamma=tau,
+                lambda_value=lambda_value,
             )
             selected_index = int(selection["selected_index"])
         elif method == "quadrature":
@@ -80,14 +80,14 @@ def beta2_bandwidth_selection_counts(
                 h_grid=h_grid,
                 similarity_name="exponential_l2_similarity",
                 m_x=m_x,
-                gamma=tau,
+                lambda_value=lambda_value,
             )
             selected_index = int(selection["choice"]["selected_index"])
         else:
             similarity = beta2_similarity_matrix_fft(
                 samples=samples,
                 h_grid=h_grid,
-                tau=tau,
+                lambda_value=lambda_value,
                 half_width=half_width,
                 spatial_points=spatial_points,
             )
@@ -102,7 +102,7 @@ def run_one_spectral_vs_oracle_experiment(
     n: int,
     sigma2: float,
     h_grid: np.ndarray,
-    gamma: float = 1.0,
+    lambda_value: float = 1.0,
 ) -> dict[str, float | int]:
     """Compare the exact squared-L2 spectral selector with a normal-target oracle."""
     rng = np.random.default_rng(seed)
@@ -112,7 +112,7 @@ def run_one_spectral_vs_oracle_experiment(
     spectral = select_spectral_bandwidth(
         samples,
         h_grid,
-        gamma=gamma,
+        lambda_value=lambda_value,
     )
     spectral_index = int(spectral["selected_index"])
     return {
@@ -123,7 +123,7 @@ def run_one_spectral_vs_oracle_experiment(
         "spectral_h": float(h_grid[spectral_index]),
         "oracle_l2_error": float(np.sqrt(max(ise[oracle_index], 0.0))),
         "spectral_l2_error": float(np.sqrt(max(ise[spectral_index], 0.0))),
-        "gamma": float(gamma),
+        "lambda": float(lambda_value),
     }
 
 
@@ -133,7 +133,6 @@ def run_one_consistency_experiment(
     sigma2: float,
     h_grid: np.ndarray,
     m_x: int,
-    gamma: float = 1.0,
 ) -> list[dict[str, float | int | str]]:
     """Run the oracle, Hellinger, and JS selectors for one consistency replicate."""
     rng = np.random.default_rng(seed)

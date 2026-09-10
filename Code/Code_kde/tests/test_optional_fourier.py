@@ -52,7 +52,7 @@ class OptionalFourierTests(unittest.TestCase):
         similarity = beta2_similarity_matrix_fft(
             self.samples,
             self.bandwidths,
-            tau=1.7,
+            lambda_value=1.7,
             half_width=12.0,
             spatial_points=4096,
         )
@@ -61,7 +61,7 @@ class OptionalFourierTests(unittest.TestCase):
     def test_fourier_bandwidth_selection_counts(self) -> None:
         n = 20
         repetitions = 4
-        tau = 1.7
+        lambda_value = 1.7
         seed = 1234
         spatial_points = 2_048
         counts = beta2_bandwidth_selection_counts(
@@ -70,7 +70,7 @@ class OptionalFourierTests(unittest.TestCase):
             M=repetitions,
             method="fourier",
             sigma2=1.0,
-            tau=tau,
+            lambda_value=lambda_value,
             half_width=12.0,
             spatial_points=spatial_points,
             seed=seed,
@@ -83,7 +83,7 @@ class OptionalFourierTests(unittest.TestCase):
             similarity = beta2_similarity_matrix_fft(
                 samples=samples,
                 h_grid=self.bandwidths,
-                tau=tau,
+                lambda_value=lambda_value,
                 half_width=12.0,
                 spatial_points=spatial_points,
             )

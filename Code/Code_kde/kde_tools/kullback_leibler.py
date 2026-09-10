@@ -47,19 +47,19 @@ def directional_kl_divergence_matrix(
 def directional_kl_similarity(
         density_values: np.ndarray,
         x_grid: np.ndarray,
-        gamma: float = 1.0,
+        lambda_value: float = 1.0,
         eps: float = 1e-300,
 ) -> np.ndarray:
-    """Return ``exp(-gamma * KL(p_i || p_j))`` using spatial quadrature."""
-    gamma = float(gamma)
-    if not np.isfinite(gamma) or gamma <= 0.0:
-        raise ValueError("gamma must be finite and strictly positive.")
+    """Return ``exp(-lambda * KL(p_i || p_j))`` using spatial quadrature."""
+    lambda_value = float(lambda_value)
+    if not np.isfinite(lambda_value) or lambda_value <= 0.0:
+        raise ValueError("lambda_value must be finite and strictly positive.")
     divergence = directional_kl_divergence_matrix(
         density_values=density_values,
         x_grid=x_grid,
         eps=eps,
     )
-    similarity = np.exp(-gamma * divergence)
+    similarity = np.exp(-lambda_value * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
 
@@ -81,13 +81,13 @@ def _closed_periodic_grid(
 def directional_kl_similarity_fft(
         densities: np.ndarray,
         dx: float,
-        gamma: float = 1.0,
+        lambda_value: float = 1.0,
         eps: float = 1e-300,
 ) -> np.ndarray:
     """Compute directional KL similarities on a periodic FFT grid."""
-    gamma = float(gamma)
-    if not np.isfinite(gamma) or gamma <= 0.0:
-        raise ValueError("gamma must be finite and strictly positive.")
+    lambda_value = float(lambda_value)
+    if not np.isfinite(lambda_value) or lambda_value <= 0.0:
+        raise ValueError("lambda_value must be finite and strictly positive.")
     values, x_grid = _closed_periodic_grid(densities, dx)
     values = np.maximum(values, eps)
     log_values = np.log(values)
@@ -104,6 +104,6 @@ def directional_kl_similarity_fft(
             axis=1,
         )
     divergence = np.maximum(own_log_density[:, None] - cross_log_density, 0.0)
-    similarity = np.exp(-gamma * divergence)
+    similarity = np.exp(-lambda_value * divergence)
     np.fill_diagonal(similarity, 1.0)
     return similarity
