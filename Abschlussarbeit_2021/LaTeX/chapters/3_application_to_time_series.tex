@@ -230,7 +230,7 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
     \end{align*}
     In the case $k<p+1$ it holds
     \begin{align*}
-        m_k>\frac{2}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}}.
+        m_{k-1}\ge m_k>\frac{2}{\sqrt{1+\phi_1^2+\dots+\phi_p^2}},\quad\forall k=2,\dots,p.
     \end{align*}
 \end{Prop}
 
@@ -267,17 +267,8 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
 \end{Rem}
 
 \begin{Rem}[about Proposition~\ref{prop:minimum_width}]\label{rem:minimizer_estimates_coefficients}
-    The minimizing direction $u^{*}$ at $k=p+1$ serves as an estimate for the AR coefficients. Namely, $\hat{\phi}=-\|u^{*}\|_2u^{*}[2:p+1]$.
+    For $k=p+1$ the minimizing direction is $u=(u_0,u_1,\dots,u_p)=q_{\phi}/\|q_{\phi}\|$. We can recover the AR coefficients by $\phi_j=-(q_{\phi})_j=-\|q_{\phi}\|u_j=-u_j/u_0$, $j=1,\dots,p$. If $\hat{u}$ is a practically obtained minimizer (for example, via gradient descent, see below), we get coefficient estimates $\hat{\phi}_j=-\hat{u}_j/\hat{u}_0$.
 \end{Rem}
-
-% \todo[inline]{redo Figure}
-
-% \begin{figure}[ht]
-%     \centering
-%     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/comparison_P2_P3.png}
-%     \caption{Comparison between the point clouds $\mathcal{P}_2$ and $\mathcal{P}_3$ and the corresponding approximating zonotopes $\mathcal{Z}^{2}_{2300}$ and $\mathcal{Z}^{(3)}_{3300}$. The true order of the underlying AR process is $p=2$.}
-%     \label{fig:placeholder}
-% \end{figure}
 
 An empirical version of the width $w_k(u)$ is obtained by inserting $\operatorname{conv}(\mathcal{P}_k)$ in place of $\mathcal{Z}^{(k)}$. Consequently, we obtain
 \begin{align*}
@@ -327,10 +318,6 @@ There exists work that derive statements on the convergence speed of $a_T=d_H(\o
 \begin{Cor}
     We have $\hat{m}_{k,T}\to m_k$ for $T\to\infty$ almost  surely.
 \end{Cor}
-
-\todo[inline]{What about convergence speed result of the form $|\hat{m}_{k,T}-m_k|=\mathcal{O}(a_T)$}
-
-\todo[inline]{Do numerical experiments to estimate convergence speed}
 
 \begin{proof}
     For once we have
@@ -385,7 +372,7 @@ By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k
 \end{align}
 is not empty.
 
-A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties. We show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the \textcolor{red}{linear} convergence of Algorithm~\ref{alg:projected_gradient_descent} if the initial point $u_0$ is close to $\mathcal{X}_k$. But first, we state this result in our notation.
+A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties. We show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the linear convergence of Algorithm~\ref{alg:projected_gradient_descent} if the initial point $u_0$ is close to $\mathcal{X}_k$. But first, we state this result in our notation.
 
 \begin{algorithm}[ht]
     \caption{Projected gradient descent}
@@ -441,11 +428,7 @@ In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is 
 
 \subsection{Elbow point selection}\label{sec:elbow_point_selection}
 
-\begin{itemize}
-    \item consistent elbow selectors need a penalty term $\lambda_T$
-\end{itemize}
-
-\todo[inline]{compare different elbow selectors, maybe somehow establish consistency?}
+\todo[inline]{compare different elbow selectors}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
@@ -454,59 +437,6 @@ The last step is to employ an elbow point selector with the property that it wou
 \textbf{fit one affine line and one constant line}
 
 Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$, we can use a modified L-method, that is, fit an affine curve through the points $(1,\hat{m}_1),\dots,(q+1,\hat{m}_{q+1})$ and a constant line through $(q+1,\hat{m}_{q+1}),\dots,(K,\hat{m}_K)$ for all $q=1,\dots,K$ and select the $q$ with the best fit.
-
-\textbf{fit just the constant tail}
-
-Since we only now that $(p+1,m_{p+1},)\dots,(K,m_K)$ lie on a constant line, we can simply fit the points $(q+1,\hat{m}_{q+1}),\dots,(K,\hat{m}_K)$ to a constant line $c$ for all $q=1,\dots,K-1$ and then choose
-\begin{align*}
-    \hat{p}_T=\arg\min_{1\le q\le K-1}\left\{S_T(q)+\lambda_Tq\right\},
-\end{align*}
-where
-\begin{align*}
-    S_T(q)=\min_{c\in\mathbb{R}}\sum_{k=q+1}^{K}(\hat{m}_{k,T}-c)^2
-\end{align*}
-and $\lambda_T q$ is a penalty term because without it, larger orders would be preferred.
-
-\textbf{something based on increments}
-
-\begin{align*}
-    \Delta_k=m_k-m_{k+1}\begin{cases}
-        >0 & ,k\le p\\
-        =0 & ,k\ge p+1
-    \end{cases}
-\end{align*}
-
-\begin{align*}
-    p=\max\{k:\Delta_k>0\}
-\end{align*}
-
-\begin{align*}
-    \hat{p}_T=\max\{k:\hat{m}_{k,T}-\hat{m}_{k+1,T}>\tau_T\}
-\end{align*}
-
-\begin{align*}
-    \tau_T\to0,\quad e_T=\max_{1\le k\le K}|\hat{m}_{k,T}-m_k|,\quad e_T=\mathbf{o}(\tau_T)
-\end{align*}
-
-Under the correct assumption on the penalty term sequence $\lambda_T$, it can even be established that $\hat{p}_T\to p$ almost surely.
-
-\subsection{Other convex--geometric functionals}
-
-\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
-
-\todo[inline]{spherical harmonics: $Q_0$ (mean width), $Q_2$, $Q_4$, ...}
-
-\todo[inline]{numerical analogues $\hat{Q}_0$, $\hat{Q}_2$, $\hat{Q}_4$}
-
-Besides the minimum width $m_k$ we can ask if other convex--geometric functionals can be used. A natural candidate would be the mean width, given by integrating $w_k(u)$ over $\mathbb{S}^{k-1}$:
-\begin{align*}
-    \overline{w}_k=\int_{\mathbb{S}^{k-1}}w_k(u)\,d\sigma(u).
-\end{align*}
-In practice one would estimate the integral by Monte Carlo simulation. The estimator would take the form
-\begin{align*}
-    \hat{\overline{w}}_k=\int_{\mathbb{S}^{k-1}}\hat{w}_{k,T}(u)\,d\sigma(u)\approx\frac{1}{M}\sum_{m=1}^{M}\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},U_k\rangle,
-\end{align*}
-where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
 
 
 
@@ -576,3 +506,9 @@ PACF cutoff
 \todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
 
 \section{Literature Positioning}
+
+The Estimation of the coefficients of an AR process with uniform innovations was already considered by Horváth~\cite{horvath_ar_1989} in 1989. He derives the conditional maximum likelihood function
+\begin{align*}
+    L(\theta|\mathcal{Y})=\mathbf{1}\left\{|y_t+\sum_{j=1}^{n}a_jy_{t-j}|\le h\text{ for all }i=n+1,\dots,N\right\}
+\end{align*}
+and proceeds to formulate the minimization of $L(\theta|\mathcal{Y})$ as a Linear programming problem. In the modern times such a problem can by solved very efficiently by for example the open source software HiGHS, which is also available as Python package.

@@ -49,4 +49,22 @@ That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, su
 
 \todo[inline]{find reference or prove}
 
+\textbf{Other convex--geometric functionals}
+
+\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
+
+\todo[inline]{spherical harmonics: $Q_0$ (mean width), $Q_2$, $Q_4$, ...}
+
+\todo[inline]{numerical analogues $\hat{Q}_0$, $\hat{Q}_2$, $\hat{Q}_4$}
+
+Besides the minimum width $m_k$ we can ask if other convex--geometric functionals can be used. A natural candidate would be the mean width, given by integrating $w_k(u)$ over $\mathbb{S}^{k-1}$:
+\begin{align*}
+    \overline{w}_k=\int_{\mathbb{S}^{k-1}}w_k(u)\,d\sigma(u).
+\end{align*}
+In practice one would estimate the integral by Monte Carlo simulation. The estimator would take the form
+\begin{align*}
+    \hat{\overline{w}}_k=\int_{\mathbb{S}^{k-1}}\hat{w}_{k,T}(u)\,d\sigma(u)\approx\frac{1}{M}\sum_{m=1}^{M}\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},U_k\rangle,
+\end{align*}
+where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
+
 \textbf{Spectral Scale Selection for Kernel Density Estimation}
