@@ -183,8 +183,7 @@ Let $L^1$ be the set of all absolutely integrable functions $f:\mathbb{R}\to\mat
 \begin{align*}
     \mathcal{P}=\left\{f\in L^1:f\ge0,\int f(x)\,dx=1\right\}
 \end{align*}
-
-A divergence is a map $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ such that $D(p,q)=0$ if and only if $p=q$.
+Note that $\mathcal{P}\subseteq L^1$ is convex. A divergence is a map $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ such that $D(p,q)=0$ if and only if $p=q$.
 
 The two most important classes of divergences are $f$-divergences and Bregman divergences.
 
@@ -721,6 +720,13 @@ Let $R_i=\sum_jS_{ij}$ be the $i$-th row sum of $S$. Then
 \end{aligned}
 \end{equation}
 where the first approximation is due to Equation~\eqref{eq:similarity_approximation} and the second one is the Riemann sum approximation. Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.
+
+\begin{Prop}
+    Let $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence. Let $0<h_1<\dots<h_N$ be a grid linear in $\psi_{\beta}$ for some $\beta\in[0,2]$. Let $\lambda_N$ be a sequence such that $N^2=\mathbf{o}(\lambda_N)$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S^{(N)}_{ij}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here, $\hat{f}_h$ is the kernel density estimate with kernel $K$ and data $X_1,\dots,X_n\sim f$. Let $R_i^{(N)}=\sum_jS^{(N)}_{ij}$ be the $i$-th row of $S^{(N)}$. Then
+    \begin{align*}
+        \lim_{N\to\infty}\Delta_{\psi}R_i^{(N)}=
+    \end{align*}
+\end{Prop}
 
 Let $v$ be the Perron vector of $S$, that is,
 \begin{align}\label{eq:perron_vector003}
