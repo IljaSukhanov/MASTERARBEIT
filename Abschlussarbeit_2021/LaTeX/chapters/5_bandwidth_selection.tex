@@ -12,6 +12,8 @@ Let $h^*_D=\arg\min\mathbb{E}[D(f,\hat{f}_h)]$ and let $S=\exp{(-D/\tau)}$. Does
 
 \todo[inline]{generalize to dimension $d$ later}
 
+\todo[inline]{check for general dimension $d$}
+
 We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
@@ -93,8 +95,6 @@ Minimizing the AMISE leads to
 \begin{align}\label{eq:h_amise}
     h_{\operatorname{AMISE}}(n)=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|f^{''}\|_2^2}\right)^{1/5}
 \end{align}
-
-\todo[inline]{check for general dimension $d$}
 
 \todo[inline]{Does $h_{\operatorname{AMISE}}\to h_{\text{oracle}}$?}
 
@@ -497,26 +497,64 @@ For total variation we use the $\min$ kernel and for squared Hellinger Bhattacha
 
 \todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent}
 
-The choice of the correct bandwidth grid is essential. Let $\mathcal{H}_N=\{h_1,\dots,h_N\}$ with $0<h_{\min}=h_1<\dots<h_N=h_{\max}$. The next definition gives a general construction principle for such a bandwidth grid.
+The choice of the correct bandwidth grid is essential. Set
+\begin{align*}
+    \mathcal{H}_N=\{h_1,\dots,h_N\},\quad0<h_{\min}:=h_1<\dots<h_N=:h_{\max}.
+\end{align*}
+The next definition gives a general construction principle for such a bandwidth grid.
+
+\begin{Def}\label{def:r_linear}
+    Let $r\in[0,1]$. A grid $\mathcal{H}_N$ is said to be $r$-linear if
+    \begin{align}\label{eq:def_r_linear}
+        \frac{1}{r}h_j^r=\frac{1}{r}h_1^r+\underbrace{\frac{h_N^r-h_1^r}{r(N-1)}}_{=:\Delta_{r,N}}(j-1),\quad j=1,\dots,N.
+    \end{align}
+\end{Def}
+
+\begin{Rem}
+    The construction in Equation~\eqref{eq:def_r_linear} is just the Box-Cox transformation of a linear grid $\mathcal{H}_N$, compare with \cite[Equation (1)]{box_analysis_1964}. Setting $\psi_r(h)=r^{-1}(h^r-1)$ we see that a grid $\mathcal{H}_N$ is $r$-linear if $\{\psi_r(h_j)\}_{j=1}^{N}$ is a linear grid.
+    \todo[inline]{weighted power mean (handbook of means and their inequalities)}
+    \todo[inline]{adaptive moving mesh methods}
+\end{Rem}
 
 \begin{Def}\label{def:linear_in_psi_beta}
     Let $\beta\in[0,2]$ and $\psi_{\beta}$ be defined by $\psi_{\beta}(h)=(h^{1-\beta/2}-1)/(1-\beta/2)$. A grid $0<h_1<\dots<h_N$ is said to be linear in $\psi_{\beta}$ if
     \begin{align*}
         \psi_{\beta}(h_j)=\psi_{\beta}(h_1)+\frac{j-1}{N-1}(\psi_{\beta}(h_N)-\psi_{\beta}(h_1)),\quad j=1,\dots,N.
     \end{align*}
-    \todo[inline]{add source that motivates the $\psi_{\beta}$ definition}
 \end{Def}
 
-Definition~\ref{def:linear_in_psi_beta} smoothly connects a linear and a geometric grid. A linear grid is a grid linear in $\psi_0$. A geometric grid is a grid linear in $\psi_2$. In particular, a linear grid is given by
+Definition~\ref{def:r_linear} smoothly connects a linear and a geometric grid. Setting $r=1$ gives a linear grid, that is,
 \begin{align*}
-    h_j=h_{\min}+\frac{j-1}{N-1}(h_{\max}-h_{\min})=h_{\min}+q_N(j-1),\quad q_N=\frac{h_{\max}-h_{\min}}{N-1}
+    h_j=h_{\min}+\Delta_{1,N}(j-1),\quad\Delta_{1,N}=\frac{h_{\max}-h_{\min}}{N-1}.
 \end{align*}
-and a geometric grid is given by
+Interpreting $r=0$ as limit we obtain a geometric grid, that is,
 \begin{align*}
-    h_j=h_{\min}\left(\frac{h_{\max}}{h_{\min}}\right)^{\frac{j-1}{N-1}}=h_{\min}q_N^{j-1},\quad q_N=\left(\frac{h_{\max}}{h_{\min}}\right)^{1/(N-1)}
+    \log{h_j}=\log{h_{\min}}+\Delta_{0,N}(j-1),\quad\Delta_{0,N}=\frac{\log{h_{\max}}-\log{h_{\min}}}{N-1}.
 \end{align*}
-
+The geometric grid can equivalently be written as
+\begin{align*}
+    h_j=h_{\min}q_N^{j-1},\quad q_N=\left(\frac{h_{\max}}{h_{\min}}\right)^{1/(N-1)}.
+\end{align*}
 Taking the limit $N\to+\infty$ increases the fineness of the grid.
+
+Next we formulate a Lemma that gives the asymptotic approximation for the spacing $h_{j}-h_i$ of a $r$-linear grid.
+
+\begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
+    Let $\mathcal{H}_N$ be a $r$-linear grid. Set $\delta_{ij}=(j-i)\Delta_{r,N}$. Then
+    \begin{align*}
+        h_j-h_i=h_i^{1-r}\delta_{ij}+\frac{1-r}{2}h_i^{1-2r}\delta_{ij}^2+\mathbf{O}(\delta_{ij}^3).
+    \end{align*}
+    In particular
+    \begin{align*}
+        h_j-h_i=h_i^{1-r}\delta_{ij}+\mathbf{O}(\delta_{ij}^2).
+    \end{align*}
+\end{Lem}
+
+\begin{proof}
+    \todo[inline]{TBD}
+\end{proof}
+
+\todo[inline]{add intuition: Why would one want such an expansion? What does it tell us?}
 
 \textbf{Motivation for why a geometric grid is the natural choice}
 
@@ -651,82 +689,75 @@ It is interesting to ask what happens to this distribution for increased sample 
 
 \todo[inline]{Make argument rigorous}
 
-To explain the results, we need concepts from functional analysis. In particular, the generalized Taylor expansion in Banach spaces. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.5 therein.
+\subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}
+
+To explain the results, we need the concept of a Fréchet-derivative. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.2 therein.
 
 The subsequent derivations will lead to Conjecture~\ref{conjecture:argmax_perron_argmin_hat_Q} below, which states that under the correct joint limit $N\to\infty$, $\lambda_N\to\infty$ and $\lambda_N/N^2\to0$, the Perron vector peaks at the bandwidth $h$ at which the $L^2$-curve $h\mapsto\hat{f}_h$ change slowest.
 
-Consider the operator $\Psi:\mathbb{R}_{>0}\to L^2(\mathbb{R})$, $h\mapsto\hat{f}_h$. Then $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ is the Fréchet-derivative of $\Psi$ at $h>0$ if it is a bounded linear operator and there exists $\epsilon>0$ such that
+We introduce the general definition of a Fréchet-derivative. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ an open nonempty subset. Let $\Psi:U\to Y$ be a map. A linear and bounded operator $d\Psi(u):X\to Y$ is called Fréchet-derivative of $\Psi$ at the point $u\in U$ if
 \begin{align*}
-    \Psi(h+\tau)-\Psi(h)=d\Psi(h)[\tau]+r_{\tau}(h),\quad\tau\in(-\epsilon,\epsilon),
+    \Psi(u+h)=\Psi(u)+d\Psi(u)[h]+r_u(h),\quad\forall h\in U-u,
 \end{align*}
-where $r_{\tau}$ is the remainder that fulfills
-\begin{align*}
-    \lim\limits_{\tau\to0}\frac{\|r_{\tau}(h)\|_{L^2}}{|\tau|}=0.
-\end{align*}
+where $r_u:U-u\to Y$ is a remainder that fulfills $\|r(h)\|/\|h\|\to0$ for $h\to0$.
 
-In fact, the Fréchet-derivative $d\Psi(h)$ is given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
-\begin{align*}
-    \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K'\left(\frac{x-X_j}{h}\right)\right),\quad x\in\mathbb{R}
-\end{align*}
+In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next Lemma gives the Fréchet-derivative of $h\mapsto\hat{f}_h$.
 
-Now, let $h_1<\dots<h_N$ be a grid that is linear in $\psi_{\beta}$. The difference between two bandwidths $h_i<h_j$ is
-\begin{align*}
-    h_j-h_i&=h_i\left(\left(1+\frac{(1-\beta/2)(j-i)\Delta_{\psi}}{h_i^{1-\beta/2}}\right)^{\frac{1}{1-\beta/2}}-1\right)\\&
-    =h_i^{\beta/2}(j-i)\Delta_{\psi}+\mathbf{o}((j-i)\Delta_{\psi})
-\end{align*}
-
-Write
-\begin{align*}
-    \hat{f}_{h_j}-\hat{f}_{h_i}=(h_j-h_i)\partial_h\hat{f}_{h_i}+\mathbf{o}(h_j-h_i)
-\end{align*}
-and consequently
-\begin{align*}
-    D_{i,j}=\frac{1}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_{L^2}^2=\frac{1}{2}(h_j-h_i)^2\|\partial_h\hat{f}_{h_i}\|^2+\mathbf{o}((h_j-h_i)^2)
-\end{align*}
-
-It holds $h_j-h_i=h_i^{\beta/2}\Delta_{\psi}+\mathbf{o}((j-i)\Delta_{\psi})$. Using this we obtain
-\begin{align*}
-    D_{i,j}=\frac{1}{2}h_i^{\beta}(j-i)^2\Delta_{\psi}^2\|\partial_h\hat{f}_{h_i}\|^2+\mathbf{o}((j-i)^2\Delta_{\psi}^2)
-\end{align*}
-
-Introduce
-\begin{align}\label{eq:hat_Q_n_beta}
-    \hat{Q}_{n,\beta}(h)\coloneqq \frac{1}{2}h^{\beta}\int\left(\partial_h\hat{f}_h(x)\right)^2\,dx=\frac{1}{2}h^{\beta}\|\partial_h\hat{f}_h\|_{L^2}^2
-\end{align}
-
-We obtain
-\begin{align*}
-    D_{ij}=\Delta_{\psi}^2(j-i)^2\hat{Q}_{n,\beta}(h_i)+\mathbf{o}((j-i)^2\Delta_{\psi}^2)
-\end{align*}
-
-Thus,
-\begin{align}\label{eq:similarity_approximation}
-    S_{ij}=\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,\beta}(h_i))}(1+\mathbf{o}(\delta_{ij}^2)),
-\end{align}
-where we have set $\delta_{ij}=(j-i)\Delta_{\psi}$. This means that for nearby bandwidths $h_i$ and $h_j$ the similarity between the kernel density estimates $\hat{f}_{h_i}$ and $\hat{f}_{h_j}$ is approximately given by $\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,\beta}(h_i))}$. 
-
-Let $R_i=\sum_jS_{ij}$ be the $i$-th row sum of $S$. Then
-\begin{equation}\label{eq:row_sum_connection_to_hat_Q}
-\begin{aligned}
-    \Delta_{\psi}R_i
-    &=\sum_{j=1}^{N}\Delta_{\psi}S_{ij}
-    \approx\sum_{j=1}^{N}
-    \underbrace{(\delta_{i,j+1}-\delta_{i,j})}_{=\Delta_{\psi}}
-    g_i(\delta_{ij})\\
-    &\approx\int_{\mathbb{R}}
-    \underbrace{\exp\left(-\lambda\delta^2\hat{Q}_{n,\beta}(h_i)\right)}_{=g_i(\delta)}
-    \,d\delta
-    =\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}}.
-\end{aligned}
-\end{equation}
-where the first approximation is due to Equation~\eqref{eq:similarity_approximation} and the second one is the Riemann sum approximation. Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.
+\begin{Lem}\label{lem:frechet_derivative_of_kde}
+    The Fréchet-derivative of $h\mapsto\hat{f}_h$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
+    \begin{align*}
+        \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K^{'}\left(\frac{x-X_j}{h}\right)\right),\quad x\in\mathbb{R}.
+    \end{align*}
+\end{Lem}
 
 \begin{Prop}
     Let $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence. Let $0<h_1<\dots<h_N$ be a grid linear in $\psi_{\beta}$ for some $\beta\in[0,2]$. Let $\lambda_N$ be a sequence such that $N^2=\mathbf{o}(\lambda_N)$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S^{(N)}_{ij}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here, $\hat{f}_h$ is the kernel density estimate with kernel $K$ and data $X_1,\dots,X_n\sim f$. Let $R_i^{(N)}=\sum_jS^{(N)}_{ij}$ be the $i$-th row of $S^{(N)}$. Then
     \begin{align*}
-        \lim_{N\to\infty}\Delta_{\psi}R_i^{(N)}=
+        \sqrt{\lambda_N}\Delta_{r,N}R_i^{(N)}\to\sqrt{\frac{\pi}{\hat{Q}_{n,r}(h_i)}},\quad N\to\infty.
     \end{align*}
 \end{Prop}
+
+\begin{proof}
+    From Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} and Lemma~\ref{lem:frechet_derivative_of_kde} it follows that
+    \begin{align*}
+        \hat{f}_{h_j}-\hat{f}_{h_i}&=(h_j-h_i)\partial_h\hat{f}_{h_i}+\mathbf{o}(h_j-h_i)\\&
+        =h_i^{1-r}(j-i)\Delta_{r,N}\partial_h\hat{f}_{h_i}+\mathbf{o}((j-i)\Delta_{r,N})
+    \end{align*}
+    and consequently
+    \begin{align*}
+        D_{ij}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2=\frac{1}{2}h_i^{2(1-r)}(j-i)^2\Delta_{r,N}^2\|\partial_h\hat{f}_h\|_2^2+\mathbf{o}((i-j)^2\Delta_{r,N})
+    \end{align*}
+
+    Introduce
+    \begin{align}\label{eq:hat_Q_n_beta}
+        \hat{Q}_{n,r}(h):=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2
+    \end{align}
+
+    We obtain
+    \begin{align*}
+        D_{ij}=\Delta_{r,N}^2(j-i)^2\hat{Q}_{n,r}(h_i)+\mathbf{o}((i-j)^2\Delta_{r,N}^2)
+    \end{align*}
+
+    Thus,
+    \begin{align}\label{eq:similarity_approximation}
+        S_{ij}=\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,r}(h_i))}(1+\mathbf{o}(\delta_{ij}^2)),
+    \end{align}
+    where we have set $\delta_{ij}=(j-i)\Delta_{r,N}$. \textcolor{red}{This means that for nearby bandwidths $h_i$ and $h_j$ the similarity between the kernel density estimates $\hat{f}_{h_i}$ and $\hat{f}_{h_j}$ is approximately given by $\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,\beta}(h_i))}$.}
+
+    Let $R_i=\sum_jS_{ij}$ be the $i$-th row sum of $S$. Then
+    \begin{equation}\label{eq:row_sum_connection_to_hat_Q}
+    \begin{aligned}
+        \Delta_{\psi}R_i
+        &=\sum_{j=1}^{N}\Delta_{\psi}S_{ij}
+        \approx\sum_{j=1}^{N}
+        \underbrace{(\delta_{i,j+1}-\delta_{i,j})}_{=\Delta_{\psi}}
+        g_i(\delta_{ij})\\
+        &\approx\int_{\mathbb{R}}
+        \underbrace{\exp\left(-\lambda\delta^2\hat{Q}_{n,\beta}(h_i)\right)}_{=g_i(\delta)}\,d\delta=\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}}.
+    \end{aligned}
+    \end{equation}
+    where the first approximation is due to Equation~\eqref{eq:similarity_approximation} and the second one is the Riemann sum approximation. \textcolor{red}{Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.}
+\end{proof}
 
 Let $v$ be the Perron vector of $S$, that is,
 \begin{align}\label{eq:perron_vector003}
@@ -747,6 +778,8 @@ Let $v$ be the Perron vector of $S$, that is,
     \end{align*}
     for $N\to\infty$, $\lambda_N\to\infty$, $\lambda_N/N^2\to0$.
 \end{conjecture}
+
+\subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
 The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_{n,\beta}(h)]$ to the asymptotic minimizer of $\operatorname{MISE}(h)$.
 
