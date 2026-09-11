@@ -98,6 +98,8 @@ Minimizing the AMISE leads to
 
 \todo[inline]{Does $h_{\operatorname{AMISE}}\to h_{\text{oracle}}$?}
 
+\todo[inline]{Is oracle bandwidth unique for $N(0,1)$?}
+
 The optimal bandwidth thus behaves like $n^{-1/5}$.
 
 Plug in methods use Equation~\eqref{eq:h_amise} as a starting point. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
@@ -130,52 +132,14 @@ Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the
 
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
+\todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
+
 The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is given by
 \begin{align*}
     \operatorname{ISE}(h)=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{2}h}(X_i-X_j)-\frac{2}{n}\sum_{i=1}^{n}\phi_{\sqrt{h^2+\sigma^2}}(X_i)+\phi_{\sqrt{2}\sigma}(0)
 \end{align*}
 
-\textbf{Constructing Mixture Models with multiple global MISE minima}
-
-\todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
-
-
-
-Since the optimal bandwidth minimizes the MISE, particularly interesting scenarios arise in cases where the MISE has no unique minimum. 
-
-Since for Gaussian kernels and Gaussian mixture densities the mean integrated squared error has a closed form, we can find $w_l$, $m_l$, $s_l^2$ such that there exist $h_1<h_2$ that are both global minima of the MISE curve.
-
-\todo[inline]{add construction principle and example, there are different classes of local minima pairs}
-
-This serves as an easy example of a situation where the optimal bandwidth is not unique and thus is a particularly interesting test for spectrally selected bandwidths.
-
-% Figure~\ref{fig:equal-minima-example} illustrates a Gaussian mixture density with two local MISE minima.
-
-% \begin{figure}[htbp]
-%     \centering
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\linewidth]{Code/Code_kde/outputs/equal_minima_mixture_pdf_clean.png}
-%         \caption{Gaussian mixture density.}
-%         \label{fig:equal-minima-density}
-%     \end{subfigure}
-%     \hfill
-%     \begin{subfigure}{0.48\textwidth}
-%         \centering
-%         \includegraphics[width=\linewidth]{Code/Code_kde/outputs/mise_equal_minima_constructed.png}
-%         \caption{Exact MISE curve.}
-%         \label{fig:equal-minima-mise}
-%     \end{subfigure}
-
-%     \caption{Example of a Gaussian mixture density whose exact MISE curve has two equal local minima.}
-%     \label{fig:equal-minima-example}
-% \end{figure}
-
-\todo[inline]{Is oracle bandwidth unique for $N(0,1)$?}
-
 \section{Divergences between distributions}\label{sec:divergences}
-
-\todo[inline]{Introduce divergences directly on space of probability distribution functions (convex subspace of $L^1$)}
 
 For information about information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}.
 
@@ -382,6 +346,8 @@ Truncate and apply composite trapezoidal rule
 \end{align*}
 
 \todo[inline]{Check the error bounds!}
+
+\todo[inline]{Maybe instead of rigorous error bounds just do numerical experiment?}
 
 The error is bounded above by
 \begin{align*}
@@ -704,11 +670,34 @@ where $r_u:U-u\to Y$ is a remainder that fulfills $\|r(h)\|/\|h\|\to0$ for $h\to
 In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next Lemma gives the Fréchet-derivative of $h\mapsto\hat{f}_h$.
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
-    The Fréchet-derivative of $h\mapsto\hat{f}_h$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
+    Let $K$ be differentiable. The Fréchet-derivative of $h\mapsto\hat{f}_h$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
     \begin{align*}
         \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K^{'}\left(\frac{x-X_j}{h}\right)\right),\quad x\in\mathbb{R}.
     \end{align*}
 \end{Lem}
+
+\begin{proof}
+    Let $h>0$ and $\tau>0$. For every $x\in\mathbb{R}$ we have
+    \begin{align*}
+        \lim\limits_{\tau\to0}\frac{1}{\tau}(\hat{f}_{h+\tau}(x)-\hat{f}_h(x))&=\frac{1}{n}\sum_{j=1}^{n}\lim\limits_{\tau\to0}\frac{1}{\tau}K_{h+\tau}(x-X_j)-K_{h}(x-X_j)\\&
+        =\frac{1}{n}\sum_{j=1}^{n}\partial_hK_h(x-X_j)\\&
+        =-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K^{'}\left(\frac{x-X_j}{h}\right)\right)\\&
+        =:\partial_h\hat{f}_h(x)
+    \end{align*}
+    Now we bound
+    \begin{align*}
+        \left|\frac{\hat{f}_{h+\tau}(x)-\hat{f}_h(x)}{\tau}\right|\le\dots\le M(x),
+    \end{align*}
+    where $M\in L^2(\mathbb{R})$. By the dominated convergence theorem (see for example~[])
+    \begin{align}\label{eq:dom_conv_consequence}
+        \|\frac{\hat{f}_{h+\tau}(x)-\hat{f}_h(x)}{\tau}-\partial_h\hat{f}_h(x)\|_2\to0,\quad\tau\to0
+    \end{align}
+    Set $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$. It now holds
+    \begin{align*}
+        \Psi(h+\tau)-\Psi(h)=d\Psi(h)[\tau]+r_h(\tau),
+    \end{align*}
+    where $r_h(\tau)=\hat{f}_{h+\tau}-\hat{f}_h-\tau\partial_h\hat{f}_h$ is the remainder with $\|r_h(\tau)\|_2/|\tau|\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}
+\end{proof}
 
 \begin{Prop}
     Let $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence. Let $0<h_1<\dots<h_N$ be a grid linear in $\psi_{\beta}$ for some $\beta\in[0,2]$. Let $\lambda_N$ be a sequence such that $N^2=\mathbf{o}(\lambda_N)$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S^{(N)}_{ij}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here, $\hat{f}_h$ is the kernel density estimate with kernel $K$ and data $X_1,\dots,X_n\sim f$. Let $R_i^{(N)}=\sum_jS^{(N)}_{ij}$ be the $i$-th row of $S^{(N)}$. Then
