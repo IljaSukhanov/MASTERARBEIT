@@ -340,7 +340,7 @@ Next we use Parseval's identity to get
     =\frac{1}{\pi}\int_0^{\infty}|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega
 \end{align*}
 
-Truncate and apply composite trapezoidal rule
+Truncate and apply the composite trapezoidal rule
 \begin{align*}
     \frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}
 \end{align*}
@@ -363,7 +363,7 @@ where $M=(X_{\max}-X_{\min})^2+2(X_{\max}-X_{\min})h_{\max}\sqrt{2/e}+2h_{\max}^
 
 \section{Assembly of Scale Similarity Matrices}
 
-\subsection{Why not use the divergence matrix for spectral scale selection?}
+\subsection{Properties of Divergence matrices and its Perron vector}
 
 In this subsection, we want to briefly give an argument why it is not advisable to compute the Perron vector of the divergence matrix $D$ itself and thus motivate the above similarity transformation more.
 
@@ -382,24 +382,72 @@ Robinson matrices are generalizations of of Min matrices. It is always beneficia
 The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
 
 \begin{Lem}
-    Let $(M,d)$ be a geodesic metric space such that for every fixed point $y\in X$, the function $x\mapsto d(x,y)$ is geodesically convex. Let $X\subseteq M$ be a convex subset. Let $x_1,\dots,x_N\in X$ be finitely many points and define the distance matrix $D=(d(x_i,x_j))_{i,j=1}^{N}$. Let $v=(v_j)\in\mathbb{R}^{N}$ be the Perron vector of $D$. Then
+    Let $H$ be a Hilbert space and $x_1,\dots,x_N\in H$ distinct points that form a strictly acute chain, that is,
+    \begin{align}\label{eq:acute_chain_condition}
+        \langle x_{k+1}-x_k,x_{l+1}-x_l\rangle>0\quad\text{for all }k,l=1,\dots,N-1.
+    \end{align}
+    Let $D=(D_{ij})\in\mathbb{R}^{N\times N}$, $D_{ij}=\|x_i-x_j\|^2$ be the pairwise distance matrix and $v=(v_j)\in\mathbb{R}^N$ its Perron vector. Then $v$ has its largest entries at the border, that is,
     \begin{align*}
         \arg\max_{1\le j\le N}v_j\subseteq\{1,N\}.
     \end{align*}
-    \todo[inline]{This Lemma is not correct yet but numerical experiments suggest that the Perron vector of divergence matrices behaves not how we want}
-    \todo[inline]{Find correct assumptions to prove the Lemma}
 \end{Lem}
 
 \begin{proof}
-    Define the function
+    Since the points $x_j$ are distinct, all entries of the matrix $D$ are positive and by Perron-Frobenius, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$. We interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. Write the expected value $\mathbb{E}[X]=\mu=\sum_{j=1}^{N}v_jx_j$ and the variance $\operatorname{Var}[X]=\sigma^2=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$. Now we have
+    \begin{align}\label{eq:bias_variance_decomp_perron_entry}
+        (Dv)_i=\sum_{j=1}^{N}D_{ij}v_j=\sum_{j=1}^{N}\|x_i-x_j\|^2v_j=\mathbb{E}[\|X-x_i\|^2]\stackrel{\ast}{=}\|\mu-x_i\|^2+\sigma^2,
+    \end{align}
+    where at $\ast$ we have used the bias-variance decomposition. Since $v$ is the Perron vector of $D$, the left hand side of Equation~\eqref{eq:bias_variance_decomp_perron_entry} is equal to $\rho v_i$ with $\rho>0$ being the unique maximum eigenvalue of $D$.
+
+    Next, we write
     \begin{align*}
-        F(x)=\sum_{j=1}^{N}d(x,x_j)v_j,\quad x\in X.
+        \mu&=\sum_{j=1}^{N}v_jx_j=v_1x_1+v_2x_2+\dots+v_Nx_N\\&
+        =x_1-(v_2+\dots+v_N)x_1\\&
+        +v_2x_2+v_3x_2+\dots+v_Nx_2-(v_3x_2+\dots+v_Nx_2)\\&
+        \vdots\\&
+        +v_{N-2}x_{N-2}+v_{N-1}x_{N-2}+v_Nx_{N-2}-(v_{N-1}x_{N-2}+v_Nx_{N-2})\\&
+        +v_{N-1}x_{N-1}+v_Nx_{N-1}-v_Nx_{N-1}\\&
+        +v_Nx_N\\&
+        =x_1+(v_2+\dots+v_N)(x_2-x_1)+\dots+(v_{N-1}+v_N)(x_{N-1}-x_{N-2})+v_N(x_N-x_{N-1})\\&
+        =x_1+\sum_{k=1}^{N-1}\sum_{j=k+1}^{N}v_j(x_{k+1}-x_k)=x_1+\sum_{k=1}^{N-1}a_k\delta_k,
     \end{align*}
-    Since $v$ is the Perron vector, we have $F(x_i)=\lambda v_i$. Thus
+    where $a_k=\sum_{j=k+1}^{N}v_j$ and $\delta_k=x_{k+1}-x_k$. Note that because of the positivity of the Perron vector, it holds $1>a_1>a_2>\dots>a_{N-1}=v_N>0$.
+
+    As a next step, write
     \begin{align*}
-        \arg\max_{1\le j\le N} v_j=\arg\max_{1\le j\le N}F(x_j).
+        x_i-\mu&=x_i-x_1-(\mu-x_1)=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{N-1}a_k\delta_k=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{i-1}a_k\delta_k-\sum_{k=i}^{N-1}a_k\delta_k\\&
+        =\underbrace{\sum_{k=1}^{i-1}(1-a_k)\delta_k}_{=P_i}-\underbrace{\sum_{k=i}^{N-1}a_k\delta_k}_{=Q_i}
     \end{align*}
+    Consequently,
+    \begin{align*}
+        \|x_i-\mu\|^2&=\|P_i-Q_i\|^2=\|P_i\|^2+\|Q_i\|^2-2\langle P_i,Q_i\rangle\\&
+        <\|P_i\|^2+\|Q_i\|^2+2\langle P_i,Q_i\rangle=\|P_i+Q_i\|^2
+    \end{align*}
+    for all $i=2,\dots,N-1$, where we have used that
+    \begin{align*}
+        \langle P_i,Q_i\rangle=\sum_{1\le k\le i-1}\sum_{i\le l\le N-1}\underbrace{(1-a_k)}_{>0}\underbrace{a_l}_{>0}\underbrace{\langle\delta_k,\delta_l\rangle}_{>0}>0.
+    \end{align*}
+    In particular, this is the step where we use the acute chain condition~\eqref{eq:acute_chain_condition}.
+
+    Now we see that
+    \begin{align}\label{eq:acute_chain_proof_002}
+        \|P_i+Q_i\|\le\begin{cases}
+            \|\sum_{k=1}^{N-1}a_k\delta_k\|=\|\mu-x_1\| & ,a_{i-1}\ge\frac{1}{2}\\
+            \|\sum_{k=1}^{N-1}(1-a_k)\delta_k\|=\|x_N-\mu\| & ,a_{i-1}<\frac{1}{2}.
+        \end{cases}
+    \end{align}
+
+    Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry} and~\eqref{eq:acute_chain_proof_002} we arrive at
+    \begin{align*}
+        \rho v_i-\sigma^2&=\|\mu-x_i\|^2<\|P_i+Q_i\|^2\le\max\{\|\mu-x_1\|,\|x_N-\mu\|\}\\&
+        =\max\{\rho v_1-\sigma^2,\rho v_N-\sigma^2\}
+    \end{align*}
+    and therefore $v_i<\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
 \end{proof}
+
+\todo[inline]{discuss acute chain condition}
+
+\todo[inline]{prove acute chain condition for certain kernel density estimates}
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
 
@@ -482,13 +530,6 @@ The next definition gives a general construction principle for such a bandwidth 
     \todo[inline]{adaptive moving mesh methods}
 \end{Rem}
 
-\begin{Def}\label{def:linear_in_psi_beta}
-    Let $\beta\in[0,2]$ and $\psi_{\beta}$ be defined by $\psi_{\beta}(h)=(h^{1-\beta/2}-1)/(1-\beta/2)$. A grid $0<h_1<\dots<h_N$ is said to be linear in $\psi_{\beta}$ if
-    \begin{align*}
-        \psi_{\beta}(h_j)=\psi_{\beta}(h_1)+\frac{j-1}{N-1}(\psi_{\beta}(h_N)-\psi_{\beta}(h_1)),\quad j=1,\dots,N.
-    \end{align*}
-\end{Def}
-
 Definition~\ref{def:r_linear} smoothly connects a linear and a geometric grid. Setting $r=1$ gives a linear grid, that is,
 \begin{align*}
     h_j=h_{\min}+\Delta_{1,N}(j-1),\quad\Delta_{1,N}=\frac{h_{\max}-h_{\min}}{N-1}.
@@ -506,21 +547,23 @@ Taking the limit $N\to+\infty$ increases the fineness of the grid.
 Next we formulate a Lemma that gives the asymptotic approximation for the spacing $h_{j}-h_i$ of a $r$-linear grid.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid. Set $\delta_{ij}=(j-i)\Delta_{r,N}$. Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid. Set $\delta^{r,N}_k=k\Delta_{r,N}=\mathbf{O}(N^{-1})$. Then
     \begin{align*}
-        h_j-h_i=h_i^{1-r}\delta_{ij}+\frac{1-r}{2}h_i^{1-2r}\delta_{ij}^2+\mathbf{O}(\delta_{ij}^3).
+        h_{i+k}-h_i=h_i^{1-r}\delta^{r,N}_k+\mathbf{O}(N^{-2}).
     \end{align*}
-    In particular
-    \begin{align*}
-        h_j-h_i=h_i^{1-r}\delta_{ij}+\mathbf{O}(\delta_{ij}^2).
-    \end{align*}
+    \todo[inline]{add intuition: Why would one want such an expansion? What does it tell us?}
 \end{Lem}
 
 \begin{proof}
-    \todo[inline]{TBD}
+    We have $h_{i+k}^r-h_i^r=rk\Delta_{r,N}$ from which follows
+    \begin{align*}
+        h_{i+k}=\left(h_i^r+r\delta^{r,N}_k)\right)^{1/r}=h_i\left(1+\frac{r\delta^{r,N}_k}{h_i^r}\right)^{1/r}
+    \end{align*}
+    The first order Taylor approximation of $(1+x)^{1/r}$ is $(1+x)^{1/r}=1+\frac{x}{r}+\mathbf{O}(x^2)$. We get
+    \begin{align*}
+        h_{i+k}-h_i=h_i\left(1+\frac{\delta^{r,N}_k}{h_i^r}+\mathbf{O}\left(\frac{r^2(\delta^{r,N}_k)^2}{h_i^{2r}}\right)-1\right)=h_i^{1-r}\delta^{r,N}_k+\mathbf{O}(N^{-2})
+    \end{align*}
 \end{proof}
-
-\todo[inline]{add intuition: Why would one want such an expansion? What does it tell us?}
 
 \textbf{Motivation for why a geometric grid is the natural choice}
 
