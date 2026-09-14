@@ -32,29 +32,6 @@ For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in
 \end{align*}
 This allows for fair and principled numerical experiments.
 
-\section{Order selection methods}\label{sec:classical_order_selection_methods}
-
-\todo[inline]{make more detailed and add motivation later}
-
-There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process.
-
-For each candidate order $k=1,\dots,K$ obtain coefficient estimates $\hat{\phi}_1^{(k)},\dots,\hat{\phi}_k^{(k)}$. Let $\hat{\sigma}_k^2$ be the estimated innovation variance defined by
-\begin{align*}
-    \hat{\sigma}_k^2=\frac{1}{T-k}\sum_{t=k+1}^{T}\left(X_t-\sum_{j=1}^{k}\phi_j^{(k)}X_{t-j}\right)^2
-\end{align*}
-
-The class of information criteria selectors has the form
-\begin{align*}
-    \hat{p}_{\operatorname{IC}}=\arg\min_{1\le k\le K}\operatorname{IC}_T(k),
-\end{align*}
-where
-\begin{align*}
-    \operatorname{IC}_T(k)=\log{\hat{\sigma}_k^2}+\frac{kc_T}{T}
-\end{align*}
-Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature. We focus on $c_T=\log{T}$, which leads to the Bayesian information criterion (BIC). The BIC is consistent, that is, $\mathbb{P}(\hat{p}_{\operatorname{BIC}}\to p)=1$.
-
-Another approach that is often used is the so called partial autocorrelation function (PACF) cutoff. In this approach, the relation $k\mapsto\hat{\phi}_k^{(k)}$ is examined and the estimated order $\hat{p}$ is set as the last $k$ outside the approximate 95\% confidence band $\pm1.96/\sqrt{T}$.
-
 \section{Estimation methods}\label{sec:classical_estimation_methods}
 
 \textbf{Yule-Walker}
@@ -131,6 +108,29 @@ This is equivalent to minimizing
 \begin{align*}
     \min_{\theta\in\mathbb{R}^{p+1}:\theta_0=1}w_{\operatorname{conv}(\mathcal{P}_T)}(\theta)
 \end{align*}
+
+\section{Order selection methods}\label{sec:classical_order_selection_methods}
+
+\todo[inline]{make more detailed and add motivation later}
+
+There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process.
+
+For each candidate order $k=1,\dots,K$ obtain coefficient estimates $\hat{\phi}_1^{(k)},\dots,\hat{\phi}_k^{(k)}$. Let $\hat{\sigma}_k^2$ be the estimated innovation variance defined by
+\begin{align*}
+    \hat{\sigma}_k^2=\frac{1}{T-k}\sum_{t=k+1}^{T}\left(X_t-\sum_{j=1}^{k}\phi_j^{(k)}X_{t-j}\right)^2
+\end{align*}
+
+The class of information criteria selectors has the form
+\begin{align*}
+    \hat{p}_{\operatorname{IC}}=\arg\min_{1\le k\le K}\operatorname{IC}_T(k),
+\end{align*}
+where
+\begin{align*}
+    \operatorname{IC}_T(k)=\log{\hat{\sigma}_k^2}+\frac{kc_T}{T}
+\end{align*}
+Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature. We focus on $c_T=\log{T}$, which leads to the Bayesian information criterion (BIC). The BIC is consistent, that is, $\mathbb{P}(\hat{p}_{\operatorname{BIC}}\to p)=1$.
+
+Another approach that is often used is the so called partial autocorrelation function (PACF) cutoff. In this approach, the relation $k\mapsto\hat{\phi}_k^{(k)}$ is examined and the estimated order $\hat{p}$ is set as the last $k$ outside the approximate 95\% confidence band $\pm1.96/\sqrt{T}$.
 
 
 
