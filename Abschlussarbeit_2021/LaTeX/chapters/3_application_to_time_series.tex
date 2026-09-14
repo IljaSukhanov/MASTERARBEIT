@@ -26,6 +26,8 @@ where $\phi_i\in\mathbb{R}$ are the coefficients with $\phi_p\ne0$.
 
 It is well known that there exists a stationary process $(X_t)_{t\in\mathbb{Z}}$ that can be written in the form \eqref{eq:def_arma} if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert=1$. Another important property that we will need for the geometric interpretation of the embedded AR process is causality: An ARMA process $(X_t)$ is called causal if there exist constants $\psi_j$ with $\sum_j|\psi_j|<+\infty$, such that $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$ for all $t\in\mathbb{Z}$. It turns out that this property is stronger than stationarity, as an ARMA process is causal iff $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert\le1$. In what follows, we will exclusively work with causal ARMA processes.
 
+\todo[inline]{Explain this a little bit better (15.09)}
+
 For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in a theoretically grounded way. Jones~\cite{jones_randomly_1987} gives one such approach. There, an algorithm is given which samples $\phi=(\phi_1,\dots,\phi_p)$ uniformly from
 \begin{align*}
     C_p=\{\phi\in\mathbb{R}^p:1-\phi_1z-\dots-\phi_pz^p\ne0\text{ for all }z\in\mathbb{C},|z|\le 1\}
@@ -366,9 +368,11 @@ The next results establish the consistency of the empirical minimum width, that 
     Let $\epsilon>0$ be arbitrary. Because $\{Y_t:t\ge1\}$ is dense in $\mathcal{Z}$, it holds $\mathcal{Z}\subseteq\bigcup_tB(Y_t,\epsilon)$ and since $\mathcal{Z}$ is compact, there exists a finite sub-cover $\mathcal{Z}\subseteq\bigcup_{j=1}^{m(\epsilon)}B(Y_{t_j(\epsilon)},\epsilon)$. Set $T_{\epsilon}=\max\{t_1(\epsilon),\dots,t_{m(\epsilon)}(\epsilon)\}$. Now, let $z\in\mathcal{Z}$ be arbitrary. It follows that $d(z,\mathcal{P}_T)=\inf\{\|z-Y_t\|:t=1,\dots,T\}\le\epsilon$ for all $T\ge T_{\epsilon}$. Thus $\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$. Since $\mathcal{P}_T\subseteq\mathcal{Z}$, it also holds that $\sup_{y\in\mathcal{P}_T}d(y,\mathcal{Z})=0$. By definition of the Hausdorff distance we obtain $d_H(\mathcal{P}_T,\mathcal{Z})=\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$ and therefore $d_H(\mathcal{P}_T,\mathcal{Z})\to0$ for $T\to\infty$. By Lemma~\ref{lem:property_hausdorff_distance} we also get $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})\to0$ for $T\to\infty$.   
 \end{proof}
 
-There exists work that derive statements on the convergence speed of $a_T=d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})$ but only under certain assumptions on dependence structure of $Y_1,\dots,Y_T$. Brunel~\cite{brunel_uniform_2019} proves $a_T=\mathcal{O}(\dots)$ for independent and identically distributed $Y_t$. Louhichi~\cite{louhichi_sharp_2025} replaces the independence assumption with some weaker assumption and shows $a_T=\mathcal{O}(\dots)$.
+\todo[inline]{Give small review on convergence speed (15.09)}
 
 \todo[inline]{Can I show the assumptions for my setting (sliding windows)?}
+
+There exists work that derive statements on the convergence speed of $a_T=d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})$ but only under certain assumptions on dependence structure of $Y_1,\dots,Y_T$. Brunel~\cite{brunel_uniform_2019} proves $a_T=\mathcal{O}(\dots)$ for independent and identically distributed $Y_t$. Louhichi~\cite{louhichi_sharp_2025} replaces the independence assumption with some weaker assumption and shows $a_T=\mathcal{O}(\dots)$.
 
 \begin{Lem}\label{lem:ergodic_implies_dense}
     Let $\{Y_t\}$ be stationary and ergodic. Furthermore let $\mathcal{Z}=\operatorname{supp}(Y_t)$ be compact and convex. Then $\{Y_t:t\ge 1\}$ is dense in $\mathcal{Z}$ almost surely.
@@ -492,7 +496,7 @@ We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ i
 \end{Lem}
 
 \begin{proof}
-    \todo[inline]{TBD}
+    \todo[inline]{TBD (15.09)}
 \end{proof}
 
 In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
