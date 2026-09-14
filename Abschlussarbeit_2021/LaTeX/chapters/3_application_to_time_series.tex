@@ -2,7 +2,7 @@
 
 The original goal of this chapter was to apply the spectral scale selection developed in~\cite{Baralic2026} to recover the order $p$ of autoregressive time series. Even though the scale selection principle is primarily developed for applications in TDA, the hope was to use the well known sliding window embedding as a bridge between TDA and time series analysis. In the process of studying this problem, an alternative convex-geometric direction emerged, while the TDA approach turned out to be unfruitful. This chapter presents a new AR order selection method using ideas from convex geometry.
 
-In the first section, we give an overview of the theory of time series needed for our purposes. In particular, we briefly review classical order selection and AR coefficient estimation. Next we introduce the embedding of time series as point clouds in $\mathbb{R}^k$, where Takens' theorem will play an important role. We show consistency for different kinds of convex-geometric functionals that can recover the correct AR order $p$. A discussion of different kinds of innovation distributions is given. Finally, we present our numerical results and interpret them.
+In the first section, we give an overview of the theory of time series needed for our purposes. In particular, we briefly review classical order selection and AR coefficient estimation. Next we introduce the embedding of time series as point clouds in $\mathbb{R}^k$, \textcolor{red}{where Takens' theorem will play an important role.} We show consistency for \textcolor{red}{different kinds of convex-geometric functionals} that can recover the correct AR order $p$. A discussion of different kinds of innovation distributions is given. Finally, we present our numerical results and interpret them.
 
 Goal: study connection between time series analysis and convex geometry through sliding window embedding
 
@@ -57,11 +57,53 @@ Another approach that is often used is the so called partial autocorrelation fun
 
 \section{Estimation methods}\label{sec:classical_estimation_methods}
 
-\begin{itemize}
-    \item Yule-Walker
-    \item Least-Squares
-    \item Horváth ($L^{\infty}$, Chebyshev)
-\end{itemize}
+\textbf{Yule-Walker}
+
+The Yule-Walker Equations are given by
+\begin{align*}
+    \Gamma_p\phi=\gamma_p,\quad\sigma^2=\gamma(0)-\phi^{T}\gamma_p,
+\end{align*}
+where $\Gamma_p$ is the covariance matrix of $(X_{t-1},\dots,X_{t-p})$ and $\gamma$ the auto covariance function of the process $X$. We obtain estimates $\hat{\phi}$ and $\hat{\sigma}^2$ by plugging in the empirical analogues $\hat{\Gamma}_p$ and $\hat{\gamma}_p$ into the Yule-Walker equations and solving for $\phi$ and $\sigma^2$. Thus the Yule-Walker estimates for $\phi$ and $\sigma^2$ are given by
+\begin{align*}
+    \hat{\phi}=\hat{R}_p^{-1}\hat{\rho}_p,\quad\hat{\sigma}^2=\hat{\gamma}(0)\left(1-\hat{\rho}_p^{T}\hat{R}_p^{-1}\hat{\rho}_p\right)=\hat{\gamma}\left(1-\hat{\rho}_p^{T}\hat{\phi}\right),
+\end{align*}
+where $\hat{R}_p=\hat{\gamma}(0)^{-1}\hat{\Gamma}_p$ and $\hat{\rho}_p=\hat{\gamma}(0)^{-1}\hat{\gamma}_p$.
+
+\textbf{Least-Squares}
+
+
+\textbf{Horváth}
+
+\todo[inline]{$L^{\infty}$, Chebyshev}
+
+The Estimation of the coefficients of an AR process with uniform innovations was already considered by Horváth~\cite{horvath_ar_1989} in 1989. He derives the conditional maximum likelihood function
+\begin{align*}
+    L(\theta|\mathcal{Y})=\mathbf{1}\left\{|y_t+\sum_{j=1}^{n}a_jy_{t-j}|\le h\text{ for all }i=n+1,\dots,N\right\}
+\end{align*}
+and proceeds to formulate the minimization of $L(\theta|\mathcal{Y})$ as a Linear programming problem. In the modern times such a problem can by solved very efficiently by for example the open source software HiGHS, which is also available as Python package.
+
+In particular, we find a vector $b=(b_0,b_1,\dots,b_n)$ that minimizes $e_1^Tb=b_0$ subject to
+\begin{align*}
+    \begin{pmatrix}
+        A\\
+        -A
+    \end{pmatrix}\begin{pmatrix}
+        b_0\\
+        b_1\\
+        \vdots\\
+        b_n
+    \end{pmatrix}\le\mathbf{1},
+\end{align*}
+where
+\begin{align*}
+    A=\begin{pmatrix}
+        y_{n+1} & \dots & y_1\\
+        \vdots & & \vdots\\
+        y_N & \dots & y_{N-n}
+    \end{pmatrix}
+\end{align*}
+
+
 
 \section{Embedding of time series}
 
@@ -504,11 +546,3 @@ PACF cutoff
 \subsection{Real-world Data}
 
 \todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
-
-\section{Literature Positioning}
-
-The Estimation of the coefficients of an AR process with uniform innovations was already considered by Horváth~\cite{horvath_ar_1989} in 1989. He derives the conditional maximum likelihood function
-\begin{align*}
-    L(\theta|\mathcal{Y})=\mathbf{1}\left\{|y_t+\sum_{j=1}^{n}a_jy_{t-j}|\le h\text{ for all }i=n+1,\dots,N\right\}
-\end{align*}
-and proceeds to formulate the minimization of $L(\theta|\mathcal{Y})$ as a Linear programming problem. In the modern times such a problem can by solved very efficiently by for example the open source software HiGHS, which is also available as Python package.
