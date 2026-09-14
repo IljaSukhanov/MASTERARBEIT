@@ -69,7 +69,26 @@ where $\Gamma_p$ is the covariance matrix of $(X_{t-1},\dots,X_{t-p})$ and $\gam
 \end{align*}
 where $\hat{R}_p=\hat{\gamma}(0)^{-1}\hat{\Gamma}_p$ and $\hat{\rho}_p=\hat{\gamma}(0)^{-1}\hat{\gamma}_p$.
 
-\textbf{Least-Squares}
+\textbf{Maximum-Likelihood}
+
+Write the conditional likelihood function
+\begin{align*}
+    f(x_{p+1},\dots,x_{n}|x_1,\dots,x_p)=\prod_{i=p+1}^{n}f(x_i|x_1,\dots,x_{i-1})
+\end{align*}
+
+Assuming that the innovations are normally distributed we obtain the quasi-conditional maximum likelihood function
+\begin{align*}
+    f(x_{p+1},\dots,x_n|x_1,\dots,x_p)=\prod_{i=p+1}^{n}f_{\mu_i,\sigma^2}\left(x_i\right),\quad\mu_i=\sum_{j=1}^{p}\phi_jX_{i-j}
+\end{align*}
+
+The log-likelihood function is then
+\begin{align*}
+    l_{x_{p+1},\dots,x_n|x_1,\dots,x_p}(\phi,\sigma^2)=-\frac{n-p}{2}\log{(2\pi\sigma^2)}-\frac{1}{2\sigma^2}\sum_{i=p+1}^{n}(x_i-\mu_i)^2
+\end{align*}
+
+Note that conditional quasi maximum likelihood is equivalent to least squares.
+
+Of course we are in the scenario where we assume that the innovations are bounded. Horváth~[] assumed further that the innovations are $\mathcal{U}[-a,a]$ and found that the conditional likelihood function can then be written as a Linear program.
 
 
 \textbf{Horváth}
@@ -101,6 +120,16 @@ where
         \vdots & & \vdots\\
         y_N & \dots & y_{N-n}
     \end{pmatrix}
+\end{align*}
+
+After some rewriting we see that Horváths estimator is essential $L_{\infty}$-regression:
+\begin{align*}
+    \arg\min_{\phi}\left\{\max_t\left|X_t-\sum_{j=1}^{p}\phi_jX_{t-j}\right|\right\}
+\end{align*}
+
+This is equivalent to minimizing
+\begin{align*}
+    \min_{\theta\in\mathbb{R}^{p+1}:\theta_0=1}w_{\operatorname{conv}(\mathcal{P}_T)}(\theta)
 \end{align*}
 
 
@@ -488,7 +517,7 @@ We test our newly developed geometric estimators on simulated and real data. Reg
 
 \subsection{Simulated Data}
 
-% \todo[inline]{How large does $T$ have to be?}
+\subsubsection{Order selection experiments}
 
 Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$.
 
@@ -543,6 +572,16 @@ PACF cutoff
 \end{tabular}
 \end{table}
 
+\subsubsection{Coefficient estimation experiments}
+
+Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
+
 \subsection{Real-world Data}
 
 \todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
+
+\begin{itemize}
+    \item Wind or solar power generation
+    \item traffic occupancy
+    \item industrial control, system identification
+\end{itemize}
