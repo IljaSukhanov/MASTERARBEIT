@@ -26,14 +26,6 @@ where $\phi_i\in\mathbb{R}$ are the coefficients with $\phi_p\ne0$.
 
 It is well known that there exists a stationary process $(X_t)_{t\in\mathbb{Z}}$ that can be written in the form \eqref{eq:def_arma} if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert=1$. Another important property that we will need for the geometric interpretation of the embedded AR process is causality: An ARMA process $(X_t)$ is called causal if there exist constants $\psi_j$ with $\sum_j|\psi_j|<+\infty$, such that $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$ for all $t\in\mathbb{Z}$. It turns out that this property is stronger than stationarity, as an ARMA process is causal iff $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert\le1$. In what follows, we will exclusively work with causal ARMA processes.
 
-\todo[inline]{Explain this a little bit better (15.09)}
-
-For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in a theoretically grounded way. Jones~\cite{jones_randomly_1987} gives one such approach. There, an algorithm is given which samples $\phi=(\phi_1,\dots,\phi_p)$ uniformly from
-\begin{align*}
-    C_p=\{\phi\in\mathbb{R}^p:1-\phi_1z-\dots-\phi_pz^p\ne0\text{ for all }z\in\mathbb{C},|z|\le 1\}
-\end{align*}
-This allows for fair and principled numerical experiments.
-
 \section{Estimation methods}\label{sec:classical_estimation_methods}
 
 \textbf{Yule-Walker}
@@ -72,7 +64,9 @@ Of course we are in the scenario where we assume that the innovations are bounde
 
 \textbf{Horváth}
 
-\todo[inline]{$L^{\infty}$, Chebyshev}
+\todo[inline]{$L^{\infty}$, Chebyshev (16.09)}
+
+\todo[inline]{contrast more to my approach}
 
 The Estimation of the coefficients of an AR process with uniform innovations was already considered by Horváth~\cite{horvath_ar_1989} in 1989. He derives the conditional maximum likelihood function
 \begin{align*}
@@ -113,7 +107,7 @@ This is equivalent to minimizing
 
 \section{Order selection methods}\label{sec:classical_order_selection_methods}
 
-\todo[inline]{make more detailed and add motivation later}
+\todo[inline]{make more detailed and add motivation later (16.09)}
 
 There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process.
 
@@ -368,11 +362,9 @@ The next results establish the consistency of the empirical minimum width, that 
     Let $\epsilon>0$ be arbitrary. Because $\{Y_t:t\ge1\}$ is dense in $\mathcal{Z}$, it holds $\mathcal{Z}\subseteq\bigcup_tB(Y_t,\epsilon)$ and since $\mathcal{Z}$ is compact, there exists a finite sub-cover $\mathcal{Z}\subseteq\bigcup_{j=1}^{m(\epsilon)}B(Y_{t_j(\epsilon)},\epsilon)$. Set $T_{\epsilon}=\max\{t_1(\epsilon),\dots,t_{m(\epsilon)}(\epsilon)\}$. Now, let $z\in\mathcal{Z}$ be arbitrary. It follows that $d(z,\mathcal{P}_T)=\inf\{\|z-Y_t\|:t=1,\dots,T\}\le\epsilon$ for all $T\ge T_{\epsilon}$. Thus $\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$. Since $\mathcal{P}_T\subseteq\mathcal{Z}$, it also holds that $\sup_{y\in\mathcal{P}_T}d(y,\mathcal{Z})=0$. By definition of the Hausdorff distance we obtain $d_H(\mathcal{P}_T,\mathcal{Z})=\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$ and therefore $d_H(\mathcal{P}_T,\mathcal{Z})\to0$ for $T\to\infty$. By Lemma~\ref{lem:property_hausdorff_distance} we also get $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})\to0$ for $T\to\infty$.   
 \end{proof}
 
-\todo[inline]{Give small review on convergence speed (15.09)}
+There exists work on the convergence speed of the sequence $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})$ for $T\to+\infty$, but only under certain assumptions. Brunel~\cite{brunel_uniform_2019} proves $\mathbb{E}[d_H(\mathcal{P}_T,\mathcal{Z})]=\mathbf{O}((\frac{\log{n}}{n})^{1/\alpha})$ under the assumption that \enquote{enough probability mass is put at the caps of $\mathcal{Z}$}. He also assumes that $Y_1,\dots,Y_T$ are independent and identically distributed. Louhichi~\cite{louhichi_sharp_2025} instead considers stationary points $Y_1,\dots,Y_T$ but assumes that they have a \enquote{minimal index $0<\theta^{\ast}\le1$} or being \enquote{$\beta$-mixing random variables}. She then proceeds to show the same kind of convergence speed as Brunel.
 
-\todo[inline]{Can I show the assumptions for my setting (sliding windows)?}
-
-There exists work that derive statements on the convergence speed of $a_T=d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})$ but only under certain assumptions on dependence structure of $Y_1,\dots,Y_T$. Brunel~\cite{brunel_uniform_2019} proves $a_T=\mathcal{O}(\dots)$ for independent and identically distributed $Y_t$. Louhichi~\cite{louhichi_sharp_2025} replaces the independence assumption with some weaker assumption and shows $a_T=\mathcal{O}(\dots)$.
+\todo[inline]{Show that cap condition fails in certain direction}
 
 \begin{Lem}\label{lem:ergodic_implies_dense}
     Let $\{Y_t\}$ be stationary and ergodic. Furthermore let $\mathcal{Z}=\operatorname{supp}(Y_t)$ be compact and convex. Then $\{Y_t:t\ge 1\}$ is dense in $\mathcal{Z}$ almost surely.
@@ -496,14 +488,14 @@ We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ i
 \end{Lem}
 
 \begin{proof}
-    \todo[inline]{TBD (15.09)}
+    \todo[inline]{TBD (16.09)}
 \end{proof}
 
 In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
 
 \subsection{Elbow point selection}\label{sec:elbow_point_selection}
 
-\todo[inline]{compare different elbow selectors}
+\todo[inline]{compare different elbow selectors (16.09)}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
@@ -518,6 +510,20 @@ Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$,
 \section{Numerical Results}
 
 We test our newly developed geometric estimators on simulated and real data. Regarding the experiments with simulated data we will investigate different scenarios: first we will simulate AR($p$) processes, \enquote{forget} what the order $p$ is and try to recover it using our geometric approach coupled with an elbow method. We will compare it against the classical established methods BIC and PACF cutoff, that were presented in Section~\ref{sec:classical_order_selection_methods}. The second scenario that we consider is, that we generate AR($p$) processes and keep the knowledge of the true AR($p$) order. We then compare our estimation method (projected sub-gradient descent, see Remark~\ref{rem:minimizer_estimates_coefficients}) with the classical coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}.
+
+\todo[inline]{Explain better (17.09)}
+
+For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in a theoretically grounded way. Jones~\cite{jones_randomly_1987} gives one such approach. There, an algorithm is given which samples $\phi=(\phi_1,\dots,\phi_p)$ uniformly from
+\begin{align*}
+    C_p=\{\phi\in\mathbb{R}^p:1-\phi_1z-\dots-\phi_pz^p\ne0\text{ for all }z\in\mathbb{C},|z|\le 1\}
+\end{align*}
+This allows for fair and principled numerical experiments.
+
+He invented the algorithm
+\begin{enumerate}
+    \item[1.] Generate $r_k\sim\operatorname{Beta}(a_k,b_k)$ independently, where $a_k=\lfloor(k+1)/2\rfloor$ and $b_k=\lfloor k/2\rfloor+1$
+    \item[2.] compute $\phi$ via the Durbin-Levinson algorithm
+\end{enumerate}
 
 \subsection{Simulated Data}
 
@@ -581,6 +587,8 @@ PACF cutoff
 Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
 
 \subsection{Real-world Data}
+
+\todo[inline]{Do when everything else is done}
 
 \todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
 
