@@ -4,8 +4,10 @@ import unittest
 
 import numpy as np
 
-from Code.Code_AR_processes.functions import (
+from Code.Code_AR_processes.descent import (
     batched_geometric_width_curves,
+)
+from Code.Code_AR_processes.functions import (
     simulate_uniform_ar,
     sliding_window_point_cloud,
 )
