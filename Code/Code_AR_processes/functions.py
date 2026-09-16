@@ -31,51 +31,51 @@ __all__ = [
     "zonotope_support_points",
 ]
 
-def jones_ar_coefficients(
-        p: int,
-        rng: np.random.Generator | int | None = None,
-        *,
-        return_pacf: bool = False,
-) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.float64]]: # Why this kind of output?
-    if not isinstance(p, np.integer) or p < 1:
-        raise ValueError(f"p must be a positive integer, got {p}")
-    generator = np.random.default_rng(rng)
-    lag_indices = np.arange(1, p + 1) # [1, 2, ..., p]
-    beta_shape_a = (lag_indices + 1) // 2 # why not take the integer part?
-    beta_shape_b = lag_indices // 2 + 1 # why not take the integer part?
-    beta_draws = generator.beta(a=beta_shape_a, b=beta_shape_b)
+# def jones_ar_coefficients(
+#         p: int,
+#         rng: np.random.Generator | int | None = None,
+#         *,
+#         return_pacf: bool = False,
+# ) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.float64]]: # Why this kind of output?
+#     if not isinstance(p, np.integer) or p < 1:
+#         raise ValueError(f"p must be a positive integer, got {p}")
+#     generator = np.random.default_rng(rng)
+#     lag_indices = np.arange(1, p + 1) # [1, 2, ..., p]
+#     beta_shape_a = (lag_indices + 1) // 2 # why not take the integer part?
+#     beta_shape_b = lag_indices // 2 + 1 # why not take the integer part?
+#     beta_draws = generator.beta(a=beta_shape_a, b=beta_shape_b)
     
 
-# def jones_ar_coefficients(
-#     p: int,
-#     rng: np.random.Generator | int | None = None,
-#     *,
-#     return_pacf: bool = False,
-# ) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.float64]]:
-#     """Sample a stationary AR(p) coefficient vector using Jones' method."""
-#     if not isinstance(p, (int, np.integer)) or p < 1:
-#         raise ValueError(f"p must be a positive integer, got {p}")
+def jones_ar_coefficients(
+    p: int,
+    rng: np.random.Generator | int | None = None,
+    *,
+    return_pacf: bool = False,
+) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.float64]]:
+    """Sample a stationary AR(p) coefficient vector using Jones' method."""
+    if not isinstance(p, (int, np.integer)) or p < 1:
+        raise ValueError(f"p must be a positive integer, got {p}")
 
-#     generator = np.random.default_rng(rng)
-#     lag_indices = np.arange(1, p + 1)
-#     beta_shape_a = (lag_indices + 1) // 2
-#     beta_shape_b = lag_indices // 2 + 1
-#     beta_draws = generator.beta(beta_shape_a, beta_shape_b)
-#     pacf = 2.0 * beta_draws - 1.0
+    generator = np.random.default_rng(rng)
+    lag_indices = np.arange(1, p + 1)
+    beta_shape_a = (lag_indices + 1) // 2
+    beta_shape_b = lag_indices // 2 + 1
+    beta_draws = generator.beta(beta_shape_a, beta_shape_b)
+    pacf = 2.0 * beta_draws - 1.0
 
-#     phi = np.array([pacf[0]], dtype=float)
-#     for order in range(2, p + 1):
-#         reflection_coefficient = pacf[order - 1]
-#         previous_phi = phi
-#         phi = np.empty(order, dtype=float)
-#         phi[:-1] = (
-#             previous_phi - reflection_coefficient * previous_phi[::-1]
-#         )
-#         phi[-1] = reflection_coefficient
+    phi = np.array([pacf[0]], dtype=float)
+    for order in range(2, p + 1):
+        reflection_coefficient = pacf[order - 1]
+        previous_phi = phi
+        phi = np.empty(order, dtype=float)
+        phi[:-1] = (
+            previous_phi - reflection_coefficient * previous_phi[::-1]
+        )
+        phi[-1] = reflection_coefficient
 
-#     if return_pacf:
-#         return phi, pacf
-#     return phi
+    if return_pacf:
+        return phi, pacf
+    return phi
 
 
 def centered_beta_support(
