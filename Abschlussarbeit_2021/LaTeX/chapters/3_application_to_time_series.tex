@@ -26,26 +26,44 @@ where $\phi_i\in\mathbb{R}$ are the coefficients with $\phi_p\ne0$.
 
 It is well known that there exists a stationary process $(X_t)_{t\in\mathbb{Z}}$ that can be written in the form \eqref{eq:def_arma} if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert=1$. Another important property that we will need for the geometric interpretation of the embedded AR process is causality: An ARMA process $(X_t)$ is called causal if there exist constants $\psi_j$ with $\sum_j|\psi_j|<+\infty$, such that $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$ for all $t\in\mathbb{Z}$. It turns out that this property is stronger than stationarity, as an ARMA process is causal iff $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert\le1$. In what follows, we will exclusively work with causal ARMA processes.
 
+An important object for stationary sequences is its auto covariance function $\gamma(h)=\operatorname{Cov}[X_{t+h},X_t]$. The auto covariance matrix $\Gamma_k$ of $(X_t,\dots,X_{t+k-1})$ is
+\begin{align*}
+    \Gamma_k=\begin{pmatrix}
+        \gamma(0) & \gamma(1) & \dots & \gamma(k-1)\\
+        \gamma(1) & \gamma(0) & \dots & \gamma(k-2)\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \gamma(k-1) & \gamma(k-2) & \dots & \gamma(0)
+    \end{pmatrix}
+\end{align*}
+
+The empirical analog of $\Gamma_k$ is obtained by plugging in the sample auto covariance function $\hat{\gamma}$. The sample covariance matrix $\hat{\Gamma}_k$ is positve semi-definite.
+
+
 \section{Estimation methods}\label{sec:classical_estimation_methods}
+
+We present the two classical coefficient estimation methods Yule-Walker and Maximum Likelihood. As a third estimation method we present Horváth's $L^{\infty}$ estimator which is specifically designed for AR processes with innovations having uniform distribution.
 
 \textbf{Yule-Walker}
 
 The Yule-Walker Equations are given by
 \begin{align*}
-    \Gamma_p\phi=\gamma_p,\quad\sigma^2=\gamma(0)-\phi^{T}\gamma_p,
+    \Gamma_p\phi=\gamma_p,\quad\sigma^2=\gamma(0)-\phi^{T}\gamma_p,\quad\gamma_p=\begin{pmatrix}
+        \gamma(1)\\
+        \vdots\\
+        \gamma(p)
+    \end{pmatrix}
 \end{align*}
-where $\Gamma_p$ is the covariance matrix of $(X_{t-1},\dots,X_{t-p})$ and $\gamma$ the auto covariance function of the process $X$. We obtain estimates $\hat{\phi}$ and $\hat{\sigma}^2$ by plugging in the empirical analogues $\hat{\Gamma}_p$ and $\hat{\gamma}_p$ into the Yule-Walker equations and solving for $\phi$ and $\sigma^2$. Thus the Yule-Walker estimates for $\phi$ and $\sigma^2$ are given by
-\begin{align*}
-    \hat{\phi}=\hat{R}_p^{-1}\hat{\rho}_p,\quad\hat{\sigma}^2=\hat{\gamma}(0)\left(1-\hat{\rho}_p^{T}\hat{R}_p^{-1}\hat{\rho}_p\right)=\hat{\gamma}\left(1-\hat{\rho}_p^{T}\hat{\phi}\right),
-\end{align*}
-where $\hat{R}_p=\hat{\gamma}(0)^{-1}\hat{\Gamma}_p$ and $\hat{\rho}_p=\hat{\gamma}(0)^{-1}\hat{\gamma}_p$.
+
+We obtain estimates $\hat{\phi}$ and $\hat{\sigma}^2$ by plugging in the empirical analogues $\hat{\Gamma}_p$ and $\hat{\gamma}_p$ into the Yule-Walker equations and solving for $\phi$ and $\sigma^2$. 
+
+In particular, the Yule-Walker estimate $\hat{\phi}$ is obtained by solving the linear system of equations $\hat{\Gamma}_p\hat{\phi}=\hat{\gamma}_p$. This can be solved efficiently by using the Durbin-Levinson algorithm which exploits the Toeplitz structure of $\hat{\Gamma}_k$.
 
 \textbf{Maximum-Likelihood}
 
 Write the conditional likelihood function
-\begin{align*}
+\begin{align}\label{eq:cond_max_likelihood}
     f(x_{p+1},\dots,x_{n}|x_1,\dots,x_p)=\prod_{i=p+1}^{n}f(x_i|x_1,\dots,x_{i-1})
-\end{align*}
+\end{align}
 
 Assuming that the innovations are normally distributed we obtain the quasi-conditional maximum likelihood function
 \begin{align*}
@@ -57,24 +75,22 @@ The log-likelihood function is then
     l_{x_{p+1},\dots,x_n|x_1,\dots,x_p}(\phi,\sigma^2)=-\frac{n-p}{2}\log{(2\pi\sigma^2)}-\frac{1}{2\sigma^2}\sum_{i=p+1}^{n}(x_i-\mu_i)^2
 \end{align*}
 
-Note that conditional quasi maximum likelihood is equivalent to least squares.
-
-Of course we are in the scenario where we assume that the innovations are bounded. Horváth~[] assumed further that the innovations are $\mathcal{U}[-a,a]$ and found that the conditional likelihood function can then be written as a Linear program.
-
+Note that conditional quasi maximum likelihood is equivalent to least squares. Maximizing the expression above is equivalent to minimizing
+\begin{align*}
+    \sum_{i=p+1}^{n}\left(x_i-\sum_{j=1}^{p}\phi_jx_{i-j}\right)^2
+\end{align*}
 
 \textbf{Horváth}
 
-\todo[inline]{$L^{\infty}$, Chebyshev (16.09)}
+Of course we are in the scenario where we assume that the innovations are bounded. Horváth~\cite{horvath_ar_1989} assumed further that the innovations are $\mathcal{U}[-h,h]$ and found that the conditional likelihood function can then be written as a Linear program.
 
-\todo[inline]{contrast more to my approach}
+The Estimation of the coefficients of an AR process with uniform innovations was already considered by Horváth~\cite{horvath_ar_1989} in 1989. His starting point is Equation~\eqref{eq:cond_max_likelihood}, but instead of using the Gaussian density he plugs in the uniform density. The resulting conditional likelihood function becomes
+\begin{align}\label{eq:cond_max_likelihood_uniform}
+    l_{x_{p+1},\dots,x_T|x_1,\dots,x_p}(\phi,h)=\frac{1}{(2h)^{T-p}}\mathbf{1}\left\{\left|y_t-\sum_{j=1}^{p}\phi_jx_{t-j}\right|\le h\text{ for all }t=p+1,\dots,T\right\}.
+\end{align}
+This can be written as a linear programming problem, as demonstrated below.
 
-The Estimation of the coefficients of an AR process with uniform innovations was already considered by Horváth~\cite{horvath_ar_1989} in 1989. He derives the conditional maximum likelihood function
-\begin{align*}
-    L(\theta|\mathcal{Y})=\mathbf{1}\left\{|y_t+\sum_{j=1}^{n}a_jy_{t-j}|\le h\text{ for all }i=n+1,\dots,N\right\}
-\end{align*}
-and proceeds to formulate the minimization of $L(\theta|\mathcal{Y})$ as a Linear programming problem. In the modern times such a problem can by solved very efficiently by for example the open source software HiGHS, which is also available as Python package.
-
-In particular, we find a vector $b=(b_0,b_1,\dots,b_n)$ that minimizes $e_1^Tb=b_0$ subject to
+We find a vector $b=(b_0,b_1,\dots,b_n)$ that minimizes $e_1^Tb=b_0$ subject to
 \begin{align*}
     \begin{pmatrix}
         A\\
@@ -84,49 +100,56 @@ In particular, we find a vector $b=(b_0,b_1,\dots,b_n)$ that minimizes $e_1^Tb=b
         b_1\\
         \vdots\\
         b_n
-    \end{pmatrix}\le\mathbf{1},
-\end{align*}
-where
-\begin{align*}
-    A=\begin{pmatrix}
-        y_{n+1} & \dots & y_1\\
+    \end{pmatrix}\le\mathbf{1},\quad A=\begin{pmatrix}
+        x_{p+1} & \dots & x_1\\
         \vdots & & \vdots\\
-        y_N & \dots & y_{N-n}
-    \end{pmatrix}
+        x_T & \dots & x_{T-p}
+    \end{pmatrix}\in\mathbb{R}^{(T-p)\times(p+1)}.
 \end{align*}
 
-After some rewriting we see that Horváths estimator is essential $L_{\infty}$-regression:
+In modern times such a problem can be solved very efficiently by, for example, the open source software HiGHS, which is also available as Python package.
+
+From Equation~\eqref{eq:cond_max_likelihood_uniform} it follows that
 \begin{align*}
-    \arg\min_{\phi}\left\{\max_t\left|X_t-\sum_{j=1}^{p}\phi_jX_{t-j}\right|\right\}
+    \hat{\phi}&=\arg\min_{\phi}\max_t\left|x_t-\sum_{j=1}^{p}\phi_jx_{t-j}\right|\\
+    \hat{h}&=\max_t\left|x_t-\sum_{j=1}^{p}\hat{\phi}_jx_{t-j}\right|
 \end{align*}
 
-This is equivalent to minimizing
-\begin{align*}
-    \min_{\theta\in\mathbb{R}^{p+1}:\theta_0=1}w_{\operatorname{conv}(\mathcal{P}_T)}(\theta)
-\end{align*}
+Thus, conditional maximum likelihood under uniform density leads to $L^{\infty}$-regression analogous to how conditional ML under Gaussian density leads to $L^2$-regression.
 
 \section{Order selection methods}\label{sec:classical_order_selection_methods}
 
 \todo[inline]{make more detailed and add motivation later (16.09)}
 
-There are several established methods for choosing an order $\hat{p}$ given a realization $X=(X_1,\dots,X_T)$ that is assumed to come from an AR($p$) process.
+There are several established methods for choosing an order $\hat{p}$ given a realization $x=(x_1,\dots,x_T)$ that is assumed to come from an AR($p$) process. All of them require to obtain estimates $\hat{\phi}_1^{(k)},\dots,\hat{\phi}_k^{(k)}$ for each candidate order $k=1,\dots,K$. This can be done efficiently using the Durbin-Levinson algorithm.
 
-For each candidate order $k=1,\dots,K$ obtain coefficient estimates $\hat{\phi}_1^{(k)},\dots,\hat{\phi}_k^{(k)}$. Let $\hat{\sigma}_k^2$ be the estimated innovation variance defined by
+\textbf{Information criteria selectors}
+
+Let $\hat{\sigma}_k^2$ be the estimated innovation variance \textcolor{red}{(mean squared error)} which is given by
 \begin{align*}
-    \hat{\sigma}_k^2=\frac{1}{T-k}\sum_{t=k+1}^{T}\left(X_t-\sum_{j=1}^{k}\phi_j^{(k)}X_{t-j}\right)^2
+    \hat{\sigma}_k^2=\frac{1}{T-k}\sum_{t=k+1}^{T}\left(x_t-\sum_{j=1}^{k}\hat{\phi}_j^{(k)}x_{t-j}\right)^2
 \end{align*}
+
+Since $\hat{\sigma}_1^2\ge\hat{\sigma}_2^2\ge\dots\ge\hat{\sigma}_K^2$ (the error decreases for increasing candidate order) it must be counteracted by a penalty term for the candidate order $k$.
 
 The class of information criteria selectors has the form
 \begin{align*}
-    \hat{p}_{\operatorname{IC}}=\arg\min_{1\le k\le K}\operatorname{IC}_T(k),
+    \hat{p}_{\operatorname{IC}}=\arg\min_{1\le k\le K}\operatorname{IC}_T(k),\quad\operatorname{IC}_T(k)=\log{\hat{\sigma}_k^2}+\frac{kc_T}{T}.
 \end{align*}
-where
-\begin{align*}
-    \operatorname{IC}_T(k)=\log{\hat{\sigma}_k^2}+\frac{kc_T}{T}
-\end{align*}
-Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature. We focus on $c_T=\log{T}$, which leads to the Bayesian information criterion (BIC). The BIC is consistent, that is, $\mathbb{P}(\hat{p}_{\operatorname{BIC}}\to p)=1$.
 
-Another approach that is often used is the so called partial autocorrelation function (PACF) cutoff. In this approach, the relation $k\mapsto\hat{\phi}_k^{(k)}$ is examined and the estimated order $\hat{p}$ is set as the last $k$ outside the approximate 95\% confidence band $\pm1.96/\sqrt{T}$.
+Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature.
+
+
+
+
+We focus on $c_T=\log{T}$, which leads to the Bayesian information criterion (BIC). The BIC is consistent, that is, $\mathbb{P}(\hat{p}_{\operatorname{BIC}}\to p)=1$.
+
+
+\textbf{Partial auto correlation cutoff}
+
+Another approach that is often used is the so called partial autocorrelation function (PACF) cutoff. In this approach, the relation $k\mapsto\hat{\phi}_k^{(k)}$ is examined and the estimated estimated order $\hat{p}$ is set as the last $k$ outside the approximate 95\% confidence band $\pm1.96T^{-1/2}$.
+
+The theoretical reasoning is as follows. Under the null hypothesis that the true order is strictly less than $k$ we have $\sqrt{T}\hat{\phi}_k^{(k)}\to N(0,1)$. Thus, we reject this hypothesis at level $\alpha$ when $|\hat{\phi}_k^{(k)}|>T^{-1/2}\Phi^{-1}(1-\alpha/2)$.
 
 
 
@@ -495,7 +518,7 @@ In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is 
 
 \subsection{Elbow point selection}\label{sec:elbow_point_selection}
 
-\todo[inline]{compare different elbow selectors (16.09)}
+\todo[inline]{compare different elbow selectors (17.09)}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
@@ -597,3 +620,10 @@ Here we compare the four presented coefficient estimation methods presented in S
     \item traffic occupancy
     \item industrial control, system identification
 \end{itemize}
+
+\section{Literature positioning and novelty assessment}
+
+This is equivalent to minimizing
+\begin{align*}
+    \min_{\theta\in\mathbb{R}^{p+1}:\theta_0=1}w_{\operatorname{conv}(\mathcal{P}_T)}(\theta)
+\end{align*}
