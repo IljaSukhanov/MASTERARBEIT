@@ -353,8 +353,17 @@ def batched_geometric_width_curves(
     initial_step=0.2,
     geometric_decay=0.97,
     return_directions=False,
+    use_convex_hull=False,
 ):
-    """Update several Riemannian subgradient starts together."""
+    """Update several Riemannian subgradient starts together.
+
+    ``use_convex_hull=True`` evaluates widths and subgradients using only
+    hull vertices. Covariance initialization and returned projections still
+    use the full point cloud. This preserves the directional-width objective.
+    Degenerate clouds fall back to the full cloud.
+    """
+    if not isinstance(use_convex_hull, (bool, np.bool_)):
+        raise ValueError("use_convex_hull must be a boolean.")
     single_widths, best_widths, best_projections = [], [], []
     best_directions = []
     for k in k_values:
@@ -374,11 +383,21 @@ def batched_geometric_width_curves(
         )
         directions = np.asarray(initial_directions, dtype=float)
         directions /= np.linalg.norm(directions, axis=1, keepdims=True)
+        optimization_cloud = cloud_k
+        if use_convex_hull and int(k) >= 2 and len(cloud_k) > int(k):
+            from scipy.spatial import ConvexHull, QhullError
+
+            try:
+                hull = ConvexHull(cloud_k)
+                # Sorted original indices preserve the argmax/argmin tie order.
+                optimization_cloud = cloud_k[np.sort(hull.vertices)]
+            except QhullError:
+                pass
         best_start_widths = np.full(starts, np.inf)
         best_start_directions = directions.copy()
 
         for iteration in range(iterations):
-            projections = cloud_k @ directions.T
+            projections = optimization_cloud @ directions.T
             maximum_indices = np.argmax(projections, axis=0)
             minimum_indices = np.argmin(projections, axis=0)
             current_widths = (
@@ -389,7 +408,10 @@ def batched_geometric_width_curves(
             best_start_widths[improved] = current_widths[improved]
             best_start_directions[improved] = directions[improved]
 
-            subgradients = cloud_k[maximum_indices] - cloud_k[minimum_indices]
+            subgradients = (
+                optimization_cloud[maximum_indices]
+                - optimization_cloud[minimum_indices]
+            )
             tangent_subgradients = subgradients - (
                 np.sum(directions * subgradients, axis=1, keepdims=True)
                 * directions
