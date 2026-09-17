@@ -62,26 +62,36 @@ In particular, the Yule-Walker estimate $\hat{\phi}$ is obtained by solving the 
 
 \textbf{Maximum-Likelihood}
 
-\todo[inline]{argue why conditional MLE is used and derive the density chain rule (17.09)}
-
-Write the conditional likelihood function
-\begin{align}\label{eq:cond_max_likelihood}
-    f(x_{p+1},\dots,x_{n}|x_1,\dots,x_p)=\prod_{i=p+1}^{n}f(x_i|x_1,\dots,x_{i-1})
-\end{align}
-
-Assuming that the innovations are normally distributed we obtain the quasi-conditional maximum likelihood function
+Write the joint density of the realization of an AR($p$) process
 \begin{align*}
-    f(x_{p+1},\dots,x_n|x_1,\dots,x_p)=\prod_{i=p+1}^{n}f_{\mu_i,\sigma^2}\left(x_i\right),\quad\mu_i=\sum_{j=1}^{p}\phi_jX_{i-j}
+    f(x_1,\dots,x_T)=f_{(X_1,\dots,X_p)}(x_1,\dots,x_p)\prod_{t=p+1}^{T}\underbrace{f_{X_t|X_1,\dots,X_{t-1}}(x_t|x_1,\dots,x_{t-1})}_{=f_{X_t|X_{t-p},\dots,X_{t-1}}(x_t|x_{t-p},\dots,x_{t-1})}
 \end{align*}
 
-The log-likelihood function is then
+Conditioning on the first $p$ observations gives
+\begin{equation}\label{eq:cond_max_likelihood}
+    \begin{aligned}
+        f_{X_{p+1},\dots,X_T|X_1,\dots,X_p}(x_{p+1},\dots,x_T|x_1,\dots,x_p)&=\frac{f(x_1,\dots,x_T)}{f_{(X_1,\dots,X_p)}(x_1,\dots,x_p)}\\&
+        =\prod_{t=p+1}^{T}f_{X_t|X_{t-p},\dots,X_{t-1}}(x_t|x_{t-p},\dots,x_{t-1})
+    \end{aligned}
+\end{equation}
+
+We use conditional ML because otherwise we would have to specify the joint distribution of $(X_1,\dots,X_p)$.
+
+Now we know that $X_t|X_{t-p},\dots,X_{t-1}$ is distributed as $Z_t+\mu_t$, where $\mu_t=\sum_{j=1}^{p}\phi_jX_{t-j}$. At this point, we can assume different distribution classes for $Z_t$ and continue to evaluate with the assumed distribution.
+
+Assuming that the innovations are normally distributed, we obtain the quasi-conditional maximum likelihood function
 \begin{align*}
-    l_{x_{p+1},\dots,x_n|x_1,\dots,x_p}(\phi,\sigma^2)=-\frac{n-p}{2}\log{(2\pi\sigma^2)}-\frac{1}{2\sigma^2}\sum_{i=p+1}^{n}(x_i-\mu_i)^2
+    f(x_{p+1},\dots,x_T|x_1,\dots,x_p)=\prod_{t=p+1}^{T}f_{\mu_t,\sigma^2}(x_t),\quad f_{\mu_t,\sigma^2}\sim N(\mu_t,\sigma^2).
 \end{align*}
 
-Note that conditional quasi maximum likelihood is equivalent to least squares. Maximizing the expression above is equivalent to minimizing
+The conditional log-likelihood function is then
 \begin{align*}
-    \sum_{i=p+1}^{n}\left(x_i-\sum_{j=1}^{p}\phi_jx_{i-j}\right)^2
+    l(\phi,\sigma^2)=-\frac{T-p}{2}\log{(2\pi\sigma^2)}-\frac{1}{2\sigma^2}\sum_{t=p+1}^{T}(x_t-\mu_t)^2
+\end{align*}
+
+Note that conditional quasi maximum likelihood is equivalent to least squares. Under fixed $\sigma^2$ maximizing the expression above is equivalent to minimizing
+\begin{align*}
+    \sum_{t=p+1}^{T}\left(x_t-\sum_{j=1}^{p}\phi_jx_{t-j}\right)^2
 \end{align*}
 
 \textbf{Horváth}
@@ -127,24 +137,18 @@ There are several established methods for choosing an order $\hat{p}$ given a re
 
 \textbf{Information criteria selectors}
 
-Let $\hat{\sigma}_k^2$ be the estimated innovation variance \textcolor{red}{(mean squared error)} which is given by
+Denote by $l(\hat{\theta})$ the log-likelihood function evaluated at its maximizer $\hat{\theta}$. The class of information criteria selectors has the form
 \begin{align*}
-    \hat{\sigma}_k^2=\frac{1}{T-k}\sum_{t=k+1}^{T}\left(x_t-\sum_{j=1}^{k}\hat{\phi}_j^{(k)}x_{t-j}\right)^2
+    \hat{p}_{\operatorname{IC}}=\arg\min_{1\le k\le K}\operatorname{IC}_T(k),\quad\operatorname{IC}_T(k)=-\frac{2}{T-K}l(\hat{\theta})+\frac{kc_T}{T-K}.
 \end{align*}
 
-Since $\hat{\sigma}_1^2\ge\hat{\sigma}_2^2\ge\dots\ge\hat{\sigma}_K^2$ (the error decreases for increasing candidate order) it must be counteracted by a penalty term for the candidate order $k$.
-
-The class of information criteria selectors has the form
+For example, $\hat{\theta}=(\hat{\phi},\hat{\sigma}^2)$ and $l(\hat{\phi},\hat{\sigma}^2_k)=-\frac{T-K}{2}(\log{(2\pi\hat{\sigma}^2_k)}+1)$ and therefore
 \begin{align*}
-    \hat{p}_{\operatorname{IC}}=\arg\min_{1\le k\le K}\operatorname{IC}_T(k),\quad\operatorname{IC}_T(k)=\log{\hat{\sigma}_k^2}+\frac{kc_T}{T}.
+    \operatorname{IC}_T(k)=\log{(\hat{\sigma}_k^2)}+\frac{kc_T}{T-K}
 \end{align*}
+where we have dropped all terms independent of $k$. Since $\hat{\sigma}_1^2\ge\hat{\sigma}_2^2\ge\dots\ge\hat{\sigma}_K^2$ (the lack of fit decreases as the candidate order increases), it must be counteracted by a penalty term for the candidate order $k$.
 
-Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature.
-
-\todo[inline]{give short discussion on different penalty term sequences (17.09)}
-
-
-We focus on $c_T=\log{T}$, which leads to the Bayesian information criterion (BIC). The BIC is consistent, that is, $\mathbb{P}(\hat{p}_{\operatorname{BIC}}\to p)=1$.
+Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature. Choosing $c_T=2$ leads to the Akaike information criterion (AIC), $c_T=\log{T}$ to the Bayesian information criterion (BIC), and $c_T=2\log{\log{T}}$ to the Hannan-Quinn information criterion (HQIC). All of these criteria can be motivated in their own sense and serve a different purpose. The AIC is \textcolor{blue}{asymptotically efficient}, but not \textcolor{blue}{strongly consistent}. BIC and HQIC are \textcolor{blue}{strongly consistent} but not \textcolor{blue}{asymptotically efficient}.
 
 
 \textbf{Partial auto correlation cutoff}
