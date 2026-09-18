@@ -8,6 +8,7 @@ import pandas as pd
 __all__ = [
     "two_affine_l_method_selector",
     "affine_constant_l_method_selector",
+    "shared_breakpoint_l_method_selector",
 ]
 
 
@@ -45,6 +46,66 @@ def _affine_fit(x_values, y_values):
         fitted_values,
         rmse,
     )
+
+
+def shared_breakpoint_l_method_selector(
+    k_values, widths, *, tail_model="affine", score_criterion="weighted_rmse"
+):
+    """Compare independent least-squares fits sharing the point k=q+1.
+
+    Candidate AR orders are q=1,...,K-2, giving at least two observations
+    in each segment. Both segments include k=q+1; their fitted values there
+    need not agree. No slope, continuity, or order penalty is imposed.
+    ``weighted_rmse`` weights segment RMSEs by their observation counts.
+    ``squared_error`` sums segment squared errors, counting the shared point
+    in each fit. Exact score ties favor the smaller order.
+    """
+    k_values, widths = _validated_elbow_data(k_values, widths)
+    if tail_model not in {"affine", "constant"}:
+        raise ValueError("tail_model must be 'affine' or 'constant'.")
+    if score_criterion not in {"weighted_rmse", "squared_error"}:
+        raise ValueError("score_criterion must be 'weighted_rmse' or 'squared_error'.")
+
+    rows, fits = [], []
+    for breakpoint_index in range(1, len(k_values) - 1):
+        head_k, tail_k = k_values[:breakpoint_index + 1], k_values[breakpoint_index:]
+        head_y, tail_y = widths[:breakpoint_index + 1], widths[breakpoint_index:]
+        head_intercept, head_slope, head_fit, head_rmse = _affine_fit(head_k, head_y)
+        if tail_model == "affine":
+            tail_intercept, tail_slope, tail_fit, tail_rmse = _affine_fit(tail_k, tail_y)
+        else:
+            tail_intercept, tail_slope = float(np.mean(tail_y)), 0.0
+            tail_fit = np.full(len(tail_k), tail_intercept)
+            tail_rmse = float(np.sqrt(np.mean((tail_y - tail_fit) ** 2)))
+        weighted_rmse = (
+            len(head_k) * head_rmse + len(tail_k) * tail_rmse
+        ) / (len(head_k) + len(tail_k))
+        squared_error = float(
+            np.sum((head_y - head_fit) ** 2) + np.sum((tail_y - tail_fit) ** 2)
+        )
+        plateau_onset = int(k_values[breakpoint_index])
+        row = {
+            "selected_q": plateau_onset,
+            "selected_order": plateau_onset - 1,
+            "weighted_rmse": float(weighted_rmse),
+            "squared_error": squared_error,
+            "head_intercept": head_intercept,
+            "head_slope": head_slope,
+            "tail_intercept": tail_intercept,
+            "tail_slope": tail_slope,
+        }
+        row["score"] = row[score_criterion]
+        rows.append(row)
+        fits.append({
+            "head_k": head_k.copy(), "head_fitted_values": head_fit,
+            "tail_k": tail_k.copy(), "tail_fitted_values": tail_fit,
+        })
+    best_index = min(range(len(rows)), key=lambda i: (rows[i]["score"], rows[i]["selected_order"]))
+    return {
+        **rows[best_index], **fits[best_index],
+        "tail_model": tail_model, "score_criterion": score_criterion,
+        "candidate_scores": pd.DataFrame(rows),
+    }
 
 
 def two_affine_l_method_selector(k_values, widths):

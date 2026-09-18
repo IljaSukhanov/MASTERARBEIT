@@ -1,0 +1,31 @@
+{
+  "replications_per_order": 50,
+  "sample_size": 2000,
+  "burnin": 1000,
+  "half_width": 1.0,
+  "k_values": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "seeds": {
+    "1": 20260813,
+    "2": 20260814,
+    "3": 20260816
+  },
+  "starts": 3,
+  "iterations": 500,
+  "initial_step": 0.2,
+  "geometric_decay": 0.99,
+  "width_source_hashes": {
+    "functions.py": "6251a9bdb5e9f0eb1ca7223ab4250ec2df28b2f6e31088ad59a27ff870f7958c",
+    "descent.py": "cf1871c387be61619c0548d00738f52d369898c5ab121067e0ce4c38cea53200"
+  }
+}

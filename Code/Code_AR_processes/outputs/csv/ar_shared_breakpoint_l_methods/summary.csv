@@ -1,0 +1,13 @@
+score_criterion,method,true_order,correct,under,over,total
+squared_error,Affine + constant,1,49,0,1,50
+squared_error,Affine + constant,2,37,13,0,50
+squared_error,Affine + constant,3,18,31,1,50
+squared_error,Two affine lines,1,49,0,1,50
+squared_error,Two affine lines,2,36,14,0,50
+squared_error,Two affine lines,3,18,32,0,50
+weighted_rmse,Affine + constant,1,49,0,1,50
+weighted_rmse,Affine + constant,2,40,10,0,50
+weighted_rmse,Affine + constant,3,19,29,2,50
+weighted_rmse,Two affine lines,1,49,0,1,50
+weighted_rmse,Two affine lines,2,39,11,0,50
+weighted_rmse,Two affine lines,3,19,30,1,50

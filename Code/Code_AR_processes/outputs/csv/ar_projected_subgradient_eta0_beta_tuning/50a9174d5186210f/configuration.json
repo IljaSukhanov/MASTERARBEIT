@@ -1,0 +1,215 @@
+{
+  "K": 5,
+  "T_values": [
+    500,
+    2000
+  ],
+  "baseline": {
+    "beta": 0.995,
+    "candidate_id": "baseline",
+    "step_mode": "box_normalized",
+    "step_value": 0.2
+  },
+  "burnin": 2000,
+  "candidates": [
+    {
+      "beta": 0.97,
+      "candidate_id": "grid_000",
+      "step_mode": "box_normalized",
+      "step_value": 0.025
+    },
+    {
+      "beta": 0.99,
+      "candidate_id": "grid_001",
+      "step_mode": "box_normalized",
+      "step_value": 0.025
+    },
+    {
+      "beta": 0.995,
+      "candidate_id": "grid_002",
+      "step_mode": "box_normalized",
+      "step_value": 0.025
+    },
+    {
+      "beta": 0.997,
+      "candidate_id": "grid_003",
+      "step_mode": "box_normalized",
+      "step_value": 0.025
+    },
+    {
+      "beta": 0.999,
+      "candidate_id": "grid_004",
+      "step_mode": "box_normalized",
+      "step_value": 0.025
+    },
+    {
+      "beta": 0.97,
+      "candidate_id": "grid_005",
+      "step_mode": "box_normalized",
+      "step_value": 0.05
+    },
+    {
+      "beta": 0.99,
+      "candidate_id": "grid_006",
+      "step_mode": "box_normalized",
+      "step_value": 0.05
+    },
+    {
+      "beta": 0.995,
+      "candidate_id": "grid_007",
+      "step_mode": "box_normalized",
+      "step_value": 0.05
+    },
+    {
+      "beta": 0.997,
+      "candidate_id": "grid_008",
+      "step_mode": "box_normalized",
+      "step_value": 0.05
+    },
+    {
+      "beta": 0.999,
+      "candidate_id": "grid_009",
+      "step_mode": "box_normalized",
+      "step_value": 0.05
+    },
+    {
+      "beta": 0.97,
+      "candidate_id": "grid_010",
+      "step_mode": "box_normalized",
+      "step_value": 0.1
+    },
+    {
+      "beta": 0.99,
+      "candidate_id": "grid_011",
+      "step_mode": "box_normalized",
+      "step_value": 0.1
+    },
+    {
+      "beta": 0.995,
+      "candidate_id": "grid_012",
+      "step_mode": "box_normalized",
+      "step_value": 0.1
+    },
+    {
+      "beta": 0.997,
+      "candidate_id": "grid_013",
+      "step_mode": "box_normalized",
+      "step_value": 0.1
+    },
+    {
+      "beta": 0.999,
+      "candidate_id": "grid_014",
+      "step_mode": "box_normalized",
+      "step_value": 0.1
+    },
+    {
+      "beta": 0.97,
+      "candidate_id": "grid_015",
+      "step_mode": "box_normalized",
+      "step_value": 0.2
+    },
+    {
+      "beta": 0.99,
+      "candidate_id": "grid_016",
+      "step_mode": "box_normalized",
+      "step_value": 0.2
+    },
+    {
+      "beta": 0.995,
+      "candidate_id": "grid_017",
+      "step_mode": "box_normalized",
+      "step_value": 0.2
+    },
+    {
+      "beta": 0.997,
+      "candidate_id": "grid_018",
+      "step_mode": "box_normalized",
+      "step_value": 0.2
+    },
+    {
+      "beta": 0.999,
+      "candidate_id": "grid_019",
+      "step_mode": "box_normalized",
+      "step_value": 0.2
+    },
+    {
+      "beta": 0.97,
+      "candidate_id": "grid_020",
+      "step_mode": "box_normalized",
+      "step_value": 0.4
+    },
+    {
+      "beta": 0.99,
+      "candidate_id": "grid_021",
+      "step_mode": "box_normalized",
+      "step_value": 0.4
+    },
+    {
+      "beta": 0.995,
+      "candidate_id": "grid_022",
+      "step_mode": "box_normalized",
+      "step_value": 0.4
+    },
+    {
+      "beta": 0.997,
+      "candidate_id": "grid_023",
+      "step_mode": "box_normalized",
+      "step_value": 0.4
+    },
+    {
+      "beta": 0.999,
+      "candidate_id": "grid_024",
+      "step_mode": "box_normalized",
+      "step_value": 0.4
+    },
+    {
+      "beta": 0.97,
+      "candidate_id": "grid_025",
+      "step_mode": "box_normalized",
+      "step_value": 0.8
+    },
+    {
+      "beta": 0.99,
+      "candidate_id": "grid_026",
+      "step_mode": "box_normalized",
+      "step_value": 0.8
+    },
+    {
+      "beta": 0.995,
+      "candidate_id": "grid_027",
+      "step_mode": "box_normalized",
+      "step_value": 0.8
+    },
+    {
+      "beta": 0.997,
+      "candidate_id": "grid_028",
+      "step_mode": "box_normalized",
+      "step_value": 0.8
+    },
+    {
+      "beta": 0.999,
+      "candidate_id": "grid_029",
+      "step_mode": "box_normalized",
+      "step_value": 0.8
+    }
+  ],
+  "experiment_version": 1,
+  "half_width": 1.0,
+  "invalid_u0_threshold": 1e-10,
+  "iterations": 3000,
+  "k": 4,
+  "notebook_source_sha256": "7c797cc50c0de00d3a139bd98929c9c827c162396b0720642f57cac25c5ff6bd",
+  "optimizer_seed": 20260919,
+  "phi": [
+    0.6,
+    -0.3,
+    0.2
+  ],
+  "process_seed": 20260918,
+  "selection_metric": "mean_relative_width_gap",
+  "source_sha256": "84c9dad0ae41881e65e72942b60eb83ca49c6cd90d511bb79f0145d634a8bc79",
+  "starts": 12,
+  "tuning_replications": 6,
+  "use_convex_hull": true,
+  "validation_replications": 6
+}
