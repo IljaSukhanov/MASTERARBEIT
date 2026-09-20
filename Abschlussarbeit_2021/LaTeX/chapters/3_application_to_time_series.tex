@@ -151,13 +151,9 @@ where we have dropped all terms independent of $k$. Since $\hat{\sigma}_1^2\ge\h
 Here, $c_T>0$ is some penalty term sequence. Different choices of $c_T$ lead to different AR order selectors that are known in the literature. Choosing $c_T=2$ leads to the Akaike information criterion (AIC), $c_T=\log{T}$ to the Bayesian information criterion (BIC), and $c_T=2\log{\log{T}}$ to the Hannan-Quinn information criterion (HQIC). All of these criteria can be motivated in their own sense and serve a different purpose. The AIC is asymptotically efficient, but not strongly consistent. BIC and HQIC are strongly consistent but not asymptotically efficient.
 
 
-\textbf{Partial auto correlation cutoff}
+\textbf{Partial autocorrelation cutoff}
 
-\todo[inline]{get theory right}
-
-Another approach that is often used is the so called partial autocorrelation function (PACF) cutoff. In this approach, the relation $k\mapsto\hat{\phi}_k^{(k)}$ is examined and the estimated estimated order $\hat{p}$ is set as the last $k$ outside the approximate 95\% confidence band $\pm1.96T^{-1/2}$.
-
-The theoretical reasoning is as follows. Under the null hypothesis that the true order is strictly less than $k$ we have $\sqrt{T}\hat{\phi}_k^{(k)}\to N(0,1)$. Thus, we reject this hypothesis at level $\alpha$ when $|\hat{\phi}_k^{(k)}|>T^{-1/2}\Phi^{-1}(1-\alpha/2)$.
+The partial autocorrelation function $\alpha$ is given by $\alpha(0)=1$ and $\alpha(k)=\phi_{kk}$, where $\phi_k=(\phi_{1k},\dots,\phi_{kk})$ is the coefficient vector obtained as a solution of the Yule-Walker Equations. The sample partial autocorrelation function $\hat{\alpha}$ is defined analogously through empirical analogs. For an AR($p$) process we have $\alpha(p)=\phi_p$ and $\alpha(k)=0$ for $k>p$. For causal AR($p$) processes with iid innovations it is known that (\textcolor{red}{add source}) $\sqrt{T}\hat{\alpha}(k)\stackrel{d}{\to}N(0,1)$ as $T\to+\infty$ for each fixed $k>p$. In particular, assuming $T$ is large, we have $\mathbb{P}(\sqrt{T}\hat{\alpha}(k)\in[-b,b])\approx2\Phi(b)-1$. Specifically, setting $b=\Phi^{-1}(0.975)\approx1.96$, we obtain $\mathbb{P}(\hat{\alpha}(k)\in[-\frac{1.96}{\sqrt{T}},\frac{1.96}{\sqrt{T}}])\approx0.95$. Therefore, we might choose as the AR order the last $k$ that $\hat\alpha(k)$ is outside the bounds $\pm\frac{1.96}{\sqrt{T}}$.
 
 
 
@@ -405,7 +401,9 @@ There exists work on the convergence speed of the sequence $d_H(\operatorname{co
 
 We state the \enquote{enough probability mass} condition from Brunel and show that the sliding window point cloud fails this condition. The $\epsilon$-cap of a convex body $\mathcal{Z}\subseteq\mathbb{R}^k$ in direction $u\in\mathbb{S}^{k-1}$ is the set $C_{\mathcal{Z}}(u,\epsilon)=\{x\in K:\langle x,u\rangle\ge h_{\mathcal{Z}}(u)-\epsilon\}$. Brunel's condition is that there exist $\alpha,L>0$ and $0<\epsilon_0\le1$ such that $\mu_k(C_{\mathcal{Z}}(u,\epsilon))\ge L\epsilon^{\alpha}$ for all $u\in\mathbb{S}^{k-1}$ and $\epsilon\in[0,\epsilon_0]$.
 
-This condition fails in our setting, which the next Proposition shows.
+Louhichi's \enquote{$a$-$b$ condition} is given as follows. There exist $a,b,\epsilon_0>0$ such that $\inf_{y\in\mathcal{Z}^{(k)}}\mathbb{P}(\|Y_t^{(k)}-y\|\le\epsilon)\ge a\epsilon^b$ for all $0<\epsilon\le\epsilon_0$. This is a stronger condition as Brunel's condition, because ...
+
+The next Proposition shows that in our setting, Brunel's condition fails and therefore also Louchichi's condition.
 
 \begin{Prop}
     Let $\mathcal{Z}^{(k)}$ be the zonoid from above. Then we have
@@ -416,7 +414,20 @@ This condition fails in our setting, which the next Proposition shows.
 \end{Prop}
 
 \begin{proof}
-    \todo[inline]{TBD}
+    Let $\{Z_t\}\stackrel{\text{iid}}{\sim}U[-1,1]$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Then, $\operatorname{supp}(X_t)=[-H,H]$, where $H=\sum_{j=0}^{\infty}|\psi_j|$. Consequently
+    \begin{align*}
+        H-X_t=\sum_{j=0}^{\infty}|\psi_j|-\sum_{j=0}^{\infty}\psi_jZ_{t-j}=\sum_{j=0}^{\infty}|\psi_j|\underbrace{(1-\operatorname{sgn}(\psi_j)Z_{t-j})}_{=D_{t-j}\ge0}
+    \end{align*}
+    \textcolor{red}{There exist infinitely many nonzero $\psi_j$.} Thus, for each $\alpha>0$ no matter how large we find distinct indices $j_1,\dots,j_M$ where $M>\alpha$ such that $\psi_{j_m}\ne0$ for all $m=1,\dots,M$. Let $\epsilon>0$. Then $H-X_t\le\epsilon$ implies $D_{t-j_m}\le\epsilon|\psi_{j_m}|$ for all $m=1,\dots,M$. Now it holds
+    \begin{align*}
+        \mathbb{P}(H-X_t\le\epsilon)&\le\mathbb{P}\left(\bigcap_{m=1}^{M}\{D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}\}\right)\\&
+        =\prod_{m=1}^{M}\mathbb{P}(D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1})\\&
+        =\prod_{m=1}^{M}\frac{\epsilon}{2|\psi_{j_m}|}=C_M\epsilon^M
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \frac{\mu_k(C_{\mathcal{Z}^{(k)}}(e_1,\epsilon))}{\epsilon^{\alpha}}&=\frac{\mathbb{P}(Y_t^{(k)}\in C_{\mathcal{Z}^{(k)}}(e_1,u))}{\epsilon^{\alpha}}\\&=\frac{\mathbb{P}(H-X_t\le\epsilon)}{\epsilon^{\alpha}}\le C_M\epsilon^{M-\alpha}\stackrel{\epsilon\to0}{\to}0.
+    \end{align*}
 \end{proof}
 
 \begin{Lem}\label{lem:ergodic_implies_dense}
@@ -542,7 +553,7 @@ We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ i
 
 \begin{proof}
     The function $\hat{w}_k$ is $\hat{w}_k(u)=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$, that is, a point-wise maximum over finitely many linear functions.
-    \todo[inline]{Finish the proof}
+    \todo[inline]{continue here}
 \end{proof}
 
 In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
@@ -565,19 +576,13 @@ Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$,
 
 We test our newly developed geometric estimators on simulated and real data. Regarding the experiments with simulated data we will investigate different scenarios: first we will simulate AR($p$) processes, \enquote{forget} what the order $p$ is and try to recover it using our geometric approach coupled with an elbow method. We will compare it against the classical established methods BIC and PACF cutoff, that were presented in Section~\ref{sec:classical_order_selection_methods}. The second scenario that we consider is, that we generate AR($p$) processes and keep the knowledge of the true AR($p$) order. We then compare our estimation method (projected sub-gradient descent, see Remark~\ref{rem:minimizer_estimates_coefficients}) with the classical coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}.
 
-\todo[inline]{Explain Jones algorithm better}
-
 For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in a theoretically grounded way. Jones~\cite{jones_randomly_1987} gives one such approach. There, an algorithm is given which samples $\phi=(\phi_1,\dots,\phi_p)$ uniformly from
 \begin{align*}
     C_p=\{\phi\in\mathbb{R}^p:1-\phi_1z-\dots-\phi_pz^p\ne0\text{ for all }z\in\mathbb{C},|z|\le 1\}
 \end{align*}
 This allows for fair and principled numerical experiments.
 
-He invented the algorithm
-\begin{enumerate}
-    \item[1.] Generate $r_k\sim\operatorname{Beta}(a_k,b_k)$ independently, where $a_k=\lfloor(k+1)/2\rfloor$ and $b_k=\lfloor k/2\rfloor+1$
-    \item[2.] compute $\phi$ via the Durbin-Levinson algorithm
-\end{enumerate}
+\todo[inline]{Explain Jones algorithm better}
 
 \subsection{Simulated Data}
 
@@ -654,7 +659,14 @@ Here we compare the four presented coefficient estimation methods presented in S
 
 \section{Literature positioning and novelty assessment}
 
-This is equivalent to minimizing
+The conditional maximum likelihood approach with innovations assumed to be from $U[-h,h]$ leads to $L^{\infty}$-regression:
 \begin{align*}
-    \min_{\theta\in\mathbb{R}^{p+1}:\theta_0=1}w_{\operatorname{conv}(\mathcal{P}_T)}(\theta)
+    \min_{\phi\in\mathbb{R}^{p}}\max_{t}\left|\underbrace{X_t-\sum_{j=1}^{p}\phi_jX_{t-j}}_{=\langle Y_t^{(p+1)},q_{\phi}\rangle}\right|
+\end{align*}
+
+\todo[inline]{Geometric interpretation of $L^{\infty}$-regression?}
+
+Introducing an intercept term $b$ we get
+\begin{align*}
+    \min_{\phi,b}\max_{t}\left|\langle Y_t^{(p+1)},q_{\phi}\rangle-b\right|=\frac{1}{2}\min_{\phi}\left(\max_{t}\langle Y_t^{(p+1)},q_{\phi}\rangle-\min_{t}\langle Y_t^{p+1},q_{\phi}\rangle\right)
 \end{align*}
