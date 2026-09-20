@@ -1,5 +1,3 @@
-"""Gradient-based minimum-width optimizers for AR point clouds."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -14,23 +12,19 @@ __all__ = [
 
 
 def projected_subgradient_empirical_width(
-    points,
-    iterations=2_000,
-    initial_step=0.2,
-    patience=200,
-    improvement_tolerance=1e-10,
-    rng=None,
-    initial_direction=None,
-    step_schedule="inverse_sqrt",
-    geometric_decay=0.99,
+        points,
+        iterations=2_000,
+        initial_step=0.2, # gamma_0
+        patience=200,
+        improvement_tolerance=1e-10,
+        rng=None,
+        initial_direction=None,
+        step_schedule="inverse_sqrt",
+        geometric_decay=0.99, # beta
 ):
-    """Minimize empirical directional width over the unit sphere.
-
-    step_schedule="inverse_sqrt" uses eta_t = eta_0 / sqrt(t + 1).
-    step_schedule="geometric" uses eta_t = eta_0 * beta**t, as in
-    the local convergence result of Li et al. (Theorem 4).
-    """
     points = np.asarray(points, dtype=float)
+
+    ### input checks ###
     if points.ndim != 2 or len(points) < 2:
         raise ValueError("points must have shape (n, k) with n >= 2.")
     if iterations < 1:
@@ -48,21 +42,22 @@ def projected_subgradient_empirical_width(
         raise ValueError("patience must be a positive integer.")
     if improvement_tolerance < 0:
         raise ValueError("improvement_tolerance must be nonnegative.")
+    ### end input checks ###
 
     generator = np.random.default_rng(rng)
-    dimension = points.shape[1]
+    dimension = points.shape[1] # k
 
     if initial_direction is None:
-        direction = generator.normal(size=dimension)
+        direction = generator.normal(size=dimension) # u_0 ~ N(0, I_k)
     else:
         direction = np.asarray(initial_direction, dtype=float)
         if direction.shape != (dimension,):
             raise ValueError(f"initial_direction must have shape ({dimension},).")
 
-    direction_norm = np.linalg.norm(direction)
+    direction_norm = np.linalg.norm(direction) # ||u_0||
     if direction_norm <= np.finfo(float).eps:
         raise ValueError("initial_direction must be nonzero.")
-    direction = direction / direction_norm
+    direction = direction / direction_norm # u_0 <- u_0 / ||u_0|| (u_0 ~ U(S^{k-1}))
 
     width_history = np.empty(iterations)
     best_width_history = np.empty(iterations)
@@ -71,11 +66,12 @@ def projected_subgradient_empirical_width(
     best_direction = direction.copy()
     iterations_without_improvement = 0
 
+    # main loop
     for iteration in range(iterations):
-        projections = points @ direction
-        maximum_index = int(np.argmax(projections))
-        minimum_index = int(np.argmin(projections))
-        width = projections[maximum_index] - projections[minimum_index]
+        projections = points @ direction # p_i = x_i^T u_t
+        maximum_index = int(np.argmax(projections)) # i_max = argmax_i p_i
+        minimum_index = int(np.argmin(projections)) # i_min = argmin_i p_i
+        width = projections[maximum_index] - projections[minimum_index] # w(u_t) = p_{i_max} - p_{i_min}
 
         if width < best_width - improvement_tolerance:
             best_width = float(width)
@@ -86,10 +82,12 @@ def projected_subgradient_empirical_width(
 
         width_history[iteration] = width
         best_width_history[iteration] = best_width
+
         if step_schedule == "inverse_sqrt":
-            step = initial_step / np.sqrt(iteration + 1.0)
+            step = initial_step / np.sqrt(iteration + 1.0) # gamma_t = gamma_0 / sqrt(t+1)
         else:
-            step = initial_step * geometric_decay**iteration
+            step = initial_step * geometric_decay**iteration # gamma_t = gamma_0 * beta^t
+
         step_history[iteration] = step
 
         if iterations_without_improvement >= patience:
@@ -98,22 +96,23 @@ def projected_subgradient_empirical_width(
             step_history = step_history[:iteration + 1]
             break
 
-        subgradient = points[maximum_index] - points[minimum_index]
+        subgradient = points[maximum_index] - points[minimum_index] # g_t = x_{i_max} - x_{i_min}
         riemannian_subgradient = (
             subgradient - (direction @ subgradient) * direction
-        )
+        ) # xi_t = g_t - (u_t^T g_t) u_t
         if np.linalg.norm(riemannian_subgradient) <= np.finfo(float).eps:
             width_history = width_history[:iteration + 1]
             best_width_history = best_width_history[:iteration + 1]
             step_history = step_history[:iteration + 1]
             break
 
-        candidate = direction - step * riemannian_subgradient
+        candidate = direction - step * riemannian_subgradient # u_{t+1} = u_t - gamma_t xi_t
         candidate_norm = np.linalg.norm(candidate)
+        # is the fallback mathematically necessary?
         if candidate_norm <= np.finfo(float).eps:
-            candidate = generator.normal(size=dimension)
-            candidate_norm = np.linalg.norm(candidate)
-        direction = candidate / candidate_norm
+            candidate = generator.normal(size=dimension) # u_{t+1} ~ N(0, I_k)
+            candidate_norm = np.linalg.norm(candidate) # ||u_{t+1}||
+        direction = candidate / candidate_norm # u_{t+1} <- u_{t+1} / ||u_{t+1}|| (u_{t+1} ~ U(S^{k-1}))
 
     return {
         "minimum_width": best_width,
@@ -124,6 +123,10 @@ def projected_subgradient_empirical_width(
         "step_schedule": step_schedule,
         "geometric_decay": geometric_decay,
     }
+
+
+
+# continue here
 
 
 def batched_geometric_width_curves(
