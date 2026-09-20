@@ -7,7 +7,6 @@ from .functions import sliding_window_point_cloud
 __all__ = [
     "projected_subgradient_empirical_width",
     "batched_geometric_width_curves",
-    "batched_riemannian_adam_width_curves",
 ]
 
 
@@ -126,7 +125,21 @@ def projected_subgradient_empirical_width(
 
 
 
-# continue here
+# def batched_geometric_width_curves(
+#         series,
+#         k_values,
+#         *,
+#         seed,
+#         replication,
+#         starts=3,
+#         iterations=150,
+#         initial_step=0.2,
+#         geometric_decay=0.97,
+#         return_directions=False,
+#         use_convex_hull=False,
+# ):
+    
+    
 
 
 def batched_geometric_width_curves(
@@ -142,13 +155,6 @@ def batched_geometric_width_curves(
     return_directions=False,
     use_convex_hull=False,
 ):
-    """Update several Riemannian subgradient starts together.
-
-    ``use_convex_hull=True`` evaluates widths and subgradients using only
-    hull vertices. Covariance initialization and returned projections still
-    use the full point cloud. This preserves the directional-width objective.
-    Degenerate clouds fall back to the full cloud.
-    """
     if not isinstance(use_convex_hull, (bool, np.bool_)):
         raise ValueError("use_convex_hull must be a boolean.")
     single_widths, best_widths, best_projections = [], [], []
@@ -212,135 +218,6 @@ def batched_geometric_width_curves(
             )
             valid = candidate_norms[:, 0] > np.finfo(float).eps
             directions[valid] = candidates[valid] / candidate_norms[valid]
-
-        single_widths.append(best_start_widths[0])
-        best_start = int(np.argmin(best_start_widths))
-        best_widths.append(best_start_widths[best_start])
-        best_projections.append(cloud_k @ best_start_directions[best_start])
-        best_directions.append(best_start_directions[best_start].copy())
-
-    standard_result = (
-        np.asarray(single_widths),
-        np.asarray(best_widths),
-        best_projections,
-    )
-    if return_directions:
-        return (*standard_result, best_directions)
-    return standard_result
-
-
-def batched_riemannian_adam_width_curves(
-    series,
-    k_values,
-    *,
-    seed,
-    replication,
-    starts=3,
-    iterations=150,
-    initial_step=0.2,
-    geometric_decay=0.97,
-    beta_1=0.9,
-    beta_2=0.999,
-    epsilon=1e-8,
-    return_directions=False,
-):
-    """Minimize width using sphere-aware Adam with a scalar second moment.
-
-    The active width subgradient and first moment are projected onto the
-    tangent space. A scalar second moment keeps the update invariant under
-    rotations of the point cloud. The update is retracted to the sphere by
-    normalization and uses ``initial_step * geometric_decay**iteration``.
-    """
-    if not isinstance(starts, (int, np.integer)) or starts < 1:
-        raise ValueError("starts must be a positive integer.")
-    if not isinstance(iterations, (int, np.integer)) or iterations < 1:
-        raise ValueError("iterations must be a positive integer.")
-    if not np.isfinite(initial_step) or initial_step <= 0.0:
-        raise ValueError("initial_step must be positive and finite.")
-    if not 0.0 < geometric_decay < 1.0:
-        raise ValueError("geometric_decay must lie strictly between zero and one.")
-    if not 0.0 <= beta_1 < 1.0:
-        raise ValueError("beta_1 must lie in [0, 1).")
-    if not 0.0 <= beta_2 < 1.0:
-        raise ValueError("beta_2 must lie in [0, 1).")
-    if not np.isfinite(epsilon) or epsilon <= 0.0:
-        raise ValueError("epsilon must be positive and finite.")
-
-    single_widths, best_widths, best_projections = [], [], []
-    best_directions = []
-    for k in k_values:
-        cloud_k = sliding_window_point_cloud(series, int(k))
-        if k == 1:
-            initial_directions = [np.ones(1)]
-        else:
-            covariance_k = np.cov(cloud_k, rowvar=False)
-            _, eigenvectors_k = np.linalg.eigh(covariance_k)
-            initial_directions = [eigenvectors_k[:, 0]]
-        initial_generator = np.random.default_rng(
-            np.random.SeedSequence([seed, replication, int(k), 20])
-        )
-        initial_directions.extend(
-            initial_generator.normal(size=int(k))
-            for _ in range(starts - 1)
-        )
-        directions = np.asarray(initial_directions, dtype=float)
-        directions /= np.linalg.norm(directions, axis=1, keepdims=True)
-
-        first_moments = np.zeros_like(directions)
-        second_moments = np.zeros(starts)
-        best_start_widths = np.full(starts, np.inf)
-        best_start_directions = directions.copy()
-
-        for iteration in range(iterations):
-            projections = cloud_k @ directions.T
-            maximum_indices = np.argmax(projections, axis=0)
-            minimum_indices = np.argmin(projections, axis=0)
-            current_widths = (
-                projections[maximum_indices, np.arange(starts)]
-                - projections[minimum_indices, np.arange(starts)]
-            )
-            improved = current_widths < best_start_widths
-            best_start_widths[improved] = current_widths[improved]
-            best_start_directions[improved] = directions[improved]
-
-            subgradients = cloud_k[maximum_indices] - cloud_k[minimum_indices]
-            tangent_subgradients = subgradients - (
-                np.sum(directions * subgradients, axis=1, keepdims=True)
-                * directions
-            )
-
-            # Projecting the previous moment is a vector transport into the
-            # current tangent space of the sphere.
-            first_moments -= (
-                np.sum(directions * first_moments, axis=1, keepdims=True)
-                * directions
-            )
-            first_moments = (
-                beta_1 * first_moments
-                + (1.0 - beta_1) * tangent_subgradients
-            )
-            second_moments = (
-                beta_2 * second_moments
-                + (1.0 - beta_2)
-                * np.sum(tangent_subgradients**2, axis=1)
-            )
-
-            bias_corrected_first = first_moments / (
-                1.0 - beta_1 ** (iteration + 1)
-            )
-            bias_corrected_second = second_moments / (
-                1.0 - beta_2 ** (iteration + 1)
-            )
-            step = initial_step * geometric_decay**iteration
-            adaptive_direction = bias_corrected_first / (
-                np.sqrt(bias_corrected_second)[:, None] + epsilon
-            )
-            candidates = directions - step * adaptive_direction
-            directions = candidates / np.linalg.norm(
-                candidates,
-                axis=1,
-                keepdims=True,
-            )
 
         single_widths.append(best_start_widths[0])
         best_start = int(np.argmin(best_start_widths))
