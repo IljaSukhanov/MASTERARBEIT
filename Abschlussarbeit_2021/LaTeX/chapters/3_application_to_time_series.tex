@@ -1,12 +1,10 @@
 \chapter{Geometric Estimation of Autoregressive Processes with bounded innovations}
 
-\todo[inline]{rewrite introductory text (17.09)}
-
 The original goal of this chapter was to apply the spectral scale selection developed in~\cite{Baralic2026} to recover the order $p$ of autoregressive time series. Even though the scale selection principle is primarily developed for applications in TDA, the hope was to use the well known sliding window embedding as a bridge between TDA and time series analysis. In the process of studying this problem, an alternative convex-geometric direction emerged, while the TDA approach turned out to be unfruitful. This chapter presents a new AR order selection method using ideas from convex geometry.
 
-In the first section, we give an overview of the theory of time series needed for our purposes. In particular, we briefly review classical order selection and AR coefficient estimation. Next we introduce the embedding of time series as point clouds in $\mathbb{R}^k$, \textcolor{red}{where Takens' theorem will play an important role.} We show consistency for \textcolor{red}{different kinds of convex-geometric functionals} that can recover the correct AR order $p$. A discussion of different kinds of innovation distributions is given. Finally, we present our numerical results and interpret them.
+In the first section, we give an overview of the theory of time series needed for our purposes. In particular, we briefly review classical order selection and AR coefficient estimation. Next, we introduce the embedding of time series as point clouds in $\mathbb{R}^k$. We show consistency for a certain kind of convex-geometric functional, the minimum width, that can recover the correct AR order $p$. The projected sub-gradient descent is used to compute the empirical minimum width. A discussion of different kinds of innovation distributions is given, where the focus lies primarily on bounded distributions, of which the Beta distribution is the main example. Finally, we present our numerical results and interpret them.
 
-Goal: study connection between time series analysis and convex geometry through sliding window embedding
+The main goal of this chapter is to study the connection between time series analysis and convex geometry through sliding window analysis.
 
 \section{Preliminaries on time series}
 
@@ -604,15 +602,15 @@ This allows for fair and principled numerical experiments.
 
 \subsubsection{First exemplary experiment}
 
-Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$. The coefficients used are $\phi=-0.563$ for the AR(1) process, $\phi_1=0.870,\phi_2=-0.638$ for the AR(2) process, and $\phi_1=0.698,\phi_2=-0.814,\phi_3=0.643$ for the AR(3) process. The observed time series had length $T=2000$.
+Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$. The coefficients used are $\phi=0.6$ for the AR(1) process, $\phi_1=0.6,\phi_2=-0.3$ for the AR(2) process, and $\phi_1=0.6,\phi_2=-0.3,\phi_3=0.3$ for the AR(3) process. The observed time series had length $T=2000$.
 
 The blue lines show the minimum width obtained by the projected sub-gradient descent, that is, $\hat{w}_k(\hat{u})$ with $\hat{u}$ being the output of Algorithm~\ref{alg:projected_gradient_descent}. For reference, the dashed black line shows the theoretical minimum width $m_k$. Their closeness indicates that the minimization algorithm worked well. The Figures also show the population width evaluated at the empirical minimizer, that is, $w_k(\hat{u})$ as a dashed orange line. The difference $w_k(\hat{u})-\hat{w}_k(\hat{u})$ is always positive, due to the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding-window point cloud. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}.
 
 The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\hat{q}_{AC}-1$. For these three exemplary processes, the correct order was selected. Using Remark~\ref{rem:minimizer_estimates_coefficients} the following coefficient estimates are obtained from the minimizing directions:
 \begin{itemize}
-    \item AR(1) process: $\hat{\phi}=?$
-    \item AR(2) process: $\hat{\phi}_1=?,\hat{\phi}_2=?$
-    \item AR(3) process: $\hat{\phi}_1=?,\hat{\phi}_2=?,\hat{\phi}_3=?$
+    \item AR(1) process: $\hat{\phi}=0.599652$
+    \item AR(2) process: $\hat{\phi}_1=0.605058,\hat{\phi}_2=-0.308672$
+    \item AR(3) process: $\hat{\phi}_1=0.602940,\hat{\phi}_2=-0.302585,\hat{\phi}_3=0.302667$
 \end{itemize}
 
 \begin{figure}
