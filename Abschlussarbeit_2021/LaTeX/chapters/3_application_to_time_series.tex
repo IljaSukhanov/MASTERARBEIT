@@ -552,8 +552,13 @@ We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ i
 \end{Lem}
 
 \begin{proof}
-    The function $\hat{w}_k$ is $\hat{w}_k(u)=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$, that is, a point-wise maximum over finitely many linear functions.
-    \todo[inline]{continue here}
+    The function $\hat{w}_k$ is $\hat{w}_k(u)=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$, that is, a point-wise maximum over finitely many linear functions. In the following we write $A=\{Y_t^{(k)}-Y_s^{(k)}:s,t\}$ and $f(u)=\max_{a\in A}\langle a.u\rangle$. Also let $m=\min_{u\in\mathbb{S}^{k-1}}f(u)$ and $\mathcal{X}=\{u\in\mathbb{S}^{k-1}:f(u)=m\}$.
+
+    Let $u^{\ast}\in\mathcal{X}$ and $T_{u^{\ast}}\mathbb{S}^{k-1}$ the tangent space at $u^{\ast}$. Furthermore let $A_{\ast}=\{a\in A:\langle a,u^{\ast}\rangle=m\}$ be the set of active vectors. Define $g(d)=\max_{}\langle a,d\rangle$ for all unit tangent directions $d\in T_{u^{\ast}}\mathbb{S}^{k-1}\cap\mathbb{S}^{k-1}=:S_{u^{\ast}}\mathbb{S}^{k-1}$. We can see that
+    \begin{align*}
+        f\left(\frac{u^{\ast}+td}{\sqrt{1+t^2}}\right)=\frac{m+tg(d)}{\sqrt{1+t^2}}
+    \end{align*}
+    for sufficiently small $t>0$. From this it follows that $g(d)>0$.
 \end{proof}
 
 In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
@@ -564,11 +569,17 @@ The last step is to employ an elbow point selector with the property that it wou
 
 \textbf{fit two affine lines}
 
-One way is the L-method; see~[]. Two affine lines are fitted through $(1,\hat{m}_1),\dots,(q+1,\hat{m}_{q+1})$ and $(q+1,\hat{m}_{q+1}),\dots,(K,\hat{m}_K)$ for all $q=1,\dots,K$ and we select the $q$ with the best fit. 
+Two affine lines are fitted through $(1,\hat{m}_1),\dots,(q,\hat{m}_{q})$ and $(q,\hat{m}_{q}),\dots,(K,\hat{m}_K)$ for all $q=2,\dots,K-1$ and we select the $q$ with the best fit.
+\begin{align*}
+    S_{AA}(q)=\min_{a,b,c,d}\left(\sum_{l=1}^{q}(al+b-\hat{m}_l)^2+\sum_{l=q}^{K}(cl+d-\hat{m}_l)^2\right),\quad\hat{q}_{AA}=\arg\min_{2\le q\le K-1}S_{AA}(q)
+\end{align*}
 
 \textbf{fit one affine line and one constant line}
 
-Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$, we can use a modified L-method, that is, fit an affine curve through the points $(1,\hat{m}_1),\dots,(q+1,\hat{m}_{q+1})$ and a constant line through $(q+1,\hat{m}_{q+1}),\dots,(K,\hat{m}_K)$ for all $q=1,\dots,K$ and select the $q$ with the best fit.
+Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$, we can use a modified L-method, that is, fit an affine curve through the points $(1,\hat{m}_1),\dots,(q,\hat{m}_{q})$ and a constant line through $(q,\hat{m}_{q}),\dots,(K,\hat{m}_K)$ for all $q=2,\dots,K-1$ and select the $q$ with the best fit.
+\begin{align*}
+    S_{AC}(q)=\min_{a,b,d}\left(\sum_{l=1}^{q}(al+b-\hat{m}_l)^2+\sum_{l=q}^{K}(d-\hat{m}_l)^2\right),\quad\hat{q}_{AC}=\arg\min_{2\le q\le K-1}S_{AC}(q)
+\end{align*}
 
 
 
@@ -586,11 +597,18 @@ This allows for fair and principled numerical experiments.
 
 \subsection{Simulated Data}
 
-\subsubsection{Order selection experiments}
+\subsubsection{First exemplary experiment}
 
-Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$.
+Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$. The coefficients used are $\phi=-0.563$ for the AR(1) process, $\phi_1=0.870,\phi_2=-0.638$ for the AR(2) process, and $\phi_1=0.698,\phi_2=-0.814,\phi_3=0.643$ for the AR(3) process. The observed time series had length $T=2000$.
 
-The blue lines show the minimum width obtained by the projected sub-gradient descent, that is, $\hat{w}_k(\hat{u})$ with $\hat{u}$ being the output of Algorithm~\ref{alg:projected_gradient_descent}. For reference, the dashed black line shows the theoretical minimum width $m_k$. Their closeness indicates that the minimization algorithm worked well. The Figures also show the population width evaluated at the empirical minimizer, that is, $w_k(\hat{u})$ as dashed orange line. The difference $w_k(\hat{u})-\hat{w}_k(\hat{u})$ is always positive, because of the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding window point cloud. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}
+The blue lines show the minimum width obtained by the projected sub-gradient descent, that is, $\hat{w}_k(\hat{u})$ with $\hat{u}$ being the output of Algorithm~\ref{alg:projected_gradient_descent}. For reference, the dashed black line shows the theoretical minimum width $m_k$. Their closeness indicates that the minimization algorithm worked well. The Figures also show the population width evaluated at the empirical minimizer, that is, $w_k(\hat{u})$ as a dashed orange line. The difference $w_k(\hat{u})-\hat{w}_k(\hat{u})$ is always positive, due to the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding-window point cloud. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}.
+
+The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\hat{q}_{AC}-1$. For these three exemplary processes, the correct order was selected. Using Remark~\ref{rem:minimizer_estimates_coefficients} the following coefficient estimates are obtained from the minimizing directions:
+\begin{itemize}
+    \item AR(1) process: $\hat{\phi}=?$
+    \item AR(2) process: $\hat{\phi}_1=?,\hat{\phi}_2=?$
+    \item AR(3) process: $\hat{\phi}_1=?,\hat{\phi}_2=?,\hat{\phi}_3=?$
+\end{itemize}
 
 \begin{figure}
     \centering
@@ -612,6 +630,8 @@ The blue lines show the minimum width obtained by the projected sub-gradient des
     \caption{Blue: $\hat{m}_k$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge3$)}
     \label{fig:ar3_experiment}
 \end{figure}
+
+\subsubsection{Order selection experiments}
 
 Table~\ref{tab:geometric-bic-pacf-comparison} summarizes the results from 50 simulations for each true order $p\in\{1,2,3\}$. We compare the classical order selectors BIC and PACF cutoff with our minimum width approach, where we test the different methods of detecting the elbow point from Section~\ref{sec:elbow_point_selection}.
 
