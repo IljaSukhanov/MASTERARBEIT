@@ -9,8 +9,8 @@ from threadpoolctl import threadpool_limits
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
-from Code.Code_AR_processes.functions import jones_ar_coefficients, simulate_uniform_ar
-from Code.Code_AR_processes.descent import batched_geometric_width_curves
+from Code.Code_AR_processes.ar_tools.functions import jones_ar_coefficients, simulate_uniform_ar
+from Code.Code_AR_processes.ar_tools.descent import batched_geometric_width_curves
 
 OUT = Path(__file__).resolve().parent
 INPUT = ROOT / 'Code/Code_AR_processes/outputs/csv/ar_shared_breakpoint_l_methods'
@@ -120,7 +120,7 @@ with threadpool_limits(limits=1):
         oracle=[]
         for k in range(4,11):
             direction=np.r_[1.,-phi,np.zeros(k-4)]/np.sqrt(1.+phi@phi)
-            from Code.Code_AR_processes.functions import sliding_window_point_cloud
+            from Code.Code_AR_processes.ar_tools.functions import sliding_window_point_cloud
             projection=sliding_window_point_cloud(series,k)@direction
             oracle.append(float(np.ptp(projection)))
         for k in range(1,11):

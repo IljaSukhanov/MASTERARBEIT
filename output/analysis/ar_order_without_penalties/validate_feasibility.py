@@ -7,7 +7,7 @@ from scipy.optimize import linprog
 from threadpoolctl import threadpool_limits
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
-from Code.Code_AR_processes.functions import jones_ar_coefficients,simulate_uniform_ar
+from Code.Code_AR_processes.ar_tools.functions import jones_ar_coefficients,simulate_uniform_ar
 OUT=Path(__file__).resolve().parent
 rows=[]
 with threadpool_limits(limits=1):

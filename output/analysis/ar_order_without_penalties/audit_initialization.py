@@ -8,8 +8,8 @@ from scipy.optimize import linprog
 from threadpoolctl import threadpool_limits
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
-from Code.Code_AR_processes.functions import jones_ar_coefficients,simulate_uniform_ar,sliding_window_point_cloud
-from Code.Code_AR_processes.L_method import shared_breakpoint_l_method_selector
+from Code.Code_AR_processes.ar_tools.functions import jones_ar_coefficients,simulate_uniform_ar,sliding_window_point_cloud
+from Code.Code_AR_processes.ar_tools.L_method import shared_breakpoint_l_method_selector
 OUT=Path(__file__).resolve().parent
 INPUT=ROOT/'Code/Code_AR_processes/outputs/csv/ar_shared_breakpoint_l_methods'
 old=pd.read_csv(INPUT/'width_curves.csv')

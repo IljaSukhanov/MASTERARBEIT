@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+from scipy.optimize import linprog
 
 __all__ = [
+    "horizontal_tail_lad_selector",
     "two_affine_l_method_selector",
     "affine_constant_l_method_selector",
     "shared_breakpoint_l_method_selector",
@@ -46,6 +48,52 @@ def _affine_fit(x_values, y_values):
         fitted_values,
         rmse,
     )
+
+
+def horizontal_tail_lad_selector(k_values, widths):
+    """Fit c + s(q-k)_+ by LAD for each q, subject to s >= 0."""
+    k_values = np.asarray(k_values, dtype=float)
+    widths = np.asarray(widths, dtype=float)
+    candidate_rows = []
+
+    for selected_q in k_values[1:-1].astype(int):
+        hinge = np.maximum(selected_q - k_values, 0.0)
+        sample_count = len(widths)
+        identity = np.eye(sample_count)
+        # Variables are (c, s, u_1, ..., u_K), with u_k >= |residual_k|.
+        objective = np.concatenate(([0.0, 0.0], np.ones(sample_count)))
+        constraints = np.vstack((
+            np.column_stack((-np.ones(sample_count), -hinge, -identity)),
+            np.column_stack(( np.ones(sample_count),  hinge, -identity)),
+        ))
+        bounds = [(None, None), (0.0, None)] + [(0.0, None)] * sample_count
+        fit = linprog(
+            objective,
+            A_ub=constraints,
+            b_ub=np.concatenate((-widths, widths)),
+            bounds=bounds,
+            method="highs",
+        )
+        if not fit.success:
+            raise RuntimeError(f"LAD fit failed for q={selected_q}: {fit.message}")
+        level, slope = fit.x[:2]
+        fitted_values = level + slope * hinge
+        candidate_rows.append({
+            "selected_q": selected_q,
+            "score": float(np.sum(np.abs(widths - fitted_values))),
+            "level": float(level),
+            "slope": float(slope),
+            "fitted_values": fitted_values,
+        })
+
+    best = min(candidate_rows, key=lambda row: (row["score"], row["selected_q"]))
+    return {
+        **best,
+        "selected_order": best["selected_q"] - 1,
+        "candidate_scores": pd.DataFrame(candidate_rows).drop(
+            columns="fitted_values"
+        ),
+    }
 
 
 def shared_breakpoint_l_method_selector(

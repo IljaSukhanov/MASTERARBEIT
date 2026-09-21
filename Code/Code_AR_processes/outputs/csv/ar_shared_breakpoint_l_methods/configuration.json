@@ -25,7 +25,7 @@
   "initial_step": 0.2,
   "geometric_decay": 0.99,
   "width_source_hashes": {
-    "functions.py": "6251a9bdb5e9f0eb1ca7223ab4250ec2df28b2f6e31088ad59a27ff870f7958c",
-    "descent.py": "cf1871c387be61619c0548d00738f52d369898c5ab121067e0ce4c38cea53200"
+    "ar_tools/functions.py": "6251a9bdb5e9f0eb1ca7223ab4250ec2df28b2f6e31088ad59a27ff870f7958c",
+    "ar_tools/descent.py": "0744ba05fd591e8b08e8c2a0ac8f2e38334e1dda46f4ce3e741876e570599933"
   }
 }

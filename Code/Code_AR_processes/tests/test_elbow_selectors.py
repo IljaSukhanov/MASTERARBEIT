@@ -4,7 +4,7 @@ import unittest
 
 import numpy as np
 
-from Code.Code_AR_processes.L_method import (
+from Code.Code_AR_processes.ar_tools.L_method import (
     affine_constant_l_method_selector,
     shared_breakpoint_l_method_selector,
     two_affine_l_method_selector,

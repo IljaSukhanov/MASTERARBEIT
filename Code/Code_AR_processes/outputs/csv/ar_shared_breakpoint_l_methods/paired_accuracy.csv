@@ -1,6 +1,6 @@
 score_criterion,true_order,both_correct,only_two_affine_correct,only_affine_constant_correct,neither_correct
 squared_error,1,49,0,0,1
-squared_error,2,36,0,1,13
+squared_error,2,35,0,2,13
 squared_error,3,18,0,0,32
 weighted_rmse,1,49,0,0,1
 weighted_rmse,2,39,0,1,10
