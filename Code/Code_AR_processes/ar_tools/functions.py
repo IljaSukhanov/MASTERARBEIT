@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from scipy.optimize import minimize_scalar
 
 __all__ = [
     "jones_ar_coefficients",
@@ -12,7 +11,6 @@ __all__ = [
     "sliding_window_point_cloud",
     "ar_impulse_response",
     "theoretical_ar_width_in_direction",
-    "population_minimizing_ar2_direction",
     "companion_matrix",
     "is_stationary",
     "theoretical_width_2d_from_angle",
@@ -22,21 +20,8 @@ __all__ = [
     "zonotope_support_points",
 ]
 
-# def jones_ar_coefficients(
-#         p: int,
-#         rng: np.random.Generator | int | None = None,
-#         *,
-#         return_pacf: bool = False,
-# ) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.float64]]: # Why this kind of output?
-#     if not isinstance(p, np.integer) or p < 1:
-#         raise ValueError(f"p must be a positive integer, got {p}")
-#     generator = np.random.default_rng(rng)
-#     lag_indices = np.arange(1, p + 1) # [1, 2, ..., p]
-#     beta_shape_a = (lag_indices + 1) // 2 # why not take the integer part?
-#     beta_shape_b = lag_indices // 2 + 1 # why not take the integer part?
-#     beta_draws = generator.beta(a=beta_shape_a, b=beta_shape_b)
-    
 
+### work through later:
 def jones_ar_coefficients(
     p: int,
     rng: np.random.Generator | int | None = None,
@@ -69,6 +54,7 @@ def jones_ar_coefficients(
     return phi
 
 
+### work through later:
 def centered_beta_support(
     alpha: float = 1.0,
     beta: float = 1.0,
@@ -89,6 +75,7 @@ def centered_beta_support(
     )
 
 
+### work through later:
 def simulate_beta_ar(
     phi: ArrayLike,
     sample_size: int,
@@ -171,19 +158,16 @@ def simulate_uniform_ar(
     )
 
 
+# explain output mathematically
 def sliding_window_point_cloud(
-    series: ArrayLike,
-    embedding_dimension: int,
-    *,
-    newest_first: bool = True,
-) -> NDArray[np.float64]:
-    """Construct consecutive sliding-window vectors from a time series.
-
-    By default, each row is ordered from newest to oldest, matching the
-    minimum-width calculations. Set ``newest_first=False`` for the forward
-    ordering ``(x_t, ..., x_{t+k-1})`` used by the interactive embeddings.
-    """
+        series: ArrayLike, # why not np.ndarray?
+        embedding_dimension: int,
+        *, # what is the asterisk for?
+        newest_first: bool = True,
+) -> NDArray[np.float64]: # why not np.ndarray?
     series = np.asarray(series, dtype=float)
+
+    ### input checks ###
     if series.ndim != 1:
         raise ValueError("series must be a one-dimensional array")
     if (
@@ -194,101 +178,61 @@ def sliding_window_point_cloud(
             "embedding_dimension must be a positive integer less than or "
             "equal to the length of the series"
         )
+    ### end input checks ###
 
     dimension = int(embedding_dimension)
+    window_count = len(series) - dimension + 1
     offsets = (
-        range(dimension - 1, -1, -1)
+        range(dimension -1, -1, -1)
         if newest_first
         else range(dimension)
     )
-    window_count = len(series) - dimension + 1
     return np.column_stack(
         [series[offset:window_count + offset] for offset in offsets]
     )
 
 
+### compute the coefficients of the MA(infinity) representation of an AR(p) process
 def ar_impulse_response(phi, maximum_lag):
     phi = np.asarray(phi, dtype=float)
-    order = len(phi)
-    psi = np.zeros(maximum_lag + 1)
-    psi[0] = 1.0
+    order = len(phi) # p
+    psi = np.zeros(maximum_lag + 1) # psi_0, psi_1, ..., psi_maximum_lag
+    psi[0] = 1.0 # psi_0 = 1
     for lag in range(1, maximum_lag + 1):
         psi[lag] = sum(
-            phi[j - 1] * psi[lag - j]
-            for j in range(1, min(order, lag) + 1)
+            phi[j] * psi[lag - j - 1] for j in range(min(lag, order))
         )
     return psi
 
 
 def theoretical_ar_width_in_direction(
-    phi,
-    direction,
-    half_width=1.0,
-    history=10_000,
+        phi,
+        direction,
+        half_width=1.0,
+        history=10_000,
 ):
-    """Evaluate the theoretical AR support width in a supplied direction."""
-    direction = np.asarray(direction, dtype=float)
-    direction_norm = np.linalg.norm(direction)
+    direction = np.asarray(direction, dtype=float) # u
+    direction_norm = np.linalg.norm(direction) # ||u||
 
+    ### input checks ###
     if direction.ndim != 1 or len(direction) == 0:
         raise ValueError("direction must be a nonempty one-dimensional array.")
     if direction_norm == 0:
         raise ValueError("direction must be nonzero.")
     if half_width <= 0 or history < 0:
         raise ValueError("Require half_width > 0 and history >= 0.")
+    ### end input checks ###
 
-    unit_direction = direction / direction_norm
-    psi = ar_impulse_response(phi, maximum_lag=history)
+    unit_direction = direction / direction_norm # u / ||u||
+    psi = ar_impulse_response(phi=phi, maximum_lag=history) # psi_0, psi_1, ..., psi_history
+    generator_projections = np.convolve(a=psi, v=unit_direction) # c_j = sum_{r=0}^{k-1} u_r psi_{j-r} for j = 0, 1, ..., history + k - 1
+    return float(2.0 * half_width * np.sum(np.abs(generator_projections[: history + 1]))) # 2 * half_width * sum_{j=0}^{history} |c_j|
 
-    generator_projections = np.convolve(psi, unit_direction)[: history + 1]
-    return float(2.0 * half_width * np.sum(np.abs(generator_projections)))
-
-
-def population_minimizing_ar2_direction(phi, k, history=10_000):
-    """Return a population-minimizing direction for an AR(2) process."""
-    phi = np.asarray(phi, dtype=float)
-    if phi.shape != (2,):
-        raise ValueError("phi must contain exactly two AR coefficients.")
-    if k < 1:
-        raise ValueError("k must be positive.")
-    if k == 1:
-        return np.ones(1)
-    if k >= 3:
-        direction = np.r_[1.0, -phi, np.zeros(k - 3)]
-        return direction / np.linalg.norm(direction)
-
-    psi = ar_impulse_response(phi, maximum_lag=history)
-    lagged_psi = np.r_[0.0, psi[:-1]]
-
-    def width_from_angle(angle):
-        generator_projections = (
-            np.cos(angle) * psi + np.sin(angle) * lagged_psi
-        )
-        return float(2.0 * np.sum(np.abs(generator_projections)))
-
-    angle_grid = np.linspace(0.0, np.pi, 4_097)
-    grid_widths = np.asarray([
-        width_from_angle(angle) for angle in angle_grid
-    ])
-    best_index = int(np.argmin(grid_widths))
-    lower_index = max(0, best_index - 1)
-    upper_index = min(len(angle_grid) - 1, best_index + 1)
-    local_fit = minimize_scalar(
-        width_from_angle,
-        bounds=(angle_grid[lower_index], angle_grid[upper_index]),
-        method="bounded",
-        options={"xatol": 1e-12},
-    )
-    best_angle = (
-        float(local_fit.x)
-        if local_fit.success
-        else float(angle_grid[best_index])
-    )
-    return np.array([np.cos(best_angle), np.sin(best_angle)])
+    
 
 
+### companion matrix and stationarity check
 def companion_matrix(phi):
-    """Return the companion matrix for an AR(p) coefficient vector."""
     phi = np.asarray(phi, dtype=float)
     order = len(phi)
     matrix = np.zeros((order, order))
@@ -297,12 +241,12 @@ def companion_matrix(phi):
         matrix[1:, :-1] = np.eye(order - 1)
     return matrix
 
-
 def is_stationary(phi):
-    """Return a stationarity flag and the companion-matrix eigenvalues."""
     eigenvalues = np.linalg.eigvals(companion_matrix(phi))
     return bool(np.all(np.abs(eigenvalues) < 1)), eigenvalues
 
+
+# continue here
 
 def theoretical_width_2d_from_angle(
     angle,
