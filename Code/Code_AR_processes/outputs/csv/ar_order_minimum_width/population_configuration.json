@@ -1,0 +1,10 @@
+{
+  "method_version": 1,
+  "coefficient_source_hash": "da7f7298548908d8bc7642078cb4208df77189c099cd40f6a67afd234053a1d0",
+  "optimization_history": 3000,
+  "minimum_evaluation_history": 20000,
+  "maximum_evaluation_history": 250000,
+  "spectral_tail_target": 1e-10,
+  "random_starts": 48,
+  "refined_starts": 8
+}

@@ -1,0 +1,42 @@
+{
+  "true_orders": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "replications_per_order": 50,
+  "sample_size": 2000,
+  "burnin": 1000,
+  "half_width": 1.0,
+  "k_values": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "seeds": {
+    "1": 20260813,
+    "2": 20260814,
+    "3": 20260816,
+    "4": 20260817,
+    "5": 20260818,
+    "6": 20260819
+  },
+  "starts": 3,
+  "iterations": 500,
+  "initial_step": 0.2,
+  "geometric_decay": 0.99,
+  "width_source_hashes": {
+    "ar_tools/functions.py": "a69f9aa50b7309cae251fdd6809c33c913a286689b866d070643362d83a8078e",
+    "ar_tools/descent.py": "0744ba05fd591e8b08e8c2a0ac8f2e38334e1dda46f4ce3e741876e570599933"
+  }
+}
