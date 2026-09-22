@@ -572,6 +572,8 @@ The last step is to employ an elbow point selector with the property that it wou
 
 \textbf{fit two affine lines}
 
+Define $S_{q}(a,b)=\sum_{l=1}^{q}(al+b-\hat{m}_l)^2$ and $T_{q}(c,d)=\sum_{l=q}^{T}(cl+d-\hat{m}_l)^2$ for $q=2,\dots,T-1$.
+
 Two affine lines are fitted through $(1,\hat{m}_1),\dots,(q,\hat{m}_{q})$ and $(q,\hat{m}_{q}),\dots,(K,\hat{m}_K)$ for all $q=2,\dots,K-1$ and we select the $q$ with the best fit.
 \begin{align*}
     S_{AA}(q)=\min_{a,b,c,d}\left(\sum_{l=1}^{q}(al+b-\hat{m}_l)^2+\sum_{l=q}^{K}(cl+d-\hat{m}_l)^2\right),\quad\hat{q}_{AA}=\arg\min_{2\le q\le K-1}S_{AA}(q)
