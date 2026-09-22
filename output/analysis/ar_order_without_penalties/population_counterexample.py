@@ -7,7 +7,7 @@ from threadpoolctl import threadpool_limits
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
 from Code.Code_AR_processes.ar_tools.functions import ar_impulse_response
-from Code.Code_AR_processes.ar_tools.L_method import shared_breakpoint_l_method_selector
+from Code.Code_AR_processes.ar_tools.L_method import l_method_selector
 OUT=Path(__file__).resolve().parent
 curves=pd.read_csv(ROOT/'Code/Code_AR_processes/outputs/csv/ar_shared_breakpoint_l_methods/width_curves.csv')
 records=[]
@@ -49,7 +49,10 @@ with threadpool_limits(limits=1):
   width_curve=np.r_[widths,np.repeat(plateau,7)]
   choices={}
   for tail in ('affine','constant'):
-   fit=shared_breakpoint_l_method_selector(np.arange(1,11),width_curve,tail_model=tail)
+   fit=l_method_selector(
+    width_curve, weighted=True, common_breakpoint=True,
+    affine_affine=tail=='affine', squared_loss=True,
+   )
    choices[tail]=fit['selected_order']
   records.append(dict(replication=int(replication),phi=json.dumps(phi.tolist()),rho=rho,N=N,
                       m1=widths[0],m2=widths[1],m3=widths[2],plateau=plateau,
@@ -61,7 +64,10 @@ with threadpool_limits(limits=1):
    (OUT/'population_counterexample.json').write_text(json.dumps(info,indent=2)+'\n')
    rows=[]
    for tail in ('affine','constant'):
-    scores=shared_breakpoint_l_method_selector(np.arange(1,11),width_curve,tail_model=tail)['candidate_scores']
+    scores=l_method_selector(
+     width_curve, weighted=True, common_breakpoint=True,
+     affine_affine=tail=='affine', squared_loss=True,
+    )['candidate_scores']
     scores['tail_model']=tail
     rows.append(scores)
    pd.concat(rows).to_csv(OUT/'population_counterexample_scores.csv',index=False)

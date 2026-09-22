@@ -1,204 +1,215 @@
-"""L-method elbow selectors and their fitting helpers for AR width curves."""
-
 from __future__ import annotations
 
 import numpy as np
 import pandas as pd
 from scipy.optimize import linprog
 
-__all__ = [
-    "horizontal_tail_lad_selector",
-    "two_affine_l_method_selector",
-    "affine_constant_l_method_selector",
-    "shared_breakpoint_l_method_selector",
-]
+__all__ = ["l_method_selector"]
 
 
-def _validated_elbow_data(k_values, widths, minimum_length=4):
-    """Validate an embedding-dimension width curve for elbow fitting."""
-    k_values = np.asarray(k_values, dtype=float)
-    widths = np.asarray(widths, dtype=float)
-    if k_values.ndim != 1 or widths.ndim != 1:
-        raise ValueError("k_values and widths must be one-dimensional.")
-    if len(k_values) != len(widths) or len(k_values) < minimum_length:
-        raise ValueError(
-            "k_values and widths must have the same length of at least "
-            f"{minimum_length}."
-        )
-    if not np.all(np.isfinite(k_values)) or not np.all(np.isfinite(widths)):
-        raise ValueError("k_values and widths must contain only finite values.")
-    if not np.all(np.diff(k_values) > 0):
-        raise ValueError("k_values must be strictly increasing.")
-    if k_values[0] != 1 or not np.all(np.diff(k_values) == 1):
-        raise ValueError(
-            "k_values must be consecutive embedding dimensions starting at one."
-        )
-    return k_values, widths
+def _validated_widths(minimum_widths):
+    widths = np.asarray(minimum_widths, dtype=float)
+    if widths.ndim != 1:
+        raise ValueError("minimum_widths must be one-dimensional.")
+    if len(widths) < 4:
+        raise ValueError("minimum_widths must contain at least four values.")
+    if not np.all(np.isfinite(widths)):
+        raise ValueError("minimum_widths must contain only finite values.")
+    return widths
 
 
-def _affine_fit(x_values, y_values):
-    """Return intercept, slope, predictions, and RMSE for an affine fit."""
-    design = np.column_stack((np.ones(len(x_values)), x_values))
-    coefficients, *_ = np.linalg.lstsq(design, y_values, rcond=None)
+def _validated_boolean(name, value):
+    if not isinstance(value, (bool, np.bool_)):
+        raise TypeError(f"{name} must be a boolean.")
+    return bool(value)
+
+
+def _least_squares_fit(k_values, widths, *, affine):
+    if affine:
+        design = np.column_stack((np.ones(len(k_values)), k_values))
+    else:
+        design = np.ones((len(k_values), 1))
+    coefficients, *_ = np.linalg.lstsq(design, widths, rcond=None)
     fitted_values = design @ coefficients
-    rmse = float(np.sqrt(np.mean((y_values - fitted_values) ** 2)))
-    return (
-        float(coefficients[0]),
-        float(coefficients[1]),
-        fitted_values,
-        rmse,
+    intercept = float(coefficients[0])
+    slope = float(coefficients[1]) if affine else 0.0
+    return intercept, slope, fitted_values
+
+
+def _least_absolute_deviations_fit(k_values, widths, *, affine):
+    if not affine:
+        intercept = float(np.median(widths))
+        return intercept, 0.0, np.full(len(widths), intercept)
+
+    design = np.column_stack((np.ones(len(k_values)), k_values))
+    observation_count = len(widths)
+    identity = np.eye(observation_count)
+    # Variables are (intercept, slope, u_1, ..., u_n), where
+    # u_i >= |width_i - intercept - slope * k_i|.
+    objective = np.r_[0.0, 0.0, np.ones(observation_count)]
+    constraints = np.vstack((
+        np.column_stack((design, -identity)),
+        np.column_stack((-design, -identity)),
+    ))
+    bounds = [(None, None), (None, None)] + [
+        (0.0, None)
+    ] * observation_count
+    fit = linprog(
+        objective,
+        A_ub=constraints,
+        b_ub=np.r_[widths, -widths],
+        bounds=bounds,
+        method="highs",
     )
+    if not fit.success:
+        raise RuntimeError(f"LAD affine fit failed: {fit.message}")
+
+    intercept, slope = fit.x[:2]
+    fitted_values = design @ fit.x[:2]
+    return float(intercept), float(slope), fitted_values
 
 
-def horizontal_tail_lad_selector(k_values, widths):
-    """Fit c + s(q-k)_+ by LAD for each q, subject to s >= 0."""
-    k_values = np.asarray(k_values, dtype=float)
-    widths = np.asarray(widths, dtype=float)
-    candidate_rows = []
-
-    for selected_q in k_values[1:-1].astype(int):
-        hinge = np.maximum(selected_q - k_values, 0.0)
-        sample_count = len(widths)
-        identity = np.eye(sample_count)
-        # Variables are (c, s, u_1, ..., u_K), with u_k >= |residual_k|.
-        objective = np.concatenate(([0.0, 0.0], np.ones(sample_count)))
-        constraints = np.vstack((
-            np.column_stack((-np.ones(sample_count), -hinge, -identity)),
-            np.column_stack(( np.ones(sample_count),  hinge, -identity)),
-        ))
-        bounds = [(None, None), (0.0, None)] + [(0.0, None)] * sample_count
-        fit = linprog(
-            objective,
-            A_ub=constraints,
-            b_ub=np.concatenate((-widths, widths)),
-            bounds=bounds,
-            method="highs",
+def _segment_fit(k_values, widths, *, affine, squared_loss):
+    if squared_loss:
+        intercept, slope, fitted_values = _least_squares_fit(
+            k_values, widths, affine=affine
         )
-        if not fit.success:
-            raise RuntimeError(f"LAD fit failed for q={selected_q}: {fit.message}")
-        level, slope = fit.x[:2]
-        fitted_values = level + slope * hinge
-        candidate_rows.append({
-            "selected_q": selected_q,
-            "score": float(np.sum(np.abs(widths - fitted_values))),
-            "level": float(level),
-            "slope": float(slope),
-            "fitted_values": fitted_values,
-        })
+    else:
+        intercept, slope, fitted_values = _least_absolute_deviations_fit(
+            k_values, widths, affine=affine
+        )
 
-    best = min(candidate_rows, key=lambda row: (row["score"], row["selected_q"]))
+    residuals = widths - fitted_values
+    if squared_loss:
+        loss_sum = float(residuals @ residuals)
+        average_error = float(np.sqrt(loss_sum / len(widths)))
+    else:
+        loss_sum = float(np.sum(np.abs(residuals)))
+        average_error = float(loss_sum / len(widths))
     return {
-        **best,
-        "selected_order": best["selected_q"] - 1,
-        "candidate_scores": pd.DataFrame(candidate_rows).drop(
-            columns="fitted_values"
-        ),
+        "intercept": intercept,
+        "slope": slope,
+        "fitted_values": fitted_values,
+        "loss_sum": loss_sum,
+        "average_error": average_error,
     }
 
 
-def shared_breakpoint_l_method_selector(
-    k_values, widths, *, tail_model="affine", score_criterion="weighted_rmse"
+def l_method_selector(
+    minimum_widths,
+    *,
+    weighted,
+    common_breakpoint,
+    affine_affine,
+    squared_loss,
 ):
-    """Compare independent least-squares fits sharing the point k=q+1.
+    """Select an elbow from ``(m_1, ..., m_K)``.
 
-    Candidate AR orders are q=1,...,K-2, giving at least two observations
-    in each segment. Both segments include k=q+1; their fitted values there
-    need not agree. No slope, continuity, or order penalty is imposed.
-    ``weighted_rmse`` weights segment RMSEs by their observation counts.
-    ``squared_error`` sums segment squared errors, counting the shared point
-    in each fit. Exact score ties favor the smaller order.
+    The four booleans select one of sixteen variants:
+
+    ``weighted``
+        Use the segment-size-weighted RMSE for squared loss or the
+        segment-size-weighted MAE for absolute loss. If false, use total
+        squared error or total absolute error, respectively.
+    ``common_breakpoint``
+        If true, the left segment is ``1, ..., q`` and the right segment is
+        ``q, ..., K``. The observation at ``q`` is used in both independent
+        fits; equality of their fitted values at ``q`` is not imposed. If
+        false, the right segment starts at ``q + 1``.
+    ``affine_affine``
+        Fit affine models to both segments. If false, fit an affine left
+        segment and a constant right segment.
+    ``squared_loss``
+        Fit segments by least squares. If false, fit them by least absolute
+        deviations.
+
+    Both segments contain at least two observations. Exact score ties favor
+    the smaller selected AR order. With a common point, the selected order is
+    ``q - 1``; with disjoint segments, it is ``q``. For absolute loss, the
+    weighted score is the total absolute error divided by the constant total
+    segment size, so weighting changes the score's scale but not the selected
+    order.
     """
-    k_values, widths = _validated_elbow_data(k_values, widths)
-    if tail_model not in {"affine", "constant"}:
-        raise ValueError("tail_model must be 'affine' or 'constant'.")
-    if score_criterion not in {"weighted_rmse", "squared_error"}:
-        raise ValueError("score_criterion must be 'weighted_rmse' or 'squared_error'.")
+    widths = _validated_widths(minimum_widths)
+    weighted = _validated_boolean("weighted", weighted)
+    common_breakpoint = _validated_boolean(
+        "common_breakpoint", common_breakpoint
+    )
+    affine_affine = _validated_boolean("affine_affine", affine_affine)
+    squared_loss = _validated_boolean("squared_loss", squared_loss)
 
-    rows, fits = [], []
-    for breakpoint_index in range(1, len(k_values) - 1):
-        head_k, tail_k = k_values[:breakpoint_index + 1], k_values[breakpoint_index:]
-        head_y, tail_y = widths[:breakpoint_index + 1], widths[breakpoint_index:]
-        head_intercept, head_slope, head_fit, head_rmse = _affine_fit(head_k, head_y)
-        if tail_model == "affine":
-            tail_intercept, tail_slope, tail_fit, tail_rmse = _affine_fit(tail_k, tail_y)
-        else:
-            tail_intercept, tail_slope = float(np.mean(tail_y)), 0.0
-            tail_fit = np.full(len(tail_k), tail_intercept)
-            tail_rmse = float(np.sqrt(np.mean((tail_y - tail_fit) ** 2)))
-        weighted_rmse = (
-            len(head_k) * head_rmse + len(tail_k) * tail_rmse
-        ) / (len(head_k) + len(tail_k))
-        squared_error = float(
-            np.sum((head_y - head_fit) ** 2) + np.sum((tail_y - tail_fit) ** 2)
-        )
-        plateau_onset = int(k_values[breakpoint_index])
-        row = {
-            "selected_q": plateau_onset,
-            "selected_order": plateau_onset - 1,
-            "weighted_rmse": float(weighted_rmse),
-            "squared_error": squared_error,
-            "head_intercept": head_intercept,
-            "head_slope": head_slope,
-            "tail_intercept": tail_intercept,
-            "tail_slope": tail_slope,
-        }
-        row["score"] = row[score_criterion]
-        rows.append(row)
-        fits.append({
-            "head_k": head_k.copy(), "head_fitted_values": head_fit,
-            "tail_k": tail_k.copy(), "tail_fitted_values": tail_fit,
-        })
-    best_index = min(range(len(rows)), key=lambda i: (rows[i]["score"], rows[i]["selected_order"]))
-    return {
-        **rows[best_index], **fits[best_index],
-        "tail_model": tail_model, "score_criterion": score_criterion,
-        "candidate_scores": pd.DataFrame(rows),
-    }
-
-
-def two_affine_l_method_selector(k_values, widths):
-    """Classical L-method based on two disjoint affine least-squares fits.
-
-    Each candidate puts at least two observations in both segments. The
-    standard segment-size-weighted RMSE chooses the boundary, and the selected
-    AR order is the last embedding dimension in the left segment. Consequently
-    this classical construction cannot select AR order one.
-    """
-    k_values, widths = _validated_elbow_data(k_values, widths)
+    embedding_dimensions = np.arange(1, len(widths) + 1, dtype=float)
+    maximum_breakpoint = (
+        len(widths) - 1 if common_breakpoint else len(widths) - 2
+    )
     candidate_rows = []
     candidate_fits = []
-    point_count = len(k_values)
 
-    for split_index in range(1, point_count - 2):
-        left_k = k_values[: split_index + 1]
-        left_widths = widths[: split_index + 1]
-        right_k = k_values[split_index + 1 :]
-        right_widths = widths[split_index + 1 :]
-        left_intercept, left_slope, left_fit, left_rmse = _affine_fit(
-            left_k, left_widths
+    for breakpoint in range(2, maximum_breakpoint + 1):
+        left_stop = breakpoint
+        right_start = breakpoint - 1 if common_breakpoint else breakpoint
+        left_k = embedding_dimensions[:left_stop]
+        right_k = embedding_dimensions[right_start:]
+        left_widths = widths[:left_stop]
+        right_widths = widths[right_start:]
+
+        left_fit = _segment_fit(
+            left_k,
+            left_widths,
+            affine=True,
+            squared_loss=squared_loss,
         )
-        right_intercept, right_slope, right_fit, right_rmse = _affine_fit(
-            right_k, right_widths
+        right_fit = _segment_fit(
+            right_k,
+            right_widths,
+            affine=affine_affine,
+            squared_loss=squared_loss,
         )
-        score = (
-            len(left_k) * left_rmse + len(right_k) * right_rmse
-        ) / point_count
-        selected_order = int(k_values[split_index])
-        selected_q = selected_order + 1
+
+        left_count = len(left_widths)
+        right_count = len(right_widths)
+        if weighted:
+            score = (
+                left_count * left_fit["average_error"]
+                + right_count * right_fit["average_error"]
+            ) / (left_count + right_count)
+        else:
+            score = left_fit["loss_sum"] + right_fit["loss_sum"]
+
+        selected_order = breakpoint - 1 if common_breakpoint else breakpoint
+        plateau_onset = selected_order + 1
         candidate_rows.append({
+            "breakpoint": breakpoint,
             "selected_order": selected_order,
-            "selected_q": selected_q,
+            "plateau_onset": plateau_onset,
             "score": float(score),
-            "left_intercept": left_intercept,
-            "left_slope": left_slope,
-            "right_intercept": right_intercept,
-            "right_slope": right_slope,
+            "left_count": left_count,
+            "right_count": right_count,
+            "left_loss_sum": left_fit["loss_sum"],
+            "right_loss_sum": right_fit["loss_sum"],
+            "left_average_error": left_fit["average_error"],
+            "right_average_error": right_fit["average_error"],
+            "left_intercept": left_fit["intercept"],
+            "left_slope": left_fit["slope"],
+            "right_intercept": right_fit["intercept"],
+            "right_slope": right_fit["slope"],
         })
+        if common_breakpoint:
+            fitted_values = np.r_[
+                left_fit["fitted_values"][:-1],
+                right_fit["fitted_values"],
+            ]
+        else:
+            fitted_values = np.r_[
+                left_fit["fitted_values"],
+                right_fit["fitted_values"],
+            ]
         candidate_fits.append({
             "left_k": left_k.copy(),
-            "left_fitted_values": left_fit,
+            "left_fitted_values": left_fit["fitted_values"],
             "right_k": right_k.copy(),
-            "right_fitted_values": right_fit,
+            "right_fitted_values": right_fit["fitted_values"],
+            "fitted_values": fitted_values,
         })
 
     best_index = min(
@@ -211,62 +222,9 @@ def two_affine_l_method_selector(k_values, widths):
     return {
         **candidate_rows[best_index],
         **candidate_fits[best_index],
-        "candidate_scores": pd.DataFrame(candidate_rows),
-    }
-
-
-def affine_constant_l_method_selector(k_values, widths):
-    """Modified L-method with an affine head and a constant tail.
-
-    The candidate plateau onset q is included in both fits. This overlap gives
-    the affine head two observations when q=2, so AR order one remains
-    admissible. The objective is the segment-size-weighted RMSE and contains no
-    order or dimension penalty.
-    """
-    k_values, widths = _validated_elbow_data(k_values, widths)
-    candidate_rows = []
-    candidate_fits = []
-
-    for breakpoint_index in range(1, len(k_values) - 1):
-        head_k = k_values[: breakpoint_index + 1]
-        head_widths = widths[: breakpoint_index + 1]
-        tail_k = k_values[breakpoint_index:]
-        tail_widths = widths[breakpoint_index:]
-
-        head_intercept, head_slope, head_fit, head_rmse = _affine_fit(
-            head_k, head_widths
-        )
-        tail_level = float(np.mean(tail_widths))
-        tail_fit = np.full(len(tail_k), tail_level)
-        tail_rmse = float(np.sqrt(np.mean((tail_widths - tail_level) ** 2)))
-        score = (
-            len(head_k) * head_rmse + len(tail_k) * tail_rmse
-        ) / (len(head_k) + len(tail_k))
-        selected_q = int(k_values[breakpoint_index])
-        candidate_rows.append({
-            "selected_order": selected_q - 1,
-            "selected_q": selected_q,
-            "score": float(score),
-            "head_intercept": head_intercept,
-            "head_slope": head_slope,
-            "tail_level": tail_level,
-        })
-        candidate_fits.append({
-            "head_k": head_k.copy(),
-            "head_fitted_values": head_fit,
-            "tail_k": tail_k.copy(),
-            "tail_fitted_values": tail_fit,
-        })
-
-    best_index = min(
-        range(len(candidate_rows)),
-        key=lambda index: (
-            candidate_rows[index]["score"],
-            candidate_rows[index]["selected_q"],
-        ),
-    )
-    return {
-        **candidate_rows[best_index],
-        **candidate_fits[best_index],
+        "weighted": weighted,
+        "common_breakpoint": common_breakpoint,
+        "affine_affine": affine_affine,
+        "squared_loss": squared_loss,
         "candidate_scores": pd.DataFrame(candidate_rows),
     }

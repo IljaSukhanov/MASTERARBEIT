@@ -1,72 +1,120 @@
-"""Tests for the two unpenalized minimum-width elbow selectors."""
+"""Tests for the configurable minimum-width L-method selector."""
 
 import unittest
 
 import numpy as np
 
-from Code.Code_AR_processes.ar_tools.L_method import (
-    affine_constant_l_method_selector,
-    shared_breakpoint_l_method_selector,
-    two_affine_l_method_selector,
-)
+from Code.Code_AR_processes.ar_tools.L_method import l_method_selector
 
 
-class ElbowSelectorTests(unittest.TestCase):
-    def test_shared_breakpoint_methods_admit_order_one(self) -> None:
-        k = np.arange(1, 7)
-        widths = np.array([4., 2., 2., 2., 2., 2.])
-        for tail_model in ("affine", "constant"):
-            fit = shared_breakpoint_l_method_selector(k, widths, tail_model=tail_model)
-            self.assertEqual(fit["selected_order"], 1)
-            self.assertEqual(fit["head_k"][-1], fit["tail_k"][0])
-
-    def test_shared_constant_matches_existing_modified_method(self) -> None:
-        k = np.arange(1, 9)
-        widths = np.array([8., 4.5, 3., 1.4, 1.6, 1.3, 1.5, 1.2])
-        existing = affine_constant_l_method_selector(k, widths)
-        shared = shared_breakpoint_l_method_selector(k, widths, tail_model="constant")
-        self.assertEqual(shared["selected_order"], existing["selected_order"])
-        np.testing.assert_allclose(shared["candidate_scores"]["score"], existing["candidate_scores"]["score"])
-
-    def test_affine_tail_recovers_a_nonhorizontal_two_line_curve(self) -> None:
-        k = np.arange(1, 9)
-        widths = np.array([10., 7., 4., 3.8, 3.6, 3.4, 3.2, 3.])
-        for criterion in ("weighted_rmse", "squared_error"):
-            fit = shared_breakpoint_l_method_selector(k, widths, score_criterion=criterion)
-            self.assertEqual(fit["selected_order"], 2)
-            self.assertAlmostEqual(fit["tail_slope"], -0.2)
-            self.assertAlmostEqual(fit["score"], 0.)
-
-    def test_both_methods_find_an_exact_order_three_elbow(self) -> None:
-        k_values = np.arange(1, 9)
+class LMethodSelectorTests(unittest.TestCase):
+    def test_all_sixteen_configurations_find_exact_elbow(self) -> None:
         widths = np.array([7.0, 5.0, 3.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+        for weighted in (False, True):
+            for common_breakpoint in (False, True):
+                for affine_affine in (False, True):
+                    for squared_loss in (False, True):
+                        with self.subTest(
+                            weighted=weighted,
+                            common_breakpoint=common_breakpoint,
+                            affine_affine=affine_affine,
+                            squared_loss=squared_loss,
+                        ):
+                            fit = l_method_selector(
+                                widths,
+                                weighted=weighted,
+                                common_breakpoint=common_breakpoint,
+                                affine_affine=affine_affine,
+                                squared_loss=squared_loss,
+                            )
+                            self.assertEqual(fit["selected_order"], 3)
+                            self.assertEqual(fit["plateau_onset"], 4)
+                            self.assertAlmostEqual(fit["score"], 0.0)
 
-        classical = two_affine_l_method_selector(k_values, widths)
-        modified = affine_constant_l_method_selector(k_values, widths)
+    def test_common_breakpoint_uses_shared_observation(self) -> None:
+        widths = np.array([8.0, 5.0, 3.0, 1.5, 1.4, 1.3])
+        fit = l_method_selector(
+            widths,
+            weighted=True,
+            common_breakpoint=True,
+            affine_affine=True,
+            squared_loss=True,
+        )
+        self.assertEqual(fit["left_k"][-1], fit["right_k"][0])
+        self.assertEqual(fit["left_count"] + fit["right_count"], len(widths) + 1)
+        self.assertEqual(len(fit["fitted_values"]), len(widths))
 
-        self.assertEqual(classical["selected_order"], 3)
-        self.assertEqual(classical["selected_q"], 4)
-        self.assertAlmostEqual(classical["score"], 0.0)
-        self.assertEqual(modified["selected_order"], 3)
-        self.assertEqual(modified["selected_q"], 4)
-        self.assertAlmostEqual(modified["score"], 0.0)
+    def test_disjoint_segments_do_not_share_observation(self) -> None:
+        widths = np.array([8.0, 5.0, 3.0, 1.5, 1.4, 1.3])
+        fit = l_method_selector(
+            widths,
+            weighted=True,
+            common_breakpoint=False,
+            affine_affine=True,
+            squared_loss=True,
+        )
+        self.assertEqual(fit["left_k"][-1] + 1, fit["right_k"][0])
+        self.assertEqual(fit["left_count"] + fit["right_count"], len(widths))
+        self.assertEqual(len(fit["fitted_values"]), len(widths))
 
-    def test_modified_method_can_select_order_one(self) -> None:
-        k_values = np.arange(1, 7)
-        widths = np.array([4.0, 2.0, 2.0, 2.0, 2.0, 2.0])
+    def test_weighted_squared_score_is_size_weighted_rmse(self) -> None:
+        widths = np.array([8.0, 5.1, 3.2, 1.5, 1.4, 1.2])
+        fit = l_method_selector(
+            widths,
+            weighted=True,
+            common_breakpoint=True,
+            affine_affine=False,
+            squared_loss=True,
+        )
+        row = fit["candidate_scores"].iloc[0]
+        expected = (
+            row.left_count * row.left_average_error
+            + row.right_count * row.right_average_error
+        ) / (row.left_count + row.right_count)
+        self.assertAlmostEqual(row.score, expected)
 
-        classical = two_affine_l_method_selector(k_values, widths)
-        modified = affine_constant_l_method_selector(k_values, widths)
+    def test_unweighted_squared_score_is_total_squared_error(self) -> None:
+        widths = np.array([8.0, 5.1, 3.2, 1.5, 1.4, 1.2])
+        fit = l_method_selector(
+            widths,
+            weighted=False,
+            common_breakpoint=False,
+            affine_affine=False,
+            squared_loss=True,
+        )
+        row = fit["candidate_scores"].iloc[0]
+        self.assertAlmostEqual(
+            row.score,
+            row.left_loss_sum + row.right_loss_sum,
+        )
 
-        self.assertGreaterEqual(classical["selected_order"], 2)
-        self.assertEqual(modified["selected_order"], 1)
-        self.assertEqual(modified["selected_q"], 2)
+    def test_absolute_loss_uses_lad_and_mae_scores(self) -> None:
+        widths = np.array([8.0, 5.0, 3.0, 1.0, 1.0, 1.0, 20.0])
+        weighted = l_method_selector(
+            widths,
+            weighted=True,
+            common_breakpoint=True,
+            affine_affine=False,
+            squared_loss=False,
+        )
+        unweighted = l_method_selector(
+            widths,
+            weighted=False,
+            common_breakpoint=True,
+            affine_affine=False,
+            squared_loss=False,
+        )
+        self.assertEqual(weighted["right_intercept"], 1.0)
+        self.assertEqual(weighted["selected_order"], unweighted["selected_order"])
 
-    def test_rejects_nonconsecutive_embedding_dimensions(self) -> None:
-        with self.assertRaisesRegex(ValueError, "consecutive"):
-            affine_constant_l_method_selector(
-                np.array([1, 2, 4, 5]),
-                np.array([4.0, 2.0, 2.0, 2.0]),
+    def test_rejects_non_boolean_configuration(self) -> None:
+        with self.assertRaisesRegex(TypeError, "weighted must be a boolean"):
+            l_method_selector(
+                np.array([4.0, 3.0, 2.0, 2.0]),
+                weighted=1,
+                common_breakpoint=True,
+                affine_affine=False,
+                squared_loss=True,
             )
 
 
