@@ -676,9 +676,9 @@ PACF cutoff
 
 Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
 
-Our experiment looks like this: We sample $L=100$ causal AR($p$)-processes for $p\in\{1,2,3,4,5\}$. We assume that we know the true order $p$ and compute the estimates $\hat{\phi}_1^{(l)},\dots,\hat{\phi}_p^{(l)}$, $l=1,\dots,L$. As a measure for error we use $\operatorname{MAE}=L^{-1}\sum_{l=1}^{L}\|\hat{\phi}^{(l)}-\phi^{(l)}\|_1$ (mean absolute error) and median absolute error.
+Our experiment looks like this: We sample $L=100$ causal AR($p$)-processes for $p\in\{1,2,3,4,5\}$. We assume that we know the true order $p$ and compute the estimates $\hat{\phi}_1^{(l)},\dots,\hat{\phi}_p^{(l)}$, $l=1,\dots,L$. As a measure of error we use $\operatorname{MAE}=L^{-1}\sum_{l=1}^{L}\|\hat{\phi}^{(l)}-\phi^{(l)}\|_1$ (mean absolute error) and median absolute error.
 
-Table~\ref{tab:ar-coefficient-mae} shows the results. We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger order $p$. See Figure~[]. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly. Figure~[] shows a distribution of how often each method was best.
+Table~\ref{tab:ar-coefficient-mae} shows the results. We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly. Figure~[] shows a distribution of how often each method was best.
 
 \begin{table}[htbp]
 \centering
@@ -719,6 +719,15 @@ Minimum width
 \end{tabular}
 \end{table}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4/mean_and_median_l1_error_vs_order.pdf}
+    \caption{}
+    \label{fig:mean_and_median_l1_error_vs_order}
+\end{figure}
+
+\newpage
+
 \subsection{Real-world Data}
 
 \todo[inline]{Do when everything else is done}
@@ -730,6 +739,8 @@ Minimum width
     \item traffic occupancy
     \item industrial control, system identification
 \end{itemize}
+
+\newpage
 
 \section{Literature positioning and novelty assessment}
 
