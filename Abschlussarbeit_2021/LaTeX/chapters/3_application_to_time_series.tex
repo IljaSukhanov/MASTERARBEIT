@@ -6,6 +6,8 @@ In the first section, we give an overview of the theory of time series needed fo
 
 The main goal of this chapter is to study the connection between time series analysis and convex geometry through sliding window analysis.
 
+Let $(\Omega,\mathcal{A},\mathbb{P})$ be the underlying probability space.
+
 \section{Preliminaries on time series}
 
 For information on autoregressive moving-average (ARMA) models, see Brockwell et al~\cite[Chapter~3]{brockwell2016introduction}.
@@ -157,7 +159,7 @@ The partial autocorrelation function $\alpha$ is given by $\alpha(0)=1$ and $\al
 
 \section{Embedding of time series}
 
-In order to apply machinery from Topological Data Analysis to time series data, one has to embed the time series into $\mathbb{R}^k$ for some embedding dimension $k\in\mathbb{N}$. The main method for this is the so called sliding-window embedding (see~\cite{perea_sliding_2015}), which we will describe in detail now. Let $X=(X_1,\dots,X_T)$ be one realization of some univariate time series. Then we obtain a point cloud from $X$ by defining:
+The sliding window embedding is the conceptual bridge between time series analysis and other fields in mathematics, for example, Topological Data Analysis (TDA) or Convex Geometry. The time series is embedded into $\mathbb{R}^k$ for some embedding dimension $k\in\mathbb{N}$. In TDA the obtained sliding window point cloud is put into the persistent homology pipeline to look for interesting topological features. See the papers~\cite{perea_sliding_2015}. We will instead study the geometric properties of the sliding window point cloud in Section~\ref{sec:geometric_approach} below. Before that, we introduce the sliding window embedding. Let $X=(X_1,\dots,X_T)$ be one realization of some univariate time series. Then we obtain a point cloud from $X$ by defining:
 \begin{align*}
     Y_t^{(k)}=\begin{pmatrix}
         X_{t}\\
@@ -168,9 +170,11 @@ In order to apply machinery from Topological Data Analysis to time series data, 
 \end{align*}
 Here, $k\in\mathbb{N}$ is the dimensionality of the point cloud $\mathcal{P}_{k}$ and $K$ a predetermined upper cap, that is, $k\in\{1,\dots,K\}$.
 
+
+
 We choose the \enquote{backward} embedding $Y_t^{(k)}$ over the \enquote{forward} embedding $\tilde{Y}_t^{(k)}=(X_t,X_{t+1},\dots,X_{t+k-1})^{T}$ for notational convenience throughout this chapter. Geometrically, the resulting point clouds are equivalent up to an orthogonal transformation and a time index shift, that is, $\tilde{Y}_t^{(k)}=R_kY_{t+k-1}^{(k)}$, where $R_k=\operatorname{adiag}(1,\dots,1)$.
 
-\section{Geometric Approach}
+\section{Geometric Approach}\label{sec:geometric_approach}
 
 In this section, we study how the geometry of the point cloud $\mathcal{P}_k\subseteq\mathbb{R}^{k}$ changes with increasing embedding dimension $k$. For bounded innovation distributions, like uniform or beta, the point cloud $\mathcal{P}_k$ is characterized by a well known convex--geometric object. The question becomes if we can apply some convex--geometric functional $f$ to these well known objects and detect a transition at $k=p+1$, where $p$ is the AR order of the embedded time series.
 
@@ -199,11 +203,11 @@ where $g_j^{(k)}=(\psi_j,\psi_{j-1},\dots,\psi_{j-k+1})^{T}$.
     Since $\{X_t\}$ is causal, $r_{\phi}=\min\{|z|:\phi(z)=0\}>1$. Let $R\in(1,r_{\phi})$ be arbitrary. From complex analysis, it follows that $1/\phi$ is analytical on some open neighborhood of $\{|z|\le R\}$. Its representation is given by $1/\phi(z)=\sum_{j=0}^{\infty}\psi_jz^{j}$. By Cauchy's integral formula~[], $|\psi_j|\le R^{-j}\max_{|z|=R}|1/\phi(z)|$. Setting $C=\max_{|z|=R}|1/\phi(z)|$ and $\rho=R^{-1}$ yields the statement.
 \end{proof}
 
-Due to stationarity, the distribution of $Y_t^{(k)}$ does not depend on $t$ and we write $Y_t^{(k)}\sim\mu_k$.
+Due to stationarity, the distribution of $Y_t^{(k)}$ does not depend on $t$ and we write $Y_t^{(k)}\sim\mu_k$ which means $\mu_k(B)=\mathbb{P}(Y_t^{(k)}\in B)$ for all $B\in\mathcal{B}(\mathbb{R}^{k})$.
 
-Bounded innovation distributions lead to $Y_t^{(k)}$ having compact support. Thus, in our work, we focus on innovations $Z_t$ that have support $[a,b]$. Possible ideas for extending our approach to innovation distributions with unbounded support are given in the outlook chapter~\ref{chap:outlook}. The most prominent example is the uniform distribution $\mathcal{U}[a,b]$. More generally, we can consider the Beta distribution. A random variable $X$ follows the Beta distribution $\text{Beta}(\alpha,\beta)$ if its density is given by
+Bounded innovation distributions lead to $Y_t^{(k)}$ having compact support. Thus, in our work, we focus on innovations $Z_t$ that have support $[a,b]$, $a<b$. Possible ideas for extending our approach to innovation distributions with unbounded support are given in the outlook chapter~\ref{chap:outlook}. The most prominent example is the uniform distribution $\mathcal{U}[a,b]$. More generally, we can consider the Beta distribution. A random variable $X$ follows the Beta distribution $\text{Beta}(\alpha,\beta)$ if its density is given by
 \begin{align*}
-    f_{\alpha,\beta}(x)=\frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1},\quad\alpha,\beta>0,
+    f_{\alpha,\beta}(x)=\frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}\mathbf{1}\{x\in(0,1)\},\quad\alpha,\beta>0,
 \end{align*}
 where $B(\alpha,\beta)=\Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha+\beta)$ and $\Gamma$ is the Gamma function. For $\alpha=\beta=1$ we have $\text{Beta}(\alpha,\beta)=\text{Beta}(1,1)=\mathcal{U}[0,1]$.
 
@@ -242,7 +246,7 @@ The following property of the Hausdorff distance will be important below.
 
 Using Equation~\eqref{eq:sliding_window_point_representation} we see that the support of $Y_t^{(k)}$ is given by a zonoid generated by $\{g_j^{(k)}\}_{j\in\mathbb{N}_0}$. We denote this zonoid by $\mathcal{Z}^{(k)}$. By Definition~\ref{def:zonoid} the zonoid $\mathcal{Z}^{(k)}$ can be approximated by the zonotopes $Z^{(k)}_n$ generated by $g_0^{(k)},\dots,g_n^{(k)}$.
 
-Let $[a,b]$, $a<b$ be the support of the innovations $\{Z_t\}$. By writing $[a,b]=c+d[-1,1]$, where $c=?$ and $d=?$, we can pull everything back to the special case where the support is just the interval $[-1,1]$. We have
+Let $[a,b]$, $a<b$ be the support of the innovations $\{Z_t\}$. By writing $[a,b]=c+d[-1,1]$, where $c=(a+b)/2$ and $d=(b-a)/2$, we can pull everything back to the special case where the support is just the interval $[-1,1]$. We have
 \begin{align*}
     \operatorname{supp}(Y_t^{(k)})=\sum_{j=0}^{\infty}g_j^{(k)}\operatorname{supp}(Z_{t-j})=\underbrace{c\sum_{j=0}^{\infty}g_j^{(k)}}_{=:C_k}+d\underbrace{\sum_{j=0}^{\infty}g_j^{(k)}[-1,1]}_{=\mathcal{Z}^{(k)}},
 \end{align*}
@@ -291,10 +295,12 @@ A convex body is a compact nonempty convex set. As a convex geometric functional
 
 The support function of a zonoid $\mathcal{Z}$ generated by $\{g_j\}_{j=0}^{\infty}$ is given by
 \begin{align*}
-    h_{\mathcal{Z}}(u)&=\sum_{j=0}^{\infty}|\langle u,\frac{g_j}{\|g_j\|}\rangle|\|g_j\|,\quad u\in\mathbb{S}^{k-1}\\&
-    =\int_{\mathbb{S}^{k-1}}|\langle u,g\rangle|\rho_{\mathcal{Z}}(dg),
+    h_{\mathcal{Z}^{(k)}}(u)&=\sum_{j=0}^{\infty}|\langle u,g_j^{(k)}\rangle|=\sum_{j=0}^{\infty}|\langle u,\frac{g_j^{(k)}}{\|g_j^{(k)}\|}\rangle|\|g_j^{(k)}\|,\quad u\in\mathbb{S}^{k-1}\\&
+    =\int\limits_{\mathbb{S}^{k-1}}|\langle u,g\rangle|\rho_{\mathcal{Z}}(dg),
 \end{align*}
-where $\rho_{\mathcal{Z}}$ is a unique positive even measure on $\mathbb{S}^{k-1}$. The following fact holds: $\mathcal{Z}$ is a zonoid if and only if the function $s:\mathbb{S}^{k-1}\to\mathbb{R}$, $s(u)=\exp{(-h_{\mathcal{Z}}(u)}$ is positive definite.
+where $\rho_{\mathcal{Z}}$ is a unique positive even measure on $\mathbb{S}^{k-1}$. 
+
+The following fact holds: $\mathcal{Z}$ is a zonoid if and only if the function $s:\mathbb{S}^{k-1}\to\mathbb{R}$, $s(u)=\exp{(-h_{\mathcal{Z}}(u))}$ is positive definite.
 
 \begin{Lem}\label{lem:hausdorff_distance_between_convex_bodies}
     Let $K,L\subseteq\mathbb{R}^k$ be two convex bodies. Then
@@ -669,6 +675,10 @@ PACF cutoff
 \subsubsection{Coefficient estimation experiments}
 
 Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
+
+Our experiment looks like this: We sample $L=100$ causal AR($p$)-processes for $p\in\{1,2,3,4,5\}$. We assume that we know the true order $p$ and compute the estimates $\hat{\phi}_1^{(l)},\dots,\hat{\phi}_p^{(l)}$, $l=1,\dots,L$. As a measure for error we use $\operatorname{MAE}=L^{-1}\sum_{l=1}^{L}\|\hat{\phi}^{(l)}-\phi^{(l)}\|_1$.
+
+Table~[] shows the results.
 
 \subsection{Real-world Data}
 
