@@ -676,9 +676,48 @@ PACF cutoff
 
 Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
 
-Our experiment looks like this: We sample $L=100$ causal AR($p$)-processes for $p\in\{1,2,3,4,5\}$. We assume that we know the true order $p$ and compute the estimates $\hat{\phi}_1^{(l)},\dots,\hat{\phi}_p^{(l)}$, $l=1,\dots,L$. As a measure for error we use $\operatorname{MAE}=L^{-1}\sum_{l=1}^{L}\|\hat{\phi}^{(l)}-\phi^{(l)}\|_1$.
+Our experiment looks like this: We sample $L=100$ causal AR($p$)-processes for $p\in\{1,2,3,4,5\}$. We assume that we know the true order $p$ and compute the estimates $\hat{\phi}_1^{(l)},\dots,\hat{\phi}_p^{(l)}$, $l=1,\dots,L$. As a measure for error we use $\operatorname{MAE}=L^{-1}\sum_{l=1}^{L}\|\hat{\phi}^{(l)}-\phi^{(l)}\|_1$ (mean absolute error) and median absolute error.
 
-Table~[] shows the results.
+Table~\ref{tab:ar-coefficient-mae} shows the results. We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger order $p$. See Figure~[]. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly. Figure~[] shows a distribution of how often each method was best.
+
+\begin{table}[htbp]
+\centering
+\caption{Coefficient estimation errors for 100 simulated AR($p$)
+processes per true order. Each entry reports the mean
+$\ell_1$ coefficient error, with the median per-process error
+in parentheses below. The lowest values are shown in bold.}
+\label{tab:ar-coefficient-mae}
+\begin{tabular}{lccccc}
+\toprule
+Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
+\midrule
+OLS ($L_2$)
+& \shortstack{0.012681 \\ (0.011231)}
+& \shortstack{0.027507 \\ (0.021934)}
+& \shortstack{0.050458 \\ (0.045155)}
+& \shortstack{0.068460 \\ (0.062511)}
+& \shortstack{0.100692 \\ (0.080998)} \\
+Yule--Walker
+& \shortstack{0.012586 \\ (0.010970)}
+& \shortstack{0.028103 \\ (0.022924)}
+& \shortstack{0.053082 \\ (0.048355)}
+& \shortstack{0.123852 \\ (0.066709)}
+& \shortstack{0.235747 \\ (0.094575)} \\
+Horváth ($L_{\infty}$)
+& \shortstack{\textbf{0.001073} \\ (\textbf{0.000493})}
+& \shortstack{\textbf{0.002199} \\ (\textbf{0.001458})}
+& \shortstack{\textbf{0.004234} \\ (\textbf{0.003029})}
+& \shortstack{\textbf{0.007227} \\ (\textbf{0.006078})}
+& \shortstack{\textbf{0.012418} \\ (\textbf{0.011283})} \\
+Minimum width
+& \shortstack{0.001742 \\ (0.001217)}
+& \shortstack{0.005930 \\ (0.003376)}
+& \shortstack{4.384671 \\ (0.008823)}
+& \shortstack{18.644876 \\ (0.017886)}
+& \shortstack{6.546884 \\ (0.044592)} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Real-world Data}
 
