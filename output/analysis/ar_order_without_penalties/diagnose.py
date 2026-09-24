@@ -112,7 +112,7 @@ with threadpool_limits(limits=1):
         rng=np.random.default_rng(np.random.SeedSequence([settings['seeds']['3'],replication-1,0]))
         phi=jones_ar_coefficients(3,rng=rng)
         series=simulate_uniform_ar(phi,2000,1000,1.,rng=rng)
-        _, revised, _=batched_geometric_width_curves(series,np.arange(1,11),
+        _, revised, _=batched_geometric_width_curves(series,10,
             seed=settings['seeds']['3'],replication=replication-1,starts=3,iterations=2000,
             initial_step=.2,geometric_decay=.99)
         old=curves[(curves.true_order==3)&(curves.replication==replication)].sort_values('k').minimum_width.to_numpy()
