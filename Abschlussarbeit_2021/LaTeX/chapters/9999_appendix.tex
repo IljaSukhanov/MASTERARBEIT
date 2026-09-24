@@ -64,20 +64,34 @@
 
 \textbf{Proof of Lemma~\ref{lem:weak_sharp_minima_application}}
 
-\todo[inline]{Study proof in full detail}
+\todo[inline]{24.09: Study proof in full detail}
 
 \begin{proof}
-    The function $\hat{w}_k$ is $\hat{w}_k(u)=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$, that is, a point-wise maximum over finitely many linear functions. In the following we write $A=\{Y_t^{(k)}-Y_s^{(k)}:s,t\}$ and $f(u)=\max_{a\in A}\langle a.u\rangle$. Also let $m=\min_{u\in\mathbb{S}^{k-1}}f(u)$ and $\mathcal{X}=\{u\in\mathbb{S}^{k-1}:f(u)=m\}$.
+    The function $\hat{w}_k$ is a pointwise maximum over finitely many linear functions. In the following, we write $A=\{Y_s^{(k)}-Y_t^{(k)}:s,t\}$ and $f(u)=\max\{\langle a,u\rangle:a\in A\}$. Also, let $m=\min\{f(u):u\in\mathbb{S}^{k-1}\}$ and $\mathcal{X}=\{u\in\mathbb{S}^{k-1}:f(u)=m\}$. Let $u^{\ast}\in\mathcal{X}$ and $T_{u^{\ast}}\mathbb{S}^{k-1}$ be the tangent space at $u^{\ast}$. Furthermore, let $A_{\ast}=\{a\in A:\langle a,u^{\ast}\rangle=m\}$ be the set of active vectors. Define $g(d)=\max\{\langle a,d\rangle:a\in A_{\ast}\}$ for all unit tangent directions $d\in T_{u^{\ast}}\mathbb{S}^{k-1}\cap\mathbb{S}^{k-1}=:S_{u^{\ast}}\mathbb{S}^{k-1}$.
 
-    Let $u^{\ast}\in\mathcal{X}$ and $T_{u^{\ast}}\mathbb{S}^{k-1}$ the tangent space at $u^{\ast}$. Furthermore let $A_{\ast}=\{a\in A:\langle a,u^{\ast}\rangle=m\}$ be the set of active vectors. Define $g(d)=\max_{}\langle a,d\rangle$ for all unit tangent directions $d\in T_{u^{\ast}}\mathbb{S}^{k-1}\cap\mathbb{S}^{k-1}=:S_{u^{\ast}}\mathbb{S}^{k-1}$. We can see that
-    \begin{align*}
+    We can see that
+    \begin{align}\label{eq:proof_weak_sharp_minima_lemma01}
         f\left(\frac{u^{\ast}+td}{\sqrt{1+t^2}}\right)=\frac{m+tg(d)}{\sqrt{1+t^2}}
-    \end{align*}
-    for sufficiently small $t>0$. From this it follows that $g(d)>0$ and therefore also $c^{\ast}=\min\{g(d):d\in S_{u^{\ast}}\mathbb{S}^{k-1}\}>0$. Now write $u=\frac{u^{\ast}+td}{\sqrt{1+t^2}}$. Because of $\|u-u^{\ast}\|\le t$ we can show that
-    \begin{align}\label{eq:proof_weak_sharp_minima_lemma}
-        f(u)-m\ge\frac{c^{\ast}}{2}\|u-u^{\ast}\|
     \end{align}
-    It follows that $\mathcal{X}$ is finite. To see this, assume that $v\in\mathcal{X}$, $v\ne u^{\ast}$ with $\|v-u^{\ast}\|<r^{\ast}$. It would follow from Equation~\eqref{eq:proof_weak_sharp_minima_lemma} that $f(v)-m\ge\frac{c^{\ast}}{2}\|v-u^{\ast}\|>0$, which is a contradiction to $v\in\mathcal{X}$. Thus for each $u^{\ast}\in\mathcal{X}$ there exists a radius $r^{\ast}>0$ such that $B(u^{\ast},r^{\ast})\cap\mathcal{X}=\{u^{\ast}\}$. Obviously $\{B(u^{\ast},r^{\ast}):u^{\ast}\in\mathcal{X}\}$ covers $\mathcal{X}$. Since $\mathcal{X}$ is compact, there exists a finite subcover. It follows that $\mathcal{X}$ must be finite and write $|\mathcal{X}|=q$. We can thus choose $\alpha=\min_{1\le i\le q}c^{\ast}_i/2>0$ and $\rho=\min_{1\le i\le q}r_i^{\ast}$. For all $u\in\mathbb{S}^{k-1}$, $\operatorname{dist}(u,\mathcal{X})<\rho$ now follows
+    for all $d\in S_{u^{\ast}}\mathbb{S}^{k-1}$ and sufficiently small $t>0$. (There exists a positive constant $r^{\ast}>0$ such that it holds for all $0<t<r^{\ast}$.)
+
+    From this it follows that $g(d)>0$ and therefore also $c^{\ast}=\min\{g(d):d\in S_{u^{\ast}}\mathbb{S}^{k-1}\}>0$ since $g$ is a continuous function and the unit tangent sphere $S_{u^{\ast}}\mathbb{S}^{k-1}$ is compact. Now write $u_t(d)=(u^{\ast}+td)/\sqrt{1+t^2}$. We have
+    \begin{align*}
+        f(u_t(d))-m&=\frac{m+tg(d)}{\sqrt{1+t^2}}-m\ge\frac{m+tc^{\ast}}{\sqrt{1+t^2}}-m\\&
+        =tc^{\ast}+(m+tc^{\ast})\left(\frac{1}{\sqrt{1+t^2}}-1\right)\\&
+        =tc^{\ast}-t^2\underbrace{\frac{m+tc^{\ast}}{\sqrt{1+t^2}(1+\sqrt{1+t^2})}}_{\to m/2\text{ for }t\downarrow0}\\&
+        =tc^{\ast}+\mathbf{O}(t^2).
+    \end{align*}
+    Because $\|u_t(d)-u^{\ast}\|^2=2-2/\sqrt{1+t^2}\le t^2$ it follows
+    \begin{align*}
+        f(u_t(d))-m\ge tc^{\ast}-Ct^2=t\left(c-Ct\right)\ge\frac{c^{\ast}}{2}t\ge\frac{c^{\ast}}{2}\|u_t(d)-u^{\ast}\|.
+    \end{align*}
+
+    \todo[inline]{continue here}
+    
+    It follows that $\mathcal{X}$ is finite. 
+    
+    To see this, assume that $v\in\mathcal{X}$, $v\ne u^{\ast}$ with $\|v-u^{\ast}\|<r^{\ast}$. It would follow from Equation~\eqref{eq:proof_weak_sharp_minima_lemma02} that $f(v)-m\ge\frac{c^{\ast}}{2}\|v-u^{\ast}\|>0$, which is a contradiction to $v\in\mathcal{X}$. Thus for each $u^{\ast}\in\mathcal{X}$ there exists a radius $r^{\ast}>0$ such that $B(u^{\ast},r^{\ast})\cap\mathcal{X}=\{u^{\ast}\}$. Obviously $\{B(u^{\ast},r^{\ast}):u^{\ast}\in\mathcal{X}\}$ covers $\mathcal{X}$. Since $\mathcal{X}$ is compact, there exists a finite subcover. It follows that $\mathcal{X}$ must be finite and write $|\mathcal{X}|=q$. We can thus choose $\alpha=\min_{1\le i\le q}c^{\ast}_i/2>0$ and $\rho=\min_{1\le i\le q}r_i^{\ast}$. For all $u\in\mathbb{S}^{k-1}$, $\operatorname{dist}(u,\mathcal{X})<\rho$ now follows
     \begin{align*}
         f(u)-m\ge\|u-u_i^{\ast}\|\frac{c_i^{\ast}}{2}\ge\alpha\operatorname{dist}(u,\mathcal{X})
     \end{align*}

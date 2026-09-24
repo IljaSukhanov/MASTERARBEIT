@@ -289,7 +289,7 @@ The following fact holds: $\mathcal{Z}$ is a zonoid if and only if the function 
 \end{Lem}
 
 \begin{proof}
-    \todo[inline]{24.09: find citation in handbook of convex geometry}
+    \todo[inline]{25.09: find citation in handbook of convex geometry}
     See~\cite{Schneider_2013}.
 \end{proof}
 
@@ -464,6 +464,9 @@ By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k
 \end{align}
 is not empty.
 
+\todo[inline]{25.09: is $\mathcal{X}_k$ compact?}
+\todo[inline]{25.09: Give condition on point cloud so that $m_k$ is strictly positive}
+
 A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties. We show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the linear convergence of Algorithm~\ref{alg:projected_gradient_descent} if the initial point $u_0$ is close to $\mathcal{X}_k$. But first, we state this result in our notation.
 
 \begin{algorithm}[ht]
@@ -501,11 +504,7 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
 We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ in Proposition~\ref{prop:properties_empirical_width}. It turns out that the weak sharp minima condition from Equation~\eqref{eq:weak_sharp_minima_condition} is also fulfilled in our setting. We record this fact in the following Lemma.
 
 \begin{Lem}\label{lem:weak_sharp_minima_application}
-    There exist $\alpha>0$ and $\rho>0$ such that
-    \begin{align*}
-        \hat{w}_k(u)-\hat{m}_k\ge\alpha\operatorname{dist}(u,\mathcal{X}_k)
-    \end{align*}
-    for all $u\in\mathbb{S}^{k-1}$ with $\operatorname{dist}(u,\mathcal{X}_k)<\rho$.
+    There exist $\alpha>0$ and $\rho>0$ such that $\hat{w}_k(u)-\hat{m}_k\ge\alpha\operatorname{dist}(u,\mathcal{X}_k)$ for all $u\in\mathbb{S}^{k-1}$ with $\operatorname{dist}(u,\mathcal{X}_k)<\rho$.
 \end{Lem}
 
 \begin{proof}
@@ -514,11 +513,11 @@ We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ i
 
 In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general.
 
-\todo[inline]{24.09: add image that visualizes one step of the projected subgradient descent}
+\todo[inline]{25.09: add image that visualizes one step of the projected subgradient descent}
 
 \subsection{Elbow point selection}\label{sec:elbow_point_selection}
 
-\todo[inline]{25.09: rework completely}
+\todo[inline]{26.09: rework completely}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
 
@@ -550,7 +549,7 @@ For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in
 \end{align*}
 This allows for fair and principled numerical experiments.
 
-\todo[inline]{Explain Jones algorithm better}
+\todo[inline]{27.09: Explain Jones algorithm better}
 
 \subsection{Simulated Data}
 
