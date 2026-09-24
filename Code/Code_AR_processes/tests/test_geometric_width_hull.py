@@ -61,6 +61,22 @@ class GeometricWidthHullTests(unittest.TestCase):
                 projection, sliding_window_point_cloud(series, k) @ direction,
             )
 
+    def test_one_start_uses_seeded_random_direction(self):
+        series = np.array([0.0, 2.0, -1.0, 3.0, 1.0, -2.0])
+        seed, replication, k = 17, 4, 2
+        first_widths, best_widths, _, directions = batched_geometric_width_curves(
+            series, k, seed=seed, replication=replication,
+            starts=1, iterations=1, return_directions=True,
+        )
+        generated = np.random.default_rng(
+            np.random.SeedSequence([seed, replication, k, 20])
+        ).normal(size=(1, k))[0]
+        expected_direction = generated / np.linalg.norm(generated)
+        np.testing.assert_allclose(directions[k - 1], expected_direction)
+        expected_width = np.ptp(sliding_window_point_cloud(series, k) @ expected_direction)
+        np.testing.assert_allclose(first_widths[k - 1], expected_width)
+        np.testing.assert_allclose(best_widths[k - 1], expected_width)
+
     def test_rejects_invalid_max_k(self):
         for max_k in (0, -1, 2.5, True, [2]):
             with self.subTest(max_k=max_k), self.assertRaisesRegex(ValueError, "max_k"):

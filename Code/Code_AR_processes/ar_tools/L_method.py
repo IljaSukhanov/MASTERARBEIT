@@ -103,33 +103,6 @@ def l_method_selector(
     affine_affine,
     squared_loss,
 ):
-    """Select an elbow from ``(m_1, ..., m_K)``.
-
-    The four booleans select one of sixteen variants:
-
-    ``weighted``
-        Use the segment-size-weighted RMSE for squared loss or the
-        segment-size-weighted MAE for absolute loss. If false, use total
-        squared error or total absolute error, respectively.
-    ``common_breakpoint``
-        If true, the left segment is ``1, ..., q`` and the right segment is
-        ``q, ..., K``. The observation at ``q`` is used in both independent
-        fits; equality of their fitted values at ``q`` is not imposed. If
-        false, the right segment starts at ``q + 1``.
-    ``affine_affine``
-        Fit affine models to both segments. If false, fit an affine left
-        segment and a constant right segment.
-    ``squared_loss``
-        Fit segments by least squares. If false, fit them by least absolute
-        deviations.
-
-    Both segments contain at least two observations. Exact score ties favor
-    the smaller selected AR order. With a common point, the selected order is
-    ``q - 1``; with disjoint segments, it is ``q``. For absolute loss, the
-    weighted score is the total absolute error divided by the constant total
-    segment size, so weighting changes the score's scale but not the selected
-    order.
-    """
     widths = _validated_widths(minimum_widths)
     weighted = _validated_boolean("weighted", weighted)
     common_breakpoint = _validated_boolean(

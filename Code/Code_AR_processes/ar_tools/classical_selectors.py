@@ -7,7 +7,6 @@ __all__ = ["aic_bic_ar_order", "yule_walker_pacf", "pacf_cutoff_order"]
 
 
 def aic_bic_ar_order(series, maximum_order):
-    """Select conditional least-squares AR orders by Gaussian AIC and BIC."""
     series = np.asarray(series, dtype=float)
     maximum_order = int(maximum_order)
     if series.ndim != 1 or len(series) <= maximum_order + 1:
@@ -54,7 +53,6 @@ def aic_bic_ar_order(series, maximum_order):
 
 
 def yule_walker_pacf(series, maximum_lag):
-    """Estimate PACF values with the Durbin-Levinson/Yule-Walker recursion."""
     series = np.asarray(series, dtype=float)
     centered = series - np.mean(series)
     sample_size = len(centered)
@@ -95,7 +93,6 @@ def yule_walker_pacf(series, maximum_lag):
 
 
 def pacf_cutoff_order(series, maximum_order, confidence_multiplier=1.96):
-    """Choose the largest lag whose PACF exceeds the approximate confidence band."""
     pacf_values = yule_walker_pacf(series, maximum_order)
     cutoff = confidence_multiplier / np.sqrt(len(series))
     significant_lags = np.flatnonzero(np.abs(pacf_values[1:]) > cutoff) + 1

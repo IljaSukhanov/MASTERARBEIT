@@ -125,21 +125,20 @@ def projected_subgradient_empirical_width(
 
 
 
-### input: time series X=(X_1, ..., X_T), K>=1, 
-### output: (\hat{m}_1, ..., \hat{m}_K)
-
 def batched_geometric_width_curves(
         series,
         max_k,
         *,
         seed,
         replication,
-        starts=3, # number of initial directions for each k
+        starts=3, # total number of initial directions for each k                               ### CHANGED
         iterations=150,
         initial_step=0.2,
         geometric_decay=0.97,
         return_directions=False,
         use_convex_hull=False,
+        warm_start_previous_direction=False,                                                    ### CHANGED
+        warm_start_previous_coefficients=False,                                                 ### CHANGED
 ):
     ### input checks ###
     if (
@@ -152,35 +151,41 @@ def batched_geometric_width_curves(
         raise ValueError("use_convex_hull must be a boolean.")
     if not isinstance(starts, (int, np.integer)) or starts < 1:
         raise ValueError("starts must be a positive integer.")
+    if not isinstance(warm_start_previous_direction, (bool, np.bool_)):                         ### CHANGED
+        raise ValueError("warm_start_previous_direction must be a boolean.")                    ### CHANGED
+    if not isinstance(warm_start_previous_coefficients, (bool, np.bool_)):                      ### CHANGED
+        raise ValueError("warm_start_previous_coefficients must be a boolean.")                 ### CHANGED
+    if warm_start_previous_direction and warm_start_previous_coefficients:                      ### CHANGED
+        raise ValueError("Only one warm-start strategy can be enabled.")                        ### CHANGED
     ### end input checks ###
 
-    single_widths, best_widths, best_projections = [], [], []
+    first_start_widths, best_widths, best_projections = [], [], []
     best_directions = []
     for k in range(1, int(max_k) + 1): # k=1, ..., K
 
         # sliding window point cloud of dimension k from the time series
         cloud_k = sliding_window_point_cloud(series=series, embedding_dimension=int(k))
 
-        # initial directions for the projected subgradient descent algorithm
-        if k == 1:
-            initial_directions = [np.ones(1)]
-        else:
-            covariance_k = np.cov(cloud_k, rowvar=False) # covariance matrix
-            _, eigenvectors_k = np.linalg.eigh(covariance_k)
-            initial_directions = [eigenvectors_k[:, 0]] # eigenvector corresponding to the smallest eigenvalue
-
         initial_generator = np.random.default_rng(
             seed=np.random.SeedSequence([seed, replication, int(k), 20])
         )
 
-        # additional random initial directions
-        initial_directions.extend(
-            initial_generator.normal(size=int(k))
-            for _ in range(starts - 1)
-        )
-
-        directions = np.asarray(initial_directions, dtype=float)
+        # Random initial directions for every start.
+        directions = initial_generator.normal(size=(starts, int(k)))
         directions /= np.linalg.norm(directions, axis=1, keepdims=True)
+
+        if k >= 3 and warm_start_previous_direction:                                            ### CHANGED
+            directions[0] = np.r_[best_directions[-1], 0.0]                                     ### CHANGED
+        elif k >= 3 and warm_start_previous_coefficients:                                       ### CHANGED
+            previous_direction = best_directions[-1]                                            ### CHANGED
+            if abs(previous_direction[0]) <= np.finfo(float).eps:                               ### CHANGED
+                raise ValueError(                                                               ### CHANGED
+                    "Cannot derive previous coefficients when the first "                       ### CHANGED
+                    "direction coordinate is zero."                                             ### CHANGED
+                )                                                                               ### CHANGED
+            previous_coefficients = -previous_direction[1:] / previous_direction[0]             ### CHANGED
+            coefficient_direction = np.r_[1.0, -previous_coefficients, 0.0]                     ### CHANGED
+            directions[0] = coefficient_direction / np.linalg.norm(coefficient_direction)       ### CHANGED
 
         optimization_cloud = cloud_k
 
@@ -213,17 +218,17 @@ def batched_geometric_width_curves(
             best_start_widths[start_index] = result["minimum_width"]
             best_start_directions[start_index] = result["direction"]
 
-        single_widths.append(best_start_widths[0])
+        first_start_widths.append(best_start_widths[0])
         best_start = int(np.argmin(best_start_widths))
         best_widths.append(best_start_widths[best_start])
         best_projections.append(cloud_k @ best_start_directions[best_start])
         best_directions.append(best_start_directions[best_start].copy())
 
-        standard_result = (
-            np.asarray(single_widths),
-            np.asarray(best_widths),
-            best_projections,
-        )
-        if return_directions:
-            return (*standard_result, best_directions)
-        return standard_result
+    standard_result = (
+        np.asarray(first_start_widths),
+        np.asarray(best_widths),
+        best_projections,
+    )
+    if return_directions:
+        return (*standard_result, best_directions)
+    return standard_result

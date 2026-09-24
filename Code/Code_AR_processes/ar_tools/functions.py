@@ -3,6 +3,17 @@ from __future__ import annotations
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
+from .support_geometry import (
+    ar_impulse_response,
+    ar_window_zonotope_generators,
+    fibonacci_sphere_directions,
+    theoretical_ar_width_in_direction,
+    theoretical_support_zonoid_2d,
+    theoretical_width_2d_from_angle,
+    zonotope_polygon_2d,
+    zonotope_support_points,
+)
+
 __all__ = [
     "jones_ar_coefficients",
     "centered_beta_support",
@@ -18,6 +29,7 @@ __all__ = [
     "zonotope_polygon_2d",
     "fibonacci_sphere_directions",
     "zonotope_support_points",
+    "theoretical_support_zonoid_2d",
 ]
 
 
@@ -28,7 +40,6 @@ def jones_ar_coefficients(
     *,
     return_pacf: bool = False,
 ) -> NDArray[np.float64] | tuple[NDArray[np.float64], NDArray[np.float64]]:
-    """Sample a stationary AR(p) coefficient vector using Jones' method."""
     if not isinstance(p, (int, np.integer)) or p < 1:
         raise ValueError(f"p must be a positive integer, got {p}")
 
@@ -60,7 +71,6 @@ def centered_beta_support(
     beta: float = 1.0,
     support_width: float = 2.0,
 ) -> tuple[float, float]:
-    """Return the support bounds of a mean-zero scaled Beta distribution."""
     if not np.isfinite(alpha) or alpha <= 0:
         raise ValueError("alpha must be a positive finite number")
     if not np.isfinite(beta) or beta <= 0:
@@ -87,13 +97,6 @@ def simulate_beta_ar(
     *,
     intercept: float = 0.0,
 ) -> NDArray[np.float64]:
-    """Simulate an AR process with centered, scaled Beta innovations.
-
-    If ``B ~ Beta(alpha, beta)``, the innovations are
-    ``support_width * (B - E[B])``. Their mean is zero and their support has
-    total width ``support_width``. The defaults use the original
-    ``Uniform[-1, 1]`` generator path, preserving seeded uniform experiments.
-    """
     phi = np.asarray(phi, dtype=float)
     if phi.ndim != 1 or len(phi) == 0 or not np.all(np.isfinite(phi)):
         raise ValueError("phi must be a nonempty finite one-dimensional vector")
@@ -143,7 +146,6 @@ def simulate_uniform_ar(
     *,
     intercept: float = 0.0,
 ) -> NDArray[np.float64]:
-    """Simulate an AR process with Uniform[-half_width, half_width] noise."""
     if not np.isfinite(half_width) or half_width <= 0:
         raise ValueError("half_width must be a positive finite number")
     return simulate_beta_ar(
@@ -192,45 +194,6 @@ def sliding_window_point_cloud(
     )
 
 
-### compute the coefficients of the MA(infinity) representation of an AR(p) process
-def ar_impulse_response(phi, maximum_lag):
-    phi = np.asarray(phi, dtype=float)
-    order = len(phi) # p
-    psi = np.zeros(maximum_lag + 1) # psi_0, psi_1, ..., psi_maximum_lag
-    psi[0] = 1.0 # psi_0 = 1
-    for lag in range(1, maximum_lag + 1):
-        psi[lag] = sum(
-            phi[j] * psi[lag - j - 1] for j in range(min(lag, order))
-        )
-    return psi
-
-
-def theoretical_ar_width_in_direction(
-        phi,
-        direction,
-        half_width=1.0,
-        history=10_000,
-):
-    direction = np.asarray(direction, dtype=float) # u
-    direction_norm = np.linalg.norm(direction) # ||u||
-
-    ### input checks ###
-    if direction.ndim != 1 or len(direction) == 0:
-        raise ValueError("direction must be a nonempty one-dimensional array.")
-    if direction_norm == 0:
-        raise ValueError("direction must be nonzero.")
-    if half_width <= 0 or history < 0:
-        raise ValueError("Require half_width > 0 and history >= 0.")
-    ### end input checks ###
-
-    unit_direction = direction / direction_norm # u / ||u||
-    psi = ar_impulse_response(phi=phi, maximum_lag=history) # psi_0, psi_1, ..., psi_history
-    generator_projections = np.convolve(a=psi, v=unit_direction) # c_j = sum_{r=0}^{k-1} u_r psi_{j-r} for j = 0, 1, ..., history + k - 1
-    return float(2.0 * half_width * np.sum(np.abs(generator_projections[: history + 1]))) # 2 * half_width * sum_{j=0}^{history} |c_j|
-
-    
-
-
 ### companion matrix and stationarity check
 def companion_matrix(phi):
     phi = np.asarray(phi, dtype=float)
@@ -244,80 +207,3 @@ def companion_matrix(phi):
 def is_stationary(phi):
     eigenvalues = np.linalg.eigvals(companion_matrix(phi))
     return bool(np.all(np.abs(eigenvalues) < 1)), eigenvalues
-
-
-# continue here
-
-def theoretical_width_2d_from_angle(
-    angle,
-    impulse_response,
-    lagged_impulse_response,
-    half_width=1.0,
-):
-    """Evaluate a two-dimensional AR support width at a given angle."""
-    direction = np.array([np.cos(angle), np.sin(angle)])
-    generator_projections = (
-        direction[0] * impulse_response
-        + direction[1] * lagged_impulse_response
-    )
-    return float(2.0 * half_width * np.sum(np.abs(generator_projections)))
-
-
-def ar_window_zonotope_generators(
-    phi,
-    embedding_dimension,
-    history,
-    half_width=1.0,
-):
-    """Construct finite-history zonotope generators for an AR embedding."""
-    psi = ar_impulse_response(phi, history)
-    generators = np.zeros((embedding_dimension, history + 1))
-    for innovation_lag in range(history + 1):
-        for coordinate in range(embedding_dimension):
-            response_lag = innovation_lag - coordinate
-            if response_lag >= 0:
-                generators[coordinate, innovation_lag] = (
-                    half_width * psi[response_lag]
-                )
-    return generators[:, np.linalg.norm(generators, axis=0) > 1e-13]
-
-
-def zonotope_polygon_2d(generators):
-    """Return the ordered boundary vertices of a planar zonotope."""
-    lengths = np.linalg.norm(generators, axis=0)
-    angles = np.mod(np.arctan2(generators[1], generators[0]), np.pi)
-    oriented = lengths[:, None] * np.column_stack((
-        np.cos(angles),
-        np.sin(angles),
-    ))
-    oriented = oriented[np.argsort(angles)]
-
-    current = -np.sum(oriented, axis=0)
-    vertices = [current.copy()]
-    for generator in oriented:
-        current = current + 2.0 * generator
-        vertices.append(current.copy())
-    for generator in oriented:
-        current = current - 2.0 * generator
-        vertices.append(current.copy())
-    return np.asarray(vertices)
-
-
-def fibonacci_sphere_directions(number_of_directions):
-    """Construct approximately uniform directions on the unit sphere."""
-    index = np.arange(number_of_directions)
-    z = 1.0 - 2.0 * (index + 0.5) / number_of_directions
-    radius = np.sqrt(1.0 - z**2)
-    angle = np.pi * (3.0 - np.sqrt(5.0)) * index
-    return np.column_stack((
-        radius * np.cos(angle),
-        radius * np.sin(angle),
-        z,
-    ))
-
-
-def zonotope_support_points(generators, directions):
-    """Return zonotope support points for the supplied directions."""
-    signs = np.sign(generators.T @ directions.T)
-    signs[signs == 0.0] = 1.0
-    return (generators @ signs).T
