@@ -134,7 +134,7 @@ def batched_geometric_width_curves(
         *,
         seed,
         replication,
-        starts=3, # how often the projected subgradient descent algorithm is restarted with a new random initial direction
+        starts=3, # number of initial directions for each k
         iterations=150,
         initial_step=0.2,
         geometric_decay=0.97,
@@ -150,6 +150,8 @@ def batched_geometric_width_curves(
         raise ValueError("max_k must be a positive integer.")
     if not isinstance(use_convex_hull, (bool, np.bool_)):
         raise ValueError("use_convex_hull must be a boolean.")
+    if not isinstance(starts, (int, np.integer)) or starts < 1:
+        raise ValueError("starts must be a positive integer.")
     ### end input checks ###
 
     single_widths, best_widths, best_projections = [], [], []
@@ -196,82 +198,32 @@ def batched_geometric_width_curves(
         best_start_widths = np.full(starts, np.inf)
         best_start_directions = directions.copy()
 
-        # main loop
-        for iteration in range(iterations):
-            # somehow use the previous function "projected_subgradient_empirical_width"??
+        # Run the single-direction optimizer once for each initial direction
+        for start_index, initial_direction in enumerate(directions):
+            result = projected_subgradient_empirical_width(
+                points=optimization_cloud,
+                iterations=iterations,
+                initial_step=initial_step,
+                patience=iterations + 1,
+                rng=np.random.SeedSequence([seed, replication, int(k), 21, start_index]),
+                initial_direction=initial_direction,
+                step_schedule="geometric",
+                geometric_decay=geometric_decay,
+            )
+            best_start_widths[start_index] = result["minimum_width"]
+            best_start_directions[start_index] = result["direction"]
 
+        single_widths.append(best_start_widths[0])
+        best_start = int(np.argmin(best_start_widths))
+        best_widths.append(best_start_widths[best_start])
+        best_projections.append(cloud_k @ best_start_directions[best_start])
+        best_directions.append(best_start_directions[best_start].copy())
 
-
-
-    
-    
-
-
-# def batched_geometric_width_curves(
-#     series,
-#     max_k,
-#     *,
-#     seed,
-#     replication,
-#     starts=3,
-#     iterations=150,
-#     initial_step=0.2,
-#     geometric_decay=0.97,
-#     return_directions=False,
-#     use_convex_hull=False,
-# ):
-
-#     single_widths, best_widths, best_projections = [], [], []
-#     best_directions = []
-#     for k in range(1, int(max_k) + 1):
-#         cloud_k = sliding_window_point_cloud(series, int(k))
-
-
-
-#         best_start_widths = np.full(starts, np.inf)
-#         best_start_directions = directions.copy()
-
-#         for iteration in range(iterations):
-#             projections = optimization_cloud @ directions.T
-#             maximum_indices = np.argmax(projections, axis=0)
-#             minimum_indices = np.argmin(projections, axis=0)
-#             current_widths = (
-#                 projections[maximum_indices, np.arange(starts)]
-#                 - projections[minimum_indices, np.arange(starts)]
-#             )
-#             improved = current_widths < best_start_widths
-#             best_start_widths[improved] = current_widths[improved]
-#             best_start_directions[improved] = directions[improved]
-
-#             subgradients = (
-#                 optimization_cloud[maximum_indices]
-#                 - optimization_cloud[minimum_indices]
-#             )
-#             tangent_subgradients = subgradients - (
-#                 np.sum(directions * subgradients, axis=1, keepdims=True)
-#                 * directions
-#             )
-#             step = initial_step * geometric_decay**iteration
-#             candidates = directions - step * tangent_subgradients
-#             candidate_norms = np.linalg.norm(
-#                 candidates,
-#                 axis=1,
-#                 keepdims=True,
-#             )
-#             valid = candidate_norms[:, 0] > np.finfo(float).eps
-#             directions[valid] = candidates[valid] / candidate_norms[valid]
-
-#         single_widths.append(best_start_widths[0])
-#         best_start = int(np.argmin(best_start_widths))
-#         best_widths.append(best_start_widths[best_start])
-#         best_projections.append(cloud_k @ best_start_directions[best_start])
-#         best_directions.append(best_start_directions[best_start].copy())
-
-#     standard_result = (
-#         np.asarray(single_widths),
-#         np.asarray(best_widths),
-#         best_projections,
-#     )
-#     if return_directions:
-#         return (*standard_result, best_directions)
-#     return standard_result
+        standard_result = (
+            np.asarray(single_widths),
+            np.asarray(best_widths),
+            best_projections,
+        )
+        if return_directions:
+            return (*standard_result, best_directions)
+        return standard_result
