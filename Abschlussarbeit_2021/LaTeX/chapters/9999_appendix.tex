@@ -1,6 +1,6 @@
 \chapter{Appendix}\label{chap:appendix}
 
-\section{Proofs}
+\section{Proofs Chapter~\ref{chap:ar}}
 
 \subsection{Proof of Proposition~\ref{prop:hausdorff_distance_convergence_speed}}\label{sec:proof_hausdorff_distance_convergence_speed}
 
@@ -122,4 +122,61 @@
     \begin{align*}
         f(u)-m\ge\|u-u_i^{\ast}\|\frac{c_i^{\ast}}{2}\ge\alpha\operatorname{dist}(u,\mathcal{X})
     \end{align*}
+\end{proof}
+
+\section{Proofs Chapter~\ref{chap:kde}}
+
+\subsection{Proof of Lemma~\ref{lem:acute_chain_perron_vec}}\label{sec:proof_acute_chain_perron_vec}
+
+\begin{proof}
+    Since the points $x_j$ are distinct, all entries of the matrix $D$ are positive and by Perron-Frobenius, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$. We interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. Write the expected value $\mathbb{E}[X]=\mu=\sum_{j=1}^{N}v_jx_j$ and the variance $\operatorname{Var}[X]=\sigma^2=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$. Now we have
+    \begin{align}\label{eq:bias_variance_decomp_perron_entry}
+        (Dv)_i=\sum_{j=1}^{N}D_{ij}v_j=\sum_{j=1}^{N}\|x_i-x_j\|^2v_j=\mathbb{E}[\|X-x_i\|^2]\stackrel{\ast}{=}\|\mu-x_i\|^2+\sigma^2,
+    \end{align}
+    where at $\ast$ we have used the bias-variance decomposition. Since $v$ is the Perron vector of $D$, the left hand side of Equation~\eqref{eq:bias_variance_decomp_perron_entry} is equal to $\rho v_i$ with $\rho>0$ being the unique maximum eigenvalue of $D$.
+
+    Next, we write
+    \begin{align*}
+        \mu&=\sum_{j=1}^{N}v_jx_j=v_1x_1+v_2x_2+\dots+v_Nx_N\\&
+        =x_1-(v_2+\dots+v_N)x_1\\&
+        +v_2x_2+v_3x_2+\dots+v_Nx_2-(v_3x_2+\dots+v_Nx_2)\\&
+        \vdots\\&
+        +v_{N-2}x_{N-2}+v_{N-1}x_{N-2}+v_Nx_{N-2}-(v_{N-1}x_{N-2}+v_Nx_{N-2})\\&
+        +v_{N-1}x_{N-1}+v_Nx_{N-1}-v_Nx_{N-1}\\&
+        +v_Nx_N\\&
+        =x_1+(v_2+\dots+v_N)(x_2-x_1)+\dots+(v_{N-1}+v_N)(x_{N-1}-x_{N-2})+v_N(x_N-x_{N-1})\\&
+        =x_1+\sum_{k=1}^{N-1}\sum_{j=k+1}^{N}v_j(x_{k+1}-x_k)=x_1+\sum_{k=1}^{N-1}a_k\delta_k,
+    \end{align*}
+    where $a_k=\sum_{j=k+1}^{N}v_j$ and $\delta_k=x_{k+1}-x_k$. Note that because of the positivity of the Perron vector, it holds $1>a_1>a_2>\dots>a_{N-1}=v_N>0$.
+
+    As a next step, write
+    \begin{align*}
+        x_i-\mu&=x_i-x_1-(\mu-x_1)=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{N-1}a_k\delta_k=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{i-1}a_k\delta_k-\sum_{k=i}^{N-1}a_k\delta_k\\&
+        =\underbrace{\sum_{k=1}^{i-1}(1-a_k)\delta_k}_{=P_i}-\underbrace{\sum_{k=i}^{N-1}a_k\delta_k}_{=Q_i}
+    \end{align*}
+    Consequently,
+    \begin{align*}
+        \|x_i-\mu\|^2&=\|P_i-Q_i\|^2=\|P_i\|^2+\|Q_i\|^2-2\langle P_i,Q_i\rangle\\&
+        <\|P_i\|^2+\|Q_i\|^2+2\langle P_i,Q_i\rangle=\|P_i+Q_i\|^2
+    \end{align*}
+    for all $i=2,\dots,N-1$, where we have used that
+    \begin{align*}
+        \langle P_i,Q_i\rangle=\sum_{1\le k\le i-1}\sum_{i\le l\le N-1}\underbrace{(1-a_k)}_{>0}\underbrace{a_l}_{>0}\underbrace{\langle\delta_k,\delta_l\rangle}_{>0}>0.
+    \end{align*}
+    In particular, this is the step where we use the acute chain condition~\eqref{eq:acute_chain_condition}.
+
+    Now we see that
+    \begin{align}\label{eq:acute_chain_proof_002}
+        \|P_i+Q_i\|\le\begin{cases}
+            \|\sum_{k=1}^{N-1}a_k\delta_k\|=\|\mu-x_1\| & ,a_{i-1}\ge\frac{1}{2}\\
+            \|\sum_{k=1}^{N-1}(1-a_k)\delta_k\|=\|x_N-\mu\| & ,a_{i-1}<\frac{1}{2}.
+        \end{cases}
+    \end{align}
+
+    Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry} and~\eqref{eq:acute_chain_proof_002} we arrive at
+    \begin{align*}
+        \rho v_i-\sigma^2&=\|\mu-x_i\|^2<\|P_i+Q_i\|^2\le\max\{\|\mu-x_1\|,\|x_N-\mu\|\}\\&
+        =\max\{\rho v_1-\sigma^2,\rho v_N-\sigma^2\}
+    \end{align*}
+    and therefore $v_i<\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
 \end{proof}
