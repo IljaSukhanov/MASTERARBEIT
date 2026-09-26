@@ -45,6 +45,8 @@
 
 \textbf{Proof of Proposition~\ref{prop:sliding_window_fails_brunel}}
 
+\todo[inline]{25.09: study proof in detail}
+
 \begin{proof}
     Let $\{Z_t\}\stackrel{\text{iid}}{\sim}U[-1,1]$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Then, $\operatorname{supp}(X_t)=[-H,H]$, where $H=\sum_{j=0}^{\infty}|\psi_j|$. Consequently
     \begin{align*}
@@ -64,34 +66,46 @@
 
 \textbf{Proof of Lemma~\ref{lem:weak_sharp_minima_application}}
 
-\todo[inline]{24.09: Study proof in full detail}
-
 \begin{proof}
     The function $\hat{w}_k$ is a pointwise maximum over finitely many linear functions. In the following, we write $A=\{Y_s^{(k)}-Y_t^{(k)}:s,t\}$ and $f(u)=\max\{\langle a,u\rangle:a\in A\}$. Also, let $m=\min\{f(u):u\in\mathbb{S}^{k-1}\}$ and $\mathcal{X}=\{u\in\mathbb{S}^{k-1}:f(u)=m\}$. Let $u^{\ast}\in\mathcal{X}$ and $T_{u^{\ast}}\mathbb{S}^{k-1}$ be the tangent space at $u^{\ast}$. Furthermore, let $A_{\ast}=\{a\in A:\langle a,u^{\ast}\rangle=m\}$ be the set of active vectors. Define $g(d)=\max\{\langle a,d\rangle:a\in A_{\ast}\}$ for all unit tangent directions $d\in T_{u^{\ast}}\mathbb{S}^{k-1}\cap\mathbb{S}^{k-1}=:S_{u^{\ast}}\mathbb{S}^{k-1}$.
 
-    We can see that
+    Let $t>0$. We can see that
+    \begin{align*}
+        f\left(u^{\ast}+td\right)=\max_{a\in A}\langle a,u^{\ast}+td\rangle=\underbrace{\max_{a\in A}\langle a,u^{\ast}\rangle}_{=m}+t\max_{a\in A}\langle a,d\rangle.
+    \end{align*}
+    We want to assert that $f(u^{\ast}+td)=m+tg(d)$ for sufficiently small $t>0$. In general, $\max\{\langle a,d\rangle:a\in A\}\ge\max\{\langle a,d\rangle:a\in A_{\ast}\}=g(d)$ since $A_{\ast}\subseteq A$. In case of equality there is nothing to show. Therefore we assume $\max\{\langle a,d\rangle:a\in A\}>g(d)$. If this is the case, there must exist an inactive vector $b\in A\setminus A_{\ast}$ with $\langle b,d\rangle>g(d)$. We now write
+    \begin{align*}
+        \langle b,u^{\ast}+td\rangle=\langle b,u^{\ast}\rangle+t\langle b,d\rangle=m-(\underbrace{m-\langle b,u^{\ast}\rangle}_{=:\delta_b>0})+t\langle b,d\rangle.
+    \end{align*}
+    We see that the difference
+    \begin{align*}
+        m+tg(d)-\langle b,u^{\ast}+td\rangle=\delta_b-t\left(\langle b,d\rangle-g(d)\right)
+    \end{align*}
+    stays positive for $t<\delta_b/(\langle b,d\rangle-g(d))=:r_b>0$. Set $r(u^{\ast})$ to be the minimum over all $b\in A\setminus A_{\ast}$ with $\langle b,d\rangle>g(d)$. It follows that
+    \begin{align*}
+        f(u^{\ast}+td)=\max_{a\in A}\langle a,u^{\ast}+td\rangle=\max_{a\in A_{\ast}}\langle a,u^{\ast}+td\rangle=m+tg(d)
+    \end{align*}
+    for all $t<r(u^{\ast})$ and $d\in S_{u^{\ast}}\mathbb{S}^{k-1}$ and therefore also
     \begin{align}\label{eq:proof_weak_sharp_minima_lemma01}
         f\left(\frac{u^{\ast}+td}{\sqrt{1+t^2}}\right)=\frac{m+tg(d)}{\sqrt{1+t^2}}
     \end{align}
-    for all $d\in S_{u^{\ast}}\mathbb{S}^{k-1}$ and sufficiently small $t>0$. (There exists a positive constant $r^{\ast}>0$ such that it holds for all $0<t<r^{\ast}$.)
+    for all $d\in S_{u^{\ast}}\mathbb{S}^{k-1}$ and all $0<t<r(u^{\ast})$.
 
-    From this it follows that $g(d)>0$ and therefore also $c^{\ast}=\min\{g(d):d\in S_{u^{\ast}}\mathbb{S}^{k-1}\}>0$ since $g$ is a continuous function and the unit tangent sphere $S_{u^{\ast}}\mathbb{S}^{k-1}$ is compact. Now write $u_t(d)=(u^{\ast}+td)/\sqrt{1+t^2}$. We have
+    From this it follows that $g(d)>0$ and therefore also $c^{\ast}=\min\{g(d):d\in S_{u^{\ast}}\mathbb{S}^{k-1}\}>0$ since $g$ is a continuous function and the unit tangent sphere $S_{u^{\ast}}\mathbb{S}^{k-1}$ is compact. Now write $u_t(d)=(u^{\ast}+td)/\sqrt{1+t^2}$. For $t\in(0,r(u^{\ast}))$ we have
     \begin{align*}
-        f(u_t(d))-m&=\frac{m+tg(d)}{\sqrt{1+t^2}}-m\ge\frac{m+tc^{\ast}}{\sqrt{1+t^2}}-m\\&
+        f(u_t(d))-m&\stackrel{\eqref{eq:proof_weak_sharp_minima_lemma01}}{=}\frac{m+tg(d)}{\sqrt{1+t^2}}-m\ge\frac{m+tc^{\ast}}{\sqrt{1+t^2}}-m\\&
         =tc^{\ast}+(m+tc^{\ast})\left(\frac{1}{\sqrt{1+t^2}}-1\right)\\&
-        =tc^{\ast}-t^2\underbrace{\frac{m+tc^{\ast}}{\sqrt{1+t^2}(1+\sqrt{1+t^2})}}_{\to m/2\text{ for }t\downarrow0}\\&
-        =tc^{\ast}+\mathbf{O}(t^2).
+        =tc^{\ast}-t^2\underbrace{\frac{m+tc^{\ast}}{\sqrt{1+t^2}(1+\sqrt{1+t^2})}}_{\to m/2\text{ for }t\downarrow0}.
     \end{align*}
-    Because $\|u_t(d)-u^{\ast}\|^2=2-2/\sqrt{1+t^2}\le t^2$ it follows
-    \begin{align*}
-        f(u_t(d))-m\ge tc^{\ast}-Ct^2=t\left(c-Ct\right)\ge\frac{c^{\ast}}{2}t\ge\frac{c^{\ast}}{2}\|u_t(d)-u^{\ast}\|.
-    \end{align*}
+    Denote the remainder term by $r_t$. We have $|r_t|t^{-2}\to m/2$ for $t\downarrow0$ and in particular there exist constants $C>0$ and $r_{\ast}'>0$ such that $|r_t|\le Ct^2$ for all $t\in(0,r_{\ast}')$.
 
-    \todo[inline]{continue here}
-    
-    It follows that $\mathcal{X}$ is finite. 
-    
-    To see this, assume that $v\in\mathcal{X}$, $v\ne u^{\ast}$ with $\|v-u^{\ast}\|<r^{\ast}$. It would follow from Equation~\eqref{eq:proof_weak_sharp_minima_lemma02} that $f(v)-m\ge\frac{c^{\ast}}{2}\|v-u^{\ast}\|>0$, which is a contradiction to $v\in\mathcal{X}$. Thus for each $u^{\ast}\in\mathcal{X}$ there exists a radius $r^{\ast}>0$ such that $B(u^{\ast},r^{\ast})\cap\mathcal{X}=\{u^{\ast}\}$. Obviously $\{B(u^{\ast},r^{\ast}):u^{\ast}\in\mathcal{X}\}$ covers $\mathcal{X}$. Since $\mathcal{X}$ is compact, there exists a finite subcover. It follows that $\mathcal{X}$ must be finite and write $|\mathcal{X}|=q$. We can thus choose $\alpha=\min_{1\le i\le q}c^{\ast}_i/2>0$ and $\rho=\min_{1\le i\le q}r_i^{\ast}$. For all $u\in\mathbb{S}^{k-1}$, $\operatorname{dist}(u,\mathcal{X})<\rho$ now follows
+    We continue working on $t<\min\{r(u^{\ast}),r_{\ast}',\sqrt{2},c^{\ast}/(2C)\}$. Because $\|u_t(d)-u^{\ast}\|^2=2-2/\sqrt{1+t^2}\le\min\{t^2,2\}=t^2$ it follows
+    \begin{align}\label{eq:proof_weak_sharp_minima_lemma02}
+        f(u_t(d))-m\ge tc^{\ast}+r(t)\ge tc^{\ast}-Ct^2=t(c^{\ast}-Ct)\ge\frac{c^{\ast}}{2}t\ge\frac{c^{\ast}}{2}\|u_t(d)-u^{\ast}\|,
+    \end{align}
+    which lets us see that $\mathcal{X}$ must be finite.
+
+    To see this, assume that $u_t(d)\in\mathcal{X}$ is another minimizer. It would follow from Equation~\eqref{eq:proof_weak_sharp_minima_lemma01} that $f(u_t(d))-m\ge(c^{\ast}/2)\|u_t(d)-u^{\ast}\|>0$, which is a contradiction to $u_t(d)\in\mathcal{X}$. Thus for each $u^{\ast}\in\mathcal{X}$ there exists a radius $s(u^{\ast})=\min\{\dots\}$ such that $B(u^{\ast},s(u^{\ast}))\cap\mathcal{X}=\{u^{\ast}\}$. Obviously $\{B(u^{\ast},s(u^{\ast})):u^{\ast}\in\mathcal{X}\}$ covers $\mathcal{X}$. Since $\mathcal{X}$ is compact, there exists a finite subcover. It follows that $\mathcal{X}$ must be finite and we denote by $u^{\ast}_1,\dots,u^{\ast}_q\in\mathcal{X}$ the finitely many minimizing directions. We can thus choose $\alpha=\min_{1\le i\le q}c^{\ast}_i/2>0$ and $\rho=\min_{1\le i\le q}s(u^{\ast}_i)$. For all $u\in\mathbb{S}^{k-1}$, $\operatorname{dist}(u,\mathcal{X})<\rho$ now follows
     \begin{align*}
         f(u)-m\ge\|u-u_i^{\ast}\|\frac{c_i^{\ast}}{2}\ge\alpha\operatorname{dist}(u,\mathcal{X})
     \end{align*}
