@@ -4,6 +4,14 @@
 
 \subsection{Proof of Proposition~\ref{prop:hausdorff_distance_convergence_speed}}\label{sec:proof_hausdorff_distance_convergence_speed}
 
+\begin{Lem}\label{lem:upper_bound_psi_j}
+    There exist $C>0$ and $\rho\in(0,1)$ such that $|\psi_j|\le C\rho^{j}$. In particular, $\lim\limits_{j\to\infty}\psi_j=0$.
+\end{Lem}
+
+\begin{proof}
+    Since $\{X_t\}$ is causal, $r_{\phi}=\min\{|z|:\phi(z)=0\}>1$. Let $R\in(1,r_{\phi})$ be arbitrary. From complex analysis, it follows that $1/\phi$ is analytical on some open neighborhood of $\{|z|\le R\}$. Its representation is given by $1/\phi(z)=\sum_{j=0}^{\infty}\psi_jz^{j}$. By Cauchy's integral formula~[\textcolor{red}{find citation}], $|\psi_j|\le R^{-j}\max_{|z|=R}|1/\phi(z)|$. Setting $C=\max_{|z|=R}|1/\phi(z)|$ and $\rho=R^{-1}$ yields the statement.
+\end{proof}
+
 \begin{proof}
     First, notice that $\mathcal{Z}_n^{(k)}\subseteq\mathcal{Z}$ for all $n\in\mathbb{N}$ and therefore $d(y,\mathcal{Z}^{(k)})=0$ for all $y\in\mathcal{Z}_n^{(k)}$. By definition of the Hausdorff distance $d_H(\mathcal{Z}_n^{(k)},\mathcal{Z})=\sup\{d(\mathcal{Z}_n^{(k)},z):z\in\mathcal{Z}^{(k)}\}$. Let $y\in\mathcal{Z}_n^{(k)}$ and $z\in\mathcal{Z}^{(k)}$ be arbitrary. They have representations $\sum_{j=0}^{n}a_jg_j^{(k)}$ and $\sum_{j=0}^{\infty}b_jg_j^{(k)}$ respectively for some $a_j,b_j\in[-1,1]$. Now we have
     \begin{align*}
@@ -27,6 +35,26 @@
     \begin{align*}
         d_H(\mathcal{Z}_n^{(k)},\mathcal{Z}^{(k)})\le\sum_{j=n+1}^{\infty}\|g_j^{(k)}\|\le C\sqrt{k}\frac{1}{\rho^{k-2}}\rho^{n}\sum_{j=0}^{\infty}\rho^{j}\le C\frac{\sqrt{k}}{1-\rho}\frac{1}{\rho^{k-2}}\rho^{n}
     \end{align*}
+\end{proof}
+
+\subsection{Proof of Lemma~\ref{lem:young_convolution_equality}}\label{sec:proof_young_convolution_equality}
+
+\begin{proof}
+    First, assume that the equality holds. We define the shifted sequence $\tau_ma$ by $(\tau_ma)[n]=a_{n-m}$. Then the convolution can be seen as an infinitely weighted sum of shifts, that is, $a\ast b=\sum_mb_m\tau_ma$. We set $x_m=b_m\tau_ma$. By assumption $\{x_m\}$ is absolutely summable, which implies $\|\sum_{|m|\le N}x_m-\sum_mx_m\|\to0$ for $N\to\infty$ and by the reverse triangle inequality $|\|\sum_{|m|\le N}x_m\|_2-\|\sum_mx_m\|_2|\le\|\sum_{|m|\le N}x_m-\sum_mx_m\|_2$. Therefore,
+    \begin{align*}
+        \sum_{m,k}\langle x_m,x_k\rangle=\lim_{N\to\infty}\sum_{|m|\le N}\sum_{|k|\le N}\langle x_m,x_k\rangle=\lim_{N\to\infty}\left\|\sum_{|m|\le N}x_m\right\|_2^2=\left\|\sum_mx_m\right\|_2^2.
+    \end{align*}
+    By assumption we also have
+    \begin{align*}
+        \sum_m\|x_m\|_2=\|a\|_2\|b\|_1=\|a\ast b\|_2=\left\|\sum_mx_m\right\|_2
+    \end{align*}
+    Thus,
+    \begin{align*}
+        \sum_{m,k}\langle x_m,x_k\rangle=\left\|\sum_{m}x_m\right\|_2^2=\sum_{m,k}\|x_m\|_2\|x_k\|_2
+    \end{align*}
+    By Cauchy Schwarz, $\langle x_m,x_k\rangle\le\|x_m\|_2\|x_k\|_2$ and because of the above equality it follows $\langle x_m,x_k\rangle=\|x_m\|_2\|x_k\|_2$. This means that $x_m$ and $x_k$ are linearly dependent for all $m,k$ with $b_m,b_k\ne0$ and therefore $x_m=c_{m,k}x_k$ for some $c_{m,k}\ne0$. It further follows that $|a_{n-m}|=|a_{n-k}|$ for all $n$. Now $m\ne k$ would lead to $a\notin l^{2}(\mathbb{Z})$. This shows that $b$ must either be a null sequence or can only have one nonzero entry.
+
+    The other direction simply follows by plugging in and checking.
 \end{proof}
 
 \subsection{Proof of Lemma~\ref{lem:hausdorff_convergence}}\label{sec:proof_hausdorff_convergence}
