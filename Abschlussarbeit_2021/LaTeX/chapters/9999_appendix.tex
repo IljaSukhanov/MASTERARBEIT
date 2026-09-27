@@ -37,7 +37,11 @@
     \end{align*}
 \end{proof}
 
-\subsection{Proof of Lemma~\ref{lem:young_convolution_equality}}\label{sec:proof_young_convolution_equality}
+\subsection{Proof of Proposition~\ref{prop:minimum_width}}\label{sec:proof_minimum_width}
+
+\begin{Lem}\label{lem:young_convolution_equality}
+    Let $a=(a_n)_{n\in\mathbb{Z}}\in l^2(\mathbb{Z})\setminus\{0\}$ and $b=(b_n)_{n\in\mathbb{Z}}\in l^1(\mathbb{Z})$ be sequences. Then it holds $\|a\ast b\|_2=\|a\|_2\|b\|_1$ if and only if $b=0$ or $b=c\delta_r$ for some $c\ne0$ and $r\in\mathbb{Z}$.
+\end{Lem}
 
 \begin{proof}
     First, assume that the equality holds. We define the shifted sequence $\tau_ma$ by $(\tau_ma)[n]=a_{n-m}$. Then the convolution can be seen as an infinitely weighted sum of shifts, that is, $a\ast b=\sum_mb_m\tau_ma$. We set $x_m=b_m\tau_ma$. By assumption $\{x_m\}$ is absolutely summable, which implies $\|\sum_{|m|\le N}x_m-\sum_mx_m\|\to0$ for $N\to\infty$ and by the reverse triangle inequality $|\|\sum_{|m|\le N}x_m\|_2-\|\sum_mx_m\|_2|\le\|\sum_{|m|\le N}x_m-\sum_mx_m\|_2$. Therefore,
@@ -55,6 +59,42 @@
     By Cauchy Schwarz, $\langle x_m,x_k\rangle\le\|x_m\|_2\|x_k\|_2$ and because of the above equality it follows $\langle x_m,x_k\rangle=\|x_m\|_2\|x_k\|_2$. This means that $x_m$ and $x_k$ are linearly dependent for all $m,k$ with $b_m,b_k\ne0$ and therefore $x_m=c_{m,k}x_k$ for some $c_{m,k}\ne0$. It further follows that $|a_{n-m}|=|a_{n-k}|$ for all $n$. Now $m\ne k$ would lead to $a\notin l^{2}(\mathbb{Z})$. This shows that $b$ must either be a null sequence or can only have one nonzero entry.
 
     The other direction simply follows by plugging in and checking.
+\end{proof}
+
+\begin{proof}
+    Recall that $g_j^{(k)}=(\psi_j,\dots,\psi_{j-k+1})^{T}$ where $\{\psi_{j}\}_{j\in\mathbb{Z}}$ is a sequence given by
+    \begin{align*}
+        \psi_j=\begin{cases}
+            \sum_{i=1}^{p}\phi_i\psi_{j-i} & ,j\ge 1\\
+            1 & ,j=0\\
+            0 & ,j<0.
+        \end{cases}
+    \end{align*}
+    Let $u=(u_0,\dots,u_{k-1})\in\mathbb{S}^{k-1}$ and consider the extension of $u$ to a sequence $\{\tilde{u}_l\}_{l\in\mathbb{Z}}$ where $\tilde{u}_l=\mathbf{1}\{0\le l\le k-1\}u_l$. Define the sequence $a=\{a_j\}_{j\in\mathbb{Z}}$ by
+    \begin{align*}
+        a_j=\langle g_j^{(k)},u\rangle=\sum_{l=0}^{k-1}u_l\psi_{j-l}=\sum_{l\in\mathbb{Z}}\tilde{u}_l\psi_{j-l}=(\tilde{u}\ast\psi)[j].
+    \end{align*}
+    By Definition of $\{\psi_j\}_{j\in\mathbb{Z}}$ we have $(q_{\phi}\ast\psi)=\delta_0$ and thus $q_{\phi}\ast a=q_{\phi}\ast(\tilde{u}\ast\psi)=(q_{\phi}\ast\psi)\ast\tilde{u}=\delta_0\ast\tilde{u}=\tilde{u}$ by properties of the convolution. By Young's convolution inequality (see~\cite[Theorem 1.2.12]{grafakos_classical_2014})
+    \begin{align}\label{eq:young_convolution_inequality}
+        1=\|u\|_2=\|q_{\phi}\ast a\|_2\le\|q_{\phi}\|_2\|a\|_1.
+    \end{align}
+    Next, we use the simple formula for the support function of the zonoid $\mathcal{Z}^{(k)}$ to obtain
+    \begin{align*}
+        w_k(u)=2h_{\mathcal{Z}^{(k)}}(u)=2\sum_{j=0}^{\infty}|\langle g_j^{(k)},u\rangle|=2\|a\|_1.
+    \end{align*}
+    Therefore, we obtain
+    \begin{align*}
+        w_k(u)=2\|a\|_1\ge\frac{2}{\|q_{\phi}\|_2}.
+    \end{align*}
+    Plugging in the directions from the set in Equation~\eqref{eq:minimizers} in $w_k$ we easily see that the above lower bound is actually attained. It remains to show that there are no other minimizing directions. Inequality~\eqref{eq:young_convolution_inequality} becomes an equality iff $a$ has exactly one nonzero entry (see Lemma~\ref{lem:young_convolution_equality} in the Appendix~\ref{chap:appendix}). This means $a=c\delta_r$ and it follows $\tilde{u}=c\tau_rq_{\phi}$, which forces $u$ to have the form $\pm q_r^{(k)}/\|q_{\phi}\|_2$ for some $r=0,\dots,k-(p+1)$.
+
+    Now let $k<p+1$. We have shown above that $w_k(u)$ attains the lower bound $2/\|q_{\phi}\|_2$ if and only if $u$ has the specific form above. But if $k<p+1$ there are no permitted $r$ that would lead to the specific form. Since $w_k$ is continuous it attains its minimum on $\mathbb{S}^{k-1}$ and therefore $m_k>2/\|q_{\phi}\|_2$.
+
+    We are left to show $m_{k-1}\ge m_k$ for $k=2,\dots,p$. Let $v=(v_0,\dots,v_{k-2})\in\mathbb{S}^{k-2}$ and $u=(v_0,\dots,v_{k-2},0)\in\mathbb{S}^{k-1}$ and thus
+    \begin{align*}
+        w_{k}(u)=2\sum_{j}\left|\sum_{l=0}^{k-1}u_l\psi_{j-l}\right|=2\sum_{j}\left|\sum_{l=0}^{k-2}v_l\psi_{j-l}\right|=w_{k-1}(v).
+    \end{align*}
+    Let $v$ be a minimizing direction. Then $m_{k-1}=w_{k-1}(v)=w_k(u)\ge\min_{u\in\mathbb{S}^{k-1}}w_k(u)=m_k$.
 \end{proof}
 
 \subsection{Proof of Lemma~\ref{lem:hausdorff_convergence}}\label{sec:proof_hausdorff_convergence}
@@ -104,6 +144,29 @@
         \frac{\mathbb{P}(Y_t^{(k)}\in C_{\mathcal{Z}^{(k)}}(e_1,\epsilon))}{\epsilon^{\alpha}}=\frac{\mathbb{P}(H-X_t\le\epsilon)}{\epsilon^{\alpha}}\le C_M\epsilon^{M-\alpha}\stackrel{\epsilon\to0}{\to}0.
     \end{align*}
 \end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:properties_empirical_width}}\label{sec:proof_properties_empirical_width}
+
+\begin{proof}
+    Let $u,v\in S^{k-1}$. Write $\hat{w}_k(u)=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and we obtain
+    \begin{align*}
+        \hat{w}_k(u)-\hat{w}_k(v)&=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle-\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},v\rangle\\
+        &\le\max_{s,t}\left(\langle Y_s^{(k)}-Y_t^{(k)},u\rangle-\langle Y_s^{(k)}-Y_t^{(k)},v\rangle\right)\\
+        &=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u-v\rangle\\
+        &\le\left(\max_{s,t}\|Y_s^{(k)}-Y_t^{(k)}\|\right)\|u-v\|
+    \end{align*}
+    for all $u,v\in\mathbb{R}^{k}$.
+
+    Convexity of $\hat{w}_k$ follows from convexity of linear functions and the pointwise maximum of convex functions. Piecewise linearity also follows directly from the standard fact, that the pointwise maximum of linear functions is piecewise linear. Differentiability almost everywhere follows directly from Rademacher's theorem (see e.g.~[]). The set of non-differentiable points is just the set of all points $u$ where two distinct linear functions $\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and $\langle Y_q^{(k)}-Y_p^{(k)},u\rangle$ coincide. The gradient of $\hat{w}_k$ in all directions $u\notin\mathcal{N}$ is obtained by straightforward differentiation.    
+\end{proof}
+
+By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k-1}$. The set of minimizers
+\begin{align}\label{eq:set_of_minimizers}
+    \mathcal{X}_k=\arg\min\{\hat{w}_k(u):u\in\mathbb{S}^{k-1}\}
+\end{align}
+is not empty. We also note that $\mathcal{X}_k$ is compact, again due to the continuity of $\hat{w}_k$ and the compactness of $\mathbb{S}^{k-1}$. Denote by $\hat{m}_k$ the minimum of $\hat{w}_k$ on $\mathbb{S}^{k-1}$.
+
+Under the condition that the affine hull of $\mathcal{P}_{k,T}$ is the whole space $\mathbb{R}^{k}$ we have that the minimum width $\hat{m}_{k,T}$ is strictly positive. But we also have $\mathbb{P}(\operatorname{aff}(\mathcal{P}_{k,T})=\mathbb{R}^{k})=1$ and thus $\hat{m}_{k,T}>0$ almost surely.
 
 \subsection{Proof of Lemma~\ref{lem:weak_sharp_minima_application}}\label{sec:proof_weak_sharp_minima_application}
 
