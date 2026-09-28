@@ -68,3 +68,18 @@ In practice one would estimate the integral by Monte Carlo simulation. The estim
 where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
 
 \textbf{Spectral Scale Selection for Kernel Density Estimation}
+
+\begin{Rem}[Rényi divergence]
+    The class of Rényi divergences is defined as
+    \begin{align*}
+        R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
+    \end{align*}
+    where $\alpha\in\mathbb{R}_{>0}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
+
+    The Rényi divergence is not a $f$-divergence, but the Rényi and Amari divergences are both strictly decreasing transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
+    \begin{align*}
+        R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t}\\
+        D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1)
+    \end{align*}
+    Thus, the Rényi and Amari divergences can be transformed into each other using a strictly increasing function.
+\end{Rem}

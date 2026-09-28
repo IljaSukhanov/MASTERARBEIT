@@ -134,9 +134,11 @@ Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the
 
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
-\todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
+We already established above that a minimizer of $\operatorname{MISE}$ always exists. The question of uniqueness is a more complicated problem. For a general Gaussian mixture model we can not assume the uniqueness of the minimizer but we are able to do so in the simple case where $f\sim N(0,1)$.
 
-\todo[inline]{Is oracle bandwidth unique for $N(0,1)$?}
+\todo[inline]{Is oracle bandwidth unique for $N(0,1)$? Apparently yes, give explanation or find source}
+
+\todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
 
 The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is given by
 \begin{align*}
@@ -176,8 +178,10 @@ Since we will use divergences to construct scale similarity matrices, it is impo
 
 \begin{proof}
     We make use of \cite[Proposition 7.2]{polyanskiy_information_2025}
-    \todo[inline]{prove the symmetry characterization}
+    \todo[inline]{29.09: prove the symmetry characterization}
 \end{proof}
+
+\textcolor{red}{In the following we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just the symmetric divergences since such divergences lead to symmetric scale similarity matrices of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the Outlook~[]. The reason we still introduce the divergences in such generality is to that the ideas in the Outlook can be better appreciated.}
 
 \subsubsection*{Amari alpha divergence}
 
@@ -196,22 +200,7 @@ By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int 
 
 In particular, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance).
 
-\todo[inline]{Mention two different parameterizations}
-
-\begin{Rem}[Rényi divergence]
-    The class of Rényi divergences is defined as
-    \begin{align*}
-        R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
-    \end{align*}
-    where $\alpha\in\mathbb{R}_{>0}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
-
-    The Rényi divergence is not a $f$-divergence but Rényi and Amari divergences are both strictly decreasing transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
-    \begin{align*}
-        R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t}\\
-        D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1)
-    \end{align*}
-    Thus, Rényi and Amari divergences can be transformed into each other by using a strictly increasing function.
-\end{Rem}
+\todo[inline]{29.09: Mention two different parameterizations}
 
 \subsubsection*{\texorpdfstring{$\chi^{\alpha}$}{chi-alpha}-divergences (total variation)}
 
@@ -233,7 +222,7 @@ where $H(f)=-\int f\log{f}$ is the Shannon entropy.
 
 The JS-divergence is also symmetric.
 
-\todo[inline]{add interpretations for JS divergence}
+\todo[inline]{29.09: add interpretations for JS divergence}
 
 \subsection{Bregman divergences}
 
@@ -253,7 +242,7 @@ Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\
 
 Similarly to $f$-divergences we have the invariance $D_{\phi}=D_{\Tilde{\phi}}$ whenever $\phi-\Tilde{\phi}$ is affine and $D_{\phi}$ is symmetric iff $\phi$ is a quadratic function.
 
-\todo[inline]{State invariance properties for $F$ and carry over to $\phi$}
+\todo[inline]{29.09: State invariance properties for $F$ and carry over to $\phi$}
 
 
 An example of such a function $\phi$ is the class of $\beta$-divergences determined by
