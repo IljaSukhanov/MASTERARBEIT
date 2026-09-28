@@ -12,22 +12,18 @@ Let $h^*_D=\arg\min\mathbb{E}[D(f,\hat{f}_h)]$ and let $S=\exp{(-D/\tau)}$. Does
 
 \section{Preliminaries on Kernel Density Estimation}
 
-\todo[inline]{generalize to dimension $d$ later}
-
-\todo[inline]{check for general dimension $d$}
-
-We have data $X_1,\dots.X_n\in\mathbb{R}^d$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
+We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
-    \hat{f}_h(x)\coloneqq \frac{1}{nh^d}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}^d.
+    \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
 \end{align*}
 
 Two common choices for the kernel $K$ are:
 \begin{itemize}
-    \item the Epanechnikov kernel $K(u)=\mathbf{1}\{-1\le u\le1\}3(1-\|u\|^2)/4$, $u\in\mathbb{R}^d$
-    \item the Gaussian kernel $K(u)=(2\pi)^{-1/2}\exp{(-\|u\|^2/2)}$
+    \item the Epanechnikov kernel $K(u)=\mathbf{1}\{-1\le u\le1\}3(1-u^2)/4$, $u\in\mathbb{R}$
+    \item the Gaussian kernel $K(u)=(2\pi)^{-1/2}\exp{(-u^2/2)}$, $u\in\mathbb{R}$
 \end{itemize}
 
-From now on, we always work with the Gaussian kernel, unless indicated otherwise. We also restrict our exploration to the one dimensional case $d=1$ and discuss possible extensions in the Outlook Chapter~\ref{chap:outlook}.
+From now on, we always work with the Gaussian kernel, unless indicated otherwise.
 
 The question of how to choose the bandwidth $h$ is widely known in the literature. See reviews~[]. We present some of the most popular methods below, which we also use to compare with our newly developed spectral selector. Following the review~\cite{heidenreich_bandwidth_2013}, bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. The methods of both classes minimize some approximation of the (mean) integrated squared error.
 
@@ -43,20 +39,19 @@ The question of how to choose the bandwidth $h$ is widely known in the literatur
 
 \subsection*{Cross-validation methods}
 
-We follow the derivations of Tsybakov~[].
-
 The ISE can be written as
 \begin{align*}
-    \operatorname{ISE}(h)=\int\hat{f}_h(x)^2\,dx-2\mathbb{E}_{X\sim f}\left[\hat{f}_h(X)\right]+\int f(x)^2\,dx
+    \operatorname{ISE}(h)=\int\hat{f}_h(x)^2\,dx-2\mathbb{E}_{X\sim f}\left[\hat{f}_h(X)\right]+\int f(x)^2\,dx.
 \end{align*}
 
-The Ordinary Least Squares Cross-Variance estimator is given by
+The first term $\int\hat{f}_h^2$ can be computed from the data. The third term $\int f^2$ does not depend on the bandwidth and can be ignored when minimizing. We are left to find an (unbiased) estimator for $\mathbb{E}_{X\sim f}[\hat{f}_h(X)]$. Such an estimator is given by $n^{-1}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i)$, where $\hat{f}_{h,-i}$ is the leave-one-out kernel density estimate given by
 \begin{align*}
-    \operatorname{CV}(h)=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i),\quad\hat{h}_{\operatorname{CV}}\in\arg\min\operatorname{CV}(h)
+    \hat{f}_{h,-i}(x)=\frac{1}{(n-1)h}\sum_{j\ne i}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
 \end{align*}
-Here, $\hat{f}_{h,-i}$ is the kernel density function where the observation $X_i$ is left out, that is,
+
+The Ordinary Least Squares Cross-Validation bandwidth is
 \begin{align*}
-    \hat{f}_{h,-i}(x)=\frac{1}{(n-1)h}\sum_{j\ne i}K\left(\frac{x-X_j}{h}\right)
+    \hat{h}_{\operatorname{CV}}=\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h)=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
 \end{align*}
 
 \subsection*{Plug-in methods}
@@ -67,32 +62,37 @@ The bias-variance decomposition of the MISE is
 \end{align*}
 with
 \begin{align*}
-    \operatorname{IV}(h)&=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{\|K\|_2^2}{nh}-\frac{\|K_h\ast f\|_2^2}{n},\quad\text{and}\\
-    \operatorname{ISB}(h)&=\int\operatorname{Bias}(\hat{f}_h(x))^2\,dx=\|K_h\ast f-f\|_2^2
+    \operatorname{IV}(h)&:=\int\operatorname{Var}[\hat{f}_h(x)]\,dx=\frac{\|K\|_2^2}{nh}-\frac{\|K_h\ast f\|_2^2}{n},\quad\text{and}\\
+    \operatorname{ISB}(h)&:=\int\operatorname{Bias}(\hat{f}_h(x))^2\,dx=\|K_h\ast f-f\|_2^2.
 \end{align*}
 
-This decomposition gives conditions on $h=h_n$ so that the kernel density estimate $\hat{f}_{h_n}$ is consistent. Namely, it must hold $h_n\to0$ and $nh_n\to+\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
+This decomposition gives conditions on $h=h_n$ so that the kernel density estimate $\hat{f}_{h}$ is consistent. In order for the bias to vanish, it must hold $h_n\to0$, because then $K_h\ast f\to f$. For the variance to vanish, we must require $nh_n\to\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
 
-Note that $\|K_h\|_1=\int K_h(x)\,dx=\int K(x)\,dx=1$ for every $h>0$. By Young's convolution inequality $\|K_{h_n}\ast f\|\le\|K_{h_n}\|_1\|f\|_2=\|f\|_2$. Therefore
+It is important to be convinced that $\operatorname{MISE}$ actually has a global minimum. To this end, we refer to Chacón et al.~\cite[Theorem~1]{chacon_existence_nodate} which tells us that a global minimum always exists if $K$ is a nonnegative kernel that peaks at $0$.
+
+\textbf{Asymptotic expansion of the integrated variance}
+
+Note that $\|K_h\|_1=\int K_h(x)\,dx=\int K(x)\,dx=1$ for every $h>0$. By Young's convolution inequality $\|K_{h_n}\ast f\|\le\|K_{h_n}\|_1\|f\|_2=\|f\|_2$. Therefore,
 \begin{align*}
     \frac{\frac{\|K_{h_n}\ast f\|_2^2}{n}}{\frac{\|K\|_2^2}{nh_n}}=\frac{h_n\|K_{h_n}\ast f\|_2^2}{\|K\|_2^2}\le h_n\frac{\|f\|_2^2}{\|K\|_2^2}\to 0
 \end{align*}
 and thus $-n^{-1}\|K_{h_n}\ast f\|_2^2=\mathbf{o}((nh_n)^{-1}\|K\|_2^2)$. We therefore may omit the term $-n^{-1}\|K_{h_n}\ast f\|_2^2$ as it is asymptotically negligible.
+
+\textbf{Asymptotic expansion of the integrated squared bias}
 
 For the $\operatorname{ISB}(h)$ term we get
 \begin{align*}
     \operatorname{ISB}(h)=\frac{h_n^4}{4}\mu_2(K)^2R(f^{''})+\mathbf{o}(h_n^4)
 \end{align*}
 
-The MISE can be written as
+The first non-vanishing asymptotic approximation of the MISE is
 \begin{align*}
-    \operatorname{MISE}(h_n)=\underbrace{\frac{\|K\|_2^2}{nh_n}+\frac{h_n^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h_n)}+o\left(\frac{1}{nh_n}+h_n^{4}\right),
+    \operatorname{MISE}(h_n)=\underbrace{\frac{\|K\|_2^2}{nh_n}+\frac{h_n^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h_n)}+o\left(\frac{1}{nh_n}+h_n^{4}\right).
 \end{align*}
-which is the first non-vanishing asymptotic approximation.
 
-We have found scaling sequences $a_n$ and $b_n$ such that $a_n\operatorname{MISE}(b_nt)\to G(t)$, namely
+We have found scaling sequences $a_n$ and $b_n$ such that $a_n\operatorname{MISE}(b_nt)\to G(t):=at^{-1}+bt^4$ with constants $a=\|K\|_2^2$ and $b=\mu_2(K)^2\|f^{''}\|_2^2/4$, namely
 \begin{align*}
-    n^{4/5}\operatorname{MISE}(n^{-1/5}t)\to\frac{R(K)}{t}+\frac{\mu_2(K)^2R(f^{''})}{4}t^4,\quad n\to\infty
+    n^{4/5}\operatorname{MISE}(n^{-1/5}t)\to\frac{\|K\|_2^2}{t}+\frac{\mu_2(K)^2\|f^{''}\|_2^2}{4}t^4,\quad n\to\infty
 \end{align*}
 
 Minimizing the AMISE leads to
@@ -100,13 +100,11 @@ Minimizing the AMISE leads to
     h_{\operatorname{AMISE}}(n)=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|f^{''}\|_2^2}\right)^{1/5}
 \end{align}
 
-\todo[inline]{Does $h_{\operatorname{AMISE}}\to h_{\text{oracle}}$?}
+We have $h_{\text{oracle}}=h_{\operatorname{AMISE}}+\mathbf{o}(n^{-1/5})$ (see again~\cite{chacon_existence_nodate}), which implies that $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent.
 
-\todo[inline]{Is oracle bandwidth unique for $N(0,1)$?}
+\textcolor{red}{The optimal bandwidth thus behaves like $n^{-1/5}$.}
 
-The optimal bandwidth thus behaves like $n^{-1/5}$.
-
-Plug in methods use Equation~\eqref{eq:h_amise} as a starting point. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
+Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
 \begin{align*}
     \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}
 \end{align*}
@@ -137,6 +135,8 @@ Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
 \todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
+
+\todo[inline]{Is oracle bandwidth unique for $N(0,1)$?}
 
 The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is given by
 \begin{align*}
@@ -349,27 +349,13 @@ Truncate and apply the composite trapezoidal rule
     \frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}
 \end{align*}
 
-\todo[inline]{Check the error bounds!}
-
-\todo[inline]{Maybe instead of rigorous error bounds just do numerical experiment?}
-
-The error is bounded above by
-\begin{align*}
-    \underbrace{\frac{1}{2\sqrt{\pi}h_{\min}}\operatorname{erfc}(h_{\min}\Omega)}_{\text{truncation error}}+\underbrace{\frac{M\Omega^3}{12\pi K^2}}_{\text{quadrature error}},
-\end{align*}
-where $M=(X_{\max}-X_{\min})^2+2(X_{\max}-X_{\min})h_{\max}\sqrt{2/e}+2h_{\max}^2$. Choose
-\begin{align*}
-    \Omega&\ge\frac{1}{h_{\min}}\operatorname{erfc}^{-1}(2\sqrt{\pi}h_{\min}\epsilon_{\text{trunc}})\\
-    K&\ge\sqrt{\frac{M\Omega^3}{12\pi\epsilon_{\text{quadr}}}}
-\end{align*}
-
 \todo[inline]{Compare exact, quadrature and Fourier in terms of speed and accuracy}
 
 \section{Assembly of Scale Similarity Matrices}
 
 \subsection{Properties of Divergence matrices and its Perron vector}
 
-In this subsection, we want to briefly give an argument why it is not advisable to compute the Perron vector of the divergence matrix $D$ itself and thus motivate the above similarity transformation more.
+In this subsection, we give structural results on the divergence matrix $D$ built from the $L^2$-divergence. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the above similarity transformation, because else our scale selection procedure will choose either the first or last scale.
 
 \begin{Def}[Robinson matrix]
     A matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called a Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
@@ -379,9 +365,7 @@ In this subsection, we want to briefly give an argument why it is not advisable 
     whenever $i<j<k$.
 \end{Def}
 
-Robinson matrices are generalizations of of Min matrices. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices.
-
-\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix?}
+Robinson matrices are generalizations of Min matrices. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices.
 
 The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
 
@@ -402,6 +386,7 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
 
 \todo[inline]{discuss acute chain condition}
 
+\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix?}
 \todo[inline]{prove acute chain condition for certain kernel density estimates}
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
