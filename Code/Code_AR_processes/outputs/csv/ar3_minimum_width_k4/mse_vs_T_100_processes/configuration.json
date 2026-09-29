@@ -1,0 +1,22 @@
+{
+  "burnin": 1000,
+  "embedding_dimension": 4,
+  "experiment_seed": 20260928,
+  "geometric_decay": 0.997,
+  "hull_vertex_reduction": true,
+  "initial_step_scale": 0.2,
+  "innovation_distribution": "uniform[-1,1]",
+  "iterations": 5000,
+  "mse_definition": "mean of three squared coefficient errors per fit; then mean over 100 processes",
+  "optimizer_seed": 20260929,
+  "order": 3,
+  "replications": 100,
+  "sample_sizes": [
+    100,
+    500,
+    1000,
+    1500,
+    2000
+  ],
+  "starts": 12
+}
