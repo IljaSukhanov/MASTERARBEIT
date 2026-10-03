@@ -8,7 +8,7 @@ Goal: Develop spectral bandwidth ranking pipeline, explain why the spectral cons
 
 Let $h^*_D=\arg\min\mathbb{E}[D(f,\hat{f}_h)]$ and let $S=\exp{(-D/\tau)}$. Does the peak of the Perron vector of $S$ relate to $h^*_D$?
 
-\todo[inline]{Literature positioning: Lindeberg, Goldenshluger}
+\todo[inline]{Literature positioning: Lindeberg, Goldenshluger, SiZer (?)}
 
 \section{Preliminaries on Kernel Density Estimation}
 
@@ -111,7 +111,7 @@ Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point. Silverman's
 
 Among the many other more sophisticated plug in methods, we present the (improved) Sheather and Jones' plug in selector
 
-\todo[inline]{introduce (improved) Sheather and Jones' plug in}
+\todo[inline]{03.10: introduce (improved) Sheather and Jones' plug in}
 
 \textbf{Exact MISE representation for Gaussian mixture model}
 
@@ -134,11 +134,9 @@ Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the
 
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
-We already established above that a minimizer of $\operatorname{MISE}$ always exists. The question of uniqueness is a more complicated problem. For a general Gaussian mixture model we can not assume the uniqueness of the minimizer but we are able to do so in the simple case where $f\sim N(0,1)$.
+We already established above that a minimizer of $\operatorname{MISE}$ always exists. The question of uniqueness is a more complicated problem. \textcolor{blue}{For a general Gaussian mixture model we cannot assume the uniqueness of the minimizer}, but we are able to do so in the simple case where $f\sim N(0,1)$.
 
-\todo[inline]{29.09: Is oracle bandwidth unique for $N(0,1)$? Apparently yes, give explanation or find source}
-
-\todo[inline]{Discuss uniqueness of MISE curve for Gaussian mixture models}
+First, notice that $h\mapsto M_n(h)=(2\sqrt{\pi})^{-1}((nh)^{-1}+(1-1/n)/(\sqrt{1+h^2})+1)-2(\sqrt{2\pi}\sqrt{2+h^2})^{-1}$ is continuous on $(0,\infty)$. We set $Q_n(h)=2\sqrt{\pi}h^2M_n'(h)$ and see that $Q_n(h)\to2\sqrt{2}-1>0$ for $h\to\infty$ and $Q_n(h)\to-1/n<0$ for $h\to0$. Also, we have $Q_n'(h)>0$ for all $h>0$, which implies that $Q_n$ only has one zero, and, in turn, the minimizer of $M_n$ is unique.
 
 The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is given by
 \begin{align*}
@@ -198,7 +196,7 @@ The actual divergence is then given by
     D_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right)
 \end{align}
 
-Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2$ is the squared Hellinger distance.
+Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2=1-\int\sqrt{pq}$ is the squared Hellinger distance.
 
 By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
@@ -214,6 +212,15 @@ For completeness, we mention that in the literature there exists a second parame
 Another class of divergences are the $\chi^{\alpha}$-divergences (see~[]). They are determined by $f_{\alpha}(t)=(1/2)|t-1|^{\alpha}$, where $\alpha\ge1$. Setting $\alpha=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q)=(1/2)\int|p-q|$.
 
 The only symmetric $\chi^{\alpha}$-divergence is the total variation distance.
+
+Total variation and squared Hellinger are related by the following chain of inequalities:
+\begin{align*}
+    D_H(p,q)&=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2\le\frac{1}{2}\int|p-q|=d_{\text{TV}}(p,q)\\&
+    =\frac{1}{2}\int|p-q|=\frac{1}{2}\int(\sqrt{p}+\sqrt{q})|\sqrt{p}-\sqrt{q}|\\&
+    \le\sqrt{\int(\sqrt{p}+\sqrt{q})^2}\sqrt{\int(\sqrt{p}-\sqrt{q})^2}\\&
+    =\sqrt{\left(2+2\int\sqrt{pq}\right)\left(2-2\int\sqrt{pq}\right)}\\&
+    =\sqrt{4-4\left(\int\sqrt{pq}\right)}=2\sqrt{1-\int\sqrt{pq}}=2\sqrt{D_H(p,q)}
+\end{align*}
 
 \subsubsection*{JS divergence}
 
@@ -231,35 +238,35 @@ The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrizat
 \begin{align*}
     \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}(p\|\frac{p+q}{2})+\operatorname{KL}(q\|\frac{p+q}{2})\right),
 \end{align*}
-that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their \textcolor{blue}{equally weighted mixture}.
+that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their equally weighted mixture.
 
 \subsection{Bregman divergences}
 
-The second major class are Bregman divergences. We give a general definition below in order to show that this concept of distance applies not just to probability densities. Interestingly, efforts to extend the definition of Bregman divergences to Hilbert spaces only have been made recently, see~[].
+The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. \textcolor{red}{Interestingly, efforts to extend the definition of Bregman divergences to Hilbert spaces only have been made recently, see~\cite{tsuchida_generalising_2026}.} The Bregman divergence is a generalization of the $L^2$ distance and is applied in a variety of instances where the $L^2$-distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
 
 \begin{Def}
-    Let $(V,\langle\cdot,\cdot\rangle)$ be a Hilbert space and $C\subseteq V$ a convex subset. Let $F:C\to\mathbb{R}$ be strictly convex and differentiable. The Bregman divergence between $x\in C$ and $y\in C$ is defined by
-    \begin{align*}
-        D_F(x\|y)\coloneqq F(x)-F(y)-\langle x-y,\nabla F(y)\rangle.
-    \end{align*}
+    Let $(\mathcal{H},\langle\cdot,\cdot\rangle)$ be a Hilbert space and $F:\mathcal{H}\to\mathbb{R}\cup\{+\infty\}$ a proper, lower semi-continuous, strictly convex, and Fréchet differentiable on the interior of $\text{domain}(\Phi)=\{g\in\mathcal{H}:F(g)<+\infty\}$. \textcolor{red}{Additionally, we assume $F$ to be essentially smooth and essentially strictly convex.} The Bregman divergence between $x\in\mathcal{H}$ and $y\in\mathcal{H}$ is defined by
+    \begin{align}\label{eq:def_bregman_divergence}
+        D_F(x\|y):=F(x)-F(y)-\langle x-y,\nabla F(y)\rangle_{\mathcal{H}}.
+    \end{align}
 \end{Def}
 
-Similarly to the $f$-divergence, we have invariance $D_F=D_{G}$ if and only if $F-G$ is an affine functional.
+The first order Taylor approximation of $F$ around $y$ evaluated at $x$ is $F(y)+DF(y)[x-y]$, where $DF(x):\mathcal{H}\to\mathbb{R}$ is a bounded linear operator. By the Riesz representation theorem, $DF(y)[h]=\langle\nabla F(y),h\rangle$ for all $h\in\mathcal{H}$ and in particular $DF(y)[x-y]=\langle x-y,\nabla F(y)\rangle_{\mathcal{H}}$. The Bregman divergence $D_F(x\|y)$ as defined in Equation~\eqref{eq:def_bregman_divergence} is therefore the difference between $F$ evaluated at $x$ and the first order Taylor approximation of $F$ around $y$ evaluated at $x$.
 
 
-
-
-and $D_F$ is symmetric if and only if $F$ has constant Hessian.
-
-\todo[inline]{29.09: cite or prove}
-
-Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\rangle_2)$ with convex subset $\mathcal{P}$ and functions $F$ of the form $F_{\phi}(p)=\int\phi(p(x))\,dx$. Here, $\phi$ is a differentiable and strictly convex function. Under this setting, the Bregman divergence becomes
+Similarly to the $f$-divergence, we have invariance $D_F=D_{G}$ if and only if $F-G$ is an affine functional. If $F$ is twice continuously Fréchet differentiable and satisfies additional technical assumptions, there is a symmetry characterization for Bregman divergences similar to the one for $f$-divergences stated in Proposition~\ref{prop:f_divergence_symmetric}. Theorem 12 in~\cite{tsuchida_generalising_2026} states that in this case $D_F$ is symmetric if and only if
 \begin{align*}
-    D_{\phi}(p\|q)=\int\left[\phi(p(x))-\phi(q(x))-(p(x)-q(x))\phi'(q(x))\right]\,dx.
+    F(g)=\frac{1}{2}\langle g,Tg\rangle_{\mathcal{H}}+\langle b,g\rangle_{\mathcal{H}} +c,\quad g\in\operatorname{int}(\operatorname{dom}(F)),
 \end{align*}
-We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is affine and $D_{\phi}$ symmetric if and only if $\phi$ is a quadratic function.
+where $T$ is some bounded, self-adjoint and strictly positive operator, $b\in\mathcal{H}$ and $c\in\mathbb{R}$. That is, the Hessian $\nabla^2F(g)$ of $F$ at $g\in\mathcal{H}$ is $T$ and, in particular, independent of $g$.
 
-\todo[inline]{29.09: State invariance properties for $F$ and carry over to $\phi$}
+\todo[inline]{State invariance properties for $F$ and carry over to $\phi$}
+
+Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\rangle_2)$ with convex subset $\mathcal{P}$ and functions $F$ of the form $F_{\phi}(p)=\int\phi(p(x))\,dx$. Here, $\phi$ is a differentiable and strictly convex function. In this setting, since $\nabla F_{\phi}(q)=\phi'\circ q$, the Bregman divergence becomes
+\begin{align*}
+    D_{\phi}(p\|q):=D_{F_{\phi}}(p\|q)=\int\left(\phi(p(x))-\phi(q(x))-(p(x)-q(x))\phi'(q(x))\right)\,dx.
+\end{align*}
+\textcolor{red}{We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is affine and $D_{\phi}$ symmetric if and only if $\phi$ is a quadratic function.}
 
 
 An example of such a function $\phi$ is the class of $\beta$-divergences determined by
@@ -350,24 +357,14 @@ Truncate and apply the composite trapezoidal rule
 In this subsection, we give structural results on the divergence matrix $D$ built from the $L^2$-divergence. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the above similarity transformation, because else our scale selection procedure will choose either the first or last scale.
 
 \begin{Def}[Robinson matrix]
-    A matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called a Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
+    A matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called a (two way) Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
     \begin{align*}
         D^{\pi}_{ik}\ge\max\{D^{\pi}_{ij},D^{\pi}_{jk}\}\text{ and }D_{ki}^{\pi}\ge\max\{D_{ji}^{\pi},D_{kj}^{\pi}\}
     \end{align*}
     whenever $i<j<k$.
 \end{Def}
 
-Robinson matrices are generalizations of Min matrices. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices.
-
-\todo[inline]{Prove that for Gaussian kernels we obtain a Robinson matrix?}
-
-In particular, the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. \textcolor{red}{This is because of the following reasoning.}
-
-\textcolor{red}{We want to show that
-\begin{align*}
-    \max\{\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2,\|\hat{f}_{h_j}-\hat{f}_{h_k}\|\}\le\|\hat{f}_{h_i}-\hat{f}_{h_k}\|_2^2,
-\end{align*}
-whenever $i<j<k$.}
+\textcolor{red}{Robinson matrices are generalizations of Min matrices.} Every Min matrix is a Robinson similarity. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices, see Proposition~\ref{prop:L2_divergence_matrix} below.
 
 The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
 
@@ -386,9 +383,38 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
     See Appendix Section~\ref{sec:proof_acute_chain_perron_vec}.
 \end{proof}
 
-\todo[inline]{discuss acute chain condition}
+\todo[inline]{04.10: discuss acute chain condition (interpretation, precedence)}
 
-\todo[inline]{prove acute chain condition for certain kernel density estimates}
+
+We now show that when choosing the Gaussian kernel (which we said is the default setting in this thesis), we have that the family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ fulfills the acute chain condition and as a consequence the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
+
+\begin{Prop}\label{prop:L2_divergence_matrix}
+    The following two properties hold.
+    \begin{enumerate}
+        \item[(a)] The family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ fulfills the acute chain condition stated in Equation~\eqref{eq:acute_chain_condition}.
+        \item[(b)] The divergence matrix $D=(D_{ij})$ with entries given by $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
+    \end{enumerate}
+\end{Prop}
+
+\begin{proof}
+    The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$. We set $\delta_k=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k]=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega)=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
+    \begin{align*}
+        \langle\delta_k,\delta_l\rangle&=\int\delta_k\delta_l=\frac{1}{2\pi}\int\limits_{\mathbb{R}}|P_n(\omega)|^2b_k(\omega)b_l(\omega)\,d\omega.
+    \end{align*}
+    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2\delta_k(\omega)\delta_l(\omega)$ is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. By~[\textcolor{red}{03.10: classical result from measure theory}], it follows that $\langle\delta_k,\delta_l\rangle>0$.
+
+    Now, let $i<j<k$. We have
+    \begin{align*}
+        \|\hat{f}_{h_k}-\hat{f}_{h_i}\|_2^2&=\|\hat{f}_{h_k}-\hat{f}_{h_j}+\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2\\&=\|\hat{f}_{h_k}-\hat{f}_{h_j}\|_2^2+\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2+2\langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle\\&
+        >\|\hat{f}_{h_k}-\hat{f}_{h_j}\|_2^2+\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2\\&
+        \ge\max\{\|\hat{f}_{h_k}-\hat{f}_{h_j}\|_2^2,\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2\},
+    \end{align*}
+    because
+    \begin{align*}
+        \langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle&=\langle\sum_{r=j}^{k-1}\underbrace{(\hat{f}_{h_{r+1}}-\hat{f}_{h_r})}_{=\delta_r},\sum_{s=i}^{j-1}\underbrace{(\hat{f}_{h_{s+1}}-\hat{f}_{h_s})}_{=\delta_s}\rangle\\&=\sum_{r=j}^{k-1}\sum_{s=i}^{j-1}\langle\delta_r,\delta_s\rangle>0,
+    \end{align*}
+     by the first part of the proof.
+\end{proof}
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
 
@@ -396,24 +422,32 @@ A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all 
 \begin{align*}
     \sum_{i,j=1}^{n}a_ia_jD(x_i,x_j)\le0
 \end{align*}
-for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=0$. A function $\phi:(0.\infty)\to\mathbb{R}$ is called completely monotone if $\phi\in C^{\infty}(0,\infty)$ and $(-1)^{n}\phi^{(n)}(t)\ge 0$ for all $n\in\mathbb{N}_0$ and $t>0$.
+for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=0$. A function $\phi:(0.\infty)\to\mathbb{R}$ is called completely monotone if $\phi\in C^{\infty}(0,\infty)$ and $(-1)^{n}\phi^{(n)}(t)\ge 0$ for all $n\in\mathbb{N}_0$ and $t>0$. The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
 
-Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite. In fact, using Schoenberg's theorem below, we can also include $L^2$-divergence, squared Hellinger, and Total Variation in the class of conditionally negative definite divergences. The most prominent example of a completely monotone function is $\phi(t)=e^{-t/\tau}$, $\tau>0$.
+The following Theorem is due to Schoenberg; see~[]. It connects the concepts presented above.
+
+\todo[inline]{05.10: Find a source to cite (Harmonic Analysis on Semigroups, Berg, Christensen, Ressel)}
 
 \begin{Thm}[Schoenberg]\label{thm:schoenberg}
     The following statements are equivalent.
     \begin{enumerate}
         \item[(a)] $D:X\times X\to\mathbb{R}$ is conditionally negative definite and $D(x,x)=0$ for all $x\in X$
-        \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive semidefinite for all completely monotone functions $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$.
+        \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive semi-definite for all completely monotone functions $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$.
         \item[(c)] There exists some Hilbert space embedding $\Phi:X\to\mathcal{H}$ such that $D(x,y)=\|\Phi(x)-\Phi(y)\|_{\mathcal{H}}^{2}$.
     \end{enumerate}
-    \todo[inline]{Find a source to cite}
-    \todo[inline]{Additional conditions for positive definite}
+    \todo[inline]{05.10: Additional conditions for positive definite (points pairwise distinct?)}
 \end{Thm}
 
-% (Harmonic Analysis on Semigroups, Berg, Christensen, Ressel)
+\textcolor{red}{Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite.} In fact, using Schoenberg's theorem above, we can also include $L^2$-divergence, squared Hellinger, and Total Variation in the class of conditionally negative definite divergences. We can use the equivalence $(a)\iff(c)$ from Theorem~\ref{thm:schoenberg} to show that $L^2$-divergence, squared Hellinger and Total Variation are conditionally negative definite by giving the isometric Hilbert space embeddings:
+\begin{itemize}
+    \item $L^2$-divergence: $\mathcal{H}=L^2(\mathbb{R})$, $\Phi(p)=p/\sqrt{2}$, $\|\Phi(p)-\Phi(q)\|_{L^2}^2=(1/2)\|p-q\|_2^2$
+    \item squared Hellinger: $\mathcal{H}=L^2(\mathbb{R})$, $\Phi(p)=\sqrt{p/2}$, $\|\Phi(p)-\Phi(q)\|_{L^2}^2=(1/2)\|\sqrt{p}-\sqrt{q}\|_2^2$
+    \item Total Variation: $\mathcal{H}=L^2(\mathbb{R},(0,\infty))$, $\Phi(p)(x,t)=(1/\sqrt{2})\mathbf{1}\{0<t<p(x)\}$, we have $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}^2=(1/2)\int|p-q|$
+    \item Jensen Shannon: $\mathcal{H}=L^2(\mathbb{R},(0,\infty))$, $\Phi(p)(x,t)=(1-\exp{(-tp(x)/2)})/(\sqrt{2}t)$, $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}=\operatorname{JS}(p,q)$
+    \todo[inline]{03.10: Prove! Use this identity: \url{https://math.stackexchange.com/questions/3944257/evaluate-int-0-infty-frac-mathrme-ax-mathrme-bx2x2dx-ln}}
+\end{itemize}
 
-Theorem~\ref{thm:schoenberg} gives a general construction principle for the scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
+In the context of our scale selection methodology, Theorem~\ref{thm:schoenberg} gives a general construction principle for a scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$ that is guaranteed to be positive (semi-) definite. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
 
 Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$. It can be interpreted as an uncertainty or concentration measure. $H(p)$ is large if $p$ is close to the discrete uniform distribution and maximal for $p=(N^{-1},\dots,N^{-1})$ (maximal uncertainty and minimal concentration). It is small if $p$ is concentrated on some entry and minimal for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$ (minimal uncertainty and maximal concentration).
 
@@ -429,26 +463,9 @@ This is another instance of the Donsker–Varadhan variational principle.
 
 Taking the limit $\tau\to+\infty$ yields $S=11^{T}$, which corresponds to maximal penalization on concentration. Taking the limit $\tau\to0$ gives $S=I_N$, which corresponds to no penalization on concentration.
 
-For bounded divergences, we can use a more straightforward transformation approach. For example, the total variation divergence can be written as
-\begin{align*}
-    d_{\text{TV}}(p,q)&=\frac{1}{2}\int|p-q|=1-1+\frac{1}{2}\int|p-q|\\&
-    =1-\frac{1}{2}\int p-\frac{1}{2}\int q+\frac{1}{2}\int|p-q|\\&
-    =1-\int\frac{p+q-|p-q|}{2}\\&
-    =1-\int\min\{p,q\}
-\end{align*}
-Thus, $1-d_{\text{TV}}(p,q)=\int\min\{p,q\}$ is a similarity measure between $p$ and $q$.
-
-Similarly for the squared Hellinger distance we can write
-\begin{align*}
-    H^2(p,q)=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2=1-\int\sqrt{pq}
-\end{align*}
-So again $1-H^2(p,q)=\int\sqrt{pq}$ is a similarity measure between $p$ and $q$.
-
-For total variation we use the $\min$ kernel and for squared Hellinger Bhattacharyya kernel (see~\cite{jebara_probability_nodate}).
-
-\todo[inline]{29.09: Is there a general construction principle behind this?}
-
 \subsection{Bandwidth grid}
+
+\textcolor{magenta}{By properly scaling the data it we can take $h_{\max}=1$ without loss of generality.}
 
 \todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent}
 
@@ -467,8 +484,8 @@ The next definition gives a general construction principle for such a bandwidth 
 
 \begin{Rem}
     The construction in Equation~\eqref{eq:def_r_linear} is just the Box-Cox transformation of a linear grid $\mathcal{H}_N$, compare with \cite[Equation (1)]{box_analysis_1964}. Setting $\psi_r(h)=r^{-1}(h^r-1)$ we see that a grid $\mathcal{H}_N$ is $r$-linear if $\{\psi_r(h_j)\}_{j=1}^{N}$ is a linear grid.
-    \todo[inline]{weighted power mean (handbook of means and their inequalities)}
-    \todo[inline]{adaptive moving mesh methods}
+    \todo[inline]{04.10: weighted power mean (handbook of means and their inequalities)}
+    \todo[inline]{04.10: adaptive moving mesh methods}
 \end{Rem}
 
 Definition~\ref{def:r_linear} smoothly connects a linear and a geometric grid. Setting $r=1$ gives a linear grid, that is,
@@ -638,6 +655,12 @@ It is interesting to ask what happens to this distribution for increased sample 
 \section{Explanation of the Results}\label{sec:res_2}
 
 \todo[inline]{Make argument rigorous}
+
+\subsection{Convergence to closest adjacent pair}
+
+\todo[inline]{03.10: write this chapter!}
+
+Here we explain the results of the fixed $N$ and $\lambda\to\infty$ experiment.
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}
 
