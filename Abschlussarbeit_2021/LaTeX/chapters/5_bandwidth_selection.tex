@@ -111,7 +111,7 @@ Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point. Silverman's
 
 Among the many other more sophisticated plug in methods, we present the (improved) Sheather and Jones' plug in selector
 
-\todo[inline]{03.10: introduce (improved) Sheather and Jones' plug in}
+\todo[inline]{05.10: introduce (improved) Sheather and Jones' plug in}
 
 \textbf{Exact MISE representation for Gaussian mixture model}
 
@@ -134,9 +134,11 @@ Marron and Wand~\cite{10.1214/aos/1176348653} derive an explicit formula for the
 
 Minimizing $\operatorname{MISE}(h)$ yields the \enquote{oracle} bandwidth $h_{\text{oracle}}$. We will use the oracle bandwidth as an ultimate benchmark in all settings where $\operatorname{MISE}$ has an explicit representation and thus can be minimized using standard methods.
 
-We already established above that a minimizer of $\operatorname{MISE}$ always exists. The question of uniqueness is a more complicated problem. \textcolor{blue}{For a general Gaussian mixture model we cannot assume the uniqueness of the minimizer}, but we are able to do so in the simple case where $f\sim N(0,1)$.
+We already established above that a minimizer of $\operatorname{MISE}$ always exists. The question of uniqueness is a more complicated problem. \textcolor{blue}{For a general Gaussian mixture model we cannot assume the uniqueness of the minimizer}, but we are able to do so in the simple case where $f\sim N(0,\sigma^2)$.
 
-First, notice that $h\mapsto M_n(h)=(2\sqrt{\pi})^{-1}((nh)^{-1}+(1-1/n)/(\sqrt{1+h^2})+1)-2(\sqrt{2\pi}\sqrt{2+h^2})^{-1}$ is continuous on $(0,\infty)$. We set $Q_n(h)=2\sqrt{\pi}h^2M_n'(h)$ and see that $Q_n(h)\to2\sqrt{2}-1>0$ for $h\to\infty$ and $Q_n(h)\to-1/n<0$ for $h\to0$. Also, we have $Q_n'(h)>0$ for all $h>0$, which implies that $Q_n$ only has one zero, and, in turn, the minimizer of $M_n$ is unique.
+First, notice that $h\mapsto M_n(h)=(2\sqrt{\pi})^{-1}((nh)^{-1}+(1-1/n)/(\sqrt{\sigma^2+h^2})+\sigma^{-1})-2(\sqrt{2\pi}\sqrt{2\sigma^2+h^2})^{-1}$ is continuous on $(0,\infty)$. We set $Q_n(h)=2\sqrt{\pi}h^2M_n'(h)$ and see that $Q_n(h)\to2\sqrt{2}-1>0$ for $h\to\infty$ and $Q_n(h)\to-1/n<0$ for $h\to0$. Also, we have $Q_n'(h)>0$ for all $h>0$, which implies that $Q_n$ only has one zero, and, in turn, the minimizer of $M_n$ is unique.
+
+As a function of $\sigma$, the second derivative of $M_n$ at the unique minimizer behaves like $\sigma^{-3}$, which means that, for increasing variance, the valley in which the unique minimizer lies becomes flatter.
 
 The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is given by
 \begin{align*}
@@ -235,9 +237,9 @@ The divergence is then given by
 where $H(f)=-\int f\log{f}$ is the Shannon entropy.
 
 The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
-\begin{align*}
+\begin{align}\label{eq:JS_KL_formula}
     \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}(p\|\frac{p+q}{2})+\operatorname{KL}(q\|\frac{p+q}{2})\right),
-\end{align*}
+\end{align}
 that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their equally weighted mixture.
 
 \subsection{Bregman divergences}
@@ -296,17 +298,19 @@ The derivation of the formula uses mainly the Gaussian convolution identity, tha
 
 \subsection{Approximating integrals using quadrature}
 
-Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}. We decide to use the classical quadrature formula
+Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}.
+
+\textbf{$\alpha$-divergence and total variation}
+
+We decide to use the classical quadrature formula
 \begin{align*}
-    \int_a^bf(x)\,dx\approx Q_M(f)=(b-a)\sum_{m=0}^{M}w_mf(x_m)
+    \int_a^bf(x)\,dx\approx Q_M(f)=(b-a)\sum_{m=0}^{M}w_mf(x_m),
 \end{align*}
 where $w_m$ are the quadrature weights and $x_m$ the (equidistant) quadrature nodes. As quadrature weights we choose $w_m=1/(2M)$ for $m=0,M$ and $w_m=1/M$ for $m=1,\dots,M-1$. This choice corresponds to the composite trapezoidal rule.
 
-Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We first aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f(p(x),q(x))\,dx|$, where $f$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are kernel density estimates with a Gaussian kernel. 
-
-It holds
+Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We first aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f(p(x),q(x))\,dx|$, where $f$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are kernel density estimates with a Gaussian kernel. It holds
 \begin{align*}
-    \tau_h:=\int_{A^c}\hat{f}_h=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}
+    \tau_h:=\int_{A^c}\hat{f}_h=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}.
 \end{align*}
 Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
 \begin{align*}
@@ -318,34 +322,41 @@ Replacing $\int p^{\alpha}q^{1-\alpha}$ in Equation~\eqref{eq:alpha_divergence1}
 \begin{align*}
     E_{\text{trunc}}=\frac{1}{\alpha(1-\alpha)}\int_{A^c}p^{\alpha}q^{1-\alpha}\stackrel{\text{Hölder}}{\le}\frac{1}{\alpha(1-\alpha)}\left(\int_{A^c}p\right)^{\alpha}\left(\int_{A^c}q\right)^{1-\alpha}\le\frac{\delta_L}{\alpha(1-\alpha)}
 \end{align*}
-
-Truncating the total variation yields
+for the $\alpha$-divergence and truncating the total variation yields
 \begin{align*}
-    \frac{1}{2}\int_{A^c}|p-q|\le\frac{1}{2}\int_{A^c}p+\frac{1}{2}\int_{A^c}q\le\delta_L
+    \frac{1}{2}\int_{A^c}|p-q|\le\frac{1}{2}\int_{A^c}p+\frac{1}{2}\int_{A^c}q\le\delta_L.
 \end{align*}
+
+As a consequence, we see that approximating the $\alpha$-divergence and the total variation using the composite trapezoidal rule allows for clean error control. 
 
 \textbf{KL divergence and Jensen-Shannon}
 
-For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$.
-
-\todo[inline]{TBD}
-
-The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Even though an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
-
-In the following, we will briefly describe the approach by following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform we obtain the Fourier transform of a kernel density function with Gaussian kernel:
+For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$ by $\sum_{m=1}^{M}w_mf(x_m)$ with the nodes $x_m$ being the $M$-th Hermite Polynomial $H_M$ and weights $w_m=(2^{M-1}M!\sqrt{\pi})/(M^2H_{M-1}^2(x_m))$. For reference on Gauss-Hermite quadrature, see~\cite[Section~25.4.46]{abramowitz_stegun1972}. We can write (and consequently approximate) the KL-divergence between two kernel density estimates $\hat{f}_h$ and $\hat{f}_g$ as
 \begin{align*}
-    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=P_n(\omega)}\exp{(-h^2\omega^2)/2}
+    D_{\text{KL}}(\hat{f}_h\|\hat{f}_g)&=\frac{1}{\sqrt{\pi}}\frac{1}{n}\sum_{i=1}^{n}\int_{-\infty}^{+\infty}e^{-x^2}\log{\left(\hat{f}_h(X_j+h\sqrt{2}x)-\hat{f}_g(X_j+h\sqrt{2}x)\right)}\,dx\\&
+    \approx\frac{1}{\sqrt{\pi}}\frac{1}{n}\sum_{i=1}^{n}\sum_{m=1}^{M}w_m\log{\left(\hat{f}_h(X_j+h\sqrt{2}x_m)-\hat{f}_g(X_j+h\sqrt{2}x_m)\right)}.
 \end{align*}
-Next we use Parseval's identity to get
+Using the formula in Equation~\eqref{eq:JS_KL_formula} we can also approximate the JS-divergence between $\hat{f}_h$ and $\hat{f}_g$.
+
+One advantage of the Gauss-Hermite quadrature is that we do not need to care about the truncation error because there is none.
+
+\textbf{$L^2$-distance}
+
+The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
+
+In the following, we will briefly describe the approach following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform, we obtain the Fourier transform of a kernel density function with a Gaussian kernel:
+\begin{align*}
+    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=P_n(\omega)}\exp{(-h^2\omega^2)/2}.
+\end{align*}
+Next, we use Parseval's identity to get
 \begin{align*}
     G_{r,s}=\int\hat{f}_{h_r}(x)\hat{f}_{h_s}(x)\,dx&=\frac{1}{2\pi}\int\mathcal{F}[\hat{f}_h](\omega)\overline{\mathcal{F}[\hat{f}_s](\omega)}\,d\omega\\&
     =\frac{1}{2\pi}\int|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega\\&
-    =\frac{1}{\pi}\int_0^{\infty}|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega
+    =\frac{1}{\pi}\int_0^{\infty}|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega.
 \end{align*}
-
-Truncate and apply the composite trapezoidal rule
+Finally, we approximate $G_{rs}$ by truncating the integral and applying the composite trapezoidal rule:
 \begin{align*}
-    \frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}
+    G_{rs}\approx\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
 \end{align*}
 
 \todo[inline]{Compare exact, quadrature and Fourier in terms of speed and accuracy}
@@ -358,15 +369,15 @@ In this subsection, we give structural results on the divergence matrix $D$ buil
 
 \begin{Def}[Robinson matrix]
     A matrix $D$ with entries $D_{ij}=D(x_i,x_j)$ is called a (two way) Robinson matrix (cf.~\cite{carmona_two_2024}) if there exists a permutation $\pi$ on $\{1,\dots,N\}$ such that for $D_{ij}^{\pi}=D(x_{\pi(i)},x_{\pi(j)})$ it holds
-    \begin{align*}
+    \begin{align}\label{eq:def_robinson}
         D^{\pi}_{ik}\ge\max\{D^{\pi}_{ij},D^{\pi}_{jk}\}\text{ and }D_{ki}^{\pi}\ge\max\{D_{ji}^{\pi},D_{kj}^{\pi}\}
-    \end{align*}
+    \end{align}
     whenever $i<j<k$.
 \end{Def}
 
-\textcolor{red}{Robinson matrices are generalizations of Min matrices.} Every Min matrix is a Robinson similarity. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices, see Proposition~\ref{prop:L2_divergence_matrix} below.
+\textcolor{red}{Robinson matrices are generalizations of Min matrices.} Every Min matrix is a Robinson similarity. Note that for a Robinson similarity, the inequalities in Equation~\eqref{eq:def_robinson} are reversed. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices, see Proposition~\ref{prop:L2_divergence_matrix} below.
 
-The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma.
+The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma. An entry $v_i$ is large if the scale $i$ has a large distance to other scales $j$. The Perron vector thus gives scales that are far apart from many other scales larger weight. These scales are usually the bordering scales. The next Lemma makes this intuition precise.
 
 \begin{Lem}\label{lem:acute_chain_perron_vec}
     Let $H$ be a Hilbert space and $x_1,\dots,x_N\in H$ distinct points that form a strictly acute chain, that is,
@@ -383,25 +394,25 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
     See Appendix Section~\ref{sec:proof_acute_chain_perron_vec}.
 \end{proof}
 
-\todo[inline]{04.10: discuss acute chain condition (interpretation, precedence)}
+\todo[inline]{05.10: discuss acute chain condition (interpretation, precedence)}
 
 
-We now show that when choosing the Gaussian kernel (which we said is the default setting in this thesis), we have that the family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ fulfills the acute chain condition and as a consequence the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
+We now show that when choosing the Gaussian kernel, the family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ satisfies the acute chain condition and, as a consequence, the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
 
 \begin{Prop}\label{prop:L2_divergence_matrix}
     The following two properties hold.
     \begin{enumerate}
-        \item[(a)] The family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ fulfills the acute chain condition stated in Equation~\eqref{eq:acute_chain_condition}.
+        \item[(a)] The family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ satisfies the acute chain condition stated in Equation~\eqref{eq:acute_chain_condition}.
         \item[(b)] The divergence matrix $D=(D_{ij})$ with entries given by $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
     \end{enumerate}
 \end{Prop}
 
 \begin{proof}
-    The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$. We set $\delta_k=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k]=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega)=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
+    The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with a Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$. We set $\delta_k=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k]=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega)=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
     \begin{align*}
         \langle\delta_k,\delta_l\rangle&=\int\delta_k\delta_l=\frac{1}{2\pi}\int\limits_{\mathbb{R}}|P_n(\omega)|^2b_k(\omega)b_l(\omega)\,d\omega.
     \end{align*}
-    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2\delta_k(\omega)\delta_l(\omega)$ is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. By~[\textcolor{red}{03.10: classical result from measure theory}], it follows that $\langle\delta_k,\delta_l\rangle>0$.
+    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2\delta_k(\omega)\delta_l(\omega)$ is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. We have found a set with positive Lebesgue measure on which the integrand is positive, which implies that the integral $\langle\delta_k,\delta_l\rangle$ itself is positive, that is, $\langle\delta_k,\delta_l\rangle>0$.
 
     Now, let $i<j<k$. We have
     \begin{align*}
@@ -444,7 +455,7 @@ The following Theorem is due to Schoenberg; see~[]. It connects the concepts pre
     \item squared Hellinger: $\mathcal{H}=L^2(\mathbb{R})$, $\Phi(p)=\sqrt{p/2}$, $\|\Phi(p)-\Phi(q)\|_{L^2}^2=(1/2)\|\sqrt{p}-\sqrt{q}\|_2^2$
     \item Total Variation: $\mathcal{H}=L^2(\mathbb{R},(0,\infty))$, $\Phi(p)(x,t)=(1/\sqrt{2})\mathbf{1}\{0<t<p(x)\}$, we have $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}^2=(1/2)\int|p-q|$
     \item Jensen Shannon: $\mathcal{H}=L^2(\mathbb{R},(0,\infty))$, $\Phi(p)(x,t)=(1-\exp{(-tp(x)/2)})/(\sqrt{2}t)$, $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}=\operatorname{JS}(p,q)$
-    \todo[inline]{03.10: Prove! Use this identity: \url{https://math.stackexchange.com/questions/3944257/evaluate-int-0-infty-frac-mathrme-ax-mathrme-bx2x2dx-ln}}
+    \todo[inline]{05.10: Prove! Use this identity: \url{https://math.stackexchange.com/questions/3944257/evaluate-int-0-infty-frac-mathrme-ax-mathrme-bx2x2dx-ln}}
 \end{itemize}
 
 In the context of our scale selection methodology, Theorem~\ref{thm:schoenberg} gives a general construction principle for a scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$ that is guaranteed to be positive (semi-) definite. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
@@ -476,16 +487,14 @@ The choice of the correct bandwidth grid is essential. Set
 The next definition gives a general construction principle for such a bandwidth grid.
 
 \begin{Def}\label{def:r_linear}
-    Let $r\in[0,1]$. A grid $\mathcal{H}_N$ is said to be $r$-linear if
+    Let $0<r\le 1$. A grid $\mathcal{H}_N$ is said to be $r$-linear if
     \begin{align}\label{eq:def_r_linear}
         \frac{1}{r}h_j^r=\frac{1}{r}h_1^r+\underbrace{\frac{h_N^r-h_1^r}{r(N-1)}}_{=:\Delta_{r,N}}(j-1),\quad j=1,\dots,N.
     \end{align}
 \end{Def}
 
 \begin{Rem}
-    The construction in Equation~\eqref{eq:def_r_linear} is just the Box-Cox transformation of a linear grid $\mathcal{H}_N$, compare with \cite[Equation (1)]{box_analysis_1964}. Setting $\psi_r(h)=r^{-1}(h^r-1)$ we see that a grid $\mathcal{H}_N$ is $r$-linear if $\{\psi_r(h_j)\}_{j=1}^{N}$ is a linear grid.
-    \todo[inline]{04.10: weighted power mean (handbook of means and their inequalities)}
-    \todo[inline]{04.10: adaptive moving mesh methods}
+    The construction in Equation~\eqref{eq:def_r_linear} is just the Box-Cox transformation of a linear grid $\mathcal{H}_N$, compare with \cite[Equation (1)]{box_analysis_1964}. Setting $\psi_r(h)=r^{-1}(h^r-1)$ we see that a grid $\mathcal{H}_N$ is $r$-linear if $\{\psi_r(h_j)\}_{j=1}^{N}$ is a linear grid. Taking the limit $r\to0$ we obtain $\psi_0(h):=\lim\limits_{r\to0}\psi_{r}(h)=\log{h}$. A $0$-linear grid can therefore be seen as a geometric grid. Another interpretation is the following: $h_j$ is the weighted power mean between the two endpoints $h_1$ and $h_N$ with exponent $r$ and weights $w_1=1-(j-1)/(N-1)$ and $w_2=(j-1)/(N-1)$. For reference, see~\cite[Chapter~3.1]{bullen2013handbook}.
 \end{Rem}
 
 Definition~\ref{def:r_linear} smoothly connects a linear and a geometric grid. Setting $r=1$ gives a linear grid, that is,
@@ -502,24 +511,23 @@ The geometric grid can equivalently be written as
 \end{align*}
 Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
-Next we formulate a Lemma that gives the asymptotic approximation for the spacing $h_{j}-h_i$ of a $r$-linear grid.
+Next we formulate a Lemma that gives the asymptotic approximation for the spacing $h_{j}-h_i$ of a $r$-linear grid, where $i=i_N$ and $j=j_N$ may depend on $N$. It tells us that for large $N$ the difference between two scales $h_j$ and $h_i$ is approximately $h_i^{1-r}\delta_{ij}^{r,N}$, given that $|j_N-i_N|=\mathbf{O}(1)$, that is, the number of grid steps is bounded. In other words, we express the difference between two untransformed bandwidths $h_j-h_i$ using the difference between two transformed bandwidths $r^{-1}h_j^{r}-r^{-1}h_i^{r}$ approximately when $N$ is large and $|j-i|$ is bounded.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid. Set $\delta^{r,N}_k=k\Delta_{r,N}=\mathbf{O}(N^{-1})$. Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid. Set $\delta^{r,N}_{ij}=(j-i)\Delta_{r,N}$. Assume $|j-i|=\mathbf{O}(1)$. Then
     \begin{align*}
-        h_{i+k}-h_i=h_i^{1-r}\delta^{r,N}_k+\mathbf{O}(N^{-2}).
+        h_{j}-h_i=h_i^{1-r}\delta^{r,N}_{ij}+\mathbf{O}(N^{-2}).
     \end{align*}
-    \todo[inline]{add intuition: Why would one want such an expansion? What does it tell us?}
 \end{Lem}
 
 \begin{proof}
-    We have $h_{i+k}^r-h_i^r=rk\Delta_{r,N}$ from which follows
+    We have $h_{j}^r-h_i^r=r(j-i)\Delta_{r,N}$ from which follows
     \begin{align*}
-        h_{i+k}=\left(h_i^r+r\delta^{r,N}_k)\right)^{1/r}=h_i\left(1+\frac{r\delta^{r,N}_k}{h_i^r}\right)^{1/r}
+        h_{j}=\left(h_i^r+r\delta^{r,N}_{ij})\right)^{1/r}=h_i\left(1+\frac{r\delta^{r,N}_{ij}}{h_i^r}\right)^{1/r}
     \end{align*}
     The first order Taylor approximation of $(1+x)^{1/r}$ is $(1+x)^{1/r}=1+\frac{x}{r}+\mathbf{O}(x^2)$. We get
     \begin{align*}
-        h_{i+k}-h_i=h_i\left(1+\frac{\delta^{r,N}_k}{h_i^r}+\mathbf{O}\left(\frac{r^2(\delta^{r,N}_k)^2}{h_i^{2r}}\right)-1\right)=h_i^{1-r}\delta^{r,N}_k+\mathbf{O}(N^{-2})
+        h_{j}-h_i=h_i\left(1+\frac{\delta^{r,N}_{ij}}{h_i^r}+\mathbf{O}\left(\frac{r^2(\delta^{r,N}_{ij})^2}{h_i^{2r}}\right)-1\right)=h_i^{1-r}\delta^{r,N}_{ij}+\mathbf{O}(N^{-2})
     \end{align*}
 \end{proof}
 
@@ -655,12 +663,28 @@ It is interesting to ask what happens to this distribution for increased sample 
 \section{Explanation of the Results}\label{sec:res_2}
 
 \todo[inline]{Make argument rigorous}
+\todo[inline]{Mention Davis Kahan theorem and spectral gap}
 
 \subsection{Convergence to closest adjacent pair}
 
-\todo[inline]{03.10: write this chapter!}
-
 Here we explain the results of the fixed $N$ and $\lambda\to\infty$ experiment.
+
+Let $\Sigma^{(\lambda)}$ be the scale similarity matrix with entries $\Sigma^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $\Sigma^{(\lambda)}=I_N+A^{(\lambda)}$. The matrices $\Sigma^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}=\min_{i\ne j}D_{ij}$ is the smallest distance between two distinct scales $h_i$ and $h_j$. The off diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$, which all lie between $0$ and $1$. One particular advantage of this construction is that large $\lambda$ become numerically manageable while the Perron vector does not change.
+
+Taking the limit $\lambda\to\infty$ we get
+\begin{align*}
+    \lim\limits_{\lambda\to\infty}\Tilde{A}_{ij}^{(\lambda)}=\begin{cases}
+        1 & ,D_{ij}=d_{\ast}\\
+        0 & ,D_{ij}>d_{\ast}.
+    \end{cases}
+\end{align*}
+
+In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with edges between $h_i$ and $h_j$ if and only if $D_{ij}$ is minimal. In fact if $D$ is a Robinson matrix (for example if we take the $L^2$-divergence) this forces $d_{\ast}=d_{j,j+1}$ for some $j=1,\dots,N-1$.
+
+Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_j+(1/2)e_{j+1}$, that is, it concentrates at $\arg\min_{(j,j+1)}D_{j,j+1}$. We write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$ (where the limit is understood entry-wise). The matrix $B$ can be written as $B=e_j^{T}e_{j+1}+e_{j+1}e_j^{T}$. Direct calculations show that $e_{j}+e_{j+1}$ is an eigenvector with eigenvalue $1$, $e_j-e_{j+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j,j+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_j+(1/2)e_{j+1}$ is the sum normalized Perron vector of $B$.
+
+This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}.
+
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}
 
