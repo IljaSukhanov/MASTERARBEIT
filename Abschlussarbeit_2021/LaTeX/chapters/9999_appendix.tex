@@ -222,9 +222,9 @@ Under the condition that the affine hull of $\mathcal{P}_{k,T}$ is the whole spa
 \begin{proof}
     Since the points $x_j$ are distinct, all entries of the matrix $D$ are positive and by Perron-Frobenius, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$. We interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. Write the expected value $\mathbb{E}[X]=\mu=\sum_{j=1}^{N}v_jx_j$ and the variance $\operatorname{Var}[X]=\sigma^2=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$. Now we have
     \begin{align}\label{eq:bias_variance_decomp_perron_entry}
-        (Dv)_i=\sum_{j=1}^{N}D_{ij}v_j=\sum_{j=1}^{N}\|x_i-x_j\|^2v_j=\mathbb{E}[\|X-x_i\|^2]\stackrel{\ast}{=}\|\mu-x_i\|^2+\sigma^2,
+        (Dv)_i=\sum_{j=1}^{N}D_{ij}v_j=\sum_{j=1}^{N}\|x_i-x_j\|^2v_j=\mathbb{E}[\|X-x_i\|^2]\stackrel{(\ast)}{=}\|\mu-x_i\|^2+\sigma^2,
     \end{align}
-    where at $\ast$ we have used the bias-variance decomposition. Since $v$ is the Perron vector of $D$, the left hand side of Equation~\eqref{eq:bias_variance_decomp_perron_entry} is equal to $\rho v_i$ with $\rho>0$ being the unique maximum eigenvalue of $D$.
+    where at $(\ast)$ we have used the bias-variance decomposition. Since $v$ is the Perron vector of $D$, the left hand side of Equation~\eqref{eq:bias_variance_decomp_perron_entry} is equal to $\rho v_i$ with $\rho>0$ being the unique maximum eigenvalue of $D$.
 
     Next, we write
     \begin{align*}
@@ -248,11 +248,11 @@ Under the condition that the affine hull of $\mathcal{P}_{k,T}$ is the whole spa
     Consequently,
     \begin{align*}
         \|x_i-\mu\|^2&=\|P_i-Q_i\|^2=\|P_i\|^2+\|Q_i\|^2-2\langle P_i,Q_i\rangle\\&
-        <\|P_i\|^2+\|Q_i\|^2+2\langle P_i,Q_i\rangle=\|P_i+Q_i\|^2
+        \le\|P_i\|^2+\|Q_i\|^2+2\langle P_i,Q_i\rangle=\|P_i+Q_i\|^2
     \end{align*}
-    for all $i=2,\dots,N-1$, where we have used that
+    for all $i=2,\dots,N-1$, where we have used
     \begin{align*}
-        \langle P_i,Q_i\rangle=\sum_{1\le k\le i-1}\sum_{i\le l\le N-1}\underbrace{(1-a_k)}_{>0}\underbrace{a_l}_{>0}\underbrace{\langle\delta_k,\delta_l\rangle}_{>0}>0.
+        \langle P_i,Q_i\rangle=\sum_{1\le k\le i-1}\sum_{i\le l\le N-1}\underbrace{(1-a_k)}_{>0}\underbrace{a_l}_{>0}\underbrace{\langle\delta_k,\delta_l\rangle}_{\ge0}>0.
     \end{align*}
     In particular, this is the step where we use the acute chain condition~\eqref{eq:acute_chain_condition}.
 
@@ -266,8 +266,8 @@ Under the condition that the affine hull of $\mathcal{P}_{k,T}$ is the whole spa
 
     Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry} and~\eqref{eq:acute_chain_proof_002} we arrive at
     \begin{align*}
-        \rho v_i-\sigma^2&=\|\mu-x_i\|^2<\|P_i+Q_i\|^2\le\max\{\|\mu-x_1\|,\|x_N-\mu\|\}\\&
+        \rho v_i-\sigma^2&=\|\mu-x_i\|^2\le\|P_i+Q_i\|^2\le\max\{\|\mu-x_1\|,\|x_N-\mu\|\}\\&
         =\max\{\rho v_1-\sigma^2,\rho v_N-\sigma^2\}
     \end{align*}
-    and therefore $v_i<\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
+    and therefore $v_i\le\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
 \end{proof}
