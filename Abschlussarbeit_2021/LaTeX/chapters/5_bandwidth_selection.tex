@@ -39,6 +39,8 @@ The question of how to choose the bandwidth $h$ is widely known in the literatur
 
 \subsection*{Cross-validation methods}
 
+\todo[inline]{Give consistency result for cross-validation bandwidth choice}
+
 The ISE can be written as
 \begin{align*}
     \operatorname{ISE}(h)=\int\hat{f}_h(x)^2\,dx-2\mathbb{E}_{X\sim f}\left[\hat{f}_h(X)\right]+\int f(x)^2\,dx.
@@ -100,18 +102,26 @@ Minimizing the AMISE leads to
     h_{\operatorname{AMISE}}(n)=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|f^{''}\|_2^2}\right)^{1/5}
 \end{align}
 
-We have $h_{\text{oracle}}=h_{\operatorname{AMISE}}+\mathbf{o}(n^{-1/5})$ (see again~\cite{chacon_existence_nodate}), which implies that $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent.
+We have $h_{\text{oracle}}=h_{\operatorname{AMISE}}+\mathbf{o}(n^{-1/5})$ (see again~\cite{chacon_existence_nodate}), which implies that $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent.\textcolor{red}{The optimal bandwidth thus behaves like $n^{-1/5}$.}
 
-\textcolor{red}{The optimal bandwidth thus behaves like $n^{-1/5}$.}
-
-Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
+Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point and try to find estimators $\hat{R}(f'')$ for $R(f'')=\|f''\|_2^2$. Silverman's rule of thumb assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
 \begin{align*}
     \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}
 \end{align*}
 
-Among the many other more sophisticated plug in methods, we present the (improved) Sheather and Jones' plug in selector
+Among the many other more sophisticated plug in methods, we present the (improved) Sheather and Jones' plug in selector, since it is used fairly commonly in practice; see for example the documentation of the kde packages of the statistics sowftware R and SAS.
 
-\todo[inline]{05.10: introduce (improved) Sheather and Jones' plug in}
+\todo[inline]{Give consistency result for plug-in bandwidth}
+
+They approximate $R(f'')=\|f''\|_2^2$ by $R(\hat{f}_g'')=\|\hat{f}_g''\|_2^2$, where $\hat{f}_g''$ is the second derivative of the kernel density estimate with pilot bandwidth $g$, whose choice is a major problem. They choose it so that the leading bias term of the mean squared error $\mathbb{E}[(R(f'')-R(\hat{f}_g''))^2]$ cancels. This choice leads to $g^7=R(K'')\mu_2(K)^{-1}R(f''')^{-1}n^{-1}$. They then make this depend on $h_{\operatorname{AMISE}}$ by solving Equation~\eqref{eq:h_amise} for $n$ and plugging it into the formula for $g^7$, which results in $g(h)=C_K(R(f'')/R(f'''))^{1/7}h^{5/7}$.
+
+Of course, the ratio $R(f'')/R(f''')$ has to be estimated separately, which is done by $R(\hat{f}_a'')/R(\hat{f}_b''')$ with $a$ and $b$ chosen following Silverman's rule of thumb. The resulting equation $\hat{g}(h)=C_K(R(\hat{f}_a'')/R(\hat{f}_b'''))^{1/7}h^{5/7}$ is plugged into $R(f_g'')$, which in turn is plugged into Equation~\eqref{eq:h_amise}. The Equation
+\begin{align*}
+    h=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|\hat{f}_{\hat{g}(h)}''\|_2^2}\right)^{1/5}
+\end{align*}
+is solved numerically for $h$.
+
+For illustration, the next Figure~[] shows 50 points sampled from $N(0,1)$ together with the true density $f$ and the kernel density estimates $\hat{f}_{h}$ with $h\in\{\hat{h}_{CV},h_{\text{oracle}},h_{\text{AMISE}},h_{\text{Sil}},h_{\text{SJ}}\}$.
 
 \textbf{Exact MISE representation for Gaussian mixture model}
 
@@ -327,9 +337,11 @@ for the $\alpha$-divergence and truncating the total variation yields
     \frac{1}{2}\int_{A^c}|p-q|\le\frac{1}{2}\int_{A^c}p+\frac{1}{2}\int_{A^c}q\le\delta_L.
 \end{align*}
 
-As a consequence, we see that approximating the $\alpha$-divergence and the total variation using the composite trapezoidal rule allows for clean error control. 
+As a consequence, we see that approximating $\alpha$-divergence and total variation using the composite trapezoidal rule allows clean error control. 
 
 \textbf{KL divergence and Jensen-Shannon}
+
+\todo[inline]{Gauss-Hermite seems slow, just use composite trapezoidal again but derive truncation error bound}
 
 For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$ by $\sum_{m=1}^{M}w_mf(x_m)$ with the nodes $x_m$ being the $M$-th Hermite Polynomial $H_M$ and weights $w_m=(2^{M-1}M!\sqrt{\pi})/(M^2H_{M-1}^2(x_m))$. For reference on Gauss-Hermite quadrature, see~\cite[Section~25.4.46]{abramowitz_stegun1972}. We can write (and consequently approximate) the KL-divergence between two kernel density estimates $\hat{f}_h$ and $\hat{f}_g$ as
 \begin{align*}
@@ -359,7 +371,7 @@ Finally, we approximate $G_{rs}$ by truncating the integral and applying the com
     G_{rs}\approx\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
 \end{align*}
 
-\todo[inline]{05.10: Compare exact, quadrature and Fourier in terms of speed and accuracy}
+\todo[inline]{Compare exact, quadrature and Fourier in terms of speed and accuracy}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -375,12 +387,12 @@ In this subsection, we give structural results on the divergence matrix $D$ buil
     whenever $i<j<k$.
 \end{Def}
 
-\textcolor{red}{Robinson matrices are generalizations of Min matrices.} Every Min matrix is a Robinson similarity. Note that for a Robinson similarity, the inequalities in Equation~\eqref{eq:def_robinson} are reversed. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices, see Proposition~\ref{prop:L2_divergence_matrix} below.
+Robinson matrices are generalizations of Min matrices, that is, every Min matrix is a Robinson similarity. Note that for a Robinson similarity, the inequalities in Equation~\eqref{eq:def_robinson} are reversed. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices, see Proposition~\ref{prop:L2_divergence_matrix} below.
 
 The reason why we do not want to work with the matrix $D$ and instead transform to a similarity matrix $\phi(D)$ is due to the following Lemma. An entry $v_i$ is large if the scale $i$ has a large distance to other scales $j$. The Perron vector thus gives scales that are far apart from many other scales larger weight. These scales are usually the bordering scales. The next Lemma makes this intuition precise.
 
 \begin{Lem}\label{lem:acute_chain_perron_vec}
-    Let $H$ be a Hilbert space and $x_1,\dots,x_N\in H$ distinct points that form an acute chain, that is,
+    Let $H$ be a Hilbert space, and let $x_1,\dots,x_N$ be distinct points in $\mathcal{H}$ that form an acute chain, that is,
     \begin{align}\label{eq:acute_chain_condition}
         \langle x_{k+1}-x_k,x_{l+1}-x_l\rangle\ge0\quad\text{for all }k,l=1,\dots,N-1.
     \end{align}
@@ -394,9 +406,7 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
     See Appendix Section~\ref{sec:proof_acute_chain_perron_vec}.
 \end{proof}
 
-The \enquote{acute chain condition} has precedence in the theory of so called Monge matrices, for reference see, for example~\cite{hutter_estimation_2020}. Monge matrices have a special structural property that allows for certain problems to have faster algorithms when assuming this structure. A matrix $D$ is a Monge matrix if $D_{ij}+D_{kl}\le D_{il}+D_{kj}$ whenever $i\le k$ and $j\le l$. In fact, a matrix $D$ with entries $D_{ij}=\|x_i-x_j\|^2$ is Monge if and only if the acute chain condition holds for $x_1,\dots,x_N$. All symmetric Monge matrices with zero diagonal are Robinson matrices.
-
-\todo[inline]{06.10: add geometrical interpretation: see~\cite{hutter_estimation_2020}}
+The \enquote{acute chain condition} has precedence in the theory of so called Monge matrices, for reference see, for example~\cite{hutter_estimation_2020}. Monge matrices have a special structural property that allows for certain problems to have faster algorithms when assuming this structure. A matrix $D$ is a Monge matrix if $D_{ij}+D_{kl}\le D_{il}+D_{kj}$ whenever $i\le k$ and $j\le l$. In fact, a matrix $D$ with entries $D_{ij}=\|x_i-x_j\|^2$ is Monge if and only if the acute chain condition holds for $x_1,\dots,x_N$. All symmetric Monge matrices with zero diagonal are Robinson matrices. The acute chain condition has a geometric interpretation: the angle between all the differences of two consecutive points is at most $90$ degrees.
 
 We now show that when choosing the Gaussian kernel, the family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ satisfies the acute chain condition and, as a consequence, the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
 
@@ -485,7 +495,7 @@ The quantity
 \begin{align*}
     \sum_{j=1}^{N}p_jD_{ij}-\tau H(p)=\sum_{j=1}^{N}p_jD_{ij}+\tau\sum_{j=1}^{N}p_j\log{p_j}
 \end{align*}
-is minimized by $\hat{p}_i=(\hat{p}_{i1},\dots,\hat{p}_{iN})$, where $\hat{p}_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. See~\cite{anantharam_variational_2017} for reference.
+is minimized by $\hat{p}_i=(\hat{p}_{i1},\dots,\hat{p}_{iN})$, where $\hat{p}_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. See~\cite{anantharam_variational_2017} for reference. We can interpret $\hat{p}_i$ as a probability vector that describes how strongly the scale $h_i$ is connected to any other scales.
 
 The minimization of the first term $D_ip=\sum_jp_jD_{ij}$ ($D_i\in\mathbb{R}^{1\times N}$ is the $i$-th row of $D$) leads to probability vectors that concentrate on the $i$-th component since $\min_jD_{ij}=D_{ii}=0$ (the largest probability weights is put on a bandwidth that is closest to bandwidth $h_i$ with respect to the divergence $D$). The penalty term $\sum_jp_j\log{p_j}$ counteracts this concentration by penalizing it, where $\tau$ controls the amount of penalization. In that sense, $\tau$ can be interpreted as a penalty weight. 
 
@@ -553,16 +563,6 @@ Next we formulate a Lemma that gives the asymptotic approximation for the spacin
 \textbf{Motivation for why a geometric grid is the natural choice}
 
 The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the area under the curve the same. We can measure the width of a kernel $K$, for example, by $s(K)\coloneqq\sqrt{\mu_2(K)}=(\int x^2K(x)\,dx)^{1/2}$. The width of the stretched kernel is $s(K_h)=hs(K)$. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$. Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the same factor $q_N$. Thus, each step stretches the kernel by the same factor.
-
-% \todo[inline]{Continue here, cite some paper by Nielsen}
-
-% For any $f$-divergence $D_f$ we have
-% \begin{align*}
-%     D_f(K_{h_i},K_{h_j})=\Tilde{\Psi}(j-1)
-% \end{align*}
-% for some function $\Tilde{\Psi}$.
-
-% The kernel density estimate $\hat{f}_h$ can be written as a convolution of $K_h$ and the empirical distribution $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$. In symbols, $\hat{f}_h=K_h\ast P_n$. We have the pointwise expectation $\mathbb{E}[\hat{f}_h]=f\ast K_h$.
 
 \section{Numerical Experiments}
 
@@ -637,6 +637,7 @@ Now we draw repeated samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ and st
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf}
     \caption{Distribution of spectrally chosen bandwidths for $M=1000$ repeatedly drawn $N(0,1)$ samples ($n=200$); $N=201$, $\lambda=1$}
     \label{fig:distribution_of_chosen_bandwidths}
+    \todo[inline]{add spectral bandwidth choices for total variation, squared Hellinger and Jensen Shannon}
 \end{figure}
 
 \subsection{Increasing sample size experiments}
