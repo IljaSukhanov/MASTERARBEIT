@@ -23,7 +23,9 @@ def trapezoidal_integral(
     x_grid: np.ndarray,
     axis: int = -1,
 ) -> np.ndarray:
-    trapezoid = getattr(np, "trapezoid", np.trapz)
+    trapezoid = getattr(np, "trapezoid", None)
+    if trapezoid is None:
+        trapezoid = np.trapz
     return trapezoid(y=values, x=x_grid, axis=axis)
 
 ### construct the quadrature nodes to approximate int \hat{f}_h dx for a given grid of bandwidths h_grid and samples X_i ###
@@ -46,6 +48,56 @@ def quadrature_grid_for_kdes(
     left = float(np.min(samples)) - padding * float(np.max(h_grid))
     right = float(np.max(samples)) + padding * float(np.max(h_grid))
     return np.linspace(left, right, int(m_x))
+
+
+def quadrature_js_divergence_matrix(
+    density_values: np.ndarray,
+    x_grid: np.ndarray,
+    eps: float = 1e-300,
+) -> np.ndarray:
+    r"""Approximate pairwise JS divergences by composite trapezoidal integration.
+
+    For p, q and m = (p + q)/2, integrate
+    (p log(p/m) + q log(q/m))/2 on the supplied spatial grid. Natural
+    logarithms are used. The implementation expands this as
+    (p log(p) + q log(q))/2 - m log(m), caching the individual integrals.
+    Zero-density terms contribute zero; eps protects logarithms in the tails.
+
+    See eq:JS_KL_formula and the composite trapezoidal rule in
+    Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex, and
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.trapezoid.html
+
+    Densities are not renormalized on the finite interval. The returned matrix
+    is symmetric with zero diagonal. Roundoff below zero is clipped; values
+    are not capped at log(2), so an underresolved grid remains diagnosable.
+    Tail truncation and spatial discretization errors are not certified here;
+    compare wider intervals and finer grids to assess convergence.
+    """
+    values = np.asarray(density_values, dtype=float)
+    x_grid = np.asarray(x_grid, dtype=float)
+    weights = _trapezoidal_weights(x_grid)
+    if values.ndim != 2 or values.shape[0] == 0:
+        raise ValueError("density_values must be a nonempty two-dimensional array.")
+    if values.shape[1] != len(x_grid):
+        raise ValueError("x_grid must match the density grid axis.")
+    if not np.all(np.isfinite(values)) or np.any(values < 0.0):
+        raise ValueError("Density values must be finite and nonnegative.")
+    if not np.isfinite(eps) or eps <= 0.0:
+        raise ValueError("eps must be finite and strictly positive.")
+
+    integrated_xlogx = (values * np.log(np.maximum(values, eps))) @ weights
+    divergence = np.zeros((len(values), len(values)), dtype=float)
+    for i in range(len(values) - 1):
+        mixtures = 0.5 * values[i] + 0.5 * values[i + 1:]
+        mixture_xlogx = (mixtures * np.log(np.maximum(mixtures, eps))) @ weights
+        pair_values = np.maximum(
+            0.5 * integrated_xlogx[i] + 0.5 * integrated_xlogx[i + 1:]
+            - mixture_xlogx,
+            0.0,
+        )
+        divergence[i, i + 1:] = pair_values
+        divergence[i + 1:, i] = pair_values
+    return divergence
 
 
 ### is this function still needed when we have a faster Fourier-based method? ###
@@ -77,7 +129,7 @@ def quadrature_similarity_matrices(
     lambda_value: float = 1.0,
     eps: float = 1e-300,
 ) -> np.ndarray:
-    """Compute a similarity matrix from densities evaluated on a grid."""
+    """Compute similarities by composite trapezoidal integration on x_grid."""
     if similarity_name not in SIMILARITY_NAMES:
         raise ValueError(
             f"Unknown similarity {similarity_name!r}. Choose from {SIMILARITY_NAMES}."
@@ -113,24 +165,8 @@ def quadrature_similarity_matrices(
         d2 = quadrature_beta2_divergence_matrix(values, x_grid)
         matrix = np.exp(-lambda_value * d2)
     else:
-        entropy = -np.sum(
-            weights[None, :] * values * np.log(np.maximum(values, eps)),
-            axis=1,
-        )
-        matrix = np.empty((number_of_densities, number_of_densities), dtype=float)
-        for i in range(number_of_densities):
-            for j in range(i, number_of_densities):
-                mixture = 0.5 * (values[i] + values[j])
-                mixture_entropy = -float(
-                    np.dot(weights, mixture * np.log(np.maximum(mixture, eps)))
-                )
-                divergence = max(
-                    mixture_entropy - 0.5 * entropy[i] - 0.5 * entropy[j],
-                    0.0,
-                )
-                value = 1.0 - divergence / np.log(2.0)
-                matrix[i, j] = value
-                matrix[j, i] = value
+        divergence = quadrature_js_divergence_matrix(values, x_grid, eps=eps)
+        matrix = 1.0 - divergence / np.log(2.0)
 
     return np.clip(matrix, 0.0, 1.0)
 
@@ -143,7 +179,8 @@ def compute_quadrature_similarity_matrices(
     x_grid: np.ndarray | None = None,
     m_x: int = 2_001,
     lambda_value: float = 1.0,
-) -> dict[str, np.ndarray | float]:
+) -> dict[str, np.ndarray]:
+    """Construct KDE similarities on a shared composite trapezoidal grid."""
     if x_grid is None:
         x_grid = quadrature_grid_for_kdes(
             samples=samples,
@@ -198,8 +235,8 @@ def select_quadrature_similarity_bandwidths(
 ### gives the trapezoidal weights w_k = (x_{k+1} - x_{k-1}) / 2 for k = 1, ..., m-2 and w_0 = (x_1 - x_0) / 2, w_{m-1} = (x_{m-1} - x_{m-2}) / 2 ###
 def _trapezoidal_weights(x_grid: np.ndarray) -> np.ndarray:
     x_grid = np.asarray(x_grid, dtype=float)
-    if x_grid.ndim != 1 or len(x_grid) < 2:
-        raise ValueError("x_grid must be one-dimensional with at least two nodes.")
+    if x_grid.ndim != 1 or len(x_grid) < 2 or not np.all(np.isfinite(x_grid)):
+        raise ValueError("x_grid must be finite and one-dimensional with at least two nodes.")
 
     steps = np.diff(x_grid)
     if np.any(steps <= 0.0):

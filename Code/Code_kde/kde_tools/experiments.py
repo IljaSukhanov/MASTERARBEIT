@@ -134,7 +134,7 @@ def run_one_consistency_experiment(
     h_grid: np.ndarray,
     m_x: int,
 ) -> list[dict[str, float | int | str]]:
-    """Run the oracle, Hellinger, and JS selectors for one consistency replicate."""
+    """Run the oracle, Hellinger, and JS selectors using shared spatial quadrature."""
     rng = np.random.default_rng(seed)
     samples = rng.normal(0.0, np.sqrt(sigma2), size=n)
     h_grid = np.asarray(h_grid, dtype=float)
