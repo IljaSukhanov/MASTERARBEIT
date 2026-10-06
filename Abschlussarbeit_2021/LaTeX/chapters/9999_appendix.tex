@@ -9,7 +9,7 @@
 \end{Lem}
 
 \begin{proof}
-    Since $\{X_t\}$ is causal, $r_{\phi}=\min\{|z|:\phi(z)=0\}>1$. Let $R\in(1,r_{\phi})$ be arbitrary. From complex analysis, it follows that $1/\phi$ is analytical on some open neighborhood of $\{|z|\le R\}$. Its representation is given by $1/\phi(z)=\sum_{j=0}^{\infty}\psi_jz^{j}$. By Cauchy's integral formula~[\textcolor{red}{find citation}], $|\psi_j|\le R^{-j}\max_{|z|=R}|1/\phi(z)|$. Setting $C=\max_{|z|=R}|1/\phi(z)|$ and $\rho=R^{-1}$ yields the statement.
+    Define $r_{\phi}:=\min\{|z|:z\in\mathbb{C},\phi(z)=0\}$. Since $\{X_t\}$ is causal, $r_{\phi}>1$. Let $R\in(1,r_{\phi})$ be arbitrary. From complex analysis, it follows that $1/\phi$ is analytical on the disk $D_0(R)=\{z\in\mathbb{C}:|z|\le R\}$. Let $1/\phi(z)=\sum_{j=0}^{\infty}\psi_jz^{j}$ be its representation. By Cauchy's integral inequality, see~\cite[Corollary~4.3]{Shiu01072004}, $|\psi_j|\le R^{-j}\max_{|z|=R}|1/\phi(z)|$. Setting $C=\max_{|z|=R}|1/\phi(z)|$ and $\rho=R^{-1}$ yields the statement.
 \end{proof}
 
 \begin{proof}
@@ -126,7 +126,6 @@
 
 \subsection{Proof of Proposition~\ref{prop:sliding_window_fails_brunel}}\label{sec:proof_sliding_window_fails_brunel}
 
-\todo[inline]{justify red statement}
 \todo[inline]{Extend to Beta distributed innovations}
 
 \begin{proof}
@@ -134,7 +133,7 @@
     \begin{align*}
         H-X_t=\sum_{j=0}^{\infty}|\psi_j|-\sum_{j=0}^{\infty}\psi_jZ_{t-j}=\sum_{j=0}^{\infty}|\psi_j|\underbrace{(1-\operatorname{sgn}(\psi_j)Z_{t-j})}_{=D_{t-j}\in[0,2]}.
     \end{align*}
-    \textcolor{red}{There exist infinitely many nonzero $\psi_j$.} Thus, for each $\alpha>0$ no matter how large we find distinct indices $j_1,\dots,j_M$ where $M>\alpha$ such that $\psi_{j_m}\ne0$ for all $m=1,\dots,M$. Let $\epsilon>0$. Then $H-X_t\le\epsilon$ implies $D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}$ for all $m=1,\dots,M$. Now, it follows
+    There exist infinitely many nonzero $\psi_j$. (Assume, for contradiction, that only finitely many $\psi_j$ are nonzero. Then, the set $\{j\in\mathbb{N}_0:\psi_j\ne0\}$ is nonempty ($\psi_0=1$) and finite. Let $J$ be its maximum. This would mean that $1/\phi(z)=\sum_{j=0}^{J}\psi_jz^{j}$ is a polynomial of order $J$. By assumption, the polynomial $\phi$ has degree $p$. But now we have $0=\deg(\phi\cdot(1/\phi))=\deg(\phi)+\deg(1/\phi)=p+J$. This would force $p=0$ and $J=0$, which contradicts our assumption that $p\ge1$.) Thus, for each $\alpha>0$ no matter how large we find distinct indices $j_1,\dots,j_M$ where $M>\alpha$ such that $\psi_{j_m}\ne0$ for all $m=1,\dots,M$. Let $\epsilon>0$. Then $H-X_t\le\epsilon$ implies $D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}$ for all $m=1,\dots,M$. Now, it follows
     \begin{align*}
         \mathbb{P}(H-X_t\le\epsilon)&\le\mathbb{P}\left(\bigcap_{m=1}^{M}\left\{D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}\right\}\right)\stackrel{(\ast)}{=}\prod_{m=1}^{M}\mathbb{P}(D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1})\\&
         \stackrel{(\ast\ast)}{=}\prod_{m=1}^{M}\min\left\{\frac{\epsilon}{2|\psi_{j_m}|},1\right\}\le\prod_{m=1}^{M}\frac{\epsilon}{2|\psi_{j_m}|}=C_M\epsilon^M,
