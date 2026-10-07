@@ -87,6 +87,8 @@ For the $\operatorname{ISB}(h)$ term we get
     \operatorname{ISB}(h)=\frac{h_n^4}{4}\mu_2(K)^2R(f^{''})+\mathbf{o}(h_n^4)
 \end{align*}
 
+\textbf{Asymptotic expansion of $\operatorname{MISE}(h)$}
+
 The first non-vanishing asymptotic approximation of the MISE is
 \begin{align*}
     \operatorname{MISE}(h_n)=\underbrace{\frac{\|K\|_2^2}{nh_n}+\frac{h_n^4}{4}\mu_2(K)^2\|f^{''}\|_2^2}_{=\operatorname{AMISE}(h_n)}+o\left(\frac{1}{nh_n}+h_n^{4}\right).
@@ -167,6 +169,8 @@ Note that $\mathcal{P}\subseteq L^1$ is convex. A divergence is a map $D:\mathca
 
 The two most important classes of divergences are $f$-divergences and Bregman divergences.
 
+Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}.
+
 \subsection{\texorpdfstring{$f$}{f}-divergences}
 
 We take material on $f$-divergences mainly from \cite[Chapter 7]{polyanskiy_information_2025}. There, divergences are defined between two probability distributions $P$ and $Q$. For our purposes, it is enough to define them directly between probability density functions (Lebesgue integral).
@@ -234,83 +238,7 @@ Total variation and squared Hellinger are related by the following chain of ineq
     =\sqrt{4-4\left(\int\sqrt{pq}\right)}=2\sqrt{1-\int\sqrt{pq}}=2\sqrt{D_H(p,q)}
 \end{align*}
 
-\subsubsection*{JS divergence}
-
-Another important divergence that belongs to the class of $f$-divergences is the Jensen Shannon divergence. The function $f$ is set to be
-\begin{align*}
-    f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right)
-\end{align*}
-The divergence is then given by
-\begin{align*}
-    \operatorname{JS}(f,g)=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g),
-\end{align*}
-where $H(f)=-\int f\log{f}$ is the Shannon entropy.
-
-The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
-\begin{align}\label{eq:JS_KL_formula}
-    \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}(p\|\frac{p+q}{2})+\operatorname{KL}(q\|\frac{p+q}{2})\right),
-\end{align}
-that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their equally weighted mixture.
-
-\subsection{Bregman divergences}
-
-The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. \textcolor{red}{Interestingly, efforts to extend the definition of Bregman divergences to Hilbert spaces only have been made recently, see~\cite{tsuchida_generalising_2026}.} The Bregman divergence is a generalization of the $L^2$ distance and is applied in a variety of instances where the $L^2$-distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
-
-\begin{Def}
-    Let $(\mathcal{H},\langle\cdot,\cdot\rangle)$ be a Hilbert space and $F:\mathcal{H}\to\mathbb{R}\cup\{+\infty\}$ a proper, lower semi-continuous, strictly convex, and Fréchet differentiable on the interior of $\text{domain}(\Phi)=\{g\in\mathcal{H}:F(g)<+\infty\}$. \textcolor{red}{Additionally, we assume $F$ to be essentially smooth and essentially strictly convex.} The Bregman divergence between $x\in\mathcal{H}$ and $y\in\mathcal{H}$ is defined by
-    \begin{align}\label{eq:def_bregman_divergence}
-        D_F(x\|y):=F(x)-F(y)-\langle x-y,\nabla F(y)\rangle_{\mathcal{H}}.
-    \end{align}
-\end{Def}
-
-The first order Taylor approximation of $F$ around $y$ evaluated at $x$ is $F(y)+DF(y)[x-y]$, where $DF(x):\mathcal{H}\to\mathbb{R}$ is a bounded linear operator. By the Riesz representation theorem, $DF(y)[h]=\langle\nabla F(y),h\rangle$ for all $h\in\mathcal{H}$ and in particular $DF(y)[x-y]=\langle x-y,\nabla F(y)\rangle_{\mathcal{H}}$. The Bregman divergence $D_F(x\|y)$ as defined in Equation~\eqref{eq:def_bregman_divergence} is therefore the difference between $F$ evaluated at $x$ and the first order Taylor approximation of $F$ around $y$ evaluated at $x$.
-
-
-Similarly to the $f$-divergence, we have invariance $D_F=D_{G}$ if and only if $F-G$ is an affine functional. If $F$ is twice continuously Fréchet differentiable and satisfies additional technical assumptions, there is a symmetry characterization for Bregman divergences similar to the one for $f$-divergences stated in Proposition~\ref{prop:f_divergence_symmetric}. Theorem 12 in~\cite{tsuchida_generalising_2026} states that in this case $D_F$ is symmetric if and only if
-\begin{align*}
-    F(g)=\frac{1}{2}\langle g,Tg\rangle_{\mathcal{H}}+\langle b,g\rangle_{\mathcal{H}} +c,\quad g\in\operatorname{int}(\operatorname{dom}(F)),
-\end{align*}
-where $T$ is some bounded, self-adjoint and strictly positive operator, $b\in\mathcal{H}$ and $c\in\mathbb{R}$. That is, the Hessian $\nabla^2F(g)$ of $F$ at $g\in\mathcal{H}$ is $T$ and, in particular, independent of $g$.
-
-\todo[inline]{State invariance properties for $F$ and carry over to $\phi$}
-
-Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\rangle_2)$ with convex subset $\mathcal{P}$ and functions $F$ of the form $F_{\phi}(p)=\int\phi(p(x))\,dx$. Here, $\phi$ is a differentiable and strictly convex function. In this setting, since $\nabla F_{\phi}(q)=\phi'\circ q$, the Bregman divergence becomes
-\begin{align*}
-    D_{\phi}(p\|q):=D_{F_{\phi}}(p\|q)=\int\left(\phi(p(x))-\phi(q(x))-(p(x)-q(x))\phi'(q(x))\right)\,dx.
-\end{align*}
-\textcolor{red}{We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is affine and $D_{\phi}$ symmetric if and only if $\phi$ is a quadratic function.}
-
-
-An example of such a function $\phi$ is the class of $\beta$-divergences determined by
-\begin{align*}
-    \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(1+\beta)},\quad\beta>0.
-\end{align*}
-
-The $\beta$-divergence $D_{\beta}\coloneqq D_{\phi_{\beta}}$ is thus given by
-\begin{align*}
-    D_{\beta}(p\|q)=\frac{1}{\beta(1+\beta)}\left(\int\left(p(x)^{1+\beta}-(1+\beta)p(x)q(x)^{\beta}+\beta q(x)^{1+\beta}\right)\,dx\right)
-\end{align*}
-
-For $\beta=1$ we get
-\begin{align*}
-    D_1(p\|q)=\frac{1}{2}\int(p(x)-q(x))^2\,dx=\frac{1}{2}\|p-q\|_2^2=\frac{1}{2}\langle p,p\rangle_{L^2}+\frac{1}{2}\langle q,q\rangle_{L^2}-\langle p,q\rangle_{L^2}
-\end{align*}
-
-If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_s(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_1(\hat{f}_h,\hat{f}_s)$. We have
-\begin{align}\label{eq:beta2_exact_formula01}
-    D_1(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},
-\end{align}
-where
-\begin{align}\label{eq:beta2_exact_formula02}
-    G_{hs}=\langle\hat{f}_{h},\hat{f}_s\rangle_{L^2}=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{h^2+s^2}}\left(X_i-X_j\right)
-\end{align}
-The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
-
-\subsection{Approximating integrals using quadrature}
-
-Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}.
-
-\textbf{$\alpha$-divergence and total variation}
+\textbf{Numerical Approximation}
 
 We decide to use the classical quadrature formula
 \begin{align*}
@@ -339,7 +267,25 @@ for the $\alpha$-divergence and truncating the total variation yields
 
 As a consequence, we see that approximating $\alpha$-divergence and total variation using the composite trapezoidal rule allows clean error control. 
 
-\textbf{KL divergence and Jensen-Shannon}
+\subsubsection*{JS divergence}
+
+Another important divergence that belongs to the class of $f$-divergences is the Jensen Shannon divergence. The function $f$ is set to be
+\begin{align*}
+    f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right)
+\end{align*}
+The divergence is then given by
+\begin{align*}
+    \operatorname{JS}(f,g)=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g),
+\end{align*}
+where $H(f)=-\int f\log{f}$ is the Shannon entropy.
+
+The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
+\begin{align}\label{eq:JS_KL_formula}
+    \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}(p\|\frac{p+q}{2})+\operatorname{KL}(q\|\frac{p+q}{2})\right),
+\end{align}
+that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their equally weighted mixture.
+
+\textbf{Numerical Approximation}
 
 \todo[inline]{Gauss-Hermite seems slow, just use composite trapezoidal again but derive truncation error bound}
 
@@ -352,7 +298,66 @@ Using the formula in Equation~\eqref{eq:JS_KL_formula} we can also approximate t
 
 One advantage of the Gauss-Hermite quadrature is that we do not need to care about the truncation error because there is none.
 
-\textbf{$L^2$-distance}
+\subsection{Bregman divergences}
+
+The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. The Bregman divergence is a generalization of the $L^2$ distance and is applied in a variety of instances where the $L^2$-distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
+
+\begin{Def}
+    Let $(\mathcal{H},\langle\cdot,\cdot\rangle)$ be a Hilbert space and $C\subseteq\mathcal{H}$ nonempty, open and convex and $F:C\to\mathbb{R}\cup\{+\infty\}$ a proper, lower semi-continuous, strictly convex, and Fréchet differentiable on the interior of $\text{domain}(\Phi)=\{g\in\mathcal{H}:F(g)<+\infty\}$. The Bregman divergence between $x\in C$ and $y\in C$ is defined by
+    \begin{align}\label{eq:def_bregman_divergence}
+        D_F(x\|y):=F(x)-F(y)-\langle x-y,\nabla F(y)\rangle_{\mathcal{H}}.
+    \end{align}
+\end{Def}
+
+The first order Taylor approximation of $F$ around $y$ evaluated at $x$ is $F(y)+DF(y)[x-y]$, where $DF(x):\mathcal{H}\to\mathbb{R}$ is a bounded linear operator. By the Riesz representation theorem, $DF(y)[h]=\langle\nabla F(y),h\rangle$ for all $h\in\mathcal{H}$ and in particular $DF(y)[x-y]=\langle x-y,\nabla F(y)\rangle_{\mathcal{H}}$. The Bregman divergence $D_F(x\|y)$ as defined in Equation~\eqref{eq:def_bregman_divergence} is therefore the difference between $F$ evaluated at $x$ and the first order Taylor approximation of $F$ around $y$ evaluated at $x$.
+
+
+\textcolor{red}{Similarly to the $f$-divergence, we have invariance $D_F=D_{G}$ if and only if $F-G$ is an affine functional, that is, $F(x)-G(x)=\langle a,x\rangle_{\mathcal{H}}+b$ for some $a\in\mathcal{H}$ and $b\in\mathbb{R}$ and all $x\in C$.}
+
+If $F$ is twice continuously Fréchet differentiable, there is a symmetry characterization for Bregman divergences similar to the one for $f$-divergences stated in Proposition~\ref{prop:f_divergence_symmetric}. Theorem 12 in~\cite{tsuchida_generalising_2026} states that in this case $D_F$ is symmetric if and only if
+\begin{align}\label{eq:general_symmetry_characterization}
+    F(p)=\frac{1}{2}\langle p,Tp\rangle_{\mathcal{H}}+\langle b,p\rangle_{\mathcal{H}} +c,\quad p\in\operatorname{int}(\operatorname{dom}(F)),
+\end{align}
+where $T$ is some bounded, self-adjoint and strictly positive operator, $b\in\mathcal{H}$ and $c\in\mathbb{R}$. That is, the Hessian $\nabla^2F(g)$ of $F$ at $g\in\mathcal{H}$ is $T$ and, in particular, independent of $g$.
+
+Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\rangle_2)$ with functions $F$ of the form $F_{\phi}(p)=\int\phi(p(x))\,dx$, where $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$ is continuously differentiable, strictly convex, $\phi'$ globally Lipschitz-continuous and $\phi(0)=\phi'(0)=0$. In this setting, since $\nabla F_{\phi}(q)=\phi'\circ q$, the Bregman divergence becomes
+\begin{align*}
+    D_{\phi}(p\|q):=D_{F_{\phi}}(p\|q)=\int\left(\phi(p(x))-\phi(q(x))-(p(x)-q(x))\phi'(q(x))\right)\,dx.
+\end{align*}
+
+We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is an affine function. To see the one direction, we know that this is equivalent to $F_{\phi}(p)-F_{\Tilde{\phi}}(p)=\langle a,p\rangle_2+b$ for all $p\in L^2$. In particular for $p(x)=x\mathbf{1}\{x\in[0,1]\}$. Plugging this particular choice of $p$ into the equation yields $\phi(x)-\Tilde{\phi}(x)=x\int_0^1a^2(t)\,dt+b$, that is, $\phi-\Tilde{\phi}$ is affine. The other direction follows from a simple calculation.
+
+We also have that $D_{\phi}$ is symmetric if and only if $\phi$ is a quadratic function. 
+
+If $D_{\phi}$ is symmetric, then $F_{\phi}(p)$ has the representation in Equation~\eqref{eq:general_symmetry_characterization} for all $p\in L^2$. Plugging in the particular choice $p(x)=x\mathbf{1}\{x\in[0,1]\}$ into Equation~\eqref{eq:general_symmetry_characterization} and recalling the condition $\phi(0)=\phi'(0)=0$, we arrive at $\phi$ having the form $\phi(x)=(\kappa/2)x^2$ with $\kappa=\langle\mathbf{1}\{\cdot\in[0,1]\}T\mathbf{1}\{\cdot\in[0,1]\}\rangle$. The converse direction is again a simple calculation.
+
+
+An example of such a function $\phi$ is the class of $\beta$-divergences (see~\cite[Equation~(46)]{cichocki_families_2010}) determined by
+\begin{align*}
+    \phi_{\beta}(t)=\frac{t^{1+\beta}}{\beta(1+\beta)},\quad\beta>0.
+\end{align*}
+
+The $\beta$-divergence $D_{\beta}\coloneqq D_{\phi_{\beta}}$ is thus given by
+\begin{align*}
+    D_{\beta}(p\|q)=\frac{1}{\beta(1+\beta)}\left(\int\left(p(x)^{1+\beta}-(1+\beta)p(x)q(x)^{\beta}+\beta q(x)^{1+\beta}\right)\,dx\right).
+\end{align*}
+
+By the above symmetry characterization, the $\beta$-divergence is symmetric only for $\beta=1$. In this case, we get
+\begin{align*}
+    D_1(p\|q)=\frac{1}{2}\int(p(x)-q(x))^2\,dx=\frac{1}{2}\|p-q\|_2^2=\frac{1}{2}\langle p,p\rangle_{L^2}+\frac{1}{2}\langle q,q\rangle_{L^2}-\langle p,q\rangle_{L^2}.
+\end{align*}
+
+If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_s(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_1(\hat{f}_h,\hat{f}_s)$. We have
+\begin{align}\label{eq:beta2_exact_formula01}
+    D_1(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},
+\end{align}
+where
+\begin{align}\label{eq:beta2_exact_formula02}
+    G_{hs}=\langle\hat{f}_{h},\hat{f}_s\rangle_{L^2}=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{h^2+s^2}}\left(X_i-X_j\right)
+\end{align}
+The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
+
+\textbf{Numerical Approximation}
 
 The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 

@@ -156,16 +156,18 @@
     \end{align*}
     for all $u,v\in\mathbb{R}^{k}$.
 
-    Convexity of $\hat{w}_k$ follows from convexity of linear functions and the pointwise maximum of convex functions. Piecewise linearity also follows directly from the standard fact, that the pointwise maximum of linear functions is piecewise linear. Differentiability almost everywhere follows directly from Rademacher's theorem (see e.g.~[]). The set of non-differentiable points is just the set of all points $u$ where two distinct linear functions $\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and $\langle Y_q^{(k)}-Y_p^{(k)},u\rangle$ coincide. The gradient of $\hat{w}_k$ in all directions $u\notin\mathcal{N}$ is obtained by straightforward differentiation.    
+    Convexity of $\hat{w}_k$ follows from the convexity of linear functions and the pointwise maximum of convex functions. Piecewise linearity also follows directly from the standard fact that the pointwise maximum of linear functions is piecewise linear. Differentiability almost everywhere follows directly from Rademacher's theorem (Lipschitz-continuous functions are differentiable almost everywhere). The set of non-differentiable points is just the set of all points $u$ where two distinct linear functions $\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and $\langle Y_q^{(k)}-Y_p^{(k)},u\rangle$ coincide. The gradient of $\hat{w}_k$ in all directions $u\notin\mathcal{N}$ is obtained by straightforward differentiation.
+
+    By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k-1}$. The set of minimizers
+    \begin{align}\label{eq:set_of_minimizers}
+        \mathcal{X}_k=\arg\min\{\hat{w}_k(u):u\in\mathbb{S}^{k-1}\}
+    \end{align}
+    is not empty. We also note that $\mathcal{X}_k$ is compact, again due to the continuity of $\hat{w}_k$ and the compactness of $\mathbb{S}^{k-1}$. 
+    
+    Denote by $\hat{m}_{k,T}$ the minimum of $\hat{w}_k$ on $\mathbb{S}^{k-1}$. We have $\hat{m}_{k,T}>0$ if and only if the affine hull of $\mathcal{P}_k$ is the whole space $\mathbb{R}^{k}$. Let $\operatorname{aff}(\mathcal{P}_{k,T})=\mathbb{R}^{k}$. Assume for a contradiction that $\hat{m}_{k,T}=0$. Then there would exist a direction $u\in\mathbb{S}^{k-1}$ with $\langle Y_t^{(k)},u\rangle=c_{k,u}$ constant for all observations $t$. Hence, all points $Y_t^{(k)}$ lie inside the affine hyperplane $H_u=\{x\in\mathbb{R}^{k}:\langle u,x\rangle=c_{k,u}\}$ and therefore $\operatorname{aff}(\mathcal{P}_{k,T})\subseteq H_u$. But $H_u$ is not the whole space, leading to a contradiction. If $\operatorname{aff}(\mathcal{P}_{k,T})\ne\mathbb{R}^{k}$, then $V:=\{Y_t^{(k)}-Y_K^{(k)}:t=K,\dots,T\}$ is a proper subspace since $Y_K^{(k)}+V=\operatorname{aff}(\mathcal{P}_{k,T})$. This means that we can find a direction $u'\in V^{\perp},\|u'\|=1$ and this direction fulfills $\langle Y_t^{(k)}-Y_K^{(k)},u\rangle=0$ for all $t=K,\dots,T$, implying that $\langle Y_t^{(k)},u\rangle$ is constant for all $t$ and thus $\hat{m}_{k,T}=0$.
+
+    Take $Y_K^{(k)},\dots,Y_{K+k}^{(k)}$ and let the matrix $M$ be defined by having columns $Y_{K+1}^{(k)}-Y_K^{(k)},\dots,Y_{K+k}^{(k)}-Y_{K}^{(k)}$. The determinant $D=\det{M}$ is a nonzero polynomial in the observations $W=(X_{K-k+1},\dots,X_K,X_{K+1},\dots,X_{K+k})$, implying that $\{x:D(x)=0\}$ has Lebesgue measure zero; see~\cite{caron_zero_nodate}. Note that we need at least $T\ge K+k$ to form this vector $W$. The random vector $W$ has a joint density if the innovations have a density. Therefore, it follows $\mathbb{P}(D(W)\ne0)=1$, that is, the determinant of $M$ is almost surely nonzero. This immediately implies that the differences $Y_{K+1}^{(k)}-Y_K^{(k)},\dots,Y_{K+k}^{(k)}-Y_{K}^{(k)}$ span the whole space $\mathbb{R}^{k}$ and thus $\operatorname{aff}(\mathcal{P}_{k,T})=\mathbb{R}^{k}$. Combining the arguments, we find that $\hat{m}_{k,T}>0$ is almost surely the case given that $T\ge K+k$.
 \end{proof}
-
-By Weierstrass' extreme value theorem, $\hat{w}_k$ has a global minimum on $S^{k-1}$. The set of minimizers
-\begin{align}\label{eq:set_of_minimizers}
-    \mathcal{X}_k=\arg\min\{\hat{w}_k(u):u\in\mathbb{S}^{k-1}\}
-\end{align}
-is not empty. We also note that $\mathcal{X}_k$ is compact, again due to the continuity of $\hat{w}_k$ and the compactness of $\mathbb{S}^{k-1}$. Denote by $\hat{m}_k$ the minimum of $\hat{w}_k$ on $\mathbb{S}^{k-1}$.
-
-Under the condition that the affine hull of $\mathcal{P}_{k,T}$ is the whole space $\mathbb{R}^{k}$ we have that the minimum width $\hat{m}_{k,T}$ is strictly positive. But we also have $\mathbb{P}(\operatorname{aff}(\mathcal{P}_{k,T})=\mathbb{R}^{k})=1$ and thus $\hat{m}_{k,T}>0$ almost surely.
 
 \subsection{Proof of Lemma~\ref{lem:weak_sharp_minima_application}}\label{sec:proof_weak_sharp_minima_application}
 
