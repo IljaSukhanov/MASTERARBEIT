@@ -1,0 +1,26 @@
+{
+  "profile": "thesis",
+  "settings": {
+    "sample_size": 200,
+    "repetitions": 1000,
+    "grid_size": 201,
+    "sigma2": 1.0,
+    "lambda_value": 1.0,
+    "h_min": 0.01,
+    "h_max": 2.0,
+    "m_x": 6001,
+    "padding": 6.0,
+    "base_seed": 910000,
+    "implementation_version": 2,
+    "js_quadrature": "composite_trapezoidal"
+  },
+  "methods": [
+    "L2",
+    "TV",
+    "H2",
+    "JS",
+    "ISE"
+  ],
+  "tail_mass_bound": 1.973175290075403e-09,
+  "maximum_grid_mass_error": 8.222311720373909e-11
+}

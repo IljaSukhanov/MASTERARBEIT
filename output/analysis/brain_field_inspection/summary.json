@@ -1,0 +1,172 @@
+{
+  "source": "https://zenodo.org/records/4940267",
+  "recording": "eeg2.edf",
+  "sample_rate_hz": 256.0,
+  "duration_seconds": 3761.0,
+  "eeg_channels": 19,
+  "window_seconds": 5,
+  "complete_windows": 752,
+  "consensus_seizure_intervals_seconds": [],
+  "maximum_peak": {
+    "channel": "T3",
+    "window": 705,
+    "uv": 804.9039932554087
+  },
+  "channels": [
+    {
+      "channel": "Fp1",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 61.8708412350843,
+      "p95_peak_uv": 122.58103602023377,
+      "max_peak_uv": 335.3914211706897,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "Fp2",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 61.8708412350843,
+      "p95_peak_uv": 114.43284903637785,
+      "max_peak_uv": 341.3423442487874,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "F3",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 45.5474497131263,
+      "p95_peak_uv": 95.41726274071503,
+      "max_peak_uv": 345.7673896145516,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "F4",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 46.23059468367592,
+      "p95_peak_uv": 95.84765850016777,
+      "max_peak_uv": 287.3262732322155,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "F7",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 66.83344380016479,
+      "p95_peak_uv": 129.7412524910729,
+      "max_peak_uv": 226.90151582384715,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "F8",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 69.8851992248301,
+      "p95_peak_uv": 132.11084233375018,
+      "max_peak_uv": 235.29384324167586,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "Fz",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 1.064614398633239,
+      "p95_peak_uv": 2.895667653431701,
+      "max_peak_uv": 115.05467950987259,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "C3",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 81.63095760979013,
+      "p95_peak_uv": 132.362612156285,
+      "max_peak_uv": 331.57672688985804,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "C4",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 83.61809863582221,
+      "p95_peak_uv": 146.2328405613885,
+      "max_peak_uv": 200.95459471419508,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "Cz",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 66.07400494399826,
+      "p95_peak_uv": 122.95172605975586,
+      "max_peak_uv": 340.41981762138766,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "T3",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 100.7044290139479,
+      "p95_peak_uv": 220.02043672978954,
+      "max_peak_uv": 804.9039932554087,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "T5",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 128.0176400646992,
+      "p95_peak_uv": 229.3054026093323,
+      "max_peak_uv": 344.8448629871518,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "T4",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 103.22212723929533,
+      "p95_peak_uv": 184.00524333017987,
+      "max_peak_uv": 306.5453324076052,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "T6",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 140.30445564897627,
+      "p95_peak_uv": 244.46499768135646,
+      "max_peak_uv": 388.9427288735624,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "P3",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 114.43732842494,
+      "p95_peak_uv": 225.35337933439197,
+      "max_peak_uv": 444.1795020599993,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "P4",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 127.02931955168333,
+      "p95_peak_uv": 227.95122144535614,
+      "max_peak_uv": 406.0395592516861,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "Pz",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 131.07639548936368,
+      "p95_peak_uv": 241.65738269066455,
+      "max_peak_uv": 429.9888393353067,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "O1",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 122.07021698660219,
+      "p95_peak_uv": 207.38931927167562,
+      "max_peak_uv": 289.9132653431807,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    },
+    {
+      "channel": "O2",
+      "min_peak_uv": 0.003499999999803549,
+      "median_peak_uv": 108.41711146122589,
+      "p95_peak_uv": 179.48171591311373,
+      "max_peak_uv": 309.90926337473684,
+      "prefilter": "HP:0.000 Hz LP:0.0 Hz N:0.0"
+    }
+  ],
+  "processing": "Original EDF reference and acquisition filtering retained; no additional filtering, detrending, artefact removal or marginal transformation.",
+  "layout": "MNE-Python v1.10.2 standard_1020 reference coordinates; not subject-specific coordinates.",
+  "interpretation": "Descriptive inspection of one recording, not a max-stability test or diagnostic analysis."
+}
