@@ -35,11 +35,7 @@ The question of how to choose the bandwidth $h$ is widely known in the literatur
     The mean integrated squared error (MISE) is $\operatorname{MISE}(h)\coloneqq\mathbb{E}[\operatorname{ISE}(h)]$.
 \end{Def}
 
-
-
 \subsection*{Cross-validation methods}
-
-\todo[inline]{Give consistency result for cross-validation bandwidth choice}
 
 The ISE can be written as
 \begin{align*}
@@ -55,6 +51,8 @@ The Ordinary Least Squares Cross-Validation bandwidth is
 \begin{align*}
     \hat{h}_{\operatorname{CV}}=\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h)=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
 \end{align*}
+
+It is known that \textcolor{red}{(add source!!)} $\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0)=\mathbf{O}(n^{-1})$, that is, the integrated squared error evaluated at the cross-validation selected bandwidth converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ to zero at rate $n^{-1}$.
 
 \subsection*{Plug-in methods}
 
@@ -287,7 +285,7 @@ that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ a
 
 \textbf{Numerical Approximation}
 
-\todo[inline]{Gauss-Hermite seems slow, just use composite trapezoidal again but derive truncation error bound}
+\todo[inline]{08.10: Gauss-Hermite seems slow, just use composite trapezoidal again but derive truncation error bound}
 
 For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$ by $\sum_{m=1}^{M}w_mf(x_m)$ with the nodes $x_m$ being the $M$-th Hermite Polynomial $H_M$ and weights $w_m=(2^{M-1}M!\sqrt{\pi})/(M^2H_{M-1}^2(x_m))$. For reference on Gauss-Hermite quadrature, see~\cite[Section~25.4.46]{abramowitz_stegun1972}. We can write (and consequently approximate) the KL-divergence between two kernel density estimates $\hat{f}_h$ and $\hat{f}_g$ as
 \begin{align*}
@@ -303,7 +301,7 @@ One advantage of the Gauss-Hermite quadrature is that we do not need to care abo
 The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. The Bregman divergence is a generalization of the $L^2$ distance and is applied in a variety of instances where the $L^2$-distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
 
 \begin{Def}
-    Let $(\mathcal{H},\langle\cdot,\cdot\rangle)$ be a Hilbert space and $C\subseteq\mathcal{H}$ nonempty, open and convex and $F:C\to\mathbb{R}\cup\{+\infty\}$ a proper, lower semi-continuous, strictly convex, and Fréchet differentiable on the interior of $\text{domain}(\Phi)=\{g\in\mathcal{H}:F(g)<+\infty\}$. The Bregman divergence between $x\in C$ and $y\in C$ is defined by
+    Let $(\mathcal{H},\langle\cdot,\cdot\rangle)$ be a Hilbert space and $C\subseteq\mathcal{H}$ nonempty, open and convex and $F:C\to\mathbb{R}$ strictly convex, and Fréchet differentiable on $C$. The Bregman divergence between $x\in C$ and $y\in C$ is defined by
     \begin{align}\label{eq:def_bregman_divergence}
         D_F(x\|y):=F(x)-F(y)-\langle x-y,\nabla F(y)\rangle_{\mathcal{H}}.
     \end{align}
@@ -320,16 +318,14 @@ If $F$ is twice continuously Fréchet differentiable, there is a symmetry charac
 \end{align}
 where $T$ is some bounded, self-adjoint and strictly positive operator, $b\in\mathcal{H}$ and $c\in\mathbb{R}$. That is, the Hessian $\nabla^2F(g)$ of $F$ at $g\in\mathcal{H}$ is $T$ and, in particular, independent of $g$.
 
-Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\rangle_2)$ with functions $F$ of the form $F_{\phi}(p)=\int\phi(p(x))\,dx$, where $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$ is continuously differentiable, strictly convex, $\phi'$ globally Lipschitz-continuous and $\phi(0)=\phi'(0)=0$. In this setting, since $\nabla F_{\phi}(q)=\phi'\circ q$, the Bregman divergence becomes
+Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\rangle_2)$ with functions $F$ of the form $F_{\phi}(p)=\int\phi(p(x))\,dx$, where $\phi:\mathbb{R}\to\mathbb{R}$ is continuously differentiable, strictly convex, $\phi'$ globally Lipschitz-continuous and $\phi(0)=\phi'(0)=0$. In this setting, since $\nabla F_{\phi}(q)=\phi'\circ q$, the Bregman divergence becomes
 \begin{align*}
     D_{\phi}(p\|q):=D_{F_{\phi}}(p\|q)=\int\left(\phi(p(x))-\phi(q(x))-(p(x)-q(x))\phi'(q(x))\right)\,dx.
 \end{align*}
 
-We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is an affine function. To see the one direction, we know that this is equivalent to $F_{\phi}(p)-F_{\Tilde{\phi}}(p)=\langle a,p\rangle_2+b$ for all $p\in L^2$. In particular for $p(x)=x\mathbf{1}\{x\in[0,1]\}$. Plugging this particular choice of $p$ into the equation yields $\phi(x)-\Tilde{\phi}(x)=x\int_0^1a^2(t)\,dt+b$, that is, $\phi-\Tilde{\phi}$ is affine. The other direction follows from a simple calculation.
+We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is an affine function. To see the one direction, we know that this is equivalent to $F_{\phi}(p)-F_{\Tilde{\phi}}(p)=\langle a,p\rangle_2+b$ for all $p\in L^2$. In particular for $p_t(x)=t\mathbf{1}\{x\in[0,1]\}$. Plugging this particular choice of $p_t$ into the equation yields $\phi(x)-\Tilde{\phi}(x)=t\int_0^1a(x)\,dx+b$, that is, $\phi-\Tilde{\phi}$ is affine. The other direction follows from a simple calculation.
 
-We also have that $D_{\phi}$ is symmetric if and only if $\phi$ is a quadratic function. 
-
-If $D_{\phi}$ is symmetric, then $F_{\phi}(p)$ has the representation in Equation~\eqref{eq:general_symmetry_characterization} for all $p\in L^2$. Plugging in the particular choice $p(x)=x\mathbf{1}\{x\in[0,1]\}$ into Equation~\eqref{eq:general_symmetry_characterization} and recalling the condition $\phi(0)=\phi'(0)=0$, we arrive at $\phi$ having the form $\phi(x)=(\kappa/2)x^2$ with $\kappa=\langle\mathbf{1}\{\cdot\in[0,1]\}T\mathbf{1}\{\cdot\in[0,1]\}\rangle$. The converse direction is again a simple calculation.
+We also have that $D_{\phi}$ is symmetric if and only if $\phi$ is a quadratic function given that we additionally assume $\phi\in C^2(\mathbb{R})$. If $D_{\phi}$ is symmetric, then $F_{\phi}(p)$ has the representation in Equation~\eqref{eq:general_symmetry_characterization} for all $p\in L^2$. Plugging in the particular choice $p(x)=x\mathbf{1}\{x\in[0,1]\}$ into Equation~\eqref{eq:general_symmetry_characterization} and recalling the condition $\phi(0)=\phi'(0)=0$, we arrive at $\phi$ having the form $\phi(x)=(\kappa/2)x^2$ with $\kappa=\langle\mathbf{1}\{\cdot\in[0,1]\}T\mathbf{1}\{\cdot\in[0,1]\}\rangle$. The converse direction is again a simple calculation.
 
 
 An example of such a function $\phi$ is the class of $\beta$-divergences (see~\cite[Equation~(46)]{cichocki_families_2010}) determined by
@@ -376,7 +372,7 @@ Finally, we approximate $G_{rs}$ by truncating the integral and applying the com
     G_{rs}\approx\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
 \end{align*}
 
-\todo[inline]{Compare exact, quadrature and Fourier in terms of speed and accuracy}
+\todo[inline]{08.10: Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
 
 \section{Assembly of Scale Similarity Matrices}
 
