@@ -1,0 +1,44 @@
+{
+  "source_run_ids": {
+    "1": "028fa8664f9c",
+    "10": "1de0f2734d87",
+    "100": "4e41e6f126cf",
+    "1000": "d7062cba5620"
+  },
+  "common_configuration": {
+    "profile": "thesis",
+    "settings": {
+      "repetitions": 1000,
+      "grid_size": 201,
+      "sigma2": 1.0,
+      "h_min": 0.01,
+      "h_max": 2.0,
+      "fft_half_width": 12.0,
+      "fft_spatial_points": 8192,
+      "seed": 20260830,
+      "maximum_sample_size": 1000
+    },
+    "sample_sizes": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+    ],
+    "method": "fft_l2_spectral",
+    "implementation_version": 1
+  },
+  "analysis_type": "descriptive analysis of existing selections; population matrix reference",
+  "thresholds": [
+    0.2,
+    0.25,
+    0.3
+  ],
+  "checkpoint_count_verified": 40,
+  "simulations_rerun": false
+}
