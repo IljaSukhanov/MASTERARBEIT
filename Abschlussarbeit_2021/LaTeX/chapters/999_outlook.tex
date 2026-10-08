@@ -111,3 +111,18 @@ So again $H^2(p,q)\le 1$ and $1-H^2(p,q)=\int\sqrt{pq}$ is a similarity measure 
     f(t)&=\frac{1}{2}t\log{\underbrace{\frac{2t}{1+t}}_{\le 2}}+\frac{1}{2}\log{\underbrace{\frac{2}{1+t}}_{\le 2}}\le\frac{1}{2}\log{2}(t+1),\quad t\ge0,\\
     \operatorname{JS}(p,q)&=\int qf(p/q)\le\int q\frac{1}{2}\log{2}\left(\frac{p}{q}+1\right)=\log{2}
 \end{align*}
+
+\textbf{Perron vector conjecture}
+
+\begin{conjecture}\label{conjecture:argmax_perron_argmin_hat_Q}
+    Let $v^{(\lambda)}$ be the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\lambda D(\hat{f}_{h_i},\hat{f}_{h_j}))}$, where $D$ is the $L^2$-divergence. Let $\hat{Q}_{n,\beta}(h)$ be like in Equation~\eqref{eq:hat_Q_n_beta}. Let $i^*_{N,\lambda_N}=\arg\max_{1\le i\le N} v_i^{(\lambda)}$ be the index where the Perron vector has its largest entry. Then,
+    \begin{align*}
+        \operatorname{dist}\!\left(
+        h_{i^*_{N,\lambda_N}},
+        \operatorname*{arg\,min}_{h\in[h_{\min},h_{\max}]}
+        \hat{Q}_{n,\beta}(h)
+        \right)
+        \to 0.
+    \end{align*}
+    for $N\to\infty$, $\lambda_N\to\infty$, $\lambda_N/N^2\to0$.
+\end{conjecture}
