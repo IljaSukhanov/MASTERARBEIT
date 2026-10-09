@@ -112,6 +112,16 @@ So again $H^2(p,q)\le 1$ and $1-H^2(p,q)=\int\sqrt{pq}$ is a similarity measure 
     \operatorname{JS}(p,q)&=\int qf(p/q)\le\int q\frac{1}{2}\log{2}\left(\frac{p}{q}+1\right)=\log{2}
 \end{align*}
 
+\textbf{Asymmetric divergences}
+
+\begin{itemize}
+    \item Kullback-Leibler: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$)
+\end{itemize}
+
+\textbf{Data coming from the Gaussian mixture model}
+
+Later we inspect data coming from a Gaussian mixture model. In such cases, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for the candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
+
 \textbf{Perron vector conjecture}
 
 \begin{conjecture}\label{conjecture:argmax_perron_argmin_hat_Q}
