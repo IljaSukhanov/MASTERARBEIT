@@ -792,31 +792,37 @@ Next, we state the main theorem of this thesis.
     \begin{align*}
         S_{i_Nj_N}=\exp{(-\lambda_ND_{i_Nj_N})}=\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}\exp{(-\lambda_N\mathbf{o}(\delta_N^2))}.
     \end{align*}
-    Let $\rho_N=\mathbf{o}(\delta_N^2)$. By the first order expansion of the exponential function we have $\exp{(-\lambda_N\rho_N)}=1-\lambda_N\rho_N+\mathbf{o}(\lambda_N\rho_N)$.
-
-    It follows
+    Let $\rho_N=\mathbf{o}(\delta_N^2)$. Because $\lambda_N/N^2\to0$ for $N\to\infty$ we have by the first order expansion of the exponential function $\exp{(-\lambda_N\rho_N)}=1+\mathbf{o}(1)$. It follows
     \begin{align}\label{eq:similarity_approximation}
-        S_{i_Nj_N}=\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}(1+\mathbf{o}(\delta_N^2))
+        S_{i_Nj_N}=\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}(1+\mathbf{o}(1))
     \end{align}
-
     This means that for nearby bandwidths $h_{i_N}$ and $h_{j_N}$ ($N$ large), the similarity between the kernel density estimates $\hat{f}_{h_{i_N}}$ and $\hat{f}_{h_{j_N}}$ is approximately given by $\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}$.
 
-    \todo[inline]{CONTINUE HERE}
+    Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}$ be the $i_N$-th row sum of $S^{(N)}$ and set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$.
 
-    Let $R_i=\sum_jS_{ij}$ be the $i$-th row sum of $S$. Then
-    \begin{equation}\label{eq:row_sum_connection_to_hat_Q}
-    \begin{aligned}
-        \Delta_{\psi}R_i
-        &=\sum_{j=1}^{N}\Delta_{\psi}S_{ij}
-        \approx\sum_{j=1}^{N}
-        \underbrace{(\delta_{i,j+1}-\delta_{i,j})}_{=\Delta_{\psi}}
-        g_i(\delta_{ij})\\
-        &\approx\int_{\mathbb{R}}
-        \underbrace{\exp\left(-\lambda\delta^2\hat{Q}_{n,\beta}(h_i)\right)}_{=g_i(\delta)}\,d\delta=\sqrt{\frac{\pi}{\lambda\hat{Q}_{n,\beta}(h_i)}}.
-    \end{aligned}
-    \end{equation}
-    where the first approximation is due to Equation~\eqref{eq:similarity_approximation} and the second one is the Riemann sum approximation. \textcolor{red}{Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.}
+    Let $A>0$ be fixed and define the set $I_N(A):=\{j=1,\dots,N:\epsilon_N(j_N-i_N)\le A\}$.
+
+    Then
+    \begin{align*}
+        \sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}&=\sum_{j=1}^{N}\epsilon_N\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}\\&
+        =\sum_{j\in I_N(A)}\cdots+\sum_{j\notin I_N(A)}\cdots\\&
+        =\sum_{j\in I_N(A)}e^{-t_{Nj}^2\hat{Q}_r(h_{i_N})}+\underbrace{\sum_{j\in I_N(A)}\eta_{N_j}}_{\to0\text{ for }N\to\infty}\\&+\underbrace{\sum_{j\notin I_N(A)}\cdots}_{\to0\text{ for }A\to\infty\text{ and }N\to\infty}\\&
+    \end{align*}
+
+    Assume that $\hat{Q}_r$ is continuous in $h_0$.
+
+    We continue working on the remaining non-vanishing sum:
+    \begin{align*}
+        \sum_{j\in I_N(A)}\epsilon_Ne^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}=\sum_{j\in I_N(A)}(t_{N,j+1}-t_{N,j})e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}\to\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt,\quad N\to\infty.
+    \end{align*}
+
+    Finally, letting $A\to\infty$, we arrive at
+    \begin{align}\label{eq:row_sum_connection_to_hat_Q}
+        \lim\limits_{N\to\infty}\sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}=\int\limits_{\mathbb{R}}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
+    \end{align}
 \end{proof}
+
+\textcolor{red}{Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.}
 
 Let $v$ be the Perron vector of $S$, that is,
 \begin{align}\label{eq:perron_vector003}
@@ -824,6 +830,8 @@ Let $v$ be the Perron vector of $S$, that is,
 \end{align}
 
 \todo[inline]{Somehow establish connection to the Perron vector of $S$ trough the row sums $R_i$ and Equations~\eqref{eq:row_sum_connection_to_hat_Q} and~\eqref{eq:perron_vector003}}
+
+\todo[inline]{Laplace method!!}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
