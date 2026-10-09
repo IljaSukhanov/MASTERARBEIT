@@ -1,0 +1,229 @@
+{
+  "perron_solver": "stabilized_lanczos_v1",
+  "comparison_baseline": "Marker values recovered from the four thesis PDFs saved before this rerun.",
+  "figures": {
+    "figure_3_1": {
+      "profiles": [
+        {
+          "lambda": 1.0,
+          "maximum_absolute_component_difference": 1.3485740302243698e-14,
+          "old_peak_index": 78,
+          "new_peak_index": 78,
+          "selected_bandwidth": 0.08803054014436926
+        },
+        {
+          "lambda": 10.0,
+          "maximum_absolute_component_difference": 4.8770015803611955e-14,
+          "old_peak_index": 82,
+          "new_peak_index": 82,
+          "selected_bandwidth": 0.0984183553599184
+        },
+        {
+          "lambda": 100.0,
+          "maximum_absolute_component_difference": 2.8773424615158305e-14,
+          "old_peak_index": 107,
+          "new_peak_index": 107,
+          "selected_bandwidth": 0.19762560300563428
+        },
+        {
+          "lambda": 1000.0,
+          "maximum_absolute_component_difference": 1.1268763699945339e-14,
+          "old_peak_index": 105,
+          "new_peak_index": 105,
+          "selected_bandwidth": 0.1869053959878426
+        }
+      ],
+      "maximum_absolute_component_difference": 4.8770015803611955e-14,
+      "output_pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf",
+      "before_sha256": "f038084183d46f7bff9963a6678185844801a0038e0c2a8491e441e23e1b4023",
+      "after_sha256": "4a602bb0296b93eab4986617a381c05b1393633be1df68899a0aff069644c3e3",
+      "render_comparison": {
+        "same_dimensions": true,
+        "maximum_channel_difference": 0,
+        "different_pixel_count": 0,
+        "mean_channel_difference": 0.0
+      }
+    },
+    "figure_3_3": {
+      "total_points": 101,
+      "changed_points": 0,
+      "series": [
+        {
+          "series": "fixed N=201",
+          "points": 101,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.17949871654986185,
+          "new_final_bandwidth": 0.17949871654986185
+        }
+      ],
+      "previous_pdf_grid_recovery_error": 1.942890293094024e-16,
+      "closest_pair_bandwidths": [
+        0.17480594464853602,
+        0.17949871654986185
+      ],
+      "output_pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf",
+      "before_sha256": "fdd8ffe1f90732ec021f5e426ebe844fb3603abc850769730621822fd80dde69",
+      "after_sha256": "f3b3701620b7f1a86255a57cdb9b0b8e178c3c62cb83beb5e379a9890f07c0c3",
+      "render_comparison": {
+        "same_dimensions": true,
+        "maximum_channel_difference": 0,
+        "different_pixel_count": 0,
+        "mean_channel_difference": 0.0
+      }
+    },
+    "figure_3_2": {
+      "total_points": 796,
+      "changed_points": 0,
+      "series": [
+        {
+          "series": "1.0",
+          "points": 199,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.08778540118342038,
+          "new_final_bandwidth": 0.08778540118342038
+        },
+        {
+          "series": "10.0",
+          "points": 199,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.09863815904822834,
+          "new_final_bandwidth": 0.09863815904822834
+        },
+        {
+          "series": "100.0",
+          "points": 199,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.19641690233654255,
+          "new_final_bandwidth": 0.19641690233654255
+        },
+        {
+          "series": "1000.0",
+          "points": 199,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.1872705938196342,
+          "new_final_bandwidth": 0.1872705938196342
+        }
+      ],
+      "previous_pdf_grid_recovery_error": 2.309541446976482e-13,
+      "output_pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf",
+      "before_sha256": "eaeaaf4fafc45e1ecbcea77e42d69c43520a7f362fcc0dac3105f30979b92d78",
+      "after_sha256": "90d24f501d89fff56d8d246bebc3ca9cc5b86a3b613652d6ec49ae39124c3e46",
+      "render_comparison": {
+        "same_dimensions": true,
+        "maximum_channel_difference": 0,
+        "different_pixel_count": 0,
+        "mean_channel_difference": 0.0
+      }
+    },
+    "figure_3_4": {
+      "total_points": 180,
+      "changed_points": 0,
+      "series": [
+        {
+          "series": "$N^{1/2}$ (admissible)",
+          "points": 30,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.19835647859034025,
+          "new_final_bandwidth": 0.19835647859034025
+        },
+        {
+          "series": "$N$ (admissible)",
+          "points": 30,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.18190740050695686,
+          "new_final_bandwidth": 0.18190740050695686
+        },
+        {
+          "series": "$N^{3/2}$ (admissible)",
+          "points": 30,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.17715009168561396,
+          "new_final_bandwidth": 0.17715009168561396
+        },
+        {
+          "series": "$1$ (not localized)",
+          "points": 30,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.08769394575487216,
+          "new_final_bandwidth": 0.08769394575487216
+        },
+        {
+          "series": "$N^2$ (mesh-scale)",
+          "points": 30,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.17652525597802704,
+          "new_final_bandwidth": 0.17652525597802704
+        },
+        {
+          "series": "$N^3$ (collapse)",
+          "points": 30,
+          "changed_points": 0,
+          "maximum_grid_index_change": 0,
+          "maximum_absolute_bandwidth_change": 0.0,
+          "maximum_relative_bandwidth_change": 0.0,
+          "old_final_bandwidth": 0.17652525597802704,
+          "new_final_bandwidth": 0.17652525597802704
+        }
+      ],
+      "previous_pdf_grid_recovery_error": 9.928169397710462e-14,
+      "continuous_reference": 0.17642362671618841,
+      "maximum_relative_residual": 2.0924419566280848e-14,
+      "output_pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+      "before_sha256": "d91da957d4f9789756d70dae921eca8c384e0a9346dd9e5c99c42181f1a878a3",
+      "after_sha256": "9e4ed1390daecf8ec5adb053995e2f9656ece549b71141eeb1a4632420a896b2",
+      "render_comparison": {
+        "same_dimensions": true,
+        "maximum_channel_difference": 0,
+        "different_pixel_count": 0,
+        "mean_channel_difference": 0.0
+      }
+    }
+  },
+  "elapsed_seconds": 121.07579666600031,
+  "major_changes_detected": false,
+  "visual_review": {
+    "status": "passed",
+    "figures_reviewed": [
+      "figure_3_1",
+      "figure_3_2",
+      "figure_3_3",
+      "figure_3_4"
+    ],
+    "render_size": "1200 pixels on the longest side",
+    "all_rendered_images_pixel_identical": true
+  },
+  "post_run_perron_tests": {
+    "count": 20,
+    "status": "passed"
+  }
+}

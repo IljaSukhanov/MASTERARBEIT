@@ -3,6 +3,13 @@ from __future__ import annotations
 import numpy as np
 
 from .density import exact_gaussian_kde_l2_gram
+from .perron import (
+    doob_mass_from_perron,
+    perron_eigenpair,
+    perron_eigenpair_from_divergence,
+    perron_vector,
+    perron_vector_from_divergence,
+)
 
 # 0 ... worked through
 # 1 ... inspect later
@@ -105,61 +112,40 @@ def first_order_perron_vector(
     return approximation / approximation.sum()
 
 
-# 0
-# compute the normalized Perron vector of a symmetric nonnegative matrix
-def perron_vector(matrix: np.ndarray) -> np.ndarray:
-    matrix = np.asarray(matrix, dtype=float)
-
-    if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
-        raise ValueError("The matrix must be square.")
-
-    if not np.allclose(matrix, matrix.T, atol=1e-12):
-        raise ValueError("The matrix must be symmetric.")
-
-    if np.any(matrix < 0):
-        raise ValueError("The matrix must be nonnegative.")
-
-    eigenvalues, eigenvectors = np.linalg.eigh(matrix)
-    vector = eigenvectors[:, int(np.argmax(eigenvalues))]
-    if np.sum(vector) < 0:
-        vector = -vector
-    return vector / np.sum(vector)
-
-# 1
-# computes the normalized Perron vector of a not necessarily symmetric nonnegative matrix using the power method
-def power_perron_vector(
-    matrix: np.ndarray,
-    tolerance: float = 1e-13,
-    max_iterations: int = 10_000,
-) -> np.ndarray:
-    matrix = np.asarray(matrix, dtype=float)
-    vector = np.full(matrix.shape[0], 1.0 / matrix.shape[0])
-    for _ in range(max_iterations):
-        updated = matrix @ vector
-        updated /= updated.sum()
-        if np.max(np.abs(updated - vector)) < tolerance:
-            return updated
-        vector = updated
-    return vector
-
-
-# 1
 def doob_stationary_mass(matrix: np.ndarray) -> np.ndarray:
-    right = power_perron_vector(matrix=matrix)
-    left = power_perron_vector(matrix=np.asarray(matrix).T)
-    mass = left * right
-    return mass / mass.sum()
+    """Compute symmetric Doob mass using the centralized Perron solver once."""
+    return doob_mass_from_perron(perron_vector(matrix))
 
 
 # 0
 def spectral_choice_from_similarity(
         similarity_matrix: np.ndarray,
 ) -> dict[str, np.ndarray | int | float]:
-    vector = perron_vector(matrix=similarity_matrix)
+    result = perron_eigenpair(similarity_matrix)
+    vector = result.vector
+    selected_index = result.selected_index
     return {
-        "selected_index": int(np.argmax(vector)),
+        "selected_index": selected_index,
         "perron_vector": vector,
-        "selected_weight": float(np.max(vector)),
+        "selected_weight": float(vector[selected_index]),
+        "relative_residual": result.relative_residual,
+        "relative_gap": result.relative_gap,
+    }
+
+
+def spectral_choice_from_divergence(
+    divergence_matrix: np.ndarray,
+    lambda_value: float = 1.0,
+) -> dict[str, np.ndarray | int | float]:
+    """Select exp(-lambda*D)'s Perron peak before exponent underflow occurs."""
+    result = perron_eigenpair_from_divergence(divergence_matrix, lambda_value)
+    selected_index = result.selected_index
+    return {
+        "selected_index": selected_index,
+        "perron_vector": result.vector,
+        "selected_weight": float(result.vector[selected_index]),
+        "relative_residual": result.relative_residual,
+        "relative_gap": result.relative_gap,
     }
 
 
@@ -177,10 +163,10 @@ def select_spectral_bandwidth(
     d2 = beta2_divergence_matrix(samples=samples, h_grid=h_grid)
     similarity = np.exp(-lambda_value * d2)
     np.fill_diagonal(similarity, 1.0)
-    vector = perron_vector(matrix=similarity)
+    result = perron_eigenpair_from_divergence(d2, lambda_value)
     return {
-        "selected_index": int(np.argmax(vector)),
-        "perron_vector": vector,
+        "selected_index": result.selected_index,
+        "perron_vector": result.vector,
         "similarity_matrix": similarity,
         "beta2_divergence": d2,
     }

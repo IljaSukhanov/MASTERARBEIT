@@ -21,10 +21,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import PercentFormatter
-from scipy.linalg import eigh
 
 from kde_tools.bandwidths import gaussian_mise_oracle_bandwidth
 from kde_tools.pdf_export import enable_automatic_pdf_saving
+from kde_tools.perron import PERRON_SOLVER_VERSION, perron_eigenpair_from_divergence
 from kde_tools.similarities import population_gaussian_beta2_divergence_matrix
 
 NOTEBOOK = "fast_l2_bandwidth_distributions_vs_n_lambda"
@@ -46,12 +46,7 @@ def write_rows(path, rows):
 
 
 def population_choice(divergence, lambda_value):
-    similarity = np.exp(-lambda_value * divergence)
-    _, vectors = eigh(similarity, subset_by_index=[len(similarity) - 1] * 2)
-    vector = vectors[:, 0]
-    if vector.sum() < 0:
-        vector = -vector
-    return int(vector.argmax())
+    return perron_eigenpair_from_divergence(divergence, lambda_value).selected_index
 
 
 def main():
@@ -215,6 +210,8 @@ As an additional original deterministic calculation, replacing each empirical KD
 
 Run `python3 Code/Code_kde/outputs/analysis/fast_l2_lambda_comparison/analyse_saved_results.py` from the project root. It reads only the completed runs and writes analysis CSVs and this summary. The comparison figure is automatically exported to the existing notebook's PDF folder by [pdf_export.py]({(CODE / 'kde_tools/pdf_export.py').as_posix()}). Mean Monte Carlo SE is the sample standard deviation divided by sqrt(M). Approximate 95% Monte Carlo intervals use ±1.96 SE; they describe simulation uncertainty in an estimated mean, not the spread of individual selected bandwidths (Morris et al., Table 6).
 
+The population references use the shared [Perron solver]({(CODE / 'kde_tools/perron.py').as_posix()}), version `{PERRON_SOLVER_VERSION}`. Historical sample selections retain the computation recorded in their source manifests.
+
 Source runs:
 
 {source_links}
@@ -223,6 +220,7 @@ Source runs:
     (HERE / "analysis_manifest.json").write_text(json.dumps({
         "source_run_ids": RUNS, "common_configuration": baseline,
         "analysis_type": "descriptive analysis of existing selections; population matrix reference",
+        "population_perron_solver": PERRON_SOLVER_VERSION,
         "thresholds": THRESHOLDS, "checkpoint_count_verified": 40,
         "simulations_rerun": False,
     }, indent=2) + "\n")

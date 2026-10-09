@@ -10,7 +10,7 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_kde_values,
 )
-from .fourier import beta2_similarity_matrix_fft
+from .fourier import beta2_divergence_matrix_fft
 from .quadrature import (
     quadrature_grid_for_kdes,
     quadrature_similarity_matrices,
@@ -18,6 +18,7 @@ from .quadrature import (
 )
 from .similarities import (
     select_spectral_bandwidth,
+    spectral_choice_from_divergence,
     spectral_choice_from_similarity,
 )
 
@@ -84,14 +85,13 @@ def beta2_bandwidth_selection_counts(
             )
             selected_index = int(selection["choice"]["selected_index"])
         else:
-            similarity = beta2_similarity_matrix_fft(
+            divergence = beta2_divergence_matrix_fft(
                 samples=samples,
                 h_grid=h_grid,
-                lambda_value=lambda_value,
                 half_width=half_width,
                 spatial_points=spatial_points,
             )
-            choice = spectral_choice_from_similarity(similarity_matrix=similarity)
+            choice = spectral_choice_from_divergence(divergence, lambda_value)
             selected_index = int(choice["selected_index"])
         counts[selected_index] += 1
     return counts

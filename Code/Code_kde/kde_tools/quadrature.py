@@ -4,6 +4,7 @@ import numpy as np
 
 from .density import gaussian_kde_values
 from .similarities import (
+    spectral_choice_from_divergence,
     spectral_choice_from_similarity,
     squared_l2_distance_from_gram,
 )
@@ -192,16 +193,26 @@ def compute_quadrature_similarity_matrices(
         h_grid=h_grid,
         x_grid=x_grid,
     )
-    matrix = quadrature_similarity_matrices(
-        density_values=density_values,
-        x_grid=x_grid,
-        similarity_name=similarity_name,
-        lambda_value=lambda_value,
-    )
-    return {
+    divergence = None
+    if similarity_name == "exponential_l2_similarity":
+        if not np.isfinite(lambda_value) or lambda_value <= 0.0:
+            raise ValueError("lambda_value must be finite and strictly positive.")
+        divergence = quadrature_beta2_divergence_matrix(density_values, x_grid)
+        matrix = np.exp(-lambda_value * divergence)
+    else:
+        matrix = quadrature_similarity_matrices(
+            density_values=density_values,
+            x_grid=x_grid,
+            similarity_name=similarity_name,
+            lambda_value=lambda_value,
+        )
+    result = {
         similarity_name: matrix,
         "x_grid": x_grid,
     }
+    if divergence is not None:
+        result["divergence_matrix"] = divergence
+    return result
 
 
 ### inspect later ###
@@ -221,9 +232,10 @@ def select_quadrature_similarity_bandwidths(
         m_x=m_x,
         lambda_value=lambda_value,
     )
-    choice = spectral_choice_from_similarity(
-        similarity_matrix=result[similarity_name]
-    )
+    if similarity_name == "exponential_l2_similarity":
+        choice = spectral_choice_from_divergence(result["divergence_matrix"], lambda_value)
+    else:
+        choice = spectral_choice_from_similarity(result[similarity_name])
     result["choice"] = {
         **choice,
         "selected_h": float(h_grid[int(choice["selected_index"])]),

@@ -43,6 +43,18 @@ from .pdf_export import (
     disable_automatic_pdf_saving,
     enable_automatic_pdf_saving,
 )
+from .perron import (
+    PERRON_SOLVER_VERSION,
+    PERRON_TOLERANCE,
+    PerronConvergenceError,
+    PerronDegeneracyError,
+    PerronResult,
+    doob_mass_from_perron,
+    perron_eigenpair,
+    perron_eigenpair_from_divergence,
+    perron_peak_index,
+    perron_vector_from_divergence,
+)
 from .similarities import (
     beta2_divergence_matrix,
     beta2_similarity_matrix,
@@ -50,10 +62,21 @@ from .similarities import (
     perron_vector,
     population_gaussian_beta2_divergence_matrix,
     select_spectral_bandwidth,
+    spectral_choice_from_divergence,
     spectral_choice_from_similarity,
 )
 
 __all__ = [
+    "PERRON_SOLVER_VERSION",
+    "PERRON_TOLERANCE",
+    "PerronConvergenceError",
+    "PerronDegeneracyError",
+    "PerronResult",
+    "doob_mass_from_perron",
+    "perron_eigenpair",
+    "perron_eigenpair_from_divergence",
+    "perron_peak_index",
+    "perron_vector_from_divergence",
     "bandwidth_grid_linear_in_psi_beta",
     "beta2_divergence_matrix",
     "beta2_similarity_matrix",
@@ -87,5 +110,6 @@ __all__ = [
     "select_spectral_bandwidth",
     "silverman_rule_of_thumb_bandwidth",
     "spectral_choice_from_similarity",
+    "spectral_choice_from_divergence",
     "trapezoidal_integral",
 ]

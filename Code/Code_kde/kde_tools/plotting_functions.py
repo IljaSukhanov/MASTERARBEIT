@@ -7,6 +7,8 @@ import numpy as np
 import plotly.graph_objects as go
 from matplotlib.axes import Axes
 
+from .perron import doob_mass_from_perron, perron_peak_index
+
 
 ##########################
 ### Perron vector plot ###
@@ -27,13 +29,12 @@ def plot_perron_vector(
         plotted_values = vector
         y_label = "Perron-vector component"
     elif plot_type == "doob":
-        plotted_values = vector**2
-        plotted_values /= np.sum(plotted_values)
+        plotted_values = doob_mass_from_perron(vector)
         y_label = "Doob stationary probability"
     else:
         raise ValueError('plot_type must be "perron" or "doob".')
 
-    maximum_index = int(np.argmax(plotted_values))
+    maximum_index = perron_peak_index(vector)
     standalone = ax is None
     if ax is None:
         _, ax = plt.subplots()
