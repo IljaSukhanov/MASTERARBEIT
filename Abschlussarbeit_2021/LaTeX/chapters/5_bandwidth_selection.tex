@@ -539,24 +539,29 @@ The geometric grid can equivalently be written as
 \end{align*}
 Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
-Next we formulate a Lemma that gives the asymptotic approximation for the spacing $h_{j}-h_i$ of a $r$-linear grid, where $i=i_N$ and $j=j_N$ may depend on $N$. It tells us that for large $N$ the difference between two scales $h_j$ and $h_i$ is approximately $h_i^{1-r}\delta_{ij}^{r,N}$, given that $|j_N-i_N|=\mathbf{O}(1)$, that is, the number of grid steps is bounded. In other words, we express the difference between two untransformed bandwidths $h_j-h_i$ using the difference between two transformed bandwidths $r^{-1}h_j^{r}-r^{-1}h_i^{r}$ approximately when $N$ is large and $|j-i|$ is bounded.
+Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}\delta_{ij}^{r,N}$. In other words, we express the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ using the difference between two transformed bandwidths $r^{-1}h_{j_N}^{r}-r^{-1}h_{i_N}^{r}$ approximately when $N$ is large and $|j_N-i_N|$ is asymptotically bounded.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid. Set $\delta^{r,N}_{ij}=(j-i)\Delta_{r,N}$. Assume $|j-i|=\mathbf{O}(1)$. Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N<j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $j_N-i_N=\mathbf{O}(1)$ (the difference $j_N-i_N$ stays asymptotically bounded). Then
     \begin{align*}
-        h_{j}-h_i=h_i^{1-r}\delta^{r,N}_{ij}+\mathbf{O}(N^{-2}).
+        h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}(N^{-2}).
     \end{align*}
 \end{Lem}
 
 \begin{proof}
-    We have $h_{j}^r-h_i^r=r(j-i)\Delta_{r,N}$ from which follows
+    We have $h_{j_N}-h_{i_N}=r(j_N-i_N)\Delta_{r,N}$ from which follows
     \begin{align*}
-        h_{j}=\left(h_i^r+r\delta^{r,N}_{ij})\right)^{1/r}=h_i\left(1+\frac{r\delta^{r,N}_{ij}}{h_i^r}\right)^{1/r}
+        h_{j_N}=\left(h_{i_N}^r+r\delta_{ij}^{r,N}\right)^{1/r}=h_{i_N}\left(1+r\underbrace{\frac{\delta_{ij}^{r,N}}{h_{i_N}^r}}_{=:c_N}\right)^{1/r}.
     \end{align*}
-    The first order Taylor approximation of $(1+x)^{1/r}$ is $(1+x)^{1/r}=1+\frac{x}{r}+\mathbf{O}(x^2)$. We get
+    Note that $c_N=\mathbf{O}(N^{-1})$ because
     \begin{align*}
-        h_{j}-h_i=h_i\left(1+\frac{\delta^{r,N}_{ij}}{h_i^r}+\mathbf{O}\left(\frac{r^2(\delta^{r,N}_{ij})^2}{h_i^{2r}}\right)-1\right)=h_i^{1-r}\delta^{r,N}_{ij}+\mathbf{O}(N^{-2})
+        Nc_N=h_{i_N}^{-r}(j_N-i_N)(h_{\max}^r-h_{\min}^r)\frac{N}{N-1}\le2C((h_{\max}/h_{\min})^r-1)
     \end{align*}
+    for all $N$ large enough. The first order Taylor approximation of $(1+x)^{1/r}$ around $0$ is $(1+x)^{1/r}=1+x/r+\mathbf{O}(x^2)$. We get
+    \begin{align*}
+        h_{j_N}-h_{i_N}=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+\mathbf{O}(N^{-2})\right)=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}(N^{-2})
+    \end{align*}
+    by properties of the $\mathbf{O}$-notation.
 \end{proof}
 
 \textbf{Motivation for why a geometric grid is the natural choice}
@@ -607,13 +612,14 @@ It can be seen that the grid stability curves for $\lambda=1$ (yellow) and $\lam
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
 
-In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below. Also note that the curve sharply jumps around $\lambda\approx$.
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below. \textcolor{red}{Also note that the curve sharply jumps around $\lambda\approx$.}
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
     \caption{Spectrally chosen bandwidth for one fixed $N(0,1)$ sample ($n=200$) as $\lambda$ increases; $N=201$, $h_{\min}=0.01$, and $h_{\max}=2$.}
     \label{fig:chosen_bandwidths_vs_lambda}
+    \todo[inline]{explain the sharp jump?}
 \end{figure}
 
 After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. For $\alpha>1/2$ the chosen bandwidth seems to converge towards some bandwidth $h_{\infty}=0.1764$. In Section~\ref{sec:res_2} we explain that this is the minimizer of $\hat{Q}_{200,2}(h)=(h^2/2)\|\partial_h\hat{f}_h\|_2^2$.
@@ -624,6 +630,7 @@ After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref
     \caption{For $N\to\infty$ the chosen bandwidth approaches a limit $h_{\infty}=0.1764$, for all $\alpha>1/2$. The convergence is slow for $\alpha=1$ and faster for $\alpha=3/2$}
     \label{fig:N_lambda_joint_limit_for_different_alpha}
     \todo[inline]{explain $N^2$ and $N^3$ behavior}
+    \todo[inline]{add experiments that show failure for exponents $\alpha>2$}
 \end{figure}
 
 \subsection{Repeated sampling experiments}
@@ -764,34 +771,37 @@ Next, we state the main theorem of this thesis.
 \end{Prop}
 
 \begin{proof}
-    By Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $h_j-h_i=h_i^{1-r}\delta_{ij}^{r,N}+\mathbf{o}(N^{-1})$
-
-
-    From Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} and Lemma~\ref{lem:frechet_derivative_of_kde} it follows that
+    First, we set $\delta_N:=(j_N-i_N)\Delta_{r,N}$. By Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_N:=h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{o}(N^{-1})$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
     \begin{align*}
-        \hat{f}_{h_j}-\hat{f}_{h_i}&=(h_j-h_i)\partial_h\hat{f}_{h_i}+\mathbf{o}(h_j-h_i)\\&
-        =h_i^{1-r}(j-i)\Delta_{r,N}\partial_h\hat{f}_{h_i}+\mathbf{o}((j-i)\Delta_{r,N})
+        \hat{f}_{h_{j_N}}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_h\hat{f}_h|_{h=h_{i_N}}+\mathbf{o}(\tau_N)\\&
+        =h_{i_N}^{1-r}(j_N-i_N)\Delta_{r,N}\partial_h\hat{f}_h|_{h=h_{i_N}}+\mathbf{o}(\delta_N)
     \end{align*}
     and consequently
     \begin{align*}
-        D_{ij}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2=\frac{1}{2}h_i^{2(1-r)}(j-i)^2\Delta_{r,N}^2\|\partial_h\hat{f}_h\|_2^2+\mathbf{o}((i-j)^2\Delta_{r,N})
+        D_{i_Nj_N}=\frac{1}{2}\|\hat{f}_{h_{j_N}}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(j_N-i_N)^2\Delta_{r,N}^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2^2+\mathbf{o}(\delta_N^2)
     \end{align*}
-
     Introduce
     \begin{align}\label{eq:hat_Q_n_beta}
-        \hat{Q}_{n,r}(h):=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2
+        \hat{Q}_r(h):=\frac{1}{2}h^{2(1-r)}\|\partial_s\hat{f}_s|_{s=h}\|_2^2.
     \end{align}
-
     We obtain
     \begin{align*}
-        D_{ij}=\Delta_{r,N}^2(j-i)^2\hat{Q}_{n,r}(h_i)+\mathbf{o}((i-j)^2\Delta_{r,N}^2)
+        D_{i_Nj_N}=\Delta_{r,N}^2(j_N-i_N)^2\hat{Q}_r(h_{i_N})+\mathbf{o}(\delta_N^2).
     \end{align*}
-
     Thus,
+    \begin{align*}
+        S_{i_Nj_N}=\exp{(-\lambda_ND_{i_Nj_N})}=\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}\exp{(-\lambda_N\mathbf{o}(\delta_N^2))}.
+    \end{align*}
+    Let $\rho_N=\mathbf{o}(\delta_N^2)$. By the first order expansion of the exponential function we have $\exp{(-\lambda_N\rho_N)}=1-\lambda_N\rho_N+\mathbf{o}(\lambda_N\rho_N)$.
+
+    It follows
     \begin{align}\label{eq:similarity_approximation}
-        S_{ij}=\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,r}(h_i))}(1+\mathbf{o}(\delta_{ij}^2)),
+        S_{i_Nj_N}=\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}(1+\mathbf{o}(\delta_N^2))
     \end{align}
-    where we have set $\delta_{ij}=(j-i)\Delta_{r,N}$. \textcolor{red}{This means that for nearby bandwidths $h_i$ and $h_j$ the similarity between the kernel density estimates $\hat{f}_{h_i}$ and $\hat{f}_{h_j}$ is approximately given by $\exp{(-\lambda\delta_{ij}^2\hat{Q}_{n,\beta}(h_i))}$.}
+
+    This means that for nearby bandwidths $h_{i_N}$ and $h_{j_N}$ ($N$ large), the similarity between the kernel density estimates $\hat{f}_{h_{i_N}}$ and $\hat{f}_{h_{j_N}}$ is approximately given by $\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}$.
+
+    \todo[inline]{CONTINUE HERE}
 
     Let $R_i=\sum_jS_{ij}$ be the $i$-th row sum of $S$. Then
     \begin{equation}\label{eq:row_sum_connection_to_hat_Q}
