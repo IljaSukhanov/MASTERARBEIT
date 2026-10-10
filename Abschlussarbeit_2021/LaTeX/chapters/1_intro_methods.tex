@@ -34,14 +34,6 @@ where $D_{v^*}=\operatorname{diag}(v^*_1,\dots,v^*_N)$. The resulting Markov cha
     \pi_j=\frac{v^*_j}{\sum_{k=1}^{N}(v^*_k)^2}
 \end{align*}
 
-\todo[inline]{Stationary distribution construction for asymmetric scale similarity matrices}
-
-The fact that the similarity matrix $S$ is not symmetric in general is not a problem because the Doob h transform also works in this case. The resulting stationary distribution $\pi$ is given by
-\begin{align*}
-    \pi_i=\frac{l_ir_i}{\sum_{j=1}^{N}l_jr_j}
-\end{align*}
-where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is, $Sr=\lambda_{\max}r$ and $S^{T}l=\lambda_{\max}l$.
-
 \begin{Rem}
     The Donsker-Varadhan free-energy functional $\mathcal{F}$ is known to be
     \begin{align*}
@@ -60,7 +52,3 @@ where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is,
 \todo[inline]{Power method (compute Perron vector through Power iteration)}
 \todo[inline]{Matrix pertubation theory}
 \todo[inline]{stable Perron vector computation}
-
-\section{Preliminary Concepts in Functional Analysis}
-
-We briefly introduce some standard definitions and theory from Functional Analysis which we make use of in Chapter~\ref{chap:kde}.

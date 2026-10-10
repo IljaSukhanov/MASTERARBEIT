@@ -136,3 +136,13 @@ Later we inspect data coming from a Gaussian mixture model. In such cases, there
     \end{align*}
     for $N\to\infty$, $\lambda_N\to\infty$, $\lambda_N/N^2\to0$.
 \end{conjecture}
+
+\textbf{Extension to asymmetric divergences}
+
+\todo[inline]{Stationary distribution construction for asymmetric scale similarity matrices}
+
+The fact that the similarity matrix $S$ is not symmetric in general is not a problem because the Doob h transform also works in this case. The resulting stationary distribution $\pi$ is given by
+\begin{align*}
+    \pi_i=\frac{l_ir_i}{\sum_{j=1}^{N}l_jr_j}
+\end{align*}
+where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is, $Sr=\lambda_{\max}r$ and $S^{T}l=\lambda_{\max}l$.

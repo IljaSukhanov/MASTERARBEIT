@@ -689,7 +689,7 @@ It is interesting to ask what happens to this distribution for increased sample 
 \section{Explanation of the Results}\label{sec:res_2}
 
 \todo[inline]{Make argument rigorous}
-\todo[inline]{Mention Davis Kahan theorem and spectral gap}
+\todo[inline]{Mention Davis Kahan theorem and spectral gap (outlook)}
 
 \subsection{Convergence to closest adjacent pair}
 
@@ -764,62 +764,86 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
 Next, we state the main theorem of this thesis.
 
 \begin{Prop}
-    Let $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence. Let $0<h_1<\dots<h_N$ be a $r$-linear grid for some $0<r\le 1$. Let $\lambda_N$ be a sequence such that $N^2=\mathbf{o}(\lambda_N)$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S^{(N)}_{ij}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here, $\hat{f}_h$ is the kernel density estimate with kernel $K$ fulfilling the assumptions from Lemma~\ref{lem:frechet_derivative_of_kde} and data $X_1,\dots,X_n\sim f$. Let $R_{i_N}^{(N)}=\sum_jS^{(N)}_{i_Nj}$ be the $i_N$-th row of $S^{(N)}$. Assume further that $h_{i_N}$ converges to some interior scale $h_0$. Then
+    Let $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence. Let $\mathcal{H}_N=\{0<h_1<\dots<h_N\}$ be a $r$-linear grid for some $0<r\le1$ with fixed endpoints $h_1=h_{\min}$ and $h_N=h_{\max}$. Let $\lambda_N$ be a sequence such that $\lambda_N\to+\infty$ and $\lambda_N/N^2\to0$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S_{ij}^{(N)}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here $\hat{f}_h$ is the kernel density estimate with Gaussian kernel $K$ and data $X_1,\dots,X_n\sim f$.
+
+    Let $i_N$ be an index sequence such that $h_{i_N}\to h_0\in(h_1,h_N)$. Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ be the $i_N$-th row sum of $S^{(N)}$. Then
     \begin{align*}
-        \sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}\to\sqrt{\frac{\pi}{\hat{Q}_{n,r}(h_0)}},\quad N\to\infty.
+        \sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}\to\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}},\quad N\to+\infty,
     \end{align*}
+    where $\hat{Q}_r(h)=2^{-1}h^{2(1-r)}\|\partial_s\hat{f}_s|_{s=h}\|_2^2$ is an energy functional.
 \end{Prop}
 
 \begin{proof}
-    First, we set $\delta_N:=(j_N-i_N)\Delta_{r,N}$. By Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_N:=h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{o}(N^{-1})$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
+    Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j:|t_{N,j}|\le A\}$. \textcolor{red}{We have $\#I_N(A)\le\epsilon_N^{-1}A+1$.}
+
+    Split the row sum:
     \begin{align*}
-        \hat{f}_{h_{j_N}}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_h\hat{f}_h|_{h=h_{i_N}}+\mathbf{o}(\tau_N)\\&
-        =h_{i_N}^{1-r}(j_N-i_N)\Delta_{r,N}\partial_h\hat{f}_h|_{h=h_{i_N}}+\mathbf{o}(\delta_N)
+        \epsilon_NR_{i_N}^{(N)}&=\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\epsilon_N\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}
     \end{align*}
-    and consequently
+
+    \textcolor{red}{Because $D_{i_Nj}\ge c(\delta_{i,j}^{r,N})^2$ for some constant $c>0$,} we have $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{ij}^{r,N})^2}=e^{-ct_{N,j}^2}$. Continuing
     \begin{align*}
-        D_{i_Nj_N}=\frac{1}{2}\|\hat{f}_{h_{j_N}}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(j_N-i_N)^2\Delta_{r,N}^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2^2+\mathbf{o}(\delta_N^2)
+        T_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
+        \le\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
+        \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt
     \end{align*}
-    Introduce
-    \begin{align}\label{eq:hat_Q_n_beta}
-        \hat{Q}_r(h):=\frac{1}{2}h^{2(1-r)}\|\partial_s\hat{f}_s|_{s=h}\|_2^2.
-    \end{align}
-    We obtain
+    We see that $T_N(A)$ is asymptotically bounded and therefore
     \begin{align*}
-        D_{i_Nj_N}=\Delta_{r,N}^2(j_N-i_N)^2\hat{Q}_r(h_{i_N})+\mathbf{o}(\delta_N^2).
+        \limsup_{N\to\infty}T_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{e^{-cA^2}}{2cA}\to0,\quad A\to\infty.
     \end{align*}
+
+    Now let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus by Lemma~[] we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~[] follows
+    \begin{align*}
+        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h}|_{h=h_{i_N}}+\mathbf{o}(\tau_N)\\&
+        =h_{i_N}^{1-r}\delta_N\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
+    \end{align*}
+    where $r_{N,j}$ for which holds $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ with some sequence $a_N(A)\to0$ for $N\to\infty$. Consequently,
+    \begin{align*}
+        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}\delta_{N,j}^2\|\partial\hat{f}_h|_{h=h_{i_N}}\|_2^2+\rho_{N,j}=\delta_{N,j}^2\hat{Q}_r(h_{i_N})+\mathbf{o}(\delta_{N,j}^2).
+    \end{align*}
+
     Thus,
     \begin{align*}
-        S_{i_Nj_N}=\exp{(-\lambda_ND_{i_Nj_N})}=\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}\exp{(-\lambda_N\mathbf{o}(\delta_N^2))}.
+        S_{i_Nj}=e^{-\lambda_ND_{i_Nj}}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}e^{-\lambda_N\mathbf{o}(\delta_{N,j}^2)}.
     \end{align*}
-    Let $\rho_N=\mathbf{o}(\delta_N^2)$. Because $\lambda_N/N^2\to0$ for $N\to\infty$ we have by the first order expansion of the exponential function $\exp{(-\lambda_N\rho_N)}=1+\mathbf{o}(1)$. It follows
+
+    Let $\eta_{N,j}=\mathbf{o}(\delta_{N,j}^2)$. Because $\lambda_N/N^2\to0$ for $N\to\infty$ we have by the first order expansion of the exponential function $e^{-\lambda_N\rho_{N,j}}=1+\mathbf{o}(1)$. Define $\eta_{N,j}=e^{-\lambda_N\rho_{N,j}}-1$. It follows
     \begin{align}\label{eq:similarity_approximation}
-        S_{i_Nj_N}=\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}(1+\mathbf{o}(1))
+        S_{i_Nj}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}(1+\eta_{N,j}).
     \end{align}
-    This means that for nearby bandwidths $h_{i_N}$ and $h_{j_N}$ ($N$ large), the similarity between the kernel density estimates $\hat{f}_{h_{i_N}}$ and $\hat{f}_{h_{j_N}}$ is approximately given by $\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}$.
 
-    Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}$ be the $i_N$-th row sum of $S^{(N)}$ and set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$.
-
-    Let $A>0$ be fixed and define the set $I_N(A):=\{j=1,\dots,N:\epsilon_N(j_N-i_N)\le A\}$.
-
-    Then
+    Now write
     \begin{align*}
-        \sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}&=\sum_{j=1}^{N}\epsilon_N\exp{(-\lambda_N(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N}))}\\&
-        =\sum_{j\in I_N(A)}\cdots+\sum_{j\notin I_N(A)}\cdots\\&
-        =\sum_{j\in I_N(A)}e^{-t_{Nj}^2\hat{Q}_r(h_{i_N})}+\underbrace{\sum_{j\in I_N(A)}\eta_{N_j}}_{\to0\text{ for }N\to\infty}\\&+\underbrace{\sum_{j\notin I_N(A)}\cdots}_{\to0\text{ for }A\to\infty\text{ and }N\to\infty}\\&
+        \epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}=\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}+\epsilon_N\sum_{j\in I_N(A)}\eta_{N,j}
     \end{align*}
-
-    Assume that $\hat{Q}_r$ is continuous in $h_0$.
-
-    We continue working on the remaining non-vanishing sum:
+    The local error can be bounded:
     \begin{align*}
-        \sum_{j\in I_N(A)}\epsilon_Ne^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}=\sum_{j\in I_N(A)}(t_{N,j+1}-t_{N,j})e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}\to\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt,\quad N\to\infty.
+        \left|\epsilon_N\sum_{j\in I_N(A)}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
     \end{align*}
+    We must show that $\sup_{j\in I_N(A)}|\eta_{Nj}|\to 0$ for $N\to\infty$.
 
-    Finally, letting $A\to\infty$, we arrive at
-    \begin{align}\label{eq:row_sum_connection_to_hat_Q}
-        \lim\limits_{N\to\infty}\sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}=\int\limits_{\mathbb{R}}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
-    \end{align}
+    Since $\hat{Q}_r$ is continuous in $h_0$, we have $\hat{Q}_r(h_{i_N})\to\hat{Q}_r(h_0)$ for $N\to\infty$. Therefore
+    \begin{align*}
+        \left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|\le(2A+\epsilon_N)A^2|\hat{Q}_r(h_{i_N})-\hat{Q}_r(h_0)|\to0
+    \end{align*}
+    We continue working with the remaining non-vanishing term:
+    \begin{align*}
+        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|}_{\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|
+    \end{align*}
+    and
+    \begin{align*}
+        \epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}=\sum_{j\in I_N(A)}(t_{N,j+1}-t_{N,j})e^{-t_{N,j}^2\hat{Q}_r(h_0)}\stackrel{N\to\infty}{\to}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt
+    \end{align*}
+    is a Riemann sum approximation.
+
+    Finally,
+    \begin{align*}
+        \lim\limits_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\lim\limits_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}=\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt
+    \end{align*}
+    This is true for all $A>0$. Letting $A\to\infty$, we arrive at
+    \begin{align*}
+        \lim_{A\to\infty}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt=\int\limits_{\mathbb{R}}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
+    \end{align*}
 \end{proof}
 
 \textcolor{red}{Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.}
