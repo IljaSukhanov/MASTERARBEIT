@@ -155,9 +155,9 @@ The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is gi
 
 \section{Divergences between distributions}\label{sec:divergences}
 
-For information about information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}.
+For information on information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}.
 
-Let $L^1$ be the set of all absolutely integrable functions $f:\mathbb{R}\to\mathbb{R}$ and $\mathcal{P}\subseteq L^1$ be the set of all absolutely continuous probability distributions. That is,
+Let $L^1(\mathbb{R})$ be the set of all absolutely integrable functions $f:\mathbb{R}\to\mathbb{R}$ and $\mathcal{P}\subseteq L^1$ be the set of all absolutely continuous probability distributions. That is,
 \begin{align*}
     \mathcal{P}=\left\{f\in L^1:f\ge0,\int f(x)\,dx=1\right\}
 \end{align*}
@@ -542,29 +542,26 @@ Taking the limit $N\to+\infty$ increases the fineness of the grid.
 Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}\delta_{ij}^{r,N}$. In other words, we express the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ using the difference between two transformed bandwidths $r^{-1}h_{j_N}^{r}-r^{-1}h_{i_N}^{r}$ approximately when $N$ is large and $|j_N-i_N|$ is asymptotically bounded.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $|j_N-i_N|=\mathbf{o}(N)$ (the difference $j_N-i_N$ converges to zero faster than $N^{-1}$). Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $|j_N-i_N|=\mathbf{o}(N)$ (the difference $j_N-i_N$ diverges to infinity slower than $N$). Then
     \begin{align*}
         h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2).
     \end{align*}
 \end{Lem}
 
-\todo[inline]{weaker condition: $|j_N-i_N|=\mathbf{O}(1)$ leads to $\mathbf{O}(N^{-2})$}
-
 \begin{proof}
-    We have $h_{j_N}-h_{i_N}=r(j_N-i_N)\Delta_{r,N}$ from which follows
+    We have $h_{j_N}^r-h_{i_N}^r=r(j_N-i_N)\Delta_{r,N}$ from which follows
     \begin{align*}
         h_{j_N}=\left(h_{i_N}^r+r\delta_{ij}^{r,N}\right)^{1/r}=h_{i_N}\left(1+r\underbrace{\frac{\delta_{ij}^{r,N}}{h_{i_N}^r}}_{=:c_N}\right)^{1/r}.
     \end{align*}
-    Note that $c_N=\mathbf{O}(N^{-1})$ because
+    Note that $c_N=\mathbf{O}(\delta_{ij}^{r,N})$ because $h_{i_N}^{-r}$ is bounded above by $h_{\min}^{-r}$. In particular, since $|j_N-i_N|=\mathbf{o}(1)$ by assumption, $c_N$ is a null sequence. The first order Taylor approximation of $(1+x)^{1/r}$ around $0$ is $(1+x)^{1/r}=1+x/r+\mathbf{O}(x^2)$. We get
     \begin{align*}
-        Nc_N=h_{i_N}^{-r}(j_N-i_N)(h_{\max}^r-h_{\min}^r)\frac{N}{N-1}\le2C((h_{\max}/h_{\min})^r-1)
-    \end{align*}
-    for all $N$ large enough. The first order Taylor approximation of $(1+x)^{1/r}$ around $0$ is $(1+x)^{1/r}=1+x/r+\mathbf{O}(x^2)$. We get
-    \begin{align*}
-        h_{j_N}-h_{i_N}=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+\mathbf{O}(N^{-2})\right)=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}(N^{-2})
+        h_{j_N}-h_{i_N}&=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+\mathbf{O}((\delta_{ij}^{r,N})^2)\right)\\&
+        =h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2)
     \end{align*}
     by properties of the $\mathbf{O}$-notation.
 \end{proof}
+
+The stronger condition $j_N-i_N=\mathbf{O}(1)$ (the difference between the index sequences stays asymptotically bounded) would lead to the remainder $\mathbf{O}(N^{-2})$.
 
 \textbf{Motivation for why a geometric grid is the natural choice}
 
@@ -766,7 +763,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
 Next, we state the main theorem of this thesis.
 
 \begin{Prop}
-    Let $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence. Let $\mathcal{H}_N=\{0<h_1<\dots<h_N\}$ be a $r$-linear grid for some $0<r\le1$ with fixed endpoints $h_1=h_{\min}$ and $h_N=h_{\max}$. Let $\lambda_N$ be a sequence such that $\lambda_N\to+\infty$ and $\lambda_N/N^2\to0$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S_{ij}^{(N)}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here $\hat{f}_h$ is the kernel density estimate with Gaussian kernel $K$ and data $X_1,\dots,X_n\sim f$.
+    Let $D:\mathcal{P}_2\times\mathcal{P}_2\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence on $\mathcal{P}_2:=\mathcal{P}\cap L^2(\mathbb{R})$. Let $\mathcal{H}_N=\{0<h_1<\dots<h_N\}$ be a $r$-linear grid for some $0<r\le1$ with fixed endpoints $h_1=h_{\min}$ and $h_N=h_{\max}$. Let $\lambda_N$ be a sequence such that $\lambda_N\to+\infty$ and $\lambda_N/N^2\to0$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S_{ij}^{(N)}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here $\hat{f}_h$ is the kernel density estimate with Gaussian kernel $K$ and fixed data $X_1,\dots,X_n\sim f$.
 
     Let $i_N$ be an index sequence such that $h_{i_N}\to h_0\in(h_1,h_N)$. Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ be the $i_N$-th row sum of $S^{(N)}$. Then
     \begin{align*}
