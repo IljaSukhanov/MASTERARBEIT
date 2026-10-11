@@ -542,11 +542,13 @@ Taking the limit $N\to+\infty$ increases the fineness of the grid.
 Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}\delta_{ij}^{r,N}$. In other words, we express the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ using the difference between two transformed bandwidths $r^{-1}h_{j_N}^{r}-r^{-1}h_{i_N}^{r}$ approximately when $N$ is large and $|j_N-i_N|$ is asymptotically bounded.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N<j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $j_N-i_N=\mathbf{O}(1)$ (the difference $j_N-i_N$ stays asymptotically bounded). Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $|j_N-i_N|=\mathbf{o}(N)$ (the difference $j_N-i_N$ converges to zero faster than $N^{-1}$). Then
     \begin{align*}
-        h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}(N^{-2}).
+        h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2).
     \end{align*}
 \end{Lem}
+
+\todo[inline]{weaker condition: $|j_N-i_N|=\mathbf{O}(1)$ leads to $\mathbf{O}(N^{-2})$}
 
 \begin{proof}
     We have $h_{j_N}-h_{i_N}=r(j_N-i_N)\Delta_{r,N}$ from which follows
@@ -774,14 +776,27 @@ Next, we state the main theorem of this thesis.
 \end{Prop}
 
 \begin{proof}
-    Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j:|t_{N,j}|\le A\}$. \textcolor{red}{We have $\#I_N(A)\le\epsilon_N^{-1}A+1$.}
+    Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j:|t_{N,j}|\le A\}$. 
+
+    We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\{j\in\mathbb{Z}:-A\epsilon_N^{-1}\le j\le A\epsilon_N^{-1}\}=\lceil A\epsilon_N^{-1}\rceil-\lfloor-A\epsilon_N^{-1}\rfloor-1\le A\epsilon_N^{-1}+1-(-A\epsilon_N^{-1}-1)-1=2A\epsilon_N^{-1}+1$.
 
     Split the row sum:
     \begin{align*}
-        \epsilon_NR_{i_N}^{(N)}&=\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\epsilon_N\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}
+        R_{i_N}^{(N)}=\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}.
     \end{align*}
 
-    \textcolor{red}{Because $D_{i_Nj}\ge c(\delta_{i,j}^{r,N})^2$ for some constant $c>0$,} we have $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{ij}^{r,N})^2}=e^{-ct_{N,j}^2}$. Continuing
+    We have $D_{i_Nj}\ge c(\delta_{ij}^{r,N})^2$ for some constant $c>0$. To see this, first write
+    \begin{align*}
+        e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}=\int_{h_j}^{h_{i_N}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge(h_{i_N}-j)h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
+    \end{align*}
+    and, furthermore
+    \begin{align*}
+        D_{i_Nj}&=\frac{1}{4\pi}\int|P_n(\omega)|^2\left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|^2\,d\omega\\&
+        \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2/2}\,d\omega.
+    \end{align*}
+    Now, $|\delta_{ij}^{r,N}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{ij}^{r,N})^2$ with positive constant $c=h_{\min}^{2(r-1)}(4\pi)^{-1}\int\cdots$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{ij}^{r,N})^2}=e^{-ct_{N,j}^2}$.
+
+    Continuing
     \begin{align*}
         T_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
         \le\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
@@ -789,42 +804,52 @@ Next, we state the main theorem of this thesis.
     \end{align*}
     We see that $T_N(A)$ is asymptotically bounded and therefore
     \begin{align*}
-        \limsup_{N\to\infty}T_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{e^{-cA^2}}{2cA}\to0,\quad A\to\infty.
+        \limsup_{N\to\infty}T_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{2cA}\to0,\quad A\to\infty.
     \end{align*}
-
-    Now let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus by Lemma~[] we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~[] follows
+    
+    Now, let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus, by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}((\delta_{ij}^{r,N})^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
     \begin{align*}
-        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h}|_{h=h_{i_N}}+\mathbf{o}(\tau_N)\\&
+        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h}|_{h=h_{i_N}}+u_{N,j}\\&
         =h_{i_N}^{1-r}\delta_N\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
     \end{align*}
-    where $r_{N,j}$ for which holds $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ with some sequence $a_N(A)\to0$ for $N\to\infty$. Consequently,
+    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2/\tau_{N,j}\to0$ for $N\to\infty$ and $r_{N,j}:=u_{N,j}+(\tau_{N,j}-h_{i_N}^{1-r}\delta_{ij}^{r,N})\partial_h\hat{f}_h|_{h=h_{i_N}}$.
+
+    \textcolor{red}{It holds $\|r_{N,j}\|_2\le|\delta_{ij}^{r,N}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$.}
+
+    Consequently,
     \begin{align*}
-        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}\delta_{N,j}^2\|\partial\hat{f}_h|_{h=h_{i_N}}\|_2^2+\rho_{N,j}=\delta_{N,j}^2\hat{Q}_r(h_{i_N})+\mathbf{o}(\delta_{N,j}^2).
+        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{i,j}^{r,N})^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2^2+\rho_{N,j}=(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
     \end{align*}
+    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{ij}^{r,N}\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
+    \begin{align*}
+        |\rho_{N,j}|&\le\delta_{ij}^{r,N}h_{i_N}^{1-r}\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2\\&
+        \le\delta_{ij}^{r,N}\underbrace{h_{i_N}^{1-r}\|\partial_h\hat{f}_{h}|_{h=h_{i_N}}\|_2}_{\le M}\underbrace{\|r_{N.j}\|_2}_{\le\delta_{ij}^{r,N}a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{ij}^{r,N})^2a_N(A)^2}\\&
+        \le(\delta_{ij}^{r,N})^2\left(Ma_N(A)+(1/2)a_N(A)^2\right).
+    \end{align*}
+    Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}((\delta_{ij}^{r,N})^2)$.
 
     Thus,
     \begin{align*}
-        S_{i_Nj}=e^{-\lambda_ND_{i_Nj}}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}e^{-\lambda_N\mathbf{o}(\delta_{N,j}^2)}.
+        S_{i_Nj}=e^{-\lambda_ND_{i_Nj}}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}e^{-\lambda_N\rho_{N,j}}.
     \end{align*}
-
-    Let $\eta_{N,j}=\mathbf{o}(\delta_{N,j}^2)$. Because $\lambda_N/N^2\to0$ for $N\to\infty$ we have by the first order expansion of the exponential function $e^{-\lambda_N\rho_{N,j}}=1+\mathbf{o}(1)$. Define $\eta_{N,j}=e^{-\lambda_N\rho_{N,j}}-1$. It follows
+    Because $\lambda_N/N^2\to0$ for $N\to\infty$ we have by the first order expansion of the exponential function $e^{-\lambda_N\rho_{N,j}}=1+\mathbf{o}(1)$. Define $\eta_{N,j}=e^{-\lambda_N\rho_{N,j}}-1$. It follows
     \begin{align}\label{eq:similarity_approximation}
         S_{i_Nj}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}(1+\eta_{N,j}).
     \end{align}
 
     Now write
     \begin{align*}
-        \epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}=\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}+\epsilon_N\sum_{j\in I_N(A)}\eta_{N,j}
+        \epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}=\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}+\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}\eta_{N,j}.
     \end{align*}
     The local error can be bounded:
     \begin{align*}
-        \left|\epsilon_N\sum_{j\in I_N(A)}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
+        \left|\epsilon_N\sum_{j\in I_N(A)}\underbrace{e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}}_{\le 1}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
     \end{align*}
-    We must show that $\sup_{j\in I_N(A)}|\eta_{Nj}|\to 0$ for $N\to\infty$.
+    \textcolor{red}{We must show that $\sup_{j\in I_N(A)}|\eta_{Nj}|\to 0$ for $N\to\infty$.}
 
     Since $\hat{Q}_r$ is continuous in $h_0$, we have $\hat{Q}_r(h_{i_N})\to\hat{Q}_r(h_0)$ for $N\to\infty$. Therefore
     \begin{align*}
-        \left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|\le(2A+\epsilon_N)A^2|\hat{Q}_r(h_{i_N})-\hat{Q}_r(h_0)|\to0
+        \left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|\le(2A+\epsilon_N)A^2|\hat{Q}_r(h_{i_N})-\hat{Q}_r(h_0)|\to0.
     \end{align*}
     We continue working with the remaining non-vanishing term:
     \begin{align*}
@@ -838,7 +863,7 @@ Next, we state the main theorem of this thesis.
 
     Finally,
     \begin{align*}
-        \lim\limits_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\lim\limits_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}=\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt
+        \lim\limits_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\lim\limits_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}=\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt.
     \end{align*}
     This is true for all $A>0$. Letting $A\to\infty$, we arrive at
     \begin{align*}
