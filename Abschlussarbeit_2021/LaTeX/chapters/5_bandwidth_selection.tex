@@ -539,10 +539,10 @@ The geometric grid can equivalently be written as
 \end{align*}
 Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
-Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}\delta_{ij}^{r,N}$. In other words, we express the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ using the difference between two transformed bandwidths $r^{-1}h_{j_N}^{r}-r^{-1}h_{i_N}^{r}$ approximately when $N$ is large and $|j_N-i_N|$ is asymptotically bounded.
+Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}\delta_{ij}^{r,N}$. In other words, we express the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ using the difference between two transformed bandwidths $\psi_r(h_{j_N})-\psi_r(h_{i_N})$ approximately when $N$ is large and $j_N-i_N=\mathbf{o}(N)$.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $|j_N-i_N|=\mathbf{o}(N)$ (the difference $j_N-i_N$ diverges to infinity slower than $N$). Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $|j_N-i_N|=\mathbf{o}(N)$. Then
     \begin{align*}
         h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2).
     \end{align*}
@@ -553,7 +553,7 @@ Next we formulate a Lemma that gives the first order asymptotic approximation fo
     \begin{align*}
         h_{j_N}=\left(h_{i_N}^r+r\delta_{ij}^{r,N}\right)^{1/r}=h_{i_N}\left(1+r\underbrace{\frac{\delta_{ij}^{r,N}}{h_{i_N}^r}}_{=:c_N}\right)^{1/r}.
     \end{align*}
-    Note that $c_N=\mathbf{O}(\delta_{ij}^{r,N})$ because $h_{i_N}^{-r}$ is bounded above by $h_{\min}^{-r}$. In particular, since $|j_N-i_N|=\mathbf{o}(1)$ by assumption, $c_N$ is a null sequence. The first order Taylor approximation of $(1+x)^{1/r}$ around $0$ is $(1+x)^{1/r}=1+x/r+\mathbf{O}(x^2)$. We get
+    Note that $c_N=\mathbf{O}(\delta_{ij}^{r,N})$ because $h_{i_N}^{-r}$ is bounded above by $h_{\min}^{-r}$. In particular, since $|j_N-i_N|=\mathbf{o}(N)$ by assumption, $c_N$ is a null sequence. The first order Taylor approximation of $(1+x)^{1/r}$ around $0$ is $(1+x)^{1/r}=1+x/r+\mathbf{O}(x^2)$. We get
     \begin{align*}
         h_{j_N}-h_{i_N}&=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+\mathbf{O}((\delta_{ij}^{r,N})^2)\right)\\&
         =h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2)
