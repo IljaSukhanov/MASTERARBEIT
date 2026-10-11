@@ -2,7 +2,7 @@
 
 Rechecked against the latest thesis source on 11 October 2026. No thesis files were changed.
 
-Current status of the numbered PDF checklist: **items 1, 2, and 3 are resolved; items 4 and 6 are partially corrected; items 5 and 7-14 remain open**. The fixed-sample statement, L^2 divergence domain, and grid-spacing lemma are correct. The integer-count formula now uses the correct floor and ceiling, but its interval is shifted incorrectly. The final Gaussian-tail constant is now correct, but the normalization is still inconsistent. Item numbers in this status refer to the PDF checklist, not the grouped subsection numbers in this longer review.
+Current status of the numbered PDF checklist: **items 1-4 are resolved; item 6 needs one sentence corrected; items 5 and 7-14 remain open**. The integer-count argument now shifts both endpoints correctly. The tail sums, scaled limsup, and final Gaussian-tail constant are also correct; only the sentence at line 802 still claims boundedness of the unscaled T_N(A). Item numbers in this status refer to the PDF checklist, not the grouped subsection numbers in this longer review.
 
 The proposition reviewed is the row-sum limit in [the bandwidth-selection chapter, line 765](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:765). The calculations below are my derivations from the thesis's Gaussian Fourier formula and grid definition; cited external results provide the general Taylor and Laplace tools.
 
@@ -83,7 +83,7 @@ for sufficiently large N. Thus
 \le\frac{e^{-cA^2}}{cA}.
 \]
 
-**Checklist item 6 - partially corrected.** The final constant at line 804 is now correctly 1/(cA); that part is resolved. However, epsilon_N is missing before the shifted sum on line 798 and before the integer sum on line 799. The displayed equality on line 799 only holds if that factor is retained. On lines 802-804, replace the claim about boundedness and the limsup of T_N(A) by the corresponding statements for epsilon_N T_N(A). The estimate does not show that the unscaled T_N(A) is asymptotically bounded. The integral bound alone suffices. These are my normalization checks and estimates obtained by integrating the decreasing Gaussian on successive intervals.
+**Checklist item 6 - one sentence remains.** The epsilon_N factors at lines 798-799, the scaled limsup at line 804, and the final constant 1/(cA) are now correct. Once the lower-bound calculation in item 5 is repaired, the displayed tail argument is valid for sufficiently large N, when epsilon_N < A. At line 802, replace "T_N(A) is asymptotically bounded" by "epsilon_N T_N(A) is asymptotically bounded for every fixed A > 0". The estimate does not show that the unscaled T_N(A) is asymptotically bounded. The passage to the displayed limsup uses epsilon_N -> 0. These are my checks of the current sums and the decreasing-Gaussian integral comparison.
 
 ### 4. Use absolute values in the remainder estimate
 
@@ -122,12 +122,12 @@ Now let A tend to infinity. This proves the claimed limit without assuming its e
 
 ### 7. Remaining bookkeeping
 
-- **Checklist item 4 - partially corrected.** At [line 778](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:778), the floor/ceiling formula is now correct for the unshifted closed interval. The remaining typo is that i_N has been added to the lower endpoint only. Add i_N to the upper endpoint as well, or use k = j-i_N and the corrected calculation below. The bound itself remains correct. These are my calculations from the local-window definition; the [official floor and ceiling definitions](https://docs.python.org/3/library/math.html#math.floor) give the integer endpoints.
+- **Checklist item 4 - resolved.** At [line 778](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:778), both endpoints now have the shift i_N. Since i_N is an integer, it cancels from the cardinality calculation. The floor/ceiling formula and the final bound are correct. These are my calculations from the local-window definition; the [official floor and ceiling definitions](https://docs.python.org/3/library/math.html#math.floor) give the integer endpoints.
 - Before the Riemann-sum step, note that sqrt(lambda_N)(u_{i_N}-u_1) and sqrt(lambda_N)(u_N-u_{i_N}) both tend to infinity. Hence I_N(A) is not truncated by the grid endpoints for fixed A and large N. This follows from h_{i_N} tending to an interior h_0.
 - Use one notation for delta_{ij}^{r,N} and tau_{N,j} throughout; currently delta_N, delta_{N,j}, tau_N and r_{N.j} appear without consistent definitions.
 - State why Q_r is continuous and strictly positive; the calculation below supplies both properties. The existing derivative lemma establishes differentiability, but its statement does not supply the uniform Taylor bound needed at moving base points.
 
-For item 4, set B = A/epsilon_N. With the row indices explicitly restricted to 1,...,N, the corrected line is
+For item 4, set B = A/epsilon_N. The current calculation is equivalent to the following form, with the row indices explicitly restricted to 1,...,N:
 
 \[
 I_N(A)=\{j\in\{1,\ldots,N\}:|j-i_N|\le B\},\qquad
@@ -136,7 +136,7 @@ I_N(A)=\{j\in\{1,\ldots,N\}:|j-i_N|\le B\},\qquad
 =2\lfloor B\rfloor+1\le2B+1.
 \]
 
-Equivalently, the shifted set is {j in Z : i_N-B <= j <= i_N+B}. Its count is floor(i_N+B)-ceil(i_N-B)+1 = 2 floor(B)+1 because i_N is an integer. The current interval {j in Z : i_N-B <= j <= B} does not contain the whole local window in general.
+Equivalently, the shifted set is {j in Z : i_N-B <= j <= i_N+B}. Its count is floor(i_N+B)-ceil(i_N-B)+1 = 2 floor(B)+1 because i_N is an integer. This is now the interval used in the thesis. No further correction is needed for item 4.
 
 ## Fill the red statements by citation and a short applicability check
 
