@@ -775,7 +775,7 @@ Next, we state the main theorem of this thesis.
 \begin{proof}
     Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j:|t_{N,j}|\le A\}$. 
 
-    We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\{j\in\mathbb{Z}:-A\epsilon_N^{-1}\le j\le A\epsilon_N^{-1}\}=\lceil A\epsilon_N^{-1}\rceil-\lfloor-A\epsilon_N^{-1}\rfloor-1\le A\epsilon_N^{-1}+1-(-A\epsilon_N^{-1}-1)-1=2A\epsilon_N^{-1}+1$.
+    We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\#\{j\in\mathbb{Z}:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}\}=\lfloor A\epsilon_N^{-1}\rfloor-\lceil-A\epsilon_N^{-1}\rceil+1=2\lfloor A\epsilon_N^{-1}\rfloor+1\le 2A\epsilon_N^{-1}+1$.
 
     Split the row sum:
     \begin{align*}
@@ -795,13 +795,13 @@ Next, we state the main theorem of this thesis.
 
     Continuing
     \begin{align*}
-        T_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
+        \epsilon_NT_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
         \le\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
         \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt
     \end{align*}
     We see that $T_N(A)$ is asymptotically bounded and therefore
     \begin{align*}
-        \limsup_{N\to\infty}T_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{2cA}\to0,\quad A\to\infty.
+        \limsup_{N\to\infty}T_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{cA}\to0,\quad A\to\infty.
     \end{align*}
     
     Now, let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus, by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}((\delta_{ij}^{r,N})^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
