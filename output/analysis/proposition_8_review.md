@@ -1,30 +1,28 @@
 # Review of Proposition 8
 
-Reviewed 11 October 2026. No thesis files were changed.
+Rechecked against the latest thesis source on 11 October 2026. No thesis files were changed.
 
-The proposition reviewed is the row-sum limit in [the bandwidth-selection chapter, line 768](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:768). The calculations below are my derivations from the thesis's Gaussian Fourier formula and grid definition; cited external results provide the general Taylor and Laplace tools.
+Current status of the numbered PDF checklist: **items 1, 2, and 3 are resolved; items 4-14 remain open**. The fixed-sample statement, L^2 divergence domain, and grid-spacing lemma have now been corrected. The remaining proof errors and red gaps are described below. Item numbers in this status refer to the PDF checklist, not the grouped subsection numbers in this longer review.
+
+The proposition reviewed is the row-sum limit in [the bandwidth-selection chapter, line 765](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:765). The calculations below are my derivations from the thesis's Gaussian Fourier formula and grid definition; cited external results provide the general Taylor and Laplace tools.
 
 ## Verdict and scope
 
 The asserted limit is correct for every fixed finite sample of real observations, with fixed sample size, fixed positive grid endpoints, and fixed grid exponent. The proof currently contains errors beyond the two red remainder statements. They are repairable without changing the asserted limit. A complete argument is given below.
 
-Make the fixed-sample interpretation explicit: fix an integer n >= 1 and observations X_1,...,X_n, then let N tend to infinity. Thus this is a deterministic statement conditional on the sample. Sampling from a density is unnecessary for this proposition. The current argument does not establish a joint limit with n = n(N), or with endpoints tending to zero. This scope follows from the proof below and the [current statement](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:769).
+**Checklist item 1 - resolved.** The proposition now specifies fixed data X_1,...,X_n, fixed positive grid endpoints, and a fixed exponent r. This correctly fixes the sample and its size before N tends to infinity. Sampling from a density is unnecessary for this deterministic statement conditional on the observations. The current argument does not establish a joint limit with n = n(N), or with endpoints tending to zero. This scope follows from the proof below and the [current statement](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:766).
 
-There is also a domain correction. The thesis defines P as all probability densities in L^1, whereas the proposition declares the L^2 divergence finite on all of P x P. That is false: take p(x) = (1/4)x^(-3/4) on (0,1), zero elsewhere, and q(x) = 1 on (0,1), zero elsewhere. Both integrate to one, but the integral of (p-q)^2 diverges at zero. This is a direct counterexample to the declared domain, using the [definition of P](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:160). For Proposition 8, simply define D(p,q) = (1/2)||p-q||_2^2 for p,q in P intersect L^2, or directly define D(h,s) for the Gaussian KDE family. The Gaussian KDEs used here belong to L^2, as also follows from their [Fourier representation](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:358).
+**Checklist item 2 - resolved.** The proposition now defines P_2 := P intersect L^2(R) and takes D : P_2 x P_2 -> R_{>=0}. This fixes the finite-domain issue for the L^2 divergence. The thesis's [definition of P](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:160) still correctly includes probability densities that need not be square integrable. The Gaussian KDEs used here belong to P_2, as follows from their [Fourier representation](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:358).
 
 ## Repairs beyond the red statements
 
-### 1. Repair the grid-spacing lemma used in the proof
+### 1. Grid-spacing lemma: resolved (PDF checklist item 3)
 
-The [lemma at line 544](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:544) has the correct conclusion for fixed positive endpoints, but its proof does not establish it under the stated assumption |j_N-i_N| = o(N).
+The [lemma at line 544](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:544) and its proof now establish the claimed conclusion. The statement explicitly fixes positive endpoints. The proof uses the powered grid identity, c_N = O(delta_{ij}^{r,N}), the correct o(N) assumption, and the O((delta_{ij}^{r,N})^2) remainder. The incorrect auxiliary N c_N calculation and misleading explanation of o(N) have been removed. The O(1) condition is correctly described as stronger at line 564.
 
-- Its first identity must read h_j^r-h_i^r = r(j-i)Delta_{r,N}; it is incorrect for the unpowered bandwidths.
-- The assertion c_N = O(N^(-1)) assumes |j_N-i_N| = O(1). Under the stated assumption, all that follows in general is c_N = o(1).
-- The displayed expression for N c_N also omits 1/r.
-- The remainder should be O((delta_{ij}^{r,N})^2), rather than O(N^(-2)) for arbitrary index differences o(N).
-- The parenthetical explanation of o(N) is incorrect. It means |j_N-i_N|/N tends to zero, not that the index difference itself tends to zero.
+In particular, Delta_{r,N} is a constant multiple of 1/(N-1), so the o(N) index condition implies delta_{ij}^{r,N} -> 0 and then c_N -> 0. The fixed upper endpoint also justifies absorbing h_{i_N} into the final remainder constant. No further change is needed for checklist item 3.
 
-An immediate repair is to set u = h^r/r and g(u) = (ru)^(1/r). On the fixed transformed interval,
+For a uniform version of the bound useful in Proposition 8, my derivation sets u = h^r/r and g(u) = (ru)^(1/r). On the fixed transformed interval,
 
 \[
 g'(u)=h^{1-r},\qquad g''(u)=(1-r)h^{1-2r}.
@@ -36,11 +34,11 @@ The second derivative is bounded because h stays in [a,b], where a = h_min > 0 a
 h_j-h_i=h_i^{1-r}(u_j-u_i)+O((u_j-u_i)^2).
 \]
 
-This is my application of Taylor's theorem to the [grid definition](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:517). It also avoids the invalid O(N^(-2)) argument. For the general Taylor remainder result, see [BYU Math 346, Theorem 6.6.9 and Corollary 6.6.14](https://uamte.math.byu.edu/~bakker/Math346/Lectures/M346Lec06.pdf).
+This is my application of Taylor's theorem to the [grid definition](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:517). It supports the uniform quadratic estimate independently of which local grid indices are chosen. For the scalar remainder formula, see [DLMF Section 1.4(vi), equations (1.4.35)-(1.4.36)](https://dlmf.nist.gov/1.4#vi). The thesis proof still needs the separate uniform KDE remainder check recorded in PDF checklist item 8.
 
 ### 2. Correct the global lower bound
 
-The [calculation at lines 788 onward](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:788) has a sign problem, a bandwidth/index typo, an exponent error after squaring, and an incorrect conversion constant.
+The [calculation at lines 785 onward](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:785) has a sign problem, a bandwidth/index typo, an exponent error after squaring, and an incorrect conversion constant.
 
 Using the thesis's [Fourier convention and P_n](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:358), the corrected calculation is
 
@@ -68,7 +66,7 @@ Positivity follows directly because P_n is continuous and P_n(0)=1; the integran
 
 ### 3. Normalize the tail consistently
 
-You define T_N(A) as an unscaled sum at [line 785](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:785). The ensuing Gaussian-tail estimate is valid for epsilon_N T_N(A), not for T_N(A) itself. With epsilon_N = sqrt(lambda_N)Delta_{r,N}, write
+You define T_N(A) as an unscaled sum at [line 782](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:782). The ensuing Gaussian-tail estimate is valid for epsilon_N T_N(A), not for T_N(A) itself. With epsilon_N = sqrt(lambda_N)Delta_{r,N}, write
 
 \[
 \epsilon_N T_N(A)
@@ -89,7 +87,7 @@ The last constant in the thesis also loses a factor two: the displayed derivatio
 
 ### 4. Use absolute values in the remainder estimate
 
-At [lines 815 and 825 onward](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:815), divide by |tau_{N,j}| when the increment is nonzero, and use
+At [lines 812 and 822 onward](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:812), divide by |tau_{N,j}| when the increment is nonzero, and use
 
 \[
 |\rho_{N,j}|\le
@@ -102,11 +100,11 @@ The signed delta or signed inner product cannot bound an absolute value. At j=i_
 
 ### 5. Give the correct reason for the exponential error tending to zero
 
-The sentence at [line 835](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:835) attributes this to lambda_N/N^2 tending to zero. On I_N(A), the relevant estimate is instead lambda_N(delta_{ij}^{r,N})^2 <= A^2 together with the uniform remainder bound. The mesh condition makes epsilon_N tend to zero and is used for the sum approximation. The explicit exponential estimate is given below.
+The sentence at [line 832](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:832) attributes this to lambda_N/N^2 tending to zero. On I_N(A), the relevant estimate is instead lambda_N(delta_{ij}^{r,N})^2 <= A^2 together with the uniform remainder bound. The mesh condition makes epsilon_N tend to zero and is used for the sum approximation. The explicit exponential estimate is given below.
 
 ### 6. Correct the final passage to the full limit
 
-The [equality at line 866](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:866) is false for fixed A: the full row sum does not have the same limit as the truncated sum. Set
+The [equality at line 863](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:863) is false for fixed A: the full row sum does not have the same limit as the truncated sum. Set
 
 \[
 L_A=\int_{-A}^{A}e^{-t^2\hat Q_r(h_0)}\,dt.
@@ -124,7 +122,7 @@ Now let A tend to infinity. This proves the claimed limit without assuming its e
 
 ### 7. Remaining bookkeeping
 
-- Replace the cardinality calculation at [line 781](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:781) by #I_N(A) <= 2 floor(A/epsilon_N)+1 <= 2A/epsilon_N+1. Its current integer-count formula is wrong at integer endpoints.
+- Replace the cardinality calculation at [line 778](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:778) by #I_N(A) <= 2 floor(A/epsilon_N)+1 <= 2A/epsilon_N+1. Its current integer-count formula is wrong at integer endpoints.
 - Before the Riemann-sum step, note that sqrt(lambda_N)(u_{i_N}-u_1) and sqrt(lambda_N)(u_N-u_{i_N}) both tend to infinity. Hence I_N(A) is not truncated by the grid endpoints for fixed A and large N. This follows from h_{i_N} tending to an interior h_0.
 - Use one notation for delta_{ij}^{r,N} and tau_{N,j} throughout; currently delta_N, delta_{N,j}, tau_N and r_{N.j} appear without consistent definitions.
 - State why Q_r is continuous and strictly positive; the calculation below supplies both properties. The existing derivative lemma establishes differentiability, but its statement does not supply the uniform Taylor bound needed at moving base points.
@@ -262,7 +260,7 @@ Combining this with the rectangle estimate proves Proposition 8. This is an appl
 
 ## The red interpretation following the proposition
 
-The [red sentence at line 874](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:874) is justified as an asymptotic comparison of row sums at fixed interior limiting bandwidths. For two such sequences with limits h and s, Proposition 8 implies
+The [red sentence at line 871](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:871) is justified as an asymptotic comparison of row sums at fixed interior limiting bandwidths. For two such sequences with limits h and s, Proposition 8 implies
 
 \[
 \frac{R_{i_N}^{(N)}}{R_{k_N}^{(N)}}
@@ -271,4 +269,4 @@ The [red sentence at line 874](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_
 
 Use the same functional notation, or explain that beta=2(1-r) identifies Q_{n,beta}(h)=(1/2)h^beta||partial_h fhat_h||_2^2 with Q_r(h). The slow-change interpretation refers to the transformed coordinate u=h^r/r, since Q_r=(1/2)||F'(u)||_2^2. Calling this a curvature functional is misleading: its displayed definition uses the first derivative, i.e. squared speed, rather than a second derivative.
 
-Proposition 8 establishes row-sum asymptotics. It does not yet prove concentration of the Perron vector at a minimizer, convergence of a row-sum maximizer over the whole grid, or a joint statistical bandwidth-consistency result. These conclusions require further arguments; the thesis itself records the missing Perron connection in the [TODO at line 881](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:881). The pointwise interior result also does not give the stated full-Gaussian coefficient for boundary rows, where only one side of the local peak is available.
+Proposition 8 establishes row-sum asymptotics. It does not yet prove concentration of the Perron vector at a minimizer, convergence of a row-sum maximizer over the whole grid, or a joint statistical bandwidth-consistency result. These conclusions require further arguments; the thesis itself records the missing Perron connection in the [TODO at line 878](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex:878). The pointwise interior result also does not give the stated full-Gaussian coefficient for boundary rows, where only one side of the local peak is available.
