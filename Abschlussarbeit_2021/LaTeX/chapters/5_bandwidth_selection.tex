@@ -283,7 +283,7 @@ that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ a
 
 \textbf{Numerical Approximation}
 
-\todo[inline]{08.10: Gauss-Hermite seems slow, just use composite trapezoidal again but derive truncation error bound}
+\todo[inline]{Gauss-Hermite seems slow, just use composite trapezoidal again but derive truncation error bound}
 
 For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$ by $\sum_{m=1}^{M}w_mf(x_m)$ with the nodes $x_m$ being the $M$-th Hermite Polynomial $H_M$ and weights $w_m=(2^{M-1}M!\sqrt{\pi})/(M^2H_{M-1}^2(x_m))$. For reference on Gauss-Hermite quadrature, see~\cite[Section~25.4.46]{abramowitz_stegun1972}. We can write (and consequently approximate) the KL-divergence between two kernel density estimates $\hat{f}_h$ and $\hat{f}_g$ as
 \begin{align*}
@@ -370,7 +370,7 @@ Finally, we approximate $G_{rs}$ by truncating the integral and applying the com
     G_{rs}\approx\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
 \end{align*}
 
-\todo[inline]{08.10: Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
+\todo[inline]{Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -879,7 +879,7 @@ Let $v$ be the Perron vector of $S$, that is,
     \sum_{j=1}^{N}S_{ij}v_j=\theta_{\max}v_i,\quad\forall i=1,\dots,N
 \end{align}
 
-\todo[inline]{Somehow establish connection to the Perron vector of $S$ trough the row sums $R_i$ and Equations~\eqref{eq:row_sum_connection_to_hat_Q} and~\eqref{eq:perron_vector003}}
+\todo[inline]{Somehow establish connection to the Perron vector of $S$ trough the row sums $R_i$}
 
 \todo[inline]{Laplace method!!}
 
