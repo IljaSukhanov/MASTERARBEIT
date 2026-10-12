@@ -770,6 +770,15 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
         \hat{f}_{h+\tau}-\hat{f}_h=\tau\partial_h\hat{f}_h+\underbrace{\left(\hat{f}_{h+\tau}-\hat{f}_h-\tau\partial_h\hat{f}_h\right)}_{=:r_h(\tau)},
     \end{align*}
     where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.
+
+    \textcolor{red}{We must now establish the continuity of $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$.}
+
+    Applying the bound from above:
+    \begin{align*}
+        \|r_h(\tau)\|_2&\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_2\\&
+        =|\tau|\underbrace{\sup_{h,s\in[a,b],|h-s|\le|\tau|}\|d\Psi(s)-d\Psi(h)\|_2}_{=:\mu_{d\Psi,[a,b]}(|\tau|)}
+    \end{align*}
+    for all $h\in[a,b]$ and $\tau\in\mathbb{R}$ with $h+\tau\in[a,b]$. $\mu_{f,J}(s)=\sup_{x,y\in J,|x-y|\le s}\|f(x)-f(y)\|$ is known in the literature as the modulus of continuity. For continuous $f$ and compact interval $J$ it is well known that $\mu_{f,J}(s)\to0$ for $s\downarrow0$. \textcolor{red}{Add source.} Since we have established the continuity of $d\Psi$ before, the proof is finished.
 \end{proof}
 
 Next, we state the main theorem of this thesis.
