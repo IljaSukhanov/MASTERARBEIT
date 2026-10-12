@@ -721,6 +721,8 @@ We introduce the general definition of a Fréchet-derivative. Let $X$ and $Y$ be
 \end{align*}
 where $r_u:U-u\to Y$ is a remainder that fulfills $\|r(h)\|/\|h\|\to0$ for $h\to0$.
 
+\todo[inline]{integral representation of the remainder}
+
 In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next Lemma gives the Fréchet-derivative of $h\mapsto\hat{f}_h$.
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
@@ -821,7 +823,7 @@ Next, we state the main theorem of this thesis.
     \begin{align*}
         |\rho_{N,j}|&\le\delta_{ij}^{r,N}h_{i_N}^{1-r}\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2\\&
         \le\delta_{ij}^{r,N}\underbrace{h_{i_N}^{1-r}\|\partial_h\hat{f}_{h}|_{h=h_{i_N}}\|_2}_{\le M}\underbrace{\|r_{N.j}\|_2}_{\le\delta_{ij}^{r,N}a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{ij}^{r,N})^2a_N(A)^2}\\&
-        \le(\delta_{ij}^{r,N})^2\left(Ma_N(A)+(1/2)a_N(A)^2\right).
+        \le(\delta_{ij}^{r,N})^2\underbrace{\left(Ma_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)}.
     \end{align*}
     Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}((\delta_{ij}^{r,N})^2)$.
 
@@ -842,8 +844,10 @@ Next, we state the main theorem of this thesis.
     \begin{align*}
         \left|\epsilon_N\sum_{j\in I_N(A)}\underbrace{e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}}_{\le 1}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
     \end{align*}
-    \textcolor{red}{We must show that $\sup_{j\in I_N(A)}|\eta_{Nj}|\to 0$ for $N\to\infty$.}
 
+    We must show that $\sup_{j\in I_N(A)}|\eta_{Nj}|\to0$ for $N\to\infty$. We have $\lambda_N|\rho_{N,j}|\le\lambda_N(\delta_{ij}^{r,N})^2b_N(A)\le A^2b_N(A)$ for all $j\in I_N(A)$. Consequently, $|\eta_{Nj}|=|e^{-\lambda_N\rho_{Nj}}-1|\le\max\{e^{A^2b_N(A)}-1,1-e^{-A^2b_N(A)}\}\to0$ as $N\to\infty$.
+
+    
     Since $\hat{Q}_r$ is continuous in $h_0$, we have $\hat{Q}_r(h_{i_N})\to\hat{Q}_r(h_0)$ for $N\to\infty$. Therefore
     \begin{align*}
         \left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|\le(2A+\epsilon_N)A^2|\hat{Q}_r(h_{i_N})-\hat{Q}_r(h_0)|\to0.
