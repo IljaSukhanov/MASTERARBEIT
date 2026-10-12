@@ -784,14 +784,14 @@ Next, we state the main theorem of this thesis.
 
     We have $D_{i_Nj}\ge c(\delta_{ij}^{r,N})^2$ for some constant $c>0$. To see this, first write
     \begin{align*}
-        e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}=\int_{h_j}^{h_{i_N}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge(h_{i_N}-j)h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
+        e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}=\int_{h_j}^{h_{i_N}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge(h_{i_N}-h_j)h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
     \end{align*}
     and, furthermore
     \begin{align*}
         D_{i_Nj}&=\frac{1}{4\pi}\int|P_n(\omega)|^2\left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|^2\,d\omega\\&
-        \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2/2}\,d\omega.
+        \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int\underbrace{|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2}}_{=:g(\omega)}\,d\omega.
     \end{align*}
-    Now, $|\delta_{ij}^{r,N}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{ij}^{r,N})^2$ with positive constant $c=h_{\min}^{2(r-1)}(4\pi)^{-1}\int\cdots$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{ij}^{r,N})^2}=e^{-ct_{N,j}^2}$.
+    Now, $|\delta_{ij}^{r,N}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{ij}^{r,N})^2$ with positive constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{ij}^{r,N})^2}=e^{-ct_{N,j}^2}$.
 
     Continuing
     \begin{align*}
