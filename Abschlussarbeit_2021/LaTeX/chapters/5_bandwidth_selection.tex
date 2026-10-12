@@ -717,22 +717,27 @@ To explain the results, we need the concept of a Fréchet-derivative. A good boo
 
 We introduce the general definition of a Fréchet-derivative. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ an open nonempty subset. Let $\Psi:U\to Y$ be a map. A linear and bounded operator $d\Psi(u):X\to Y$ is called Fréchet-derivative of $\Psi$ at the point $u\in U$ if
 \begin{align*}
-    \Psi(u+h)=\Psi(u)+d\Psi(u)[h]+r_u(h),\quad\forall h\in U-u,
+    \Psi(u+h)=\Psi(u)+d\Psi(u)[h]+r_u(h),\quad\forall h\in X:u+h\in U,
 \end{align*}
-where $r_u:U-u\to Y$ is a remainder that fulfills $\|r(h)\|/\|h\|\to0$ for $h\to0$.
+where $r_u(h):\{h\in X:u+h\in U\}\to Y$ is a remainder that fulfills $\|r_u(h)\|_Y/\|h\|_X\to0$ for $h\to0$. $\Psi$ is called continuously differentiable on $U$ if $\Psi$ if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\mapsto\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$. We write $\Psi\in C^1(U)$.
 
-For the remainder, write
+Assume that the line $\{u+th:t\in[0,1]\}$ is inside $U$ and define $\gamma:[0,1]\to Y$, $\gamma(t)=\Psi(u+th)$. We have $\gamma'(t)=d\Psi(u+th)[h]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus, $\Psi(u+h)-\Psi(u)=\int_0^1d\Psi(u+th)[h]\,dt$. We can use this to bound the norm of the remainder:
 \begin{align*}
-    r_u(h)=\Psi(u+h)-\Psi(u)-d\Psi(u)[h]=\int_0^1d(\Psi(u+th)-d\Psi(u))[h]\,dt
+    \|r_u(h)\|_Y&\le\int_0^1\|(d\Psi(u+th)-d\Psi(u))[h]\|_Y\,dt\\&
+    \le\|h\|_X\int_0^1\|d\Psi(u+th)-d\Psi(u)\|\,dt\\&
+    \le\|h\|_X\sup_{t\in[0,1]}\|d\Psi(u+th)-d\Psi(u)\|
 \end{align*}
-This gives the bound $\|r_u(h)\|_Y\le\|h\|_X\sup_{0\le t\le 1}\|d\Psi(u+th)-d\Psi(u)\|_{\text{op}}$.
 
 In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next Lemma gives the Fréchet-derivative of $h\mapsto\hat{f}_h$.
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
     Let $K$ be differentiable on $\mathbb{R}$ and square integrable. Let $L$ be defined as $L(u)=K(u)+uK'(u)$. We must assume a certain decay assumption on $L$, namely $|L(v)|\le C(1+|v|)^{-\alpha}$ for some $C>0$, $\alpha>1/2$ and all $v\in\mathbb{R}$. The Fréchet-derivative of $h\mapsto\hat{f}_h$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
     \begin{align*}
-        \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K^{'}\left(\frac{x-X_j}{h}\right)\right),\quad x\in\mathbb{R}.
+        \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
+    \end{align*}
+    Additionally the norm of the remainder term $r_u(h)$ can be bounded above by:
+    \begin{align*}
+        \dots
     \end{align*}
 \end{Lem}
 
