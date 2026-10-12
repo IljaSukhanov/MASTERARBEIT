@@ -882,17 +882,21 @@ Next, we state the main theorem of this thesis.
 
     Thus,
     \begin{align*}
-        \epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}&=\sum_{k=-m_n}^{m_n}(k\epsilon_N-(k-1)\epsilon_N)e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}\stackrel{N\to\infty}{\to}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt,
+        \epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}&=\sum_{k=-m_n}^{m_n}(k\epsilon_N-(k-1)\epsilon_N)e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}\\&
+        \stackrel{N\to\infty}{\to}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt=:L_A,
     \end{align*}
     because $-m_n\epsilon\to-A$ and $(m_n+1)\epsilon_N\to A$ (Riemann sum approximation).
 
     Finally,
     \begin{align*}
-        \lim\limits_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\lim\limits_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}=\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt.
+        L_A&=\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\liminf_{N\to\infty}\epsilon_NT_N(A)\\&
+        \le\liminf_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\limsup_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\limsup_{N\to\infty}\epsilon_NT_N(A)\\&
+        \le L_A+\frac{e^{-cA^2}}{cA}
     \end{align*}
-    This is true for all $A>0$. Letting $A\to\infty$, we arrive at
+    
+    Letting $A\to\infty$, we see that the limit of $\epsilon_NR_{i_N}^{(N)}$ as $N\to\infty$ exists and is given by
     \begin{align*}
-        \lim_{A\to\infty}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt=\int\limits_{\mathbb{R}}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
+        \lim_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\lim_{A\to\infty}L_A=\int_{-\infty}^{\infty}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
     \end{align*}
 \end{proof}
 
