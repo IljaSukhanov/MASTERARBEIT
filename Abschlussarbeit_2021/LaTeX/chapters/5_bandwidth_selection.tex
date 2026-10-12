@@ -723,6 +723,12 @@ where $r_u:U-u\to Y$ is a remainder that fulfills $\|r(h)\|/\|h\|\to0$ for $h\to
 
 \todo[inline]{integral representation of the remainder}
 
+For the remainder, write
+\begin{align*}
+    r_u(h)=\Psi(u+h)-\Psi(u)-d\Psi(u)[h]=\int_0^1d(\Psi(u+th)-d\Psi(u))[h]\,dt
+\end{align*}
+This gives the bound $\|r_u(h)\|_Y\le\|h\|_X\sup_{0\le t\le 1}\|d\Psi(u+th)-d\Psi(u)\|_{\text{op}}$.
+
 In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next Lemma gives the Fréchet-derivative of $h\mapsto\hat{f}_h$.
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
@@ -775,7 +781,7 @@ Next, we state the main theorem of this thesis.
 \end{Prop}
 
 \begin{proof}
-    Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j:|t_{N,j}|\le A\}$. 
+    Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$. 
 
     We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\#\{j\in\mathbb{Z}:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N\}=\lfloor A\epsilon_N^{-1}\rfloor-\lceil-A\epsilon_N^{-1}\rceil+1=2\lfloor A\epsilon_N^{-1}\rfloor+1\le 2A\epsilon_N^{-1}+1$.
 
@@ -810,10 +816,21 @@ Next, we state the main theorem of this thesis.
     \begin{align*}
         \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h}|_{h=h_{i_N}}+u_{N,j}\\&
         =h_{i_N}^{1-r}\delta_N\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
-    \end{align*}
+    \end{align*}    
     where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2/\tau_{N,j}\to0$ for $N\to\infty$ and $r_{N,j}:=u_{N,j}+(\tau_{N,j}-h_{i_N}^{1-r}\delta_{ij}^{r,N})\partial_h\hat{f}_h|_{h=h_{i_N}}$.
 
     \textcolor{red}{It holds $\|r_{N,j}\|_2\le|\delta_{ij}^{r,N}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$.}
+
+    To see this, first use the upper bound of the norm of the remainder $u_{N,j}$ to obtain $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu(|\tau_{N,j}|)$, where $\mu$ is the modulus of continuity. 
+
+    Also, $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{ij}^{r,N}|$ and $|\tau_{N,j}-h_{i_N}^{1-r}\delta_{ij}^{r,N}|\le C_g|\delta_{ij}^{r,N}|^2$ for sufficiently large $N$.
+    
+    We also have $\|\partial_h\hat{f}_h\|_2\le M_0$ for some constant $M_0>0$. Now
+    \begin{align*}
+        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+|\tau_{N,j}-h_{i_N}^{1-r}\delta_{ij}^{r,N}|\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2\\&
+        \le h_{\max}^{1-r}|\delta_{ij}^{r,N}|\mu(|\tau_{N,j}|)+C_g|\delta_{ij}^{r,N}|M_0\\&
+        =|\delta_{ij}^{r,N}|\left(\underbrace{h_{\max}^{1-r}\mu(|\tau_{N,j}|)+C_gM_0}_{=:a_N(A)}\right)
+    \end{align*}
 
     Consequently,
     \begin{align*}
@@ -858,9 +875,16 @@ Next, we state the main theorem of this thesis.
     \end{align*}
     and
     \begin{align*}
-        \epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}=\sum_{j\in I_N(A)}(t_{N,j+1}-t_{N,j})e^{-t_{N,j}^2\hat{Q}_r(h_0)}\stackrel{N\to\infty}{\to}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt
+        \epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}&=\epsilon_N\sum_{j=1,\dots,N:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\\&
+        =\epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}
     \end{align*}
-    is a Riemann sum approximation.
+    for sufficiently large $N$, where we have used that $t_{N,1}=\sqrt{\lambda_N}\delta_{ij}^{r,N}=\sqrt{\lambda_N}r^{-1}(h_{\min}^r-h_{i_N}^r)\to-\infty$ and $t_{N,N}\to+\infty$ for $N\to\infty$ because we assumed that $h_{i_N}\to h_{i_0}$ for some interior scale $i_0$ and because $\lambda_N\to\infty$.
+
+    Thus,
+    \begin{align*}
+        \epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}&=\sum_{k=-m_n}^{m_n}(k\epsilon_N-(k-1)\epsilon_N)e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}\stackrel{N\to\infty}{\to}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt,
+    \end{align*}
+    because $-m_n\epsilon\to-A$ and $(m_n+1)\epsilon_N\to A$ (Riemann sum approximation).
 
     Finally,
     \begin{align*}
