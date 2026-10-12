@@ -721,7 +721,7 @@ We introduce the general definition of a Fréchet-derivative. Let $X$ and $Y$ be
 \end{align*}
 where $r_u(h):\{h\in X:u+h\in U\}\to Y$ is a remainder that fulfills $\|r_u(h)\|_Y/\|h\|_X\to0$ for $h\to0$. $\Psi$ is called continuously differentiable on $U$ if $\Psi$ if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\mapsto\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$. We write $\Psi\in C^1(U)$.
 
-Assume that the line $\{u+th:t\in[0,1]\}$ is inside $U$ and define $\gamma:[0,1]\to Y$, $\gamma(t)=\Psi(u+th)$. We have $\gamma'(t)=d\Psi(u+th)[h]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus, $\Psi(u+h)-\Psi(u)=\int_0^1d\Psi(u+th)[h]\,dt$. We can use this to bound the norm of the remainder:
+Assume that the line $\{u+th:t\in[0,1]\}$ is inside $U$ and define $\gamma:[0,1]\to Y$, $\gamma(t)=\Psi(u+th)$. We have $\gamma'(t)=d\Psi(u+th)[h]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus $\Psi(u+h)-\Psi(u)=\int_0^1d\Psi(u+th)[h]\,dt$. We can use this to bound the norm of the remainder:
 \begin{align*}
     \|r_u(h)\|_Y&\le\int_0^1\|(d\Psi(u+th)-d\Psi(u))[h]\|_Y\,dt\\&
     \le\|h\|_X\int_0^1\|d\Psi(u+th)-d\Psi(u)\|\,dt\\&
@@ -735,10 +735,11 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     \begin{align*}
         \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
     \end{align*}
-    Additionally the norm of the remainder term $r_u(h)$ can be bounded above by:
+    Additionally, the norm of the remainder term $r_u(\tau)$ can be bounded above by:
     \begin{align*}
-        \dots
+        \|r_h(\tau)\|_2\le|\tau|\mu_J(|\tau|)
     \end{align*}
+    if $h,h+\tau\in J:=[a,b]\subseteq(0,\infty)$. Also, $\mu\ge0$ and $\mu(s)\to0$ as $s\downarrow0$.
 \end{Lem}
 
 \begin{proof}
@@ -768,7 +769,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     \begin{align*}
         \hat{f}_{h+\tau}-\hat{f}_h=\tau\partial_h\hat{f}_h+\underbrace{\left(\hat{f}_{h+\tau}-\hat{f}_h-\tau\partial_h\hat{f}_h\right)}_{=:r_h(\tau)},
     \end{align*}
-    where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.         
+    where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.
 \end{proof}
 
 Next, we state the main theorem of this thesis.
