@@ -805,7 +805,7 @@ Next, we state the main theorem of this thesis.
         R_{i_N}^{(N)}=\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}.
     \end{align*}
 
-    We have $D_{i_Nj}\ge c(\delta_{j,N})^2$ for some constant $c>0$. To see this, first write
+    We have $D_{i_Nj}\ge c(\delta_{N,j})^2$ for some constant $c>0$. To see this, first write
     \begin{align*}
         \left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge|h_{i_N}-h_j|h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
     \end{align*}
@@ -814,7 +814,7 @@ Next, we state the main theorem of this thesis.
         D_{i_Nj}&=\frac{1}{4\pi}\int|P_n(\omega)|^2\left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|^2\,d\omega\\&
         \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int\underbrace{|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2}}_{=:g(\omega)}\,d\omega.
     \end{align*}
-    Now, $|\delta_{j,N}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with positive constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$.
+    Now, $|\delta_{N,j}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with positive constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$.
 
     Continuing
     \begin{align*}
@@ -832,20 +832,18 @@ Next, we state the main theorem of this thesis.
         \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_h|_{h=h_{i_N}}+u_{N,j}\\&
         =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
     \end{align*}
-    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ by Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$, where $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large.
+    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ according to Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$, where $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large.
 
-    It holds $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$ it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite.
+    We have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite.
 
-    \textcolor{red}{It holds $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$.}
-    
-    Now
+    We have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$, because
     \begin{align*}
         \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2\\&
         \le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
         \le|\delta_{N,j}|\left(h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|\right)\\&
         \le|\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}A\lambda_N^{-1/2})+CM_0A\lambda_N^{-1/2}}_{=:a_N(A)}\right)
     \end{align*}
-    and $a_N(A)\to0$ since $\lambda_N^{-1/2}\to0$ by assumption and $\mu(s)\to0$ for $s\downarrow0$ by Lemma~\ref{lem:frechet_derivative_of_kde}.
+    and $a_N(A)\to0$ since $\lambda_N^{-1/2}\to0$ by assumption and $\mu_{[h_{\min},h_{\max}]}(s)\to0$ for $s\downarrow0$ by Lemma~\ref{lem:frechet_derivative_of_kde}.
 
     Consequently,
     \begin{align*}
@@ -857,7 +855,7 @@ Next, we state the main theorem of this thesis.
         \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N,j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
         \le(\delta_{N,j})^2\underbrace{\left(h_{\max}^{1-r}M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)}.
     \end{align*}
-    Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}((\delta_{N,j})^2)$. Thus,
+    Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}(\delta_{N,j}^2)$. Thus,
     \begin{align*}
         S_{i_Nj}=e^{-\lambda_ND_{i_Nj}}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}e^{-\lambda_N\rho_{N,j}}.
     \end{align*}
@@ -906,6 +904,7 @@ Next, we state the main theorem of this thesis.
     \begin{align*}
         \lim_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\lim_{A\to\infty}L_A=\int_{-\infty}^{\infty}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
     \end{align*}
+    We must make sure that $\hat{Q}_r(h_0)>0$. This follows from previously established results inside this proof. For all sufficiently large $N$ we have $0<c\le\delta_{N,i_N+1}^{-2}D_{i_N,i_N+1}=\hat{Q}_r(h_{i_N})+\delta_{N,i_N+1}^{-2}\rho_{N,i_N+1}$ and taking the limit gives $\hat{Q}_r(h_0)\ge c>0$.
 \end{proof}
 
 \textcolor{red}{Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.}
