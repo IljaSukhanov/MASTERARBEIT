@@ -735,11 +735,11 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     \begin{align*}
         \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
     \end{align*}
-    Additionally, the norm of the remainder term $r_u(\tau)$ can be bounded above by:
+    Additionally, the norm of the remainder term $r_h(\tau)$ can be bounded above by:
     \begin{align*}
         \|r_h(\tau)\|_2\le|\tau|\mu_J(|\tau|)
     \end{align*}
-    if $h,h+\tau\in J:=[a,b]\subseteq(0,\infty)$. Also, $\mu\ge0$ and $\mu(s)\to0$ as $s\downarrow0$.
+    if $h,h+\tau\in J:=[a,b]\subseteq(0,\infty)$. Also, $\mu_J\ge0$ and $\mu_J(s)\to0$ as $s\downarrow0$.
 \end{Lem}
 
 \begin{proof}
@@ -778,7 +778,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
         \|r_h(\tau)\|_2&\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\text{op}}\\&
         \le|\tau|\underbrace{\sup_{h,s\in J,|h-s|\le|\tau|}\|d\Psi(s)-d\Psi(h)\|_\text{op}}_{=:\mu_{J}(|\tau|)}
     \end{align*}
-    for all $h\in[a,b]$ and $\tau\in\mathbb{R}$ with $h+\tau\in[a,b]$. $\mu_{J}(s)=\sup_{x,y\in J,|x-y|\le s}\|d\Psi(x)-d\Psi(y)\|_{\text{op}}$ is known in the literature as the modulus of continuity. For continuous $d\Psi$ it is well known that $\mu_{J}(s)\to0$ for $s\downarrow0$. Also note that $\|d\psi(s)-d\Psi(h)\|_{\text{op}}=\|\partial_h\hat{f}_s-\partial_h\hat{f}_h\|_2$. Since we have established the continuity of $d\Psi$ before, the proof is finished.
+    for all $h\in[a,b]$ and $\tau\in\mathbb{R}$ with $h+\tau\in[a,b]$. $\mu_{J}(s)=\sup_{x,y\in J,|x-y|\le s}\|d\Psi(x)-d\Psi(y)\|_{\text{op}}$ is known in the literature as the modulus of continuity. Because $d\Psi$ is continuous and $d\Psi:J\to L^2(\mathbb{R})$ is uniformly continuous and in this case it is well known that $\mu_{J}(s)\to0$ for $s\downarrow0$. Also note that $\|d\Psi(s)-d\Psi(h)\|_{\text{op}}=\|\partial_h\hat{f}_h|_{h=s}-\partial_h\hat{f}_h|_{h=h}\|_2$. Since we have established the continuity of $d\Psi$ before, the proof is finished.
 \end{proof}
 
 Next, we state the main theorem of this thesis.
@@ -830,7 +830,7 @@ Next, we state the main theorem of this thesis.
         \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
         =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
     \end{align*}
-    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|\le|\tau_{N,j}|_2\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ by Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\mathbf{O}(\delta_{N,j}^2)\partial_h\hat{f}_{h_{i_N}}$.
+    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ by Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\mathbf{O}(\delta_{N,j}^2)\partial_h\hat{f}_{h_{i_N}}$.
 
     It holds $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$ it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus $\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite and we set $M_0:=\|\partial_h\hat{f}_h\|_2$.
 
