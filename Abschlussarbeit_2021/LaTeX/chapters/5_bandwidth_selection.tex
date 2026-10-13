@@ -877,21 +877,33 @@ Next, we state the main theorem of this thesis.
     \end{align*}
     We continue working with the remaining non-vanishing term:
     \begin{align*}
-        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|}_{\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|
+        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|}_{\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|.
     \end{align*}
-    and
+
+    In order to show that the second summand above also converges to $0$ for $N\to\infty$ we first rewrite the sum over $I_N(A)$. Before that, set $m_N:=\lfloor A\epsilon_N^{-1}\rfloor$ and $x_k:=\epsilon_N(-m_N+k-1)$. For sufficiently large $N$ we can now write
     \begin{align*}
         \epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}&=\epsilon_N\sum_{j=1,\dots,N:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\\&
-        =\epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}
+        =\epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}\\&
+        =\sum_{k=-m_N}^{m_N}(k\epsilon_N-(k-1)\epsilon_N)e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}\\&
+        =\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})e^{-x_k^2\hat{Q}_r(h_0)}
     \end{align*}
-    for sufficiently large $N$, where we have used that $t_{N,1}=\sqrt{\lambda_N}\delta_{N,1}=\sqrt{\lambda_N}r^{-1}(h_{\min}^r-h_{i_N}^r)\to-\infty$ and $t_{N,N}\to+\infty$ for $N\to\infty$ because we assumed that $h_{i_N}\to h_0$ for some interior scale $h_0$ and because $\lambda_N\to\infty$.
+
+    We have used $t_{N,1}=\sqrt{\lambda_N}\delta_{N,1}=\sqrt{\lambda_N}r^{-1}(h_{\min}^r-h_{i_N}^r)\to-\infty$ and $t_{N,N}\to+\infty$ for $N\to\infty$ because we assumed that $h_{i_N}\to h_0$ for some interior scale $h_0$ and because $\lambda_N\to\infty$.
+
+    Now $\{x_0,\dots,x_{2m_N+1}\}$ is a partition of the interval $[-\epsilon_Nm_N-1,\epsilon_Nm_N]$.
 
     Thus,
     \begin{align*}
-        \epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}&=\sum_{k=-m_n}^{m_n}(k\epsilon_N-(k-1)\epsilon_N)e^{-(k\epsilon_N)^2\hat{Q}_r(h_0)}\\&
-        \stackrel{N\to\infty}{\to}\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt=:L_A,
+        \left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})e^{-x_k^2\hat{Q}_r(h_0)}-\int_{-\epsilon_Nm_N+1}^{\epsilon_Nm_N}e^{-t^2}\hat{Q}_r(h_0)\,dt\right|&=\sum_{k=1}^{2m_N+1}\int_{x_{k-1}}^{x_k}|g(x_k)-g(x)|\,dx\\&
+        \le2A\hat{Q}_r(h_0)(2A\epsilon_N+\epsilon_N^2)\to0,\quad N\to\infty,
     \end{align*}
-    because $-m_n\epsilon\to-A$ and $(m_n+1)\epsilon_N\to A$ (Riemann sum approximation).
+    because $\epsilon_N\to0$ since we have assumed $\lambda_N/N^2$ and
+    \begin{align*}
+        \left|\int_{-\epsilon_Nm_N+1}^{\epsilon_Nm_N}e^{-t^2}\hat{Q}_r(h_0)\,dt-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|,
+    \end{align*}
+    because $-m_N\epsilon\to-A$ and $(m_n+1)\epsilon_N\to A$.
+
+    We have now shown that the aforementioned second summand also converges to zero.
 
     Finally,
     \begin{align*}
