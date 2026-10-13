@@ -825,35 +825,35 @@ Next, we state the main theorem of this thesis.
         \limsup_{N\to\infty}\epsilon_NT_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{cA}\to0,\quad A\to\infty.
     \end{align*}
     
-    Now, let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus, by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}((\delta_{ij}^{r,N})^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
+    Now, let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus, by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
     \begin{align*}
-        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h}|_{h=h_{i_N}}+u_{N,j}\\&
-        =h_{i_N}^{1-r}\delta_N\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
-    \end{align*}    
-    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2/\tau_{N,j}\to0$ for $N\to\infty$ and $r_{N,j}:=u_{N,j}+(\tau_{N,j}-h_{i_N}^{1-r}\delta_{ij}^{r,N})\partial_h\hat{f}_h|_{h=h_{i_N}}$.
+        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
+        =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
+    \end{align*}
+    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|\le|\tau_{N,j}|_2\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ by Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\mathbf{O}(\delta_{N,j}^2)\partial_h\hat{f}_{h_{i_N}}$.
+
+    It holds $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$ it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus $\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite and we set $M_0:=\|\partial_h\hat{f}_h\|_2$.
 
     \textcolor{red}{It holds $\|r_{N,j}\|_2\le|\delta_{ij}^{r,N}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$.}
-
-    To see this, first use the upper bound of the norm of the remainder $u_{N,j}$ to obtain $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu(|\tau_{N,j}|)$, where $\mu$ is the modulus of continuity. 
-
-    Also, $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{ij}^{r,N}|$ and $|\tau_{N,j}-h_{i_N}^{1-r}\delta_{ij}^{r,N}|\le C_g|\delta_{ij}^{r,N}|^2$ for sufficiently large $N$.
     
-    We also have $\|\partial_h\hat{f}_h\|_2\le M_0$ for some constant $M_0>0$. Now
+    Now
     \begin{align*}
-        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+|\tau_{N,j}-h_{i_N}^{1-r}\delta_{ij}^{r,N}|\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2\\&
-        \le h_{\max}^{1-r}|\delta_{ij}^{r,N}|\mu(|\tau_{N,j}|)+C_g|\delta_{ij}^{r,N}|M_0\\&
-        =|\delta_{ij}^{r,N}|\left(\underbrace{h_{\max}^{1-r}\mu(|\tau_{N,j}|)+C_gM_0}_{=:a_N(A)}\right)
+        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_h|_{h_{i_N}}\|_2\\&
+        \le|\tau_{N,j}|\mu(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
+        \le|\delta_{N,j}|\left(h_{\max}^{1-r}\mu(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|\right)\\&
+        \le|\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu(h_{\max}^{1-r}A\lambda_N^{-1/2})+CM_0A\lambda_N^{-1/2}}_{=:a_N(A)}\right)
     \end{align*}
+    and $a_N(A)\to0$ since $\lambda_N^{-1/2}\to0$ by assumption and $\mu(s)\to0$ for $s\downarrow0$ by Lemma~\ref{lem:frechet_derivative_of_kde}.
 
     Consequently,
     \begin{align*}
-        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{i,j}^{r,N})^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2^2+\rho_{N,j}=(\delta_{ij}^{r,N})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
+        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_{h_{i_N}}\|_2^2+\rho_{N,j}=(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
     \end{align*}
-    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{ij}^{r,N}\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
+    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{N,j}\langle\partial_h\hat{f}_{h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
     \begin{align*}
-        |\rho_{N,j}|&\le|\delta_{ij}^{r,N}|h_{i_N}^{1-r}|\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle|+(1/2)\|r_{N,j}\|_2^2\\&
-        \le|\delta_{ij}^{r,N}|\underbrace{h_{i_N}^{1-r}\|\partial_h\hat{f}_{h}|_{h=h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N.j}\|_2}_{\le|\delta_{ij}^{r,N}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{ij}^{r,N})^2a_N(A)^2}\\&
-        \le(\delta_{ij}^{r,N})^2\underbrace{\left(M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)}.
+        |\rho_{N,j}|&\le|\delta_{N,j}|h_{i_N}^{1-r}|\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle|+(1/2)\|r_{N,j}\|_2^2\\&
+        \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_{h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N.j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
+        \le(\delta_{ij}^{r,N})^2\underbrace{\left(h_{\max}^{1-r}M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)}.
     \end{align*}
     Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}((\delta_{ij}^{r,N})^2)$. Thus,
     \begin{align*}
