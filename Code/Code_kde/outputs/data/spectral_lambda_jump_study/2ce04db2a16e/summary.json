@@ -1,0 +1,13 @@
+{
+  "configuration_id": "2ce04db2a16e",
+  "samples": 1000,
+  "numerical_successes": 1000,
+  "numerical_failures": 0,
+  "samples_with_upward_change": 973,
+  "samples_with_no_upward_change": 27,
+  "samples_with_tied_largest_changes": 508,
+  "samples_with_largest_change_at_most_2_steps": 483,
+  "samples_with_largest_change_at_least_5_steps": 344,
+  "median_largest_upward_steps": 3.0,
+  "largest_relative_eigenpair_residual": 1.6975870221346365e-15
+}

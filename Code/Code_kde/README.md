@@ -52,6 +52,9 @@ the reusable numerical APIs remain in `kde_tools/`.
   mesh diagnostics, and repeated-sampling experiments.
 - `fast_l2_bandwidth_distributions_vs_n_lambda.ipynb`: FFT-based L²
   distributions with shared divergence-based spectral selection.
+- `spectral_lambda_jump_study.ipynb`: 1,000-sample Figure 3.3 lambda sweeps,
+  adjacent-pair histograms of the largest upward index changes, jump-size
+  diagnostics, and resumable raw-sample/trajectory checkpoints.
 - `gaussian_hellinger_bandwidth_distributions_vs_n.ipynb`: H² sample-size
   experiments with versioned checkpoints.
 
