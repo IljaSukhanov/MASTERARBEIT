@@ -719,7 +719,7 @@ We introduce the general definition of a Fréchet-derivative. Let $X$ and $Y$ be
 \begin{align*}
     \Psi(u+h)=\Psi(u)+d\Psi(u)[h]+r_u(h),\quad\forall h\in X:u+h\in U,
 \end{align*}
-where $r_u(h):\{h\in X:u+h\in U\}\to Y$ is a remainder that fulfills $\|r_u(h)\|_Y/\|h\|_X\to0$ for $h\to0$. $\Psi$ is called continuously differentiable on $U$ if $\Psi$ if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\mapsto\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$. We write $\Psi\in C^1(U)$.
+where $r_u(h):\{h\in X:u+h\in U\}\to Y$ is a remainder that fulfills $\|r_u(h)\|_Y/\|h\|_X\to0$ for $h\to0$. $\Psi$ is called continuously differentiable on $U$ if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\mapsto\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$. We write $\Psi\in C^1(U)$.
 
 Assume that the line $\{u+th:t\in[0,1]\}$ is inside $U$ and define $\gamma:[0,1]\to Y$, $\gamma(t)=\Psi(u+th)$. We have $\gamma'(t)=d\Psi(u+th)[h]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus $\Psi(u+h)-\Psi(u)=\int_0^1d\Psi(u+th)[h]\,dt$. We can use this to bound the norm of the remainder:
 \begin{align*}
@@ -778,7 +778,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
         \|r_h(\tau)\|_2&\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\text{op}}\\&
         \le|\tau|\underbrace{\sup_{h,s\in J,|h-s|\le|\tau|}\|d\Psi(s)-d\Psi(h)\|_\text{op}}_{=:\mu_{J}(|\tau|)}
     \end{align*}
-    for all $h\in[a,b]$ and $\tau\in\mathbb{R}$ with $h+\tau\in[a,b]$. $\mu_{J}(s)=\sup_{x,y\in J,|x-y|\le s}\|d\Psi(x)-d\Psi(y)\|_{\text{op}}$ is known in the literature as the modulus of continuity. Because $d\Psi$ is continuous and $d\Psi:J\to L^2(\mathbb{R})$ is uniformly continuous and in this case it is well known that $\mu_{J}(s)\to0$ for $s\downarrow0$. Also note that $\|d\Psi(s)-d\Psi(h)\|_{\text{op}}=\|\partial_h\hat{f}_h|_{h=s}-\partial_h\hat{f}_h|_{h=h}\|_2$. Since we have established the continuity of $d\Psi$ before, the proof is finished.
+    for all $h\in[a,b]$ and $\tau\in\mathbb{R}$ with $h+\tau\in[a,b]$. $\mu_{J}(s)=\sup_{x,y\in J,|x-y|\le s}\|d\Psi(x)-d\Psi(y)\|_{\text{op}}$ is known in the literature as the modulus of continuity. Because $d\Psi$ is continuous, $d\Psi:J\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ is uniformly continuous, and in this case it is well known that $\mu_{J}(s)\to0$ for $s\downarrow0$. Also note that $\|d\Psi(s)-d\Psi(h)\|_{\text{op}}=\|\partial_h\hat{f}_h|_{h=s}-\partial_h\hat{f}_h|_{h=h}\|_2$. Since we have established the continuity of $d\Psi$ before, the proof is finished.
 \end{proof}
 
 Next, we state the main theorem of this thesis.
@@ -798,12 +798,14 @@ Next, we state the main theorem of this thesis.
 
     We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\#\{j\in\mathbb{Z}:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N\}=\lfloor A\epsilon_N^{-1}\rfloor-\lceil-A\epsilon_N^{-1}\rceil+1=2\lfloor A\epsilon_N^{-1}\rfloor+1\le 2A\epsilon_N^{-1}+1$.
 
+    We also set $\delta_{j,N}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$.
+
     Split the row sum:
     \begin{align*}
         R_{i_N}^{(N)}=\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}.
     \end{align*}
 
-    We have $D_{i_Nj}\ge c(\delta_{ij}^{r,N})^2$ for some constant $c>0$. To see this, first write
+    We have $D_{i_Nj}\ge c(\delta_{j,N})^2$ for some constant $c>0$. To see this, first write
     \begin{align*}
         \left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge|h_{i_N}-h_j|h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
     \end{align*}
@@ -812,7 +814,7 @@ Next, we state the main theorem of this thesis.
         D_{i_Nj}&=\frac{1}{4\pi}\int|P_n(\omega)|^2\left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|^2\,d\omega\\&
         \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int\underbrace{|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2}}_{=:g(\omega)}\,d\omega.
     \end{align*}
-    Now, $|\delta_{ij}^{r,N}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{ij}^{r,N})^2$ with positive constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{ij}^{r,N})^2}=e^{-ct_{N,j}^2}$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$.
+    Now, $|\delta_{j,N}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with positive constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$.
 
     Continuing
     \begin{align*}
@@ -827,18 +829,18 @@ Next, we state the main theorem of this thesis.
     
     Now, let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus, by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
     \begin{align*}
-        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_N}-\hat{f}_{h_{i_N}}=\tau_N\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
-        =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
+        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_h|_{h=h_{i_N}}+u_{N,j}\\&
+        =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
     \end{align*}
-    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ by Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\mathbf{O}(\delta_{N,j}^2)\partial_h\hat{f}_{h_{i_N}}$.
+    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ by Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$, where $\alpha_{N,j}\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large.
 
-    It holds $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$ it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus $\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite and we set $M_0:=\|\partial_h\hat{f}_h\|_2$.
+    It holds $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$ it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite.
 
     \textcolor{red}{It holds $\|r_{N,j}\|_2\le|\delta_{ij}^{r,N}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$.}
     
     Now
     \begin{align*}
-        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_h|_{h_{i_N}}\|_2\\&
+        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2\\&
         \le|\tau_{N,j}|\mu(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
         \le|\delta_{N,j}|\left(h_{\max}^{1-r}\mu(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|\right)\\&
         \le|\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu(h_{\max}^{1-r}A\lambda_N^{-1/2})+CM_0A\lambda_N^{-1/2}}_{=:a_N(A)}\right)
@@ -847,12 +849,12 @@ Next, we state the main theorem of this thesis.
 
     Consequently,
     \begin{align*}
-        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_{h_{i_N}}\|_2^2+\rho_{N,j}=(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
+        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2^2+\rho_{N,j}=(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
     \end{align*}
-    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{N,j}\langle\partial_h\hat{f}_{h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
+    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{N,j}\langle\partial_h\hat{f}_h|_{h=h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
     \begin{align*}
         |\rho_{N,j}|&\le|\delta_{N,j}|h_{i_N}^{1-r}|\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle|+(1/2)\|r_{N,j}\|_2^2\\&
-        \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_{h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N.j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
+        \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N.j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
         \le(\delta_{ij}^{r,N})^2\underbrace{\left(h_{\max}^{1-r}M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)}.
     \end{align*}
     Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}((\delta_{ij}^{r,N})^2)$. Thus,
