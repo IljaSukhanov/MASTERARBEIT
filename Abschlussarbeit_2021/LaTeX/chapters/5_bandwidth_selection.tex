@@ -894,14 +894,14 @@ Next, we state the main theorem of this thesis.
 
     Thus,
     \begin{align*}
-        \left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int_{-\epsilon_Nm_N+1}^{\epsilon_Nm_N}g(x)\,dx\right|&\le\sum_{k=1}^{2m_N+1}\int_{x_{k-1}}^{x_k}|g(x_k)-g(x)|\,dx\\&
+        \left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|&\le\sum_{k=1}^{2m_N+1}\int_{x_{k-1}}^{x_k}|g(x_k)-g(x)|\,dx\\&
         \le2A\hat{Q}_r(h_0)(2A\epsilon_N+\epsilon_N^2)\to0,\quad N\to\infty,
     \end{align*}
-    because $\epsilon_N\to0$ since we have assumed $\lambda_N/N^2$ and
+    because $\epsilon_N\to0$ since we have assumed $\lambda_N/N^2\to0$ and
     \begin{align*}
-        \left|\int_{-\epsilon_Nm_N+1}^{\epsilon_Nm_N}g(t)\,dt-\int_{-A}^{A}g(t)\,dt\right|,
+        \left|\int_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(t)\,dt-\int_{-A}^{A}g(t)\,dt\right|\to0,\quad N\to\infty,
     \end{align*}
-    because $-m_N\epsilon\to-A$ and $(m_n+1)\epsilon_N\to A$.
+    because $-\epsilon_N(m_N+1)\to-A$ and $\epsilon_Nm_N\to A$.
 
     We have now shown that the aforementioned second summand also converges to zero.
 
