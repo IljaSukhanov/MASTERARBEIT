@@ -1,9 +1,5 @@
-Selector,Tail,Loss,Score,Empirical correct,Population correct,Same selected order,Wrong in both
-L-method,affine tail,squared,weighted,148/300,151/300,251/300,140/300
-L-method,affine tail,squared,total,133/300,138/300,255/300,154/300
-L-method,affine tail,absolute,weighted,138/300,146/300,247/300,145/300
-L-method,affine tail,absolute,total,138/300,146/300,247/300,145/300
-L-method,constant tail,squared,weighted,164/300,163/300,247/300,123/300
-L-method,constant tail,squared,total,153/300,149/300,257/300,141/300
-L-method,constant tail,absolute,weighted,144/300,155/300,239/300,136/300
-L-method,constant tail,absolute,total,144/300,155/300,239/300,136/300
+method,empirical_correct,population_correct,total
+First difference,98,101,300
+Perron first difference,92,97,300
+Perron second difference,109,114,300
+Second difference,118,121,300

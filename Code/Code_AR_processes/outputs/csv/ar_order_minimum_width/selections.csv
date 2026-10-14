@@ -1,3001 +1,1801 @@
 true_order,replication,method,selected_order
 1,1,BIC,1
 1,1,PACF cutoff,1
-1,1,L — affine tail — squared — weighted RMSE,1
-1,1,L — affine tail — squared — total SSE,1
-1,1,L — affine tail — absolute — weighted MAE,1
-1,1,L — affine tail — absolute — total SAE,1
-1,1,L — constant tail — squared — weighted RMSE,1
-1,1,L — constant tail — squared — total SSE,1
-1,1,L — constant tail — absolute — weighted MAE,1
-1,1,L — constant tail — absolute — total SAE,1
 1,2,BIC,1
 1,2,PACF cutoff,8
-1,2,L — affine tail — squared — weighted RMSE,1
-1,2,L — affine tail — squared — total SSE,1
-1,2,L — affine tail — absolute — weighted MAE,1
-1,2,L — affine tail — absolute — total SAE,1
-1,2,L — constant tail — squared — weighted RMSE,1
-1,2,L — constant tail — squared — total SSE,1
-1,2,L — constant tail — absolute — weighted MAE,1
-1,2,L — constant tail — absolute — total SAE,1
 1,3,BIC,1
 1,3,PACF cutoff,1
-1,3,L — affine tail — squared — weighted RMSE,1
-1,3,L — affine tail — squared — total SSE,1
-1,3,L — affine tail — absolute — weighted MAE,1
-1,3,L — affine tail — absolute — total SAE,1
-1,3,L — constant tail — squared — weighted RMSE,1
-1,3,L — constant tail — squared — total SSE,1
-1,3,L — constant tail — absolute — weighted MAE,1
-1,3,L — constant tail — absolute — total SAE,1
 1,4,BIC,1
 1,4,PACF cutoff,1
-1,4,L — affine tail — squared — weighted RMSE,1
-1,4,L — affine tail — squared — total SSE,1
-1,4,L — affine tail — absolute — weighted MAE,1
-1,4,L — affine tail — absolute — total SAE,1
-1,4,L — constant tail — squared — weighted RMSE,1
-1,4,L — constant tail — squared — total SSE,1
-1,4,L — constant tail — absolute — weighted MAE,1
-1,4,L — constant tail — absolute — total SAE,1
 1,5,BIC,1
 1,5,PACF cutoff,3
-1,5,L — affine tail — squared — weighted RMSE,1
-1,5,L — affine tail — squared — total SSE,1
-1,5,L — affine tail — absolute — weighted MAE,1
-1,5,L — affine tail — absolute — total SAE,1
-1,5,L — constant tail — squared — weighted RMSE,1
-1,5,L — constant tail — squared — total SSE,1
-1,5,L — constant tail — absolute — weighted MAE,1
-1,5,L — constant tail — absolute — total SAE,1
 1,6,BIC,1
 1,6,PACF cutoff,1
-1,6,L — affine tail — squared — weighted RMSE,1
-1,6,L — affine tail — squared — total SSE,1
-1,6,L — affine tail — absolute — weighted MAE,1
-1,6,L — affine tail — absolute — total SAE,1
-1,6,L — constant tail — squared — weighted RMSE,1
-1,6,L — constant tail — squared — total SSE,1
-1,6,L — constant tail — absolute — weighted MAE,1
-1,6,L — constant tail — absolute — total SAE,1
 1,7,BIC,1
 1,7,PACF cutoff,1
-1,7,L — affine tail — squared — weighted RMSE,1
-1,7,L — affine tail — squared — total SSE,1
-1,7,L — affine tail — absolute — weighted MAE,1
-1,7,L — affine tail — absolute — total SAE,1
-1,7,L — constant tail — squared — weighted RMSE,1
-1,7,L — constant tail — squared — total SSE,1
-1,7,L — constant tail — absolute — weighted MAE,1
-1,7,L — constant tail — absolute — total SAE,1
 1,8,BIC,1
 1,8,PACF cutoff,1
-1,8,L — affine tail — squared — weighted RMSE,1
-1,8,L — affine tail — squared — total SSE,1
-1,8,L — affine tail — absolute — weighted MAE,1
-1,8,L — affine tail — absolute — total SAE,1
-1,8,L — constant tail — squared — weighted RMSE,1
-1,8,L — constant tail — squared — total SSE,1
-1,8,L — constant tail — absolute — weighted MAE,1
-1,8,L — constant tail — absolute — total SAE,1
 1,9,BIC,1
 1,9,PACF cutoff,9
-1,9,L — affine tail — squared — weighted RMSE,1
-1,9,L — affine tail — squared — total SSE,1
-1,9,L — affine tail — absolute — weighted MAE,1
-1,9,L — affine tail — absolute — total SAE,1
-1,9,L — constant tail — squared — weighted RMSE,1
-1,9,L — constant tail — squared — total SSE,1
-1,9,L — constant tail — absolute — weighted MAE,1
-1,9,L — constant tail — absolute — total SAE,1
 1,10,BIC,1
 1,10,PACF cutoff,1
-1,10,L — affine tail — squared — weighted RMSE,1
-1,10,L — affine tail — squared — total SSE,1
-1,10,L — affine tail — absolute — weighted MAE,1
-1,10,L — affine tail — absolute — total SAE,1
-1,10,L — constant tail — squared — weighted RMSE,1
-1,10,L — constant tail — squared — total SSE,1
-1,10,L — constant tail — absolute — weighted MAE,1
-1,10,L — constant tail — absolute — total SAE,1
 1,11,BIC,1
 1,11,PACF cutoff,1
-1,11,L — affine tail — squared — weighted RMSE,1
-1,11,L — affine tail — squared — total SSE,1
-1,11,L — affine tail — absolute — weighted MAE,1
-1,11,L — affine tail — absolute — total SAE,1
-1,11,L — constant tail — squared — weighted RMSE,1
-1,11,L — constant tail — squared — total SSE,1
-1,11,L — constant tail — absolute — weighted MAE,1
-1,11,L — constant tail — absolute — total SAE,1
 1,12,BIC,1
 1,12,PACF cutoff,1
-1,12,L — affine tail — squared — weighted RMSE,1
-1,12,L — affine tail — squared — total SSE,1
-1,12,L — affine tail — absolute — weighted MAE,1
-1,12,L — affine tail — absolute — total SAE,1
-1,12,L — constant tail — squared — weighted RMSE,1
-1,12,L — constant tail — squared — total SSE,1
-1,12,L — constant tail — absolute — weighted MAE,1
-1,12,L — constant tail — absolute — total SAE,1
 1,13,BIC,1
 1,13,PACF cutoff,7
-1,13,L — affine tail — squared — weighted RMSE,1
-1,13,L — affine tail — squared — total SSE,1
-1,13,L — affine tail — absolute — weighted MAE,1
-1,13,L — affine tail — absolute — total SAE,1
-1,13,L — constant tail — squared — weighted RMSE,1
-1,13,L — constant tail — squared — total SSE,1
-1,13,L — constant tail — absolute — weighted MAE,1
-1,13,L — constant tail — absolute — total SAE,1
 1,14,BIC,1
 1,14,PACF cutoff,1
-1,14,L — affine tail — squared — weighted RMSE,1
-1,14,L — affine tail — squared — total SSE,1
-1,14,L — affine tail — absolute — weighted MAE,1
-1,14,L — affine tail — absolute — total SAE,1
-1,14,L — constant tail — squared — weighted RMSE,1
-1,14,L — constant tail — squared — total SSE,1
-1,14,L — constant tail — absolute — weighted MAE,1
-1,14,L — constant tail — absolute — total SAE,1
 1,15,BIC,1
 1,15,PACF cutoff,8
-1,15,L — affine tail — squared — weighted RMSE,1
-1,15,L — affine tail — squared — total SSE,1
-1,15,L — affine tail — absolute — weighted MAE,1
-1,15,L — affine tail — absolute — total SAE,1
-1,15,L — constant tail — squared — weighted RMSE,1
-1,15,L — constant tail — squared — total SSE,1
-1,15,L — constant tail — absolute — weighted MAE,1
-1,15,L — constant tail — absolute — total SAE,1
 1,16,BIC,1
 1,16,PACF cutoff,1
-1,16,L — affine tail — squared — weighted RMSE,1
-1,16,L — affine tail — squared — total SSE,1
-1,16,L — affine tail — absolute — weighted MAE,1
-1,16,L — affine tail — absolute — total SAE,1
-1,16,L — constant tail — squared — weighted RMSE,1
-1,16,L — constant tail — squared — total SSE,1
-1,16,L — constant tail — absolute — weighted MAE,1
-1,16,L — constant tail — absolute — total SAE,1
 1,17,BIC,1
 1,17,PACF cutoff,1
-1,17,L — affine tail — squared — weighted RMSE,1
-1,17,L — affine tail — squared — total SSE,1
-1,17,L — affine tail — absolute — weighted MAE,1
-1,17,L — affine tail — absolute — total SAE,1
-1,17,L — constant tail — squared — weighted RMSE,1
-1,17,L — constant tail — squared — total SSE,1
-1,17,L — constant tail — absolute — weighted MAE,1
-1,17,L — constant tail — absolute — total SAE,1
 1,18,BIC,1
 1,18,PACF cutoff,4
-1,18,L — affine tail — squared — weighted RMSE,1
-1,18,L — affine tail — squared — total SSE,1
-1,18,L — affine tail — absolute — weighted MAE,1
-1,18,L — affine tail — absolute — total SAE,1
-1,18,L — constant tail — squared — weighted RMSE,1
-1,18,L — constant tail — squared — total SSE,1
-1,18,L — constant tail — absolute — weighted MAE,1
-1,18,L — constant tail — absolute — total SAE,1
 1,19,BIC,1
 1,19,PACF cutoff,1
-1,19,L — affine tail — squared — weighted RMSE,1
-1,19,L — affine tail — squared — total SSE,1
-1,19,L — affine tail — absolute — weighted MAE,1
-1,19,L — affine tail — absolute — total SAE,1
-1,19,L — constant tail — squared — weighted RMSE,1
-1,19,L — constant tail — squared — total SSE,1
-1,19,L — constant tail — absolute — weighted MAE,1
-1,19,L — constant tail — absolute — total SAE,1
 1,20,BIC,1
 1,20,PACF cutoff,1
-1,20,L — affine tail — squared — weighted RMSE,1
-1,20,L — affine tail — squared — total SSE,1
-1,20,L — affine tail — absolute — weighted MAE,1
-1,20,L — affine tail — absolute — total SAE,1
-1,20,L — constant tail — squared — weighted RMSE,1
-1,20,L — constant tail — squared — total SSE,1
-1,20,L — constant tail — absolute — weighted MAE,1
-1,20,L — constant tail — absolute — total SAE,1
 1,21,BIC,1
 1,21,PACF cutoff,1
-1,21,L — affine tail — squared — weighted RMSE,1
-1,21,L — affine tail — squared — total SSE,1
-1,21,L — affine tail — absolute — weighted MAE,1
-1,21,L — affine tail — absolute — total SAE,1
-1,21,L — constant tail — squared — weighted RMSE,1
-1,21,L — constant tail — squared — total SSE,1
-1,21,L — constant tail — absolute — weighted MAE,1
-1,21,L — constant tail — absolute — total SAE,1
 1,22,BIC,1
 1,22,PACF cutoff,1
-1,22,L — affine tail — squared — weighted RMSE,1
-1,22,L — affine tail — squared — total SSE,1
-1,22,L — affine tail — absolute — weighted MAE,1
-1,22,L — affine tail — absolute — total SAE,1
-1,22,L — constant tail — squared — weighted RMSE,1
-1,22,L — constant tail — squared — total SSE,1
-1,22,L — constant tail — absolute — weighted MAE,1
-1,22,L — constant tail — absolute — total SAE,1
 1,23,BIC,1
 1,23,PACF cutoff,1
-1,23,L — affine tail — squared — weighted RMSE,1
-1,23,L — affine tail — squared — total SSE,1
-1,23,L — affine tail — absolute — weighted MAE,1
-1,23,L — affine tail — absolute — total SAE,1
-1,23,L — constant tail — squared — weighted RMSE,1
-1,23,L — constant tail — squared — total SSE,1
-1,23,L — constant tail — absolute — weighted MAE,1
-1,23,L — constant tail — absolute — total SAE,1
 1,24,BIC,1
 1,24,PACF cutoff,1
-1,24,L — affine tail — squared — weighted RMSE,1
-1,24,L — affine tail — squared — total SSE,1
-1,24,L — affine tail — absolute — weighted MAE,1
-1,24,L — affine tail — absolute — total SAE,1
-1,24,L — constant tail — squared — weighted RMSE,1
-1,24,L — constant tail — squared — total SSE,1
-1,24,L — constant tail — absolute — weighted MAE,1
-1,24,L — constant tail — absolute — total SAE,1
 1,25,BIC,1
 1,25,PACF cutoff,1
-1,25,L — affine tail — squared — weighted RMSE,1
-1,25,L — affine tail — squared — total SSE,1
-1,25,L — affine tail — absolute — weighted MAE,1
-1,25,L — affine tail — absolute — total SAE,1
-1,25,L — constant tail — squared — weighted RMSE,1
-1,25,L — constant tail — squared — total SSE,1
-1,25,L — constant tail — absolute — weighted MAE,1
-1,25,L — constant tail — absolute — total SAE,1
 1,26,BIC,1
 1,26,PACF cutoff,1
-1,26,L — affine tail — squared — weighted RMSE,1
-1,26,L — affine tail — squared — total SSE,1
-1,26,L — affine tail — absolute — weighted MAE,1
-1,26,L — affine tail — absolute — total SAE,1
-1,26,L — constant tail — squared — weighted RMSE,1
-1,26,L — constant tail — squared — total SSE,1
-1,26,L — constant tail — absolute — weighted MAE,1
-1,26,L — constant tail — absolute — total SAE,1
 1,27,BIC,0
 1,27,PACF cutoff,3
-1,27,L — affine tail — squared — weighted RMSE,5
-1,27,L — affine tail — squared — total SSE,5
-1,27,L — affine tail — absolute — weighted MAE,7
-1,27,L — affine tail — absolute — total SAE,7
-1,27,L — constant tail — squared — weighted RMSE,7
-1,27,L — constant tail — squared — total SSE,7
-1,27,L — constant tail — absolute — weighted MAE,7
-1,27,L — constant tail — absolute — total SAE,7
 1,28,BIC,1
 1,28,PACF cutoff,1
-1,28,L — affine tail — squared — weighted RMSE,1
-1,28,L — affine tail — squared — total SSE,1
-1,28,L — affine tail — absolute — weighted MAE,1
-1,28,L — affine tail — absolute — total SAE,1
-1,28,L — constant tail — squared — weighted RMSE,1
-1,28,L — constant tail — squared — total SSE,1
-1,28,L — constant tail — absolute — weighted MAE,1
-1,28,L — constant tail — absolute — total SAE,1
 1,29,BIC,1
 1,29,PACF cutoff,1
-1,29,L — affine tail — squared — weighted RMSE,1
-1,29,L — affine tail — squared — total SSE,1
-1,29,L — affine tail — absolute — weighted MAE,1
-1,29,L — affine tail — absolute — total SAE,1
-1,29,L — constant tail — squared — weighted RMSE,1
-1,29,L — constant tail — squared — total SSE,1
-1,29,L — constant tail — absolute — weighted MAE,1
-1,29,L — constant tail — absolute — total SAE,1
 1,30,BIC,1
 1,30,PACF cutoff,1
-1,30,L — affine tail — squared — weighted RMSE,1
-1,30,L — affine tail — squared — total SSE,1
-1,30,L — affine tail — absolute — weighted MAE,1
-1,30,L — affine tail — absolute — total SAE,1
-1,30,L — constant tail — squared — weighted RMSE,1
-1,30,L — constant tail — squared — total SSE,1
-1,30,L — constant tail — absolute — weighted MAE,1
-1,30,L — constant tail — absolute — total SAE,1
 1,31,BIC,0
 1,31,PACF cutoff,9
-1,31,L — affine tail — squared — weighted RMSE,1
-1,31,L — affine tail — squared — total SSE,1
-1,31,L — affine tail — absolute — weighted MAE,1
-1,31,L — affine tail — absolute — total SAE,1
-1,31,L — constant tail — squared — weighted RMSE,1
-1,31,L — constant tail — squared — total SSE,1
-1,31,L — constant tail — absolute — weighted MAE,1
-1,31,L — constant tail — absolute — total SAE,1
 1,32,BIC,1
 1,32,PACF cutoff,1
-1,32,L — affine tail — squared — weighted RMSE,1
-1,32,L — affine tail — squared — total SSE,1
-1,32,L — affine tail — absolute — weighted MAE,1
-1,32,L — affine tail — absolute — total SAE,1
-1,32,L — constant tail — squared — weighted RMSE,1
-1,32,L — constant tail — squared — total SSE,1
-1,32,L — constant tail — absolute — weighted MAE,1
-1,32,L — constant tail — absolute — total SAE,1
 1,33,BIC,1
 1,33,PACF cutoff,2
-1,33,L — affine tail — squared — weighted RMSE,1
-1,33,L — affine tail — squared — total SSE,1
-1,33,L — affine tail — absolute — weighted MAE,1
-1,33,L — affine tail — absolute — total SAE,1
-1,33,L — constant tail — squared — weighted RMSE,1
-1,33,L — constant tail — squared — total SSE,1
-1,33,L — constant tail — absolute — weighted MAE,1
-1,33,L — constant tail — absolute — total SAE,1
 1,34,BIC,1
 1,34,PACF cutoff,9
-1,34,L — affine tail — squared — weighted RMSE,1
-1,34,L — affine tail — squared — total SSE,1
-1,34,L — affine tail — absolute — weighted MAE,1
-1,34,L — affine tail — absolute — total SAE,1
-1,34,L — constant tail — squared — weighted RMSE,1
-1,34,L — constant tail — squared — total SSE,1
-1,34,L — constant tail — absolute — weighted MAE,1
-1,34,L — constant tail — absolute — total SAE,1
 1,35,BIC,1
 1,35,PACF cutoff,4
-1,35,L — affine tail — squared — weighted RMSE,1
-1,35,L — affine tail — squared — total SSE,1
-1,35,L — affine tail — absolute — weighted MAE,1
-1,35,L — affine tail — absolute — total SAE,1
-1,35,L — constant tail — squared — weighted RMSE,1
-1,35,L — constant tail — squared — total SSE,1
-1,35,L — constant tail — absolute — weighted MAE,1
-1,35,L — constant tail — absolute — total SAE,1
 1,36,BIC,1
 1,36,PACF cutoff,1
-1,36,L — affine tail — squared — weighted RMSE,1
-1,36,L — affine tail — squared — total SSE,1
-1,36,L — affine tail — absolute — weighted MAE,1
-1,36,L — affine tail — absolute — total SAE,1
-1,36,L — constant tail — squared — weighted RMSE,1
-1,36,L — constant tail — squared — total SSE,1
-1,36,L — constant tail — absolute — weighted MAE,1
-1,36,L — constant tail — absolute — total SAE,1
 1,37,BIC,1
 1,37,PACF cutoff,5
-1,37,L — affine tail — squared — weighted RMSE,1
-1,37,L — affine tail — squared — total SSE,1
-1,37,L — affine tail — absolute — weighted MAE,1
-1,37,L — affine tail — absolute — total SAE,1
-1,37,L — constant tail — squared — weighted RMSE,1
-1,37,L — constant tail — squared — total SSE,1
-1,37,L — constant tail — absolute — weighted MAE,1
-1,37,L — constant tail — absolute — total SAE,1
 1,38,BIC,1
 1,38,PACF cutoff,6
-1,38,L — affine tail — squared — weighted RMSE,1
-1,38,L — affine tail — squared — total SSE,1
-1,38,L — affine tail — absolute — weighted MAE,1
-1,38,L — affine tail — absolute — total SAE,1
-1,38,L — constant tail — squared — weighted RMSE,1
-1,38,L — constant tail — squared — total SSE,1
-1,38,L — constant tail — absolute — weighted MAE,1
-1,38,L — constant tail — absolute — total SAE,1
 1,39,BIC,1
 1,39,PACF cutoff,2
-1,39,L — affine tail — squared — weighted RMSE,1
-1,39,L — affine tail — squared — total SSE,1
-1,39,L — affine tail — absolute — weighted MAE,1
-1,39,L — affine tail — absolute — total SAE,1
-1,39,L — constant tail — squared — weighted RMSE,1
-1,39,L — constant tail — squared — total SSE,1
-1,39,L — constant tail — absolute — weighted MAE,1
-1,39,L — constant tail — absolute — total SAE,1
 1,40,BIC,1
 1,40,PACF cutoff,1
-1,40,L — affine tail — squared — weighted RMSE,1
-1,40,L — affine tail — squared — total SSE,1
-1,40,L — affine tail — absolute — weighted MAE,1
-1,40,L — affine tail — absolute — total SAE,1
-1,40,L — constant tail — squared — weighted RMSE,1
-1,40,L — constant tail — squared — total SSE,1
-1,40,L — constant tail — absolute — weighted MAE,1
-1,40,L — constant tail — absolute — total SAE,1
 1,41,BIC,1
 1,41,PACF cutoff,9
-1,41,L — affine tail — squared — weighted RMSE,1
-1,41,L — affine tail — squared — total SSE,1
-1,41,L — affine tail — absolute — weighted MAE,1
-1,41,L — affine tail — absolute — total SAE,1
-1,41,L — constant tail — squared — weighted RMSE,1
-1,41,L — constant tail — squared — total SSE,1
-1,41,L — constant tail — absolute — weighted MAE,1
-1,41,L — constant tail — absolute — total SAE,1
 1,42,BIC,1
 1,42,PACF cutoff,1
-1,42,L — affine tail — squared — weighted RMSE,1
-1,42,L — affine tail — squared — total SSE,1
-1,42,L — affine tail — absolute — weighted MAE,1
-1,42,L — affine tail — absolute — total SAE,1
-1,42,L — constant tail — squared — weighted RMSE,1
-1,42,L — constant tail — squared — total SSE,1
-1,42,L — constant tail — absolute — weighted MAE,1
-1,42,L — constant tail — absolute — total SAE,1
 1,43,BIC,1
 1,43,PACF cutoff,1
-1,43,L — affine tail — squared — weighted RMSE,1
-1,43,L — affine tail — squared — total SSE,1
-1,43,L — affine tail — absolute — weighted MAE,1
-1,43,L — affine tail — absolute — total SAE,1
-1,43,L — constant tail — squared — weighted RMSE,1
-1,43,L — constant tail — squared — total SSE,1
-1,43,L — constant tail — absolute — weighted MAE,1
-1,43,L — constant tail — absolute — total SAE,1
 1,44,BIC,1
 1,44,PACF cutoff,6
-1,44,L — affine tail — squared — weighted RMSE,1
-1,44,L — affine tail — squared — total SSE,1
-1,44,L — affine tail — absolute — weighted MAE,1
-1,44,L — affine tail — absolute — total SAE,1
-1,44,L — constant tail — squared — weighted RMSE,1
-1,44,L — constant tail — squared — total SSE,1
-1,44,L — constant tail — absolute — weighted MAE,1
-1,44,L — constant tail — absolute — total SAE,1
 1,45,BIC,1
 1,45,PACF cutoff,1
-1,45,L — affine tail — squared — weighted RMSE,1
-1,45,L — affine tail — squared — total SSE,1
-1,45,L — affine tail — absolute — weighted MAE,1
-1,45,L — affine tail — absolute — total SAE,1
-1,45,L — constant tail — squared — weighted RMSE,1
-1,45,L — constant tail — squared — total SSE,1
-1,45,L — constant tail — absolute — weighted MAE,1
-1,45,L — constant tail — absolute — total SAE,1
 1,46,BIC,1
 1,46,PACF cutoff,5
-1,46,L — affine tail — squared — weighted RMSE,1
-1,46,L — affine tail — squared — total SSE,1
-1,46,L — affine tail — absolute — weighted MAE,1
-1,46,L — affine tail — absolute — total SAE,1
-1,46,L — constant tail — squared — weighted RMSE,1
-1,46,L — constant tail — squared — total SSE,1
-1,46,L — constant tail — absolute — weighted MAE,1
-1,46,L — constant tail — absolute — total SAE,1
 1,47,BIC,1
 1,47,PACF cutoff,1
-1,47,L — affine tail — squared — weighted RMSE,1
-1,47,L — affine tail — squared — total SSE,1
-1,47,L — affine tail — absolute — weighted MAE,1
-1,47,L — affine tail — absolute — total SAE,1
-1,47,L — constant tail — squared — weighted RMSE,1
-1,47,L — constant tail — squared — total SSE,1
-1,47,L — constant tail — absolute — weighted MAE,1
-1,47,L — constant tail — absolute — total SAE,1
 1,48,BIC,1
 1,48,PACF cutoff,1
-1,48,L — affine tail — squared — weighted RMSE,1
-1,48,L — affine tail — squared — total SSE,1
-1,48,L — affine tail — absolute — weighted MAE,1
-1,48,L — affine tail — absolute — total SAE,1
-1,48,L — constant tail — squared — weighted RMSE,1
-1,48,L — constant tail — squared — total SSE,1
-1,48,L — constant tail — absolute — weighted MAE,1
-1,48,L — constant tail — absolute — total SAE,1
 1,49,BIC,1
 1,49,PACF cutoff,8
-1,49,L — affine tail — squared — weighted RMSE,1
-1,49,L — affine tail — squared — total SSE,1
-1,49,L — affine tail — absolute — weighted MAE,1
-1,49,L — affine tail — absolute — total SAE,1
-1,49,L — constant tail — squared — weighted RMSE,1
-1,49,L — constant tail — squared — total SSE,1
-1,49,L — constant tail — absolute — weighted MAE,1
-1,49,L — constant tail — absolute — total SAE,1
 1,50,BIC,0
 1,50,PACF cutoff,0
-1,50,L — affine tail — squared — weighted RMSE,1
-1,50,L — affine tail — squared — total SSE,1
-1,50,L — affine tail — absolute — weighted MAE,1
-1,50,L — affine tail — absolute — total SAE,1
-1,50,L — constant tail — squared — weighted RMSE,1
-1,50,L — constant tail — squared — total SSE,1
-1,50,L — constant tail — absolute — weighted MAE,1
-1,50,L — constant tail — absolute — total SAE,1
 2,1,BIC,2
 2,1,PACF cutoff,4
-2,1,L — affine tail — squared — weighted RMSE,1
-2,1,L — affine tail — squared — total SSE,1
-2,1,L — affine tail — absolute — weighted MAE,1
-2,1,L — affine tail — absolute — total SAE,1
-2,1,L — constant tail — squared — weighted RMSE,1
-2,1,L — constant tail — squared — total SSE,1
-2,1,L — constant tail — absolute — weighted MAE,1
-2,1,L — constant tail — absolute — total SAE,1
 2,2,BIC,2
 2,2,PACF cutoff,9
-2,2,L — affine tail — squared — weighted RMSE,2
-2,2,L — affine tail — squared — total SSE,2
-2,2,L — affine tail — absolute — weighted MAE,2
-2,2,L — affine tail — absolute — total SAE,2
-2,2,L — constant tail — squared — weighted RMSE,2
-2,2,L — constant tail — squared — total SSE,2
-2,2,L — constant tail — absolute — weighted MAE,2
-2,2,L — constant tail — absolute — total SAE,2
 2,3,BIC,2
 2,3,PACF cutoff,2
-2,3,L — affine tail — squared — weighted RMSE,2
-2,3,L — affine tail — squared — total SSE,2
-2,3,L — affine tail — absolute — weighted MAE,2
-2,3,L — affine tail — absolute — total SAE,2
-2,3,L — constant tail — squared — weighted RMSE,2
-2,3,L — constant tail — squared — total SSE,2
-2,3,L — constant tail — absolute — weighted MAE,2
-2,3,L — constant tail — absolute — total SAE,2
 2,4,BIC,2
 2,4,PACF cutoff,2
-2,4,L — affine tail — squared — weighted RMSE,2
-2,4,L — affine tail — squared — total SSE,2
-2,4,L — affine tail — absolute — weighted MAE,2
-2,4,L — affine tail — absolute — total SAE,2
-2,4,L — constant tail — squared — weighted RMSE,2
-2,4,L — constant tail — squared — total SSE,2
-2,4,L — constant tail — absolute — weighted MAE,2
-2,4,L — constant tail — absolute — total SAE,2
 2,5,BIC,2
 2,5,PACF cutoff,2
-2,5,L — affine tail — squared — weighted RMSE,2
-2,5,L — affine tail — squared — total SSE,2
-2,5,L — affine tail — absolute — weighted MAE,2
-2,5,L — affine tail — absolute — total SAE,2
-2,5,L — constant tail — squared — weighted RMSE,2
-2,5,L — constant tail — squared — total SSE,2
-2,5,L — constant tail — absolute — weighted MAE,2
-2,5,L — constant tail — absolute — total SAE,2
 2,6,BIC,2
 2,6,PACF cutoff,2
-2,6,L — affine tail — squared — weighted RMSE,2
-2,6,L — affine tail — squared — total SSE,2
-2,6,L — affine tail — absolute — weighted MAE,2
-2,6,L — affine tail — absolute — total SAE,2
-2,6,L — constant tail — squared — weighted RMSE,2
-2,6,L — constant tail — squared — total SSE,2
-2,6,L — constant tail — absolute — weighted MAE,2
-2,6,L — constant tail — absolute — total SAE,2
 2,7,BIC,2
 2,7,PACF cutoff,2
-2,7,L — affine tail — squared — weighted RMSE,2
-2,7,L — affine tail — squared — total SSE,2
-2,7,L — affine tail — absolute — weighted MAE,2
-2,7,L — affine tail — absolute — total SAE,2
-2,7,L — constant tail — squared — weighted RMSE,2
-2,7,L — constant tail — squared — total SSE,2
-2,7,L — constant tail — absolute — weighted MAE,2
-2,7,L — constant tail — absolute — total SAE,2
 2,8,BIC,2
 2,8,PACF cutoff,2
-2,8,L — affine tail — squared — weighted RMSE,2
-2,8,L — affine tail — squared — total SSE,2
-2,8,L — affine tail — absolute — weighted MAE,2
-2,8,L — affine tail — absolute — total SAE,2
-2,8,L — constant tail — squared — weighted RMSE,2
-2,8,L — constant tail — squared — total SSE,2
-2,8,L — constant tail — absolute — weighted MAE,2
-2,8,L — constant tail — absolute — total SAE,2
 2,9,BIC,2
 2,9,PACF cutoff,2
-2,9,L — affine tail — squared — weighted RMSE,2
-2,9,L — affine tail — squared — total SSE,2
-2,9,L — affine tail — absolute — weighted MAE,2
-2,9,L — affine tail — absolute — total SAE,2
-2,9,L — constant tail — squared — weighted RMSE,2
-2,9,L — constant tail — squared — total SSE,2
-2,9,L — constant tail — absolute — weighted MAE,2
-2,9,L — constant tail — absolute — total SAE,2
 2,10,BIC,2
 2,10,PACF cutoff,8
-2,10,L — affine tail — squared — weighted RMSE,2
-2,10,L — affine tail — squared — total SSE,2
-2,10,L — affine tail — absolute — weighted MAE,2
-2,10,L — affine tail — absolute — total SAE,2
-2,10,L — constant tail — squared — weighted RMSE,2
-2,10,L — constant tail — squared — total SSE,2
-2,10,L — constant tail — absolute — weighted MAE,2
-2,10,L — constant tail — absolute — total SAE,2
 2,11,BIC,2
 2,11,PACF cutoff,7
-2,11,L — affine tail — squared — weighted RMSE,2
-2,11,L — affine tail — squared — total SSE,2
-2,11,L — affine tail — absolute — weighted MAE,2
-2,11,L — affine tail — absolute — total SAE,2
-2,11,L — constant tail — squared — weighted RMSE,2
-2,11,L — constant tail — squared — total SSE,2
-2,11,L — constant tail — absolute — weighted MAE,2
-2,11,L — constant tail — absolute — total SAE,2
 2,12,BIC,2
 2,12,PACF cutoff,2
-2,12,L — affine tail — squared — weighted RMSE,1
-2,12,L — affine tail — squared — total SSE,1
-2,12,L — affine tail — absolute — weighted MAE,1
-2,12,L — affine tail — absolute — total SAE,1
-2,12,L — constant tail — squared — weighted RMSE,1
-2,12,L — constant tail — squared — total SSE,1
-2,12,L — constant tail — absolute — weighted MAE,1
-2,12,L — constant tail — absolute — total SAE,1
 2,13,BIC,2
 2,13,PACF cutoff,2
-2,13,L — affine tail — squared — weighted RMSE,2
-2,13,L — affine tail — squared — total SSE,2
-2,13,L — affine tail — absolute — weighted MAE,2
-2,13,L — affine tail — absolute — total SAE,2
-2,13,L — constant tail — squared — weighted RMSE,2
-2,13,L — constant tail — squared — total SSE,2
-2,13,L — constant tail — absolute — weighted MAE,2
-2,13,L — constant tail — absolute — total SAE,2
 2,14,BIC,2
 2,14,PACF cutoff,7
-2,14,L — affine tail — squared — weighted RMSE,2
-2,14,L — affine tail — squared — total SSE,2
-2,14,L — affine tail — absolute — weighted MAE,2
-2,14,L — affine tail — absolute — total SAE,2
-2,14,L — constant tail — squared — weighted RMSE,2
-2,14,L — constant tail — squared — total SSE,2
-2,14,L — constant tail — absolute — weighted MAE,2
-2,14,L — constant tail — absolute — total SAE,2
 2,15,BIC,2
 2,15,PACF cutoff,2
-2,15,L — affine tail — squared — weighted RMSE,2
-2,15,L — affine tail — squared — total SSE,2
-2,15,L — affine tail — absolute — weighted MAE,2
-2,15,L — affine tail — absolute — total SAE,2
-2,15,L — constant tail — squared — weighted RMSE,2
-2,15,L — constant tail — squared — total SSE,2
-2,15,L — constant tail — absolute — weighted MAE,2
-2,15,L — constant tail — absolute — total SAE,2
 2,16,BIC,2
 2,16,PACF cutoff,2
-2,16,L — affine tail — squared — weighted RMSE,2
-2,16,L — affine tail — squared — total SSE,2
-2,16,L — affine tail — absolute — weighted MAE,2
-2,16,L — affine tail — absolute — total SAE,2
-2,16,L — constant tail — squared — weighted RMSE,2
-2,16,L — constant tail — squared — total SSE,2
-2,16,L — constant tail — absolute — weighted MAE,2
-2,16,L — constant tail — absolute — total SAE,2
 2,17,BIC,2
 2,17,PACF cutoff,2
-2,17,L — affine tail — squared — weighted RMSE,2
-2,17,L — affine tail — squared — total SSE,2
-2,17,L — affine tail — absolute — weighted MAE,2
-2,17,L — affine tail — absolute — total SAE,2
-2,17,L — constant tail — squared — weighted RMSE,2
-2,17,L — constant tail — squared — total SSE,2
-2,17,L — constant tail — absolute — weighted MAE,2
-2,17,L — constant tail — absolute — total SAE,2
 2,18,BIC,2
 2,18,PACF cutoff,2
-2,18,L — affine tail — squared — weighted RMSE,2
-2,18,L — affine tail — squared — total SSE,2
-2,18,L — affine tail — absolute — weighted MAE,2
-2,18,L — affine tail — absolute — total SAE,2
-2,18,L — constant tail — squared — weighted RMSE,2
-2,18,L — constant tail — squared — total SSE,2
-2,18,L — constant tail — absolute — weighted MAE,2
-2,18,L — constant tail — absolute — total SAE,2
 2,19,BIC,2
 2,19,PACF cutoff,5
-2,19,L — affine tail — squared — weighted RMSE,2
-2,19,L — affine tail — squared — total SSE,2
-2,19,L — affine tail — absolute — weighted MAE,2
-2,19,L — affine tail — absolute — total SAE,2
-2,19,L — constant tail — squared — weighted RMSE,2
-2,19,L — constant tail — squared — total SSE,2
-2,19,L — constant tail — absolute — weighted MAE,2
-2,19,L — constant tail — absolute — total SAE,2
 2,20,BIC,2
 2,20,PACF cutoff,2
-2,20,L — affine tail — squared — weighted RMSE,2
-2,20,L — affine tail — squared — total SSE,2
-2,20,L — affine tail — absolute — weighted MAE,2
-2,20,L — affine tail — absolute — total SAE,2
-2,20,L — constant tail — squared — weighted RMSE,2
-2,20,L — constant tail — squared — total SSE,2
-2,20,L — constant tail — absolute — weighted MAE,2
-2,20,L — constant tail — absolute — total SAE,2
 2,21,BIC,1
 2,21,PACF cutoff,3
-2,21,L — affine tail — squared — weighted RMSE,1
-2,21,L — affine tail — squared — total SSE,1
-2,21,L — affine tail — absolute — weighted MAE,1
-2,21,L — affine tail — absolute — total SAE,1
-2,21,L — constant tail — squared — weighted RMSE,1
-2,21,L — constant tail — squared — total SSE,1
-2,21,L — constant tail — absolute — weighted MAE,1
-2,21,L — constant tail — absolute — total SAE,1
 2,22,BIC,2
 2,22,PACF cutoff,2
-2,22,L — affine tail — squared — weighted RMSE,1
-2,22,L — affine tail — squared — total SSE,1
-2,22,L — affine tail — absolute — weighted MAE,1
-2,22,L — affine tail — absolute — total SAE,1
-2,22,L — constant tail — squared — weighted RMSE,1
-2,22,L — constant tail — squared — total SSE,1
-2,22,L — constant tail — absolute — weighted MAE,1
-2,22,L — constant tail — absolute — total SAE,1
 2,23,BIC,2
 2,23,PACF cutoff,7
-2,23,L — affine tail — squared — weighted RMSE,2
-2,23,L — affine tail — squared — total SSE,2
-2,23,L — affine tail — absolute — weighted MAE,2
-2,23,L — affine tail — absolute — total SAE,2
-2,23,L — constant tail — squared — weighted RMSE,2
-2,23,L — constant tail — squared — total SSE,2
-2,23,L — constant tail — absolute — weighted MAE,2
-2,23,L — constant tail — absolute — total SAE,2
 2,24,BIC,1
 2,24,PACF cutoff,2
-2,24,L — affine tail — squared — weighted RMSE,1
-2,24,L — affine tail — squared — total SSE,1
-2,24,L — affine tail — absolute — weighted MAE,1
-2,24,L — affine tail — absolute — total SAE,1
-2,24,L — constant tail — squared — weighted RMSE,1
-2,24,L — constant tail — squared — total SSE,1
-2,24,L — constant tail — absolute — weighted MAE,1
-2,24,L — constant tail — absolute — total SAE,1
 2,25,BIC,2
 2,25,PACF cutoff,2
-2,25,L — affine tail — squared — weighted RMSE,2
-2,25,L — affine tail — squared — total SSE,2
-2,25,L — affine tail — absolute — weighted MAE,2
-2,25,L — affine tail — absolute — total SAE,2
-2,25,L — constant tail — squared — weighted RMSE,2
-2,25,L — constant tail — squared — total SSE,2
-2,25,L — constant tail — absolute — weighted MAE,2
-2,25,L — constant tail — absolute — total SAE,2
 2,26,BIC,2
 2,26,PACF cutoff,2
-2,26,L — affine tail — squared — weighted RMSE,2
-2,26,L — affine tail — squared — total SSE,2
-2,26,L — affine tail — absolute — weighted MAE,2
-2,26,L — affine tail — absolute — total SAE,2
-2,26,L — constant tail — squared — weighted RMSE,2
-2,26,L — constant tail — squared — total SSE,2
-2,26,L — constant tail — absolute — weighted MAE,2
-2,26,L — constant tail — absolute — total SAE,2
 2,27,BIC,2
 2,27,PACF cutoff,9
-2,27,L — affine tail — squared — weighted RMSE,2
-2,27,L — affine tail — squared — total SSE,2
-2,27,L — affine tail — absolute — weighted MAE,2
-2,27,L — affine tail — absolute — total SAE,2
-2,27,L — constant tail — squared — weighted RMSE,2
-2,27,L — constant tail — squared — total SSE,2
-2,27,L — constant tail — absolute — weighted MAE,2
-2,27,L — constant tail — absolute — total SAE,2
 2,28,BIC,2
 2,28,PACF cutoff,2
-2,28,L — affine tail — squared — weighted RMSE,1
-2,28,L — affine tail — squared — total SSE,1
-2,28,L — affine tail — absolute — weighted MAE,1
-2,28,L — affine tail — absolute — total SAE,1
-2,28,L — constant tail — squared — weighted RMSE,1
-2,28,L — constant tail — squared — total SSE,1
-2,28,L — constant tail — absolute — weighted MAE,1
-2,28,L — constant tail — absolute — total SAE,1
 2,29,BIC,2
 2,29,PACF cutoff,2
-2,29,L — affine tail — squared — weighted RMSE,2
-2,29,L — affine tail — squared — total SSE,2
-2,29,L — affine tail — absolute — weighted MAE,2
-2,29,L — affine tail — absolute — total SAE,2
-2,29,L — constant tail — squared — weighted RMSE,2
-2,29,L — constant tail — squared — total SSE,2
-2,29,L — constant tail — absolute — weighted MAE,2
-2,29,L — constant tail — absolute — total SAE,2
 2,30,BIC,0
 2,30,PACF cutoff,5
-2,30,L — affine tail — squared — weighted RMSE,2
-2,30,L — affine tail — squared — total SSE,1
-2,30,L — affine tail — absolute — weighted MAE,2
-2,30,L — affine tail — absolute — total SAE,2
-2,30,L — constant tail — squared — weighted RMSE,2
-2,30,L — constant tail — squared — total SSE,2
-2,30,L — constant tail — absolute — weighted MAE,2
-2,30,L — constant tail — absolute — total SAE,2
 2,31,BIC,2
 2,31,PACF cutoff,2
-2,31,L — affine tail — squared — weighted RMSE,1
-2,31,L — affine tail — squared — total SSE,1
-2,31,L — affine tail — absolute — weighted MAE,1
-2,31,L — affine tail — absolute — total SAE,1
-2,31,L — constant tail — squared — weighted RMSE,1
-2,31,L — constant tail — squared — total SSE,1
-2,31,L — constant tail — absolute — weighted MAE,1
-2,31,L — constant tail — absolute — total SAE,1
 2,32,BIC,2
 2,32,PACF cutoff,2
-2,32,L — affine tail — squared — weighted RMSE,2
-2,32,L — affine tail — squared — total SSE,2
-2,32,L — affine tail — absolute — weighted MAE,2
-2,32,L — affine tail — absolute — total SAE,2
-2,32,L — constant tail — squared — weighted RMSE,2
-2,32,L — constant tail — squared — total SSE,2
-2,32,L — constant tail — absolute — weighted MAE,2
-2,32,L — constant tail — absolute — total SAE,2
 2,33,BIC,2
 2,33,PACF cutoff,4
-2,33,L — affine tail — squared — weighted RMSE,2
-2,33,L — affine tail — squared — total SSE,2
-2,33,L — affine tail — absolute — weighted MAE,2
-2,33,L — affine tail — absolute — total SAE,2
-2,33,L — constant tail — squared — weighted RMSE,2
-2,33,L — constant tail — squared — total SSE,2
-2,33,L — constant tail — absolute — weighted MAE,2
-2,33,L — constant tail — absolute — total SAE,2
 2,34,BIC,2
 2,34,PACF cutoff,2
-2,34,L — affine tail — squared — weighted RMSE,2
-2,34,L — affine tail — squared — total SSE,1
-2,34,L — affine tail — absolute — weighted MAE,1
-2,34,L — affine tail — absolute — total SAE,1
-2,34,L — constant tail — squared — weighted RMSE,2
-2,34,L — constant tail — squared — total SSE,1
-2,34,L — constant tail — absolute — weighted MAE,1
-2,34,L — constant tail — absolute — total SAE,1
 2,35,BIC,2
 2,35,PACF cutoff,2
-2,35,L — affine tail — squared — weighted RMSE,2
-2,35,L — affine tail — squared — total SSE,2
-2,35,L — affine tail — absolute — weighted MAE,2
-2,35,L — affine tail — absolute — total SAE,2
-2,35,L — constant tail — squared — weighted RMSE,2
-2,35,L — constant tail — squared — total SSE,2
-2,35,L — constant tail — absolute — weighted MAE,2
-2,35,L — constant tail — absolute — total SAE,2
 2,36,BIC,2
 2,36,PACF cutoff,2
-2,36,L — affine tail — squared — weighted RMSE,2
-2,36,L — affine tail — squared — total SSE,2
-2,36,L — affine tail — absolute — weighted MAE,2
-2,36,L — affine tail — absolute — total SAE,2
-2,36,L — constant tail — squared — weighted RMSE,2
-2,36,L — constant tail — squared — total SSE,2
-2,36,L — constant tail — absolute — weighted MAE,2
-2,36,L — constant tail — absolute — total SAE,2
 2,37,BIC,2
 2,37,PACF cutoff,6
-2,37,L — affine tail — squared — weighted RMSE,2
-2,37,L — affine tail — squared — total SSE,1
-2,37,L — affine tail — absolute — weighted MAE,1
-2,37,L — affine tail — absolute — total SAE,1
-2,37,L — constant tail — squared — weighted RMSE,2
-2,37,L — constant tail — squared — total SSE,1
-2,37,L — constant tail — absolute — weighted MAE,1
-2,37,L — constant tail — absolute — total SAE,1
 2,38,BIC,2
 2,38,PACF cutoff,2
-2,38,L — affine tail — squared — weighted RMSE,2
-2,38,L — affine tail — squared — total SSE,2
-2,38,L — affine tail — absolute — weighted MAE,2
-2,38,L — affine tail — absolute — total SAE,2
-2,38,L — constant tail — squared — weighted RMSE,2
-2,38,L — constant tail — squared — total SSE,2
-2,38,L — constant tail — absolute — weighted MAE,2
-2,38,L — constant tail — absolute — total SAE,2
 2,39,BIC,2
 2,39,PACF cutoff,2
-2,39,L — affine tail — squared — weighted RMSE,2
-2,39,L — affine tail — squared — total SSE,2
-2,39,L — affine tail — absolute — weighted MAE,2
-2,39,L — affine tail — absolute — total SAE,2
-2,39,L — constant tail — squared — weighted RMSE,2
-2,39,L — constant tail — squared — total SSE,2
-2,39,L — constant tail — absolute — weighted MAE,2
-2,39,L — constant tail — absolute — total SAE,2
 2,40,BIC,2
 2,40,PACF cutoff,2
-2,40,L — affine tail — squared — weighted RMSE,1
-2,40,L — affine tail — squared — total SSE,1
-2,40,L — affine tail — absolute — weighted MAE,1
-2,40,L — affine tail — absolute — total SAE,1
-2,40,L — constant tail — squared — weighted RMSE,2
-2,40,L — constant tail — squared — total SSE,1
-2,40,L — constant tail — absolute — weighted MAE,1
-2,40,L — constant tail — absolute — total SAE,1
 2,41,BIC,2
 2,41,PACF cutoff,2
-2,41,L — affine tail — squared — weighted RMSE,1
-2,41,L — affine tail — squared — total SSE,1
-2,41,L — affine tail — absolute — weighted MAE,1
-2,41,L — affine tail — absolute — total SAE,1
-2,41,L — constant tail — squared — weighted RMSE,1
-2,41,L — constant tail — squared — total SSE,1
-2,41,L — constant tail — absolute — weighted MAE,1
-2,41,L — constant tail — absolute — total SAE,1
 2,42,BIC,2
 2,42,PACF cutoff,2
-2,42,L — affine tail — squared — weighted RMSE,2
-2,42,L — affine tail — squared — total SSE,2
-2,42,L — affine tail — absolute — weighted MAE,2
-2,42,L — affine tail — absolute — total SAE,2
-2,42,L — constant tail — squared — weighted RMSE,2
-2,42,L — constant tail — squared — total SSE,2
-2,42,L — constant tail — absolute — weighted MAE,2
-2,42,L — constant tail — absolute — total SAE,2
 2,43,BIC,1
 2,43,PACF cutoff,1
-2,43,L — affine tail — squared — weighted RMSE,1
-2,43,L — affine tail — squared — total SSE,1
-2,43,L — affine tail — absolute — weighted MAE,1
-2,43,L — affine tail — absolute — total SAE,1
-2,43,L — constant tail — squared — weighted RMSE,1
-2,43,L — constant tail — squared — total SSE,1
-2,43,L — constant tail — absolute — weighted MAE,1
-2,43,L — constant tail — absolute — total SAE,1
 2,44,BIC,2
 2,44,PACF cutoff,4
-2,44,L — affine tail — squared — weighted RMSE,1
-2,44,L — affine tail — squared — total SSE,1
-2,44,L — affine tail — absolute — weighted MAE,1
-2,44,L — affine tail — absolute — total SAE,1
-2,44,L — constant tail — squared — weighted RMSE,1
-2,44,L — constant tail — squared — total SSE,1
-2,44,L — constant tail — absolute — weighted MAE,1
-2,44,L — constant tail — absolute — total SAE,1
 2,45,BIC,2
 2,45,PACF cutoff,3
-2,45,L — affine tail — squared — weighted RMSE,2
-2,45,L — affine tail — squared — total SSE,2
-2,45,L — affine tail — absolute — weighted MAE,2
-2,45,L — affine tail — absolute — total SAE,2
-2,45,L — constant tail — squared — weighted RMSE,2
-2,45,L — constant tail — squared — total SSE,2
-2,45,L — constant tail — absolute — weighted MAE,2
-2,45,L — constant tail — absolute — total SAE,2
 2,46,BIC,2
 2,46,PACF cutoff,2
-2,46,L — affine tail — squared — weighted RMSE,2
-2,46,L — affine tail — squared — total SSE,2
-2,46,L — affine tail — absolute — weighted MAE,2
-2,46,L — affine tail — absolute — total SAE,2
-2,46,L — constant tail — squared — weighted RMSE,2
-2,46,L — constant tail — squared — total SSE,2
-2,46,L — constant tail — absolute — weighted MAE,2
-2,46,L — constant tail — absolute — total SAE,2
 2,47,BIC,2
 2,47,PACF cutoff,2
-2,47,L — affine tail — squared — weighted RMSE,2
-2,47,L — affine tail — squared — total SSE,2
-2,47,L — affine tail — absolute — weighted MAE,2
-2,47,L — affine tail — absolute — total SAE,2
-2,47,L — constant tail — squared — weighted RMSE,2
-2,47,L — constant tail — squared — total SSE,2
-2,47,L — constant tail — absolute — weighted MAE,2
-2,47,L — constant tail — absolute — total SAE,2
 2,48,BIC,2
 2,48,PACF cutoff,2
-2,48,L — affine tail — squared — weighted RMSE,2
-2,48,L — affine tail — squared — total SSE,2
-2,48,L — affine tail — absolute — weighted MAE,2
-2,48,L — affine tail — absolute — total SAE,2
-2,48,L — constant tail — squared — weighted RMSE,2
-2,48,L — constant tail — squared — total SSE,2
-2,48,L — constant tail — absolute — weighted MAE,2
-2,48,L — constant tail — absolute — total SAE,2
 2,49,BIC,2
 2,49,PACF cutoff,9
-2,49,L — affine tail — squared — weighted RMSE,2
-2,49,L — affine tail — squared — total SSE,2
-2,49,L — affine tail — absolute — weighted MAE,2
-2,49,L — affine tail — absolute — total SAE,2
-2,49,L — constant tail — squared — weighted RMSE,2
-2,49,L — constant tail — squared — total SSE,2
-2,49,L — constant tail — absolute — weighted MAE,2
-2,49,L — constant tail — absolute — total SAE,2
 2,50,BIC,2
 2,50,PACF cutoff,2
-2,50,L — affine tail — squared — weighted RMSE,2
-2,50,L — affine tail — squared — total SSE,1
-2,50,L — affine tail — absolute — weighted MAE,1
-2,50,L — affine tail — absolute — total SAE,1
-2,50,L — constant tail — squared — weighted RMSE,2
-2,50,L — constant tail — squared — total SSE,2
-2,50,L — constant tail — absolute — weighted MAE,1
-2,50,L — constant tail — absolute — total SAE,1
 3,1,BIC,3
 3,1,PACF cutoff,3
-3,1,L — affine tail — squared — weighted RMSE,2
-3,1,L — affine tail — squared — total SSE,2
-3,1,L — affine tail — absolute — weighted MAE,2
-3,1,L — affine tail — absolute — total SAE,2
-3,1,L — constant tail — squared — weighted RMSE,2
-3,1,L — constant tail — squared — total SSE,2
-3,1,L — constant tail — absolute — weighted MAE,2
-3,1,L — constant tail — absolute — total SAE,2
 3,2,BIC,3
 3,2,PACF cutoff,3
-3,2,L — affine tail — squared — weighted RMSE,2
-3,2,L — affine tail — squared — total SSE,1
-3,2,L — affine tail — absolute — weighted MAE,1
-3,2,L — affine tail — absolute — total SAE,1
-3,2,L — constant tail — squared — weighted RMSE,2
-3,2,L — constant tail — squared — total SSE,2
-3,2,L — constant tail — absolute — weighted MAE,1
-3,2,L — constant tail — absolute — total SAE,1
 3,3,BIC,3
 3,3,PACF cutoff,2
-3,3,L — affine tail — squared — weighted RMSE,2
-3,3,L — affine tail — squared — total SSE,2
-3,3,L — affine tail — absolute — weighted MAE,2
-3,3,L — affine tail — absolute — total SAE,2
-3,3,L — constant tail — squared — weighted RMSE,2
-3,3,L — constant tail — squared — total SSE,2
-3,3,L — constant tail — absolute — weighted MAE,2
-3,3,L — constant tail — absolute — total SAE,2
 3,4,BIC,3
 3,4,PACF cutoff,4
-3,4,L — affine tail — squared — weighted RMSE,2
-3,4,L — affine tail — squared — total SSE,1
-3,4,L — affine tail — absolute — weighted MAE,1
-3,4,L — affine tail — absolute — total SAE,1
-3,4,L — constant tail — squared — weighted RMSE,2
-3,4,L — constant tail — squared — total SSE,1
-3,4,L — constant tail — absolute — weighted MAE,1
-3,4,L — constant tail — absolute — total SAE,1
 3,5,BIC,2
 3,5,PACF cutoff,3
-3,5,L — affine tail — squared — weighted RMSE,2
-3,5,L — affine tail — squared — total SSE,2
-3,5,L — affine tail — absolute — weighted MAE,2
-3,5,L — affine tail — absolute — total SAE,2
-3,5,L — constant tail — squared — weighted RMSE,2
-3,5,L — constant tail — squared — total SSE,2
-3,5,L — constant tail — absolute — weighted MAE,2
-3,5,L — constant tail — absolute — total SAE,2
 3,6,BIC,3
 3,6,PACF cutoff,3
-3,6,L — affine tail — squared — weighted RMSE,3
-3,6,L — affine tail — squared — total SSE,3
-3,6,L — affine tail — absolute — weighted MAE,4
-3,6,L — affine tail — absolute — total SAE,4
-3,6,L — constant tail — squared — weighted RMSE,3
-3,6,L — constant tail — squared — total SSE,3
-3,6,L — constant tail — absolute — weighted MAE,4
-3,6,L — constant tail — absolute — total SAE,4
 3,7,BIC,3
 3,7,PACF cutoff,3
-3,7,L — affine tail — squared — weighted RMSE,3
-3,7,L — affine tail — squared — total SSE,3
-3,7,L — affine tail — absolute — weighted MAE,4
-3,7,L — affine tail — absolute — total SAE,4
-3,7,L — constant tail — squared — weighted RMSE,3
-3,7,L — constant tail — squared — total SSE,3
-3,7,L — constant tail — absolute — weighted MAE,4
-3,7,L — constant tail — absolute — total SAE,4
 3,8,BIC,3
 3,8,PACF cutoff,3
-3,8,L — affine tail — squared — weighted RMSE,3
-3,8,L — affine tail — squared — total SSE,3
-3,8,L — affine tail — absolute — weighted MAE,4
-3,8,L — affine tail — absolute — total SAE,4
-3,8,L — constant tail — squared — weighted RMSE,3
-3,8,L — constant tail — squared — total SSE,3
-3,8,L — constant tail — absolute — weighted MAE,4
-3,8,L — constant tail — absolute — total SAE,4
 3,9,BIC,3
 3,9,PACF cutoff,3
-3,9,L — affine tail — squared — weighted RMSE,2
-3,9,L — affine tail — squared — total SSE,2
-3,9,L — affine tail — absolute — weighted MAE,2
-3,9,L — affine tail — absolute — total SAE,2
-3,9,L — constant tail — squared — weighted RMSE,2
-3,9,L — constant tail — squared — total SSE,2
-3,9,L — constant tail — absolute — weighted MAE,2
-3,9,L — constant tail — absolute — total SAE,2
 3,10,BIC,3
 3,10,PACF cutoff,9
-3,10,L — affine tail — squared — weighted RMSE,3
-3,10,L — affine tail — squared — total SSE,3
-3,10,L — affine tail — absolute — weighted MAE,3
-3,10,L — affine tail — absolute — total SAE,3
-3,10,L — constant tail — squared — weighted RMSE,3
-3,10,L — constant tail — squared — total SSE,3
-3,10,L — constant tail — absolute — weighted MAE,3
-3,10,L — constant tail — absolute — total SAE,3
 3,11,BIC,0
 3,11,PACF cutoff,1
-3,11,L — affine tail — squared — weighted RMSE,3
-3,11,L — affine tail — squared — total SSE,3
-3,11,L — affine tail — absolute — weighted MAE,3
-3,11,L — affine tail — absolute — total SAE,3
-3,11,L — constant tail — squared — weighted RMSE,3
-3,11,L — constant tail — squared — total SSE,3
-3,11,L — constant tail — absolute — weighted MAE,3
-3,11,L — constant tail — absolute — total SAE,3
 3,12,BIC,1
 3,12,PACF cutoff,3
-3,12,L — affine tail — squared — weighted RMSE,4
-3,12,L — affine tail — squared — total SSE,1
-3,12,L — affine tail — absolute — weighted MAE,4
-3,12,L — affine tail — absolute — total SAE,4
-3,12,L — constant tail — squared — weighted RMSE,4
-3,12,L — constant tail — squared — total SSE,4
-3,12,L — constant tail — absolute — weighted MAE,4
-3,12,L — constant tail — absolute — total SAE,4
 3,13,BIC,3
 3,13,PACF cutoff,3
-3,13,L — affine tail — squared — weighted RMSE,1
-3,13,L — affine tail — squared — total SSE,1
-3,13,L — affine tail — absolute — weighted MAE,1
-3,13,L — affine tail — absolute — total SAE,1
-3,13,L — constant tail — squared — weighted RMSE,1
-3,13,L — constant tail — squared — total SSE,1
-3,13,L — constant tail — absolute — weighted MAE,1
-3,13,L — constant tail — absolute — total SAE,1
 3,14,BIC,3
 3,14,PACF cutoff,3
-3,14,L — affine tail — squared — weighted RMSE,2
-3,14,L — affine tail — squared — total SSE,1
-3,14,L — affine tail — absolute — weighted MAE,2
-3,14,L — affine tail — absolute — total SAE,2
-3,14,L — constant tail — squared — weighted RMSE,2
-3,14,L — constant tail — squared — total SSE,2
-3,14,L — constant tail — absolute — weighted MAE,2
-3,14,L — constant tail — absolute — total SAE,2
 3,15,BIC,3
 3,15,PACF cutoff,3
-3,15,L — affine tail — squared — weighted RMSE,1
-3,15,L — affine tail — squared — total SSE,1
-3,15,L — affine tail — absolute — weighted MAE,1
-3,15,L — affine tail — absolute — total SAE,1
-3,15,L — constant tail — squared — weighted RMSE,4
-3,15,L — constant tail — squared — total SSE,1
-3,15,L — constant tail — absolute — weighted MAE,4
-3,15,L — constant tail — absolute — total SAE,4
 3,16,BIC,3
 3,16,PACF cutoff,3
-3,16,L — affine tail — squared — weighted RMSE,1
-3,16,L — affine tail — squared — total SSE,1
-3,16,L — affine tail — absolute — weighted MAE,1
-3,16,L — affine tail — absolute — total SAE,1
-3,16,L — constant tail — squared — weighted RMSE,1
-3,16,L — constant tail — squared — total SSE,1
-3,16,L — constant tail — absolute — weighted MAE,1
-3,16,L — constant tail — absolute — total SAE,1
 3,17,BIC,3
 3,17,PACF cutoff,3
-3,17,L — affine tail — squared — weighted RMSE,3
-3,17,L — affine tail — squared — total SSE,3
-3,17,L — affine tail — absolute — weighted MAE,4
-3,17,L — affine tail — absolute — total SAE,4
-3,17,L — constant tail — squared — weighted RMSE,3
-3,17,L — constant tail — squared — total SSE,3
-3,17,L — constant tail — absolute — weighted MAE,4
-3,17,L — constant tail — absolute — total SAE,4
 3,18,BIC,3
 3,18,PACF cutoff,9
-3,18,L — affine tail — squared — weighted RMSE,2
-3,18,L — affine tail — squared — total SSE,2
-3,18,L — affine tail — absolute — weighted MAE,2
-3,18,L — affine tail — absolute — total SAE,2
-3,18,L — constant tail — squared — weighted RMSE,2
-3,18,L — constant tail — squared — total SSE,2
-3,18,L — constant tail — absolute — weighted MAE,2
-3,18,L — constant tail — absolute — total SAE,2
 3,19,BIC,3
 3,19,PACF cutoff,3
-3,19,L — affine tail — squared — weighted RMSE,3
-3,19,L — affine tail — squared — total SSE,3
-3,19,L — affine tail — absolute — weighted MAE,3
-3,19,L — affine tail — absolute — total SAE,3
-3,19,L — constant tail — squared — weighted RMSE,3
-3,19,L — constant tail — squared — total SSE,3
-3,19,L — constant tail — absolute — weighted MAE,3
-3,19,L — constant tail — absolute — total SAE,3
 3,20,BIC,3
 3,20,PACF cutoff,8
-3,20,L — affine tail — squared — weighted RMSE,3
-3,20,L — affine tail — squared — total SSE,3
-3,20,L — affine tail — absolute — weighted MAE,3
-3,20,L — affine tail — absolute — total SAE,3
-3,20,L — constant tail — squared — weighted RMSE,3
-3,20,L — constant tail — squared — total SSE,3
-3,20,L — constant tail — absolute — weighted MAE,3
-3,20,L — constant tail — absolute — total SAE,3
 3,21,BIC,3
 3,21,PACF cutoff,3
-3,21,L — affine tail — squared — weighted RMSE,2
-3,21,L — affine tail — squared — total SSE,2
-3,21,L — affine tail — absolute — weighted MAE,2
-3,21,L — affine tail — absolute — total SAE,2
-3,21,L — constant tail — squared — weighted RMSE,2
-3,21,L — constant tail — squared — total SSE,2
-3,21,L — constant tail — absolute — weighted MAE,2
-3,21,L — constant tail — absolute — total SAE,2
 3,22,BIC,3
 3,22,PACF cutoff,7
-3,22,L — affine tail — squared — weighted RMSE,2
-3,22,L — affine tail — squared — total SSE,2
-3,22,L — affine tail — absolute — weighted MAE,2
-3,22,L — affine tail — absolute — total SAE,2
-3,22,L — constant tail — squared — weighted RMSE,2
-3,22,L — constant tail — squared — total SSE,2
-3,22,L — constant tail — absolute — weighted MAE,2
-3,22,L — constant tail — absolute — total SAE,2
 3,23,BIC,3
 3,23,PACF cutoff,3
-3,23,L — affine tail — squared — weighted RMSE,3
-3,23,L — affine tail — squared — total SSE,3
-3,23,L — affine tail — absolute — weighted MAE,3
-3,23,L — affine tail — absolute — total SAE,3
-3,23,L — constant tail — squared — weighted RMSE,3
-3,23,L — constant tail — squared — total SSE,3
-3,23,L — constant tail — absolute — weighted MAE,3
-3,23,L — constant tail — absolute — total SAE,3
 3,24,BIC,1
 3,24,PACF cutoff,3
-3,24,L — affine tail — squared — weighted RMSE,1
-3,24,L — affine tail — squared — total SSE,1
-3,24,L — affine tail — absolute — weighted MAE,1
-3,24,L — affine tail — absolute — total SAE,1
-3,24,L — constant tail — squared — weighted RMSE,1
-3,24,L — constant tail — squared — total SSE,1
-3,24,L — constant tail — absolute — weighted MAE,1
-3,24,L — constant tail — absolute — total SAE,1
 3,25,BIC,2
 3,25,PACF cutoff,9
-3,25,L — affine tail — squared — weighted RMSE,1
-3,25,L — affine tail — squared — total SSE,1
-3,25,L — affine tail — absolute — weighted MAE,1
-3,25,L — affine tail — absolute — total SAE,1
-3,25,L — constant tail — squared — weighted RMSE,2
-3,25,L — constant tail — squared — total SSE,1
-3,25,L — constant tail — absolute — weighted MAE,1
-3,25,L — constant tail — absolute — total SAE,1
 3,26,BIC,3
 3,26,PACF cutoff,6
-3,26,L — affine tail — squared — weighted RMSE,2
-3,26,L — affine tail — squared — total SSE,2
-3,26,L — affine tail — absolute — weighted MAE,2
-3,26,L — affine tail — absolute — total SAE,2
-3,26,L — constant tail — squared — weighted RMSE,2
-3,26,L — constant tail — squared — total SSE,2
-3,26,L — constant tail — absolute — weighted MAE,2
-3,26,L — constant tail — absolute — total SAE,2
 3,27,BIC,3
 3,27,PACF cutoff,3
-3,27,L — affine tail — squared — weighted RMSE,2
-3,27,L — affine tail — squared — total SSE,2
-3,27,L — affine tail — absolute — weighted MAE,2
-3,27,L — affine tail — absolute — total SAE,2
-3,27,L — constant tail — squared — weighted RMSE,2
-3,27,L — constant tail — squared — total SSE,2
-3,27,L — constant tail — absolute — weighted MAE,2
-3,27,L — constant tail — absolute — total SAE,2
 3,28,BIC,3
 3,28,PACF cutoff,3
-3,28,L — affine tail — squared — weighted RMSE,2
-3,28,L — affine tail — squared — total SSE,2
-3,28,L — affine tail — absolute — weighted MAE,2
-3,28,L — affine tail — absolute — total SAE,2
-3,28,L — constant tail — squared — weighted RMSE,2
-3,28,L — constant tail — squared — total SSE,2
-3,28,L — constant tail — absolute — weighted MAE,2
-3,28,L — constant tail — absolute — total SAE,2
 3,29,BIC,3
 3,29,PACF cutoff,3
-3,29,L — affine tail — squared — weighted RMSE,3
-3,29,L — affine tail — squared — total SSE,3
-3,29,L — affine tail — absolute — weighted MAE,4
-3,29,L — affine tail — absolute — total SAE,4
-3,29,L — constant tail — squared — weighted RMSE,3
-3,29,L — constant tail — squared — total SSE,3
-3,29,L — constant tail — absolute — weighted MAE,4
-3,29,L — constant tail — absolute — total SAE,4
 3,30,BIC,3
 3,30,PACF cutoff,3
-3,30,L — affine tail — squared — weighted RMSE,3
-3,30,L — affine tail — squared — total SSE,3
-3,30,L — affine tail — absolute — weighted MAE,3
-3,30,L — affine tail — absolute — total SAE,3
-3,30,L — constant tail — squared — weighted RMSE,3
-3,30,L — constant tail — squared — total SSE,3
-3,30,L — constant tail — absolute — weighted MAE,3
-3,30,L — constant tail — absolute — total SAE,3
 3,31,BIC,3
 3,31,PACF cutoff,6
-3,31,L — affine tail — squared — weighted RMSE,1
-3,31,L — affine tail — squared — total SSE,1
-3,31,L — affine tail — absolute — weighted MAE,1
-3,31,L — affine tail — absolute — total SAE,1
-3,31,L — constant tail — squared — weighted RMSE,1
-3,31,L — constant tail — squared — total SSE,1
-3,31,L — constant tail — absolute — weighted MAE,1
-3,31,L — constant tail — absolute — total SAE,1
 3,32,BIC,2
 3,32,PACF cutoff,5
-3,32,L — affine tail — squared — weighted RMSE,2
-3,32,L — affine tail — squared — total SSE,2
-3,32,L — affine tail — absolute — weighted MAE,2
-3,32,L — affine tail — absolute — total SAE,2
-3,32,L — constant tail — squared — weighted RMSE,2
-3,32,L — constant tail — squared — total SSE,2
-3,32,L — constant tail — absolute — weighted MAE,2
-3,32,L — constant tail — absolute — total SAE,2
 3,33,BIC,3
 3,33,PACF cutoff,3
-3,33,L — affine tail — squared — weighted RMSE,3
-3,33,L — affine tail — squared — total SSE,2
-3,33,L — affine tail — absolute — weighted MAE,3
-3,33,L — affine tail — absolute — total SAE,3
-3,33,L — constant tail — squared — weighted RMSE,3
-3,33,L — constant tail — squared — total SSE,2
-3,33,L — constant tail — absolute — weighted MAE,3
-3,33,L — constant tail — absolute — total SAE,3
 3,34,BIC,3
 3,34,PACF cutoff,3
-3,34,L — affine tail — squared — weighted RMSE,1
-3,34,L — affine tail — squared — total SSE,1
-3,34,L — affine tail — absolute — weighted MAE,1
-3,34,L — affine tail — absolute — total SAE,1
-3,34,L — constant tail — squared — weighted RMSE,1
-3,34,L — constant tail — squared — total SSE,1
-3,34,L — constant tail — absolute — weighted MAE,1
-3,34,L — constant tail — absolute — total SAE,1
 3,35,BIC,3
 3,35,PACF cutoff,7
-3,35,L — affine tail — squared — weighted RMSE,2
-3,35,L — affine tail — squared — total SSE,2
-3,35,L — affine tail — absolute — weighted MAE,2
-3,35,L — affine tail — absolute — total SAE,2
-3,35,L — constant tail — squared — weighted RMSE,2
-3,35,L — constant tail — squared — total SSE,2
-3,35,L — constant tail — absolute — weighted MAE,2
-3,35,L — constant tail — absolute — total SAE,2
 3,36,BIC,3
 3,36,PACF cutoff,4
-3,36,L — affine tail — squared — weighted RMSE,2
-3,36,L — affine tail — squared — total SSE,2
-3,36,L — affine tail — absolute — weighted MAE,2
-3,36,L — affine tail — absolute — total SAE,2
-3,36,L — constant tail — squared — weighted RMSE,2
-3,36,L — constant tail — squared — total SSE,2
-3,36,L — constant tail — absolute — weighted MAE,2
-3,36,L — constant tail — absolute — total SAE,2
 3,37,BIC,3
 3,37,PACF cutoff,3
-3,37,L — affine tail — squared — weighted RMSE,3
-3,37,L — affine tail — squared — total SSE,3
-3,37,L — affine tail — absolute — weighted MAE,4
-3,37,L — affine tail — absolute — total SAE,4
-3,37,L — constant tail — squared — weighted RMSE,3
-3,37,L — constant tail — squared — total SSE,3
-3,37,L — constant tail — absolute — weighted MAE,4
-3,37,L — constant tail — absolute — total SAE,4
 3,38,BIC,3
 3,38,PACF cutoff,7
-3,38,L — affine tail — squared — weighted RMSE,2
-3,38,L — affine tail — squared — total SSE,2
-3,38,L — affine tail — absolute — weighted MAE,2
-3,38,L — affine tail — absolute — total SAE,2
-3,38,L — constant tail — squared — weighted RMSE,2
-3,38,L — constant tail — squared — total SSE,2
-3,38,L — constant tail — absolute — weighted MAE,2
-3,38,L — constant tail — absolute — total SAE,2
 3,39,BIC,3
 3,39,PACF cutoff,3
-3,39,L — affine tail — squared — weighted RMSE,1
-3,39,L — affine tail — squared — total SSE,1
-3,39,L — affine tail — absolute — weighted MAE,1
-3,39,L — affine tail — absolute — total SAE,1
-3,39,L — constant tail — squared — weighted RMSE,1
-3,39,L — constant tail — squared — total SSE,1
-3,39,L — constant tail — absolute — weighted MAE,1
-3,39,L — constant tail — absolute — total SAE,1
 3,40,BIC,2
 3,40,PACF cutoff,2
-3,40,L — affine tail — squared — weighted RMSE,2
-3,40,L — affine tail — squared — total SSE,2
-3,40,L — affine tail — absolute — weighted MAE,2
-3,40,L — affine tail — absolute — total SAE,2
-3,40,L — constant tail — squared — weighted RMSE,2
-3,40,L — constant tail — squared — total SSE,2
-3,40,L — constant tail — absolute — weighted MAE,2
-3,40,L — constant tail — absolute — total SAE,2
 3,41,BIC,3
 3,41,PACF cutoff,3
-3,41,L — affine tail — squared — weighted RMSE,3
-3,41,L — affine tail — squared — total SSE,3
-3,41,L — affine tail — absolute — weighted MAE,3
-3,41,L — affine tail — absolute — total SAE,3
-3,41,L — constant tail — squared — weighted RMSE,3
-3,41,L — constant tail — squared — total SSE,3
-3,41,L — constant tail — absolute — weighted MAE,3
-3,41,L — constant tail — absolute — total SAE,3
 3,42,BIC,3
 3,42,PACF cutoff,3
-3,42,L — affine tail — squared — weighted RMSE,3
-3,42,L — affine tail — squared — total SSE,3
-3,42,L — affine tail — absolute — weighted MAE,3
-3,42,L — affine tail — absolute — total SAE,3
-3,42,L — constant tail — squared — weighted RMSE,3
-3,42,L — constant tail — squared — total SSE,3
-3,42,L — constant tail — absolute — weighted MAE,3
-3,42,L — constant tail — absolute — total SAE,3
 3,43,BIC,3
 3,43,PACF cutoff,3
-3,43,L — affine tail — squared — weighted RMSE,2
-3,43,L — affine tail — squared — total SSE,2
-3,43,L — affine tail — absolute — weighted MAE,2
-3,43,L — affine tail — absolute — total SAE,2
-3,43,L — constant tail — squared — weighted RMSE,2
-3,43,L — constant tail — squared — total SSE,2
-3,43,L — constant tail — absolute — weighted MAE,2
-3,43,L — constant tail — absolute — total SAE,2
 3,44,BIC,3
 3,44,PACF cutoff,3
-3,44,L — affine tail — squared — weighted RMSE,1
-3,44,L — affine tail — squared — total SSE,1
-3,44,L — affine tail — absolute — weighted MAE,1
-3,44,L — affine tail — absolute — total SAE,1
-3,44,L — constant tail — squared — weighted RMSE,1
-3,44,L — constant tail — squared — total SSE,1
-3,44,L — constant tail — absolute — weighted MAE,1
-3,44,L — constant tail — absolute — total SAE,1
 3,45,BIC,3
 3,45,PACF cutoff,4
-3,45,L — affine tail — squared — weighted RMSE,1
-3,45,L — affine tail — squared — total SSE,1
-3,45,L — affine tail — absolute — weighted MAE,1
-3,45,L — affine tail — absolute — total SAE,1
-3,45,L — constant tail — squared — weighted RMSE,2
-3,45,L — constant tail — squared — total SSE,1
-3,45,L — constant tail — absolute — weighted MAE,1
-3,45,L — constant tail — absolute — total SAE,1
 3,46,BIC,3
 3,46,PACF cutoff,3
-3,46,L — affine tail — squared — weighted RMSE,3
-3,46,L — affine tail — squared — total SSE,3
-3,46,L — affine tail — absolute — weighted MAE,3
-3,46,L — affine tail — absolute — total SAE,3
-3,46,L — constant tail — squared — weighted RMSE,3
-3,46,L — constant tail — squared — total SSE,3
-3,46,L — constant tail — absolute — weighted MAE,3
-3,46,L — constant tail — absolute — total SAE,3
 3,47,BIC,3
 3,47,PACF cutoff,3
-3,47,L — affine tail — squared — weighted RMSE,3
-3,47,L — affine tail — squared — total SSE,3
-3,47,L — affine tail — absolute — weighted MAE,3
-3,47,L — affine tail — absolute — total SAE,3
-3,47,L — constant tail — squared — weighted RMSE,3
-3,47,L — constant tail — squared — total SSE,3
-3,47,L — constant tail — absolute — weighted MAE,3
-3,47,L — constant tail — absolute — total SAE,3
 3,48,BIC,3
 3,48,PACF cutoff,3
-3,48,L — affine tail — squared — weighted RMSE,3
-3,48,L — affine tail — squared — total SSE,3
-3,48,L — affine tail — absolute — weighted MAE,3
-3,48,L — affine tail — absolute — total SAE,3
-3,48,L — constant tail — squared — weighted RMSE,3
-3,48,L — constant tail — squared — total SSE,3
-3,48,L — constant tail — absolute — weighted MAE,3
-3,48,L — constant tail — absolute — total SAE,3
 3,49,BIC,3
 3,49,PACF cutoff,8
-3,49,L — affine tail — squared — weighted RMSE,3
-3,49,L — affine tail — squared — total SSE,3
-3,49,L — affine tail — absolute — weighted MAE,3
-3,49,L — affine tail — absolute — total SAE,3
-3,49,L — constant tail — squared — weighted RMSE,3
-3,49,L — constant tail — squared — total SSE,3
-3,49,L — constant tail — absolute — weighted MAE,3
-3,49,L — constant tail — absolute — total SAE,3
 3,50,BIC,3
 3,50,PACF cutoff,3
-3,50,L — affine tail — squared — weighted RMSE,1
-3,50,L — affine tail — squared — total SSE,1
-3,50,L — affine tail — absolute — weighted MAE,1
-3,50,L — affine tail — absolute — total SAE,1
-3,50,L — constant tail — squared — weighted RMSE,1
-3,50,L — constant tail — squared — total SSE,1
-3,50,L — constant tail — absolute — weighted MAE,1
-3,50,L — constant tail — absolute — total SAE,1
 4,1,BIC,4
 4,1,PACF cutoff,4
-4,1,L — affine tail — squared — weighted RMSE,4
-4,1,L — affine tail — squared — total SSE,4
-4,1,L — affine tail — absolute — weighted MAE,4
-4,1,L — affine tail — absolute — total SAE,4
-4,1,L — constant tail — squared — weighted RMSE,4
-4,1,L — constant tail — squared — total SSE,4
-4,1,L — constant tail — absolute — weighted MAE,4
-4,1,L — constant tail — absolute — total SAE,4
 4,2,BIC,4
 4,2,PACF cutoff,4
-4,2,L — affine tail — squared — weighted RMSE,2
-4,2,L — affine tail — squared — total SSE,2
-4,2,L — affine tail — absolute — weighted MAE,2
-4,2,L — affine tail — absolute — total SAE,2
-4,2,L — constant tail — squared — weighted RMSE,2
-4,2,L — constant tail — squared — total SSE,2
-4,2,L — constant tail — absolute — weighted MAE,2
-4,2,L — constant tail — absolute — total SAE,2
 4,3,BIC,4
 4,3,PACF cutoff,4
-4,3,L — affine tail — squared — weighted RMSE,1
-4,3,L — affine tail — squared — total SSE,1
-4,3,L — affine tail — absolute — weighted MAE,1
-4,3,L — affine tail — absolute — total SAE,1
-4,3,L — constant tail — squared — weighted RMSE,1
-4,3,L — constant tail — squared — total SSE,1
-4,3,L — constant tail — absolute — weighted MAE,1
-4,3,L — constant tail — absolute — total SAE,1
 4,4,BIC,4
 4,4,PACF cutoff,4
-4,4,L — affine tail — squared — weighted RMSE,4
-4,4,L — affine tail — squared — total SSE,4
-4,4,L — affine tail — absolute — weighted MAE,4
-4,4,L — affine tail — absolute — total SAE,4
-4,4,L — constant tail — squared — weighted RMSE,4
-4,4,L — constant tail — squared — total SSE,4
-4,4,L — constant tail — absolute — weighted MAE,5
-4,4,L — constant tail — absolute — total SAE,5
 4,5,BIC,4
 4,5,PACF cutoff,5
-4,5,L — affine tail — squared — weighted RMSE,1
-4,5,L — affine tail — squared — total SSE,1
-4,5,L — affine tail — absolute — weighted MAE,1
-4,5,L — affine tail — absolute — total SAE,1
-4,5,L — constant tail — squared — weighted RMSE,1
-4,5,L — constant tail — squared — total SSE,1
-4,5,L — constant tail — absolute — weighted MAE,1
-4,5,L — constant tail — absolute — total SAE,1
 4,6,BIC,4
 4,6,PACF cutoff,5
-4,6,L — affine tail — squared — weighted RMSE,2
-4,6,L — affine tail — squared — total SSE,2
-4,6,L — affine tail — absolute — weighted MAE,2
-4,6,L — affine tail — absolute — total SAE,2
-4,6,L — constant tail — squared — weighted RMSE,4
-4,6,L — constant tail — squared — total SSE,2
-4,6,L — constant tail — absolute — weighted MAE,2
-4,6,L — constant tail — absolute — total SAE,2
 4,7,BIC,4
 4,7,PACF cutoff,7
-4,7,L — affine tail — squared — weighted RMSE,1
-4,7,L — affine tail — squared — total SSE,1
-4,7,L — affine tail — absolute — weighted MAE,1
-4,7,L — affine tail — absolute — total SAE,1
-4,7,L — constant tail — squared — weighted RMSE,1
-4,7,L — constant tail — squared — total SSE,1
-4,7,L — constant tail — absolute — weighted MAE,1
-4,7,L — constant tail — absolute — total SAE,1
 4,8,BIC,4
 4,8,PACF cutoff,7
-4,8,L — affine tail — squared — weighted RMSE,4
-4,8,L — affine tail — squared — total SSE,2
-4,8,L — affine tail — absolute — weighted MAE,4
-4,8,L — affine tail — absolute — total SAE,4
-4,8,L — constant tail — squared — weighted RMSE,4
-4,8,L — constant tail — squared — total SSE,4
-4,8,L — constant tail — absolute — weighted MAE,4
-4,8,L — constant tail — absolute — total SAE,4
 4,9,BIC,4
 4,9,PACF cutoff,4
-4,9,L — affine tail — squared — weighted RMSE,4
-4,9,L — affine tail — squared — total SSE,4
-4,9,L — affine tail — absolute — weighted MAE,4
-4,9,L — affine tail — absolute — total SAE,4
-4,9,L — constant tail — squared — weighted RMSE,4
-4,9,L — constant tail — squared — total SSE,4
-4,9,L — constant tail — absolute — weighted MAE,4
-4,9,L — constant tail — absolute — total SAE,4
 4,10,BIC,4
 4,10,PACF cutoff,4
-4,10,L — affine tail — squared — weighted RMSE,4
-4,10,L — affine tail — squared — total SSE,4
-4,10,L — affine tail — absolute — weighted MAE,4
-4,10,L — affine tail — absolute — total SAE,4
-4,10,L — constant tail — squared — weighted RMSE,4
-4,10,L — constant tail — squared — total SSE,4
-4,10,L — constant tail — absolute — weighted MAE,4
-4,10,L — constant tail — absolute — total SAE,4
 4,11,BIC,4
 4,11,PACF cutoff,4
-4,11,L — affine tail — squared — weighted RMSE,3
-4,11,L — affine tail — squared — total SSE,2
-4,11,L — affine tail — absolute — weighted MAE,2
-4,11,L — affine tail — absolute — total SAE,2
-4,11,L — constant tail — squared — weighted RMSE,3
-4,11,L — constant tail — squared — total SSE,2
-4,11,L — constant tail — absolute — weighted MAE,3
-4,11,L — constant tail — absolute — total SAE,3
 4,12,BIC,3
 4,12,PACF cutoff,6
-4,12,L — affine tail — squared — weighted RMSE,3
-4,12,L — affine tail — squared — total SSE,3
-4,12,L — affine tail — absolute — weighted MAE,3
-4,12,L — affine tail — absolute — total SAE,3
-4,12,L — constant tail — squared — weighted RMSE,3
-4,12,L — constant tail — squared — total SSE,3
-4,12,L — constant tail — absolute — weighted MAE,3
-4,12,L — constant tail — absolute — total SAE,3
 4,13,BIC,4
 4,13,PACF cutoff,4
-4,13,L — affine tail — squared — weighted RMSE,1
-4,13,L — affine tail — squared — total SSE,1
-4,13,L — affine tail — absolute — weighted MAE,1
-4,13,L — affine tail — absolute — total SAE,1
-4,13,L — constant tail — squared — weighted RMSE,1
-4,13,L — constant tail — squared — total SSE,1
-4,13,L — constant tail — absolute — weighted MAE,1
-4,13,L — constant tail — absolute — total SAE,1
 4,14,BIC,4
 4,14,PACF cutoff,8
-4,14,L — affine tail — squared — weighted RMSE,1
-4,14,L — affine tail — squared — total SSE,1
-4,14,L — affine tail — absolute — weighted MAE,1
-4,14,L — affine tail — absolute — total SAE,1
-4,14,L — constant tail — squared — weighted RMSE,4
-4,14,L — constant tail — squared — total SSE,4
-4,14,L — constant tail — absolute — weighted MAE,4
-4,14,L — constant tail — absolute — total SAE,4
 4,15,BIC,4
 4,15,PACF cutoff,4
-4,15,L — affine tail — squared — weighted RMSE,4
-4,15,L — affine tail — squared — total SSE,4
-4,15,L — affine tail — absolute — weighted MAE,4
-4,15,L — affine tail — absolute — total SAE,4
-4,15,L — constant tail — squared — weighted RMSE,4
-4,15,L — constant tail — squared — total SSE,4
-4,15,L — constant tail — absolute — weighted MAE,4
-4,15,L — constant tail — absolute — total SAE,4
 4,16,BIC,4
 4,16,PACF cutoff,5
-4,16,L — affine tail — squared — weighted RMSE,2
-4,16,L — affine tail — squared — total SSE,2
-4,16,L — affine tail — absolute — weighted MAE,2
-4,16,L — affine tail — absolute — total SAE,2
-4,16,L — constant tail — squared — weighted RMSE,3
-4,16,L — constant tail — squared — total SSE,2
-4,16,L — constant tail — absolute — weighted MAE,2
-4,16,L — constant tail — absolute — total SAE,2
 4,17,BIC,4
 4,17,PACF cutoff,4
-4,17,L — affine tail — squared — weighted RMSE,2
-4,17,L — affine tail — squared — total SSE,2
-4,17,L — affine tail — absolute — weighted MAE,2
-4,17,L — affine tail — absolute — total SAE,2
-4,17,L — constant tail — squared — weighted RMSE,2
-4,17,L — constant tail — squared — total SSE,2
-4,17,L — constant tail — absolute — weighted MAE,2
-4,17,L — constant tail — absolute — total SAE,2
 4,18,BIC,3
 4,18,PACF cutoff,4
-4,18,L — affine tail — squared — weighted RMSE,3
-4,18,L — affine tail — squared — total SSE,3
-4,18,L — affine tail — absolute — weighted MAE,3
-4,18,L — affine tail — absolute — total SAE,3
-4,18,L — constant tail — squared — weighted RMSE,3
-4,18,L — constant tail — squared — total SSE,3
-4,18,L — constant tail — absolute — weighted MAE,3
-4,18,L — constant tail — absolute — total SAE,3
 4,19,BIC,4
 4,19,PACF cutoff,4
-4,19,L — affine tail — squared — weighted RMSE,4
-4,19,L — affine tail — squared — total SSE,2
-4,19,L — affine tail — absolute — weighted MAE,4
-4,19,L — affine tail — absolute — total SAE,4
-4,19,L — constant tail — squared — weighted RMSE,4
-4,19,L — constant tail — squared — total SSE,4
-4,19,L — constant tail — absolute — weighted MAE,4
-4,19,L — constant tail — absolute — total SAE,4
 4,20,BIC,4
 4,20,PACF cutoff,4
-4,20,L — affine tail — squared — weighted RMSE,4
-4,20,L — affine tail — squared — total SSE,4
-4,20,L — affine tail — absolute — weighted MAE,5
-4,20,L — affine tail — absolute — total SAE,5
-4,20,L — constant tail — squared — weighted RMSE,4
-4,20,L — constant tail — squared — total SSE,4
-4,20,L — constant tail — absolute — weighted MAE,5
-4,20,L — constant tail — absolute — total SAE,5
 4,21,BIC,4
 4,21,PACF cutoff,4
-4,21,L — affine tail — squared — weighted RMSE,4
-4,21,L — affine tail — squared — total SSE,2
-4,21,L — affine tail — absolute — weighted MAE,4
-4,21,L — affine tail — absolute — total SAE,4
-4,21,L — constant tail — squared — weighted RMSE,4
-4,21,L — constant tail — squared — total SSE,2
-4,21,L — constant tail — absolute — weighted MAE,4
-4,21,L — constant tail — absolute — total SAE,4
 4,22,BIC,4
 4,22,PACF cutoff,4
-4,22,L — affine tail — squared — weighted RMSE,4
-4,22,L — affine tail — squared — total SSE,4
-4,22,L — affine tail — absolute — weighted MAE,5
-4,22,L — affine tail — absolute — total SAE,5
-4,22,L — constant tail — squared — weighted RMSE,4
-4,22,L — constant tail — squared — total SSE,4
-4,22,L — constant tail — absolute — weighted MAE,5
-4,22,L — constant tail — absolute — total SAE,5
 4,23,BIC,4
 4,23,PACF cutoff,4
-4,23,L — affine tail — squared — weighted RMSE,2
-4,23,L — affine tail — squared — total SSE,2
-4,23,L — affine tail — absolute — weighted MAE,2
-4,23,L — affine tail — absolute — total SAE,2
-4,23,L — constant tail — squared — weighted RMSE,2
-4,23,L — constant tail — squared — total SSE,2
-4,23,L — constant tail — absolute — weighted MAE,2
-4,23,L — constant tail — absolute — total SAE,2
 4,24,BIC,4
 4,24,PACF cutoff,4
-4,24,L — affine tail — squared — weighted RMSE,4
-4,24,L — affine tail — squared — total SSE,4
-4,24,L — affine tail — absolute — weighted MAE,4
-4,24,L — affine tail — absolute — total SAE,4
-4,24,L — constant tail — squared — weighted RMSE,4
-4,24,L — constant tail — squared — total SSE,4
-4,24,L — constant tail — absolute — weighted MAE,4
-4,24,L — constant tail — absolute — total SAE,4
 4,25,BIC,4
 4,25,PACF cutoff,4
-4,25,L — affine tail — squared — weighted RMSE,4
-4,25,L — affine tail — squared — total SSE,4
-4,25,L — affine tail — absolute — weighted MAE,4
-4,25,L — affine tail — absolute — total SAE,4
-4,25,L — constant tail — squared — weighted RMSE,4
-4,25,L — constant tail — squared — total SSE,4
-4,25,L — constant tail — absolute — weighted MAE,4
-4,25,L — constant tail — absolute — total SAE,4
 4,26,BIC,4
 4,26,PACF cutoff,4
-4,26,L — affine tail — squared — weighted RMSE,1
-4,26,L — affine tail — squared — total SSE,1
-4,26,L — affine tail — absolute — weighted MAE,1
-4,26,L — affine tail — absolute — total SAE,1
-4,26,L — constant tail — squared — weighted RMSE,1
-4,26,L — constant tail — squared — total SSE,1
-4,26,L — constant tail — absolute — weighted MAE,1
-4,26,L — constant tail — absolute — total SAE,1
 4,27,BIC,4
 4,27,PACF cutoff,4
-4,27,L — affine tail — squared — weighted RMSE,4
-4,27,L — affine tail — squared — total SSE,4
-4,27,L — affine tail — absolute — weighted MAE,4
-4,27,L — affine tail — absolute — total SAE,4
-4,27,L — constant tail — squared — weighted RMSE,4
-4,27,L — constant tail — squared — total SSE,4
-4,27,L — constant tail — absolute — weighted MAE,4
-4,27,L — constant tail — absolute — total SAE,4
 4,28,BIC,4
 4,28,PACF cutoff,5
-4,28,L — affine tail — squared — weighted RMSE,1
-4,28,L — affine tail — squared — total SSE,1
-4,28,L — affine tail — absolute — weighted MAE,1
-4,28,L — affine tail — absolute — total SAE,1
-4,28,L — constant tail — squared — weighted RMSE,3
-4,28,L — constant tail — squared — total SSE,2
-4,28,L — constant tail — absolute — weighted MAE,1
-4,28,L — constant tail — absolute — total SAE,1
 4,29,BIC,4
 4,29,PACF cutoff,5
-4,29,L — affine tail — squared — weighted RMSE,1
-4,29,L — affine tail — squared — total SSE,1
-4,29,L — affine tail — absolute — weighted MAE,1
-4,29,L — affine tail — absolute — total SAE,1
-4,29,L — constant tail — squared — weighted RMSE,2
-4,29,L — constant tail — squared — total SSE,1
-4,29,L — constant tail — absolute — weighted MAE,1
-4,29,L — constant tail — absolute — total SAE,1
 4,30,BIC,4
 4,30,PACF cutoff,4
-4,30,L — affine tail — squared — weighted RMSE,4
-4,30,L — affine tail — squared — total SSE,4
-4,30,L — affine tail — absolute — weighted MAE,4
-4,30,L — affine tail — absolute — total SAE,4
-4,30,L — constant tail — squared — weighted RMSE,4
-4,30,L — constant tail — squared — total SSE,4
-4,30,L — constant tail — absolute — weighted MAE,4
-4,30,L — constant tail — absolute — total SAE,4
 4,31,BIC,4
 4,31,PACF cutoff,4
-4,31,L — affine tail — squared — weighted RMSE,4
-4,31,L — affine tail — squared — total SSE,4
-4,31,L — affine tail — absolute — weighted MAE,4
-4,31,L — affine tail — absolute — total SAE,4
-4,31,L — constant tail — squared — weighted RMSE,4
-4,31,L — constant tail — squared — total SSE,4
-4,31,L — constant tail — absolute — weighted MAE,4
-4,31,L — constant tail — absolute — total SAE,4
 4,32,BIC,4
 4,32,PACF cutoff,4
-4,32,L — affine tail — squared — weighted RMSE,2
-4,32,L — affine tail — squared — total SSE,2
-4,32,L — affine tail — absolute — weighted MAE,2
-4,32,L — affine tail — absolute — total SAE,2
-4,32,L — constant tail — squared — weighted RMSE,2
-4,32,L — constant tail — squared — total SSE,2
-4,32,L — constant tail — absolute — weighted MAE,2
-4,32,L — constant tail — absolute — total SAE,2
 4,33,BIC,4
 4,33,PACF cutoff,4
-4,33,L — affine tail — squared — weighted RMSE,4
-4,33,L — affine tail — squared — total SSE,4
-4,33,L — affine tail — absolute — weighted MAE,5
-4,33,L — affine tail — absolute — total SAE,5
-4,33,L — constant tail — squared — weighted RMSE,4
-4,33,L — constant tail — squared — total SSE,4
-4,33,L — constant tail — absolute — weighted MAE,5
-4,33,L — constant tail — absolute — total SAE,5
 4,34,BIC,4
 4,34,PACF cutoff,4
-4,34,L — affine tail — squared — weighted RMSE,4
-4,34,L — affine tail — squared — total SSE,4
-4,34,L — affine tail — absolute — weighted MAE,4
-4,34,L — affine tail — absolute — total SAE,4
-4,34,L — constant tail — squared — weighted RMSE,4
-4,34,L — constant tail — squared — total SSE,4
-4,34,L — constant tail — absolute — weighted MAE,4
-4,34,L — constant tail — absolute — total SAE,4
 4,35,BIC,4
 4,35,PACF cutoff,5
-4,35,L — affine tail — squared — weighted RMSE,2
-4,35,L — affine tail — squared — total SSE,2
-4,35,L — affine tail — absolute — weighted MAE,2
-4,35,L — affine tail — absolute — total SAE,2
-4,35,L — constant tail — squared — weighted RMSE,4
-4,35,L — constant tail — squared — total SSE,3
-4,35,L — constant tail — absolute — weighted MAE,2
-4,35,L — constant tail — absolute — total SAE,2
 4,36,BIC,4
 4,36,PACF cutoff,4
-4,36,L — affine tail — squared — weighted RMSE,3
-4,36,L — affine tail — squared — total SSE,3
-4,36,L — affine tail — absolute — weighted MAE,3
-4,36,L — affine tail — absolute — total SAE,3
-4,36,L — constant tail — squared — weighted RMSE,3
-4,36,L — constant tail — squared — total SSE,3
-4,36,L — constant tail — absolute — weighted MAE,3
-4,36,L — constant tail — absolute — total SAE,3
 4,37,BIC,4
 4,37,PACF cutoff,4
-4,37,L — affine tail — squared — weighted RMSE,1
-4,37,L — affine tail — squared — total SSE,1
-4,37,L — affine tail — absolute — weighted MAE,1
-4,37,L — affine tail — absolute — total SAE,1
-4,37,L — constant tail — squared — weighted RMSE,1
-4,37,L — constant tail — squared — total SSE,1
-4,37,L — constant tail — absolute — weighted MAE,1
-4,37,L — constant tail — absolute — total SAE,1
 4,38,BIC,4
 4,38,PACF cutoff,4
-4,38,L — affine tail — squared — weighted RMSE,1
-4,38,L — affine tail — squared — total SSE,1
-4,38,L — affine tail — absolute — weighted MAE,1
-4,38,L — affine tail — absolute — total SAE,1
-4,38,L — constant tail — squared — weighted RMSE,1
-4,38,L — constant tail — squared — total SSE,1
-4,38,L — constant tail — absolute — weighted MAE,1
-4,38,L — constant tail — absolute — total SAE,1
 4,39,BIC,4
 4,39,PACF cutoff,6
-4,39,L — affine tail — squared — weighted RMSE,2
-4,39,L — affine tail — squared — total SSE,2
-4,39,L — affine tail — absolute — weighted MAE,2
-4,39,L — affine tail — absolute — total SAE,2
-4,39,L — constant tail — squared — weighted RMSE,2
-4,39,L — constant tail — squared — total SSE,2
-4,39,L — constant tail — absolute — weighted MAE,2
-4,39,L — constant tail — absolute — total SAE,2
 4,40,BIC,3
 4,40,PACF cutoff,3
-4,40,L — affine tail — squared — weighted RMSE,3
-4,40,L — affine tail — squared — total SSE,3
-4,40,L — affine tail — absolute — weighted MAE,3
-4,40,L — affine tail — absolute — total SAE,3
-4,40,L — constant tail — squared — weighted RMSE,3
-4,40,L — constant tail — squared — total SSE,3
-4,40,L — constant tail — absolute — weighted MAE,3
-4,40,L — constant tail — absolute — total SAE,3
 4,41,BIC,4
 4,41,PACF cutoff,9
-4,41,L — affine tail — squared — weighted RMSE,1
-4,41,L — affine tail — squared — total SSE,1
-4,41,L — affine tail — absolute — weighted MAE,1
-4,41,L — affine tail — absolute — total SAE,1
-4,41,L — constant tail — squared — weighted RMSE,1
-4,41,L — constant tail — squared — total SSE,1
-4,41,L — constant tail — absolute — weighted MAE,1
-4,41,L — constant tail — absolute — total SAE,1
 4,42,BIC,4
 4,42,PACF cutoff,4
-4,42,L — affine tail — squared — weighted RMSE,4
-4,42,L — affine tail — squared — total SSE,1
-4,42,L — affine tail — absolute — weighted MAE,4
-4,42,L — affine tail — absolute — total SAE,4
-4,42,L — constant tail — squared — weighted RMSE,4
-4,42,L — constant tail — squared — total SSE,4
-4,42,L — constant tail — absolute — weighted MAE,4
-4,42,L — constant tail — absolute — total SAE,4
 4,43,BIC,4
 4,43,PACF cutoff,4
-4,43,L — affine tail — squared — weighted RMSE,4
-4,43,L — affine tail — squared — total SSE,4
-4,43,L — affine tail — absolute — weighted MAE,4
-4,43,L — affine tail — absolute — total SAE,4
-4,43,L — constant tail — squared — weighted RMSE,4
-4,43,L — constant tail — squared — total SSE,4
-4,43,L — constant tail — absolute — weighted MAE,4
-4,43,L — constant tail — absolute — total SAE,4
 4,44,BIC,4
 4,44,PACF cutoff,4
-4,44,L — affine tail — squared — weighted RMSE,2
-4,44,L — affine tail — squared — total SSE,2
-4,44,L — affine tail — absolute — weighted MAE,2
-4,44,L — affine tail — absolute — total SAE,2
-4,44,L — constant tail — squared — weighted RMSE,2
-4,44,L — constant tail — squared — total SSE,2
-4,44,L — constant tail — absolute — weighted MAE,2
-4,44,L — constant tail — absolute — total SAE,2
 4,45,BIC,4
 4,45,PACF cutoff,4
-4,45,L — affine tail — squared — weighted RMSE,2
-4,45,L — affine tail — squared — total SSE,2
-4,45,L — affine tail — absolute — weighted MAE,2
-4,45,L — affine tail — absolute — total SAE,2
-4,45,L — constant tail — squared — weighted RMSE,2
-4,45,L — constant tail — squared — total SSE,2
-4,45,L — constant tail — absolute — weighted MAE,2
-4,45,L — constant tail — absolute — total SAE,2
 4,46,BIC,4
 4,46,PACF cutoff,4
-4,46,L — affine tail — squared — weighted RMSE,3
-4,46,L — affine tail — squared — total SSE,2
-4,46,L — affine tail — absolute — weighted MAE,2
-4,46,L — affine tail — absolute — total SAE,2
-4,46,L — constant tail — squared — weighted RMSE,3
-4,46,L — constant tail — squared — total SSE,2
-4,46,L — constant tail — absolute — weighted MAE,2
-4,46,L — constant tail — absolute — total SAE,2
 4,47,BIC,3
 4,47,PACF cutoff,4
-4,47,L — affine tail — squared — weighted RMSE,2
-4,47,L — affine tail — squared — total SSE,2
-4,47,L — affine tail — absolute — weighted MAE,2
-4,47,L — affine tail — absolute — total SAE,2
-4,47,L — constant tail — squared — weighted RMSE,2
-4,47,L — constant tail — squared — total SSE,2
-4,47,L — constant tail — absolute — weighted MAE,2
-4,47,L — constant tail — absolute — total SAE,2
 4,48,BIC,4
 4,48,PACF cutoff,4
-4,48,L — affine tail — squared — weighted RMSE,4
-4,48,L — affine tail — squared — total SSE,3
-4,48,L — affine tail — absolute — weighted MAE,3
-4,48,L — affine tail — absolute — total SAE,3
-4,48,L — constant tail — squared — weighted RMSE,4
-4,48,L — constant tail — squared — total SSE,3
-4,48,L — constant tail — absolute — weighted MAE,3
-4,48,L — constant tail — absolute — total SAE,3
 4,49,BIC,4
 4,49,PACF cutoff,4
-4,49,L — affine tail — squared — weighted RMSE,4
-4,49,L — affine tail — squared — total SSE,4
-4,49,L — affine tail — absolute — weighted MAE,4
-4,49,L — affine tail — absolute — total SAE,4
-4,49,L — constant tail — squared — weighted RMSE,4
-4,49,L — constant tail — squared — total SSE,4
-4,49,L — constant tail — absolute — weighted MAE,4
-4,49,L — constant tail — absolute — total SAE,4
 4,50,BIC,4
 4,50,PACF cutoff,4
-4,50,L — affine tail — squared — weighted RMSE,4
-4,50,L — affine tail — squared — total SSE,1
-4,50,L — affine tail — absolute — weighted MAE,4
-4,50,L — affine tail — absolute — total SAE,4
-4,50,L — constant tail — squared — weighted RMSE,4
-4,50,L — constant tail — squared — total SSE,4
-4,50,L — constant tail — absolute — weighted MAE,4
-4,50,L — constant tail — absolute — total SAE,4
 5,1,BIC,5
 5,1,PACF cutoff,5
-5,1,L — affine tail — squared — weighted RMSE,3
-5,1,L — affine tail — squared — total SSE,3
-5,1,L — affine tail — absolute — weighted MAE,4
-5,1,L — affine tail — absolute — total SAE,4
-5,1,L — constant tail — squared — weighted RMSE,3
-5,1,L — constant tail — squared — total SSE,3
-5,1,L — constant tail — absolute — weighted MAE,4
-5,1,L — constant tail — absolute — total SAE,4
 5,2,BIC,5
 5,2,PACF cutoff,6
-5,2,L — affine tail — squared — weighted RMSE,2
-5,2,L — affine tail — squared — total SSE,2
-5,2,L — affine tail — absolute — weighted MAE,2
-5,2,L — affine tail — absolute — total SAE,2
-5,2,L — constant tail — squared — weighted RMSE,2
-5,2,L — constant tail — squared — total SSE,2
-5,2,L — constant tail — absolute — weighted MAE,2
-5,2,L — constant tail — absolute — total SAE,2
 5,3,BIC,5
 5,3,PACF cutoff,6
-5,3,L — affine tail — squared — weighted RMSE,3
-5,3,L — affine tail — squared — total SSE,2
-5,3,L — affine tail — absolute — weighted MAE,2
-5,3,L — affine tail — absolute — total SAE,2
-5,3,L — constant tail — squared — weighted RMSE,3
-5,3,L — constant tail — squared — total SSE,3
-5,3,L — constant tail — absolute — weighted MAE,2
-5,3,L — constant tail — absolute — total SAE,2
 5,4,BIC,5
 5,4,PACF cutoff,5
-5,4,L — affine tail — squared — weighted RMSE,2
-5,4,L — affine tail — squared — total SSE,2
-5,4,L — affine tail — absolute — weighted MAE,2
-5,4,L — affine tail — absolute — total SAE,2
-5,4,L — constant tail — squared — weighted RMSE,2
-5,4,L — constant tail — squared — total SSE,2
-5,4,L — constant tail — absolute — weighted MAE,2
-5,4,L — constant tail — absolute — total SAE,2
 5,5,BIC,4
 5,5,PACF cutoff,7
-5,5,L — affine tail — squared — weighted RMSE,1
-5,5,L — affine tail — squared — total SSE,1
-5,5,L — affine tail — absolute — weighted MAE,1
-5,5,L — affine tail — absolute — total SAE,1
-5,5,L — constant tail — squared — weighted RMSE,1
-5,5,L — constant tail — squared — total SSE,1
-5,5,L — constant tail — absolute — weighted MAE,1
-5,5,L — constant tail — absolute — total SAE,1
 5,6,BIC,5
 5,6,PACF cutoff,5
-5,6,L — affine tail — squared — weighted RMSE,3
-5,6,L — affine tail — squared — total SSE,3
-5,6,L — affine tail — absolute — weighted MAE,3
-5,6,L — affine tail — absolute — total SAE,3
-5,6,L — constant tail — squared — weighted RMSE,4
-5,6,L — constant tail — squared — total SSE,3
-5,6,L — constant tail — absolute — weighted MAE,3
-5,6,L — constant tail — absolute — total SAE,3
 5,7,BIC,4
 5,7,PACF cutoff,6
-5,7,L — affine tail — squared — weighted RMSE,4
-5,7,L — affine tail — squared — total SSE,4
-5,7,L — affine tail — absolute — weighted MAE,4
-5,7,L — affine tail — absolute — total SAE,4
-5,7,L — constant tail — squared — weighted RMSE,4
-5,7,L — constant tail — squared — total SSE,4
-5,7,L — constant tail — absolute — weighted MAE,4
-5,7,L — constant tail — absolute — total SAE,4
 5,8,BIC,5
 5,8,PACF cutoff,5
-5,8,L — affine tail — squared — weighted RMSE,3
-5,8,L — affine tail — squared — total SSE,4
-5,8,L — affine tail — absolute — weighted MAE,4
-5,8,L — affine tail — absolute — total SAE,4
-5,8,L — constant tail — squared — weighted RMSE,5
-5,8,L — constant tail — squared — total SSE,5
-5,8,L — constant tail — absolute — weighted MAE,5
-5,8,L — constant tail — absolute — total SAE,5
 5,9,BIC,5
 5,9,PACF cutoff,5
-5,9,L — affine tail — squared — weighted RMSE,4
-5,9,L — affine tail — squared — total SSE,4
-5,9,L — affine tail — absolute — weighted MAE,4
-5,9,L — affine tail — absolute — total SAE,4
-5,9,L — constant tail — squared — weighted RMSE,4
-5,9,L — constant tail — squared — total SSE,4
-5,9,L — constant tail — absolute — weighted MAE,4
-5,9,L — constant tail — absolute — total SAE,4
 5,10,BIC,4
 5,10,PACF cutoff,4
-5,10,L — affine tail — squared — weighted RMSE,4
-5,10,L — affine tail — squared — total SSE,3
-5,10,L — affine tail — absolute — weighted MAE,4
-5,10,L — affine tail — absolute — total SAE,4
-5,10,L — constant tail — squared — weighted RMSE,4
-5,10,L — constant tail — squared — total SSE,3
-5,10,L — constant tail — absolute — weighted MAE,3
-5,10,L — constant tail — absolute — total SAE,3
 5,11,BIC,4
 5,11,PACF cutoff,9
-5,11,L — affine tail — squared — weighted RMSE,4
-5,11,L — affine tail — squared — total SSE,4
-5,11,L — affine tail — absolute — weighted MAE,4
-5,11,L — affine tail — absolute — total SAE,4
-5,11,L — constant tail — squared — weighted RMSE,4
-5,11,L — constant tail — squared — total SSE,4
-5,11,L — constant tail — absolute — weighted MAE,4
-5,11,L — constant tail — absolute — total SAE,4
 5,12,BIC,5
 5,12,PACF cutoff,5
-5,12,L — affine tail — squared — weighted RMSE,3
-5,12,L — affine tail — squared — total SSE,3
-5,12,L — affine tail — absolute — weighted MAE,3
-5,12,L — affine tail — absolute — total SAE,3
-5,12,L — constant tail — squared — weighted RMSE,4
-5,12,L — constant tail — squared — total SSE,4
-5,12,L — constant tail — absolute — weighted MAE,3
-5,12,L — constant tail — absolute — total SAE,3
 5,13,BIC,5
 5,13,PACF cutoff,5
-5,13,L — affine tail — squared — weighted RMSE,3
-5,13,L — affine tail — squared — total SSE,3
-5,13,L — affine tail — absolute — weighted MAE,3
-5,13,L — affine tail — absolute — total SAE,3
-5,13,L — constant tail — squared — weighted RMSE,3
-5,13,L — constant tail — squared — total SSE,3
-5,13,L — constant tail — absolute — weighted MAE,3
-5,13,L — constant tail — absolute — total SAE,3
 5,14,BIC,5
 5,14,PACF cutoff,5
-5,14,L — affine tail — squared — weighted RMSE,2
-5,14,L — affine tail — squared — total SSE,2
-5,14,L — affine tail — absolute — weighted MAE,2
-5,14,L — affine tail — absolute — total SAE,2
-5,14,L — constant tail — squared — weighted RMSE,2
-5,14,L — constant tail — squared — total SSE,2
-5,14,L — constant tail — absolute — weighted MAE,3
-5,14,L — constant tail — absolute — total SAE,3
 5,15,BIC,5
 5,15,PACF cutoff,4
-5,15,L — affine tail — squared — weighted RMSE,2
-5,15,L — affine tail — squared — total SSE,2
-5,15,L — affine tail — absolute — weighted MAE,2
-5,15,L — affine tail — absolute — total SAE,2
-5,15,L — constant tail — squared — weighted RMSE,2
-5,15,L — constant tail — squared — total SSE,2
-5,15,L — constant tail — absolute — weighted MAE,2
-5,15,L — constant tail — absolute — total SAE,2
 5,16,BIC,5
 5,16,PACF cutoff,5
-5,16,L — affine tail — squared — weighted RMSE,5
-5,16,L — affine tail — squared — total SSE,5
-5,16,L — affine tail — absolute — weighted MAE,5
-5,16,L — affine tail — absolute — total SAE,5
-5,16,L — constant tail — squared — weighted RMSE,5
-5,16,L — constant tail — squared — total SSE,5
-5,16,L — constant tail — absolute — weighted MAE,5
-5,16,L — constant tail — absolute — total SAE,5
 5,17,BIC,5
 5,17,PACF cutoff,5
-5,17,L — affine tail — squared — weighted RMSE,2
-5,17,L — affine tail — squared — total SSE,2
-5,17,L — affine tail — absolute — weighted MAE,2
-5,17,L — affine tail — absolute — total SAE,2
-5,17,L — constant tail — squared — weighted RMSE,4
-5,17,L — constant tail — squared — total SSE,2
-5,17,L — constant tail — absolute — weighted MAE,2
-5,17,L — constant tail — absolute — total SAE,2
 5,18,BIC,5
 5,18,PACF cutoff,5
-5,18,L — affine tail — squared — weighted RMSE,2
-5,18,L — affine tail — squared — total SSE,2
-5,18,L — affine tail — absolute — weighted MAE,2
-5,18,L — affine tail — absolute — total SAE,2
-5,18,L — constant tail — squared — weighted RMSE,2
-5,18,L — constant tail — squared — total SSE,2
-5,18,L — constant tail — absolute — weighted MAE,2
-5,18,L — constant tail — absolute — total SAE,2
 5,19,BIC,5
 5,19,PACF cutoff,5
-5,19,L — affine tail — squared — weighted RMSE,2
-5,19,L — affine tail — squared — total SSE,2
-5,19,L — affine tail — absolute — weighted MAE,2
-5,19,L — affine tail — absolute — total SAE,2
-5,19,L — constant tail — squared — weighted RMSE,3
-5,19,L — constant tail — squared — total SSE,3
-5,19,L — constant tail — absolute — weighted MAE,3
-5,19,L — constant tail — absolute — total SAE,3
 5,20,BIC,5
 5,20,PACF cutoff,5
-5,20,L — affine tail — squared — weighted RMSE,5
-5,20,L — affine tail — squared — total SSE,3
-5,20,L — affine tail — absolute — weighted MAE,5
-5,20,L — affine tail — absolute — total SAE,5
-5,20,L — constant tail — squared — weighted RMSE,5
-5,20,L — constant tail — squared — total SSE,5
-5,20,L — constant tail — absolute — weighted MAE,5
-5,20,L — constant tail — absolute — total SAE,5
 5,21,BIC,5
 5,21,PACF cutoff,5
-5,21,L — affine tail — squared — weighted RMSE,5
-5,21,L — affine tail — squared — total SSE,5
-5,21,L — affine tail — absolute — weighted MAE,5
-5,21,L — affine tail — absolute — total SAE,5
-5,21,L — constant tail — squared — weighted RMSE,5
-5,21,L — constant tail — squared — total SSE,5
-5,21,L — constant tail — absolute — weighted MAE,5
-5,21,L — constant tail — absolute — total SAE,5
 5,22,BIC,5
 5,22,PACF cutoff,5
-5,22,L — affine tail — squared — weighted RMSE,3
-5,22,L — affine tail — squared — total SSE,3
-5,22,L — affine tail — absolute — weighted MAE,4
-5,22,L — affine tail — absolute — total SAE,4
-5,22,L — constant tail — squared — weighted RMSE,3
-5,22,L — constant tail — squared — total SSE,3
-5,22,L — constant tail — absolute — weighted MAE,4
-5,22,L — constant tail — absolute — total SAE,4
 5,23,BIC,5
 5,23,PACF cutoff,8
-5,23,L — affine tail — squared — weighted RMSE,1
-5,23,L — affine tail — squared — total SSE,1
-5,23,L — affine tail — absolute — weighted MAE,1
-5,23,L — affine tail — absolute — total SAE,1
-5,23,L — constant tail — squared — weighted RMSE,5
-5,23,L — constant tail — squared — total SSE,5
-5,23,L — constant tail — absolute — weighted MAE,5
-5,23,L — constant tail — absolute — total SAE,5
 5,24,BIC,5
 5,24,PACF cutoff,5
-5,24,L — affine tail — squared — weighted RMSE,1
-5,24,L — affine tail — squared — total SSE,1
-5,24,L — affine tail — absolute — weighted MAE,1
-5,24,L — affine tail — absolute — total SAE,1
-5,24,L — constant tail — squared — weighted RMSE,1
-5,24,L — constant tail — squared — total SSE,1
-5,24,L — constant tail — absolute — weighted MAE,1
-5,24,L — constant tail — absolute — total SAE,1
 5,25,BIC,5
 5,25,PACF cutoff,5
-5,25,L — affine tail — squared — weighted RMSE,2
-5,25,L — affine tail — squared — total SSE,2
-5,25,L — affine tail — absolute — weighted MAE,2
-5,25,L — affine tail — absolute — total SAE,2
-5,25,L — constant tail — squared — weighted RMSE,2
-5,25,L — constant tail — squared — total SSE,2
-5,25,L — constant tail — absolute — weighted MAE,2
-5,25,L — constant tail — absolute — total SAE,2
 5,26,BIC,5
 5,26,PACF cutoff,5
-5,26,L — affine tail — squared — weighted RMSE,2
-5,26,L — affine tail — squared — total SSE,2
-5,26,L — affine tail — absolute — weighted MAE,2
-5,26,L — affine tail — absolute — total SAE,2
-5,26,L — constant tail — squared — weighted RMSE,4
-5,26,L — constant tail — squared — total SSE,2
-5,26,L — constant tail — absolute — weighted MAE,4
-5,26,L — constant tail — absolute — total SAE,4
 5,27,BIC,5
 5,27,PACF cutoff,5
-5,27,L — affine tail — squared — weighted RMSE,3
-5,27,L — affine tail — squared — total SSE,3
-5,27,L — affine tail — absolute — weighted MAE,3
-5,27,L — affine tail — absolute — total SAE,3
-5,27,L — constant tail — squared — weighted RMSE,4
-5,27,L — constant tail — squared — total SSE,3
-5,27,L — constant tail — absolute — weighted MAE,3
-5,27,L — constant tail — absolute — total SAE,3
 5,28,BIC,5
 5,28,PACF cutoff,5
-5,28,L — affine tail — squared — weighted RMSE,5
-5,28,L — affine tail — squared — total SSE,5
-5,28,L — affine tail — absolute — weighted MAE,5
-5,28,L — affine tail — absolute — total SAE,5
-5,28,L — constant tail — squared — weighted RMSE,5
-5,28,L — constant tail — squared — total SSE,5
-5,28,L — constant tail — absolute — weighted MAE,5
-5,28,L — constant tail — absolute — total SAE,5
 5,29,BIC,4
 5,29,PACF cutoff,6
-5,29,L — affine tail — squared — weighted RMSE,4
-5,29,L — affine tail — squared — total SSE,3
-5,29,L — affine tail — absolute — weighted MAE,4
-5,29,L — affine tail — absolute — total SAE,4
-5,29,L — constant tail — squared — weighted RMSE,4
-5,29,L — constant tail — squared — total SSE,4
-5,29,L — constant tail — absolute — weighted MAE,4
-5,29,L — constant tail — absolute — total SAE,4
 5,30,BIC,5
 5,30,PACF cutoff,5
-5,30,L — affine tail — squared — weighted RMSE,1
-5,30,L — affine tail — squared — total SSE,1
-5,30,L — affine tail — absolute — weighted MAE,1
-5,30,L — affine tail — absolute — total SAE,1
-5,30,L — constant tail — squared — weighted RMSE,1
-5,30,L — constant tail — squared — total SSE,1
-5,30,L — constant tail — absolute — weighted MAE,1
-5,30,L — constant tail — absolute — total SAE,1
 5,31,BIC,5
 5,31,PACF cutoff,9
-5,31,L — affine tail — squared — weighted RMSE,5
-5,31,L — affine tail — squared — total SSE,5
-5,31,L — affine tail — absolute — weighted MAE,5
-5,31,L — affine tail — absolute — total SAE,5
-5,31,L — constant tail — squared — weighted RMSE,5
-5,31,L — constant tail — squared — total SSE,5
-5,31,L — constant tail — absolute — weighted MAE,5
-5,31,L — constant tail — absolute — total SAE,5
 5,32,BIC,5
 5,32,PACF cutoff,5
-5,32,L — affine tail — squared — weighted RMSE,1
-5,32,L — affine tail — squared — total SSE,1
-5,32,L — affine tail — absolute — weighted MAE,1
-5,32,L — affine tail — absolute — total SAE,1
-5,32,L — constant tail — squared — weighted RMSE,2
-5,32,L — constant tail — squared — total SSE,2
-5,32,L — constant tail — absolute — weighted MAE,2
-5,32,L — constant tail — absolute — total SAE,2
 5,33,BIC,5
 5,33,PACF cutoff,7
-5,33,L — affine tail — squared — weighted RMSE,2
-5,33,L — affine tail — squared — total SSE,2
-5,33,L — affine tail — absolute — weighted MAE,2
-5,33,L — affine tail — absolute — total SAE,2
-5,33,L — constant tail — squared — weighted RMSE,2
-5,33,L — constant tail — squared — total SSE,2
-5,33,L — constant tail — absolute — weighted MAE,2
-5,33,L — constant tail — absolute — total SAE,2
 5,34,BIC,3
 5,34,PACF cutoff,5
-5,34,L — affine tail — squared — weighted RMSE,4
-5,34,L — affine tail — squared — total SSE,2
-5,34,L — affine tail — absolute — weighted MAE,4
-5,34,L — affine tail — absolute — total SAE,4
-5,34,L — constant tail — squared — weighted RMSE,4
-5,34,L — constant tail — squared — total SSE,4
-5,34,L — constant tail — absolute — weighted MAE,4
-5,34,L — constant tail — absolute — total SAE,4
 5,35,BIC,4
 5,35,PACF cutoff,4
-5,35,L — affine tail — squared — weighted RMSE,3
-5,35,L — affine tail — squared — total SSE,1
-5,35,L — affine tail — absolute — weighted MAE,2
-5,35,L — affine tail — absolute — total SAE,2
-5,35,L — constant tail — squared — weighted RMSE,3
-5,35,L — constant tail — squared — total SSE,2
-5,35,L — constant tail — absolute — weighted MAE,2
-5,35,L — constant tail — absolute — total SAE,2
 5,36,BIC,6
 5,36,PACF cutoff,6
-5,36,L — affine tail — squared — weighted RMSE,5
-5,36,L — affine tail — squared — total SSE,5
-5,36,L — affine tail — absolute — weighted MAE,5
-5,36,L — affine tail — absolute — total SAE,5
-5,36,L — constant tail — squared — weighted RMSE,5
-5,36,L — constant tail — squared — total SSE,5
-5,36,L — constant tail — absolute — weighted MAE,5
-5,36,L — constant tail — absolute — total SAE,5
 5,37,BIC,5
 5,37,PACF cutoff,5
-5,37,L — affine tail — squared — weighted RMSE,2
-5,37,L — affine tail — squared — total SSE,2
-5,37,L — affine tail — absolute — weighted MAE,2
-5,37,L — affine tail — absolute — total SAE,2
-5,37,L — constant tail — squared — weighted RMSE,3
-5,37,L — constant tail — squared — total SSE,2
-5,37,L — constant tail — absolute — weighted MAE,3
-5,37,L — constant tail — absolute — total SAE,3
 5,38,BIC,5
 5,38,PACF cutoff,5
-5,38,L — affine tail — squared — weighted RMSE,3
-5,38,L — affine tail — squared — total SSE,2
-5,38,L — affine tail — absolute — weighted MAE,2
-5,38,L — affine tail — absolute — total SAE,2
-5,38,L — constant tail — squared — weighted RMSE,3
-5,38,L — constant tail — squared — total SSE,2
-5,38,L — constant tail — absolute — weighted MAE,3
-5,38,L — constant tail — absolute — total SAE,3
 5,39,BIC,5
 5,39,PACF cutoff,7
-5,39,L — affine tail — squared — weighted RMSE,2
-5,39,L — affine tail — squared — total SSE,2
-5,39,L — affine tail — absolute — weighted MAE,2
-5,39,L — affine tail — absolute — total SAE,2
-5,39,L — constant tail — squared — weighted RMSE,2
-5,39,L — constant tail — squared — total SSE,2
-5,39,L — constant tail — absolute — weighted MAE,2
-5,39,L — constant tail — absolute — total SAE,2
 5,40,BIC,5
 5,40,PACF cutoff,5
-5,40,L — affine tail — squared — weighted RMSE,5
-5,40,L — affine tail — squared — total SSE,5
-5,40,L — affine tail — absolute — weighted MAE,5
-5,40,L — affine tail — absolute — total SAE,5
-5,40,L — constant tail — squared — weighted RMSE,5
-5,40,L — constant tail — squared — total SSE,5
-5,40,L — constant tail — absolute — weighted MAE,5
-5,40,L — constant tail — absolute — total SAE,5
 5,41,BIC,5
 5,41,PACF cutoff,9
-5,41,L — affine tail — squared — weighted RMSE,1
-5,41,L — affine tail — squared — total SSE,1
-5,41,L — affine tail — absolute — weighted MAE,1
-5,41,L — affine tail — absolute — total SAE,1
-5,41,L — constant tail — squared — weighted RMSE,1
-5,41,L — constant tail — squared — total SSE,1
-5,41,L — constant tail — absolute — weighted MAE,1
-5,41,L — constant tail — absolute — total SAE,1
 5,42,BIC,5
 5,42,PACF cutoff,7
-5,42,L — affine tail — squared — weighted RMSE,5
-5,42,L — affine tail — squared — total SSE,5
-5,42,L — affine tail — absolute — weighted MAE,5
-5,42,L — affine tail — absolute — total SAE,5
-5,42,L — constant tail — squared — weighted RMSE,5
-5,42,L — constant tail — squared — total SSE,5
-5,42,L — constant tail — absolute — weighted MAE,5
-5,42,L — constant tail — absolute — total SAE,5
 5,43,BIC,5
 5,43,PACF cutoff,5
-5,43,L — affine tail — squared — weighted RMSE,5
-5,43,L — affine tail — squared — total SSE,5
-5,43,L — affine tail — absolute — weighted MAE,5
-5,43,L — affine tail — absolute — total SAE,5
-5,43,L — constant tail — squared — weighted RMSE,5
-5,43,L — constant tail — squared — total SSE,5
-5,43,L — constant tail — absolute — weighted MAE,5
-5,43,L — constant tail — absolute — total SAE,5
 5,44,BIC,5
 5,44,PACF cutoff,5
-5,44,L — affine tail — squared — weighted RMSE,3
-5,44,L — affine tail — squared — total SSE,3
-5,44,L — affine tail — absolute — weighted MAE,3
-5,44,L — affine tail — absolute — total SAE,3
-5,44,L — constant tail — squared — weighted RMSE,3
-5,44,L — constant tail — squared — total SSE,3
-5,44,L — constant tail — absolute — weighted MAE,3
-5,44,L — constant tail — absolute — total SAE,3
 5,45,BIC,5
 5,45,PACF cutoff,5
-5,45,L — affine tail — squared — weighted RMSE,2
-5,45,L — affine tail — squared — total SSE,2
-5,45,L — affine tail — absolute — weighted MAE,2
-5,45,L — affine tail — absolute — total SAE,2
-5,45,L — constant tail — squared — weighted RMSE,2
-5,45,L — constant tail — squared — total SSE,2
-5,45,L — constant tail — absolute — weighted MAE,2
-5,45,L — constant tail — absolute — total SAE,2
 5,46,BIC,5
 5,46,PACF cutoff,6
-5,46,L — affine tail — squared — weighted RMSE,2
-5,46,L — affine tail — squared — total SSE,2
-5,46,L — affine tail — absolute — weighted MAE,2
-5,46,L — affine tail — absolute — total SAE,2
-5,46,L — constant tail — squared — weighted RMSE,2
-5,46,L — constant tail — squared — total SSE,2
-5,46,L — constant tail — absolute — weighted MAE,2
-5,46,L — constant tail — absolute — total SAE,2
 5,47,BIC,5
 5,47,PACF cutoff,6
-5,47,L — affine tail — squared — weighted RMSE,5
-5,47,L — affine tail — squared — total SSE,5
-5,47,L — affine tail — absolute — weighted MAE,5
-5,47,L — affine tail — absolute — total SAE,5
-5,47,L — constant tail — squared — weighted RMSE,5
-5,47,L — constant tail — squared — total SSE,5
-5,47,L — constant tail — absolute — weighted MAE,5
-5,47,L — constant tail — absolute — total SAE,5
 5,48,BIC,5
 5,48,PACF cutoff,5
-5,48,L — affine tail — squared — weighted RMSE,1
-5,48,L — affine tail — squared — total SSE,1
-5,48,L — affine tail — absolute — weighted MAE,1
-5,48,L — affine tail — absolute — total SAE,1
-5,48,L — constant tail — squared — weighted RMSE,1
-5,48,L — constant tail — squared — total SSE,1
-5,48,L — constant tail — absolute — weighted MAE,1
-5,48,L — constant tail — absolute — total SAE,1
 5,49,BIC,4
 5,49,PACF cutoff,5
-5,49,L — affine tail — squared — weighted RMSE,4
-5,49,L — affine tail — squared — total SSE,4
-5,49,L — affine tail — absolute — weighted MAE,4
-5,49,L — affine tail — absolute — total SAE,4
-5,49,L — constant tail — squared — weighted RMSE,4
-5,49,L — constant tail — squared — total SSE,4
-5,49,L — constant tail — absolute — weighted MAE,4
-5,49,L — constant tail — absolute — total SAE,4
 5,50,BIC,4
 5,50,PACF cutoff,4
-5,50,L — affine tail — squared — weighted RMSE,4
-5,50,L — affine tail — squared — total SSE,4
-5,50,L — affine tail — absolute — weighted MAE,5
-5,50,L — affine tail — absolute — total SAE,5
-5,50,L — constant tail — squared — weighted RMSE,4
-5,50,L — constant tail — squared — total SSE,4
-5,50,L — constant tail — absolute — weighted MAE,5
-5,50,L — constant tail — absolute — total SAE,5
 6,1,BIC,6
 6,1,PACF cutoff,6
-6,1,L — affine tail — squared — weighted RMSE,4
-6,1,L — affine tail — squared — total SSE,4
-6,1,L — affine tail — absolute — weighted MAE,4
-6,1,L — affine tail — absolute — total SAE,4
-6,1,L — constant tail — squared — weighted RMSE,4
-6,1,L — constant tail — squared — total SSE,4
-6,1,L — constant tail — absolute — weighted MAE,4
-6,1,L — constant tail — absolute — total SAE,4
 6,2,BIC,6
 6,2,PACF cutoff,6
-6,2,L — affine tail — squared — weighted RMSE,2
-6,2,L — affine tail — squared — total SSE,2
-6,2,L — affine tail — absolute — weighted MAE,2
-6,2,L — affine tail — absolute — total SAE,2
-6,2,L — constant tail — squared — weighted RMSE,6
-6,2,L — constant tail — squared — total SSE,6
-6,2,L — constant tail — absolute — weighted MAE,6
-6,2,L — constant tail — absolute — total SAE,6
 6,3,BIC,6
 6,3,PACF cutoff,9
-6,3,L — affine tail — squared — weighted RMSE,3
-6,3,L — affine tail — squared — total SSE,3
-6,3,L — affine tail — absolute — weighted MAE,3
-6,3,L — affine tail — absolute — total SAE,3
-6,3,L — constant tail — squared — weighted RMSE,3
-6,3,L — constant tail — squared — total SSE,3
-6,3,L — constant tail — absolute — weighted MAE,3
-6,3,L — constant tail — absolute — total SAE,3
 6,4,BIC,6
 6,4,PACF cutoff,6
-6,4,L — affine tail — squared — weighted RMSE,1
-6,4,L — affine tail — squared — total SSE,1
-6,4,L — affine tail — absolute — weighted MAE,1
-6,4,L — affine tail — absolute — total SAE,1
-6,4,L — constant tail — squared — weighted RMSE,2
-6,4,L — constant tail — squared — total SSE,2
-6,4,L — constant tail — absolute — weighted MAE,2
-6,4,L — constant tail — absolute — total SAE,2
 6,5,BIC,6
 6,5,PACF cutoff,6
-6,5,L — affine tail — squared — weighted RMSE,6
-6,5,L — affine tail — squared — total SSE,6
-6,5,L — affine tail — absolute — weighted MAE,6
-6,5,L — affine tail — absolute — total SAE,6
-6,5,L — constant tail — squared — weighted RMSE,6
-6,5,L — constant tail — squared — total SSE,6
-6,5,L — constant tail — absolute — weighted MAE,6
-6,5,L — constant tail — absolute — total SAE,6
 6,6,BIC,6
 6,6,PACF cutoff,7
-6,6,L — affine tail — squared — weighted RMSE,3
-6,6,L — affine tail — squared — total SSE,3
-6,6,L — affine tail — absolute — weighted MAE,3
-6,6,L — affine tail — absolute — total SAE,3
-6,6,L — constant tail — squared — weighted RMSE,3
-6,6,L — constant tail — squared — total SSE,3
-6,6,L — constant tail — absolute — weighted MAE,3
-6,6,L — constant tail — absolute — total SAE,3
 6,7,BIC,6
 6,7,PACF cutoff,6
-6,7,L — affine tail — squared — weighted RMSE,2
-6,7,L — affine tail — squared — total SSE,2
-6,7,L — affine tail — absolute — weighted MAE,2
-6,7,L — affine tail — absolute — total SAE,2
-6,7,L — constant tail — squared — weighted RMSE,2
-6,7,L — constant tail — squared — total SSE,2
-6,7,L — constant tail — absolute — weighted MAE,2
-6,7,L — constant tail — absolute — total SAE,2
 6,8,BIC,6
 6,8,PACF cutoff,6
-6,8,L — affine tail — squared — weighted RMSE,4
-6,8,L — affine tail — squared — total SSE,4
-6,8,L — affine tail — absolute — weighted MAE,4
-6,8,L — affine tail — absolute — total SAE,4
-6,8,L — constant tail — squared — weighted RMSE,6
-6,8,L — constant tail — squared — total SSE,4
-6,8,L — constant tail — absolute — weighted MAE,4
-6,8,L — constant tail — absolute — total SAE,4
 6,9,BIC,6
 6,9,PACF cutoff,6
-6,9,L — affine tail — squared — weighted RMSE,1
-6,9,L — affine tail — squared — total SSE,1
-6,9,L — affine tail — absolute — weighted MAE,1
-6,9,L — affine tail — absolute — total SAE,1
-6,9,L — constant tail — squared — weighted RMSE,3
-6,9,L — constant tail — squared — total SSE,1
-6,9,L — constant tail — absolute — weighted MAE,1
-6,9,L — constant tail — absolute — total SAE,1
 6,10,BIC,6
 6,10,PACF cutoff,6
-6,10,L — affine tail — squared — weighted RMSE,3
-6,10,L — affine tail — squared — total SSE,2
-6,10,L — affine tail — absolute — weighted MAE,4
-6,10,L — affine tail — absolute — total SAE,4
-6,10,L — constant tail — squared — weighted RMSE,4
-6,10,L — constant tail — squared — total SSE,3
-6,10,L — constant tail — absolute — weighted MAE,4
-6,10,L — constant tail — absolute — total SAE,4
 6,11,BIC,6
 6,11,PACF cutoff,6
-6,11,L — affine tail — squared — weighted RMSE,1
-6,11,L — affine tail — squared — total SSE,1
-6,11,L — affine tail — absolute — weighted MAE,1
-6,11,L — affine tail — absolute — total SAE,1
-6,11,L — constant tail — squared — weighted RMSE,3
-6,11,L — constant tail — squared — total SSE,3
-6,11,L — constant tail — absolute — weighted MAE,3
-6,11,L — constant tail — absolute — total SAE,3
 6,12,BIC,6
 6,12,PACF cutoff,6
-6,12,L — affine tail — squared — weighted RMSE,2
-6,12,L — affine tail — squared — total SSE,2
-6,12,L — affine tail — absolute — weighted MAE,3
-6,12,L — affine tail — absolute — total SAE,3
-6,12,L — constant tail — squared — weighted RMSE,4
-6,12,L — constant tail — squared — total SSE,3
-6,12,L — constant tail — absolute — weighted MAE,3
-6,12,L — constant tail — absolute — total SAE,3
 6,13,BIC,6
 6,13,PACF cutoff,7
-6,13,L — affine tail — squared — weighted RMSE,2
-6,13,L — affine tail — squared — total SSE,2
-6,13,L — affine tail — absolute — weighted MAE,2
-6,13,L — affine tail — absolute — total SAE,2
-6,13,L — constant tail — squared — weighted RMSE,7
-6,13,L — constant tail — squared — total SSE,4
-6,13,L — constant tail — absolute — weighted MAE,7
-6,13,L — constant tail — absolute — total SAE,7
 6,14,BIC,6
 6,14,PACF cutoff,6
-6,14,L — affine tail — squared — weighted RMSE,1
-6,14,L — affine tail — squared — total SSE,1
-6,14,L — affine tail — absolute — weighted MAE,1
-6,14,L — affine tail — absolute — total SAE,1
-6,14,L — constant tail — squared — weighted RMSE,6
-6,14,L — constant tail — squared — total SSE,6
-6,14,L — constant tail — absolute — weighted MAE,7
-6,14,L — constant tail — absolute — total SAE,7
 6,15,BIC,6
 6,15,PACF cutoff,6
-6,15,L — affine tail — squared — weighted RMSE,3
-6,15,L — affine tail — squared — total SSE,3
-6,15,L — affine tail — absolute — weighted MAE,3
-6,15,L — affine tail — absolute — total SAE,3
-6,15,L — constant tail — squared — weighted RMSE,3
-6,15,L — constant tail — squared — total SSE,3
-6,15,L — constant tail — absolute — weighted MAE,3
-6,15,L — constant tail — absolute — total SAE,3
 6,16,BIC,6
 6,16,PACF cutoff,6
-6,16,L — affine tail — squared — weighted RMSE,6
-6,16,L — affine tail — squared — total SSE,2
-6,16,L — affine tail — absolute — weighted MAE,6
-6,16,L — affine tail — absolute — total SAE,6
-6,16,L — constant tail — squared — weighted RMSE,6
-6,16,L — constant tail — squared — total SSE,6
-6,16,L — constant tail — absolute — weighted MAE,6
-6,16,L — constant tail — absolute — total SAE,6
 6,17,BIC,6
 6,17,PACF cutoff,6
-6,17,L — affine tail — squared — weighted RMSE,1
-6,17,L — affine tail — squared — total SSE,3
-6,17,L — affine tail — absolute — weighted MAE,3
-6,17,L — affine tail — absolute — total SAE,3
-6,17,L — constant tail — squared — weighted RMSE,6
-6,17,L — constant tail — squared — total SSE,6
-6,17,L — constant tail — absolute — weighted MAE,6
-6,17,L — constant tail — absolute — total SAE,6
 6,18,BIC,6
 6,18,PACF cutoff,9
-6,18,L — affine tail — squared — weighted RMSE,1
-6,18,L — affine tail — squared — total SSE,1
-6,18,L — affine tail — absolute — weighted MAE,1
-6,18,L — affine tail — absolute — total SAE,1
-6,18,L — constant tail — squared — weighted RMSE,1
-6,18,L — constant tail — squared — total SSE,1
-6,18,L — constant tail — absolute — weighted MAE,1
-6,18,L — constant tail — absolute — total SAE,1
 6,19,BIC,6
 6,19,PACF cutoff,6
-6,19,L — affine tail — squared — weighted RMSE,3
-6,19,L — affine tail — squared — total SSE,3
-6,19,L — affine tail — absolute — weighted MAE,6
-6,19,L — affine tail — absolute — total SAE,6
-6,19,L — constant tail — squared — weighted RMSE,6
-6,19,L — constant tail — squared — total SSE,6
-6,19,L — constant tail — absolute — weighted MAE,6
-6,19,L — constant tail — absolute — total SAE,6
 6,20,BIC,6
 6,20,PACF cutoff,6
-6,20,L — affine tail — squared — weighted RMSE,1
-6,20,L — affine tail — squared — total SSE,1
-6,20,L — affine tail — absolute — weighted MAE,1
-6,20,L — affine tail — absolute — total SAE,1
-6,20,L — constant tail — squared — weighted RMSE,1
-6,20,L — constant tail — squared — total SSE,1
-6,20,L — constant tail — absolute — weighted MAE,1
-6,20,L — constant tail — absolute — total SAE,1
 6,21,BIC,6
 6,21,PACF cutoff,6
-6,21,L — affine tail — squared — weighted RMSE,6
-6,21,L — affine tail — squared — total SSE,6
-6,21,L — affine tail — absolute — weighted MAE,5
-6,21,L — affine tail — absolute — total SAE,5
-6,21,L — constant tail — squared — weighted RMSE,6
-6,21,L — constant tail — squared — total SSE,6
-6,21,L — constant tail — absolute — weighted MAE,5
-6,21,L — constant tail — absolute — total SAE,5
 6,22,BIC,6
 6,22,PACF cutoff,6
-6,22,L — affine tail — squared — weighted RMSE,2
-6,22,L — affine tail — squared — total SSE,2
-6,22,L — affine tail — absolute — weighted MAE,2
-6,22,L — affine tail — absolute — total SAE,2
-6,22,L — constant tail — squared — weighted RMSE,3
-6,22,L — constant tail — squared — total SSE,3
-6,22,L — constant tail — absolute — weighted MAE,3
-6,22,L — constant tail — absolute — total SAE,3
 6,23,BIC,6
 6,23,PACF cutoff,6
-6,23,L — affine tail — squared — weighted RMSE,2
-6,23,L — affine tail — squared — total SSE,2
-6,23,L — affine tail — absolute — weighted MAE,2
-6,23,L — affine tail — absolute — total SAE,2
-6,23,L — constant tail — squared — weighted RMSE,3
-6,23,L — constant tail — squared — total SSE,3
-6,23,L — constant tail — absolute — weighted MAE,4
-6,23,L — constant tail — absolute — total SAE,4
 6,24,BIC,6
 6,24,PACF cutoff,6
-6,24,L — affine tail — squared — weighted RMSE,6
-6,24,L — affine tail — squared — total SSE,6
-6,24,L — affine tail — absolute — weighted MAE,6
-6,24,L — affine tail — absolute — total SAE,6
-6,24,L — constant tail — squared — weighted RMSE,6
-6,24,L — constant tail — squared — total SSE,6
-6,24,L — constant tail — absolute — weighted MAE,6
-6,24,L — constant tail — absolute — total SAE,6
 6,25,BIC,6
 6,25,PACF cutoff,6
-6,25,L — affine tail — squared — weighted RMSE,6
-6,25,L — affine tail — squared — total SSE,2
-6,25,L — affine tail — absolute — weighted MAE,6
-6,25,L — affine tail — absolute — total SAE,6
-6,25,L — constant tail — squared — weighted RMSE,6
-6,25,L — constant tail — squared — total SSE,6
-6,25,L — constant tail — absolute — weighted MAE,6
-6,25,L — constant tail — absolute — total SAE,6
 6,26,BIC,6
 6,26,PACF cutoff,6
-6,26,L — affine tail — squared — weighted RMSE,6
-6,26,L — affine tail — squared — total SSE,5
-6,26,L — affine tail — absolute — weighted MAE,6
-6,26,L — affine tail — absolute — total SAE,6
-6,26,L — constant tail — squared — weighted RMSE,6
-6,26,L — constant tail — squared — total SSE,6
-6,26,L — constant tail — absolute — weighted MAE,6
-6,26,L — constant tail — absolute — total SAE,6
 6,27,BIC,6
 6,27,PACF cutoff,6
-6,27,L — affine tail — squared — weighted RMSE,6
-6,27,L — affine tail — squared — total SSE,6
-6,27,L — affine tail — absolute — weighted MAE,6
-6,27,L — affine tail — absolute — total SAE,6
-6,27,L — constant tail — squared — weighted RMSE,6
-6,27,L — constant tail — squared — total SSE,6
-6,27,L — constant tail — absolute — weighted MAE,6
-6,27,L — constant tail — absolute — total SAE,6
 6,28,BIC,6
 6,28,PACF cutoff,6
-6,28,L — affine tail — squared — weighted RMSE,3
-6,28,L — affine tail — squared — total SSE,3
-6,28,L — affine tail — absolute — weighted MAE,3
-6,28,L — affine tail — absolute — total SAE,3
-6,28,L — constant tail — squared — weighted RMSE,3
-6,28,L — constant tail — squared — total SSE,3
-6,28,L — constant tail — absolute — weighted MAE,3
-6,28,L — constant tail — absolute — total SAE,3
 6,29,BIC,6
 6,29,PACF cutoff,6
-6,29,L — affine tail — squared — weighted RMSE,4
-6,29,L — affine tail — squared — total SSE,4
-6,29,L — affine tail — absolute — weighted MAE,6
-6,29,L — affine tail — absolute — total SAE,6
-6,29,L — constant tail — squared — weighted RMSE,6
-6,29,L — constant tail — squared — total SSE,6
-6,29,L — constant tail — absolute — weighted MAE,6
-6,29,L — constant tail — absolute — total SAE,6
 6,30,BIC,6
 6,30,PACF cutoff,6
-6,30,L — affine tail — squared — weighted RMSE,2
-6,30,L — affine tail — squared — total SSE,2
-6,30,L — affine tail — absolute — weighted MAE,2
-6,30,L — affine tail — absolute — total SAE,2
-6,30,L — constant tail — squared — weighted RMSE,3
-6,30,L — constant tail — squared — total SSE,3
-6,30,L — constant tail — absolute — weighted MAE,3
-6,30,L — constant tail — absolute — total SAE,3
 6,31,BIC,6
 6,31,PACF cutoff,7
-6,31,L — affine tail — squared — weighted RMSE,3
-6,31,L — affine tail — squared — total SSE,2
-6,31,L — affine tail — absolute — weighted MAE,3
-6,31,L — affine tail — absolute — total SAE,3
-6,31,L — constant tail — squared — weighted RMSE,3
-6,31,L — constant tail — squared — total SSE,3
-6,31,L — constant tail — absolute — weighted MAE,3
-6,31,L — constant tail — absolute — total SAE,3
 6,32,BIC,6
 6,32,PACF cutoff,6
-6,32,L — affine tail — squared — weighted RMSE,2
-6,32,L — affine tail — squared — total SSE,2
-6,32,L — affine tail — absolute — weighted MAE,2
-6,32,L — affine tail — absolute — total SAE,2
-6,32,L — constant tail — squared — weighted RMSE,6
-6,32,L — constant tail — squared — total SSE,5
-6,32,L — constant tail — absolute — weighted MAE,6
-6,32,L — constant tail — absolute — total SAE,6
 6,33,BIC,6
 6,33,PACF cutoff,6
-6,33,L — affine tail — squared — weighted RMSE,2
-6,33,L — affine tail — squared — total SSE,2
-6,33,L — affine tail — absolute — weighted MAE,2
-6,33,L — affine tail — absolute — total SAE,2
-6,33,L — constant tail — squared — weighted RMSE,2
-6,33,L — constant tail — squared — total SSE,2
-6,33,L — constant tail — absolute — weighted MAE,2
-6,33,L — constant tail — absolute — total SAE,2
 6,34,BIC,6
 6,34,PACF cutoff,6
-6,34,L — affine tail — squared — weighted RMSE,2
-6,34,L — affine tail — squared — total SSE,2
-6,34,L — affine tail — absolute — weighted MAE,2
-6,34,L — affine tail — absolute — total SAE,2
-6,34,L — constant tail — squared — weighted RMSE,4
-6,34,L — constant tail — squared — total SSE,4
-6,34,L — constant tail — absolute — weighted MAE,4
-6,34,L — constant tail — absolute — total SAE,4
 6,35,BIC,6
 6,35,PACF cutoff,6
-6,35,L — affine tail — squared — weighted RMSE,2
-6,35,L — affine tail — squared — total SSE,2
-6,35,L — affine tail — absolute — weighted MAE,2
-6,35,L — affine tail — absolute — total SAE,2
-6,35,L — constant tail — squared — weighted RMSE,4
-6,35,L — constant tail — squared — total SSE,2
-6,35,L — constant tail — absolute — weighted MAE,2
-6,35,L — constant tail — absolute — total SAE,2
 6,36,BIC,6
 6,36,PACF cutoff,6
-6,36,L — affine tail — squared — weighted RMSE,3
-6,36,L — affine tail — squared — total SSE,3
-6,36,L — affine tail — absolute — weighted MAE,3
-6,36,L — affine tail — absolute — total SAE,3
-6,36,L — constant tail — squared — weighted RMSE,6
-6,36,L — constant tail — squared — total SSE,4
-6,36,L — constant tail — absolute — weighted MAE,5
-6,36,L — constant tail — absolute — total SAE,5
 6,37,BIC,6
 6,37,PACF cutoff,6
-6,37,L — affine tail — squared — weighted RMSE,2
-6,37,L — affine tail — squared — total SSE,2
-6,37,L — affine tail — absolute — weighted MAE,2
-6,37,L — affine tail — absolute — total SAE,2
-6,37,L — constant tail — squared — weighted RMSE,3
-6,37,L — constant tail — squared — total SSE,2
-6,37,L — constant tail — absolute — weighted MAE,3
-6,37,L — constant tail — absolute — total SAE,3
 6,38,BIC,5
 6,38,PACF cutoff,8
-6,38,L — affine tail — squared — weighted RMSE,3
-6,38,L — affine tail — squared — total SSE,3
-6,38,L — affine tail — absolute — weighted MAE,3
-6,38,L — affine tail — absolute — total SAE,3
-6,38,L — constant tail — squared — weighted RMSE,3
-6,38,L — constant tail — squared — total SSE,3
-6,38,L — constant tail — absolute — weighted MAE,3
-6,38,L — constant tail — absolute — total SAE,3
 6,39,BIC,6
 6,39,PACF cutoff,9
-6,39,L — affine tail — squared — weighted RMSE,1
-6,39,L — affine tail — squared — total SSE,1
-6,39,L — affine tail — absolute — weighted MAE,1
-6,39,L — affine tail — absolute — total SAE,1
-6,39,L — constant tail — squared — weighted RMSE,1
-6,39,L — constant tail — squared — total SSE,1
-6,39,L — constant tail — absolute — weighted MAE,1
-6,39,L — constant tail — absolute — total SAE,1
 6,40,BIC,6
 6,40,PACF cutoff,7
-6,40,L — affine tail — squared — weighted RMSE,5
-6,40,L — affine tail — squared — total SSE,5
-6,40,L — affine tail — absolute — weighted MAE,5
-6,40,L — affine tail — absolute — total SAE,5
-6,40,L — constant tail — squared — weighted RMSE,5
-6,40,L — constant tail — squared — total SSE,5
-6,40,L — constant tail — absolute — weighted MAE,5
-6,40,L — constant tail — absolute — total SAE,5
 6,41,BIC,6
 6,41,PACF cutoff,6
-6,41,L — affine tail — squared — weighted RMSE,6
-6,41,L — affine tail — squared — total SSE,6
-6,41,L — affine tail — absolute — weighted MAE,6
-6,41,L — affine tail — absolute — total SAE,6
-6,41,L — constant tail — squared — weighted RMSE,6
-6,41,L — constant tail — squared — total SSE,6
-6,41,L — constant tail — absolute — weighted MAE,6
-6,41,L — constant tail — absolute — total SAE,6
 6,42,BIC,6
 6,42,PACF cutoff,6
-6,42,L — affine tail — squared — weighted RMSE,3
-6,42,L — affine tail — squared — total SSE,2
-6,42,L — affine tail — absolute — weighted MAE,3
-6,42,L — affine tail — absolute — total SAE,3
-6,42,L — constant tail — squared — weighted RMSE,3
-6,42,L — constant tail — squared — total SSE,3
-6,42,L — constant tail — absolute — weighted MAE,3
-6,42,L — constant tail — absolute — total SAE,3
 6,43,BIC,6
 6,43,PACF cutoff,6
-6,43,L — affine tail — squared — weighted RMSE,4
-6,43,L — affine tail — squared — total SSE,2
-6,43,L — affine tail — absolute — weighted MAE,4
-6,43,L — affine tail — absolute — total SAE,4
-6,43,L — constant tail — squared — weighted RMSE,5
-6,43,L — constant tail — squared — total SSE,4
-6,43,L — constant tail — absolute — weighted MAE,4
-6,43,L — constant tail — absolute — total SAE,4
 6,44,BIC,6
 6,44,PACF cutoff,6
-6,44,L — affine tail — squared — weighted RMSE,2
-6,44,L — affine tail — squared — total SSE,2
-6,44,L — affine tail — absolute — weighted MAE,2
-6,44,L — affine tail — absolute — total SAE,2
-6,44,L — constant tail — squared — weighted RMSE,6
-6,44,L — constant tail — squared — total SSE,6
-6,44,L — constant tail — absolute — weighted MAE,6
-6,44,L — constant tail — absolute — total SAE,6
 6,45,BIC,6
 6,45,PACF cutoff,8
-6,45,L — affine tail — squared — weighted RMSE,2
-6,45,L — affine tail — squared — total SSE,2
-6,45,L — affine tail — absolute — weighted MAE,2
-6,45,L — affine tail — absolute — total SAE,2
-6,45,L — constant tail — squared — weighted RMSE,2
-6,45,L — constant tail — squared — total SSE,2
-6,45,L — constant tail — absolute — weighted MAE,2
-6,45,L — constant tail — absolute — total SAE,2
 6,46,BIC,6
 6,46,PACF cutoff,6
-6,46,L — affine tail — squared — weighted RMSE,6
-6,46,L — affine tail — squared — total SSE,6
-6,46,L — affine tail — absolute — weighted MAE,6
-6,46,L — affine tail — absolute — total SAE,6
-6,46,L — constant tail — squared — weighted RMSE,6
-6,46,L — constant tail — squared — total SSE,6
-6,46,L — constant tail — absolute — weighted MAE,6
-6,46,L — constant tail — absolute — total SAE,6
 6,47,BIC,6
 6,47,PACF cutoff,6
-6,47,L — affine tail — squared — weighted RMSE,2
-6,47,L — affine tail — squared — total SSE,2
-6,47,L — affine tail — absolute — weighted MAE,2
-6,47,L — affine tail — absolute — total SAE,2
-6,47,L — constant tail — squared — weighted RMSE,4
-6,47,L — constant tail — squared — total SSE,3
-6,47,L — constant tail — absolute — weighted MAE,3
-6,47,L — constant tail — absolute — total SAE,3
 6,48,BIC,6
 6,48,PACF cutoff,6
-6,48,L — affine tail — squared — weighted RMSE,1
-6,48,L — affine tail — squared — total SSE,1
-6,48,L — affine tail — absolute — weighted MAE,6
-6,48,L — affine tail — absolute — total SAE,6
-6,48,L — constant tail — squared — weighted RMSE,6
-6,48,L — constant tail — squared — total SSE,6
-6,48,L — constant tail — absolute — weighted MAE,6
-6,48,L — constant tail — absolute — total SAE,6
 6,49,BIC,6
 6,49,PACF cutoff,6
-6,49,L — affine tail — squared — weighted RMSE,1
-6,49,L — affine tail — squared — total SSE,1
-6,49,L — affine tail — absolute — weighted MAE,1
-6,49,L — affine tail — absolute — total SAE,1
-6,49,L — constant tail — squared — weighted RMSE,1
-6,49,L — constant tail — squared — total SSE,1
-6,49,L — constant tail — absolute — weighted MAE,1
-6,49,L — constant tail — absolute — total SAE,1
 6,50,BIC,6
 6,50,PACF cutoff,8
-6,50,L — affine tail — squared — weighted RMSE,1
-6,50,L — affine tail — squared — total SSE,1
-6,50,L — affine tail — absolute — weighted MAE,1
-6,50,L — affine tail — absolute — total SAE,1
-6,50,L — constant tail — squared — weighted RMSE,1
-6,50,L — constant tail — squared — total SSE,1
-6,50,L — constant tail — absolute — weighted MAE,1
-6,50,L — constant tail — absolute — total SAE,1
+1,1,First difference,1
+1,1,Second difference,1
+1,1,Perron first difference,1
+1,1,Perron second difference,1
+1,2,First difference,1
+1,2,Second difference,1
+1,2,Perron first difference,1
+1,2,Perron second difference,1
+1,3,First difference,1
+1,3,Second difference,1
+1,3,Perron first difference,1
+1,3,Perron second difference,1
+1,4,First difference,1
+1,4,Second difference,1
+1,4,Perron first difference,1
+1,4,Perron second difference,1
+1,5,First difference,1
+1,5,Second difference,1
+1,5,Perron first difference,1
+1,5,Perron second difference,1
+1,6,First difference,1
+1,6,Second difference,1
+1,6,Perron first difference,1
+1,6,Perron second difference,1
+1,7,First difference,1
+1,7,Second difference,1
+1,7,Perron first difference,1
+1,7,Perron second difference,1
+1,8,First difference,1
+1,8,Second difference,1
+1,8,Perron first difference,1
+1,8,Perron second difference,1
+1,9,First difference,1
+1,9,Second difference,1
+1,9,Perron first difference,1
+1,9,Perron second difference,1
+1,10,First difference,1
+1,10,Second difference,1
+1,10,Perron first difference,1
+1,10,Perron second difference,1
+1,11,First difference,1
+1,11,Second difference,1
+1,11,Perron first difference,1
+1,11,Perron second difference,1
+1,12,First difference,1
+1,12,Second difference,1
+1,12,Perron first difference,1
+1,12,Perron second difference,1
+1,13,First difference,1
+1,13,Second difference,1
+1,13,Perron first difference,1
+1,13,Perron second difference,1
+1,14,First difference,1
+1,14,Second difference,1
+1,14,Perron first difference,1
+1,14,Perron second difference,1
+1,15,First difference,1
+1,15,Second difference,1
+1,15,Perron first difference,1
+1,15,Perron second difference,1
+1,16,First difference,1
+1,16,Second difference,1
+1,16,Perron first difference,1
+1,16,Perron second difference,1
+1,17,First difference,1
+1,17,Second difference,1
+1,17,Perron first difference,1
+1,17,Perron second difference,1
+1,18,First difference,1
+1,18,Second difference,1
+1,18,Perron first difference,1
+1,18,Perron second difference,1
+1,19,First difference,1
+1,19,Second difference,1
+1,19,Perron first difference,1
+1,19,Perron second difference,1
+1,20,First difference,1
+1,20,Second difference,1
+1,20,Perron first difference,1
+1,20,Perron second difference,1
+1,21,First difference,1
+1,21,Second difference,1
+1,21,Perron first difference,1
+1,21,Perron second difference,1
+1,22,First difference,1
+1,22,Second difference,1
+1,22,Perron first difference,1
+1,22,Perron second difference,1
+1,23,First difference,1
+1,23,Second difference,1
+1,23,Perron first difference,1
+1,23,Perron second difference,1
+1,24,First difference,1
+1,24,Second difference,1
+1,24,Perron first difference,1
+1,24,Perron second difference,1
+1,25,First difference,1
+1,25,Second difference,1
+1,25,Perron first difference,1
+1,25,Perron second difference,1
+1,26,First difference,1
+1,26,Second difference,1
+1,26,Perron first difference,1
+1,26,Perron second difference,1
+1,27,First difference,7
+1,27,Second difference,7
+1,27,Perron first difference,7
+1,27,Perron second difference,7
+1,28,First difference,1
+1,28,Second difference,1
+1,28,Perron first difference,1
+1,28,Perron second difference,1
+1,29,First difference,1
+1,29,Second difference,1
+1,29,Perron first difference,1
+1,29,Perron second difference,1
+1,30,First difference,1
+1,30,Second difference,1
+1,30,Perron first difference,1
+1,30,Perron second difference,1
+1,31,First difference,1
+1,31,Second difference,1
+1,31,Perron first difference,1
+1,31,Perron second difference,1
+1,32,First difference,1
+1,32,Second difference,1
+1,32,Perron first difference,1
+1,32,Perron second difference,1
+1,33,First difference,1
+1,33,Second difference,1
+1,33,Perron first difference,1
+1,33,Perron second difference,1
+1,34,First difference,1
+1,34,Second difference,1
+1,34,Perron first difference,1
+1,34,Perron second difference,1
+1,35,First difference,1
+1,35,Second difference,1
+1,35,Perron first difference,1
+1,35,Perron second difference,1
+1,36,First difference,1
+1,36,Second difference,1
+1,36,Perron first difference,1
+1,36,Perron second difference,1
+1,37,First difference,1
+1,37,Second difference,1
+1,37,Perron first difference,1
+1,37,Perron second difference,1
+1,38,First difference,1
+1,38,Second difference,1
+1,38,Perron first difference,1
+1,38,Perron second difference,1
+1,39,First difference,1
+1,39,Second difference,1
+1,39,Perron first difference,1
+1,39,Perron second difference,1
+1,40,First difference,1
+1,40,Second difference,1
+1,40,Perron first difference,1
+1,40,Perron second difference,1
+1,41,First difference,1
+1,41,Second difference,1
+1,41,Perron first difference,1
+1,41,Perron second difference,1
+1,42,First difference,1
+1,42,Second difference,1
+1,42,Perron first difference,1
+1,42,Perron second difference,1
+1,43,First difference,1
+1,43,Second difference,1
+1,43,Perron first difference,1
+1,43,Perron second difference,1
+1,44,First difference,1
+1,44,Second difference,1
+1,44,Perron first difference,1
+1,44,Perron second difference,1
+1,45,First difference,1
+1,45,Second difference,1
+1,45,Perron first difference,1
+1,45,Perron second difference,1
+1,46,First difference,1
+1,46,Second difference,1
+1,46,Perron first difference,1
+1,46,Perron second difference,1
+1,47,First difference,1
+1,47,Second difference,1
+1,47,Perron first difference,1
+1,47,Perron second difference,1
+1,48,First difference,1
+1,48,Second difference,1
+1,48,Perron first difference,1
+1,48,Perron second difference,1
+1,49,First difference,1
+1,49,Second difference,1
+1,49,Perron first difference,1
+1,49,Perron second difference,1
+1,50,First difference,1
+1,50,Second difference,1
+1,50,Perron first difference,1
+1,50,Perron second difference,1
+2,1,First difference,1
+2,1,Second difference,1
+2,1,Perron first difference,1
+2,1,Perron second difference,1
+2,2,First difference,2
+2,2,Second difference,2
+2,2,Perron first difference,2
+2,2,Perron second difference,2
+2,3,First difference,2
+2,3,Second difference,2
+2,3,Perron first difference,2
+2,3,Perron second difference,2
+2,4,First difference,1
+2,4,Second difference,1
+2,4,Perron first difference,1
+2,4,Perron second difference,1
+2,5,First difference,2
+2,5,Second difference,2
+2,5,Perron first difference,2
+2,5,Perron second difference,2
+2,6,First difference,2
+2,6,Second difference,2
+2,6,Perron first difference,2
+2,6,Perron second difference,2
+2,7,First difference,2
+2,7,Second difference,2
+2,7,Perron first difference,2
+2,7,Perron second difference,2
+2,8,First difference,2
+2,8,Second difference,2
+2,8,Perron first difference,2
+2,8,Perron second difference,2
+2,9,First difference,1
+2,9,Second difference,2
+2,9,Perron first difference,1
+2,9,Perron second difference,2
+2,10,First difference,2
+2,10,Second difference,2
+2,10,Perron first difference,2
+2,10,Perron second difference,2
+2,11,First difference,2
+2,11,Second difference,2
+2,11,Perron first difference,2
+2,11,Perron second difference,2
+2,12,First difference,1
+2,12,Second difference,1
+2,12,Perron first difference,1
+2,12,Perron second difference,1
+2,13,First difference,1
+2,13,Second difference,2
+2,13,Perron first difference,1
+2,13,Perron second difference,2
+2,14,First difference,2
+2,14,Second difference,2
+2,14,Perron first difference,2
+2,14,Perron second difference,2
+2,15,First difference,1
+2,15,Second difference,1
+2,15,Perron first difference,1
+2,15,Perron second difference,1
+2,16,First difference,2
+2,16,Second difference,2
+2,16,Perron first difference,2
+2,16,Perron second difference,2
+2,17,First difference,2
+2,17,Second difference,2
+2,17,Perron first difference,2
+2,17,Perron second difference,2
+2,18,First difference,1
+2,18,Second difference,2
+2,18,Perron first difference,1
+2,18,Perron second difference,2
+2,19,First difference,2
+2,19,Second difference,2
+2,19,Perron first difference,2
+2,19,Perron second difference,2
+2,20,First difference,2
+2,20,Second difference,2
+2,20,Perron first difference,2
+2,20,Perron second difference,2
+2,21,First difference,1
+2,21,Second difference,1
+2,21,Perron first difference,1
+2,21,Perron second difference,1
+2,22,First difference,1
+2,22,Second difference,1
+2,22,Perron first difference,1
+2,22,Perron second difference,1
+2,23,First difference,2
+2,23,Second difference,2
+2,23,Perron first difference,2
+2,23,Perron second difference,2
+2,24,First difference,1
+2,24,Second difference,1
+2,24,Perron first difference,1
+2,24,Perron second difference,1
+2,25,First difference,2
+2,25,Second difference,2
+2,25,Perron first difference,2
+2,25,Perron second difference,2
+2,26,First difference,2
+2,26,Second difference,2
+2,26,Perron first difference,2
+2,26,Perron second difference,2
+2,27,First difference,2
+2,27,Second difference,2
+2,27,Perron first difference,2
+2,27,Perron second difference,2
+2,28,First difference,1
+2,28,Second difference,1
+2,28,Perron first difference,1
+2,28,Perron second difference,1
+2,29,First difference,1
+2,29,Second difference,2
+2,29,Perron first difference,1
+2,29,Perron second difference,2
+2,30,First difference,1
+2,30,Second difference,1
+2,30,Perron first difference,1
+2,30,Perron second difference,1
+2,31,First difference,1
+2,31,Second difference,1
+2,31,Perron first difference,1
+2,31,Perron second difference,1
+2,32,First difference,2
+2,32,Second difference,2
+2,32,Perron first difference,2
+2,32,Perron second difference,2
+2,33,First difference,2
+2,33,Second difference,2
+2,33,Perron first difference,2
+2,33,Perron second difference,2
+2,34,First difference,1
+2,34,Second difference,1
+2,34,Perron first difference,1
+2,34,Perron second difference,1
+2,35,First difference,2
+2,35,Second difference,2
+2,35,Perron first difference,2
+2,35,Perron second difference,2
+2,36,First difference,2
+2,36,Second difference,2
+2,36,Perron first difference,1
+2,36,Perron second difference,2
+2,37,First difference,1
+2,37,Second difference,1
+2,37,Perron first difference,1
+2,37,Perron second difference,1
+2,38,First difference,2
+2,38,Second difference,2
+2,38,Perron first difference,2
+2,38,Perron second difference,2
+2,39,First difference,1
+2,39,Second difference,1
+2,39,Perron first difference,1
+2,39,Perron second difference,1
+2,40,First difference,1
+2,40,Second difference,1
+2,40,Perron first difference,1
+2,40,Perron second difference,1
+2,41,First difference,1
+2,41,Second difference,1
+2,41,Perron first difference,1
+2,41,Perron second difference,1
+2,42,First difference,2
+2,42,Second difference,2
+2,42,Perron first difference,2
+2,42,Perron second difference,2
+2,43,First difference,1
+2,43,Second difference,1
+2,43,Perron first difference,1
+2,43,Perron second difference,1
+2,44,First difference,1
+2,44,Second difference,1
+2,44,Perron first difference,1
+2,44,Perron second difference,1
+2,45,First difference,1
+2,45,Second difference,2
+2,45,Perron first difference,1
+2,45,Perron second difference,2
+2,46,First difference,2
+2,46,Second difference,2
+2,46,Perron first difference,2
+2,46,Perron second difference,2
+2,47,First difference,2
+2,47,Second difference,2
+2,47,Perron first difference,2
+2,47,Perron second difference,2
+2,48,First difference,2
+2,48,Second difference,2
+2,48,Perron first difference,2
+2,48,Perron second difference,2
+2,49,First difference,2
+2,49,Second difference,2
+2,49,Perron first difference,2
+2,49,Perron second difference,2
+2,50,First difference,1
+2,50,Second difference,1
+2,50,Perron first difference,1
+2,50,Perron second difference,1
+3,1,First difference,1
+3,1,Second difference,2
+3,1,Perron first difference,1
+3,1,Perron second difference,2
+3,2,First difference,1
+3,2,Second difference,1
+3,2,Perron first difference,1
+3,2,Perron second difference,1
+3,3,First difference,1
+3,3,Second difference,1
+3,3,Perron first difference,1
+3,3,Perron second difference,1
+3,4,First difference,1
+3,4,Second difference,1
+3,4,Perron first difference,1
+3,4,Perron second difference,1
+3,5,First difference,2
+3,5,Second difference,2
+3,5,Perron first difference,2
+3,5,Perron second difference,2
+3,6,First difference,3
+3,6,Second difference,3
+3,6,Perron first difference,3
+3,6,Perron second difference,3
+3,7,First difference,3
+3,7,Second difference,3
+3,7,Perron first difference,3
+3,7,Perron second difference,3
+3,8,First difference,3
+3,8,Second difference,3
+3,8,Perron first difference,3
+3,8,Perron second difference,3
+3,9,First difference,2
+3,9,Second difference,2
+3,9,Perron first difference,2
+3,9,Perron second difference,2
+3,10,First difference,3
+3,10,Second difference,3
+3,10,Perron first difference,2
+3,10,Perron second difference,3
+3,11,First difference,1
+3,11,Second difference,3
+3,11,Perron first difference,1
+3,11,Perron second difference,1
+3,12,First difference,1
+3,12,Second difference,1
+3,12,Perron first difference,1
+3,12,Perron second difference,1
+3,13,First difference,1
+3,13,Second difference,1
+3,13,Perron first difference,1
+3,13,Perron second difference,1
+3,14,First difference,1
+3,14,Second difference,1
+3,14,Perron first difference,1
+3,14,Perron second difference,1
+3,15,First difference,1
+3,15,Second difference,1
+3,15,Perron first difference,1
+3,15,Perron second difference,1
+3,16,First difference,1
+3,16,Second difference,1
+3,16,Perron first difference,1
+3,16,Perron second difference,1
+3,17,First difference,3
+3,17,Second difference,3
+3,17,Perron first difference,3
+3,17,Perron second difference,3
+3,18,First difference,2
+3,18,Second difference,2
+3,18,Perron first difference,2
+3,18,Perron second difference,2
+3,19,First difference,2
+3,19,Second difference,2
+3,19,Perron first difference,2
+3,19,Perron second difference,2
+3,20,First difference,2
+3,20,Second difference,3
+3,20,Perron first difference,2
+3,20,Perron second difference,3
+3,21,First difference,1
+3,21,Second difference,2
+3,21,Perron first difference,1
+3,21,Perron second difference,2
+3,22,First difference,2
+3,22,Second difference,2
+3,22,Perron first difference,2
+3,22,Perron second difference,2
+3,23,First difference,3
+3,23,Second difference,3
+3,23,Perron first difference,3
+3,23,Perron second difference,3
+3,24,First difference,1
+3,24,Second difference,1
+3,24,Perron first difference,1
+3,24,Perron second difference,1
+3,25,First difference,1
+3,25,Second difference,1
+3,25,Perron first difference,1
+3,25,Perron second difference,1
+3,26,First difference,2
+3,26,Second difference,2
+3,26,Perron first difference,2
+3,26,Perron second difference,2
+3,27,First difference,2
+3,27,Second difference,2
+3,27,Perron first difference,2
+3,27,Perron second difference,2
+3,28,First difference,1
+3,28,Second difference,1
+3,28,Perron first difference,1
+3,28,Perron second difference,1
+3,29,First difference,3
+3,29,Second difference,3
+3,29,Perron first difference,3
+3,29,Perron second difference,3
+3,30,First difference,2
+3,30,Second difference,3
+3,30,Perron first difference,2
+3,30,Perron second difference,3
+3,31,First difference,1
+3,31,Second difference,1
+3,31,Perron first difference,1
+3,31,Perron second difference,1
+3,32,First difference,2
+3,32,Second difference,2
+3,32,Perron first difference,2
+3,32,Perron second difference,2
+3,33,First difference,2
+3,33,Second difference,2
+3,33,Perron first difference,2
+3,33,Perron second difference,2
+3,34,First difference,1
+3,34,Second difference,1
+3,34,Perron first difference,1
+3,34,Perron second difference,1
+3,35,First difference,2
+3,35,Second difference,2
+3,35,Perron first difference,2
+3,35,Perron second difference,2
+3,36,First difference,1
+3,36,Second difference,1
+3,36,Perron first difference,1
+3,36,Perron second difference,1
+3,37,First difference,3
+3,37,Second difference,3
+3,37,Perron first difference,3
+3,37,Perron second difference,3
+3,38,First difference,2
+3,38,Second difference,2
+3,38,Perron first difference,2
+3,38,Perron second difference,2
+3,39,First difference,1
+3,39,Second difference,1
+3,39,Perron first difference,1
+3,39,Perron second difference,1
+3,40,First difference,2
+3,40,Second difference,2
+3,40,Perron first difference,2
+3,40,Perron second difference,2
+3,41,First difference,2
+3,41,Second difference,2
+3,41,Perron first difference,2
+3,41,Perron second difference,2
+3,42,First difference,1
+3,42,Second difference,3
+3,42,Perron first difference,1
+3,42,Perron second difference,1
+3,43,First difference,2
+3,43,Second difference,2
+3,43,Perron first difference,2
+3,43,Perron second difference,2
+3,44,First difference,1
+3,44,Second difference,1
+3,44,Perron first difference,1
+3,44,Perron second difference,1
+3,45,First difference,1
+3,45,Second difference,1
+3,45,Perron first difference,1
+3,45,Perron second difference,1
+3,46,First difference,1
+3,46,Second difference,3
+3,46,Perron first difference,1
+3,46,Perron second difference,3
+3,47,First difference,3
+3,47,Second difference,3
+3,47,Perron first difference,3
+3,47,Perron second difference,3
+3,48,First difference,1
+3,48,Second difference,1
+3,48,Perron first difference,1
+3,48,Perron second difference,1
+3,49,First difference,1
+3,49,Second difference,3
+3,49,Perron first difference,1
+3,49,Perron second difference,1
+3,50,First difference,1
+3,50,Second difference,1
+3,50,Perron first difference,1
+3,50,Perron second difference,1
+4,1,First difference,4
+4,1,Second difference,4
+4,1,Perron first difference,4
+4,1,Perron second difference,4
+4,2,First difference,2
+4,2,Second difference,2
+4,2,Perron first difference,2
+4,2,Perron second difference,2
+4,3,First difference,1
+4,3,Second difference,1
+4,3,Perron first difference,1
+4,3,Perron second difference,1
+4,4,First difference,4
+4,4,Second difference,4
+4,4,Perron first difference,4
+4,4,Perron second difference,4
+4,5,First difference,1
+4,5,Second difference,1
+4,5,Perron first difference,1
+4,5,Perron second difference,1
+4,6,First difference,2
+4,6,Second difference,2
+4,6,Perron first difference,2
+4,6,Perron second difference,2
+4,7,First difference,1
+4,7,Second difference,1
+4,7,Perron first difference,1
+4,7,Perron second difference,1
+4,8,First difference,2
+4,8,Second difference,2
+4,8,Perron first difference,2
+4,8,Perron second difference,2
+4,9,First difference,1
+4,9,Second difference,1
+4,9,Perron first difference,1
+4,9,Perron second difference,1
+4,10,First difference,4
+4,10,Second difference,4
+4,10,Perron first difference,4
+4,10,Perron second difference,4
+4,11,First difference,2
+4,11,Second difference,2
+4,11,Perron first difference,2
+4,11,Perron second difference,2
+4,12,First difference,2
+4,12,Second difference,2
+4,12,Perron first difference,2
+4,12,Perron second difference,2
+4,13,First difference,1
+4,13,Second difference,1
+4,13,Perron first difference,1
+4,13,Perron second difference,1
+4,14,First difference,1
+4,14,Second difference,1
+4,14,Perron first difference,1
+4,14,Perron second difference,1
+4,15,First difference,3
+4,15,Second difference,4
+4,15,Perron first difference,3
+4,15,Perron second difference,4
+4,16,First difference,2
+4,16,Second difference,2
+4,16,Perron first difference,2
+4,16,Perron second difference,2
+4,17,First difference,1
+4,17,Second difference,2
+4,17,Perron first difference,1
+4,17,Perron second difference,2
+4,18,First difference,2
+4,18,Second difference,2
+4,18,Perron first difference,2
+4,18,Perron second difference,2
+4,19,First difference,2
+4,19,Second difference,2
+4,19,Perron first difference,2
+4,19,Perron second difference,2
+4,20,First difference,4
+4,20,Second difference,4
+4,20,Perron first difference,4
+4,20,Perron second difference,4
+4,21,First difference,2
+4,21,Second difference,2
+4,21,Perron first difference,2
+4,21,Perron second difference,2
+4,22,First difference,4
+4,22,Second difference,4
+4,22,Perron first difference,4
+4,22,Perron second difference,4
+4,23,First difference,2
+4,23,Second difference,2
+4,23,Perron first difference,2
+4,23,Perron second difference,2
+4,24,First difference,1
+4,24,Second difference,2
+4,24,Perron first difference,1
+4,24,Perron second difference,2
+4,25,First difference,2
+4,25,Second difference,2
+4,25,Perron first difference,2
+4,25,Perron second difference,2
+4,26,First difference,1
+4,26,Second difference,1
+4,26,Perron first difference,1
+4,26,Perron second difference,1
+4,27,First difference,3
+4,27,Second difference,4
+4,27,Perron first difference,3
+4,27,Perron second difference,4
+4,28,First difference,1
+4,28,Second difference,1
+4,28,Perron first difference,1
+4,28,Perron second difference,1
+4,29,First difference,1
+4,29,Second difference,1
+4,29,Perron first difference,1
+4,29,Perron second difference,1
+4,30,First difference,4
+4,30,Second difference,4
+4,30,Perron first difference,1
+4,30,Perron second difference,4
+4,31,First difference,1
+4,31,Second difference,4
+4,31,Perron first difference,1
+4,31,Perron second difference,4
+4,32,First difference,2
+4,32,Second difference,2
+4,32,Perron first difference,2
+4,32,Perron second difference,2
+4,33,First difference,4
+4,33,Second difference,4
+4,33,Perron first difference,4
+4,33,Perron second difference,4
+4,34,First difference,2
+4,34,Second difference,4
+4,34,Perron first difference,2
+4,34,Perron second difference,2
+4,35,First difference,2
+4,35,Second difference,2
+4,35,Perron first difference,1
+4,35,Perron second difference,2
+4,36,First difference,2
+4,36,Second difference,2
+4,36,Perron first difference,2
+4,36,Perron second difference,2
+4,37,First difference,1
+4,37,Second difference,1
+4,37,Perron first difference,1
+4,37,Perron second difference,1
+4,38,First difference,1
+4,38,Second difference,1
+4,38,Perron first difference,1
+4,38,Perron second difference,1
+4,39,First difference,2
+4,39,Second difference,2
+4,39,Perron first difference,2
+4,39,Perron second difference,2
+4,40,First difference,2
+4,40,Second difference,2
+4,40,Perron first difference,2
+4,40,Perron second difference,2
+4,41,First difference,1
+4,41,Second difference,1
+4,41,Perron first difference,1
+4,41,Perron second difference,1
+4,42,First difference,1
+4,42,Second difference,1
+4,42,Perron first difference,1
+4,42,Perron second difference,1
+4,43,First difference,1
+4,43,Second difference,1
+4,43,Perron first difference,1
+4,43,Perron second difference,1
+4,44,First difference,2
+4,44,Second difference,2
+4,44,Perron first difference,2
+4,44,Perron second difference,2
+4,45,First difference,1
+4,45,Second difference,1
+4,45,Perron first difference,1
+4,45,Perron second difference,1
+4,46,First difference,1
+4,46,Second difference,1
+4,46,Perron first difference,1
+4,46,Perron second difference,1
+4,47,First difference,1
+4,47,Second difference,1
+4,47,Perron first difference,1
+4,47,Perron second difference,1
+4,48,First difference,2
+4,48,Second difference,2
+4,48,Perron first difference,2
+4,48,Perron second difference,2
+4,49,First difference,1
+4,49,Second difference,3
+4,49,Perron first difference,1
+4,49,Perron second difference,3
+4,50,First difference,1
+4,50,Second difference,1
+4,50,Perron first difference,1
+4,50,Perron second difference,1
+5,1,First difference,3
+5,1,Second difference,3
+5,1,Perron first difference,3
+5,1,Perron second difference,3
+5,2,First difference,2
+5,2,Second difference,2
+5,2,Perron first difference,2
+5,2,Perron second difference,2
+5,3,First difference,1
+5,3,Second difference,1
+5,3,Perron first difference,1
+5,3,Perron second difference,1
+5,4,First difference,1
+5,4,Second difference,2
+5,4,Perron first difference,1
+5,4,Perron second difference,2
+5,5,First difference,1
+5,5,Second difference,1
+5,5,Perron first difference,1
+5,5,Perron second difference,1
+5,6,First difference,1
+5,6,Second difference,1
+5,6,Perron first difference,1
+5,6,Perron second difference,1
+5,7,First difference,1
+5,7,Second difference,2
+5,7,Perron first difference,1
+5,7,Perron second difference,2
+5,8,First difference,3
+5,8,Second difference,3
+5,8,Perron first difference,3
+5,8,Perron second difference,3
+5,9,First difference,4
+5,9,Second difference,4
+5,9,Perron first difference,1
+5,9,Perron second difference,4
+5,10,First difference,1
+5,10,Second difference,2
+5,10,Perron first difference,1
+5,10,Perron second difference,2
+5,11,First difference,3
+5,11,Second difference,3
+5,11,Perron first difference,3
+5,11,Perron second difference,3
+5,12,First difference,2
+5,12,Second difference,3
+5,12,Perron first difference,2
+5,12,Perron second difference,3
+5,13,First difference,2
+5,13,Second difference,2
+5,13,Perron first difference,2
+5,13,Perron second difference,2
+5,14,First difference,2
+5,14,Second difference,2
+5,14,Perron first difference,2
+5,14,Perron second difference,2
+5,15,First difference,2
+5,15,Second difference,2
+5,15,Perron first difference,2
+5,15,Perron second difference,2
+5,16,First difference,4
+5,16,Second difference,5
+5,16,Perron first difference,4
+5,16,Perron second difference,4
+5,17,First difference,2
+5,17,Second difference,2
+5,17,Perron first difference,2
+5,17,Perron second difference,2
+5,18,First difference,1
+5,18,Second difference,2
+5,18,Perron first difference,1
+5,18,Perron second difference,2
+5,19,First difference,2
+5,19,Second difference,2
+5,19,Perron first difference,2
+5,19,Perron second difference,2
+5,20,First difference,1
+5,20,Second difference,1
+5,20,Perron first difference,1
+5,20,Perron second difference,1
+5,21,First difference,5
+5,21,Second difference,5
+5,21,Perron first difference,5
+5,21,Perron second difference,5
+5,22,First difference,3
+5,22,Second difference,3
+5,22,Perron first difference,3
+5,22,Perron second difference,3
+5,23,First difference,1
+5,23,Second difference,1
+5,23,Perron first difference,1
+5,23,Perron second difference,1
+5,24,First difference,1
+5,24,Second difference,1
+5,24,Perron first difference,1
+5,24,Perron second difference,1
+5,25,First difference,1
+5,25,Second difference,2
+5,25,Perron first difference,1
+5,25,Perron second difference,2
+5,26,First difference,1
+5,26,Second difference,2
+5,26,Perron first difference,1
+5,26,Perron second difference,2
+5,27,First difference,2
+5,27,Second difference,2
+5,27,Perron first difference,2
+5,27,Perron second difference,2
+5,28,First difference,5
+5,28,Second difference,5
+5,28,Perron first difference,1
+5,28,Perron second difference,1
+5,29,First difference,1
+5,29,Second difference,1
+5,29,Perron first difference,1
+5,29,Perron second difference,1
+5,30,First difference,1
+5,30,Second difference,1
+5,30,Perron first difference,1
+5,30,Perron second difference,1
+5,31,First difference,2
+5,31,Second difference,5
+5,31,Perron first difference,2
+5,31,Perron second difference,5
+5,32,First difference,1
+5,32,Second difference,1
+5,32,Perron first difference,1
+5,32,Perron second difference,1
+5,33,First difference,1
+5,33,Second difference,2
+5,33,Perron first difference,1
+5,33,Perron second difference,1
+5,34,First difference,2
+5,34,Second difference,2
+5,34,Perron first difference,2
+5,34,Perron second difference,2
+5,35,First difference,1
+5,35,Second difference,1
+5,35,Perron first difference,1
+5,35,Perron second difference,1
+5,36,First difference,1
+5,36,Second difference,1
+5,36,Perron first difference,1
+5,36,Perron second difference,1
+5,37,First difference,2
+5,37,Second difference,2
+5,37,Perron first difference,2
+5,37,Perron second difference,2
+5,38,First difference,2
+5,38,Second difference,2
+5,38,Perron first difference,2
+5,38,Perron second difference,2
+5,39,First difference,1
+5,39,Second difference,1
+5,39,Perron first difference,1
+5,39,Perron second difference,1
+5,40,First difference,5
+5,40,Second difference,5
+5,40,Perron first difference,5
+5,40,Perron second difference,5
+5,41,First difference,1
+5,41,Second difference,1
+5,41,Perron first difference,1
+5,41,Perron second difference,1
+5,42,First difference,5
+5,42,Second difference,5
+5,42,Perron first difference,5
+5,42,Perron second difference,5
+5,43,First difference,3
+5,43,Second difference,3
+5,43,Perron first difference,3
+5,43,Perron second difference,3
+5,44,First difference,1
+5,44,Second difference,1
+5,44,Perron first difference,1
+5,44,Perron second difference,1
+5,45,First difference,1
+5,45,Second difference,1
+5,45,Perron first difference,1
+5,45,Perron second difference,1
+5,46,First difference,2
+5,46,Second difference,2
+5,46,Perron first difference,2
+5,46,Perron second difference,2
+5,47,First difference,2
+5,47,Second difference,3
+5,47,Perron first difference,2
+5,47,Perron second difference,3
+5,48,First difference,1
+5,48,Second difference,1
+5,48,Perron first difference,1
+5,48,Perron second difference,1
+5,49,First difference,3
+5,49,Second difference,3
+5,49,Perron first difference,3
+5,49,Perron second difference,3
+5,50,First difference,4
+5,50,Second difference,4
+5,50,Perron first difference,4
+5,50,Perron second difference,4
+6,1,First difference,2
+6,1,Second difference,4
+6,1,Perron first difference,2
+6,1,Perron second difference,2
+6,2,First difference,1
+6,2,Second difference,2
+6,2,Perron first difference,1
+6,2,Perron second difference,2
+6,3,First difference,2
+6,3,Second difference,3
+6,3,Perron first difference,2
+6,3,Perron second difference,3
+6,4,First difference,1
+6,4,Second difference,1
+6,4,Perron first difference,1
+6,4,Perron second difference,1
+6,5,First difference,2
+6,5,Second difference,6
+6,5,Perron first difference,2
+6,5,Perron second difference,6
+6,6,First difference,3
+6,6,Second difference,3
+6,6,Perron first difference,3
+6,6,Perron second difference,3
+6,7,First difference,1
+6,7,Second difference,1
+6,7,Perron first difference,1
+6,7,Perron second difference,1
+6,8,First difference,2
+6,8,Second difference,2
+6,8,Perron first difference,2
+6,8,Perron second difference,2
+6,9,First difference,1
+6,9,Second difference,1
+6,9,Perron first difference,1
+6,9,Perron second difference,1
+6,10,First difference,1
+6,10,Second difference,1
+6,10,Perron first difference,1
+6,10,Perron second difference,1
+6,11,First difference,1
+6,11,Second difference,1
+6,11,Perron first difference,1
+6,11,Perron second difference,1
+6,12,First difference,2
+6,12,Second difference,2
+6,12,Perron first difference,2
+6,12,Perron second difference,2
+6,13,First difference,2
+6,13,Second difference,2
+6,13,Perron first difference,2
+6,13,Perron second difference,2
+6,14,First difference,1
+6,14,Second difference,1
+6,14,Perron first difference,1
+6,14,Perron second difference,1
+6,15,First difference,2
+6,15,Second difference,2
+6,15,Perron first difference,2
+6,15,Perron second difference,2
+6,16,First difference,2
+6,16,Second difference,2
+6,16,Perron first difference,2
+6,16,Perron second difference,2
+6,17,First difference,1
+6,17,Second difference,6
+6,17,Perron first difference,1
+6,17,Perron second difference,1
+6,18,First difference,1
+6,18,Second difference,1
+6,18,Perron first difference,1
+6,18,Perron second difference,1
+6,19,First difference,1
+6,19,Second difference,1
+6,19,Perron first difference,1
+6,19,Perron second difference,1
+6,20,First difference,1
+6,20,Second difference,1
+6,20,Perron first difference,1
+6,20,Perron second difference,1
+6,21,First difference,4
+6,21,Second difference,4
+6,21,Perron first difference,4
+6,21,Perron second difference,4
+6,22,First difference,2
+6,22,Second difference,2
+6,22,Perron first difference,2
+6,22,Perron second difference,2
+6,23,First difference,2
+6,23,Second difference,2
+6,23,Perron first difference,2
+6,23,Perron second difference,2
+6,24,First difference,1
+6,24,Second difference,1
+6,24,Perron first difference,1
+6,24,Perron second difference,1
+6,25,First difference,1
+6,25,Second difference,2
+6,25,Perron first difference,1
+6,25,Perron second difference,2
+6,26,First difference,5
+6,26,Second difference,5
+6,26,Perron first difference,5
+6,26,Perron second difference,5
+6,27,First difference,6
+6,27,Second difference,6
+6,27,Perron first difference,3
+6,27,Perron second difference,6
+6,28,First difference,2
+6,28,Second difference,2
+6,28,Perron first difference,2
+6,28,Perron second difference,2
+6,29,First difference,4
+6,29,Second difference,4
+6,29,Perron first difference,2
+6,29,Perron second difference,4
+6,30,First difference,2
+6,30,Second difference,2
+6,30,Perron first difference,2
+6,30,Perron second difference,2
+6,31,First difference,2
+6,31,Second difference,2
+6,31,Perron first difference,2
+6,31,Perron second difference,2
+6,32,First difference,2
+6,32,Second difference,2
+6,32,Perron first difference,2
+6,32,Perron second difference,2
+6,33,First difference,1
+6,33,Second difference,2
+6,33,Perron first difference,1
+6,33,Perron second difference,2
+6,34,First difference,2
+6,34,Second difference,2
+6,34,Perron first difference,2
+6,34,Perron second difference,2
+6,35,First difference,1
+6,35,Second difference,2
+6,35,Perron first difference,1
+6,35,Perron second difference,2
+6,36,First difference,2
+6,36,Second difference,2
+6,36,Perron first difference,2
+6,36,Perron second difference,2
+6,37,First difference,2
+6,37,Second difference,2
+6,37,Perron first difference,2
+6,37,Perron second difference,2
+6,38,First difference,1
+6,38,Second difference,1
+6,38,Perron first difference,1
+6,38,Perron second difference,1
+6,39,First difference,1
+6,39,Second difference,1
+6,39,Perron first difference,1
+6,39,Perron second difference,1
+6,40,First difference,4
+6,40,Second difference,4
+6,40,Perron first difference,4
+6,40,Perron second difference,4
+6,41,First difference,1
+6,41,Second difference,6
+6,41,Perron first difference,1
+6,41,Perron second difference,1
+6,42,First difference,2
+6,42,Second difference,2
+6,42,Perron first difference,2
+6,42,Perron second difference,2
+6,43,First difference,2
+6,43,Second difference,2
+6,43,Perron first difference,2
+6,43,Perron second difference,2
+6,44,First difference,6
+6,44,Second difference,6
+6,44,Perron first difference,2
+6,44,Perron second difference,2
+6,45,First difference,1
+6,45,Second difference,2
+6,45,Perron first difference,1
+6,45,Perron second difference,1
+6,46,First difference,3
+6,46,Second difference,3
+6,46,Perron first difference,3
+6,46,Perron second difference,3
+6,47,First difference,2
+6,47,Second difference,2
+6,47,Perron first difference,2
+6,47,Perron second difference,2
+6,48,First difference,1
+6,48,Second difference,1
+6,48,Perron first difference,1
+6,48,Perron second difference,1
+6,49,First difference,1
+6,49,Second difference,1
+6,49,Perron first difference,1
+6,49,Perron second difference,1
+6,50,First difference,1
+6,50,Second difference,1
+6,50,Perron first difference,1
+6,50,Perron second difference,1

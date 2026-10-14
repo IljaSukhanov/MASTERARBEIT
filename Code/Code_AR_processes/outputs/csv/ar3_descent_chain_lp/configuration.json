@@ -1,0 +1,27 @@
+{
+  "replications": 50,
+  "true_order": 3,
+  "sample_size": 2000,
+  "max_fitted_k": 10,
+  "common_times": "t=10,...,2000 for all fitted dimensions",
+  "lp_tolerance": 1e-09,
+  "max_lp_iterations_per_start": 50,
+  "starts": [
+    "previous direction padded with zero",
+    "previous direction shifted by zero",
+    "first coordinate axis"
+  ],
+  "source_process_folder": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_order_selection_warm_starts/processes",
+  "algorithm_sha256": "f47686afc7124aa1a74854fb3c0201d8a980da4d61b4a8868c4f908bed39f839",
+  "caps": [
+    5,
+    8,
+    10
+  ],
+  "cap_5_note": "Assumes an order upper bound of 3; not an automatic data-driven cap choice",
+  "transformations": [
+    "identity",
+    "log"
+  ],
+  "global_audit": "Convex hull of P-P for dimensions 1\u20134, floating-point rather than interval-certified"
+}

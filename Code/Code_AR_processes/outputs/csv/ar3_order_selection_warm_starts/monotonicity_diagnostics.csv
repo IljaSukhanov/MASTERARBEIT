@@ -1,0 +1,151 @@
+variant,replication,upward_steps,positive_steps_at_machine_precision,maximum_increase
+Independent rerun,1,4,0,0.016930112308338297
+Independent rerun,2,1,0,0.009738743986804299
+Independent rerun,3,4,0,0.33870189100099424
+Independent rerun,4,4,0,0.40452749335825655
+Independent rerun,5,5,0,0.04550612493578843
+Independent rerun,6,1,0,0.4290084460181367
+Independent rerun,7,2,0,0.1083455585444888
+Independent rerun,8,2,0,0.33038877689265567
+Independent rerun,9,3,0,0.17415460048652864
+Independent rerun,10,1,0,0.0015756536928921427
+Independent rerun,11,2,0,0.05865005871554585
+Independent rerun,12,2,0,0.0004169501346436011
+Independent rerun,13,4,0,0.1666073082236752
+Independent rerun,14,3,0,0.17731474748525056
+Independent rerun,15,1,0,0.0003467367480050054
+Independent rerun,16,1,0,0.23962680991409946
+Independent rerun,17,2,0,0.0010893081989475917
+Independent rerun,18,3,0,0.001351735311688751
+Independent rerun,19,0,0,0.0
+Independent rerun,20,1,0,0.05684430180899458
+Independent rerun,21,5,0,0.07006190674040491
+Independent rerun,22,3,0,0.07783831361394067
+Independent rerun,23,1,0,0.0028059366905659466
+Independent rerun,24,2,0,0.0005347355254310404
+Independent rerun,25,0,0,0.0
+Independent rerun,26,1,0,0.026154300710232503
+Independent rerun,27,3,0,0.14759204330248754
+Independent rerun,28,2,0,0.004353981494267911
+Independent rerun,29,2,0,0.025114995745581625
+Independent rerun,30,1,0,0.00039991612154355316
+Independent rerun,31,2,0,0.016103635447693332
+Independent rerun,32,3,0,0.001344837825134837
+Independent rerun,33,3,0,0.23191814533218524
+Independent rerun,34,3,0,0.16376776202454568
+Independent rerun,35,3,0,0.09003403942894228
+Independent rerun,36,3,0,0.33486086223472145
+Independent rerun,37,3,0,0.0007074565849929382
+Independent rerun,38,2,0,0.3331672570500843
+Independent rerun,39,1,0,0.010836634883593987
+Independent rerun,40,3,0,0.0008703135208818491
+Independent rerun,41,1,0,0.029238292516860387
+Independent rerun,42,4,0,0.008852316902651314
+Independent rerun,43,4,0,0.04978734426783549
+Independent rerun,44,3,0,0.2841844204097439
+Independent rerun,45,0,0,0.0
+Independent rerun,46,2,0,7.209765114968292e-05
+Independent rerun,47,2,0,0.0032903589664214916
+Independent rerun,48,3,0,0.11283656091962646
+Independent rerun,49,1,0,0.014008161899033311
+Independent rerun,50,2,0,0.11746841555785381
+Original saved,1,3,0,0.01702103479806083
+Original saved,2,1,0,0.032453908743689364
+Original saved,3,1,0,0.014639134890929717
+Original saved,4,3,0,0.23398829496901374
+Original saved,5,4,0,0.046015106535987726
+Original saved,6,2,0,0.00012223605913441737
+Original saved,7,1,0,0.10860792269833164
+Original saved,8,1,0,0.00022967677068819192
+Original saved,9,3,0,0.1813038502675408
+Original saved,10,0,0,0.0
+Original saved,11,1,0,0.0003276878478910561
+Original saved,12,2,0,0.0028877265677296204
+Original saved,13,4,0,0.16660908772234317
+Original saved,14,2,0,0.15684570141532728
+Original saved,15,2,0,0.0007356887322216288
+Original saved,16,2,0,0.009017391649412954
+Original saved,17,1,0,0.007131939716910285
+Original saved,18,1,0,0.0013575289252467648
+Original saved,19,0,0,0.0
+Original saved,20,0,0,0.0
+Original saved,21,5,0,0.09245080380236792
+Original saved,22,4,0,0.10746926630406639
+Original saved,23,1,0,0.00868455101419019
+Original saved,24,0,0,0.0
+Original saved,25,0,0,0.0
+Original saved,26,1,0,0.009012743964025072
+Original saved,27,3,0,0.02544485257953233
+Original saved,28,3,0,0.004519483396199897
+Original saved,29,2,0,0.057702739282956106
+Original saved,30,2,0,0.0009238418626744682
+Original saved,31,1,0,0.008001813354180376
+Original saved,32,2,0,0.009333194988938143
+Original saved,33,3,0,0.24218962674099376
+Original saved,34,2,0,0.017560637459124395
+Original saved,35,3,0,0.03194090473461886
+Original saved,36,4,0,0.031672020034212656
+Original saved,37,2,0,0.0007944118720537574
+Original saved,38,2,0,0.33247691574836713
+Original saved,39,2,0,0.05316562021560056
+Original saved,40,1,0,0.00024183549471734622
+Original saved,41,1,0,0.029009469165943047
+Original saved,42,3,0,0.021999841528543396
+Original saved,43,1,0,0.01861837645883324
+Original saved,44,5,0,0.08969829830103015
+Original saved,45,1,0,0.00011246899419492529
+Original saved,46,2,0,0.0009544142225945684
+Original saved,47,2,0,0.0035124917906967923
+Original saved,48,3,0,0.10639455814343335
+Original saved,49,2,0,0.015077910981003972
+Original saved,50,1,0,0.01964998491855452
+Padded warm start,1,0,1,2.220446049250313e-16
+Padded warm start,2,0,1,4.440892098500626e-16
+Padded warm start,3,0,2,3.552713678800501e-15
+Padded warm start,4,0,1,2.220446049250313e-16
+Padded warm start,5,0,1,2.220446049250313e-16
+Padded warm start,6,0,0,0.0
+Padded warm start,7,0,0,0.0
+Padded warm start,8,0,1,8.881784197001252e-16
+Padded warm start,9,0,1,2.220446049250313e-16
+Padded warm start,10,0,0,0.0
+Padded warm start,11,0,1,2.220446049250313e-16
+Padded warm start,12,0,0,0.0
+Padded warm start,13,0,0,0.0
+Padded warm start,14,0,1,6.661338147750939e-16
+Padded warm start,15,0,0,0.0
+Padded warm start,16,0,0,0.0
+Padded warm start,17,0,0,0.0
+Padded warm start,18,0,0,0.0
+Padded warm start,19,0,0,0.0
+Padded warm start,20,0,0,0.0
+Padded warm start,21,0,0,0.0
+Padded warm start,22,0,0,0.0
+Padded warm start,23,0,0,0.0
+Padded warm start,24,0,0,0.0
+Padded warm start,25,0,0,0.0
+Padded warm start,26,0,0,0.0
+Padded warm start,27,0,1,4.440892098500626e-16
+Padded warm start,28,0,0,0.0
+Padded warm start,29,0,0,0.0
+Padded warm start,30,0,1,2.220446049250313e-16
+Padded warm start,31,0,0,0.0
+Padded warm start,32,0,0,0.0
+Padded warm start,33,0,0,0.0
+Padded warm start,34,0,1,2.220446049250313e-16
+Padded warm start,35,0,1,4.440892098500626e-16
+Padded warm start,36,0,2,1.7763568394002505e-15
+Padded warm start,37,0,0,0.0
+Padded warm start,38,0,0,0.0
+Padded warm start,39,0,0,0.0
+Padded warm start,40,0,1,4.440892098500626e-16
+Padded warm start,41,0,0,0.0
+Padded warm start,42,0,1,2.220446049250313e-16
+Padded warm start,43,0,1,2.220446049250313e-16
+Padded warm start,44,0,0,0.0
+Padded warm start,45,0,0,0.0
+Padded warm start,46,0,0,0.0
+Padded warm start,47,0,0,0.0
+Padded warm start,48,0,0,0.0
+Padded warm start,49,0,0,0.0
+Padded warm start,50,0,0,0.0

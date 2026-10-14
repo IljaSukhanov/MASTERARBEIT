@@ -1,49 +1,61 @@
 method,true_order,correct,under,over,total
-L — affine tail — absolute — total SAE,1,50,0,0,50
-L — affine tail — absolute — total SAE,2,37,13,0,50
-L — affine tail — absolute — total SAE,3,21,29,0,50
-L — affine tail — absolute — total SAE,4,19,31,0,50
-L — affine tail — absolute — total SAE,5,10,40,0,50
-L — affine tail — absolute — total SAE,6,9,41,0,50
-L — affine tail — absolute — weighted MAE,1,50,0,0,50
-L — affine tail — absolute — weighted MAE,2,37,13,0,50
-L — affine tail — absolute — weighted MAE,3,21,29,0,50
-L — affine tail — absolute — weighted MAE,4,19,31,0,50
-L — affine tail — absolute — weighted MAE,5,10,40,0,50
-L — affine tail — absolute — weighted MAE,6,9,41,0,50
-L — affine tail — squared — total SSE,1,50,0,0,50
-L — affine tail — squared — total SSE,2,37,13,0,50
-L — affine tail — squared — total SSE,3,19,31,0,50
-L — affine tail — squared — total SSE,4,16,34,0,50
-L — affine tail — squared — total SSE,5,9,41,0,50
-L — affine tail — squared — total SSE,6,7,43,0,50
-L — affine tail — squared — weighted RMSE,1,50,0,0,50
-L — affine tail — squared — weighted RMSE,2,40,10,0,50
-L — affine tail — squared — weighted RMSE,3,21,29,0,50
-L — affine tail — squared — weighted RMSE,4,19,31,0,50
-L — affine tail — squared — weighted RMSE,5,10,40,0,50
-L — affine tail — squared — weighted RMSE,6,11,39,0,50
-L — constant tail — absolute — total SAE,1,50,0,0,50
-L — constant tail — absolute — total SAE,2,37,13,0,50
-L — constant tail — absolute — total SAE,3,21,29,0,50
-L — constant tail — absolute — total SAE,4,19,31,0,50
-L — constant tail — absolute — total SAE,5,12,38,0,50
-L — constant tail — absolute — total SAE,6,16,34,0,50
-L — constant tail — absolute — weighted MAE,1,50,0,0,50
-L — constant tail — absolute — weighted MAE,2,37,13,0,50
-L — constant tail — absolute — weighted MAE,3,21,29,0,50
-L — constant tail — absolute — weighted MAE,4,19,31,0,50
-L — constant tail — absolute — weighted MAE,5,12,38,0,50
-L — constant tail — absolute — weighted MAE,6,16,34,0,50
-L — constant tail — squared — total SSE,1,50,0,0,50
-L — constant tail — squared — total SSE,2,37,13,0,50
-L — constant tail — squared — total SSE,3,20,30,0,50
-L — constant tail — squared — total SSE,4,17,33,0,50
-L — constant tail — squared — total SSE,5,11,39,0,50
-L — constant tail — squared — total SSE,6,14,36,0,50
-L — constant tail — squared — weighted RMSE,1,50,0,0,50
-L — constant tail — squared — weighted RMSE,2,42,8,0,50
-L — constant tail — squared — weighted RMSE,3,22,28,0,50
-L — constant tail — squared — weighted RMSE,4,21,29,0,50
-L — constant tail — squared — weighted RMSE,5,11,39,0,50
-L — constant tail — squared — weighted RMSE,6,17,33,0,50
+Descent chain,1,50,0,0,50
+Descent chain,2,50,0,0,50
+Descent chain,3,50,0,0,50
+Descent chain,4,50,0,0,50
+Descent chain,5,50,0,0,50
+Descent chain,6,50,0,0,50
+Drop-to-tail energy,1,50,0,0,50
+Drop-to-tail energy,2,50,0,0,50
+Drop-to-tail energy,3,50,0,0,50
+Drop-to-tail energy,4,50,0,0,50
+Drop-to-tail energy,5,50,0,0,50
+Drop-to-tail energy,6,50,0,0,50
+First difference,1,50,0,0,50
+First difference,2,29,21,0,50
+First difference,3,9,41,0,50
+First difference,4,7,43,0,50
+First difference,5,5,45,0,50
+First difference,6,1,49,0,50
+Local drift,1,50,0,0,50
+Local drift,2,50,0,0,50
+Local drift,3,50,0,0,50
+Local drift,4,50,0,0,50
+Local drift,5,50,0,0,50
+Local drift,6,50,0,0,50
+Minimum width — first tied minimum,1,50,0,0,50
+Minimum width — first tied minimum,2,50,0,0,50
+Minimum width — first tied minimum,3,50,0,0,50
+Minimum width — first tied minimum,4,50,0,0,50
+Minimum width — first tied minimum,5,50,0,0,50
+Minimum width — first tied minimum,6,50,0,0,50
+Perron first difference,1,50,0,0,50
+Perron first difference,2,28,22,0,50
+Perron first difference,3,8,42,0,50
+Perron first difference,4,6,44,0,50
+Perron first difference,5,5,45,0,50
+Perron first difference,6,0,50,0,50
+Perron second difference,1,50,0,0,50
+Perron second difference,2,33,17,0,50
+Perron second difference,3,15,35,0,50
+Perron second difference,4,9,41,0,50
+Perron second difference,5,6,44,0,50
+Perron second difference,6,1,49,0,50
+Second difference,1,50,0,0,50
+Second difference,2,33,17,0,50
+Second difference,3,15,35,0,50
+Second difference,4,10,40,0,50
+Second difference,5,9,41,0,50
+Second difference,6,4,46,0,50
+Tail SSE ratio,1,50,0,0,50
+Tail SSE ratio,2,50,0,0,50
+Tail SSE ratio,3,50,0,0,50
+Tail SSE ratio,4,50,0,0,50
+Tail SSE ratio,5,50,0,0,50
+Tail SSE ratio,6,50,0,0,50
+Tail variance ratio,1,50,0,0,50
+Tail variance ratio,2,50,0,0,50
+Tail variance ratio,3,50,0,0,50
+Tail variance ratio,4,50,0,0,50
+Tail variance ratio,5,50,0,0,50
+Tail variance ratio,6,50,0,0,50

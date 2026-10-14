@@ -1,0 +1,6 @@
+{
+  "warm_monotonicity_check": "32 * machine epsilon * max(1, maximum absolute width)",
+  "descent_chain": "Reject larger upward steps; set only machine-precision-sized drops within that tolerance to zero and compute remaining reduction by summing the resulting drops",
+  "curve_postprocessing": "None; saved widths are the actual optimizer outputs",
+  "runner_sha256": "9ff371f9fad9701bbf25d5e52bc16b359e31d3dc7c53d7022b28859e33ca80f6"
+}

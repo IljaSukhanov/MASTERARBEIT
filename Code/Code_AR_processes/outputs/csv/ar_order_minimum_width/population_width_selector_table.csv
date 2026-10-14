@@ -1,9 +1,11 @@
-Selector,Tail,Loss,Score,AR(1),AR(2),AR(3),AR(4),AR(5),AR(6)
-L-method,affine tail,squared,weighted,<strong>50/50</strong><br><span>(0/0)</span>,<strong>40/50</strong><br><span>(10/0)</span>,<strong>21/50</strong><br><span>(29/0)</span>,<strong>19/50</strong><br><span>(31/0)</span>,<strong>10/50</strong><br><span>(40/0)</span>,<strong>11/50</strong><br><span>(39/0)</span>
-L-method,affine tail,squared,total,<strong>50/50</strong><br><span>(0/0)</span>,<strong>37/50</strong><br><span>(13/0)</span>,<strong>19/50</strong><br><span>(31/0)</span>,<strong>16/50</strong><br><span>(34/0)</span>,<strong>9/50</strong><br><span>(41/0)</span>,<strong>7/50</strong><br><span>(43/0)</span>
-L-method,affine tail,absolute,weighted,<strong>50/50</strong><br><span>(0/0)</span>,<strong>37/50</strong><br><span>(13/0)</span>,<strong>21/50</strong><br><span>(29/0)</span>,<strong>19/50</strong><br><span>(31/0)</span>,<strong>10/50</strong><br><span>(40/0)</span>,<strong>9/50</strong><br><span>(41/0)</span>
-L-method,affine tail,absolute,total,<strong>50/50</strong><br><span>(0/0)</span>,<strong>37/50</strong><br><span>(13/0)</span>,<strong>21/50</strong><br><span>(29/0)</span>,<strong>19/50</strong><br><span>(31/0)</span>,<strong>10/50</strong><br><span>(40/0)</span>,<strong>9/50</strong><br><span>(41/0)</span>
-L-method,constant tail,squared,weighted,<strong>50/50</strong><br><span>(0/0)</span>,<strong>42/50</strong><br><span>(8/0)</span>,<strong>22/50</strong><br><span>(28/0)</span>,<strong>21/50</strong><br><span>(29/0)</span>,<strong>11/50</strong><br><span>(39/0)</span>,<strong>17/50</strong><br><span>(33/0)</span>
-L-method,constant tail,squared,total,<strong>50/50</strong><br><span>(0/0)</span>,<strong>37/50</strong><br><span>(13/0)</span>,<strong>20/50</strong><br><span>(30/0)</span>,<strong>17/50</strong><br><span>(33/0)</span>,<strong>11/50</strong><br><span>(39/0)</span>,<strong>14/50</strong><br><span>(36/0)</span>
-L-method,constant tail,absolute,weighted,<strong>50/50</strong><br><span>(0/0)</span>,<strong>37/50</strong><br><span>(13/0)</span>,<strong>21/50</strong><br><span>(29/0)</span>,<strong>19/50</strong><br><span>(31/0)</span>,<strong>12/50</strong><br><span>(38/0)</span>,<strong>16/50</strong><br><span>(34/0)</span>
-L-method,constant tail,absolute,total,<strong>50/50</strong><br><span>(0/0)</span>,<strong>37/50</strong><br><span>(13/0)</span>,<strong>21/50</strong><br><span>(29/0)</span>,<strong>19/50</strong><br><span>(31/0)</span>,<strong>12/50</strong><br><span>(38/0)</span>,<strong>16/50</strong><br><span>(34/0)</span>
+method,1,2,3,4,5,6
+Descent chain,50,50,50,50,50,50
+Drop-to-tail energy,50,50,50,50,50,50
+First difference,50,29,9,7,5,1
+Local drift,50,50,50,50,50,50
+Minimum width — first tied minimum,50,50,50,50,50,50
+Perron first difference,50,28,8,6,5,0
+Perron second difference,50,33,15,9,6,1
+Second difference,50,33,15,10,9,4
+Tail SSE ratio,50,50,50,50,50,50
+Tail variance ratio,50,50,50,50,50,50

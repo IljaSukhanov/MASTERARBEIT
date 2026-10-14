@@ -13,7 +13,7 @@ from Code.Code_AR_processes.ar_tools.functions import jones_ar_coefficients, sim
 from Code.Code_AR_processes.ar_tools.descent import batched_geometric_width_curves
 
 OUT = Path(__file__).resolve().parent
-INPUT = ROOT / 'Code/Code_AR_processes/outputs/csv/ar_shared_breakpoint_l_methods'
+INPUT = ROOT / 'Code/Code_AR_processes/outputs/csv/ar_width_comparison'
 settings = json.loads((INPUT / 'configuration.json').read_text())
 curves = pd.read_csv(INPUT / 'width_curves.csv')
 rows, candidate_rows, radius_rows = [], [], []

@@ -1,0 +1,651 @@
+variant,replication,true_order,method,selected_order,correct
+Independent rerun,1,3,First difference,1,False
+Independent rerun,1,3,Second difference,2,False
+Independent rerun,1,3,Perron first difference,1,False
+Independent rerun,1,3,Perron second difference,2,False
+Independent rerun,2,3,First difference,1,False
+Independent rerun,2,3,Second difference,1,False
+Independent rerun,2,3,Perron first difference,1,False
+Independent rerun,2,3,Perron second difference,1,False
+Independent rerun,3,3,First difference,1,False
+Independent rerun,3,3,Second difference,1,False
+Independent rerun,3,3,Perron first difference,1,False
+Independent rerun,3,3,Perron second difference,1,False
+Independent rerun,4,3,First difference,1,False
+Independent rerun,4,3,Second difference,1,False
+Independent rerun,4,3,Perron first difference,1,False
+Independent rerun,4,3,Perron second difference,1,False
+Independent rerun,5,3,First difference,2,False
+Independent rerun,5,3,Second difference,2,False
+Independent rerun,5,3,Perron first difference,2,False
+Independent rerun,5,3,Perron second difference,2,False
+Independent rerun,6,3,First difference,3,True
+Independent rerun,6,3,Second difference,3,True
+Independent rerun,6,3,Perron first difference,3,True
+Independent rerun,6,3,Perron second difference,3,True
+Independent rerun,7,3,First difference,3,True
+Independent rerun,7,3,Second difference,3,True
+Independent rerun,7,3,Perron first difference,3,True
+Independent rerun,7,3,Perron second difference,3,True
+Independent rerun,8,3,First difference,4,False
+Independent rerun,8,3,Second difference,4,False
+Independent rerun,8,3,Perron first difference,4,False
+Independent rerun,8,3,Perron second difference,4,False
+Independent rerun,9,3,First difference,2,False
+Independent rerun,9,3,Second difference,2,False
+Independent rerun,9,3,Perron first difference,2,False
+Independent rerun,9,3,Perron second difference,2,False
+Independent rerun,10,3,First difference,3,True
+Independent rerun,10,3,Second difference,3,True
+Independent rerun,10,3,Perron first difference,2,False
+Independent rerun,10,3,Perron second difference,3,True
+Independent rerun,11,3,First difference,4,False
+Independent rerun,11,3,Second difference,4,False
+Independent rerun,11,3,Perron first difference,4,False
+Independent rerun,11,3,Perron second difference,4,False
+Independent rerun,12,3,First difference,1,False
+Independent rerun,12,3,Second difference,1,False
+Independent rerun,12,3,Perron first difference,1,False
+Independent rerun,12,3,Perron second difference,1,False
+Independent rerun,13,3,First difference,1,False
+Independent rerun,13,3,Second difference,1,False
+Independent rerun,13,3,Perron first difference,1,False
+Independent rerun,13,3,Perron second difference,1,False
+Independent rerun,14,3,First difference,1,False
+Independent rerun,14,3,Second difference,1,False
+Independent rerun,14,3,Perron first difference,1,False
+Independent rerun,14,3,Perron second difference,1,False
+Independent rerun,15,3,First difference,1,False
+Independent rerun,15,3,Second difference,1,False
+Independent rerun,15,3,Perron first difference,1,False
+Independent rerun,15,3,Perron second difference,1,False
+Independent rerun,16,3,First difference,1,False
+Independent rerun,16,3,Second difference,1,False
+Independent rerun,16,3,Perron first difference,1,False
+Independent rerun,16,3,Perron second difference,1,False
+Independent rerun,17,3,First difference,3,True
+Independent rerun,17,3,Second difference,3,True
+Independent rerun,17,3,Perron first difference,3,True
+Independent rerun,17,3,Perron second difference,3,True
+Independent rerun,18,3,First difference,2,False
+Independent rerun,18,3,Second difference,2,False
+Independent rerun,18,3,Perron first difference,2,False
+Independent rerun,18,3,Perron second difference,2,False
+Independent rerun,19,3,First difference,2,False
+Independent rerun,19,3,Second difference,2,False
+Independent rerun,19,3,Perron first difference,2,False
+Independent rerun,19,3,Perron second difference,2,False
+Independent rerun,20,3,First difference,2,False
+Independent rerun,20,3,Second difference,2,False
+Independent rerun,20,3,Perron first difference,2,False
+Independent rerun,20,3,Perron second difference,2,False
+Independent rerun,21,3,First difference,1,False
+Independent rerun,21,3,Second difference,2,False
+Independent rerun,21,3,Perron first difference,1,False
+Independent rerun,21,3,Perron second difference,2,False
+Independent rerun,22,3,First difference,2,False
+Independent rerun,22,3,Second difference,2,False
+Independent rerun,22,3,Perron first difference,2,False
+Independent rerun,22,3,Perron second difference,2,False
+Independent rerun,23,3,First difference,3,True
+Independent rerun,23,3,Second difference,3,True
+Independent rerun,23,3,Perron first difference,3,True
+Independent rerun,23,3,Perron second difference,3,True
+Independent rerun,24,3,First difference,1,False
+Independent rerun,24,3,Second difference,1,False
+Independent rerun,24,3,Perron first difference,1,False
+Independent rerun,24,3,Perron second difference,1,False
+Independent rerun,25,3,First difference,1,False
+Independent rerun,25,3,Second difference,1,False
+Independent rerun,25,3,Perron first difference,1,False
+Independent rerun,25,3,Perron second difference,1,False
+Independent rerun,26,3,First difference,2,False
+Independent rerun,26,3,Second difference,2,False
+Independent rerun,26,3,Perron first difference,2,False
+Independent rerun,26,3,Perron second difference,2,False
+Independent rerun,27,3,First difference,2,False
+Independent rerun,27,3,Second difference,2,False
+Independent rerun,27,3,Perron first difference,2,False
+Independent rerun,27,3,Perron second difference,2,False
+Independent rerun,28,3,First difference,1,False
+Independent rerun,28,3,Second difference,1,False
+Independent rerun,28,3,Perron first difference,1,False
+Independent rerun,28,3,Perron second difference,1,False
+Independent rerun,29,3,First difference,3,True
+Independent rerun,29,3,Second difference,3,True
+Independent rerun,29,3,Perron first difference,3,True
+Independent rerun,29,3,Perron second difference,3,True
+Independent rerun,30,3,First difference,2,False
+Independent rerun,30,3,Second difference,3,True
+Independent rerun,30,3,Perron first difference,2,False
+Independent rerun,30,3,Perron second difference,3,True
+Independent rerun,31,3,First difference,1,False
+Independent rerun,31,3,Second difference,1,False
+Independent rerun,31,3,Perron first difference,1,False
+Independent rerun,31,3,Perron second difference,1,False
+Independent rerun,32,3,First difference,2,False
+Independent rerun,32,3,Second difference,2,False
+Independent rerun,32,3,Perron first difference,2,False
+Independent rerun,32,3,Perron second difference,2,False
+Independent rerun,33,3,First difference,2,False
+Independent rerun,33,3,Second difference,2,False
+Independent rerun,33,3,Perron first difference,2,False
+Independent rerun,33,3,Perron second difference,2,False
+Independent rerun,34,3,First difference,1,False
+Independent rerun,34,3,Second difference,1,False
+Independent rerun,34,3,Perron first difference,1,False
+Independent rerun,34,3,Perron second difference,1,False
+Independent rerun,35,3,First difference,2,False
+Independent rerun,35,3,Second difference,2,False
+Independent rerun,35,3,Perron first difference,2,False
+Independent rerun,35,3,Perron second difference,2,False
+Independent rerun,36,3,First difference,1,False
+Independent rerun,36,3,Second difference,1,False
+Independent rerun,36,3,Perron first difference,1,False
+Independent rerun,36,3,Perron second difference,1,False
+Independent rerun,37,3,First difference,4,False
+Independent rerun,37,3,Second difference,4,False
+Independent rerun,37,3,Perron first difference,4,False
+Independent rerun,37,3,Perron second difference,4,False
+Independent rerun,38,3,First difference,2,False
+Independent rerun,38,3,Second difference,2,False
+Independent rerun,38,3,Perron first difference,2,False
+Independent rerun,38,3,Perron second difference,2,False
+Independent rerun,39,3,First difference,1,False
+Independent rerun,39,3,Second difference,1,False
+Independent rerun,39,3,Perron first difference,1,False
+Independent rerun,39,3,Perron second difference,1,False
+Independent rerun,40,3,First difference,2,False
+Independent rerun,40,3,Second difference,2,False
+Independent rerun,40,3,Perron first difference,2,False
+Independent rerun,40,3,Perron second difference,2,False
+Independent rerun,41,3,First difference,2,False
+Independent rerun,41,3,Second difference,2,False
+Independent rerun,41,3,Perron first difference,2,False
+Independent rerun,41,3,Perron second difference,2,False
+Independent rerun,42,3,First difference,1,False
+Independent rerun,42,3,Second difference,3,True
+Independent rerun,42,3,Perron first difference,1,False
+Independent rerun,42,3,Perron second difference,1,False
+Independent rerun,43,3,First difference,2,False
+Independent rerun,43,3,Second difference,2,False
+Independent rerun,43,3,Perron first difference,2,False
+Independent rerun,43,3,Perron second difference,2,False
+Independent rerun,44,3,First difference,1,False
+Independent rerun,44,3,Second difference,1,False
+Independent rerun,44,3,Perron first difference,1,False
+Independent rerun,44,3,Perron second difference,1,False
+Independent rerun,45,3,First difference,1,False
+Independent rerun,45,3,Second difference,1,False
+Independent rerun,45,3,Perron first difference,1,False
+Independent rerun,45,3,Perron second difference,1,False
+Independent rerun,46,3,First difference,1,False
+Independent rerun,46,3,Second difference,3,True
+Independent rerun,46,3,Perron first difference,1,False
+Independent rerun,46,3,Perron second difference,3,True
+Independent rerun,47,3,First difference,3,True
+Independent rerun,47,3,Second difference,3,True
+Independent rerun,47,3,Perron first difference,3,True
+Independent rerun,47,3,Perron second difference,3,True
+Independent rerun,48,3,First difference,1,False
+Independent rerun,48,3,Second difference,1,False
+Independent rerun,48,3,Perron first difference,1,False
+Independent rerun,48,3,Perron second difference,1,False
+Independent rerun,49,3,First difference,1,False
+Independent rerun,49,3,Second difference,3,True
+Independent rerun,49,3,Perron first difference,1,False
+Independent rerun,49,3,Perron second difference,1,False
+Independent rerun,50,3,First difference,1,False
+Independent rerun,50,3,Second difference,1,False
+Independent rerun,50,3,Perron first difference,1,False
+Independent rerun,50,3,Perron second difference,1,False
+Original saved,1,3,First difference,1,False
+Original saved,1,3,Second difference,2,False
+Original saved,1,3,Perron first difference,1,False
+Original saved,1,3,Perron second difference,2,False
+Original saved,2,3,First difference,1,False
+Original saved,2,3,Second difference,1,False
+Original saved,2,3,Perron first difference,1,False
+Original saved,2,3,Perron second difference,1,False
+Original saved,3,3,First difference,1,False
+Original saved,3,3,Second difference,1,False
+Original saved,3,3,Perron first difference,1,False
+Original saved,3,3,Perron second difference,1,False
+Original saved,4,3,First difference,1,False
+Original saved,4,3,Second difference,1,False
+Original saved,4,3,Perron first difference,1,False
+Original saved,4,3,Perron second difference,1,False
+Original saved,5,3,First difference,2,False
+Original saved,5,3,Second difference,2,False
+Original saved,5,3,Perron first difference,2,False
+Original saved,5,3,Perron second difference,2,False
+Original saved,6,3,First difference,3,True
+Original saved,6,3,Second difference,3,True
+Original saved,6,3,Perron first difference,3,True
+Original saved,6,3,Perron second difference,3,True
+Original saved,7,3,First difference,3,True
+Original saved,7,3,Second difference,3,True
+Original saved,7,3,Perron first difference,3,True
+Original saved,7,3,Perron second difference,3,True
+Original saved,8,3,First difference,3,True
+Original saved,8,3,Second difference,3,True
+Original saved,8,3,Perron first difference,3,True
+Original saved,8,3,Perron second difference,3,True
+Original saved,9,3,First difference,2,False
+Original saved,9,3,Second difference,2,False
+Original saved,9,3,Perron first difference,2,False
+Original saved,9,3,Perron second difference,2,False
+Original saved,10,3,First difference,3,True
+Original saved,10,3,Second difference,3,True
+Original saved,10,3,Perron first difference,2,False
+Original saved,10,3,Perron second difference,3,True
+Original saved,11,3,First difference,1,False
+Original saved,11,3,Second difference,3,True
+Original saved,11,3,Perron first difference,1,False
+Original saved,11,3,Perron second difference,1,False
+Original saved,12,3,First difference,1,False
+Original saved,12,3,Second difference,1,False
+Original saved,12,3,Perron first difference,1,False
+Original saved,12,3,Perron second difference,1,False
+Original saved,13,3,First difference,1,False
+Original saved,13,3,Second difference,1,False
+Original saved,13,3,Perron first difference,1,False
+Original saved,13,3,Perron second difference,1,False
+Original saved,14,3,First difference,1,False
+Original saved,14,3,Second difference,1,False
+Original saved,14,3,Perron first difference,1,False
+Original saved,14,3,Perron second difference,1,False
+Original saved,15,3,First difference,1,False
+Original saved,15,3,Second difference,1,False
+Original saved,15,3,Perron first difference,1,False
+Original saved,15,3,Perron second difference,1,False
+Original saved,16,3,First difference,1,False
+Original saved,16,3,Second difference,1,False
+Original saved,16,3,Perron first difference,1,False
+Original saved,16,3,Perron second difference,1,False
+Original saved,17,3,First difference,3,True
+Original saved,17,3,Second difference,3,True
+Original saved,17,3,Perron first difference,3,True
+Original saved,17,3,Perron second difference,3,True
+Original saved,18,3,First difference,2,False
+Original saved,18,3,Second difference,2,False
+Original saved,18,3,Perron first difference,2,False
+Original saved,18,3,Perron second difference,2,False
+Original saved,19,3,First difference,2,False
+Original saved,19,3,Second difference,2,False
+Original saved,19,3,Perron first difference,2,False
+Original saved,19,3,Perron second difference,2,False
+Original saved,20,3,First difference,2,False
+Original saved,20,3,Second difference,3,True
+Original saved,20,3,Perron first difference,2,False
+Original saved,20,3,Perron second difference,3,True
+Original saved,21,3,First difference,1,False
+Original saved,21,3,Second difference,2,False
+Original saved,21,3,Perron first difference,1,False
+Original saved,21,3,Perron second difference,2,False
+Original saved,22,3,First difference,2,False
+Original saved,22,3,Second difference,2,False
+Original saved,22,3,Perron first difference,2,False
+Original saved,22,3,Perron second difference,2,False
+Original saved,23,3,First difference,3,True
+Original saved,23,3,Second difference,3,True
+Original saved,23,3,Perron first difference,3,True
+Original saved,23,3,Perron second difference,3,True
+Original saved,24,3,First difference,1,False
+Original saved,24,3,Second difference,1,False
+Original saved,24,3,Perron first difference,1,False
+Original saved,24,3,Perron second difference,1,False
+Original saved,25,3,First difference,1,False
+Original saved,25,3,Second difference,1,False
+Original saved,25,3,Perron first difference,1,False
+Original saved,25,3,Perron second difference,1,False
+Original saved,26,3,First difference,2,False
+Original saved,26,3,Second difference,2,False
+Original saved,26,3,Perron first difference,2,False
+Original saved,26,3,Perron second difference,2,False
+Original saved,27,3,First difference,2,False
+Original saved,27,3,Second difference,2,False
+Original saved,27,3,Perron first difference,2,False
+Original saved,27,3,Perron second difference,2,False
+Original saved,28,3,First difference,1,False
+Original saved,28,3,Second difference,1,False
+Original saved,28,3,Perron first difference,1,False
+Original saved,28,3,Perron second difference,1,False
+Original saved,29,3,First difference,3,True
+Original saved,29,3,Second difference,3,True
+Original saved,29,3,Perron first difference,3,True
+Original saved,29,3,Perron second difference,3,True
+Original saved,30,3,First difference,2,False
+Original saved,30,3,Second difference,3,True
+Original saved,30,3,Perron first difference,2,False
+Original saved,30,3,Perron second difference,3,True
+Original saved,31,3,First difference,1,False
+Original saved,31,3,Second difference,1,False
+Original saved,31,3,Perron first difference,1,False
+Original saved,31,3,Perron second difference,1,False
+Original saved,32,3,First difference,2,False
+Original saved,32,3,Second difference,2,False
+Original saved,32,3,Perron first difference,2,False
+Original saved,32,3,Perron second difference,2,False
+Original saved,33,3,First difference,2,False
+Original saved,33,3,Second difference,2,False
+Original saved,33,3,Perron first difference,2,False
+Original saved,33,3,Perron second difference,2,False
+Original saved,34,3,First difference,1,False
+Original saved,34,3,Second difference,1,False
+Original saved,34,3,Perron first difference,1,False
+Original saved,34,3,Perron second difference,1,False
+Original saved,35,3,First difference,2,False
+Original saved,35,3,Second difference,2,False
+Original saved,35,3,Perron first difference,2,False
+Original saved,35,3,Perron second difference,2,False
+Original saved,36,3,First difference,1,False
+Original saved,36,3,Second difference,1,False
+Original saved,36,3,Perron first difference,1,False
+Original saved,36,3,Perron second difference,1,False
+Original saved,37,3,First difference,3,True
+Original saved,37,3,Second difference,3,True
+Original saved,37,3,Perron first difference,3,True
+Original saved,37,3,Perron second difference,3,True
+Original saved,38,3,First difference,2,False
+Original saved,38,3,Second difference,2,False
+Original saved,38,3,Perron first difference,2,False
+Original saved,38,3,Perron second difference,2,False
+Original saved,39,3,First difference,1,False
+Original saved,39,3,Second difference,1,False
+Original saved,39,3,Perron first difference,1,False
+Original saved,39,3,Perron second difference,1,False
+Original saved,40,3,First difference,2,False
+Original saved,40,3,Second difference,2,False
+Original saved,40,3,Perron first difference,2,False
+Original saved,40,3,Perron second difference,2,False
+Original saved,41,3,First difference,2,False
+Original saved,41,3,Second difference,2,False
+Original saved,41,3,Perron first difference,2,False
+Original saved,41,3,Perron second difference,2,False
+Original saved,42,3,First difference,1,False
+Original saved,42,3,Second difference,3,True
+Original saved,42,3,Perron first difference,1,False
+Original saved,42,3,Perron second difference,1,False
+Original saved,43,3,First difference,2,False
+Original saved,43,3,Second difference,2,False
+Original saved,43,3,Perron first difference,2,False
+Original saved,43,3,Perron second difference,2,False
+Original saved,44,3,First difference,1,False
+Original saved,44,3,Second difference,1,False
+Original saved,44,3,Perron first difference,1,False
+Original saved,44,3,Perron second difference,1,False
+Original saved,45,3,First difference,1,False
+Original saved,45,3,Second difference,1,False
+Original saved,45,3,Perron first difference,1,False
+Original saved,45,3,Perron second difference,1,False
+Original saved,46,3,First difference,1,False
+Original saved,46,3,Second difference,3,True
+Original saved,46,3,Perron first difference,1,False
+Original saved,46,3,Perron second difference,3,True
+Original saved,47,3,First difference,3,True
+Original saved,47,3,Second difference,3,True
+Original saved,47,3,Perron first difference,3,True
+Original saved,47,3,Perron second difference,3,True
+Original saved,48,3,First difference,1,False
+Original saved,48,3,Second difference,1,False
+Original saved,48,3,Perron first difference,1,False
+Original saved,48,3,Perron second difference,1,False
+Original saved,49,3,First difference,1,False
+Original saved,49,3,Second difference,3,True
+Original saved,49,3,Perron first difference,1,False
+Original saved,49,3,Perron second difference,1,False
+Original saved,50,3,First difference,1,False
+Original saved,50,3,Second difference,1,False
+Original saved,50,3,Perron first difference,1,False
+Original saved,50,3,Perron second difference,1,False
+Padded warm start,1,3,First difference,1,False
+Padded warm start,1,3,Second difference,2,False
+Padded warm start,1,3,Perron first difference,1,False
+Padded warm start,1,3,Perron second difference,2,False
+Padded warm start,1,3,Descent chain,4,False
+Padded warm start,2,3,First difference,1,False
+Padded warm start,2,3,Second difference,1,False
+Padded warm start,2,3,Perron first difference,1,False
+Padded warm start,2,3,Perron second difference,1,False
+Padded warm start,2,3,Descent chain,2,False
+Padded warm start,3,3,First difference,1,False
+Padded warm start,3,3,Second difference,1,False
+Padded warm start,3,3,Perron first difference,1,False
+Padded warm start,3,3,Perron second difference,1,False
+Padded warm start,3,3,Descent chain,7,False
+Padded warm start,4,3,First difference,1,False
+Padded warm start,4,3,Second difference,1,False
+Padded warm start,4,3,Perron first difference,1,False
+Padded warm start,4,3,Perron second difference,1,False
+Padded warm start,4,3,Descent chain,3,True
+Padded warm start,5,3,First difference,2,False
+Padded warm start,5,3,Second difference,2,False
+Padded warm start,5,3,Perron first difference,2,False
+Padded warm start,5,3,Perron second difference,2,False
+Padded warm start,5,3,Descent chain,6,False
+Padded warm start,6,3,First difference,3,True
+Padded warm start,6,3,Second difference,3,True
+Padded warm start,6,3,Perron first difference,3,True
+Padded warm start,6,3,Perron second difference,3,True
+Padded warm start,6,3,Descent chain,8,False
+Padded warm start,7,3,First difference,3,True
+Padded warm start,7,3,Second difference,3,True
+Padded warm start,7,3,Perron first difference,3,True
+Padded warm start,7,3,Perron second difference,3,True
+Padded warm start,7,3,Descent chain,3,True
+Padded warm start,8,3,First difference,3,True
+Padded warm start,8,3,Second difference,3,True
+Padded warm start,8,3,Perron first difference,3,True
+Padded warm start,8,3,Perron second difference,3,True
+Padded warm start,8,3,Descent chain,3,True
+Padded warm start,9,3,First difference,2,False
+Padded warm start,9,3,Second difference,2,False
+Padded warm start,9,3,Perron first difference,2,False
+Padded warm start,9,3,Perron second difference,2,False
+Padded warm start,9,3,Descent chain,4,False
+Padded warm start,10,3,First difference,3,True
+Padded warm start,10,3,Second difference,3,True
+Padded warm start,10,3,Perron first difference,2,False
+Padded warm start,10,3,Perron second difference,3,True
+Padded warm start,10,3,Descent chain,3,True
+Padded warm start,11,3,First difference,1,False
+Padded warm start,11,3,Second difference,3,True
+Padded warm start,11,3,Perron first difference,1,False
+Padded warm start,11,3,Perron second difference,1,False
+Padded warm start,11,3,Descent chain,3,True
+Padded warm start,12,3,First difference,1,False
+Padded warm start,12,3,Second difference,1,False
+Padded warm start,12,3,Perron first difference,1,False
+Padded warm start,12,3,Perron second difference,1,False
+Padded warm start,12,3,Descent chain,3,True
+Padded warm start,13,3,First difference,1,False
+Padded warm start,13,3,Second difference,1,False
+Padded warm start,13,3,Perron first difference,1,False
+Padded warm start,13,3,Perron second difference,1,False
+Padded warm start,13,3,Descent chain,3,True
+Padded warm start,14,3,First difference,1,False
+Padded warm start,14,3,Second difference,1,False
+Padded warm start,14,3,Perron first difference,1,False
+Padded warm start,14,3,Perron second difference,1,False
+Padded warm start,14,3,Descent chain,4,False
+Padded warm start,15,3,First difference,1,False
+Padded warm start,15,3,Second difference,1,False
+Padded warm start,15,3,Perron first difference,1,False
+Padded warm start,15,3,Perron second difference,1,False
+Padded warm start,15,3,Descent chain,4,False
+Padded warm start,16,3,First difference,1,False
+Padded warm start,16,3,Second difference,1,False
+Padded warm start,16,3,Perron first difference,1,False
+Padded warm start,16,3,Perron second difference,1,False
+Padded warm start,16,3,Descent chain,8,False
+Padded warm start,17,3,First difference,3,True
+Padded warm start,17,3,Second difference,3,True
+Padded warm start,17,3,Perron first difference,3,True
+Padded warm start,17,3,Perron second difference,3,True
+Padded warm start,17,3,Descent chain,3,True
+Padded warm start,18,3,First difference,2,False
+Padded warm start,18,3,Second difference,2,False
+Padded warm start,18,3,Perron first difference,2,False
+Padded warm start,18,3,Perron second difference,2,False
+Padded warm start,18,3,Descent chain,3,True
+Padded warm start,19,3,First difference,2,False
+Padded warm start,19,3,Second difference,2,False
+Padded warm start,19,3,Perron first difference,2,False
+Padded warm start,19,3,Perron second difference,2,False
+Padded warm start,19,3,Descent chain,3,True
+Padded warm start,20,3,First difference,2,False
+Padded warm start,20,3,Second difference,3,True
+Padded warm start,20,3,Perron first difference,2,False
+Padded warm start,20,3,Perron second difference,3,True
+Padded warm start,20,3,Descent chain,3,True
+Padded warm start,21,3,First difference,1,False
+Padded warm start,21,3,Second difference,2,False
+Padded warm start,21,3,Perron first difference,1,False
+Padded warm start,21,3,Perron second difference,2,False
+Padded warm start,21,3,Descent chain,4,False
+Padded warm start,22,3,First difference,2,False
+Padded warm start,22,3,Second difference,2,False
+Padded warm start,22,3,Perron first difference,2,False
+Padded warm start,22,3,Perron second difference,2,False
+Padded warm start,22,3,Descent chain,2,False
+Padded warm start,23,3,First difference,3,True
+Padded warm start,23,3,Second difference,3,True
+Padded warm start,23,3,Perron first difference,3,True
+Padded warm start,23,3,Perron second difference,3,True
+Padded warm start,23,3,Descent chain,3,True
+Padded warm start,24,3,First difference,1,False
+Padded warm start,24,3,Second difference,1,False
+Padded warm start,24,3,Perron first difference,1,False
+Padded warm start,24,3,Perron second difference,1,False
+Padded warm start,24,3,Descent chain,8,False
+Padded warm start,25,3,First difference,1,False
+Padded warm start,25,3,Second difference,1,False
+Padded warm start,25,3,Perron first difference,1,False
+Padded warm start,25,3,Perron second difference,1,False
+Padded warm start,25,3,Descent chain,2,False
+Padded warm start,26,3,First difference,2,False
+Padded warm start,26,3,Second difference,2,False
+Padded warm start,26,3,Perron first difference,2,False
+Padded warm start,26,3,Perron second difference,2,False
+Padded warm start,26,3,Descent chain,2,False
+Padded warm start,27,3,First difference,2,False
+Padded warm start,27,3,Second difference,2,False
+Padded warm start,27,3,Perron first difference,2,False
+Padded warm start,27,3,Perron second difference,2,False
+Padded warm start,27,3,Descent chain,2,False
+Padded warm start,28,3,First difference,1,False
+Padded warm start,28,3,Second difference,1,False
+Padded warm start,28,3,Perron first difference,1,False
+Padded warm start,28,3,Perron second difference,1,False
+Padded warm start,28,3,Descent chain,7,False
+Padded warm start,29,3,First difference,3,True
+Padded warm start,29,3,Second difference,3,True
+Padded warm start,29,3,Perron first difference,3,True
+Padded warm start,29,3,Perron second difference,3,True
+Padded warm start,29,3,Descent chain,3,True
+Padded warm start,30,3,First difference,2,False
+Padded warm start,30,3,Second difference,3,True
+Padded warm start,30,3,Perron first difference,2,False
+Padded warm start,30,3,Perron second difference,3,True
+Padded warm start,30,3,Descent chain,3,True
+Padded warm start,31,3,First difference,1,False
+Padded warm start,31,3,Second difference,1,False
+Padded warm start,31,3,Perron first difference,1,False
+Padded warm start,31,3,Perron second difference,1,False
+Padded warm start,31,3,Descent chain,7,False
+Padded warm start,32,3,First difference,2,False
+Padded warm start,32,3,Second difference,2,False
+Padded warm start,32,3,Perron first difference,2,False
+Padded warm start,32,3,Perron second difference,2,False
+Padded warm start,32,3,Descent chain,8,False
+Padded warm start,33,3,First difference,2,False
+Padded warm start,33,3,Second difference,2,False
+Padded warm start,33,3,Perron first difference,2,False
+Padded warm start,33,3,Perron second difference,2,False
+Padded warm start,33,3,Descent chain,3,True
+Padded warm start,34,3,First difference,1,False
+Padded warm start,34,3,Second difference,1,False
+Padded warm start,34,3,Perron first difference,1,False
+Padded warm start,34,3,Perron second difference,1,False
+Padded warm start,34,3,Descent chain,6,False
+Padded warm start,35,3,First difference,2,False
+Padded warm start,35,3,Second difference,2,False
+Padded warm start,35,3,Perron first difference,2,False
+Padded warm start,35,3,Perron second difference,2,False
+Padded warm start,35,3,Descent chain,8,False
+Padded warm start,36,3,First difference,1,False
+Padded warm start,36,3,Second difference,1,False
+Padded warm start,36,3,Perron first difference,1,False
+Padded warm start,36,3,Perron second difference,1,False
+Padded warm start,36,3,Descent chain,8,False
+Padded warm start,37,3,First difference,3,True
+Padded warm start,37,3,Second difference,3,True
+Padded warm start,37,3,Perron first difference,3,True
+Padded warm start,37,3,Perron second difference,3,True
+Padded warm start,37,3,Descent chain,8,False
+Padded warm start,38,3,First difference,2,False
+Padded warm start,38,3,Second difference,2,False
+Padded warm start,38,3,Perron first difference,2,False
+Padded warm start,38,3,Perron second difference,2,False
+Padded warm start,38,3,Descent chain,8,False
+Padded warm start,39,3,First difference,1,False
+Padded warm start,39,3,Second difference,1,False
+Padded warm start,39,3,Perron first difference,1,False
+Padded warm start,39,3,Perron second difference,1,False
+Padded warm start,39,3,Descent chain,7,False
+Padded warm start,40,3,First difference,2,False
+Padded warm start,40,3,Second difference,2,False
+Padded warm start,40,3,Perron first difference,2,False
+Padded warm start,40,3,Perron second difference,2,False
+Padded warm start,40,3,Descent chain,2,False
+Padded warm start,41,3,First difference,2,False
+Padded warm start,41,3,Second difference,2,False
+Padded warm start,41,3,Perron first difference,2,False
+Padded warm start,41,3,Perron second difference,2,False
+Padded warm start,41,3,Descent chain,3,True
+Padded warm start,42,3,First difference,1,False
+Padded warm start,42,3,Second difference,3,True
+Padded warm start,42,3,Perron first difference,1,False
+Padded warm start,42,3,Perron second difference,1,False
+Padded warm start,42,3,Descent chain,6,False
+Padded warm start,43,3,First difference,2,False
+Padded warm start,43,3,Second difference,2,False
+Padded warm start,43,3,Perron first difference,2,False
+Padded warm start,43,3,Perron second difference,2,False
+Padded warm start,43,3,Descent chain,8,False
+Padded warm start,44,3,First difference,1,False
+Padded warm start,44,3,Second difference,1,False
+Padded warm start,44,3,Perron first difference,1,False
+Padded warm start,44,3,Perron second difference,1,False
+Padded warm start,44,3,Descent chain,3,True
+Padded warm start,45,3,First difference,1,False
+Padded warm start,45,3,Second difference,1,False
+Padded warm start,45,3,Perron first difference,1,False
+Padded warm start,45,3,Perron second difference,1,False
+Padded warm start,45,3,Descent chain,3,True
+Padded warm start,46,3,First difference,1,False
+Padded warm start,46,3,Second difference,3,True
+Padded warm start,46,3,Perron first difference,1,False
+Padded warm start,46,3,Perron second difference,3,True
+Padded warm start,46,3,Descent chain,7,False
+Padded warm start,47,3,First difference,3,True
+Padded warm start,47,3,Second difference,3,True
+Padded warm start,47,3,Perron first difference,3,True
+Padded warm start,47,3,Perron second difference,3,True
+Padded warm start,47,3,Descent chain,3,True
+Padded warm start,48,3,First difference,1,False
+Padded warm start,48,3,Second difference,1,False
+Padded warm start,48,3,Perron first difference,1,False
+Padded warm start,48,3,Perron second difference,1,False
+Padded warm start,48,3,Descent chain,7,False
+Padded warm start,49,3,First difference,1,False
+Padded warm start,49,3,Second difference,3,True
+Padded warm start,49,3,Perron first difference,1,False
+Padded warm start,49,3,Perron second difference,1,False
+Padded warm start,49,3,Descent chain,8,False
+Padded warm start,50,3,First difference,1,False
+Padded warm start,50,3,Second difference,1,False
+Padded warm start,50,3,Perron first difference,1,False
+Padded warm start,50,3,Perron second difference,1,False
+Padded warm start,50,3,Descent chain,7,False

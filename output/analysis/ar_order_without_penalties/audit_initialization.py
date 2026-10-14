@@ -9,9 +9,8 @@ from threadpoolctl import threadpool_limits
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
 from Code.Code_AR_processes.ar_tools.functions import jones_ar_coefficients,simulate_uniform_ar,sliding_window_point_cloud
-from Code.Code_AR_processes.ar_tools.L_method import l_method_selector
 OUT=Path(__file__).resolve().parent
-INPUT=ROOT/'Code/Code_AR_processes/outputs/csv/ar_shared_breakpoint_l_methods'
+INPUT=ROOT/'Code/Code_AR_processes/outputs/csv/ar_width_comparison'
 old=pd.read_csv(INPUT/'width_curves.csv')
 
 
@@ -74,12 +73,6 @@ if __name__=='__main__':
     rows.append(dict(replication=replication,k=k,width_original=w0,width_data_initialized=w1))
    for kind,w in [('original',baseline),('data_initialized',improved)]:
     selections.append(dict(replication=replication,kind=kind,method='drop_to_tail_energy',order=ratio_pick(w)))
-    for tail in ('affine','constant'):
-     order=l_method_selector(
-      w, weighted=True, common_breakpoint=True,
-      affine_affine=tail=='affine', squared_loss=True,
-     )['selected_order']
-     selections.append(dict(replication=replication,kind=kind,method=tail,order=order))
    print(f'Completed data-only initialization audit {replication}/10',flush=True)
  pd.DataFrame(rows).to_csv(OUT/'initialization_audit_widths.csv',index=False)
  f=pd.DataFrame(selections);f.to_csv(OUT/'initialization_audit_selections.csv',index=False)

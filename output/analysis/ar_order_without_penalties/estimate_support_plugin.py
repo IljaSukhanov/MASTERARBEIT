@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT))
 from Code.Code_AR_processes.ar_tools.functions import jones_ar_coefficients, simulate_uniform_ar
 
 OUT = Path(__file__).resolve().parent
-INPUT = ROOT / 'Code/Code_AR_processes/outputs/csv/ar_shared_breakpoint_l_methods'
+INPUT = ROOT / 'Code/Code_AR_processes/outputs/csv/ar_width_comparison'
 SETTINGS = json.loads((INPUT / 'configuration.json').read_text())
 RADII = pd.read_csv(OUT / 'known_bound_radii.csv')
 KNOWN_ORIGINAL = pd.read_csv(OUT / 'selections.csv')
