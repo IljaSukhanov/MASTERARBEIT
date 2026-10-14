@@ -1,0 +1,29 @@
+{
+  "samples": 1000,
+  "lambda_grid_points": 101,
+  "lambda_min": 0.01,
+  "lambda_max": 10000.0,
+  "scope": "Interior peaks above relative prominence 1e-8; lambda grid from Experiment 1. No universal continuous-lambda claim.",
+  "samples_without_confirmed_switch": 729,
+  "samples_without_confirmed_switch_but_multiple_peaks_seen": 233,
+  "samples_without_confirmed_switch_and_no_multiple_peaks_seen": 496,
+  "samples_with_multiple_peaks_at_every_sampled_lambda": 0,
+  "samples_with_multiple_peaks_at_every_sampled_lambda_and_no_confirmed_switch": 0,
+  "persistent_sample_ids": [],
+  "persistent_no_switch_sample_ids": [],
+  "sensitivity": {
+    "1e-10": {
+      "multiple_peaks_at_every_sampled_lambda": 0,
+      "with_no_switch_under_this_threshold": 0
+    },
+    "1e-08": {
+      "multiple_peaks_at_every_sampled_lambda": 0,
+      "with_no_switch_under_this_threshold": 0
+    },
+    "1e-06": {
+      "multiple_peaks_at_every_sampled_lambda": 0,
+      "with_no_switch_under_this_threshold": 0
+    }
+  },
+  "persistent_examples": []
+}

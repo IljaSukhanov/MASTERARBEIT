@@ -1,0 +1,327 @@
+{
+  "sample_seed": 20260823,
+  "sample_size": 200,
+  "bandwidth_interval": [
+    0.01,
+    2.0
+  ],
+  "measure": "uniform in log(h)",
+  "continuous_extension": "phi_N(h) = sum_j exp(-lambda D(h,h_j))*v_j/rho(S)",
+  "definition_scope": "Kernel evaluation at new bandwidths; this is a Nystr\u00f6m approximation, not a fitted interpolation or a certified continuum theorem.",
+  "convergence": [
+    {
+      "grid_size": 201,
+      "placement": "endpoint",
+      "lambda_crossing": 17.88728037528766,
+      "peaks": [
+        {
+          "h": 0.11290535723706184,
+          "height": 0.005551271747122441,
+          "log_h_derivative": -2.876772590850374e-20,
+          "relative_log_h_curvature": -0.013838909436632603
+        },
+        {
+          "h": 0.2041620160307539,
+          "height": 0.005551271747122487,
+          "log_h_derivative": 1.9655406664141187e-16,
+          "relative_log_h_curvature": -0.012463383538059196
+        }
+      ],
+      "peak_bandwidth_ratio": 1.8082580049951478,
+      "valley_h": 0.1514805070694003,
+      "relative_valley_depth": 0.0001418434344614297,
+      "relative_height_gap_slope_at_crossing": -8.318395250676676e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 4.7704895589362195e-18,
+      "relative_residual": 3.99583663288024e-16,
+      "relative_spectral_gap": 0.8275548051619263,
+      "height_gap_below": 4.6182769431607484e-08,
+      "height_gap_above": -4.616902096483272e-08,
+      "maximum_divergence_discrepancy_from_analytic_gaussian": 2.2426505097428162e-14,
+      "maximum_divergence_discrepancy_from_existing_fft": 9.825473767932635e-15
+    },
+    {
+      "grid_size": 401,
+      "placement": "endpoint",
+      "lambda_crossing": 18.079706706840785,
+      "peaks": [
+        {
+          "h": 0.1134119077304477,
+          "height": 0.0027832689006619437,
+          "log_h_derivative": 2.448967354228917e-19,
+          "relative_log_h_curvature": -0.013524685452701628
+        },
+        {
+          "h": 0.20325916810839026,
+          "height": 0.0027832689006619905,
+          "log_h_derivative": -6.533251697861105e-20,
+          "relative_log_h_curvature": -0.012242539529625245
+        }
+      ],
+      "peak_bandwidth_ratio": 1.7922206951274242,
+      "valley_h": 0.15151288254617748,
+      "relative_valley_depth": 0.00013485036741123644,
+      "relative_height_gap_slope_at_crossing": -8.24769386290242e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 2.6020852139652106e-18,
+      "relative_residual": 4.438644359269669e-16,
+      "relative_spectral_gap": 0.8242587631367365,
+      "height_gap_below": 2.296125799217119e-08,
+      "height_gap_above": -2.294802678437513e-08
+    },
+    {
+      "grid_size": 801,
+      "placement": "endpoint",
+      "lambda_crossing": 18.175987333251562,
+      "peaks": [
+        {
+          "h": 0.11366802683896692,
+          "height": 0.0013935419802023074,
+          "log_h_derivative": 1.3342368684028473e-19,
+          "relative_log_h_curvature": -0.013365966569460295
+        },
+        {
+          "h": 0.20280713287532676,
+          "height": 0.0013935419802023285,
+          "log_h_derivative": -3.0264261269079206e-20,
+          "relative_log_h_curvature": -0.012129686072106887
+        }
+      ],
+      "peak_bandwidth_ratio": 1.7842056250579847,
+      "valley_h": 0.15152926009448905,
+      "relative_valley_depth": 0.00013140764741905204,
+      "relative_height_gap_slope_at_crossing": -8.211256738265874e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 1.0842021724855044e-18,
+      "relative_residual": 3.936000874804884e-16,
+      "relative_spectral_gap": 0.8226164092061531,
+      "height_gap_below": 1.1446385804469994e-08,
+      "height_gap_above": -1.1438158538162532e-08
+    },
+    {
+      "grid_size": 1601,
+      "placement": "endpoint",
+      "lambda_crossing": 18.224145158600944,
+      "peaks": [
+        {
+          "h": 0.11379681743601837,
+          "height": 0.0006972477862372447,
+          "log_h_derivative": 1.556134878362004e-19,
+          "relative_log_h_curvature": -0.013286213442732535
+        },
+        {
+          "h": 0.2025809395587878,
+          "height": 0.000697247786237255,
+          "log_h_derivative": -2.789972171475194e-20,
+          "relative_log_h_curvature": -0.012072652311161763
+        }
+      ],
+      "peak_bandwidth_ratio": 1.7801986393221219,
+      "valley_h": 0.15153749645564416,
+      "relative_valley_depth": 0.00012969991910592314,
+      "relative_height_gap_slope_at_crossing": -8.192761701566357e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 1.1926223897340549e-18,
+      "relative_residual": 5.580511014874772e-16,
+      "relative_spectral_gap": 0.8217966408185299,
+      "height_gap_below": 5.714414013486234e-09,
+      "height_gap_above": -5.7098945368963885e-09
+    },
+    {
+      "grid_size": 201,
+      "placement": "midpoint",
+      "lambda_crossing": 18.272052706830955,
+      "peaks": [
+        {
+          "h": 0.11392376826220849,
+          "height": 0.005553974428495511,
+          "log_h_derivative": 6.116552307525529e-20,
+          "relative_log_h_curvature": -0.013208004458426547
+        },
+        {
+          "h": 0.2023585474110465,
+          "height": 0.005553974428496147,
+          "log_h_derivative": 9.388196565039184e-20,
+          "relative_log_h_curvature": -0.012016592080250075
+        }
+      ],
+      "peak_bandwidth_ratio": 1.7762627632303676,
+      "valley_h": 0.15154556383344187,
+      "relative_valley_depth": 0.00012803507137954925,
+      "relative_height_gap_slope_at_crossing": -8.175289275332267e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 4.7704895589362195e-18,
+      "relative_residual": 4.036558225684034e-16,
+      "relative_spectral_gap": 0.8263981012132272,
+      "height_gap_below": 4.5423080024739604e-08,
+      "height_gap_above": -4.538392062852781e-08
+    },
+    {
+      "grid_size": 401,
+      "placement": "midpoint",
+      "lambda_crossing": 18.27224902196594,
+      "peaks": [
+        {
+          "h": 0.1139255166174268,
+          "height": 0.002783931755553934,
+          "log_h_derivative": -1.0026651109439943e-19,
+          "relative_log_h_curvature": -0.013206654010651867
+        },
+        {
+          "h": 0.20235560686794524,
+          "height": 0.0027839317555542562,
+          "log_h_derivative": 3.114946277999342e-20,
+          "relative_log_h_curvature": -0.012015560359749142
+        }
+      ],
+      "peak_bandwidth_ratio": 1.7762096927545694,
+      "valley_h": 0.15154571414769522,
+      "relative_valley_depth": 0.00012800981834216443,
+      "relative_height_gap_slope_at_crossing": -8.174384351346069e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 2.168404344971009e-18,
+      "relative_residual": 3.606573411826828e-16,
+      "relative_spectral_gap": 0.8236860186373347,
+      "height_gap_below": 2.276582788604542e-08,
+      "height_gap_above": -2.2746176109745414e-08
+    },
+    {
+      "grid_size": 801,
+      "placement": "midpoint",
+      "lambda_crossing": 18.272298398801542,
+      "peaks": [
+        {
+          "h": 0.11392595625835224,
+          "height": 0.001393706103304499,
+          "log_h_derivative": 2.690502598248322e-20,
+          "relative_log_h_curvature": -0.013206314450369454
+        },
+        {
+          "h": 0.2023548674638873,
+          "height": 0.0013937061033046595,
+          "log_h_derivative": -2.393788795953938e-20,
+          "relative_log_h_curvature": -0.012015300936965748
+        }
+      ],
+      "peak_bandwidth_ratio": 1.7761963481351257,
+      "valley_h": 0.15154575194714576,
+      "relative_valley_depth": 0.00012800346895782997,
+      "relative_height_gap_slope_at_crossing": -8.174156762543236e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 3.686287386450715e-18,
+      "relative_residual": 6.028807912960279e-16,
+      "relative_spectral_gap": 0.8223314274111143,
+      "height_gap_below": 1.1396829074222792e-08,
+      "height_gap_above": -1.1386987993798267e-08
+    },
+    {
+      "grid_size": 1601,
+      "placement": "midpoint",
+      "lambda_crossing": 18.272310779756918,
+      "peaks": [
+        {
+          "h": 0.11392606648931557,
+          "height": 0.0006972886189024712,
+          "log_h_derivative": 1.2662865953660475e-20,
+          "relative_log_h_curvature": -0.013206229314023595
+        },
+        {
+          "h": 0.20235468207498647,
+          "height": 0.0006972886189025523,
+          "log_h_derivative": -1.1769935785046249e-20,
+          "relative_log_h_curvature": -0.012015235892862223
+        }
+      ],
+      "peak_bandwidth_ratio": 1.7761930022745416,
+      "valley_h": 0.15154576142466708,
+      "relative_valley_depth": 0.00012800187702529344,
+      "relative_height_gap_slope_at_crossing": -8.174099706497294e-05,
+      "maximum_extension_discrepancy_at_checked_basis_nodes": 1.3010426069826053e-18,
+      "relative_residual": 4.727566068690543e-16,
+      "relative_spectral_gap": 0.8216544961072838,
+      "height_gap_below": 5.701936722692785e-09,
+      "height_gap_above": -5.69701274230703e-09
+    }
+  ],
+  "derivative_checks": [
+    {
+      "h": 0.105,
+      "analytic_first": 2.2982188973602737e-06,
+      "numeric_first": 2.2982189068487813e-06,
+      "analytic_second": -3.906353433575961e-05,
+      "numeric_second": -3.906350069804443e-05,
+      "first_difference_step": 1e-05,
+      "second_difference_step": 0.0001
+    },
+    {
+      "h": 0.15,
+      "analytic_first": -8.771418093443999e-08,
+      "numeric_first": -8.771421089459607e-08,
+      "analytic_second": 8.53427444417909e-06,
+      "numeric_second": 8.534319084763098e-06,
+      "first_difference_step": 1e-05,
+      "second_difference_step": 0.0001
+    },
+    {
+      "h": 0.215,
+      "analytic_first": -1.3319009268013862e-06,
+      "numeric_first": -1.3319009740594965e-06,
+      "analytic_second": -2.741049633727384e-05,
+      "numeric_second": -2.7410755956691624e-05,
+      "first_difference_step": 1e-05,
+      "second_difference_step": 0.0001
+    }
+  ],
+  "illustration_grid": {
+    "size": 801,
+    "placement": "midpoint",
+    "lambda_crossing": 18.272298398801542
+  },
+  "phase_lambda_values": [
+    18.17229839880154,
+    18.272298398801542,
+    18.372298398801544
+  ],
+  "resolved_maxima_in_each_extended_phase": [
+    2,
+    2,
+    2
+  ],
+  "phase_peaks": [
+    [
+      {
+        "h": 0.11364719448147388,
+        "height": 0.0013929453625691067,
+        "log_h_derivative": 1.0792664638503148e-19,
+        "relative_log_h_curvature": -0.013434494866097954
+      },
+      {
+        "h": 0.2023646421991025,
+        "height": 0.0013929339657400325,
+        "log_h_derivative": 1.1720742438015187e-20,
+        "relative_log_h_curvature": -0.01191719067277424
+      }
+    ],
+    [
+      {
+        "h": 0.11392595625835224,
+        "height": 0.001393706103304499,
+        "log_h_derivative": 2.690502598248322e-20,
+        "relative_log_h_curvature": -0.013206314450369454
+      },
+      {
+        "h": 0.2023548674638873,
+        "height": 0.0013937061033046595,
+        "log_h_derivative": -2.393788795953938e-20,
+        "relative_log_h_curvature": -0.012015300936965748
+      }
+    ],
+    [
+      {
+        "h": 0.1142095806489257,
+        "height": 0.001394466589612215,
+        "log_h_derivative": -1.0194061842828715e-19,
+        "relative_log_h_curvature": -0.012973583993114206
+      },
+      {
+        "h": 0.20234497866022003,
+        "height": 0.0013944779766002088,
+        "log_h_derivative": 1.617112351929884e-20,
+        "relative_log_h_curvature": -0.012113624469231072
+      }
+    ]
+  ]
+}

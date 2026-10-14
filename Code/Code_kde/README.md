@@ -54,7 +54,13 @@ the reusable numerical APIs remain in `kde_tools/`.
   distributions with shared divergence-based spectral selection.
 - `spectral_lambda_jump_study.ipynb`: 1,000-sample Figure 3.3 lambda sweeps,
   adjacent-pair histograms of the largest upward index changes, jump-size
-  diagnostics, and resumable raw-sample/trajectory checkpoints.
+  diagnostics, and resumable raw-sample/trajectory checkpoints. Experiment 2
+  counts coexisting Perron peaks, refines dominance crossings, and checks
+  sensitivity to the numerical prominence filter on the same samples.
+- `spectral_lambda_switch_distribution.ipynb`: 100 fresh Figure 3.3 samples;
+  coarse lambda scans followed by 201-point local fine grids and peak-height
+  roots. Saves crossing brackets, bandwidth changes, all detected switches,
+  explicit no-switch outcomes, distribution plots, and automatic PDF exports.
 - `gaussian_hellinger_bandwidth_distributions_vs_n.ipynb`: H² sample-size
   experiments with versioned checkpoints.
 

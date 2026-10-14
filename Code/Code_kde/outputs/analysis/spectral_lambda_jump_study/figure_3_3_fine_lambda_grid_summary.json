@@ -1,0 +1,25 @@
+{
+  "source_figure": "3.3",
+  "sample_seed": 20260823,
+  "sample_size": 200,
+  "bandwidth_grid_size": 201,
+  "bandwidth_min": 0.01,
+  "bandwidth_max": 2.0,
+  "fft_half_width": 12.0,
+  "fft_spatial_points": 8192,
+  "lambda_grid": "linspace(10, 30, 1001)",
+  "lambda_step": 0.02,
+  "perron_solver": "stabilized_lanczos_v1",
+  "original_grid_points_verified": 8,
+  "largest_upward_pair": [
+    17.86,
+    17.88
+  ],
+  "bandwidths_at_largest_upward_pair": [
+    0.11142140949205241,
+    0.2049212977328429
+  ],
+  "largest_upward_grid_steps": 23,
+  "maximum_relative_residual": 7.594091450435766e-16,
+  "minimum_relative_gap": 0.753761225115712
+}

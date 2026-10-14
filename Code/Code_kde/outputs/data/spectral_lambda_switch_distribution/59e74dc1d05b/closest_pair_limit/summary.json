@@ -1,0 +1,22 @@
+{
+  "samples": 100,
+  "unique_closest_pairs": 100,
+  "adjacent_closest_pairs": 100,
+  "selected_at_10000_in_closest_pair": 42,
+  "ten_examples_selected_at_10000_in_pair": 4,
+  "pair_mass_at_10000": {
+    "minimum": 0.03724999562223663,
+    "median": 0.06002618155605245,
+    "maximum": 0.08052175435584566
+  },
+  "terminal_lambda_range": [
+    5146316492.866452,
+    2683440822228.19
+  ],
+  "minimum_gap_to_next_pair": 1.055516785086752e-11,
+  "maximum_terminal_l1_vector_error": 9.000682224042828e-13,
+  "maximum_terminal_relative_residual": 4.99684493166119e-16,
+  "matrix_remainder_target": 1e-10,
+  "fixed_grid": "201 logarithmic nodes from 0.01 to 2, same as Figure 3.3",
+  "scope": "Numerical confirmation on each saved sample and its computed divergence matrix; terminal lambda chosen separately from each sample's minimum-edge gap. This is the fixed-N limit, not a joint N/lambda limit or a population/sample-size limit."
+}

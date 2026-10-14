@@ -1,0 +1,200 @@
+{
+  "sample_seed": 20260823,
+  "n": 200,
+  "N": 201,
+  "scope": "Same fixed Figure 3.3 sample and bandwidth grid; finite numerical checks only.",
+  "saved_curve_above_20": {
+    "points": 45,
+    "lambda_min": 22.908676527677724,
+    "lambda_max": 10000.0,
+    "selected_h_min": 0.17949871654986185,
+    "selected_h_max": 0.2049212977328429
+  },
+  "additional_checks": [
+    {
+      "lambda": 20.0,
+      "selected_index": 114,
+      "selected_h": 0.2049212977328429,
+      "top_local_peaks": [
+        {
+          "index": 114,
+          "h": 0.2049212977328429,
+          "weight": 0.005617134195296246
+        },
+        {
+          "index": 94,
+          "h": 0.12063799148280487,
+          "weight": 0.0056161819894323724
+        }
+      ],
+      "relative_gap": 0.8125961014045524,
+      "relative_residual": 3.833078076069256e-16
+    },
+    {
+      "lambda": 25.0,
+      "selected_index": 114,
+      "selected_h": 0.2049212977328429,
+      "top_local_peaks": [
+        {
+          "index": 114,
+          "h": 0.2049212977328429,
+          "weight": 0.005770973856904227
+        }
+      ],
+      "relative_gap": 0.7809250924783678,
+      "relative_residual": 5.947257610716399e-16
+    },
+    {
+      "lambda": 30.0,
+      "selected_index": 113,
+      "selected_h": 0.1995638838946399,
+      "top_local_peaks": [
+        {
+          "index": 113,
+          "h": 0.1995638838946399,
+          "weight": 0.005921768951890837
+        }
+      ],
+      "relative_gap": 0.753761225115712,
+      "relative_residual": 6.072942866182106e-16
+    },
+    {
+      "lambda": 50.0,
+      "selected_index": 113,
+      "selected_h": 0.1995638838946399,
+      "top_local_peaks": [
+        {
+          "index": 113,
+          "h": 0.1995638838946399,
+          "weight": 0.006490907977400275
+        }
+      ],
+      "relative_gap": 0.6763263544796606,
+      "relative_residual": 5.370691536039584e-16
+    },
+    {
+      "lambda": 100.0,
+      "selected_index": 112,
+      "selected_h": 0.1943465330140275,
+      "top_local_peaks": [
+        {
+          "index": 112,
+          "h": 0.1943465330140275,
+          "weight": 0.00767456658559156
+        }
+      ],
+      "relative_gap": 0.5805659942251478,
+      "relative_residual": 3.8603164179695945e-16
+    },
+    {
+      "lambda": 1000.0,
+      "selected_index": 111,
+      "selected_h": 0.18926558331823967,
+      "top_local_peaks": [
+        {
+          "index": 111,
+          "h": 0.18926558331823967,
+          "weight": 0.015224317508596548
+        }
+      ],
+      "relative_gap": 0.31123160823491197,
+      "relative_residual": 5.153440006346262e-16
+    },
+    {
+      "lambda": 10000.0,
+      "selected_index": 109,
+      "selected_h": 0.17949871654986185,
+      "top_local_peaks": [
+        {
+          "index": 109,
+          "h": 0.17949871654986185,
+          "weight": 0.030466221454599804
+        },
+        {
+          "index": 1,
+          "h": 0.010268456082014894,
+          "weight": 7.172349705436995e-18
+        },
+        {
+          "index": 6,
+          "h": 0.011722787697229443,
+          "weight": 7.172349705436995e-18
+        }
+      ],
+      "relative_gap": 0.15394404562635444,
+      "relative_residual": 6.005051340073757e-16
+    },
+    {
+      "lambda": 100000.0,
+      "selected_index": 109,
+      "selected_h": 0.17949871654986185,
+      "top_local_peaks": [
+        {
+          "index": 109,
+          "h": 0.17949871654986185,
+          "weight": 0.057428662134873465
+        },
+        {
+          "index": 199,
+          "h": 1.947712474032959,
+          "weight": 9.816227289266742e-18
+        },
+        {
+          "index": 177,
+          "h": 1.0874556302811742,
+          "weight": 8.413909105085779e-18
+        }
+      ],
+      "relative_gap": 0.07399037267227618,
+      "relative_residual": 6.920384677988324e-16
+    },
+    {
+      "lambda": 1000000.0,
+      "selected_index": 108,
+      "selected_h": 0.17480594464853602,
+      "top_local_peaks": [
+        {
+          "index": 108,
+          "h": 0.17480594464853602,
+          "weight": 0.1038430914224949
+        },
+        {
+          "index": 143,
+          "h": 0.44181092102888536,
+          "weight": 3.774272784285129e-18
+        },
+        {
+          "index": 146,
+          "h": 0.47835673925749994,
+          "weight": 3.774272784285129e-18
+        }
+      ],
+      "relative_gap": 0.06948301550231022,
+      "relative_residual": 7.054944986595738e-16
+    },
+    {
+      "lambda": 100000000.0,
+      "selected_index": 108,
+      "selected_h": 0.17480594464853602,
+      "top_local_peaks": [
+        {
+          "index": 108,
+          "h": 0.17480594464853602,
+          "weight": 0.2974720267248622
+        },
+        {
+          "index": 93,
+          "h": 0.11748406042667037,
+          "weight": 1.3065649820527418e-40
+        },
+        {
+          "index": 126,
+          "h": 0.28161053475038417,
+          "weight": 3.2664124551318544e-41
+        }
+      ],
+      "relative_gap": 0.5794265439106606,
+      "relative_residual": 5.275270305038844e-16
+    }
+  ]
+}
