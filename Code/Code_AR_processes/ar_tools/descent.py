@@ -174,7 +174,7 @@ def batched_geometric_width_curves(
         directions = initial_generator.normal(size=(starts, int(k)))
         directions /= np.linalg.norm(directions, axis=1, keepdims=True)
 
-        if k >= 3 and warm_start_previous_direction:                                            ### CHANGED
+        if k >= 2 and warm_start_previous_direction:                                            ### CHANGED
             directions[0] = np.r_[best_directions[-1], 0.0]                                     ### CHANGED
         elif k >= 3 and warm_start_previous_coefficients:                                       ### CHANGED
             previous_direction = best_directions[-1]                                            ### CHANGED

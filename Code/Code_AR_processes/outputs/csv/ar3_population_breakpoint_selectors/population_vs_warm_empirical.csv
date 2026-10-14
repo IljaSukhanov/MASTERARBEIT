@@ -1,0 +1,11 @@
+method,correct_population,under_population,over_population,total_population,correct_warm_empirical,under_warm_empirical,over_warm_empirical,total_warm_empirical
+First difference,9,41,0,50,9.0,41.0,0.0,50.0
+Second difference,15,35,0,50,15.0,35.0,0.0,50.0
+Perron first difference,8,42,0,50,8.0,42.0,0.0,50.0
+Perron second difference,15,35,0,50,12.0,38.0,0.0,50.0
+Descent chain,50,0,0,50,19.0,6.0,25.0,50.0
+Local drift,50,0,0,50,,,,
+Drop-to-tail energy,50,0,0,50,,,,
+Tail SSE ratio,50,0,0,50,,,,
+Tail variance ratio,50,0,0,50,,,,
+Minimum width — first tied minimum,50,0,0,50,,,,

@@ -1,0 +1,7 @@
+{
+  "tested": "Four derivative/spectral rules, descent chain, local drift, three cumulative-tail ratios, and first tied minimum width (10 total)",
+  "birth_death_inverse_rule": "Undefined on population plateau: similarity matrix singular and reciprocal-drop rates infinite. No stationary-chain accuracy assigned.",
+  "other_functionals": "BIC/PACF and residual/implied-innovation-width rules require series or a different functional; not evaluated by substituting geometric population widths into them.",
+  "tail_corner_checks": "Sensitivity check, not a proof over the entire uncertainty interval",
+  "descent_chain_source": "/Users/iljasukhanov/Downloads/elbow_point_selection_preview.pdf, Definitions 1.2.8-1.2.10 and Eq. (1.6), pp. 5-6"
+}

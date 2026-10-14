@@ -652,10 +652,26 @@ Now we draw repeated samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ and st
 
 We see a large discrepancy between the distributions of the spectrally chosen bandwidth and the distribution of the minimizer of the energy functional and the minimizer of the $\operatorname{ISE}$.
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf}
-    \caption{Distribution of spectrally chosen bandwidths for $M=1000$ repeatedly drawn $N(0,1)$ samples ($n=200$); $N=201$, $\lambda=1$}
+
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf}
+        \caption{$\lambda=1$}
+        \label{fig:bandwidth_lambda_one}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf}
+        \caption{$\lambda_N=N^{3/2}\approx31622.78$}
+        \label{fig:distribution_of_chosen_bandwidths}
+    \end{subfigure}
+
+    \caption{Distributions of chosen bandwidths for
+        $N=1000$, $n=200$, and $M=1000$ repetitions,
+        combining five consecutive grid positions per bin.}
     \label{fig:distribution_of_chosen_bandwidths}
 \end{figure}
 

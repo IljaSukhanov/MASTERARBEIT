@@ -1,0 +1,31 @@
+{
+  "true_order": 3,
+  "replications": 50,
+  "sample_size": 2000,
+  "burnin": 1000,
+  "half_width": 1.0,
+  "k_values": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "seed": 20260816,
+  "starts": 3,
+  "iterations": 500,
+  "initial_step": 0.2,
+  "geometric_decay": 0.99,
+  "warm_start": "First start replaced by previous best direction padded with zero for every k >= 2",
+  "observation_windows": "Original all-valid sliding windows; identical in both fresh fits",
+  "source_hashes": {
+    "ar_tools/functions.py": "d5a39602124b8c8c58a6c2f778e6b695fa37880b4b4be7e2269374b96fbfc66f",
+    "ar_tools/descent.py": "2f7a9c994db59c8293e5a07acf18cf3c990c2e2c9fcabc40f247cbd3d539c940"
+  },
+  "original_csv_sha256": "2d4d36170189f0aaf1e33c12ef153ad9a4efc838ea69ad32d771a0e7cae7daa2"
+}
