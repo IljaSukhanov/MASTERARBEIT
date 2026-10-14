@@ -1,0 +1,34 @@
+{
+  "changed_experiment_settings": {
+    "M": {
+      "baseline": 1000,
+      "repeat": 100
+    },
+    "lambda": {
+      "baseline": 1.0,
+      "repeat": 31622.776601683792
+    }
+  },
+  "unchanged_grid_size": 1000,
+  "source_notebook": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/spectral_scale_selection_kde.ipynb",
+  "source_cells": [
+    "beta2-configurable-parameters",
+    "beta2-configurable-selections",
+    "beta2-configurable-histograms"
+  ],
+  "fft_maximum_absolute_error": 2.1760371282653068e-14,
+  "fft_relative_error": 1.1969342591063773e-13,
+  "samples_sha256": "71b4447f9fc1829fcb9dad9dfa2dac7246b042d8ac2bc0669a846c091751a738",
+  "workers": 4,
+  "completed_repetitions": 100,
+  "all_three_count_totals": [
+    100,
+    100,
+    100
+  ],
+  "elapsed_seconds": 54.85657733300104,
+  "maximum_perron_relative_residual": 4.432529536833371e-15,
+  "minimum_perron_relative_gap": 0.02421139545912537,
+  "ise_and_qhat_match_first_100_baseline_samples": true,
+  "baseline_selections": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/data/figure_3_5_bandwidth_distribution_n1000/selections.csv"
+}

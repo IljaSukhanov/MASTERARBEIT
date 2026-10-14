@@ -1,0 +1,41 @@
+beta=2, n=200, N=1000, M=1000, lambda=1
+FFT validation: absolute error=2.176e-14, relative error=1.197e-13
+Starting at 0/1000 completed repetitions
+Completed 100/1000; elapsed 57.2s
+Completed 200/1000; elapsed 121.9s
+Completed 300/1000; elapsed 180.8s
+Completed 400/1000; elapsed 239.9s
+Completed 500/1000; elapsed 285.7s
+Completed 600/1000; elapsed 329.6s
+Completed 700/1000; elapsed 373.5s
+Completed 800/1000; elapsed 418.3s
+Completed 900/1000; elapsed 462.6s
+Completed 1000/1000; elapsed 506.2s
+[
+  {
+    "selector": "spectral selections",
+    "mean_h": 0.10302365200246695,
+    "median_h": 0.09276838545367212,
+    "modal_h": 0.08432182514219823,
+    "repetitions": 1000
+  },
+  {
+    "selector": "ISE-optimal grid bandwidths",
+    "mean_h": 0.37482963716043605,
+    "median_h": 0.36835508009332074,
+    "modal_h": 0.3644684980252875,
+    "repetitions": 1000
+  },
+  {
+    "selector": "Q-hat minimizers",
+    "mean_h": 0.2657929442882146,
+    "median_h": 0.26867042210662695,
+    "modal_h": 0.2932400808459329,
+    "repetitions": 1000
+  }
+]
+Saved PDF: /Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/pdfs/figure_3_5_bandwidth_distribution_n1000/001_figure_3_5_repeated_n_1000_n_200_m_1000_lambda_1.pdf
+/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/pdf_export.py:95: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  return _ORIGINAL_MATPLOTLIB_SHOW(*args, **kwargs)
+Figure: /Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/images/figure_3_5_bandwidth_distribution_n1000/figure_3_5_N1000.png
+PDF directory: /Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/pdfs/figure_3_5_bandwidth_distribution_n1000

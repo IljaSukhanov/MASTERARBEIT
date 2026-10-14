@@ -1,0 +1,36 @@
+{
+  "changed_experiment_settings": {
+    "M": {
+      "baseline": 100,
+      "repeat": 1000
+    }
+  },
+  "previous_experiment": "spectral_bandwidth_distribution_n1000_lambda_n3_2_m100",
+  "unchanged_grid_size": 1000,
+  "source_notebook": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/spectral_scale_selection_kde.ipynb",
+  "source_cells": [
+    "beta2-configurable-parameters",
+    "beta2-configurable-selections",
+    "beta2-configurable-histograms"
+  ],
+  "fft_maximum_absolute_error": 2.1760371282653068e-14,
+  "fft_relative_error": 1.1969342591063773e-13,
+  "samples_sha256": "6a33f4c51d028c4145179ca536db8f5069055aba68f38820d56faf9355bf3299",
+  "workers": 4,
+  "reused_previous_repetitions": 100,
+  "previous_sample_prefix_hash_verified": true,
+  "cached_ise_qhat_complete_sample_hash_verified": true,
+  "cached_ise_qhat_source": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/data/figure_3_5_bandwidth_distribution_n1000/selections.csv",
+  "completed_repetitions": 1000,
+  "all_three_count_totals": [
+    1000,
+    1000,
+    1000
+  ],
+  "elapsed_seconds": 149.0608132080015,
+  "maximum_perron_relative_residual": 4.432529536833371e-15,
+  "minimum_perron_relative_gap": 0.003507704963176464,
+  "ise_and_qhat_match_all_baseline_samples": true,
+  "baseline_selections": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/data/figure_3_5_bandwidth_distribution_n1000/selections.csv",
+  "all_first_100_selections_and_diagnostics_unchanged": true
+}

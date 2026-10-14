@@ -1,0 +1,44 @@
+{
+  "version": "exact_ise_and_qr_continuous_v1",
+  "methods": [
+    "ISE",
+    "Q0",
+    "Q1",
+    "Q13_14"
+  ],
+  "r_values": {
+    "Q0": 0.0,
+    "Q1": 1.0,
+    "Q13_14": 0.9285714285714286
+  },
+  "sample_sizes": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900,
+    1000
+  ],
+  "repetitions": 1000,
+  "seed": 20260830,
+  "sigma2": 1.0,
+  "h_min": 0.01,
+  "h_max": 2.0,
+  "sample_bank_shape": [
+    1000,
+    1000
+  ],
+  "sample_bank_sha256": "a63d3c99c6ef68a42ff54f2108bfc0d1470c0e48c7a1fff7bcaa3cf88a59a8bb",
+  "scan_points": 257,
+  "spatial_points": 32768,
+  "half_width": 16.0,
+  "histogram_points": 201,
+  "source_sha256": {
+    "continuous_minimizers.py": "700b1392d667cadb0532b276643a41377e78c6f5bd26ca647a992b2d5ccdd597",
+    "qhat.py": "1491254b17be17762329db34cdbe5f1b1b185df857d4a23dc4a3fc8fdae8bc56"
+  }
+}

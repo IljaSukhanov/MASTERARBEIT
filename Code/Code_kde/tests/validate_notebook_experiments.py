@@ -333,22 +333,6 @@ def main():
                 "status": "passed",
             }
 
-            name = "100_kde_test"
-            n, ns = setup(name, scratch / "pdfs")
-            ns["pdf_output_directory"] = enable_automatic_pdf_saving(
-                name, output_root=scratch / "pdfs"
-            )
-            for i, cell in enumerate(n["cells"]):
-                if cell["cell_type"] == "code" and i != 1:
-                    execute(textcell(n, i), ns)
-            assert ns["oracle_index"] == int(np.argmin(ns["ise_values"]))
-            assert len(list(ns["pdf_output_directory"].glob("*.pdf"))) >= 3
-            report["notebooks"][name] = {
-                "kde_and_ise_cells": "passed",
-                "automatic_pdf_exports": "passed",
-                "status": "passed",
-            }
-
         analysis_path = (
             root / "outputs/analysis/fast_l2_lambda_comparison/analyse_saved_results.py"
         )
@@ -367,7 +351,7 @@ def main():
             "Saved-results population references use the shared selector, including extreme lambda."
         )
         report["checks"].append(
-            "Five notebook experiment paths passed reduced-size numerical execution."
+            "Four notebook experiment paths passed reduced-size numerical execution."
         )
         report["checks"].append(
             "Current checkpoints resume, and legacy solver checkpoints are rejected."

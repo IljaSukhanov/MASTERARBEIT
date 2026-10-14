@@ -1,8 +1,9 @@
 # KDE code guide
 
-The active notebooks focus on L² (beta-2) spectral bandwidth selection and
-ISE benchmarks, using exact Gaussian formulas or the optional Fourier
-implementation. Experiments with other divergences have been removed from
+The active notebooks focus on L² (beta-2) spectral bandwidth selection,
+continuous sample-energy comparisons, and ISE benchmarks, using exact
+Gaussian formulas or the optional Fourier implementation. Experiments with
+other divergences have been removed from
 the notebooks and the notebook validation runner. Shared numerical helpers
 and historical outputs are retained for optional future work.
 Numerical work lives in `kde_tools/`:
@@ -24,8 +25,8 @@ Numerical work lives in `kde_tools/`:
 - `similarities.py`: beta-2 divergence matrices; exponential
   similarities parameterized as `exp(-lambda_value * D)`, where the thesis
   notation is $\lambda=1/\tau$; compatibility entry points and spectral selection.
-- `perron.py`: the single symmetric Perron implementation used by every
-  active KDE experiment. It constructs shifted off-diagonal exponents for
+- `perron.py`: the single symmetric Perron implementation used by active
+  spectral KDE experiments. It constructs shifted off-diagonal exponents for
   exponential similarities, uses SciPy's symmetric Lanczos solver, and checks
   the eigenpair residual and spectral gap. The scalar and 2-by-2 cases are
   handled in the same module because ARPACK requires fewer requested
@@ -33,6 +34,13 @@ Numerical work lives in `kde_tools/`:
   [SciPy eigsh documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.eigsh.html).
 - `experiments.py`: one-repetition simulation runners.  Notebooks control the
   settings, repetition loops, summaries, and plots.
+- `qhat.py`: analytic Gaussian sample energy and continuous minimization of
+  `Q_hat(h) = h**2 / 2 * ||partial_h f_hat_h||_2**2`. Candidate brackets come
+  from a Fourier scan; candidates are refined using the analytic pair
+  formula and compared with both bandwidth-interval endpoints.
+- `continuous_minimizers.py`: continuous ISE and Q-r minimizers in the thesis's
+  r notation, sharing the analytic pair calculations and comparing both
+  interval endpoints.
 
 The optional Fourier implementation is isolated in `kde_tools/fourier/` and is
 never imported by the main package. FFT experiment runners import it explicitly;
@@ -46,8 +54,6 @@ The main exploratory workflow is `spectral_scale_selection_kde.ipynb`. Its
 beta-2 experiments use the optional Fourier implementation explicitly, while
 the reusable numerical APIs remain in `kde_tools/`.
 
-- `100_kde_test.ipynb`: introductory KDE plots and the exact ISE oracle
-  benchmark.
 - `gaussian_symmetric_divergence_bandwidth_distributions.ipynb`: repeated
   Gaussian-sample bandwidth distributions for `exp(-lambda * D)` with
   L² and the sample-specific ISE choice. Includes preview and Figure 3.5
@@ -57,7 +63,18 @@ the reusable numerical APIs remain in `kde_tools/`.
 - `experiment_1_joint_N_lambda_limit.ipynb`: joint grid/localization limits,
   mesh diagnostics, and repeated-sampling experiments.
 - `fast_l2_bandwidth_distributions_vs_n_lambda.ipynb`: FFT-based L²
-  distributions with shared divergence-based spectral selection.
+  distributions with shared divergence-based spectral selection. The final
+  saved-run comparison overlays the continuous Q-hat minimizer distribution
+  on the same samples at every n, with resumable minimizer checkpoints and
+  automatic PDF export.
+- `continuous_ise_qhat_distributions_vs_n.ipynb`: continuous sample ISE,
+  Q-0, Q-1, and Q-13/14 bandwidth distributions for n=100,...,2000, using
+  1,000 paired Gaussian samples. The original 1,000-observation prefixes are
+  retained and extended with independent seeded observations. Verified
+  original checkpoints are imported for n<=1000. Saves
+  resumable checkpoints, CSVs, numerical validation, full-interval plots,
+  interior histograms with separate upper-boundary probability bars, and
+  green/ISE peak comparisons. Plots use two pages of ten sample sizes each.
 - `spectral_lambda_jump_study.ipynb`: 1,000-sample Figure 3.3 lambda sweeps,
   adjacent-pair histograms of the largest upward index changes, jump-size
   diagnostics, and resumable raw-sample/trajectory checkpoints. Experiment 2
@@ -120,7 +137,7 @@ Run the lightweight checks from this directory with:
 python3 -m unittest discover -s tests
 ```
 
-For reduced numerical runs through five notebook workflows, including checkpoint
+For reduced numerical runs through four notebook workflows, including checkpoint
 resuming and the original 101-point Figure 3.3 sweep, run:
 
 ```bash

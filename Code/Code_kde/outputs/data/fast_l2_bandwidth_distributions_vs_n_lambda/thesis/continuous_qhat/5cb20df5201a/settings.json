@@ -1,0 +1,38 @@
+{
+  "version": "exact_gaussian_continuous_log_minimum_v1",
+  "source_sha256": "1491254b17be17762329db34cdbe5f1b1b185df857d4a23dc4a3fc8fdae8bc56",
+  "sampling_configuration": {
+    "profile": "thesis",
+    "settings": {
+      "repetitions": 1000,
+      "grid_size": 201,
+      "sigma2": 1.0,
+      "h_min": 0.01,
+      "h_max": 2.0,
+      "fft_half_width": 12.0,
+      "fft_spatial_points": 8192,
+      "seed": 20260830,
+      "maximum_sample_size": 1000
+    },
+    "sample_sizes": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+    ],
+    "method": "fft_l2_spectral",
+    "implementation_version": 1
+  },
+  "sample_bank_sha256": "a63d3c99c6ef68a42ff54f2108bfc0d1470c0e48c7a1fff7bcaa3cf88a59a8bb",
+  "h_min": 0.01,
+  "h_max": 2.0,
+  "scan_points": 257,
+  "spatial_points": 32768,
+  "half_width": 16.0
+}

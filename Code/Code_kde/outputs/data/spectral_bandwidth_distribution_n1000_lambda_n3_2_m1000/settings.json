@@ -1,0 +1,13 @@
+{
+  "n": 200,
+  "N": 1000,
+  "M": 1000,
+  "h_min": 0.01,
+  "h_max": 2.0,
+  "lambda": 31622.776601683792,
+  "lambda_rule": "N**(3/2)",
+  "seed": 20260828,
+  "fft_half_width": 12.0,
+  "fft_spatial_points": 8192,
+  "perron_solver": "stabilized_lanczos_v1"
+}
