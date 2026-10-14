@@ -16,6 +16,7 @@ We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled from an (unknown) distribution
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
 \end{align*}
+Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ is a Monte Carlo estimate of $(f\ast K_h)(x)=\mathbb{E}_{X\sim f}[K_h(x-X)]$. Writing $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ for the empirical measure, we see that $(P_n\ast K_h)(x)=\int P_n(y)K_h(x-y)\,dy=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
 
 Two common choices for the kernel $K$ are:
 \begin{itemize}
@@ -152,6 +153,8 @@ The integrated squared error between $\hat{f}_h$ and $f\sim N(0,\sigma^2)$ is gi
 \begin{align*}
     \operatorname{ISE}(h)=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{2}h}(X_i-X_j)-\frac{2}{n}\sum_{i=1}^{n}\phi_{\sqrt{h^2+\sigma^2}}(X_i)+\phi_{\sqrt{2}\sigma}(0)
 \end{align*}
+
+The connection between the minimum of $\operatorname{ISE}$ and the minimum of $\operatorname{MISE}$ is as follows. First, $\min_h\operatorname{ISE}(h)\le\operatorname{ISE}(h_0)$ for all $h_0>0$. Therefore $\mathbb{E}[\min_h\operatorname{ISE}(h)]\le\mathbb{E}[\operatorname{ISE}(h_0)]$ and since this is true for all $h_0>0$, it follows $\mathbb{E}[\min_h\operatorname{ISE}(h)]\le\min_h[\operatorname{MISE}(h)]$.
 
 \section{Divergences between distributions}\label{sec:divergences}
 
@@ -502,6 +505,8 @@ This is another instance of the Donsker–Varadhan variational principle.
 
 Taking the limit $\tau\to+\infty$ yields $S=11^{T}$, which corresponds to maximal penalization on concentration. Taking the limit $\tau\to0$ gives $S=I_N$, which corresponds to no penalization on concentration.
 
+Yet another advantage of the exponential transformation is the obvious fact that the entries of the resulting similarity matrix $S$ are all positive and therefore by the Perron-Frobenius theorem, $S$ has a real valued eigenvalue $\lambda_{\max}$ which is strictly larger than the absolute value of all other eigenvalues. The corresponding eigenvector $v_{\max}$ (called the Perron vector) has all positive entries and is unique up to scaling.
+
 \subsection{Bandwidth grid}
 
 \textcolor{magenta}{By properly scaling the data it we can take $h_{\max}=1$ without loss of generality.}
@@ -569,6 +574,11 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 \section{Numerical Experiments}
 
+\todo[inline]{How does software compute eigenvectors}
+\todo[inline]{Power method (compute Perron vector through Power iteration)}
+\todo[inline]{Matrix pertubation theory}
+\todo[inline]{stable Perron vector computation}
+
 In our numerical experiments, we restrict ourselves to these four divergences:
 \begin{itemize}
     \item $L_2$ divergence ($\beta$-divergence, $\beta=1$)
@@ -611,7 +621,9 @@ It can be seen that the grid stability curves for $\lambda=1$ (yellow) and $\lam
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
 
-In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below. \textcolor{red}{Also note that the curve sharply jumps around $\lambda\approx$.}
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the chosen bandwidth for one fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below. Also note that the curve sharply jumps around $\lambda\approx17.87375$.
+
+\textcolor{red}{The observation regarding the sharp jumps motivates to ask more questions: does it happen under repeated sampling? At which $\lambda$ does the switch happen each time? Is it an interesting property about this method or just a numerical artifact?}
 
 \begin{figure}
     \centering
@@ -687,7 +699,6 @@ It is interesting to ask what happens to this distribution for increased sample 
 
 \section{Explanation of the Results}\label{sec:res_2}
 
-\todo[inline]{Make argument rigorous}
 \todo[inline]{Mention Davis Kahan theorem and spectral gap (outlook)}
 
 \subsection{Convergence to closest adjacent pair}
@@ -708,7 +719,7 @@ In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with
 
 Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_j+(1/2)e_{j+1}$, that is, it concentrates at $\arg\min_{(j,j+1)}D_{j,j+1}$. We write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$ (where the limit is understood entry-wise). The matrix $B$ can be written as $B=e_j^{T}e_{j+1}+e_{j+1}e_j^{T}$. Direct calculations show that $e_{j}+e_{j+1}$ is an eigenvector with eigenvalue $1$, $e_j-e_{j+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j,j+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_j+(1/2)e_{j+1}$ is the sum normalized Perron vector of $B$.
 
-This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}.
+This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}. In Figure~\ref{fig:chosen_bandwidths_vs_lambda} the chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ with the smallest consecutive jump $D_{j,j+1}$, that is, $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}
@@ -783,10 +794,10 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
 
 Next, we state the main theorem of this thesis.
 
-\begin{Prop}
+\begin{Prop}\label{prop:main_thm}
     Let $D:\mathcal{P}_2\times\mathcal{P}_2\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence on $\mathcal{P}_2:=\mathcal{P}\cap L^2(\mathbb{R})$. Let $\mathcal{H}_N=\{0<h_1<\dots<h_N\}$ be a $r$-linear grid for some $0<r\le1$ with fixed endpoints $h_1=h_{\min}$ and $h_N=h_{\max}$. Let $\lambda_N$ be a sequence such that $\lambda_N\to+\infty$ and $\lambda_N/N^2\to0$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S_{ij}^{(N)}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here $\hat{f}_h$ is the kernel density estimate with Gaussian kernel $K$ and fixed data $X_1,\dots,X_n\sim f$.
 
-    Let $i_N$ be an index sequence such that $h_{i_N}\to h_0\in(h_1,h_N)$. Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ be the $i_N$-th row sum of $S^{(N)}$. Then
+    Let $i_N$ be an index sequence such that $h_{i_N}\to h_0\in(h_{\min},h_{\max})$. Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ be the $i_N$-th row sum of $S^{(N)}$. Then
     \begin{align*}
         \sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}\to\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}},\quad N\to+\infty,
     \end{align*}
@@ -919,14 +930,13 @@ Next, we state the main theorem of this thesis.
     We must make sure that $\hat{Q}_r(h_0)>0$. This follows from previously established results inside this proof. For all sufficiently large $N$ we have $0<c\le\delta_{N,i_N+1}^{-2}D_{i_N,i_N+1}=\hat{Q}_r(h_{i_N})+\delta_{N,i_N+1}^{-2}\rho_{N,i_N+1}$ and taking the limit gives $\hat{Q}_r(h_0)\ge c>0$.
 \end{proof}
 
-\textcolor{red}{Thus, a bandwidth $h_i$ has a high similarity mass $R_i$ if $\hat{Q}_{n,\beta}(h_i)$ is small, that is, where the curve $h\mapsto\hat{f}_h$ changes slowly.}
+Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
+\begin{align*}
+    \sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}=\underbrace{\theta_{\max}}_{>0}^{(N)}v_i^{(N)},\quad\text{for all }i=1,\dots,N.
+\end{align*}
+The Perron vector $v^{(N)}$ has large entries $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|=1$ we can see the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar to $\hat{f}_{h_j}$ (in terms of $L^2$-distance) where the bandwidths $h_j$ also have a large weight.
 
-Let $v$ be the Perron vector of $S$, that is,
-\begin{align}\label{eq:perron_vector003}
-    \sum_{j=1}^{N}S_{ij}v_j=\theta_{\max}v_i,\quad\forall i=1,\dots,N
-\end{align}
-
-\todo[inline]{Somehow establish connection to the Perron vector of $S$ trough the row sums $R_i$}
+The Proposition~\ref{prop:main_thm} establishes that for a large $N$ (finer and finer bandwidth grid) the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately equal to $\lambda_N^{-1/2}\Delta_{r,N}^{-1}\pi^{1/2}\hat{Q}_r^{-1/2}(h_{i_N})$ (a properly scaled energy functional). This means that large row sums correspond to a low value of the energy functional $\hat{Q}_r$ and since the energy functional $\hat{Q}_r$ is the squared $L^2$ norm of the Fréchet derivative of the kernel density estimate, its minimizer can be interpreted as the point at which the $L^2$-curve $h\mapsto\hat{f}_h$ changes most slowly. This provides an informal explanation for why the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
 
 \todo[inline]{Laplace method!!}
 
