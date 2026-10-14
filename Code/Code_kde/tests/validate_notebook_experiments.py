@@ -14,6 +14,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 root = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(root))
@@ -64,10 +65,23 @@ def definitions(n, ns):
             exec(compile(tree, "<notebook definitions>", "exec"), ns)
 
 
-def setup(name):
+def setup(name, pdf_root=None):
+    import matplotlib.pyplot as plt
+    from kde_tools.pdf_export import enable_automatic_pdf_saving
+
+    plt.close("all")
     n = load(name)
     ns = {"__name__": "__main__", "display": lambda value: None}
-    execute(textcell(n, 1), ns)
+    if pdf_root is None:
+        execute(textcell(n, 1), ns)
+    else:
+        with patch(
+            "kde_tools.pdf_export.enable_automatic_pdf_saving",
+            side_effect=lambda notebook_name, **kwargs: enable_automatic_pdf_saving(
+                notebook_name, output_root=pdf_root
+            ),
+        ):
+            execute(textcell(n, 1), ns)
     return n, ns
 
 
@@ -102,7 +116,7 @@ def main():
         captured = io.StringIO()
         with contextlib.redirect_stdout(captured):
             name = "spectral_scale_selection_kde"
-            n, ns = setup(name)
+            n, ns = setup(name, scratch / "pdfs")
             execute(strip_plot(textcell(n, 3)), ns)
             execute(strip_plot(textcell(n, 5)), ns)
             d = ns["stationary_example_lambda_divergence"]
@@ -162,7 +176,7 @@ def main():
             }
 
             name = "experiment_1_joint_N_lambda_limit"
-            n, ns = setup(name)
+            n, ns = setup(name, scratch / "pdfs")
             ns.update(
                 N_DATA=40,
                 N_VALUES=np.array([31, 101]),
@@ -219,68 +233,68 @@ def main():
                 "status": "passed",
             }
 
-            small_settings = {
-                "perron_solver": PERRON_SOLVER_VERSION,
-                "sample_size": 20,
-                "repetitions": 2,
-                "grid_size": 11,
-                "sigma2": 1.0,
-                "lambda_value": 1.0,
-                "h_min": 0.05,
-                "h_max": 1.0,
-                "m_x": 1001,
-                "padding": 6.0,
-                "base_seed": 910000,
-                "implementation_version": 2,
-                "js_quadrature": "composite_trapezoidal",
-            }
             h = np.geomspace(0.05, 1.0, 11)
             name = "gaussian_symmetric_divergence_bandwidth_distributions"
-            n, ns = setup(name)
-            ns["N_SWEEP_METHODS"] = ("TV", "H2", "JS")
-            definitions(n, ns)
-            choices, errors, diag = ns["select_one_sample"](
-                np.random.default_rng(7).normal(size=20), h, small_settings
+            n, ns = setup(name, scratch / "pdfs")
+            from kde_tools.pdf_export import enable_automatic_pdf_saving
+
+            ns.update(
+                data_output_directory=scratch / "data" / name,
+                image_output_directory=scratch / "images" / name,
+                pdf_output_directory=enable_automatic_pdf_saving(
+                    name, output_root=scratch / "pdfs"
+                ),
             )
-            assert set(choices) == {"L2", "TV", "H2", "JS", "ISE"}
-            base = {k: v for k, v in small_settings.items() if k != "sample_size"}
-            first = ns["run_n_sweep_point"](20, base, h, scratch / name, reuse=False)
-            resumed = ns["run_n_sweep_point"](20, base, h, scratch / name, reuse=True)
-            assert np.array_equal(
-                first["selected_indices"], resumed["selected_indices"]
+            ns["image_output_directory"].mkdir(parents=True)
+            execute(
+                textcell(n, 3), ns,
+                {
+                    "RUN_PROFILE": '"preview"',
+                    "PROFILES": '{"preview": {"sample_size": 20, "repetitions": 2, "grid_size": 11}}',
+                },
             )
+            execute(textcell(n, 5), ns)
+            sample = np.random.default_rng(7).normal(size=20)
+            choices, errors = ns["select_one_sample"](sample, ns["h_grid"], ns["settings"])
+            assert set(choices) == {"L2", "ISE"}
+            reference_divergence = ns["beta2_divergence_matrix"](sample, ns["h_grid"])
+            assert choices["L2"] == perron_eigenpair_from_divergence(
+                reference_divergence, ns["settings"]["lambda_value"]
+            ).selected_index
+            assert choices["ISE"] == int(np.argmin(ns["exact_oracle_ise_values"](
+                sample, ns["h_grid"], ns["settings"]["sigma2"]
+            )))
+            execute(textcell(n, 7), ns)
+            first = ns["selected_indices"].copy()
+            execute(textcell(n, 7), ns)
+            np.testing.assert_array_equal(first, ns["selected_indices"])
+            assert ns["completed"] == ns["settings"]["repetitions"]
+            # Reject stale configurations before their saved choices are loaded.
+            current_configuration = ns["configuration_json"]
+            ns["configuration_json"] = '{"obsolete_configuration": true}'
+            try:
+                execute(textcell(n, 7), ns)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Obsolete distribution checkpoint was accepted.")
+            ns["configuration_json"] = current_configuration
+            execute(textcell(n, 7), ns)
+            for i in (9, 11, 13):
+                execute(textcell(n, i), ns)
+            saved_settings = json.loads((ns["run_directory"] / "settings.json").read_text())
+            assert saved_settings["methods"] == ["L2", "ISE"]
+            assert len(list(ns["pdf_output_directory"].glob("*.pdf"))) == 3
             report["notebooks"][name] = {
                 "methods": list(choices),
                 "checkpoint_resume": "passed",
-                "status": "passed",
-            }
-
-            name = "gaussian_hellinger_bandwidth_distributions_vs_n"
-            n, ns = setup(name)
-            definitions(n, ns)
-            settings = {
-                k: v
-                for k, v in small_settings.items()
-                if k not in ["sample_size", "implementation_version", "js_quadrature"]
-            }
-            first = ns["run_h2_point"](20, settings, h, scratch / name, reuse=False)
-            resumed = ns["run_h2_point"](20, settings, h, scratch / name, reuse=True)
-            assert np.array_equal(
-                first["selected_indices"], resumed["selected_indices"]
-            )
-            assert (
-                ns["find_existing_h2_checkpoint"](
-                    {**settings, "sample_size": 20}, h, scratch / "absent", "thesis"
-                )
-                is None
-            )
-            report["notebooks"][name] = {
-                "checkpoint_resume": "passed",
+                "obsolete_checkpoint_rejection": "passed",
+                "csv_and_pdf_exports": "passed",
                 "status": "passed",
             }
 
             name = "fast_l2_bandwidth_distributions_vs_n_lambda"
-            n, ns = setup(name)
+            n, ns = setup(name, scratch / "pdfs")
             definitions(n, ns)
             settings = {
                 "repetitions": 2,
@@ -320,28 +334,18 @@ def main():
             }
 
             name = "100_kde_test"
-            n, ns = setup(name)
-            from kde_tools.quadrature import select_quadrature_similarity_bandwidths
-
-            sample = np.random.default_rng(42).normal(size=20)
-            for similarity_name in [
-                "tv_overlap",
-                "hellinger_affinity",
-                "js_similarity",
-                "exponential_l2_similarity",
-            ]:
-                result = select_quadrature_similarity_bandwidths(
-                    sample,
-                    h,
-                    similarity_name,
-                    m_x=1001,
-                    lambda_value=(
-                        1e9 if similarity_name == "exponential_l2_similarity" else 1.0
-                    ),
-                )
-                assert 0 <= result["choice"]["selected_index"] < len(h)
+            n, ns = setup(name, scratch / "pdfs")
+            ns["pdf_output_directory"] = enable_automatic_pdf_saving(
+                name, output_root=scratch / "pdfs"
+            )
+            for i, cell in enumerate(n["cells"]):
+                if cell["cell_type"] == "code" and i != 1:
+                    execute(textcell(n, i), ns)
+            assert ns["oracle_index"] == int(np.argmin(ns["ise_values"]))
+            assert len(list(ns["pdf_output_directory"].glob("*.pdf"))) >= 3
             report["notebooks"][name] = {
-                "shared_similarity_selectors": 4,
+                "kde_and_ise_cells": "passed",
+                "automatic_pdf_exports": "passed",
                 "status": "passed",
             }
 
@@ -363,7 +367,7 @@ def main():
             "Saved-results population references use the shared selector, including extreme lambda."
         )
         report["checks"].append(
-            "Six notebook experiment paths passed reduced-size numerical execution."
+            "Five notebook experiment paths passed reduced-size numerical execution."
         )
         report["checks"].append(
             "Current checkpoints resume, and legacy solver checkpoints are rejected."

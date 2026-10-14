@@ -1,12 +1,16 @@
 # KDE code guide
 
-The supported experiment code uses analytic Gaussian formulas whenever they
-are available and composite trapezoidal integration for TV, Hellinger, and JS.
+The active notebooks focus on L² (beta-2) spectral bandwidth selection and
+ISE benchmarks, using exact Gaussian formulas or the optional Fourier
+implementation. Experiments with other divergences have been removed from
+the notebooks and the notebook validation runner. Shared numerical helpers
+and historical outputs are retained for optional future work.
 Numerical work lives in `kde_tools/`:
 
 - `density.py`: direct KDE evaluation, quadrature grids, and exact
   Gaussian/Gaussian-mixture integrals.
-- `quadrature.py`: shared spatial grids and composite trapezoidal integration.
+- `quadrature.py`: shared spatial grids and composite trapezoidal integration,
+  including helpers retained for optional divergence experiments.
   `quadrature_js_divergence_matrix(density_values, x_grid)` returns raw JS
   in natural-log units from cached density values. The `js_similarity` option
   returns `1 - JS/log(2)`; use the raw divergence for `exp(-lambda * JS)`.
@@ -42,12 +46,14 @@ The main exploratory workflow is `spectral_scale_selection_kde.ipynb`. Its
 beta-2 experiments use the optional Fourier implementation explicitly, while
 the reusable numerical APIs remain in `kde_tools/`.
 
-- `100_kde_test.ipynb`: early KDE and similarity experiments.
+- `100_kde_test.ipynb`: introductory KDE plots and the exact ISE oracle
+  benchmark.
 - `gaussian_symmetric_divergence_bandwidth_distributions.ipynb`: repeated
   Gaussian-sample bandwidth distributions for `exp(-lambda * D)` with
-  L², TV, H², JS, and the sample-specific ISE choice. Includes preview and
-  Figure 3.5 parameter profiles, resumable checkpoints, CSV results, and
-  automatic PDF exports.
+  L² and the sample-specific ISE choice. Includes preview and Figure 3.5
+  parameter profiles, resumable checkpoints, CSV results, and automatic PDF
+  exports. New configuration fingerprints include both retained methods;
+  historical checkpoints and plots are kept separately.
 - `experiment_1_joint_N_lambda_limit.ipynb`: joint grid/localization limits,
   mesh diagnostics, and repeated-sampling experiments.
 - `fast_l2_bandwidth_distributions_vs_n_lambda.ipynb`: FFT-based L²
@@ -61,8 +67,6 @@ the reusable numerical APIs remain in `kde_tools/`.
   coarse lambda scans followed by 201-point local fine grids and peak-height
   roots. Saves crossing brackets, bandwidth changes, all detected switches,
   explicit no-switch outcomes, distribution plots, and automatic PDF exports.
-- `gaussian_hellinger_bandwidth_distributions_vs_n.ipynb`: H² sample-size
-  experiments with versioned checkpoints.
 
 ## Central Perron API
 
@@ -116,7 +120,7 @@ Run the lightweight checks from this directory with:
 python3 -m unittest discover -s tests
 ```
 
-For reduced numerical runs through all six notebooks, including checkpoint
+For reduced numerical runs through five notebook workflows, including checkpoint
 resuming and the original 101-point Figure 3.3 sweep, run:
 
 ```bash
