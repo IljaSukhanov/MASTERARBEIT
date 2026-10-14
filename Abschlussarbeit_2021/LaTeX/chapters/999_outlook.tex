@@ -67,6 +67,16 @@ In practice one would estimate the integral by Monte Carlo simulation. The estim
 \end{align*}
 where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
 
+\textbf{Real-world Data}
+
+\todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
+
+\begin{itemize}
+    \item Wind or solar power generation
+    \item traffic occupancy
+    \item industrial control, system identification
+\end{itemize}
+
 \textbf{Spectral Scale Selection for Kernel Density Estimation}
 
 \textbf{Rényi divergence}
@@ -148,3 +158,6 @@ The fact that the similarity matrix $S$ is not symmetric in general is not a pro
     \pi_i=\frac{l_ir_i}{\sum_{j=1}^{N}l_jr_j}
 \end{align*}
 where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is, $Sr=\lambda_{\max}r$ and $S^{T}l=\lambda_{\max}l$.
+
+\todo[inline]{Mention Davis Kahan theorem and spectral gap}
+\todo[inline]{Matrix pertubation theory}
