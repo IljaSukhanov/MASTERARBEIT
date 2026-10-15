@@ -1,0 +1,37 @@
+{
+  "notebook": "Code/Code_AR_processes/ar_thesis_figures_2_1_to_2_3.ipynb",
+  "full_execution_succeeded": true,
+  "notebook_format_valid": true,
+  "unchanged_quantities": [
+    "single_ar1_widths",
+    "single_ar1_empirical_directions",
+    "single_ar1_population_width",
+    "single_ar1_population_at_empirical_min",
+    "single_ar1_estimated_phi",
+    "single_ar1_q_hat",
+    "single_ar1_p_hat",
+    "single_ar2_widths",
+    "single_ar2_empirical_directions",
+    "single_ar2_population_width",
+    "single_ar2_population_at_empirical_min",
+    "single_ar2_estimated_phi",
+    "single_ar2_q_hat",
+    "single_ar2_p_hat",
+    "single_ar3_widths",
+    "single_ar3_empirical_directions",
+    "single_ar3_population_width",
+    "single_ar3_population_at_empirical_min",
+    "single_ar3_estimated_phi",
+    "single_ar3_q_hat",
+    "single_ar3_p_hat"
+  ],
+  "all_unchanged": true,
+  "green_curves_and_legends_remaining": 0,
+  "current_selected_orders": {
+    "AR(1)": 1,
+    "AR(2)": 8,
+    "AR(3)": 3
+  },
+  "thesis_exports_replaced": false,
+  "reason": "The unedited current notebook already selects order 8 for AR(2), while the saved thesis figure shows order 2. Regenerated previews are stored separately."
+}
