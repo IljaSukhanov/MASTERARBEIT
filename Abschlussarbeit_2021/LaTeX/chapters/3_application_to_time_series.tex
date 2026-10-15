@@ -543,19 +543,27 @@ as we have seen in the proof of Corollary~\ref{cor:main}.
 
 The closeness between $m_k$ (black) and $\hat{w}_k(\hat{u}_k)$ (blue) does not indicate that the minimization algorithm worked well. The reason for this can be demonstrated by the following error decomposition:
 \begin{align*}
-    \hat{w}_k(\hat{u}_k)-w_k(u_k)=\left(\underbrace{w_k(\hat{u}_k)-w_k(u_k)}_{\ge0}\right)-\left(\underbrace{w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)}_{\ge0}\right)
+    \hat{w}_{k,T}(\hat{u}_{k,T})-w_k(u_k)=\left(\underbrace{w_k(\hat{u}_{k,T})-w_k(u_k)}_{\ge0}\right)-\left(\underbrace{w_k(\hat{u}_{k,T})-\hat{w}_k(\hat{u}_{k,T})}_{=:F_{k,T}(\hat{u}_{k,T})\ge0}\right)
 \end{align*}
 
-The second difference is the \enquote{point filling error} which is a purely sample dependent error and vanishes for larger observation size.
+The second difference $F_{k,T}(\hat{u}_{k,T})$ is the \enquote{point filling error} in direction $\hat{u}_{k,T}$ that goes to zero for $T\to\infty$.
 
 The first difference can be further decomposed:
 \begin{align*}
-    0\le w_k(\hat{u}_k)-w_k(u_k)=\underbrace{w_k(\Tilde{u}_k)-w_k(u_k)}_{\ge0}+w_k(\hat{u}_k)-w_k(\Tilde{u}_k).
+    0\le w_k(\hat{u}_k)-w_k(u_k)=\underbrace{w_k(\Tilde{u}_{k,T})-w_k(u_k)}_{=:E_{k,T}\ge0}+\underbrace{w_k(\hat{u}_{k,T})-w_k(\Tilde{u}_{k,T})}_{=:R_{k,T}}.
 \end{align*}
-Here $\Tilde{u}_k$ is the true minimizer of the empirical width $\hat{w}_k$. By our considerations in Section~\ref{sec:emp_min_width} any minimizer $\Tilde{u}_k$ of the empirical width converges towards the set of minimizing directions of the population width, thus the first difference goes to zero for $T\to\infty$.
+Here $\Tilde{u}_k$ is the true minimizer of the empirical width $\hat{w}_k$. By our considerations in Section~\ref{sec:emp_min_width} any minimizer $\Tilde{u}_k$ of the empirical width converges towards the set of minimizing directions of the population width, thus the first difference $E_{k,T}$ goes to zero for $T\to\infty$.
 
-The second difference is not guaranteed to be nonnegative as well. 
+The second difference $R_{k,T}$ is not guaranteed to be nonnegative as well. This term measures the difference in population width between two directions.
 
+\textcolor{red}{It can be written as $R_{k,T}=E_{k,T}+F_{k,T}(\hat{u}_{k,T})-F_{k,T}(\Tilde{u}_{k,T})$.}
+
+Note that by (the proof of) Corollary~\ref{cor:main} we have
+\begin{align*}
+    F_{k,T}(u)=|w_k(\hat{u}_{k,T})-\hat{w}_{k,T}(\hat{u}_{k,T})|\le\sup_{u\in\mathcal{S}^{k-1}}|w_k(u)-w_{k,T}(u)|=:\delta_{k,T}\to0,\quad T\to\infty.
+\end{align*}
+
+It follows $|R_{k,T}-E_{k,T}|\le\delta_{k,T}\to0$ for $T\to\infty$.
 
 The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\hat{q}_{AC}-1$. For these three exemplary processes, the correct order was selected. Using Remark~\ref{rem:minimizer_estimates_coefficients} the following coefficient estimates are obtained from the minimizing directions:
 \begin{itemize}
