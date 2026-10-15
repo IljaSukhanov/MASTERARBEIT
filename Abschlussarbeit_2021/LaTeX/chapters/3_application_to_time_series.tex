@@ -550,9 +550,11 @@ The second difference is the \enquote{point filling error} which is a purely sam
 
 The first difference can be further decomposed:
 \begin{align*}
-    0\le w_k(\hat{u}_k)-w_k(u_k)=\underbrace{w_k(\Tilde{u}_k)-w_k(u_k)}_{\ge0}+w_k(\hat{u}_k)-w_k(\Tilde{u_k}).
+    0\le w_k(\hat{u}_k)-w_k(u_k)=\underbrace{w_k(\Tilde{u}_k)-w_k(u_k)}_{\ge0}+w_k(\hat{u}_k)-w_k(\Tilde{u}_k).
 \end{align*}
-Here $\Tilde{u}_k$ is the true minimizer of the empirical width $\hat{w}_k$. By our considerations in Section~\ref{sec:emp_min_width} any minimizer $\Tilde{u}_k$ of the empirical width converges towards the set of minimizing directions of the population width thus the first sum vanishes for $T\to\infty$.
+Here $\Tilde{u}_k$ is the true minimizer of the empirical width $\hat{w}_k$. By our considerations in Section~\ref{sec:emp_min_width} any minimizer $\Tilde{u}_k$ of the empirical width converges towards the set of minimizing directions of the population width, thus the first difference goes to zero for $T\to\infty$.
+
+The second difference is not guaranteed to be nonnegative as well. 
 
 
 The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\hat{q}_{AC}-1$. For these three exemplary processes, the correct order was selected. Using Remark~\ref{rem:minimizer_estimates_coefficients} the following coefficient estimates are obtained from the minimizing directions:
