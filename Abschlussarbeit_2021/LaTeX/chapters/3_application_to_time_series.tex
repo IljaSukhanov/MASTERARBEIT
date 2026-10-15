@@ -350,6 +350,8 @@ The next Proposition shows that in our setting, Brunel's condition fails and the
     See Appendix Section~\ref{sec:proof_sliding_window_fails_brunel}.
 \end{proof}
 
+\todo[inline]{decrease overlap to increase convergence speed?}
+
 The next Lemma now shows that the support of a stationary and ergodic process is in fact dense in $\mathcal{Z}$ with probability 1. 
 
 \begin{Lem}\label{lem:ergodic_implies_dense}
@@ -403,7 +405,7 @@ We can specify this result in the case where $k=p+1$. Then we know from Proposit
     \sup_{\hat{u}\in\hat{\mathcal{U}}_{p+1,T}}\min_{s\in\{-1,1\}}\|\hat{u}-s\|q_{\phi}\|_2^{-1}q_{\phi}\|_2\to0,\quad T\to\infty.
 \end{align*}
 
-The first coordinate of $\|q_{\phi}\|_2^{-1}q_{\phi}$ is $(1+\phi_1^2+\dots+\phi_p^2)^{-1/2}$ (nonzero), and by the convergence result above, the first coordinate of $\hat{u}_{k,T}$ is also eventually nonzero almost surely. The map $g:(u_0,u_1,\dots,u_p)\mapsto(-u_1/u_0,\dots,-u_p/u_0)$ is continuous on $\mathbb{S}^{p}\setminus\{u=(u_0,\dots,u_p):u_0\ne0\}$ and even. By Remark~\ref{rem:minimizer_estimates_coefficients} we get
+The first coordinate of $\|q_{\phi}\|_2^{-1}q_{\phi}$ is $(1+\phi_1^2+\dots+\phi_p^2)^{-1/2}$ (nonzero), and by the convergence result above, the first coordinate of $\hat{u}_{k,T}$ is also eventually nonzero almost surely. The map $g:(u_0,u_1,\dots,u_p)\mapsto(-u_1/u_0,\dots,-u_p/u_0)$ is continuous on $\mathbb{S}^{p}\setminus\{u=(u_0,\dots,u_p):u_0=0\}$ and even. By Remark~\ref{rem:minimizer_estimates_coefficients} we get
 \begin{align*}
     \sup_{\hat{u}\in\hat{\mathcal{U}}_{k,T}}\|g(\hat{u})-\phi\|_2\to0,\quad T\to\infty.
 \end{align*}
@@ -531,7 +533,7 @@ Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_exp
 
 The blue lines show the minimum width obtained by the projected sub-gradient descent, that is, $\hat{w}_k(\hat{u}_k)$ with $\hat{u}_k$ being the output of Algorithm~\ref{alg:projected_gradient_descent}. For reference, the dashed black line shows the theoretical minimum width $m_k$, which is equal to $2(1+\phi_1^2+\dots+\phi_p^2)^{-1/2}$ for $k\ge p+1$.
 
-The Figures also show the population width evaluated at the empirical minimizer, that is, $w_k(\hat{u}_k)$ as a dashed orange line. The difference $w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)$ is always positive, due to the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}^{(k)}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding-window point cloud $\mathcal{P}_k$. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}, that is, the error we make by replacing $\mathcal{Z}^{(k)}$ with $\operatorname{conv}(\mathcal{P}_k)$.
+The Figures also show the population width evaluated at the minimizer $\hat{u}_k$ obtained by Algorithm~\ref{alg:projected_gradient_descent}, that is, $w_k(\hat{u}_k)$ as a dashed orange line. The difference $w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)$ is always positive, due to the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}^{(k)}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding-window point cloud $\mathcal{P}_k$. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}, that is, the error we make by replacing $\mathcal{Z}^{(k)}$ with $\operatorname{conv}(\mathcal{P}_k)$.
 
 This error goes to zero for $T\to+\infty$ because
 \begin{align*}
@@ -563,21 +565,21 @@ The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\h
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR1_experiment.pdf}
-    \caption{Blue: $\hat{m}_k$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge1$)}
+    \caption{Blue: $\hat{w}_k(\hat{u}_k)$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge1$)}
     \label{fig:ar1_experiment}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR2_experiment.pdf}
-    \caption{Blue: $\hat{m}_k$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge2$)}
+    \caption{Blue: $\hat{w}_k(\hat{u}_k)$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge2$)}
     \label{fig:ar2_experiment}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf}
-    \caption{Blue: $\hat{m}_k$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge3$)}
+    \caption{Blue: $\hat{w}_k(\hat{u}_k)$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge3$)}
     \label{fig:ar3_experiment}
 \end{figure}
 
