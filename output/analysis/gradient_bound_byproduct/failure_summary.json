@@ -1,0 +1,11 @@
+{
+  "correct": 32,
+  "under": 17,
+  "over": 1,
+  "extra_underselections_vs_known_radius": 16,
+  "extra_underselections_with_certified_suboptimal_gradient_width": 5,
+  "oracle_true_coefficient_bound_accepts_order_2": 1,
+  "all_50_with_certified_suboptimal_gradient_width": 12,
+  "failed_median_relative_width_excess": -0.01891319205104655,
+  "correct_median_relative_width_excess": -0.00360118618111776
+}

@@ -1,0 +1,26 @@
+{
+  "failed_runs": [
+    2,
+    3,
+    5,
+    10,
+    20,
+    23,
+    26,
+    27,
+    32,
+    34,
+    35,
+    36,
+    41,
+    43,
+    44,
+    45
+  ],
+  "all_original_input_hashes_unchanged": true,
+  "bound_calculations_verified": 16,
+  "order_radius_calculations_verified": 144,
+  "rendered_pdf_pages": 17,
+  "visual_review": "all pages checked in contact sheet; overview and case 32 checked at full size",
+  "pdf": "output/pdf/ar3_sixteen_failed_bound_computations.pdf"
+}
