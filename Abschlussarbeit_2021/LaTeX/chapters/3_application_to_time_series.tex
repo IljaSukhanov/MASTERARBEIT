@@ -469,7 +469,7 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
     \label{fig:proj_subgradient_descent_visualization}
 \end{figure}
 
-\begin{Thm}[{\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel}}]
+\begin{Thm}[{\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel}}]\label{thm:conv_grad_descent}
     Consider the minimization problem $\min f(x)$, $x\in\mathbb{S}^{k-1}$, where $f$ is convex on $\mathbb{R}^{k}$ and Lipschitz-continuous with constant $L>0$. Let $\{u_k\}_{k\ge0}$ be the sequence obtained from Algorithm~\ref{alg:projected_gradient_descent}. Let $\mathcal{X}=\arg\min\{f(x):x\in\mathbb{S}^{k-1}\}$ be the set of minimizing directions of $f$ and let $f^{\ast}$ be the minimum of $f$ over $\mathbb{S}^{k-1}$. Assume that the weak sharp minima condition holds, that is,
     \begin{align}\label{eq:weak_sharp_minima_condition}
         \exists\alpha,\rho>0\text{ such that }\forall u\in\mathbb{S}^{k-1},\operatorname{dist}(u,\mathcal{X})<\rho:f(u)-f^{\ast}\ge\alpha\operatorname{dist}(u,\mathcal{X}).
@@ -556,14 +556,14 @@ Here $\Tilde{u}_k$ is the true minimizer of the empirical width $\hat{w}_k$. By 
 
 The second difference $R_{k,T}$ is not guaranteed to be nonnegative as well. This term measures the difference in population width between two directions.
 
-\textcolor{red}{It can be written as $R_{k,T}=E_{k,T}+F_{k,T}(\hat{u}_{k,T})-F_{k,T}(\Tilde{u}_{k,T})$.}
+\textcolor{red}{It can be written as $R_{k,T}=\epsilon_{k,T}+F_{k,T}(\hat{u}_{k,T})-F_{k,T}(\Tilde{u}_{k,T})$, where $\epsilon_{k,T}:=\hat{w}_{k,T}(\hat{u}_{k,T})-\hat{w}_{k,T}(\Tilde{u}_{k,T})$ is the optimization error.}
 
 Note that by (the proof of) Corollary~\ref{cor:main} we have
 \begin{align*}
-    F_{k,T}(u)=|w_k(\hat{u}_{k,T})-\hat{w}_{k,T}(\hat{u}_{k,T})|\le\sup_{u\in\mathcal{S}^{k-1}}|w_k(u)-w_{k,T}(u)|=:\delta_{k,T}\to0,\quad T\to\infty.
+    F_{k,T}(\hat{u}_{k,T})=|w_k(\hat{u}_{k,T})-\hat{w}_{k,T}(\hat{u}_{k,T})|\le\sup_{u\in\mathcal{S}^{k-1}}|w_k(u)-w_{k,T}(u)|=:\delta_{k,T}\to0,\quad T\to\infty.
 \end{align*}
 
-It follows $|R_{k,T}-E_{k,T}|\le\delta_{k,T}\to0$ for $T\to\infty$.
+It follows $|R_{k,T}-\epsilon_{k,T}|\le\delta_{k,T}\to0$ for $T\to\infty$. The interpretation is that $R_{k,T}$ differs from the optimization error $\epsilon_{k,T}$ by a quantity that vanishes. The optimization error $\epsilon_{k,T}$ goes to zero for $T\to\infty$ under certain conditions by Theorem~\ref{thm:conv_grad_descent}.
 
 The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\hat{q}_{AC}-1$. For these three exemplary processes, the correct order was selected. Using Remark~\ref{rem:minimizer_estimates_coefficients} the following coefficient estimates are obtained from the minimizing directions:
 \begin{itemize}
