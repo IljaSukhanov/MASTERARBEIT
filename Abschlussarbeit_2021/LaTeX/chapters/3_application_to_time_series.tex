@@ -303,7 +303,7 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
     For $k=p+1$ the minimizing direction is $u=(u_0,u_1,\dots,u_p)=q_{\phi}/\|q_{\phi}\|$. We can recover the AR coefficients by $\phi_j=-(q_{\phi})_j=-\|q_{\phi}\|u_j=-u_j/u_0$, $j=1,\dots,p$. If $\hat{u}$ is a practically obtained minimizer (for example, via gradient descent, see below), we get coefficient estimates $\hat{\phi}_j=-\hat{u}_j/\hat{u}_0$.
 \end{Rem}
 
-\subsection{The empirical minimum width and its consistency}
+\subsection{The empirical minimum width and its consistency}\label{sec:emp_min_width}
 
 An empirical version of the width $w_k(u)$ is obtained by inserting $\operatorname{conv}(\mathcal{P}_k)$ in place of $\mathcal{Z}^{(k)}$. Consequently, we obtain
 \begin{align*}
@@ -364,7 +364,7 @@ The next Lemma now shows that the support of a stationary and ergodic process is
     A causal AR process has the representation $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Such processes are stationary and ergodic given that the innovations $\{Z_t\}$ are stationary and ergodic. Furthermore, the embedded process $t\mapsto Y_t^{(k)}$ inherits the stationarity and ergodicity.
 \end{Rem}
 
-\begin{Cor}
+\begin{Cor}\label{cor:main}
     We have $\hat{m}_{k,T}\to m_k$ for $T\to\infty$ almost  surely.
 \end{Cor}
 
@@ -375,10 +375,42 @@ The next Lemma now shows that the support of a stationary and ergodic process is
     \end{align*}
     By Lemma~\ref{lem:hausdorff_distance_between_convex_bodies} we have
     \begin{align*}
-        \sup_{u\in S^{k-1}}|\hat{w}_{k,T}(u)-w_k(u)|\le2d_H(\operatorname{conv}(\mathcal{P}_k),\mathcal{Z}^{(k)})
+        \sup_{u\in\mathbb{S}^{k-1}}|\hat{w}_{k,T}(u)-w_k(u)|\le2d_H(\operatorname{conv}(\mathcal{P}_k),\mathcal{Z}^{(k)})
     \end{align*}
     Finally, applying Lemmas~\ref{lem:hausdorff_convergence} and~\ref{lem:ergodic_implies_dense} and Remark~\ref{rem:ar_ergodic} proves the statement.
 \end{proof}
+
+The proof of Corollary~\ref{cor:main} in particular establishes uniform almost sure convergence of $\hat{w}_{k,T}$ to $w_k$ on $\mathbb{S}^{k-1}$. This allows us to establish an argmin consistency result.
+
+\begin{Cor}
+    Let $\mathcal{U}_k$ be the set of minimizing directions of $w_k$ and $\hat{\mathcal{U}}_{k,T}$ the set of minimizing directions of $\hat{w}_k$. Then we have
+    \begin{align*}
+        \sup_{\hat{u}\in\hat{\mathcal{U}}_{k,T}}\operatorname{dist}(\hat{u},\mathcal{U}_k)\to0,\quad T\to+\infty,\quad\text{almost surely},
+    \end{align*}
+    that is, every empirical minimizer becomes arbitrarily close to the set of the population minimizing directions.
+\end{Cor}
+
+\begin{proof}
+    Let $\hat{u}\in\hat{\mathcal{U}}_{k,T}$. For every $\epsilon>0$ define the set $A_{\epsilon}:=\{u\in\mathbb{S}^{k-1}:\operatorname{dist}(u,\mathcal{U}_k)\ge\epsilon\}$. Note that $A_{\epsilon}$ is a compact set. Now fix $\epsilon>0$ and assume that $A_{\epsilon}$ is nonempty, that is, there exists $u_0\in\mathbb{S}^{k-1}$ such that $\|u_0-\Tilde{u}\|\ge\epsilon$ for all $\Tilde{u}\in\mathcal{U}_k$. By continuity of $w_k$ there exists $u_{\epsilon}\in A_{\epsilon}$ with $w_k(u_{\epsilon})=\min_{u_0\in A_{\epsilon}}w_k(u_0)$. Define $\delta_{\epsilon}:=w_k(u_{\epsilon})-m_k\ge0$. Since $\delta_{\epsilon}=0$ would be a contradiction, we have $\delta_{\epsilon}>0$.
+
+    We already know that $0\le w_k(\hat{u}_{k,T})-m_k\to0$ for $T\to\infty$. In particular, $w_k(\hat{u}_{k,T})-m_k<\delta_{\epsilon}$ for all sufficiently large $T$ (all $T\ge T_0$ for some $T_0$).
+
+    Now $\hat{u}_{k,T}\in A_{\epsilon}$ would imply $w_k(\hat{u}_{k,T})-m_k\ge\delta_{\epsilon}$, which would be a contradiction. Therefore, $\hat{u}_{k,T}\notin A_{\epsilon}$ for all $T\ge T_0$. This means $\operatorname{dist}(\hat{u}_{k,T},\mathcal{U}_k)<\epsilon$. Since $\epsilon>0$ was arbitrarily chosen, this proves $\operatorname{dist}(\hat{u}_{k,T},\mathcal{U}_k)\to0$ for $T\to\infty$. Finally, we get $\sup_{\hat{u}\in\hat{\mathcal{U}}_{k,T}}\operatorname{dist}(\hat{u},\mathcal{U}_k)\to0$ for $T\to\infty$.
+\end{proof}
+
+We can specify this result in the case where $k=p+1$. Then we know from Proposition~\ref{prop:minimum_width} that $\mathcal{U}_{p+1}=\{\pm\|q_{\phi}\|_2^{-1}q_{\phi}\}$. Consequently, we would get
+\begin{align*}
+    \sup_{\hat{u}\in\hat{\mathcal{U}}_{p+1,T}}\min_{s\in\{-1,1\}}\|\hat{u}-s\|q_{\phi}\|_2^{-1}q_{\phi}\|_2\to0,\quad T\to\infty.
+\end{align*}
+
+The first coordinate of $\|q_{\phi}\|_2^{-1}q_{\phi}$ is $(1+\phi_1^2+\dots+\phi_p^2)^{-1/2}$ (nonzero), and by the convergence result above, the first coordinate of $\hat{u}_{k,T}$ is also eventually nonzero almost surely. The map $g:(u_0,u_1,\dots,u_p)\mapsto(-u_1/u_0,\dots,-u_p/u_0)$ is continuous on $\mathbb{S}^{p}\setminus\{u=(u_0,\dots,u_p):u_0\ne0\}$ and even. By Remark~\ref{rem:minimizer_estimates_coefficients} we get
+\begin{align*}
+    \sup_{\hat{u}\in\hat{\mathcal{U}}_{k,T}}\|g(\hat{u})-\phi\|_2\to0,\quad T\to\infty.
+\end{align*}
+
+Thus, we have shown that a continuous transformation of every empirical minimizer is a strongly consistent estimator for the AR coefficients $\phi$.
+
+\todo[inline]{cite classical argmin consistency theorem}
 
 \subsection{Minimization via Projected sub-gradient descent}
 
@@ -497,7 +529,29 @@ This allows for fair and principled numerical experiments.
 
 Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$. The coefficients used are $\phi=0.6$ for the AR(1) process, $\phi_1=0.6,\phi_2=-0.3$ for the AR(2) process, and $\phi_1=0.6,\phi_2=-0.3,\phi_3=0.3$ for the AR(3) process. The observed time series had length $T=2000$.
 
-The blue lines show the minimum width obtained by the projected sub-gradient descent, that is, $\hat{w}_k(\hat{u})$ with $\hat{u}$ being the output of Algorithm~\ref{alg:projected_gradient_descent}. For reference, the dashed black line shows the theoretical minimum width $m_k$. Their closeness indicates that the minimization algorithm worked well. The Figures also show the population width evaluated at the empirical minimizer, that is, $w_k(\hat{u})$ as a dashed orange line. The difference $w_k(\hat{u})-\hat{w}_k(\hat{u})$ is always positive, due to the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding-window point cloud. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}.
+The blue lines show the minimum width obtained by the projected sub-gradient descent, that is, $\hat{w}_k(\hat{u}_k)$ with $\hat{u}_k$ being the output of Algorithm~\ref{alg:projected_gradient_descent}. For reference, the dashed black line shows the theoretical minimum width $m_k$, which is equal to $2(1+\phi_1^2+\dots+\phi_p^2)^{-1/2}$ for $k\ge p+1$.
+
+The Figures also show the population width evaluated at the empirical minimizer, that is, $w_k(\hat{u}_k)$ as a dashed orange line. The difference $w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)$ is always positive, due to the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}^{(k)}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding-window point cloud $\mathcal{P}_k$. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}, that is, the error we make by replacing $\mathcal{Z}^{(k)}$ with $\operatorname{conv}(\mathcal{P}_k)$.
+
+This error goes to zero for $T\to+\infty$ because
+\begin{align*}
+    0\le w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)\le2d_H(\operatorname{conv}(\mathcal{P}_{k,T}),\mathcal{Z}^{(k)})\to0,\quad T\to+\infty
+\end{align*}
+as we have seen in the proof of Corollary~\ref{cor:main}.
+
+The closeness between $m_k$ (black) and $\hat{w}_k(\hat{u}_k)$ (blue) does not indicate that the minimization algorithm worked well. The reason for this can be demonstrated by the following error decomposition:
+\begin{align*}
+    \hat{w}_k(\hat{u}_k)-w_k(u_k)=\left(\underbrace{w_k(\hat{u}_k)-w_k(u_k)}_{\ge0}\right)-\left(\underbrace{w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)}_{\ge0}\right)
+\end{align*}
+
+The second difference is the \enquote{point filling error} which is a purely sample dependent error and vanishes for larger observation size.
+
+The first difference can be further decomposed:
+\begin{align*}
+    0\le w_k(\hat{u}_k)-w_k(u_k)=\underbrace{w_k(\Tilde{u}_k)-w_k(u_k)}_{\ge0}+w_k(\hat{u}_k)-w_k(\Tilde{u_k}).
+\end{align*}
+Here $\Tilde{u}_k$ is the true minimizer of the empirical width $\hat{w}_k$. By our considerations in Section~\ref{sec:emp_min_width} any minimizer $\Tilde{u}_k$ of the empirical width converges towards the set of minimizing directions of the population width thus the first sum vanishes for $T\to\infty$.
+
 
 The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\hat{q}_{AC}-1$. For these three exemplary processes, the correct order was selected. Using Remark~\ref{rem:minimizer_estimates_coefficients} the following coefficient estimates are obtained from the minimizing directions:
 \begin{itemize}
@@ -619,6 +673,8 @@ Minimum width
 \end{figure}
 
 \section{Literature positioning and novelty assessment}
+
+\todo[inline]{15.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
 
 The conditional maximum likelihood approach with innovations assumed to be from $U[-h,h]$ leads to $L^{\infty}$-regression:
 \begin{align*}
