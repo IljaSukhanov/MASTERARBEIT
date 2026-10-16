@@ -1,12 +1,21 @@
 from __future__ import annotations
 
-import numpy as np
+import json
+from time import perf_counter
 
+import numpy as np
+from scipy.spatial import ConvexHull, QhullError
+from scipy.spatial.distance import pdist
+
+from .experiment_settings import WARM_START_VARIANTS
 from .functions import sliding_window_point_cloud
 
 __all__ = [
     "projected_subgradient_empirical_width",
     "batched_geometric_width_curves",
+    "fit_minimum_width_known_order",
+    "fit_ar3_mse_prefix",
+    "fit_ar3_warm_start_rows",
 ]
 
 
@@ -232,3 +241,127 @@ def batched_geometric_width_curves(
     if return_directions:
         return (*standard_result, best_directions)
     return standard_result
+
+
+def fit_minimum_width_known_order(series, point_cloud, order, *, seed, replication,
+                                  starts, iterations, step_scale, decay):
+    diameter = float(pdist(point_cloud).max())
+    if not np.isfinite(diameter) or diameter <= 0.0:
+        raise RuntimeError("Cannot normalize the minimum-width step: invalid diameter.")
+    _, _, _, directions = batched_geometric_width_curves(
+        series,
+        order + 1,
+        seed=seed,
+        replication=replication,
+        starts=starts,
+        iterations=iterations,
+        initial_step=step_scale / diameter,
+        geometric_decay=decay,
+        return_directions=True,
+    )
+    direction = directions[order]
+    if abs(direction[0]) <= np.finfo(float).eps:
+        raise RuntimeError("Cannot recover coefficients: first direction component is zero.")
+    return -direction[1:] / direction[0]
+
+
+def fit_ar3_mse_prefix(series: np.ndarray, replication_index: int, sample_size: int,
+                       *, configuration) -> dict:
+    """Fit only k=4, with the same random starts and schedule as the 50-run study."""
+    CONFIG = configuration
+    cloud = sliding_window_point_cloud(series[:sample_size], embedding_dimension=4)
+    optimization_cloud = cloud
+    try:
+        hull = ConvexHull(cloud)
+        optimization_cloud = cloud[np.sort(hull.vertices)]
+    except QhullError:
+        pass
+
+    # A point-cloud diameter is attained by hull vertices. Thus the step-size
+    # normalization and every directional width use the original cloud values.
+    diameter = float(pdist(optimization_cloud).max())
+    if not np.isfinite(diameter) or diameter <= 0:
+        raise ValueError("The point-cloud diameter is invalid.")
+    initial_step = CONFIG["initial_step_scale"] / diameter
+
+    generator = np.random.default_rng(
+        np.random.SeedSequence([CONFIG["optimizer_seed"], replication_index, 4, 20])
+    )
+    initial_directions = generator.normal(size=(CONFIG["starts"], 4))
+    initial_directions /= np.linalg.norm(initial_directions, axis=1, keepdims=True)
+
+    results = [
+        projected_subgradient_empirical_width(
+            optimization_cloud,
+            iterations=CONFIG["iterations"],
+            initial_step=initial_step,
+            patience=CONFIG["iterations"] + 1,
+            rng=np.random.SeedSequence(
+                [CONFIG["optimizer_seed"], replication_index, 4, 21, start_index]
+            ),
+            initial_direction=direction,
+            step_schedule="geometric",
+            geometric_decay=CONFIG["geometric_decay"],
+        )
+        for start_index, direction in enumerate(initial_directions)
+    ]
+    best_start = int(np.argmin([result["minimum_width"] for result in results]))
+    result = results[best_start]
+    direction = result["direction"]
+    if abs(direction[0]) <= np.finfo(float).eps:
+        raise ValueError("The first direction component is numerically zero.")
+    estimate = -direction[1:] / direction[0]
+    if not np.all(np.isfinite(estimate)):
+        raise ValueError("The coefficient estimate is not finite.")
+    if not np.isclose(np.ptp(cloud @ direction), result["minimum_width"], atol=1e-9):
+        raise ValueError("The selected direction does not reproduce its width.")
+    return {
+        "estimate": estimate,
+        "minimum_width": float(result["minimum_width"]),
+        "abs_u_0": float(abs(direction[0])),
+        "best_start": best_start + 1,
+        "diameter": diameter,
+        "initial_step": initial_step,
+        "hull_vertices": len(optimization_cloud),
+    }
+
+
+def fit_ar3_warm_start_rows(series, phi, settings, replication, *, warm,
+                            variants=WARM_START_VARIANTS):
+    VARIANTS = variants
+    start = perf_counter()
+    _, widths, _, directions = batched_geometric_width_curves(
+        series, max(settings["k_values"]), seed=settings["seeds"]["3"],
+        replication=replication - 1, starts=settings["starts"],
+        iterations=settings["iterations"], initial_step=settings["initial_step"],
+        geometric_decay=settings["geometric_decay"], return_directions=True,
+        warm_start_previous_direction=warm,
+    )
+    elapsed = perf_counter() - start
+    variant = VARIANTS[2] if warm else VARIANTS[1]
+    rows = []
+    for k, (width, direction) in enumerate(zip(widths, directions), start=1):
+        cloud = sliding_window_point_cloud(series, k)
+        actual_width = float(np.ptp(cloud @ direction))
+        assert abs(actual_width - width) < 1e-10
+        assert abs(np.linalg.norm(direction) - 1) < 1e-12
+        candidate_width = np.nan
+        if warm and k >= 2:
+            padded = np.r_[directions[k - 2], 0.0]
+            candidate_width = float(np.ptp(cloud @ padded))
+            assert width <= candidate_width + 1e-10
+            assert candidate_width <= widths[k - 2] + 1e-10
+        row = {
+            "variant": variant, "true_order": 3, "replication": replication,
+            "k": k, "minimum_width": float(width),
+            "coefficients": json.dumps(phi.tolist()),
+            "padded_candidate_width": candidate_width,
+            "curve_runtime_seconds": elapsed,
+        }
+        row.update({f"u_{j}": float(direction[j]) if j < k else np.nan
+                    for j in range(max(settings["k_values"]))})
+        rows.append(row)
+    if warm:
+        tolerance = 32 * np.finfo(float).eps * max(1.0, float(np.abs(widths).max()))
+        assert np.all(np.diff(widths) <= tolerance), (replication, np.diff(widths))
+    return rows

@@ -30,6 +30,8 @@ __all__ = [
     "fibonacci_sphere_directions",
     "zonotope_support_points",
     "theoretical_support_zonoid_2d",
+    "stationarity_root_margin",
+    "coefficients_from_minimizing_direction",
 ]
 
 
@@ -207,3 +209,21 @@ def companion_matrix(phi):
 def is_stationary(phi):
     eigenvalues = np.linalg.eigvals(companion_matrix(phi))
     return bool(np.all(np.abs(eigenvalues) < 1)), eigenvalues
+
+
+def stationarity_root_margin(row, *, order):
+    coefficients = np.array([
+        row[f"true_phi_{index}"] for index in range(1, order + 1)
+    ])
+    roots = np.roots(np.concatenate((-coefficients[::-1], [1.0])))
+    return float(np.min(abs(roots)) - 1.0)
+
+
+def coefficients_from_minimizing_direction(direction):
+    """Recover phi_j = -u_j / u_0 as in Remark 3."""
+    direction = np.asarray(direction, dtype=float)
+    if direction.ndim != 1 or len(direction) < 2:
+        raise ValueError("direction must contain u_0 and at least one lag coefficient")
+    if np.isclose(direction[0], 0.0):
+        raise ValueError("cannot recover coefficients when u_0 is zero")
+    return -direction[1:] / direction[0]

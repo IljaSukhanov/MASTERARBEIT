@@ -4,8 +4,6 @@ Drop-to-tail energy,50,50,50,50,50,50
 First difference,50,29,9,7,5,1
 Local drift,50,50,50,50,50,50
 Minimum width — first tied minimum,50,50,50,50,50,50
-Perron first difference,50,28,8,6,5,0
-Perron second difference,50,33,15,9,6,1
 Second difference,50,33,15,10,9,4
 Tail SSE ratio,50,50,50,50,50,50
 Tail variance ratio,50,50,50,50,50,50

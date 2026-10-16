@@ -1,8 +1,6 @@
 true_order,replication,method,selected_order
 1,1,First difference,1
 1,1,Second difference,1
-1,1,Perron first difference,1
-1,1,Perron second difference,1
 1,1,Descent chain,1
 1,1,Local drift,1
 1,1,Drop-to-tail energy,1
@@ -11,8 +9,6 @@ true_order,replication,method,selected_order
 1,1,Minimum width — first tied minimum,1
 1,2,First difference,1
 1,2,Second difference,1
-1,2,Perron first difference,1
-1,2,Perron second difference,1
 1,2,Descent chain,1
 1,2,Local drift,1
 1,2,Drop-to-tail energy,1
@@ -21,8 +17,6 @@ true_order,replication,method,selected_order
 1,2,Minimum width — first tied minimum,1
 1,3,First difference,1
 1,3,Second difference,1
-1,3,Perron first difference,1
-1,3,Perron second difference,1
 1,3,Descent chain,1
 1,3,Local drift,1
 1,3,Drop-to-tail energy,1
@@ -31,8 +25,6 @@ true_order,replication,method,selected_order
 1,3,Minimum width — first tied minimum,1
 1,4,First difference,1
 1,4,Second difference,1
-1,4,Perron first difference,1
-1,4,Perron second difference,1
 1,4,Descent chain,1
 1,4,Local drift,1
 1,4,Drop-to-tail energy,1
@@ -41,8 +33,6 @@ true_order,replication,method,selected_order
 1,4,Minimum width — first tied minimum,1
 1,5,First difference,1
 1,5,Second difference,1
-1,5,Perron first difference,1
-1,5,Perron second difference,1
 1,5,Descent chain,1
 1,5,Local drift,1
 1,5,Drop-to-tail energy,1
@@ -51,8 +41,6 @@ true_order,replication,method,selected_order
 1,5,Minimum width — first tied minimum,1
 1,6,First difference,1
 1,6,Second difference,1
-1,6,Perron first difference,1
-1,6,Perron second difference,1
 1,6,Descent chain,1
 1,6,Local drift,1
 1,6,Drop-to-tail energy,1
@@ -61,8 +49,6 @@ true_order,replication,method,selected_order
 1,6,Minimum width — first tied minimum,1
 1,7,First difference,1
 1,7,Second difference,1
-1,7,Perron first difference,1
-1,7,Perron second difference,1
 1,7,Descent chain,1
 1,7,Local drift,1
 1,7,Drop-to-tail energy,1
@@ -71,8 +57,6 @@ true_order,replication,method,selected_order
 1,7,Minimum width — first tied minimum,1
 1,8,First difference,1
 1,8,Second difference,1
-1,8,Perron first difference,1
-1,8,Perron second difference,1
 1,8,Descent chain,1
 1,8,Local drift,1
 1,8,Drop-to-tail energy,1
@@ -81,8 +65,6 @@ true_order,replication,method,selected_order
 1,8,Minimum width — first tied minimum,1
 1,9,First difference,1
 1,9,Second difference,1
-1,9,Perron first difference,1
-1,9,Perron second difference,1
 1,9,Descent chain,1
 1,9,Local drift,1
 1,9,Drop-to-tail energy,1
@@ -91,8 +73,6 @@ true_order,replication,method,selected_order
 1,9,Minimum width — first tied minimum,1
 1,10,First difference,1
 1,10,Second difference,1
-1,10,Perron first difference,1
-1,10,Perron second difference,1
 1,10,Descent chain,1
 1,10,Local drift,1
 1,10,Drop-to-tail energy,1
@@ -101,8 +81,6 @@ true_order,replication,method,selected_order
 1,10,Minimum width — first tied minimum,1
 1,11,First difference,1
 1,11,Second difference,1
-1,11,Perron first difference,1
-1,11,Perron second difference,1
 1,11,Descent chain,1
 1,11,Local drift,1
 1,11,Drop-to-tail energy,1
@@ -111,8 +89,6 @@ true_order,replication,method,selected_order
 1,11,Minimum width — first tied minimum,1
 1,12,First difference,1
 1,12,Second difference,1
-1,12,Perron first difference,1
-1,12,Perron second difference,1
 1,12,Descent chain,1
 1,12,Local drift,1
 1,12,Drop-to-tail energy,1
@@ -121,8 +97,6 @@ true_order,replication,method,selected_order
 1,12,Minimum width — first tied minimum,1
 1,13,First difference,1
 1,13,Second difference,1
-1,13,Perron first difference,1
-1,13,Perron second difference,1
 1,13,Descent chain,1
 1,13,Local drift,1
 1,13,Drop-to-tail energy,1
@@ -131,8 +105,6 @@ true_order,replication,method,selected_order
 1,13,Minimum width — first tied minimum,1
 1,14,First difference,1
 1,14,Second difference,1
-1,14,Perron first difference,1
-1,14,Perron second difference,1
 1,14,Descent chain,1
 1,14,Local drift,1
 1,14,Drop-to-tail energy,1
@@ -141,8 +113,6 @@ true_order,replication,method,selected_order
 1,14,Minimum width — first tied minimum,1
 1,15,First difference,1
 1,15,Second difference,1
-1,15,Perron first difference,1
-1,15,Perron second difference,1
 1,15,Descent chain,1
 1,15,Local drift,1
 1,15,Drop-to-tail energy,1
@@ -151,8 +121,6 @@ true_order,replication,method,selected_order
 1,15,Minimum width — first tied minimum,1
 1,16,First difference,1
 1,16,Second difference,1
-1,16,Perron first difference,1
-1,16,Perron second difference,1
 1,16,Descent chain,1
 1,16,Local drift,1
 1,16,Drop-to-tail energy,1
@@ -161,8 +129,6 @@ true_order,replication,method,selected_order
 1,16,Minimum width — first tied minimum,1
 1,17,First difference,1
 1,17,Second difference,1
-1,17,Perron first difference,1
-1,17,Perron second difference,1
 1,17,Descent chain,1
 1,17,Local drift,1
 1,17,Drop-to-tail energy,1
@@ -171,8 +137,6 @@ true_order,replication,method,selected_order
 1,17,Minimum width — first tied minimum,1
 1,18,First difference,1
 1,18,Second difference,1
-1,18,Perron first difference,1
-1,18,Perron second difference,1
 1,18,Descent chain,1
 1,18,Local drift,1
 1,18,Drop-to-tail energy,1
@@ -181,8 +145,6 @@ true_order,replication,method,selected_order
 1,18,Minimum width — first tied minimum,1
 1,19,First difference,1
 1,19,Second difference,1
-1,19,Perron first difference,1
-1,19,Perron second difference,1
 1,19,Descent chain,1
 1,19,Local drift,1
 1,19,Drop-to-tail energy,1
@@ -191,8 +153,6 @@ true_order,replication,method,selected_order
 1,19,Minimum width — first tied minimum,1
 1,20,First difference,1
 1,20,Second difference,1
-1,20,Perron first difference,1
-1,20,Perron second difference,1
 1,20,Descent chain,1
 1,20,Local drift,1
 1,20,Drop-to-tail energy,1
@@ -201,8 +161,6 @@ true_order,replication,method,selected_order
 1,20,Minimum width — first tied minimum,1
 1,21,First difference,1
 1,21,Second difference,1
-1,21,Perron first difference,1
-1,21,Perron second difference,1
 1,21,Descent chain,1
 1,21,Local drift,1
 1,21,Drop-to-tail energy,1
@@ -211,8 +169,6 @@ true_order,replication,method,selected_order
 1,21,Minimum width — first tied minimum,1
 1,22,First difference,1
 1,22,Second difference,1
-1,22,Perron first difference,1
-1,22,Perron second difference,1
 1,22,Descent chain,1
 1,22,Local drift,1
 1,22,Drop-to-tail energy,1
@@ -221,8 +177,6 @@ true_order,replication,method,selected_order
 1,22,Minimum width — first tied minimum,1
 1,23,First difference,1
 1,23,Second difference,1
-1,23,Perron first difference,1
-1,23,Perron second difference,1
 1,23,Descent chain,1
 1,23,Local drift,1
 1,23,Drop-to-tail energy,1
@@ -231,8 +185,6 @@ true_order,replication,method,selected_order
 1,23,Minimum width — first tied minimum,1
 1,24,First difference,1
 1,24,Second difference,1
-1,24,Perron first difference,1
-1,24,Perron second difference,1
 1,24,Descent chain,1
 1,24,Local drift,1
 1,24,Drop-to-tail energy,1
@@ -241,8 +193,6 @@ true_order,replication,method,selected_order
 1,24,Minimum width — first tied minimum,1
 1,25,First difference,1
 1,25,Second difference,1
-1,25,Perron first difference,1
-1,25,Perron second difference,1
 1,25,Descent chain,1
 1,25,Local drift,1
 1,25,Drop-to-tail energy,1
@@ -251,8 +201,6 @@ true_order,replication,method,selected_order
 1,25,Minimum width — first tied minimum,1
 1,26,First difference,1
 1,26,Second difference,1
-1,26,Perron first difference,1
-1,26,Perron second difference,1
 1,26,Descent chain,1
 1,26,Local drift,1
 1,26,Drop-to-tail energy,1
@@ -261,8 +209,6 @@ true_order,replication,method,selected_order
 1,26,Minimum width — first tied minimum,1
 1,27,First difference,1
 1,27,Second difference,1
-1,27,Perron first difference,1
-1,27,Perron second difference,1
 1,27,Descent chain,1
 1,27,Local drift,1
 1,27,Drop-to-tail energy,1
@@ -271,8 +217,6 @@ true_order,replication,method,selected_order
 1,27,Minimum width — first tied minimum,1
 1,28,First difference,1
 1,28,Second difference,1
-1,28,Perron first difference,1
-1,28,Perron second difference,1
 1,28,Descent chain,1
 1,28,Local drift,1
 1,28,Drop-to-tail energy,1
@@ -281,8 +225,6 @@ true_order,replication,method,selected_order
 1,28,Minimum width — first tied minimum,1
 1,29,First difference,1
 1,29,Second difference,1
-1,29,Perron first difference,1
-1,29,Perron second difference,1
 1,29,Descent chain,1
 1,29,Local drift,1
 1,29,Drop-to-tail energy,1
@@ -291,8 +233,6 @@ true_order,replication,method,selected_order
 1,29,Minimum width — first tied minimum,1
 1,30,First difference,1
 1,30,Second difference,1
-1,30,Perron first difference,1
-1,30,Perron second difference,1
 1,30,Descent chain,1
 1,30,Local drift,1
 1,30,Drop-to-tail energy,1
@@ -301,8 +241,6 @@ true_order,replication,method,selected_order
 1,30,Minimum width — first tied minimum,1
 1,31,First difference,1
 1,31,Second difference,1
-1,31,Perron first difference,1
-1,31,Perron second difference,1
 1,31,Descent chain,1
 1,31,Local drift,1
 1,31,Drop-to-tail energy,1
@@ -311,8 +249,6 @@ true_order,replication,method,selected_order
 1,31,Minimum width — first tied minimum,1
 1,32,First difference,1
 1,32,Second difference,1
-1,32,Perron first difference,1
-1,32,Perron second difference,1
 1,32,Descent chain,1
 1,32,Local drift,1
 1,32,Drop-to-tail energy,1
@@ -321,8 +257,6 @@ true_order,replication,method,selected_order
 1,32,Minimum width — first tied minimum,1
 1,33,First difference,1
 1,33,Second difference,1
-1,33,Perron first difference,1
-1,33,Perron second difference,1
 1,33,Descent chain,1
 1,33,Local drift,1
 1,33,Drop-to-tail energy,1
@@ -331,8 +265,6 @@ true_order,replication,method,selected_order
 1,33,Minimum width — first tied minimum,1
 1,34,First difference,1
 1,34,Second difference,1
-1,34,Perron first difference,1
-1,34,Perron second difference,1
 1,34,Descent chain,1
 1,34,Local drift,1
 1,34,Drop-to-tail energy,1
@@ -341,8 +273,6 @@ true_order,replication,method,selected_order
 1,34,Minimum width — first tied minimum,1
 1,35,First difference,1
 1,35,Second difference,1
-1,35,Perron first difference,1
-1,35,Perron second difference,1
 1,35,Descent chain,1
 1,35,Local drift,1
 1,35,Drop-to-tail energy,1
@@ -351,8 +281,6 @@ true_order,replication,method,selected_order
 1,35,Minimum width — first tied minimum,1
 1,36,First difference,1
 1,36,Second difference,1
-1,36,Perron first difference,1
-1,36,Perron second difference,1
 1,36,Descent chain,1
 1,36,Local drift,1
 1,36,Drop-to-tail energy,1
@@ -361,8 +289,6 @@ true_order,replication,method,selected_order
 1,36,Minimum width — first tied minimum,1
 1,37,First difference,1
 1,37,Second difference,1
-1,37,Perron first difference,1
-1,37,Perron second difference,1
 1,37,Descent chain,1
 1,37,Local drift,1
 1,37,Drop-to-tail energy,1
@@ -371,8 +297,6 @@ true_order,replication,method,selected_order
 1,37,Minimum width — first tied minimum,1
 1,38,First difference,1
 1,38,Second difference,1
-1,38,Perron first difference,1
-1,38,Perron second difference,1
 1,38,Descent chain,1
 1,38,Local drift,1
 1,38,Drop-to-tail energy,1
@@ -381,8 +305,6 @@ true_order,replication,method,selected_order
 1,38,Minimum width — first tied minimum,1
 1,39,First difference,1
 1,39,Second difference,1
-1,39,Perron first difference,1
-1,39,Perron second difference,1
 1,39,Descent chain,1
 1,39,Local drift,1
 1,39,Drop-to-tail energy,1
@@ -391,8 +313,6 @@ true_order,replication,method,selected_order
 1,39,Minimum width — first tied minimum,1
 1,40,First difference,1
 1,40,Second difference,1
-1,40,Perron first difference,1
-1,40,Perron second difference,1
 1,40,Descent chain,1
 1,40,Local drift,1
 1,40,Drop-to-tail energy,1
@@ -401,8 +321,6 @@ true_order,replication,method,selected_order
 1,40,Minimum width — first tied minimum,1
 1,41,First difference,1
 1,41,Second difference,1
-1,41,Perron first difference,1
-1,41,Perron second difference,1
 1,41,Descent chain,1
 1,41,Local drift,1
 1,41,Drop-to-tail energy,1
@@ -411,8 +329,6 @@ true_order,replication,method,selected_order
 1,41,Minimum width — first tied minimum,1
 1,42,First difference,1
 1,42,Second difference,1
-1,42,Perron first difference,1
-1,42,Perron second difference,1
 1,42,Descent chain,1
 1,42,Local drift,1
 1,42,Drop-to-tail energy,1
@@ -421,8 +337,6 @@ true_order,replication,method,selected_order
 1,42,Minimum width — first tied minimum,1
 1,43,First difference,1
 1,43,Second difference,1
-1,43,Perron first difference,1
-1,43,Perron second difference,1
 1,43,Descent chain,1
 1,43,Local drift,1
 1,43,Drop-to-tail energy,1
@@ -431,8 +345,6 @@ true_order,replication,method,selected_order
 1,43,Minimum width — first tied minimum,1
 1,44,First difference,1
 1,44,Second difference,1
-1,44,Perron first difference,1
-1,44,Perron second difference,1
 1,44,Descent chain,1
 1,44,Local drift,1
 1,44,Drop-to-tail energy,1
@@ -441,8 +353,6 @@ true_order,replication,method,selected_order
 1,44,Minimum width — first tied minimum,1
 1,45,First difference,1
 1,45,Second difference,1
-1,45,Perron first difference,1
-1,45,Perron second difference,1
 1,45,Descent chain,1
 1,45,Local drift,1
 1,45,Drop-to-tail energy,1
@@ -451,8 +361,6 @@ true_order,replication,method,selected_order
 1,45,Minimum width — first tied minimum,1
 1,46,First difference,1
 1,46,Second difference,1
-1,46,Perron first difference,1
-1,46,Perron second difference,1
 1,46,Descent chain,1
 1,46,Local drift,1
 1,46,Drop-to-tail energy,1
@@ -461,8 +369,6 @@ true_order,replication,method,selected_order
 1,46,Minimum width — first tied minimum,1
 1,47,First difference,1
 1,47,Second difference,1
-1,47,Perron first difference,1
-1,47,Perron second difference,1
 1,47,Descent chain,1
 1,47,Local drift,1
 1,47,Drop-to-tail energy,1
@@ -471,8 +377,6 @@ true_order,replication,method,selected_order
 1,47,Minimum width — first tied minimum,1
 1,48,First difference,1
 1,48,Second difference,1
-1,48,Perron first difference,1
-1,48,Perron second difference,1
 1,48,Descent chain,1
 1,48,Local drift,1
 1,48,Drop-to-tail energy,1
@@ -481,8 +385,6 @@ true_order,replication,method,selected_order
 1,48,Minimum width — first tied minimum,1
 1,49,First difference,1
 1,49,Second difference,1
-1,49,Perron first difference,1
-1,49,Perron second difference,1
 1,49,Descent chain,1
 1,49,Local drift,1
 1,49,Drop-to-tail energy,1
@@ -491,8 +393,6 @@ true_order,replication,method,selected_order
 1,49,Minimum width — first tied minimum,1
 1,50,First difference,1
 1,50,Second difference,1
-1,50,Perron first difference,1
-1,50,Perron second difference,1
 1,50,Descent chain,1
 1,50,Local drift,1
 1,50,Drop-to-tail energy,1
@@ -501,8 +401,6 @@ true_order,replication,method,selected_order
 1,50,Minimum width — first tied minimum,1
 2,1,First difference,1
 2,1,Second difference,1
-2,1,Perron first difference,1
-2,1,Perron second difference,1
 2,1,Descent chain,2
 2,1,Local drift,2
 2,1,Drop-to-tail energy,2
@@ -511,8 +409,6 @@ true_order,replication,method,selected_order
 2,1,Minimum width — first tied minimum,2
 2,2,First difference,2
 2,2,Second difference,2
-2,2,Perron first difference,2
-2,2,Perron second difference,2
 2,2,Descent chain,2
 2,2,Local drift,2
 2,2,Drop-to-tail energy,2
@@ -521,8 +417,6 @@ true_order,replication,method,selected_order
 2,2,Minimum width — first tied minimum,2
 2,3,First difference,2
 2,3,Second difference,2
-2,3,Perron first difference,2
-2,3,Perron second difference,2
 2,3,Descent chain,2
 2,3,Local drift,2
 2,3,Drop-to-tail energy,2
@@ -531,8 +425,6 @@ true_order,replication,method,selected_order
 2,3,Minimum width — first tied minimum,2
 2,4,First difference,1
 2,4,Second difference,1
-2,4,Perron first difference,1
-2,4,Perron second difference,1
 2,4,Descent chain,2
 2,4,Local drift,2
 2,4,Drop-to-tail energy,2
@@ -541,8 +433,6 @@ true_order,replication,method,selected_order
 2,4,Minimum width — first tied minimum,2
 2,5,First difference,2
 2,5,Second difference,2
-2,5,Perron first difference,2
-2,5,Perron second difference,2
 2,5,Descent chain,2
 2,5,Local drift,2
 2,5,Drop-to-tail energy,2
@@ -551,8 +441,6 @@ true_order,replication,method,selected_order
 2,5,Minimum width — first tied minimum,2
 2,6,First difference,2
 2,6,Second difference,2
-2,6,Perron first difference,2
-2,6,Perron second difference,2
 2,6,Descent chain,2
 2,6,Local drift,2
 2,6,Drop-to-tail energy,2
@@ -561,8 +449,6 @@ true_order,replication,method,selected_order
 2,6,Minimum width — first tied minimum,2
 2,7,First difference,2
 2,7,Second difference,2
-2,7,Perron first difference,2
-2,7,Perron second difference,2
 2,7,Descent chain,2
 2,7,Local drift,2
 2,7,Drop-to-tail energy,2
@@ -571,8 +457,6 @@ true_order,replication,method,selected_order
 2,7,Minimum width — first tied minimum,2
 2,8,First difference,2
 2,8,Second difference,2
-2,8,Perron first difference,2
-2,8,Perron second difference,2
 2,8,Descent chain,2
 2,8,Local drift,2
 2,8,Drop-to-tail energy,2
@@ -581,8 +465,6 @@ true_order,replication,method,selected_order
 2,8,Minimum width — first tied minimum,2
 2,9,First difference,2
 2,9,Second difference,2
-2,9,Perron first difference,2
-2,9,Perron second difference,2
 2,9,Descent chain,2
 2,9,Local drift,2
 2,9,Drop-to-tail energy,2
@@ -591,8 +473,6 @@ true_order,replication,method,selected_order
 2,9,Minimum width — first tied minimum,2
 2,10,First difference,2
 2,10,Second difference,2
-2,10,Perron first difference,2
-2,10,Perron second difference,2
 2,10,Descent chain,2
 2,10,Local drift,2
 2,10,Drop-to-tail energy,2
@@ -601,8 +481,6 @@ true_order,replication,method,selected_order
 2,10,Minimum width — first tied minimum,2
 2,11,First difference,2
 2,11,Second difference,2
-2,11,Perron first difference,2
-2,11,Perron second difference,2
 2,11,Descent chain,2
 2,11,Local drift,2
 2,11,Drop-to-tail energy,2
@@ -611,8 +489,6 @@ true_order,replication,method,selected_order
 2,11,Minimum width — first tied minimum,2
 2,12,First difference,1
 2,12,Second difference,1
-2,12,Perron first difference,1
-2,12,Perron second difference,1
 2,12,Descent chain,2
 2,12,Local drift,2
 2,12,Drop-to-tail energy,2
@@ -621,8 +497,6 @@ true_order,replication,method,selected_order
 2,12,Minimum width — first tied minimum,2
 2,13,First difference,2
 2,13,Second difference,2
-2,13,Perron first difference,1
-2,13,Perron second difference,2
 2,13,Descent chain,2
 2,13,Local drift,2
 2,13,Drop-to-tail energy,2
@@ -631,8 +505,6 @@ true_order,replication,method,selected_order
 2,13,Minimum width — first tied minimum,2
 2,14,First difference,2
 2,14,Second difference,2
-2,14,Perron first difference,2
-2,14,Perron second difference,2
 2,14,Descent chain,2
 2,14,Local drift,2
 2,14,Drop-to-tail energy,2
@@ -641,8 +513,6 @@ true_order,replication,method,selected_order
 2,14,Minimum width — first tied minimum,2
 2,15,First difference,1
 2,15,Second difference,1
-2,15,Perron first difference,1
-2,15,Perron second difference,1
 2,15,Descent chain,2
 2,15,Local drift,2
 2,15,Drop-to-tail energy,2
@@ -651,8 +521,6 @@ true_order,replication,method,selected_order
 2,15,Minimum width — first tied minimum,2
 2,16,First difference,2
 2,16,Second difference,2
-2,16,Perron first difference,2
-2,16,Perron second difference,2
 2,16,Descent chain,2
 2,16,Local drift,2
 2,16,Drop-to-tail energy,2
@@ -661,8 +529,6 @@ true_order,replication,method,selected_order
 2,16,Minimum width — first tied minimum,2
 2,17,First difference,2
 2,17,Second difference,2
-2,17,Perron first difference,2
-2,17,Perron second difference,2
 2,17,Descent chain,2
 2,17,Local drift,2
 2,17,Drop-to-tail energy,2
@@ -671,8 +537,6 @@ true_order,replication,method,selected_order
 2,17,Minimum width — first tied minimum,2
 2,18,First difference,1
 2,18,Second difference,2
-2,18,Perron first difference,1
-2,18,Perron second difference,2
 2,18,Descent chain,2
 2,18,Local drift,2
 2,18,Drop-to-tail energy,2
@@ -681,8 +545,6 @@ true_order,replication,method,selected_order
 2,18,Minimum width — first tied minimum,2
 2,19,First difference,2
 2,19,Second difference,2
-2,19,Perron first difference,2
-2,19,Perron second difference,2
 2,19,Descent chain,2
 2,19,Local drift,2
 2,19,Drop-to-tail energy,2
@@ -691,8 +553,6 @@ true_order,replication,method,selected_order
 2,19,Minimum width — first tied minimum,2
 2,20,First difference,2
 2,20,Second difference,2
-2,20,Perron first difference,2
-2,20,Perron second difference,2
 2,20,Descent chain,2
 2,20,Local drift,2
 2,20,Drop-to-tail energy,2
@@ -701,8 +561,6 @@ true_order,replication,method,selected_order
 2,20,Minimum width — first tied minimum,2
 2,21,First difference,1
 2,21,Second difference,1
-2,21,Perron first difference,1
-2,21,Perron second difference,1
 2,21,Descent chain,2
 2,21,Local drift,2
 2,21,Drop-to-tail energy,2
@@ -711,8 +569,6 @@ true_order,replication,method,selected_order
 2,21,Minimum width — first tied minimum,2
 2,22,First difference,1
 2,22,Second difference,1
-2,22,Perron first difference,1
-2,22,Perron second difference,1
 2,22,Descent chain,2
 2,22,Local drift,2
 2,22,Drop-to-tail energy,2
@@ -721,8 +577,6 @@ true_order,replication,method,selected_order
 2,22,Minimum width — first tied minimum,2
 2,23,First difference,2
 2,23,Second difference,2
-2,23,Perron first difference,2
-2,23,Perron second difference,2
 2,23,Descent chain,2
 2,23,Local drift,2
 2,23,Drop-to-tail energy,2
@@ -731,8 +585,6 @@ true_order,replication,method,selected_order
 2,23,Minimum width — first tied minimum,2
 2,24,First difference,1
 2,24,Second difference,1
-2,24,Perron first difference,1
-2,24,Perron second difference,1
 2,24,Descent chain,2
 2,24,Local drift,2
 2,24,Drop-to-tail energy,2
@@ -741,8 +593,6 @@ true_order,replication,method,selected_order
 2,24,Minimum width — first tied minimum,2
 2,25,First difference,2
 2,25,Second difference,2
-2,25,Perron first difference,2
-2,25,Perron second difference,2
 2,25,Descent chain,2
 2,25,Local drift,2
 2,25,Drop-to-tail energy,2
@@ -751,8 +601,6 @@ true_order,replication,method,selected_order
 2,25,Minimum width — first tied minimum,2
 2,26,First difference,2
 2,26,Second difference,2
-2,26,Perron first difference,2
-2,26,Perron second difference,2
 2,26,Descent chain,2
 2,26,Local drift,2
 2,26,Drop-to-tail energy,2
@@ -761,8 +609,6 @@ true_order,replication,method,selected_order
 2,26,Minimum width — first tied minimum,2
 2,27,First difference,2
 2,27,Second difference,2
-2,27,Perron first difference,2
-2,27,Perron second difference,2
 2,27,Descent chain,2
 2,27,Local drift,2
 2,27,Drop-to-tail energy,2
@@ -771,8 +617,6 @@ true_order,replication,method,selected_order
 2,27,Minimum width — first tied minimum,2
 2,28,First difference,1
 2,28,Second difference,1
-2,28,Perron first difference,1
-2,28,Perron second difference,1
 2,28,Descent chain,2
 2,28,Local drift,2
 2,28,Drop-to-tail energy,2
@@ -781,8 +625,6 @@ true_order,replication,method,selected_order
 2,28,Minimum width — first tied minimum,2
 2,29,First difference,1
 2,29,Second difference,2
-2,29,Perron first difference,1
-2,29,Perron second difference,2
 2,29,Descent chain,2
 2,29,Local drift,2
 2,29,Drop-to-tail energy,2
@@ -791,8 +633,6 @@ true_order,replication,method,selected_order
 2,29,Minimum width — first tied minimum,2
 2,30,First difference,1
 2,30,Second difference,2
-2,30,Perron first difference,1
-2,30,Perron second difference,2
 2,30,Descent chain,2
 2,30,Local drift,2
 2,30,Drop-to-tail energy,2
@@ -801,8 +641,6 @@ true_order,replication,method,selected_order
 2,30,Minimum width — first tied minimum,2
 2,31,First difference,1
 2,31,Second difference,1
-2,31,Perron first difference,1
-2,31,Perron second difference,1
 2,31,Descent chain,2
 2,31,Local drift,2
 2,31,Drop-to-tail energy,2
@@ -811,8 +649,6 @@ true_order,replication,method,selected_order
 2,31,Minimum width — first tied minimum,2
 2,32,First difference,2
 2,32,Second difference,2
-2,32,Perron first difference,2
-2,32,Perron second difference,2
 2,32,Descent chain,2
 2,32,Local drift,2
 2,32,Drop-to-tail energy,2
@@ -821,8 +657,6 @@ true_order,replication,method,selected_order
 2,32,Minimum width — first tied minimum,2
 2,33,First difference,2
 2,33,Second difference,2
-2,33,Perron first difference,2
-2,33,Perron second difference,2
 2,33,Descent chain,2
 2,33,Local drift,2
 2,33,Drop-to-tail energy,2
@@ -831,8 +665,6 @@ true_order,replication,method,selected_order
 2,33,Minimum width — first tied minimum,2
 2,34,First difference,1
 2,34,Second difference,1
-2,34,Perron first difference,1
-2,34,Perron second difference,1
 2,34,Descent chain,2
 2,34,Local drift,2
 2,34,Drop-to-tail energy,2
@@ -841,8 +673,6 @@ true_order,replication,method,selected_order
 2,34,Minimum width — first tied minimum,2
 2,35,First difference,2
 2,35,Second difference,2
-2,35,Perron first difference,2
-2,35,Perron second difference,2
 2,35,Descent chain,2
 2,35,Local drift,2
 2,35,Drop-to-tail energy,2
@@ -851,8 +681,6 @@ true_order,replication,method,selected_order
 2,35,Minimum width — first tied minimum,2
 2,36,First difference,2
 2,36,Second difference,2
-2,36,Perron first difference,2
-2,36,Perron second difference,2
 2,36,Descent chain,2
 2,36,Local drift,2
 2,36,Drop-to-tail energy,2
@@ -861,8 +689,6 @@ true_order,replication,method,selected_order
 2,36,Minimum width — first tied minimum,2
 2,37,First difference,1
 2,37,Second difference,1
-2,37,Perron first difference,1
-2,37,Perron second difference,1
 2,37,Descent chain,2
 2,37,Local drift,2
 2,37,Drop-to-tail energy,2
@@ -871,8 +697,6 @@ true_order,replication,method,selected_order
 2,37,Minimum width — first tied minimum,2
 2,38,First difference,2
 2,38,Second difference,2
-2,38,Perron first difference,2
-2,38,Perron second difference,2
 2,38,Descent chain,2
 2,38,Local drift,2
 2,38,Drop-to-tail energy,2
@@ -881,8 +705,6 @@ true_order,replication,method,selected_order
 2,38,Minimum width — first tied minimum,2
 2,39,First difference,1
 2,39,Second difference,1
-2,39,Perron first difference,1
-2,39,Perron second difference,1
 2,39,Descent chain,2
 2,39,Local drift,2
 2,39,Drop-to-tail energy,2
@@ -891,8 +713,6 @@ true_order,replication,method,selected_order
 2,39,Minimum width — first tied minimum,2
 2,40,First difference,1
 2,40,Second difference,1
-2,40,Perron first difference,1
-2,40,Perron second difference,1
 2,40,Descent chain,2
 2,40,Local drift,2
 2,40,Drop-to-tail energy,2
@@ -901,8 +721,6 @@ true_order,replication,method,selected_order
 2,40,Minimum width — first tied minimum,2
 2,41,First difference,1
 2,41,Second difference,1
-2,41,Perron first difference,1
-2,41,Perron second difference,1
 2,41,Descent chain,2
 2,41,Local drift,2
 2,41,Drop-to-tail energy,2
@@ -911,8 +729,6 @@ true_order,replication,method,selected_order
 2,41,Minimum width — first tied minimum,2
 2,42,First difference,2
 2,42,Second difference,2
-2,42,Perron first difference,2
-2,42,Perron second difference,2
 2,42,Descent chain,2
 2,42,Local drift,2
 2,42,Drop-to-tail energy,2
@@ -921,8 +737,6 @@ true_order,replication,method,selected_order
 2,42,Minimum width — first tied minimum,2
 2,43,First difference,1
 2,43,Second difference,1
-2,43,Perron first difference,1
-2,43,Perron second difference,1
 2,43,Descent chain,2
 2,43,Local drift,2
 2,43,Drop-to-tail energy,2
@@ -931,8 +745,6 @@ true_order,replication,method,selected_order
 2,43,Minimum width — first tied minimum,2
 2,44,First difference,1
 2,44,Second difference,1
-2,44,Perron first difference,1
-2,44,Perron second difference,1
 2,44,Descent chain,2
 2,44,Local drift,2
 2,44,Drop-to-tail energy,2
@@ -941,8 +753,6 @@ true_order,replication,method,selected_order
 2,44,Minimum width — first tied minimum,2
 2,45,First difference,1
 2,45,Second difference,2
-2,45,Perron first difference,1
-2,45,Perron second difference,2
 2,45,Descent chain,2
 2,45,Local drift,2
 2,45,Drop-to-tail energy,2
@@ -951,8 +761,6 @@ true_order,replication,method,selected_order
 2,45,Minimum width — first tied minimum,2
 2,46,First difference,2
 2,46,Second difference,2
-2,46,Perron first difference,2
-2,46,Perron second difference,2
 2,46,Descent chain,2
 2,46,Local drift,2
 2,46,Drop-to-tail energy,2
@@ -961,8 +769,6 @@ true_order,replication,method,selected_order
 2,46,Minimum width — first tied minimum,2
 2,47,First difference,2
 2,47,Second difference,2
-2,47,Perron first difference,2
-2,47,Perron second difference,2
 2,47,Descent chain,2
 2,47,Local drift,2
 2,47,Drop-to-tail energy,2
@@ -971,8 +777,6 @@ true_order,replication,method,selected_order
 2,47,Minimum width — first tied minimum,2
 2,48,First difference,2
 2,48,Second difference,2
-2,48,Perron first difference,2
-2,48,Perron second difference,2
 2,48,Descent chain,2
 2,48,Local drift,2
 2,48,Drop-to-tail energy,2
@@ -981,8 +785,6 @@ true_order,replication,method,selected_order
 2,48,Minimum width — first tied minimum,2
 2,49,First difference,2
 2,49,Second difference,2
-2,49,Perron first difference,2
-2,49,Perron second difference,2
 2,49,Descent chain,2
 2,49,Local drift,2
 2,49,Drop-to-tail energy,2
@@ -991,8 +793,6 @@ true_order,replication,method,selected_order
 2,49,Minimum width — first tied minimum,2
 2,50,First difference,1
 2,50,Second difference,1
-2,50,Perron first difference,1
-2,50,Perron second difference,1
 2,50,Descent chain,2
 2,50,Local drift,2
 2,50,Drop-to-tail energy,2
@@ -1001,8 +801,6 @@ true_order,replication,method,selected_order
 2,50,Minimum width — first tied minimum,2
 3,1,First difference,1
 3,1,Second difference,2
-3,1,Perron first difference,1
-3,1,Perron second difference,2
 3,1,Descent chain,3
 3,1,Local drift,3
 3,1,Drop-to-tail energy,3
@@ -1011,8 +809,6 @@ true_order,replication,method,selected_order
 3,1,Minimum width — first tied minimum,3
 3,2,First difference,1
 3,2,Second difference,1
-3,2,Perron first difference,1
-3,2,Perron second difference,1
 3,2,Descent chain,3
 3,2,Local drift,3
 3,2,Drop-to-tail energy,3
@@ -1021,8 +817,6 @@ true_order,replication,method,selected_order
 3,2,Minimum width — first tied minimum,3
 3,3,First difference,1
 3,3,Second difference,1
-3,3,Perron first difference,1
-3,3,Perron second difference,1
 3,3,Descent chain,3
 3,3,Local drift,3
 3,3,Drop-to-tail energy,3
@@ -1031,8 +825,6 @@ true_order,replication,method,selected_order
 3,3,Minimum width — first tied minimum,3
 3,4,First difference,1
 3,4,Second difference,1
-3,4,Perron first difference,1
-3,4,Perron second difference,1
 3,4,Descent chain,3
 3,4,Local drift,3
 3,4,Drop-to-tail energy,3
@@ -1041,8 +833,6 @@ true_order,replication,method,selected_order
 3,4,Minimum width — first tied minimum,3
 3,5,First difference,2
 3,5,Second difference,2
-3,5,Perron first difference,2
-3,5,Perron second difference,2
 3,5,Descent chain,3
 3,5,Local drift,3
 3,5,Drop-to-tail energy,3
@@ -1051,8 +841,6 @@ true_order,replication,method,selected_order
 3,5,Minimum width — first tied minimum,3
 3,6,First difference,3
 3,6,Second difference,3
-3,6,Perron first difference,3
-3,6,Perron second difference,3
 3,6,Descent chain,3
 3,6,Local drift,3
 3,6,Drop-to-tail energy,3
@@ -1061,8 +849,6 @@ true_order,replication,method,selected_order
 3,6,Minimum width — first tied minimum,3
 3,7,First difference,3
 3,7,Second difference,3
-3,7,Perron first difference,3
-3,7,Perron second difference,3
 3,7,Descent chain,3
 3,7,Local drift,3
 3,7,Drop-to-tail energy,3
@@ -1071,8 +857,6 @@ true_order,replication,method,selected_order
 3,7,Minimum width — first tied minimum,3
 3,8,First difference,3
 3,8,Second difference,3
-3,8,Perron first difference,3
-3,8,Perron second difference,3
 3,8,Descent chain,3
 3,8,Local drift,3
 3,8,Drop-to-tail energy,3
@@ -1081,8 +865,6 @@ true_order,replication,method,selected_order
 3,8,Minimum width — first tied minimum,3
 3,9,First difference,2
 3,9,Second difference,2
-3,9,Perron first difference,2
-3,9,Perron second difference,2
 3,9,Descent chain,3
 3,9,Local drift,3
 3,9,Drop-to-tail energy,3
@@ -1091,8 +873,6 @@ true_order,replication,method,selected_order
 3,9,Minimum width — first tied minimum,3
 3,10,First difference,2
 3,10,Second difference,3
-3,10,Perron first difference,2
-3,10,Perron second difference,3
 3,10,Descent chain,3
 3,10,Local drift,3
 3,10,Drop-to-tail energy,3
@@ -1101,8 +881,6 @@ true_order,replication,method,selected_order
 3,10,Minimum width — first tied minimum,3
 3,11,First difference,1
 3,11,Second difference,1
-3,11,Perron first difference,1
-3,11,Perron second difference,1
 3,11,Descent chain,3
 3,11,Local drift,3
 3,11,Drop-to-tail energy,3
@@ -1111,8 +889,6 @@ true_order,replication,method,selected_order
 3,11,Minimum width — first tied minimum,3
 3,12,First difference,1
 3,12,Second difference,1
-3,12,Perron first difference,1
-3,12,Perron second difference,1
 3,12,Descent chain,3
 3,12,Local drift,3
 3,12,Drop-to-tail energy,3
@@ -1121,8 +897,6 @@ true_order,replication,method,selected_order
 3,12,Minimum width — first tied minimum,3
 3,13,First difference,1
 3,13,Second difference,1
-3,13,Perron first difference,1
-3,13,Perron second difference,1
 3,13,Descent chain,3
 3,13,Local drift,3
 3,13,Drop-to-tail energy,3
@@ -1131,8 +905,6 @@ true_order,replication,method,selected_order
 3,13,Minimum width — first tied minimum,3
 3,14,First difference,1
 3,14,Second difference,1
-3,14,Perron first difference,1
-3,14,Perron second difference,1
 3,14,Descent chain,3
 3,14,Local drift,3
 3,14,Drop-to-tail energy,3
@@ -1141,8 +913,6 @@ true_order,replication,method,selected_order
 3,14,Minimum width — first tied minimum,3
 3,15,First difference,1
 3,15,Second difference,1
-3,15,Perron first difference,1
-3,15,Perron second difference,1
 3,15,Descent chain,3
 3,15,Local drift,3
 3,15,Drop-to-tail energy,3
@@ -1151,8 +921,6 @@ true_order,replication,method,selected_order
 3,15,Minimum width — first tied minimum,3
 3,16,First difference,1
 3,16,Second difference,1
-3,16,Perron first difference,1
-3,16,Perron second difference,1
 3,16,Descent chain,3
 3,16,Local drift,3
 3,16,Drop-to-tail energy,3
@@ -1161,8 +929,6 @@ true_order,replication,method,selected_order
 3,16,Minimum width — first tied minimum,3
 3,17,First difference,3
 3,17,Second difference,3
-3,17,Perron first difference,3
-3,17,Perron second difference,3
 3,17,Descent chain,3
 3,17,Local drift,3
 3,17,Drop-to-tail energy,3
@@ -1171,8 +937,6 @@ true_order,replication,method,selected_order
 3,17,Minimum width — first tied minimum,3
 3,18,First difference,2
 3,18,Second difference,2
-3,18,Perron first difference,2
-3,18,Perron second difference,2
 3,18,Descent chain,3
 3,18,Local drift,3
 3,18,Drop-to-tail energy,3
@@ -1181,8 +945,6 @@ true_order,replication,method,selected_order
 3,18,Minimum width — first tied minimum,3
 3,19,First difference,2
 3,19,Second difference,2
-3,19,Perron first difference,2
-3,19,Perron second difference,2
 3,19,Descent chain,3
 3,19,Local drift,3
 3,19,Drop-to-tail energy,3
@@ -1191,8 +953,6 @@ true_order,replication,method,selected_order
 3,19,Minimum width — first tied minimum,3
 3,20,First difference,2
 3,20,Second difference,3
-3,20,Perron first difference,2
-3,20,Perron second difference,3
 3,20,Descent chain,3
 3,20,Local drift,3
 3,20,Drop-to-tail energy,3
@@ -1201,8 +961,6 @@ true_order,replication,method,selected_order
 3,20,Minimum width — first tied minimum,3
 3,21,First difference,2
 3,21,Second difference,2
-3,21,Perron first difference,2
-3,21,Perron second difference,2
 3,21,Descent chain,3
 3,21,Local drift,3
 3,21,Drop-to-tail energy,3
@@ -1211,8 +969,6 @@ true_order,replication,method,selected_order
 3,21,Minimum width — first tied minimum,3
 3,22,First difference,2
 3,22,Second difference,2
-3,22,Perron first difference,2
-3,22,Perron second difference,2
 3,22,Descent chain,3
 3,22,Local drift,3
 3,22,Drop-to-tail energy,3
@@ -1221,8 +977,6 @@ true_order,replication,method,selected_order
 3,22,Minimum width — first tied minimum,3
 3,23,First difference,3
 3,23,Second difference,3
-3,23,Perron first difference,3
-3,23,Perron second difference,3
 3,23,Descent chain,3
 3,23,Local drift,3
 3,23,Drop-to-tail energy,3
@@ -1231,8 +985,6 @@ true_order,replication,method,selected_order
 3,23,Minimum width — first tied minimum,3
 3,24,First difference,1
 3,24,Second difference,1
-3,24,Perron first difference,1
-3,24,Perron second difference,1
 3,24,Descent chain,3
 3,24,Local drift,3
 3,24,Drop-to-tail energy,3
@@ -1241,8 +993,6 @@ true_order,replication,method,selected_order
 3,24,Minimum width — first tied minimum,3
 3,25,First difference,1
 3,25,Second difference,1
-3,25,Perron first difference,1
-3,25,Perron second difference,1
 3,25,Descent chain,3
 3,25,Local drift,3
 3,25,Drop-to-tail energy,3
@@ -1251,8 +1001,6 @@ true_order,replication,method,selected_order
 3,25,Minimum width — first tied minimum,3
 3,26,First difference,2
 3,26,Second difference,2
-3,26,Perron first difference,2
-3,26,Perron second difference,2
 3,26,Descent chain,3
 3,26,Local drift,3
 3,26,Drop-to-tail energy,3
@@ -1261,8 +1009,6 @@ true_order,replication,method,selected_order
 3,26,Minimum width — first tied minimum,3
 3,27,First difference,2
 3,27,Second difference,2
-3,27,Perron first difference,2
-3,27,Perron second difference,2
 3,27,Descent chain,3
 3,27,Local drift,3
 3,27,Drop-to-tail energy,3
@@ -1271,8 +1017,6 @@ true_order,replication,method,selected_order
 3,27,Minimum width — first tied minimum,3
 3,28,First difference,1
 3,28,Second difference,1
-3,28,Perron first difference,1
-3,28,Perron second difference,1
 3,28,Descent chain,3
 3,28,Local drift,3
 3,28,Drop-to-tail energy,3
@@ -1281,8 +1025,6 @@ true_order,replication,method,selected_order
 3,28,Minimum width — first tied minimum,3
 3,29,First difference,3
 3,29,Second difference,3
-3,29,Perron first difference,3
-3,29,Perron second difference,3
 3,29,Descent chain,3
 3,29,Local drift,3
 3,29,Drop-to-tail energy,3
@@ -1291,8 +1033,6 @@ true_order,replication,method,selected_order
 3,29,Minimum width — first tied minimum,3
 3,30,First difference,2
 3,30,Second difference,3
-3,30,Perron first difference,2
-3,30,Perron second difference,3
 3,30,Descent chain,3
 3,30,Local drift,3
 3,30,Drop-to-tail energy,3
@@ -1301,8 +1041,6 @@ true_order,replication,method,selected_order
 3,30,Minimum width — first tied minimum,3
 3,31,First difference,1
 3,31,Second difference,1
-3,31,Perron first difference,1
-3,31,Perron second difference,1
 3,31,Descent chain,3
 3,31,Local drift,3
 3,31,Drop-to-tail energy,3
@@ -1311,8 +1049,6 @@ true_order,replication,method,selected_order
 3,31,Minimum width — first tied minimum,3
 3,32,First difference,2
 3,32,Second difference,2
-3,32,Perron first difference,2
-3,32,Perron second difference,2
 3,32,Descent chain,3
 3,32,Local drift,3
 3,32,Drop-to-tail energy,3
@@ -1321,8 +1057,6 @@ true_order,replication,method,selected_order
 3,32,Minimum width — first tied minimum,3
 3,33,First difference,2
 3,33,Second difference,2
-3,33,Perron first difference,2
-3,33,Perron second difference,2
 3,33,Descent chain,3
 3,33,Local drift,3
 3,33,Drop-to-tail energy,3
@@ -1331,8 +1065,6 @@ true_order,replication,method,selected_order
 3,33,Minimum width — first tied minimum,3
 3,34,First difference,1
 3,34,Second difference,1
-3,34,Perron first difference,1
-3,34,Perron second difference,1
 3,34,Descent chain,3
 3,34,Local drift,3
 3,34,Drop-to-tail energy,3
@@ -1341,8 +1073,6 @@ true_order,replication,method,selected_order
 3,34,Minimum width — first tied minimum,3
 3,35,First difference,2
 3,35,Second difference,2
-3,35,Perron first difference,2
-3,35,Perron second difference,2
 3,35,Descent chain,3
 3,35,Local drift,3
 3,35,Drop-to-tail energy,3
@@ -1351,8 +1081,6 @@ true_order,replication,method,selected_order
 3,35,Minimum width — first tied minimum,3
 3,36,First difference,1
 3,36,Second difference,1
-3,36,Perron first difference,1
-3,36,Perron second difference,1
 3,36,Descent chain,3
 3,36,Local drift,3
 3,36,Drop-to-tail energy,3
@@ -1361,8 +1089,6 @@ true_order,replication,method,selected_order
 3,36,Minimum width — first tied minimum,3
 3,37,First difference,3
 3,37,Second difference,3
-3,37,Perron first difference,3
-3,37,Perron second difference,3
 3,37,Descent chain,3
 3,37,Local drift,3
 3,37,Drop-to-tail energy,3
@@ -1371,8 +1097,6 @@ true_order,replication,method,selected_order
 3,37,Minimum width — first tied minimum,3
 3,38,First difference,2
 3,38,Second difference,2
-3,38,Perron first difference,2
-3,38,Perron second difference,2
 3,38,Descent chain,3
 3,38,Local drift,3
 3,38,Drop-to-tail energy,3
@@ -1381,8 +1105,6 @@ true_order,replication,method,selected_order
 3,38,Minimum width — first tied minimum,3
 3,39,First difference,1
 3,39,Second difference,1
-3,39,Perron first difference,1
-3,39,Perron second difference,1
 3,39,Descent chain,3
 3,39,Local drift,3
 3,39,Drop-to-tail energy,3
@@ -1391,8 +1113,6 @@ true_order,replication,method,selected_order
 3,39,Minimum width — first tied minimum,3
 3,40,First difference,2
 3,40,Second difference,2
-3,40,Perron first difference,2
-3,40,Perron second difference,2
 3,40,Descent chain,3
 3,40,Local drift,3
 3,40,Drop-to-tail energy,3
@@ -1401,8 +1121,6 @@ true_order,replication,method,selected_order
 3,40,Minimum width — first tied minimum,3
 3,41,First difference,2
 3,41,Second difference,2
-3,41,Perron first difference,2
-3,41,Perron second difference,2
 3,41,Descent chain,3
 3,41,Local drift,3
 3,41,Drop-to-tail energy,3
@@ -1411,8 +1129,6 @@ true_order,replication,method,selected_order
 3,41,Minimum width — first tied minimum,3
 3,42,First difference,1
 3,42,Second difference,3
-3,42,Perron first difference,1
-3,42,Perron second difference,3
 3,42,Descent chain,3
 3,42,Local drift,3
 3,42,Drop-to-tail energy,3
@@ -1421,8 +1137,6 @@ true_order,replication,method,selected_order
 3,42,Minimum width — first tied minimum,3
 3,43,First difference,2
 3,43,Second difference,2
-3,43,Perron first difference,2
-3,43,Perron second difference,2
 3,43,Descent chain,3
 3,43,Local drift,3
 3,43,Drop-to-tail energy,3
@@ -1431,8 +1145,6 @@ true_order,replication,method,selected_order
 3,43,Minimum width — first tied minimum,3
 3,44,First difference,1
 3,44,Second difference,1
-3,44,Perron first difference,1
-3,44,Perron second difference,1
 3,44,Descent chain,3
 3,44,Local drift,3
 3,44,Drop-to-tail energy,3
@@ -1441,8 +1153,6 @@ true_order,replication,method,selected_order
 3,44,Minimum width — first tied minimum,3
 3,45,First difference,1
 3,45,Second difference,1
-3,45,Perron first difference,1
-3,45,Perron second difference,1
 3,45,Descent chain,3
 3,45,Local drift,3
 3,45,Drop-to-tail energy,3
@@ -1451,8 +1161,6 @@ true_order,replication,method,selected_order
 3,45,Minimum width — first tied minimum,3
 3,46,First difference,2
 3,46,Second difference,3
-3,46,Perron first difference,2
-3,46,Perron second difference,3
 3,46,Descent chain,3
 3,46,Local drift,3
 3,46,Drop-to-tail energy,3
@@ -1461,8 +1169,6 @@ true_order,replication,method,selected_order
 3,46,Minimum width — first tied minimum,3
 3,47,First difference,3
 3,47,Second difference,3
-3,47,Perron first difference,3
-3,47,Perron second difference,3
 3,47,Descent chain,3
 3,47,Local drift,3
 3,47,Drop-to-tail energy,3
@@ -1471,8 +1177,6 @@ true_order,replication,method,selected_order
 3,47,Minimum width — first tied minimum,3
 3,48,First difference,3
 3,48,Second difference,3
-3,48,Perron first difference,1
-3,48,Perron second difference,3
 3,48,Descent chain,3
 3,48,Local drift,3
 3,48,Drop-to-tail energy,3
@@ -1481,8 +1185,6 @@ true_order,replication,method,selected_order
 3,48,Minimum width — first tied minimum,3
 3,49,First difference,1
 3,49,Second difference,3
-3,49,Perron first difference,1
-3,49,Perron second difference,3
 3,49,Descent chain,3
 3,49,Local drift,3
 3,49,Drop-to-tail energy,3
@@ -1491,8 +1193,6 @@ true_order,replication,method,selected_order
 3,49,Minimum width — first tied minimum,3
 3,50,First difference,1
 3,50,Second difference,1
-3,50,Perron first difference,1
-3,50,Perron second difference,1
 3,50,Descent chain,3
 3,50,Local drift,3
 3,50,Drop-to-tail energy,3
@@ -1501,8 +1201,6 @@ true_order,replication,method,selected_order
 3,50,Minimum width — first tied minimum,3
 4,1,First difference,4
 4,1,Second difference,4
-4,1,Perron first difference,4
-4,1,Perron second difference,4
 4,1,Descent chain,4
 4,1,Local drift,4
 4,1,Drop-to-tail energy,4
@@ -1511,8 +1209,6 @@ true_order,replication,method,selected_order
 4,1,Minimum width — first tied minimum,4
 4,2,First difference,2
 4,2,Second difference,2
-4,2,Perron first difference,2
-4,2,Perron second difference,2
 4,2,Descent chain,4
 4,2,Local drift,4
 4,2,Drop-to-tail energy,4
@@ -1521,8 +1217,6 @@ true_order,replication,method,selected_order
 4,2,Minimum width — first tied minimum,4
 4,3,First difference,1
 4,3,Second difference,1
-4,3,Perron first difference,1
-4,3,Perron second difference,1
 4,3,Descent chain,4
 4,3,Local drift,4
 4,3,Drop-to-tail energy,4
@@ -1531,8 +1225,6 @@ true_order,replication,method,selected_order
 4,3,Minimum width — first tied minimum,4
 4,4,First difference,4
 4,4,Second difference,4
-4,4,Perron first difference,4
-4,4,Perron second difference,4
 4,4,Descent chain,4
 4,4,Local drift,4
 4,4,Drop-to-tail energy,4
@@ -1541,8 +1233,6 @@ true_order,replication,method,selected_order
 4,4,Minimum width — first tied minimum,4
 4,5,First difference,1
 4,5,Second difference,1
-4,5,Perron first difference,1
-4,5,Perron second difference,1
 4,5,Descent chain,4
 4,5,Local drift,4
 4,5,Drop-to-tail energy,4
@@ -1551,8 +1241,6 @@ true_order,replication,method,selected_order
 4,5,Minimum width — first tied minimum,4
 4,6,First difference,2
 4,6,Second difference,2
-4,6,Perron first difference,2
-4,6,Perron second difference,2
 4,6,Descent chain,4
 4,6,Local drift,4
 4,6,Drop-to-tail energy,4
@@ -1561,8 +1249,6 @@ true_order,replication,method,selected_order
 4,6,Minimum width — first tied minimum,4
 4,7,First difference,1
 4,7,Second difference,1
-4,7,Perron first difference,1
-4,7,Perron second difference,1
 4,7,Descent chain,4
 4,7,Local drift,4
 4,7,Drop-to-tail energy,4
@@ -1571,8 +1257,6 @@ true_order,replication,method,selected_order
 4,7,Minimum width — first tied minimum,4
 4,8,First difference,2
 4,8,Second difference,2
-4,8,Perron first difference,2
-4,8,Perron second difference,2
 4,8,Descent chain,4
 4,8,Local drift,4
 4,8,Drop-to-tail energy,4
@@ -1581,8 +1265,6 @@ true_order,replication,method,selected_order
 4,8,Minimum width — first tied minimum,4
 4,9,First difference,1
 4,9,Second difference,1
-4,9,Perron first difference,1
-4,9,Perron second difference,1
 4,9,Descent chain,4
 4,9,Local drift,4
 4,9,Drop-to-tail energy,4
@@ -1591,8 +1273,6 @@ true_order,replication,method,selected_order
 4,9,Minimum width — first tied minimum,4
 4,10,First difference,4
 4,10,Second difference,4
-4,10,Perron first difference,1
-4,10,Perron second difference,4
 4,10,Descent chain,4
 4,10,Local drift,4
 4,10,Drop-to-tail energy,4
@@ -1601,8 +1281,6 @@ true_order,replication,method,selected_order
 4,10,Minimum width — first tied minimum,4
 4,11,First difference,2
 4,11,Second difference,2
-4,11,Perron first difference,2
-4,11,Perron second difference,2
 4,11,Descent chain,4
 4,11,Local drift,4
 4,11,Drop-to-tail energy,4
@@ -1611,8 +1289,6 @@ true_order,replication,method,selected_order
 4,11,Minimum width — first tied minimum,4
 4,12,First difference,2
 4,12,Second difference,2
-4,12,Perron first difference,2
-4,12,Perron second difference,2
 4,12,Descent chain,4
 4,12,Local drift,4
 4,12,Drop-to-tail energy,4
@@ -1621,8 +1297,6 @@ true_order,replication,method,selected_order
 4,12,Minimum width — first tied minimum,4
 4,13,First difference,1
 4,13,Second difference,1
-4,13,Perron first difference,1
-4,13,Perron second difference,1
 4,13,Descent chain,4
 4,13,Local drift,4
 4,13,Drop-to-tail energy,4
@@ -1631,8 +1305,6 @@ true_order,replication,method,selected_order
 4,13,Minimum width — first tied minimum,4
 4,14,First difference,1
 4,14,Second difference,1
-4,14,Perron first difference,1
-4,14,Perron second difference,1
 4,14,Descent chain,4
 4,14,Local drift,4
 4,14,Drop-to-tail energy,4
@@ -1641,8 +1313,6 @@ true_order,replication,method,selected_order
 4,14,Minimum width — first tied minimum,4
 4,15,First difference,2
 4,15,Second difference,4
-4,15,Perron first difference,2
-4,15,Perron second difference,4
 4,15,Descent chain,4
 4,15,Local drift,4
 4,15,Drop-to-tail energy,4
@@ -1651,8 +1321,6 @@ true_order,replication,method,selected_order
 4,15,Minimum width — first tied minimum,4
 4,16,First difference,2
 4,16,Second difference,2
-4,16,Perron first difference,2
-4,16,Perron second difference,2
 4,16,Descent chain,4
 4,16,Local drift,4
 4,16,Drop-to-tail energy,4
@@ -1661,8 +1329,6 @@ true_order,replication,method,selected_order
 4,16,Minimum width — first tied minimum,4
 4,17,First difference,2
 4,17,Second difference,2
-4,17,Perron first difference,2
-4,17,Perron second difference,2
 4,17,Descent chain,4
 4,17,Local drift,4
 4,17,Drop-to-tail energy,4
@@ -1671,8 +1337,6 @@ true_order,replication,method,selected_order
 4,17,Minimum width — first tied minimum,4
 4,18,First difference,2
 4,18,Second difference,2
-4,18,Perron first difference,2
-4,18,Perron second difference,2
 4,18,Descent chain,4
 4,18,Local drift,4
 4,18,Drop-to-tail energy,4
@@ -1681,8 +1345,6 @@ true_order,replication,method,selected_order
 4,18,Minimum width — first tied minimum,4
 4,19,First difference,2
 4,19,Second difference,2
-4,19,Perron first difference,2
-4,19,Perron second difference,2
 4,19,Descent chain,4
 4,19,Local drift,4
 4,19,Drop-to-tail energy,4
@@ -1691,8 +1353,6 @@ true_order,replication,method,selected_order
 4,19,Minimum width — first tied minimum,4
 4,20,First difference,1
 4,20,Second difference,4
-4,20,Perron first difference,1
-4,20,Perron second difference,1
 4,20,Descent chain,4
 4,20,Local drift,4
 4,20,Drop-to-tail energy,4
@@ -1701,8 +1361,6 @@ true_order,replication,method,selected_order
 4,20,Minimum width — first tied minimum,4
 4,21,First difference,2
 4,21,Second difference,2
-4,21,Perron first difference,2
-4,21,Perron second difference,2
 4,21,Descent chain,4
 4,21,Local drift,4
 4,21,Drop-to-tail energy,4
@@ -1711,8 +1369,6 @@ true_order,replication,method,selected_order
 4,21,Minimum width — first tied minimum,4
 4,22,First difference,4
 4,22,Second difference,4
-4,22,Perron first difference,4
-4,22,Perron second difference,4
 4,22,Descent chain,4
 4,22,Local drift,4
 4,22,Drop-to-tail energy,4
@@ -1721,8 +1377,6 @@ true_order,replication,method,selected_order
 4,22,Minimum width — first tied minimum,4
 4,23,First difference,2
 4,23,Second difference,2
-4,23,Perron first difference,2
-4,23,Perron second difference,2
 4,23,Descent chain,4
 4,23,Local drift,4
 4,23,Drop-to-tail energy,4
@@ -1731,8 +1385,6 @@ true_order,replication,method,selected_order
 4,23,Minimum width — first tied minimum,4
 4,24,First difference,2
 4,24,Second difference,2
-4,24,Perron first difference,1
-4,24,Perron second difference,2
 4,24,Descent chain,4
 4,24,Local drift,4
 4,24,Drop-to-tail energy,4
@@ -1741,8 +1393,6 @@ true_order,replication,method,selected_order
 4,24,Minimum width — first tied minimum,4
 4,25,First difference,2
 4,25,Second difference,2
-4,25,Perron first difference,2
-4,25,Perron second difference,2
 4,25,Descent chain,4
 4,25,Local drift,4
 4,25,Drop-to-tail energy,4
@@ -1751,8 +1401,6 @@ true_order,replication,method,selected_order
 4,25,Minimum width — first tied minimum,4
 4,26,First difference,1
 4,26,Second difference,1
-4,26,Perron first difference,1
-4,26,Perron second difference,1
 4,26,Descent chain,4
 4,26,Local drift,4
 4,26,Drop-to-tail energy,4
@@ -1761,8 +1409,6 @@ true_order,replication,method,selected_order
 4,26,Minimum width — first tied minimum,4
 4,27,First difference,3
 4,27,Second difference,4
-4,27,Perron first difference,3
-4,27,Perron second difference,4
 4,27,Descent chain,4
 4,27,Local drift,4
 4,27,Drop-to-tail energy,4
@@ -1771,8 +1417,6 @@ true_order,replication,method,selected_order
 4,27,Minimum width — first tied minimum,4
 4,28,First difference,1
 4,28,Second difference,1
-4,28,Perron first difference,1
-4,28,Perron second difference,1
 4,28,Descent chain,4
 4,28,Local drift,4
 4,28,Drop-to-tail energy,4
@@ -1781,8 +1425,6 @@ true_order,replication,method,selected_order
 4,28,Minimum width — first tied minimum,4
 4,29,First difference,1
 4,29,Second difference,1
-4,29,Perron first difference,1
-4,29,Perron second difference,1
 4,29,Descent chain,4
 4,29,Local drift,4
 4,29,Drop-to-tail energy,4
@@ -1791,8 +1433,6 @@ true_order,replication,method,selected_order
 4,29,Minimum width — first tied minimum,4
 4,30,First difference,4
 4,30,Second difference,4
-4,30,Perron first difference,4
-4,30,Perron second difference,4
 4,30,Descent chain,4
 4,30,Local drift,4
 4,30,Drop-to-tail energy,4
@@ -1801,8 +1441,6 @@ true_order,replication,method,selected_order
 4,30,Minimum width — first tied minimum,4
 4,31,First difference,4
 4,31,Second difference,4
-4,31,Perron first difference,4
-4,31,Perron second difference,4
 4,31,Descent chain,4
 4,31,Local drift,4
 4,31,Drop-to-tail energy,4
@@ -1811,8 +1449,6 @@ true_order,replication,method,selected_order
 4,31,Minimum width — first tied minimum,4
 4,32,First difference,2
 4,32,Second difference,2
-4,32,Perron first difference,2
-4,32,Perron second difference,2
 4,32,Descent chain,4
 4,32,Local drift,4
 4,32,Drop-to-tail energy,4
@@ -1821,8 +1457,6 @@ true_order,replication,method,selected_order
 4,32,Minimum width — first tied minimum,4
 4,33,First difference,4
 4,33,Second difference,4
-4,33,Perron first difference,4
-4,33,Perron second difference,4
 4,33,Descent chain,4
 4,33,Local drift,4
 4,33,Drop-to-tail energy,4
@@ -1831,8 +1465,6 @@ true_order,replication,method,selected_order
 4,33,Minimum width — first tied minimum,4
 4,34,First difference,2
 4,34,Second difference,2
-4,34,Perron first difference,2
-4,34,Perron second difference,2
 4,34,Descent chain,4
 4,34,Local drift,4
 4,34,Drop-to-tail energy,4
@@ -1841,8 +1473,6 @@ true_order,replication,method,selected_order
 4,34,Minimum width — first tied minimum,4
 4,35,First difference,2
 4,35,Second difference,2
-4,35,Perron first difference,2
-4,35,Perron second difference,2
 4,35,Descent chain,4
 4,35,Local drift,4
 4,35,Drop-to-tail energy,4
@@ -1851,8 +1481,6 @@ true_order,replication,method,selected_order
 4,35,Minimum width — first tied minimum,4
 4,36,First difference,2
 4,36,Second difference,2
-4,36,Perron first difference,2
-4,36,Perron second difference,2
 4,36,Descent chain,4
 4,36,Local drift,4
 4,36,Drop-to-tail energy,4
@@ -1861,8 +1489,6 @@ true_order,replication,method,selected_order
 4,36,Minimum width — first tied minimum,4
 4,37,First difference,1
 4,37,Second difference,1
-4,37,Perron first difference,1
-4,37,Perron second difference,1
 4,37,Descent chain,4
 4,37,Local drift,4
 4,37,Drop-to-tail energy,4
@@ -1871,8 +1497,6 @@ true_order,replication,method,selected_order
 4,37,Minimum width — first tied minimum,4
 4,38,First difference,1
 4,38,Second difference,1
-4,38,Perron first difference,1
-4,38,Perron second difference,1
 4,38,Descent chain,4
 4,38,Local drift,4
 4,38,Drop-to-tail energy,4
@@ -1881,8 +1505,6 @@ true_order,replication,method,selected_order
 4,38,Minimum width — first tied minimum,4
 4,39,First difference,2
 4,39,Second difference,2
-4,39,Perron first difference,2
-4,39,Perron second difference,2
 4,39,Descent chain,4
 4,39,Local drift,4
 4,39,Drop-to-tail energy,4
@@ -1891,8 +1513,6 @@ true_order,replication,method,selected_order
 4,39,Minimum width — first tied minimum,4
 4,40,First difference,2
 4,40,Second difference,2
-4,40,Perron first difference,2
-4,40,Perron second difference,2
 4,40,Descent chain,4
 4,40,Local drift,4
 4,40,Drop-to-tail energy,4
@@ -1901,8 +1521,6 @@ true_order,replication,method,selected_order
 4,40,Minimum width — first tied minimum,4
 4,41,First difference,1
 4,41,Second difference,1
-4,41,Perron first difference,1
-4,41,Perron second difference,1
 4,41,Descent chain,4
 4,41,Local drift,4
 4,41,Drop-to-tail energy,4
@@ -1911,8 +1529,6 @@ true_order,replication,method,selected_order
 4,41,Minimum width — first tied minimum,4
 4,42,First difference,1
 4,42,Second difference,1
-4,42,Perron first difference,1
-4,42,Perron second difference,1
 4,42,Descent chain,4
 4,42,Local drift,4
 4,42,Drop-to-tail energy,4
@@ -1921,8 +1537,6 @@ true_order,replication,method,selected_order
 4,42,Minimum width — first tied minimum,4
 4,43,First difference,1
 4,43,Second difference,2
-4,43,Perron first difference,1
-4,43,Perron second difference,2
 4,43,Descent chain,4
 4,43,Local drift,4
 4,43,Drop-to-tail energy,4
@@ -1931,8 +1545,6 @@ true_order,replication,method,selected_order
 4,43,Minimum width — first tied minimum,4
 4,44,First difference,2
 4,44,Second difference,2
-4,44,Perron first difference,2
-4,44,Perron second difference,2
 4,44,Descent chain,4
 4,44,Local drift,4
 4,44,Drop-to-tail energy,4
@@ -1941,8 +1553,6 @@ true_order,replication,method,selected_order
 4,44,Minimum width — first tied minimum,4
 4,45,First difference,1
 4,45,Second difference,2
-4,45,Perron first difference,1
-4,45,Perron second difference,1
 4,45,Descent chain,4
 4,45,Local drift,4
 4,45,Drop-to-tail energy,4
@@ -1951,8 +1561,6 @@ true_order,replication,method,selected_order
 4,45,Minimum width — first tied minimum,4
 4,46,First difference,1
 4,46,Second difference,2
-4,46,Perron first difference,1
-4,46,Perron second difference,1
 4,46,Descent chain,4
 4,46,Local drift,4
 4,46,Drop-to-tail energy,4
@@ -1961,8 +1569,6 @@ true_order,replication,method,selected_order
 4,46,Minimum width — first tied minimum,4
 4,47,First difference,1
 4,47,Second difference,1
-4,47,Perron first difference,1
-4,47,Perron second difference,1
 4,47,Descent chain,4
 4,47,Local drift,4
 4,47,Drop-to-tail energy,4
@@ -1971,8 +1577,6 @@ true_order,replication,method,selected_order
 4,47,Minimum width — first tied minimum,4
 4,48,First difference,2
 4,48,Second difference,2
-4,48,Perron first difference,2
-4,48,Perron second difference,2
 4,48,Descent chain,4
 4,48,Local drift,4
 4,48,Drop-to-tail energy,4
@@ -1981,8 +1585,6 @@ true_order,replication,method,selected_order
 4,48,Minimum width — first tied minimum,4
 4,49,First difference,3
 4,49,Second difference,1
-4,49,Perron first difference,1
-4,49,Perron second difference,1
 4,49,Descent chain,4
 4,49,Local drift,4
 4,49,Drop-to-tail energy,4
@@ -1991,8 +1593,6 @@ true_order,replication,method,selected_order
 4,49,Minimum width — first tied minimum,4
 4,50,First difference,1
 4,50,Second difference,1
-4,50,Perron first difference,1
-4,50,Perron second difference,1
 4,50,Descent chain,4
 4,50,Local drift,4
 4,50,Drop-to-tail energy,4
@@ -2001,8 +1601,6 @@ true_order,replication,method,selected_order
 4,50,Minimum width — first tied minimum,4
 5,1,First difference,3
 5,1,Second difference,3
-5,1,Perron first difference,3
-5,1,Perron second difference,3
 5,1,Descent chain,5
 5,1,Local drift,5
 5,1,Drop-to-tail energy,5
@@ -2011,8 +1609,6 @@ true_order,replication,method,selected_order
 5,1,Minimum width — first tied minimum,5
 5,2,First difference,2
 5,2,Second difference,2
-5,2,Perron first difference,2
-5,2,Perron second difference,2
 5,2,Descent chain,5
 5,2,Local drift,5
 5,2,Drop-to-tail energy,5
@@ -2021,8 +1617,6 @@ true_order,replication,method,selected_order
 5,2,Minimum width — first tied minimum,5
 5,3,First difference,1
 5,3,Second difference,1
-5,3,Perron first difference,1
-5,3,Perron second difference,1
 5,3,Descent chain,5
 5,3,Local drift,5
 5,3,Drop-to-tail energy,5
@@ -2031,8 +1625,6 @@ true_order,replication,method,selected_order
 5,3,Minimum width — first tied minimum,5
 5,4,First difference,1
 5,4,Second difference,2
-5,4,Perron first difference,1
-5,4,Perron second difference,2
 5,4,Descent chain,5
 5,4,Local drift,5
 5,4,Drop-to-tail energy,5
@@ -2041,8 +1633,6 @@ true_order,replication,method,selected_order
 5,4,Minimum width — first tied minimum,5
 5,5,First difference,1
 5,5,Second difference,1
-5,5,Perron first difference,1
-5,5,Perron second difference,1
 5,5,Descent chain,5
 5,5,Local drift,5
 5,5,Drop-to-tail energy,5
@@ -2051,8 +1641,6 @@ true_order,replication,method,selected_order
 5,5,Minimum width — first tied minimum,5
 5,6,First difference,2
 5,6,Second difference,3
-5,6,Perron first difference,2
-5,6,Perron second difference,3
 5,6,Descent chain,5
 5,6,Local drift,5
 5,6,Drop-to-tail energy,5
@@ -2061,8 +1649,6 @@ true_order,replication,method,selected_order
 5,6,Minimum width — first tied minimum,5
 5,7,First difference,2
 5,7,Second difference,2
-5,7,Perron first difference,2
-5,7,Perron second difference,2
 5,7,Descent chain,5
 5,7,Local drift,5
 5,7,Drop-to-tail energy,5
@@ -2071,8 +1657,6 @@ true_order,replication,method,selected_order
 5,7,Minimum width — first tied minimum,5
 5,8,First difference,2
 5,8,Second difference,2
-5,8,Perron first difference,2
-5,8,Perron second difference,2
 5,8,Descent chain,5
 5,8,Local drift,5
 5,8,Drop-to-tail energy,5
@@ -2081,8 +1665,6 @@ true_order,replication,method,selected_order
 5,8,Minimum width — first tied minimum,5
 5,9,First difference,4
 5,9,Second difference,4
-5,9,Perron first difference,4
-5,9,Perron second difference,4
 5,9,Descent chain,5
 5,9,Local drift,5
 5,9,Drop-to-tail energy,5
@@ -2091,8 +1673,6 @@ true_order,replication,method,selected_order
 5,9,Minimum width — first tied minimum,5
 5,10,First difference,2
 5,10,Second difference,2
-5,10,Perron first difference,2
-5,10,Perron second difference,2
 5,10,Descent chain,5
 5,10,Local drift,5
 5,10,Drop-to-tail energy,5
@@ -2101,8 +1681,6 @@ true_order,replication,method,selected_order
 5,10,Minimum width — first tied minimum,5
 5,11,First difference,1
 5,11,Second difference,1
-5,11,Perron first difference,1
-5,11,Perron second difference,1
 5,11,Descent chain,5
 5,11,Local drift,5
 5,11,Drop-to-tail energy,5
@@ -2111,8 +1689,6 @@ true_order,replication,method,selected_order
 5,11,Minimum width — first tied minimum,5
 5,12,First difference,2
 5,12,Second difference,5
-5,12,Perron first difference,2
-5,12,Perron second difference,3
 5,12,Descent chain,5
 5,12,Local drift,5
 5,12,Drop-to-tail energy,5
@@ -2121,8 +1697,6 @@ true_order,replication,method,selected_order
 5,12,Minimum width — first tied minimum,5
 5,13,First difference,2
 5,13,Second difference,2
-5,13,Perron first difference,2
-5,13,Perron second difference,2
 5,13,Descent chain,5
 5,13,Local drift,5
 5,13,Drop-to-tail energy,5
@@ -2131,8 +1705,6 @@ true_order,replication,method,selected_order
 5,13,Minimum width — first tied minimum,5
 5,14,First difference,2
 5,14,Second difference,2
-5,14,Perron first difference,2
-5,14,Perron second difference,2
 5,14,Descent chain,5
 5,14,Local drift,5
 5,14,Drop-to-tail energy,5
@@ -2141,8 +1713,6 @@ true_order,replication,method,selected_order
 5,14,Minimum width — first tied minimum,5
 5,15,First difference,2
 5,15,Second difference,2
-5,15,Perron first difference,2
-5,15,Perron second difference,2
 5,15,Descent chain,5
 5,15,Local drift,5
 5,15,Drop-to-tail energy,5
@@ -2151,8 +1721,6 @@ true_order,replication,method,selected_order
 5,15,Minimum width — first tied minimum,5
 5,16,First difference,4
 5,16,Second difference,5
-5,16,Perron first difference,4
-5,16,Perron second difference,5
 5,16,Descent chain,5
 5,16,Local drift,5
 5,16,Drop-to-tail energy,5
@@ -2161,8 +1729,6 @@ true_order,replication,method,selected_order
 5,16,Minimum width — first tied minimum,5
 5,17,First difference,1
 5,17,Second difference,2
-5,17,Perron first difference,1
-5,17,Perron second difference,2
 5,17,Descent chain,5
 5,17,Local drift,5
 5,17,Drop-to-tail energy,5
@@ -2171,8 +1737,6 @@ true_order,replication,method,selected_order
 5,17,Minimum width — first tied minimum,5
 5,18,First difference,1
 5,18,Second difference,2
-5,18,Perron first difference,1
-5,18,Perron second difference,2
 5,18,Descent chain,5
 5,18,Local drift,5
 5,18,Drop-to-tail energy,5
@@ -2181,8 +1745,6 @@ true_order,replication,method,selected_order
 5,18,Minimum width — first tied minimum,5
 5,19,First difference,2
 5,19,Second difference,2
-5,19,Perron first difference,2
-5,19,Perron second difference,2
 5,19,Descent chain,5
 5,19,Local drift,5
 5,19,Drop-to-tail energy,5
@@ -2191,8 +1753,6 @@ true_order,replication,method,selected_order
 5,19,Minimum width — first tied minimum,5
 5,20,First difference,1
 5,20,Second difference,3
-5,20,Perron first difference,1
-5,20,Perron second difference,3
 5,20,Descent chain,5
 5,20,Local drift,5
 5,20,Drop-to-tail energy,5
@@ -2201,8 +1761,6 @@ true_order,replication,method,selected_order
 5,20,Minimum width — first tied minimum,5
 5,21,First difference,5
 5,21,Second difference,5
-5,21,Perron first difference,5
-5,21,Perron second difference,5
 5,21,Descent chain,5
 5,21,Local drift,5
 5,21,Drop-to-tail energy,5
@@ -2211,8 +1769,6 @@ true_order,replication,method,selected_order
 5,21,Minimum width — first tied minimum,5
 5,22,First difference,3
 5,22,Second difference,3
-5,22,Perron first difference,3
-5,22,Perron second difference,3
 5,22,Descent chain,5
 5,22,Local drift,5
 5,22,Drop-to-tail energy,5
@@ -2221,8 +1777,6 @@ true_order,replication,method,selected_order
 5,22,Minimum width — first tied minimum,5
 5,23,First difference,1
 5,23,Second difference,1
-5,23,Perron first difference,1
-5,23,Perron second difference,1
 5,23,Descent chain,5
 5,23,Local drift,5
 5,23,Drop-to-tail energy,5
@@ -2231,8 +1785,6 @@ true_order,replication,method,selected_order
 5,23,Minimum width — first tied minimum,5
 5,24,First difference,1
 5,24,Second difference,1
-5,24,Perron first difference,1
-5,24,Perron second difference,1
 5,24,Descent chain,5
 5,24,Local drift,5
 5,24,Drop-to-tail energy,5
@@ -2241,8 +1793,6 @@ true_order,replication,method,selected_order
 5,24,Minimum width — first tied minimum,5
 5,25,First difference,2
 5,25,Second difference,2
-5,25,Perron first difference,2
-5,25,Perron second difference,2
 5,25,Descent chain,5
 5,25,Local drift,5
 5,25,Drop-to-tail energy,5
@@ -2251,8 +1801,6 @@ true_order,replication,method,selected_order
 5,25,Minimum width — first tied minimum,5
 5,26,First difference,2
 5,26,Second difference,2
-5,26,Perron first difference,1
-5,26,Perron second difference,2
 5,26,Descent chain,5
 5,26,Local drift,5
 5,26,Drop-to-tail energy,5
@@ -2261,8 +1809,6 @@ true_order,replication,method,selected_order
 5,26,Minimum width — first tied minimum,5
 5,27,First difference,2
 5,27,Second difference,2
-5,27,Perron first difference,2
-5,27,Perron second difference,2
 5,27,Descent chain,5
 5,27,Local drift,5
 5,27,Drop-to-tail energy,5
@@ -2271,8 +1817,6 @@ true_order,replication,method,selected_order
 5,27,Minimum width — first tied minimum,5
 5,28,First difference,5
 5,28,Second difference,5
-5,28,Perron first difference,5
-5,28,Perron second difference,5
 5,28,Descent chain,5
 5,28,Local drift,5
 5,28,Drop-to-tail energy,5
@@ -2281,8 +1825,6 @@ true_order,replication,method,selected_order
 5,28,Minimum width — first tied minimum,5
 5,29,First difference,3
 5,29,Second difference,3
-5,29,Perron first difference,3
-5,29,Perron second difference,3
 5,29,Descent chain,5
 5,29,Local drift,5
 5,29,Drop-to-tail energy,5
@@ -2291,8 +1833,6 @@ true_order,replication,method,selected_order
 5,29,Minimum width — first tied minimum,5
 5,30,First difference,1
 5,30,Second difference,1
-5,30,Perron first difference,1
-5,30,Perron second difference,1
 5,30,Descent chain,5
 5,30,Local drift,5
 5,30,Drop-to-tail energy,5
@@ -2301,8 +1841,6 @@ true_order,replication,method,selected_order
 5,30,Minimum width — first tied minimum,5
 5,31,First difference,5
 5,31,Second difference,5
-5,31,Perron first difference,5
-5,31,Perron second difference,5
 5,31,Descent chain,5
 5,31,Local drift,5
 5,31,Drop-to-tail energy,5
@@ -2311,8 +1849,6 @@ true_order,replication,method,selected_order
 5,31,Minimum width — first tied minimum,5
 5,32,First difference,1
 5,32,Second difference,1
-5,32,Perron first difference,1
-5,32,Perron second difference,1
 5,32,Descent chain,5
 5,32,Local drift,5
 5,32,Drop-to-tail energy,5
@@ -2321,8 +1857,6 @@ true_order,replication,method,selected_order
 5,32,Minimum width — first tied minimum,5
 5,33,First difference,1
 5,33,Second difference,2
-5,33,Perron first difference,1
-5,33,Perron second difference,2
 5,33,Descent chain,5
 5,33,Local drift,5
 5,33,Drop-to-tail energy,5
@@ -2331,8 +1865,6 @@ true_order,replication,method,selected_order
 5,33,Minimum width — first tied minimum,5
 5,34,First difference,2
 5,34,Second difference,2
-5,34,Perron first difference,2
-5,34,Perron second difference,2
 5,34,Descent chain,5
 5,34,Local drift,5
 5,34,Drop-to-tail energy,5
@@ -2341,8 +1873,6 @@ true_order,replication,method,selected_order
 5,34,Minimum width — first tied minimum,5
 5,35,First difference,1
 5,35,Second difference,1
-5,35,Perron first difference,1
-5,35,Perron second difference,1
 5,35,Descent chain,5
 5,35,Local drift,5
 5,35,Drop-to-tail energy,5
@@ -2351,8 +1881,6 @@ true_order,replication,method,selected_order
 5,35,Minimum width — first tied minimum,5
 5,36,First difference,1
 5,36,Second difference,5
-5,36,Perron first difference,1
-5,36,Perron second difference,2
 5,36,Descent chain,5
 5,36,Local drift,5
 5,36,Drop-to-tail energy,5
@@ -2361,8 +1889,6 @@ true_order,replication,method,selected_order
 5,36,Minimum width — first tied minimum,5
 5,37,First difference,2
 5,37,Second difference,2
-5,37,Perron first difference,2
-5,37,Perron second difference,2
 5,37,Descent chain,5
 5,37,Local drift,5
 5,37,Drop-to-tail energy,5
@@ -2371,8 +1897,6 @@ true_order,replication,method,selected_order
 5,37,Minimum width — first tied minimum,5
 5,38,First difference,2
 5,38,Second difference,2
-5,38,Perron first difference,2
-5,38,Perron second difference,2
 5,38,Descent chain,5
 5,38,Local drift,5
 5,38,Drop-to-tail energy,5
@@ -2381,8 +1905,6 @@ true_order,replication,method,selected_order
 5,38,Minimum width — first tied minimum,5
 5,39,First difference,1
 5,39,Second difference,2
-5,39,Perron first difference,1
-5,39,Perron second difference,2
 5,39,Descent chain,5
 5,39,Local drift,5
 5,39,Drop-to-tail energy,5
@@ -2391,8 +1913,6 @@ true_order,replication,method,selected_order
 5,39,Minimum width — first tied minimum,5
 5,40,First difference,5
 5,40,Second difference,5
-5,40,Perron first difference,5
-5,40,Perron second difference,5
 5,40,Descent chain,5
 5,40,Local drift,5
 5,40,Drop-to-tail energy,5
@@ -2401,8 +1921,6 @@ true_order,replication,method,selected_order
 5,40,Minimum width — first tied minimum,5
 5,41,First difference,1
 5,41,Second difference,1
-5,41,Perron first difference,1
-5,41,Perron second difference,1
 5,41,Descent chain,5
 5,41,Local drift,5
 5,41,Drop-to-tail energy,5
@@ -2411,8 +1929,6 @@ true_order,replication,method,selected_order
 5,41,Minimum width — first tied minimum,5
 5,42,First difference,5
 5,42,Second difference,5
-5,42,Perron first difference,5
-5,42,Perron second difference,5
 5,42,Descent chain,5
 5,42,Local drift,5
 5,42,Drop-to-tail energy,5
@@ -2421,8 +1937,6 @@ true_order,replication,method,selected_order
 5,42,Minimum width — first tied minimum,5
 5,43,First difference,3
 5,43,Second difference,5
-5,43,Perron first difference,3
-5,43,Perron second difference,4
 5,43,Descent chain,5
 5,43,Local drift,5
 5,43,Drop-to-tail energy,5
@@ -2431,8 +1945,6 @@ true_order,replication,method,selected_order
 5,43,Minimum width — first tied minimum,5
 5,44,First difference,1
 5,44,Second difference,1
-5,44,Perron first difference,1
-5,44,Perron second difference,1
 5,44,Descent chain,5
 5,44,Local drift,5
 5,44,Drop-to-tail energy,5
@@ -2441,8 +1953,6 @@ true_order,replication,method,selected_order
 5,44,Minimum width — first tied minimum,5
 5,45,First difference,1
 5,45,Second difference,1
-5,45,Perron first difference,1
-5,45,Perron second difference,1
 5,45,Descent chain,5
 5,45,Local drift,5
 5,45,Drop-to-tail energy,5
@@ -2451,8 +1961,6 @@ true_order,replication,method,selected_order
 5,45,Minimum width — first tied minimum,5
 5,46,First difference,2
 5,46,Second difference,2
-5,46,Perron first difference,2
-5,46,Perron second difference,2
 5,46,Descent chain,5
 5,46,Local drift,5
 5,46,Drop-to-tail energy,5
@@ -2461,8 +1969,6 @@ true_order,replication,method,selected_order
 5,46,Minimum width — first tied minimum,5
 5,47,First difference,3
 5,47,Second difference,3
-5,47,Perron first difference,3
-5,47,Perron second difference,3
 5,47,Descent chain,5
 5,47,Local drift,5
 5,47,Drop-to-tail energy,5
@@ -2471,8 +1977,6 @@ true_order,replication,method,selected_order
 5,47,Minimum width — first tied minimum,5
 5,48,First difference,1
 5,48,Second difference,1
-5,48,Perron first difference,1
-5,48,Perron second difference,1
 5,48,Descent chain,5
 5,48,Local drift,5
 5,48,Drop-to-tail energy,5
@@ -2481,8 +1985,6 @@ true_order,replication,method,selected_order
 5,48,Minimum width — first tied minimum,5
 5,49,First difference,3
 5,49,Second difference,3
-5,49,Perron first difference,3
-5,49,Perron second difference,3
 5,49,Descent chain,5
 5,49,Local drift,5
 5,49,Drop-to-tail energy,5
@@ -2491,8 +1993,6 @@ true_order,replication,method,selected_order
 5,49,Minimum width — first tied minimum,5
 5,50,First difference,4
 5,50,Second difference,4
-5,50,Perron first difference,4
-5,50,Perron second difference,4
 5,50,Descent chain,5
 5,50,Local drift,5
 5,50,Drop-to-tail energy,5
@@ -2501,8 +2001,6 @@ true_order,replication,method,selected_order
 5,50,Minimum width — first tied minimum,5
 6,1,First difference,2
 6,1,Second difference,2
-6,1,Perron first difference,2
-6,1,Perron second difference,2
 6,1,Descent chain,6
 6,1,Local drift,6
 6,1,Drop-to-tail energy,6
@@ -2511,8 +2009,6 @@ true_order,replication,method,selected_order
 6,1,Minimum width — first tied minimum,6
 6,2,First difference,1
 6,2,Second difference,1
-6,2,Perron first difference,1
-6,2,Perron second difference,1
 6,2,Descent chain,6
 6,2,Local drift,6
 6,2,Drop-to-tail energy,6
@@ -2521,8 +2017,6 @@ true_order,replication,method,selected_order
 6,2,Minimum width — first tied minimum,6
 6,3,First difference,3
 6,3,Second difference,3
-6,3,Perron first difference,3
-6,3,Perron second difference,3
 6,3,Descent chain,6
 6,3,Local drift,6
 6,3,Drop-to-tail energy,6
@@ -2531,8 +2025,6 @@ true_order,replication,method,selected_order
 6,3,Minimum width — first tied minimum,6
 6,4,First difference,1
 6,4,Second difference,2
-6,4,Perron first difference,1
-6,4,Perron second difference,1
 6,4,Descent chain,6
 6,4,Local drift,6
 6,4,Drop-to-tail energy,6
@@ -2541,8 +2033,6 @@ true_order,replication,method,selected_order
 6,4,Minimum width — first tied minimum,6
 6,5,First difference,2
 6,5,Second difference,6
-6,5,Perron first difference,2
-6,5,Perron second difference,2
 6,5,Descent chain,6
 6,5,Local drift,6
 6,5,Drop-to-tail energy,6
@@ -2551,8 +2041,6 @@ true_order,replication,method,selected_order
 6,5,Minimum width — first tied minimum,6
 6,6,First difference,2
 6,6,Second difference,2
-6,6,Perron first difference,2
-6,6,Perron second difference,2
 6,6,Descent chain,6
 6,6,Local drift,6
 6,6,Drop-to-tail energy,6
@@ -2561,8 +2049,6 @@ true_order,replication,method,selected_order
 6,6,Minimum width — first tied minimum,6
 6,7,First difference,1
 6,7,Second difference,2
-6,7,Perron first difference,1
-6,7,Perron second difference,2
 6,7,Descent chain,6
 6,7,Local drift,6
 6,7,Drop-to-tail energy,6
@@ -2571,8 +2057,6 @@ true_order,replication,method,selected_order
 6,7,Minimum width — first tied minimum,6
 6,8,First difference,2
 6,8,Second difference,2
-6,8,Perron first difference,2
-6,8,Perron second difference,2
 6,8,Descent chain,6
 6,8,Local drift,6
 6,8,Drop-to-tail energy,6
@@ -2581,8 +2065,6 @@ true_order,replication,method,selected_order
 6,8,Minimum width — first tied minimum,6
 6,9,First difference,1
 6,9,Second difference,1
-6,9,Perron first difference,1
-6,9,Perron second difference,1
 6,9,Descent chain,6
 6,9,Local drift,6
 6,9,Drop-to-tail energy,6
@@ -2591,8 +2073,6 @@ true_order,replication,method,selected_order
 6,9,Minimum width — first tied minimum,6
 6,10,First difference,1
 6,10,Second difference,1
-6,10,Perron first difference,1
-6,10,Perron second difference,1
 6,10,Descent chain,6
 6,10,Local drift,6
 6,10,Drop-to-tail energy,6
@@ -2601,8 +2081,6 @@ true_order,replication,method,selected_order
 6,10,Minimum width — first tied minimum,6
 6,11,First difference,1
 6,11,Second difference,1
-6,11,Perron first difference,1
-6,11,Perron second difference,1
 6,11,Descent chain,6
 6,11,Local drift,6
 6,11,Drop-to-tail energy,6
@@ -2611,8 +2089,6 @@ true_order,replication,method,selected_order
 6,11,Minimum width — first tied minimum,6
 6,12,First difference,2
 6,12,Second difference,2
-6,12,Perron first difference,2
-6,12,Perron second difference,2
 6,12,Descent chain,6
 6,12,Local drift,6
 6,12,Drop-to-tail energy,6
@@ -2621,8 +2097,6 @@ true_order,replication,method,selected_order
 6,12,Minimum width — first tied minimum,6
 6,13,First difference,1
 6,13,Second difference,1
-6,13,Perron first difference,1
-6,13,Perron second difference,1
 6,13,Descent chain,6
 6,13,Local drift,6
 6,13,Drop-to-tail energy,6
@@ -2631,8 +2105,6 @@ true_order,replication,method,selected_order
 6,13,Minimum width — first tied minimum,6
 6,14,First difference,1
 6,14,Second difference,1
-6,14,Perron first difference,1
-6,14,Perron second difference,1
 6,14,Descent chain,6
 6,14,Local drift,6
 6,14,Drop-to-tail energy,6
@@ -2641,8 +2113,6 @@ true_order,replication,method,selected_order
 6,14,Minimum width — first tied minimum,6
 6,15,First difference,2
 6,15,Second difference,2
-6,15,Perron first difference,2
-6,15,Perron second difference,2
 6,15,Descent chain,6
 6,15,Local drift,6
 6,15,Drop-to-tail energy,6
@@ -2651,8 +2121,6 @@ true_order,replication,method,selected_order
 6,15,Minimum width — first tied minimum,6
 6,16,First difference,4
 6,16,Second difference,4
-6,16,Perron first difference,4
-6,16,Perron second difference,4
 6,16,Descent chain,6
 6,16,Local drift,6
 6,16,Drop-to-tail energy,6
@@ -2661,8 +2129,6 @@ true_order,replication,method,selected_order
 6,16,Minimum width — first tied minimum,6
 6,17,First difference,1
 6,17,Second difference,6
-6,17,Perron first difference,1
-6,17,Perron second difference,1
 6,17,Descent chain,6
 6,17,Local drift,6
 6,17,Drop-to-tail energy,6
@@ -2671,8 +2137,6 @@ true_order,replication,method,selected_order
 6,17,Minimum width — first tied minimum,6
 6,18,First difference,1
 6,18,Second difference,1
-6,18,Perron first difference,1
-6,18,Perron second difference,1
 6,18,Descent chain,6
 6,18,Local drift,6
 6,18,Drop-to-tail energy,6
@@ -2681,8 +2145,6 @@ true_order,replication,method,selected_order
 6,18,Minimum width — first tied minimum,6
 6,19,First difference,3
 6,19,Second difference,3
-6,19,Perron first difference,3
-6,19,Perron second difference,3
 6,19,Descent chain,6
 6,19,Local drift,6
 6,19,Drop-to-tail energy,6
@@ -2691,8 +2153,6 @@ true_order,replication,method,selected_order
 6,19,Minimum width — first tied minimum,6
 6,20,First difference,1
 6,20,Second difference,1
-6,20,Perron first difference,1
-6,20,Perron second difference,1
 6,20,Descent chain,6
 6,20,Local drift,6
 6,20,Drop-to-tail energy,6
@@ -2701,8 +2161,6 @@ true_order,replication,method,selected_order
 6,20,Minimum width — first tied minimum,6
 6,21,First difference,2
 6,21,Second difference,2
-6,21,Perron first difference,2
-6,21,Perron second difference,2
 6,21,Descent chain,6
 6,21,Local drift,6
 6,21,Drop-to-tail energy,6
@@ -2711,8 +2169,6 @@ true_order,replication,method,selected_order
 6,21,Minimum width — first tied minimum,6
 6,22,First difference,2
 6,22,Second difference,2
-6,22,Perron first difference,2
-6,22,Perron second difference,2
 6,22,Descent chain,6
 6,22,Local drift,6
 6,22,Drop-to-tail energy,6
@@ -2721,8 +2177,6 @@ true_order,replication,method,selected_order
 6,22,Minimum width — first tied minimum,6
 6,23,First difference,2
 6,23,Second difference,2
-6,23,Perron first difference,2
-6,23,Perron second difference,2
 6,23,Descent chain,6
 6,23,Local drift,6
 6,23,Drop-to-tail energy,6
@@ -2731,8 +2185,6 @@ true_order,replication,method,selected_order
 6,23,Minimum width — first tied minimum,6
 6,24,First difference,1
 6,24,Second difference,2
-6,24,Perron first difference,1
-6,24,Perron second difference,2
 6,24,Descent chain,6
 6,24,Local drift,6
 6,24,Drop-to-tail energy,6
@@ -2741,8 +2193,6 @@ true_order,replication,method,selected_order
 6,24,Minimum width — first tied minimum,6
 6,25,First difference,4
 6,25,Second difference,4
-6,25,Perron first difference,1
-6,25,Perron second difference,1
 6,25,Descent chain,6
 6,25,Local drift,6
 6,25,Drop-to-tail energy,6
@@ -2751,8 +2201,6 @@ true_order,replication,method,selected_order
 6,25,Minimum width — first tied minimum,6
 6,26,First difference,3
 6,26,Second difference,3
-6,26,Perron first difference,3
-6,26,Perron second difference,3
 6,26,Descent chain,6
 6,26,Local drift,6
 6,26,Drop-to-tail energy,6
@@ -2761,8 +2209,6 @@ true_order,replication,method,selected_order
 6,26,Minimum width — first tied minimum,6
 6,27,First difference,6
 6,27,Second difference,6
-6,27,Perron first difference,1
-6,27,Perron second difference,6
 6,27,Descent chain,6
 6,27,Local drift,6
 6,27,Drop-to-tail energy,6
@@ -2771,8 +2217,6 @@ true_order,replication,method,selected_order
 6,27,Minimum width — first tied minimum,6
 6,28,First difference,2
 6,28,Second difference,2
-6,28,Perron first difference,2
-6,28,Perron second difference,2
 6,28,Descent chain,6
 6,28,Local drift,6
 6,28,Drop-to-tail energy,6
@@ -2781,8 +2225,6 @@ true_order,replication,method,selected_order
 6,28,Minimum width — first tied minimum,6
 6,29,First difference,4
 6,29,Second difference,4
-6,29,Perron first difference,4
-6,29,Perron second difference,4
 6,29,Descent chain,6
 6,29,Local drift,6
 6,29,Drop-to-tail energy,6
@@ -2791,8 +2233,6 @@ true_order,replication,method,selected_order
 6,29,Minimum width — first tied minimum,6
 6,30,First difference,2
 6,30,Second difference,2
-6,30,Perron first difference,2
-6,30,Perron second difference,2
 6,30,Descent chain,6
 6,30,Local drift,6
 6,30,Drop-to-tail energy,6
@@ -2801,8 +2241,6 @@ true_order,replication,method,selected_order
 6,30,Minimum width — first tied minimum,6
 6,31,First difference,2
 6,31,Second difference,2
-6,31,Perron first difference,2
-6,31,Perron second difference,2
 6,31,Descent chain,6
 6,31,Local drift,6
 6,31,Drop-to-tail energy,6
@@ -2811,8 +2249,6 @@ true_order,replication,method,selected_order
 6,31,Minimum width — first tied minimum,6
 6,32,First difference,1
 6,32,Second difference,2
-6,32,Perron first difference,1
-6,32,Perron second difference,2
 6,32,Descent chain,6
 6,32,Local drift,6
 6,32,Drop-to-tail energy,6
@@ -2821,8 +2257,6 @@ true_order,replication,method,selected_order
 6,32,Minimum width — first tied minimum,6
 6,33,First difference,2
 6,33,Second difference,2
-6,33,Perron first difference,2
-6,33,Perron second difference,2
 6,33,Descent chain,6
 6,33,Local drift,6
 6,33,Drop-to-tail energy,6
@@ -2831,8 +2265,6 @@ true_order,replication,method,selected_order
 6,33,Minimum width — first tied minimum,6
 6,34,First difference,1
 6,34,Second difference,1
-6,34,Perron first difference,1
-6,34,Perron second difference,1
 6,34,Descent chain,6
 6,34,Local drift,6
 6,34,Drop-to-tail energy,6
@@ -2841,8 +2273,6 @@ true_order,replication,method,selected_order
 6,34,Minimum width — first tied minimum,6
 6,35,First difference,1
 6,35,Second difference,2
-6,35,Perron first difference,1
-6,35,Perron second difference,2
 6,35,Descent chain,6
 6,35,Local drift,6
 6,35,Drop-to-tail energy,6
@@ -2851,8 +2281,6 @@ true_order,replication,method,selected_order
 6,35,Minimum width — first tied minimum,6
 6,36,First difference,2
 6,36,Second difference,2
-6,36,Perron first difference,2
-6,36,Perron second difference,2
 6,36,Descent chain,6
 6,36,Local drift,6
 6,36,Drop-to-tail energy,6
@@ -2861,8 +2289,6 @@ true_order,replication,method,selected_order
 6,36,Minimum width — first tied minimum,6
 6,37,First difference,2
 6,37,Second difference,2
-6,37,Perron first difference,2
-6,37,Perron second difference,2
 6,37,Descent chain,6
 6,37,Local drift,6
 6,37,Drop-to-tail energy,6
@@ -2871,8 +2297,6 @@ true_order,replication,method,selected_order
 6,37,Minimum width — first tied minimum,6
 6,38,First difference,1
 6,38,Second difference,1
-6,38,Perron first difference,1
-6,38,Perron second difference,1
 6,38,Descent chain,6
 6,38,Local drift,6
 6,38,Drop-to-tail energy,6
@@ -2881,8 +2305,6 @@ true_order,replication,method,selected_order
 6,38,Minimum width — first tied minimum,6
 6,39,First difference,1
 6,39,Second difference,1
-6,39,Perron first difference,1
-6,39,Perron second difference,1
 6,39,Descent chain,6
 6,39,Local drift,6
 6,39,Drop-to-tail energy,6
@@ -2891,8 +2313,6 @@ true_order,replication,method,selected_order
 6,39,Minimum width — first tied minimum,6
 6,40,First difference,1
 6,40,Second difference,2
-6,40,Perron first difference,1
-6,40,Perron second difference,2
 6,40,Descent chain,6
 6,40,Local drift,6
 6,40,Drop-to-tail energy,6
@@ -2901,8 +2321,6 @@ true_order,replication,method,selected_order
 6,40,Minimum width — first tied minimum,6
 6,41,First difference,5
 6,41,Second difference,5
-6,41,Perron first difference,5
-6,41,Perron second difference,5
 6,41,Descent chain,6
 6,41,Local drift,6
 6,41,Drop-to-tail energy,6
@@ -2911,8 +2329,6 @@ true_order,replication,method,selected_order
 6,41,Minimum width — first tied minimum,6
 6,42,First difference,2
 6,42,Second difference,2
-6,42,Perron first difference,2
-6,42,Perron second difference,2
 6,42,Descent chain,6
 6,42,Local drift,6
 6,42,Drop-to-tail energy,6
@@ -2921,8 +2337,6 @@ true_order,replication,method,selected_order
 6,42,Minimum width — first tied minimum,6
 6,43,First difference,2
 6,43,Second difference,2
-6,43,Perron first difference,2
-6,43,Perron second difference,2
 6,43,Descent chain,6
 6,43,Local drift,6
 6,43,Drop-to-tail energy,6
@@ -2931,8 +2345,6 @@ true_order,replication,method,selected_order
 6,43,Minimum width — first tied minimum,6
 6,44,First difference,2
 6,44,Second difference,2
-6,44,Perron first difference,2
-6,44,Perron second difference,2
 6,44,Descent chain,6
 6,44,Local drift,6
 6,44,Drop-to-tail energy,6
@@ -2941,8 +2353,6 @@ true_order,replication,method,selected_order
 6,44,Minimum width — first tied minimum,6
 6,45,First difference,1
 6,45,Second difference,1
-6,45,Perron first difference,1
-6,45,Perron second difference,1
 6,45,Descent chain,6
 6,45,Local drift,6
 6,45,Drop-to-tail energy,6
@@ -2951,8 +2361,6 @@ true_order,replication,method,selected_order
 6,45,Minimum width — first tied minimum,6
 6,46,First difference,3
 6,46,Second difference,3
-6,46,Perron first difference,3
-6,46,Perron second difference,3
 6,46,Descent chain,6
 6,46,Local drift,6
 6,46,Drop-to-tail energy,6
@@ -2961,8 +2369,6 @@ true_order,replication,method,selected_order
 6,46,Minimum width — first tied minimum,6
 6,47,First difference,2
 6,47,Second difference,2
-6,47,Perron first difference,2
-6,47,Perron second difference,2
 6,47,Descent chain,6
 6,47,Local drift,6
 6,47,Drop-to-tail energy,6
@@ -2971,8 +2377,6 @@ true_order,replication,method,selected_order
 6,47,Minimum width — first tied minimum,6
 6,48,First difference,5
 6,48,Second difference,6
-6,48,Perron first difference,1
-6,48,Perron second difference,5
 6,48,Descent chain,6
 6,48,Local drift,6
 6,48,Drop-to-tail energy,6
@@ -2981,8 +2385,6 @@ true_order,replication,method,selected_order
 6,48,Minimum width — first tied minimum,6
 6,49,First difference,1
 6,49,Second difference,1
-6,49,Perron first difference,1
-6,49,Perron second difference,1
 6,49,Descent chain,6
 6,49,Local drift,6
 6,49,Drop-to-tail energy,6
@@ -2991,8 +2393,6 @@ true_order,replication,method,selected_order
 6,49,Minimum width — first tied minimum,6
 6,50,First difference,1
 6,50,Second difference,1
-6,50,Perron first difference,1
-6,50,Perron second difference,1
 6,50,Descent chain,6
 6,50,Local drift,6
 6,50,Drop-to-tail energy,6

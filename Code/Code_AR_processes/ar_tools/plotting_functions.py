@@ -2,11 +2,34 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
-import plotly.graph_objects as go
+import pandas as pd
 
-__all__ = ["plot_time_series", "plot_embedding_k2", "plot_embedding_k3"]
+from .breakpoint_selectors import descent_chain
+from .functions import is_stationary, jones_ar_coefficients
+from .experiment_settings import (
+    AR_DIRECTORY, GRADIENT_IMAGE_DIRECTORY, GRADIENT_PDF_PATH,
+    POPULATION_IMAGE_DIRECTORY, POPULATION_PDF_DIRECTORY,
+    WARM_START_IMAGE_DIRECTORY, WARM_START_PDF_DIRECTORY, WARM_START_VARIANTS,
+)
+
+__all__ = [
+    "plot_time_series",
+    "plot_embedding_k2",
+    "plot_embedding_k3",
+    "save_figure",
+    "plot_ar2_jones_coefficient_sample",
+    "plot_ar3_jones_coefficient_sample",
+    "plot_ar3_lp_descent_results",
+    "plot_ar3_gradient_examples",
+    "make_ar3_gradient_previews",
+    "save_ar3_warm_start_figure",
+    "plot_ar3_warm_start_results",
+    "plot_ar3_population_selector_results",
+]
 
 plt.style.use("seaborn-v0_8-whitegrid")
 
@@ -143,6 +166,8 @@ def plot_embedding_k3(
     *,
     innovation_bounds=None,
 ):
+    import plotly.graph_objects as go
+
     if innovation_bounds is None:
         innovation_lower = -innovation_half_width
         innovation_upper = innovation_half_width
@@ -249,3 +274,351 @@ def plot_embedding_k3(
         margin=dict(l=0, r=0, b=0, t=50),
     )
     fig.show()
+
+
+def save_figure(figure, name, *, pdf_directory, image_directory):
+    figure.savefig(Path(pdf_directory) / f"{name}.pdf", bbox_inches="tight")
+    figure.savefig(Path(image_directory) / f"{name}.png", dpi=160, bbox_inches="tight")
+
+
+def plot_ar2_jones_coefficient_sample(*, ar_directory=AR_DIRECTORY, seed=42, sample_count=500,
+                                      name="ar2_jones_coefficient_sample") -> None:
+    AR_DIR = Path(ar_directory)
+    SEED, SAMPLE_COUNT, NAME = seed, sample_count, name
+    rng = np.random.default_rng(SEED)
+    coefficients = np.stack([
+        jones_ar_coefficients(2, rng=rng) for _ in range(SAMPLE_COUNT)
+    ])
+    assert coefficients.shape == (SAMPLE_COUNT, 2)
+    assert np.isfinite(coefficients).all()
+    assert all(is_stationary(phi)[0] for phi in coefficients)
+
+    csv_path = AR_DIR / "outputs" / "csv" / NAME / "coefficients.csv"
+    png_path = AR_DIR / "outputs" / "images" / NAME / f"{NAME}.png"
+    pdf_path = AR_DIR / "outputs" / "pdfs" / NAME / f"{NAME}.pdf"
+    for path in (csv_path, png_path, pdf_path):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    np.savetxt(csv_path, coefficients, delimiter=",", header="phi_1,phi_2", comments="")
+
+    plt.rcParams.update({"font.size": 12, "pdf.fonttype": 42})
+    fig, ax = plt.subplots(figsize=(9, 5.8), layout="constrained")
+    ax.fill([-2, 2, 0], [-1, -1, 1], color="#f1f5f9", zorder=0)
+    ax.plot([-2, 2, 0, -2], [-1, -1, 1, -1], color="#7b8794", lw=1.2,
+            label="Stationarity boundary", zorder=2)
+    points = ax.scatter(coefficients[:, 0], coefficients[:, 1], s=25,
+                        color="#1764ab", edgecolors="white", linewidths=0.6,
+                        label=f"{SAMPLE_COUNT} Jones draws", zorder=3)
+    assert points.get_offsets().shape == (SAMPLE_COUNT, 2)
+    ax.axhline(0, color="#aab3bd", lw=0.8, zorder=1)
+    ax.axvline(0, color="#aab3bd", lw=0.8, zorder=1)
+    ax.set(xlabel=r"$\varphi_1$", ylabel=r"$\varphi_2$",
+           title=f"Jones sampler: {SAMPLE_COUNT} AR(2) coefficient pairs",
+           xlim=(-2.15, 2.15), ylim=(-1.15, 1.15))
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_xticks(np.arange(-2, 2.1, 0.5))
+    ax.set_yticks(np.arange(-1, 1.1, 0.5))
+    ax.grid(color="#e2e6eb", linewidth=0.65, zorder=0)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(loc="upper left", frameon=False, fontsize=10)
+    fig.savefig(png_path, dpi=200)
+    fig.savefig(pdf_path, metadata={"Title": f"{SAMPLE_COUNT} Jones AR(2) coefficient pairs",
+                                  "Subject": f"Seed {SEED}; sampler: ar_tools.functions.jones_ar_coefficients"})
+    plt.close(fig)
+    print(f"Saved {SAMPLE_COUNT} coefficient pairs; seed={SEED}; all stationarity checks passed.")
+    for path in (png_path, pdf_path, csv_path):
+        print(path)
+
+
+def plot_ar3_jones_coefficient_sample(*, ar_directory=AR_DIRECTORY, seed=42, sample_count=500,
+                                      name="ar3_jones_coefficient_sample") -> None:
+    AR_DIR = Path(ar_directory)
+    SEED, SAMPLE_COUNT, NAME = seed, sample_count, name
+    rng = np.random.default_rng(SEED)
+    coefficients = np.stack([
+        jones_ar_coefficients(3, rng=rng) for _ in range(SAMPLE_COUNT)
+    ])
+    assert coefficients.shape == (SAMPLE_COUNT, 3)
+    assert np.isfinite(coefficients).all()
+    assert all(is_stationary(phi)[0] for phi in coefficients)
+
+    csv_path = AR_DIR / "outputs" / "csv" / NAME / "coefficients.csv"
+    png_path = AR_DIR / "outputs" / "images" / NAME / f"{NAME}.png"
+    pdf_path = AR_DIR / "outputs" / "pdfs" / NAME / f"{NAME}.pdf"
+    for path in (csv_path, png_path, pdf_path):
+        path.parent.mkdir(parents=True, exist_ok=True)
+    np.savetxt(csv_path, coefficients, delimiter=",", header="phi_1,phi_2,phi_3", comments="")
+
+    plt.rcParams.update({"font.size": 12, "pdf.fonttype": 42})
+    fig = plt.figure(figsize=(9, 7.5), layout="constrained")
+    ax = fig.add_subplot(projection="3d")
+    points = ax.scatter(*coefficients.T, s=22, color="#1764ab", alpha=0.85,
+                        edgecolors="white", linewidths=0.35, depthshade=True)
+    assert all(len(axis_values) == SAMPLE_COUNT for axis_values in points._offsets3d)
+    spans = np.ptp(coefficients, axis=0)
+    limits = np.column_stack((coefficients.min(axis=0) - 0.06 * spans,
+                              coefficients.max(axis=0) + 0.06 * spans))
+    ax.set(xlabel=r"$\varphi_1$", ylabel=r"$\varphi_2$", zlabel=r"$\varphi_3$",
+           title=f"Jones sampler: {SAMPLE_COUNT} AR(3) coefficient triples",
+           xlim=limits[0], ylim=limits[1], zlim=limits[2])
+    ax.set_box_aspect(spans)
+    ax.view_init(elev=24, azim=-55)
+    ax.set_proj_type("ortho")
+    for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
+        axis.pane.set_facecolor((0.96, 0.97, 0.98, 1))
+        axis._axinfo["grid"]["color"] = (0.85, 0.88, 0.91, 1)
+    fig.savefig(png_path, dpi=200)
+    fig.savefig(pdf_path, metadata={"Title": f"{SAMPLE_COUNT} Jones AR(3) coefficient triples",
+                                  "Subject": f"Seed {SEED}; sampler: ar_tools.functions.jones_ar_coefficients"})
+    plt.close(fig)
+    print(f"Saved {SAMPLE_COUNT} coefficient triples; seed={SEED}; all stationarity checks passed.")
+    for path in (png_path, pdf_path, csv_path):
+        print(path)
+
+
+def plot_ar3_lp_descent_results(widths, *, ar_directory=AR_DIRECTORY,
+                                image_directory=None, pdf_directory=None):
+    AR_DIR = Path(ar_directory)
+    IMAGE_DIR = Path(image_directory) if image_directory is not None else AR_DIR / "outputs/images/ar3_descent_chain_lp"
+    PDF_DIR = Path(pdf_directory) if pdf_directory is not None else AR_DIR / "outputs/pdfs/ar3_descent_chain_lp"
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    PDF_DIR.mkdir(parents=True, exist_ok=True)
+    population = pd.read_csv(AR_DIR / "outputs/csv/ar3_population_breakpoint_selectors/population_width_curves.csv")
+    plt.rcParams.update({"font.size": 11, "axes.spines.top": False, "axes.spines.right": False})
+    fig, axes = plt.subplots(2, 3, figsize=(13, 7))
+    for column, rep in enumerate([1, 2, 5]):
+        group = widths[widths.replication == rep].sort_values("k")
+        m = group.minimum_width.to_numpy()
+        pop = population[population.replication == rep].sort_values("k")
+        k = np.arange(1, 11)
+        axes[0, column].plot(k, m, "o-", color="#0072B2", label="Empirical LP fit")
+        axes[0, column].plot(k, pop.population_width, "--", color="#777777", label="Population width")
+        axes[0, column].scatter(k[:4], group.global_audit_width.iloc[:4], s=55,
+                                facecolors="none", edgecolors="#D55E00", label="Global hull audit")
+        axes[0, column].axvline(4, color="#009E73", alpha=.5)
+        axes[0, column].set_title(f"Replication {rep}")
+        axes[0, column].set_ylabel("Minimum width")
+        axes[0, column].set_xticks([1, 2, 4, 6, 8, 10])
+        for label, z, color in [("Raw widths", m, "#0072B2"), ("Log widths", np.log(m), "#D55E00")]:
+            chain = descent_chain(z)
+            axes[1, column].plot(k[1:-1], chain[3][1:-1], "o-", color=color,
+                                 label=f"{label}: selected order {chain[0]}")
+        axes[1, column].axvline(4, color="#009E73", alpha=.5, label="True break dimension 4")
+        axes[1, column].set_ylim(0, 1.04)
+        axes[1, column].set_xlabel("Embedding dimension k")
+        axes[1, column].set_ylabel("Chain visit probability αₖ")
+        axes[1, column].legend(loc="lower right", fontsize=9, frameon=False)
+    axes[0, 0].legend(fontsize=9, frameon=False)
+    fig.suptitle("Original descent chain: corrected optimization helps, finite-sample failures remain", fontsize=14)
+    fig.tight_layout()
+    fig.savefig(IMAGE_DIR / "lp_descent_chain_examples.png", dpi=180)
+    fig.savefig(PDF_DIR / "lp_descent_chain_examples.pdf")
+    plt.close(fig)
+
+
+def plot_ar3_gradient_examples(curves, summary, *,
+                               image_directory=GRADIENT_IMAGE_DIRECTORY,
+                               pdf_path=GRADIENT_PDF_PATH):
+    IMAGE_DIR, PDF_PATH = Path(image_directory), Path(pdf_path)
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_pdf import PdfPages
+
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    PDF_PATH.parent.mkdir(parents=True, exist_ok=True)
+    plt.style.use("seaborn-v0_8-whitegrid")
+    plt.rcParams.update({"font.size": 12, "axes.spines.top": False, "axes.spines.right": False,
+                         "pdf.fonttype": 42})
+    with PdfPages(PDF_PATH, metadata={"Title": "Ten AR(3) gradient-descent width examples",
+                                     "Subject": "Figure 2.4-style plots on the first ten saved processes"}) as pdf:
+        for rep, g in curves.groupby("replication"):
+            result = summary[summary.replication == rep].iloc[0]
+            fig, ax = plt.subplots(figsize=(10.5, 6.6))
+            fig.subplots_adjust(left=.085, right=.98, top=.90, bottom=.26)
+            ax.plot(g.k, g.empirical_fitted_width, "o-", color="#1764ab", lw=2.2, ms=6,
+                    label=r"Empirical fitted width $\widehat w_k(\widehat u_k)$", zorder=4)
+            plateau = g[g.k >= 4]
+            ax.plot(plateau.k, plateau.population_plateau, "--", color="black", lw=2.5,
+                    label=r"Population minimum $m_k=m^*$, $k\geq4$", zorder=6)
+            ax.plot(g.k, g.population_at_empirical_direction, "s--", color="#e66101", lw=2, ms=5,
+                    label=r"Population width $w_k(\widehat u_k)$", zorder=3)
+            ax.plot(g.k, g.empirical_at_population_direction, "x-", color="#16834a", lw=2, ms=7,
+                    label=r"Empirical width $\widehat w_k(u_k^{\min})$", zorder=5)
+            ax.axvline(result.selected_dimension, color="#c51b2b", ls="-.", lw=1.7,
+                       label=r"Selected descent-chain breakpoint", zorder=1)
+            ax.scatter([result.selected_dimension], [result.selected_width],
+                       s=120, color="#c51b2b", zorder=7)
+            ax.axvline(4, color="0.55", ls=":", lw=1.2, label="True breakpoint k = 4", zorder=0)
+            ax.text(.975, .965, rf"$\phi_1={result.phi_1:.3f},\ \phi_2={result.phi_2:.3f},\ \phi_3={result.phi_3:.3f}$"
+                    + "\n" + r"$T=2{,}000,\ K=10$" + "\n"
+                    + rf"$\widehat q_{{DC}}={int(result.selected_dimension)},\ \widehat p_{{DC}}={int(result.selected_order)}$",
+                    transform=ax.transAxes, ha="right", va="top", fontsize=11,
+                    bbox={"boxstyle": "round,pad=.45", "facecolor": "white", "edgecolor": "0.75", "alpha": .95})
+            ax.set(title=f"AR(3), run {rep:02d}: population and empirical widths",
+                   xlabel=r"Embedding dimension $k$", ylabel="Directional width", xticks=np.arange(1, 11),
+                   xlim=(.75, 10.45))
+            ax.grid(axis="y", color=".88", lw=.8)
+            handles, labels = ax.get_legend_handles_labels()
+            fig.legend(handles, labels, loc="lower center", bbox_to_anchor=(.53, .055),
+                       ncol=2, frameon=False, fontsize=10.5)
+            fig.text(.5, .022, "Padded-start projected gradient descent: 3 starts, 500 iterations, step 0.2 × 0.99ⁿ",
+                     ha="center", fontsize=9.5, color=".35")
+            pdf.savefig(fig)
+            fig.savefig(IMAGE_DIR / f"ar3_gradient_example_{rep:02d}.png", dpi=180)
+            plt.close(fig)
+    print(f"Saved ten-page PDF: {PDF_PATH}", flush=True)
+    make_ar3_gradient_previews(image_directory=IMAGE_DIR)
+
+
+def make_ar3_gradient_previews(*, image_directory=GRADIENT_IMAGE_DIRECTORY):
+    """Contact-sheet previews of the ten complete exported scientific plots."""
+    IMAGE_DIR = Path(image_directory)
+    from PIL import Image, ImageDraw, ImageFont
+
+    card_width, card_height, gap = 900, 566, 18
+    for first in [1, 6]:
+        preview = Image.new("RGB", (2 * card_width + 3 * gap, 3 * card_height + 4 * gap), "white")
+        for index, rep in enumerate(range(first, first + 5)):
+            with Image.open(IMAGE_DIR / f"ar3_gradient_example_{rep:02d}.png") as page:
+                page = page.convert("RGB")
+                page.thumbnail((card_width, card_height), Image.Resampling.LANCZOS)
+                x = gap + (index % 2) * (card_width + gap)
+                y = gap + (index // 2) * (card_height + gap)
+                preview.paste(page, (x, y))
+        draw = ImageDraw.Draw(preview)
+        font = ImageFont.load_default(size=26)
+        draw.multiline_text((card_width + 2 * gap + 55, 2 * (card_height + gap) + 150),
+            f"AR(3) runs {first:02d}-{first + 4:02d}\n\nFull-size figures in the ten-page PDF.\n\nFirst ten saved runs, in order.\nPadded-start gradient descent.\nRed marker: original descent chain.",
+            fill="#444444", font=font, spacing=12)
+        preview.save(IMAGE_DIR / f"ar3_gradient_examples_{first:02d}_to_{first + 4:02d}.png")
+
+
+def save_ar3_warm_start_figure(fig, name, *, image_directory, pdf_directory):
+    IMAGE_DIR, PDF_DIR = Path(image_directory), Path(pdf_directory)
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    PDF_DIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(IMAGE_DIR / f"{name}.png", dpi=180, bbox_inches="tight")
+    fig.savefig(PDF_DIR / f"{name}.pdf", bbox_inches="tight")
+
+
+def plot_ar3_warm_start_results(width_curves, summary, *,
+                                image_directory=WARM_START_IMAGE_DIRECTORY,
+                                pdf_directory=WARM_START_PDF_DIRECTORY, variants=WARM_START_VARIANTS):
+    IMAGE_DIR, PDF_DIR = Path(image_directory), Path(pdf_directory)
+    VARIANTS = variants
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    plt.rcParams.update({"font.size": 12, "axes.spines.top": False,
+                         "axes.spines.right": False})
+    labels = {
+        "First difference": "First difference",
+        "Second difference": "Second difference",
+        "Descent chain": "Descent chain",
+    }
+    fig, ax = plt.subplots(figsize=(10.5, 5.2))
+    locations = np.arange(len(labels))
+    for offset, variant, color in [(-0.17, VARIANTS[1], "#888888"),
+                                   (0.17, VARIANTS[2], "#0072B2")]:
+        block = summary[summary.variant == variant].set_index("method")
+        values = [float(block.loc[method, "correct"]) if method in block.index else np.nan
+                  for method in labels]
+        bars = ax.barh(locations + offset, values, height=0.30, color=color, label=variant)
+        ax.bar_label(bars, labels=[str(int(v)) if np.isfinite(v) else "" for v in values],
+                     padding=3, fontsize=11)
+    ax.set_yticks(locations, labels.values())
+    ax.invert_yaxis()
+    ax.set_xlim(0, 53)
+    ax.set_xticks(np.arange(0, 51, 10))
+    ax.set_xlabel("Correct AR(3) selections out of 50")
+    ax.set_title("Same 50 series and search budget: independent versus padded starts", pad=14)
+    ax.grid(axis="x", alpha=0.15)
+    ax.set_axisbelow(True)
+    ax.legend(loc="lower right", frameon=False)
+    save_ar3_warm_start_figure(fig, "selector_accuracy_comparison", image_directory=IMAGE_DIR, pdf_directory=PDF_DIR)
+    plt.close(fig)
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.5, 4.2))
+    for ax, replication in zip(axes, [1, 2, 5]):
+        for variant, color, linestyle in [(VARIANTS[0], "#999999", ":"),
+                                         (VARIANTS[1], "#D55E00", "--"),
+                                         (VARIANTS[2], "#0072B2", "-")]:
+            rows = width_curves[(width_curves.variant == variant)
+                                & (width_curves.replication == replication)].sort_values("k")
+            ax.plot(rows.k, rows.minimum_width, linestyle=linestyle, marker="o",
+                    ms=3, lw=1.6, color=color, label=variant)
+        ax.axvline(4, color="#009E73", ls="--", lw=1, label="True-order reference k=4")
+        ax.set(title=f"Replication {replication}", xlabel="Embedding dimension k")
+        ax.set_xticks([1, 2, 4, 6, 8, 10])
+        ax.grid(axis="y", alpha=0.15)
+    axes[0].set_ylabel("Width")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False,
+               bbox_to_anchor=(0.5, -0.015), fontsize=11)
+    fig.subplots_adjust(bottom=0.22, wspace=0.28)
+    save_ar3_warm_start_figure(fig, "example_width_curves", image_directory=IMAGE_DIR, pdf_directory=PDF_DIR)
+    plt.close(fig)
+
+
+def plot_ar3_population_selector_results(widths, summary, comparison, *,
+                                         image_directory=POPULATION_IMAGE_DIRECTORY,
+                                         pdf_directory=POPULATION_PDF_DIRECTORY):
+    IMAGE_DIR, PDF_DIR = Path(image_directory), Path(pdf_directory)
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    plt.rcParams.update({"font.size": 12, "axes.spines.top": False, "axes.spines.right": False})
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    PDF_DIR.mkdir(parents=True, exist_ok=True)
+    labels = summary.method
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    bars = ax.barh(np.arange(len(summary)), summary.correct, color="#0072B2")
+    ax.bar_label(bars, padding=3, fontsize=11)
+    ax.set_yticks(np.arange(len(summary)), labels)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 54)
+    ax.set_xticks(np.arange(0, 51, 10))
+    ax.set_xlabel("Correct order selections out of 50 AR(3) population curves")
+    ax.set_title("Breakpoint selectors supplied with population widths", pad=15)
+    ax.grid(axis="x", alpha=0.15)
+    ax.set_axisbelow(True)
+    fig.savefig(IMAGE_DIR / "population_selector_accuracy.png", dpi=180, bbox_inches="tight")
+    fig.savefig(PDF_DIR / "population_selector_accuracy.pdf", bbox_inches="tight")
+    plt.close(fig)
+
+    fig, axes = plt.subplots(3, 3, figsize=(14, 9))
+    for row, rep in enumerate([1, 2, 5]):
+        m = widths[widths.replication == rep].sort_values("k").population_width.to_numpy()
+        axes[row, 0].plot(np.arange(1, 11), m, "o-", color="#0072B2", ms=4)
+        axes[row, 0].set_yscale("log")
+        axes[row, 0].set_ylabel(f"Replication {rep}\nWidth (log scale)")
+        second = np.diff(m, n=2)
+        peak = int(np.argmax(second) + 2)
+        axes[row, 1].bar(np.arange(2, 10), second,
+                         color=["#D55E00" if k == peak else "#0072B2" for k in range(2, 10)])
+        axes[row, 1].set_ylabel("Change in slope")
+        axes[row, 1].text(0.98, 0.94, f"Selected order: {peak - 1}",
+                          transform=axes[row, 1].transAxes, ha="right", va="top")
+        result = descent_chain(m)
+        axes[row, 2].plot(np.arange(2, 10), result[4][1:-1], "o-", color="#0072B2", ms=4)
+        axes[row, 2].set_ylabel("Stationary probability")
+        axes[row, 2].text(0.98, 0.94, f"Selected order: {result[0]}",
+                          transform=axes[row, 2].transAxes, ha="right", va="top")
+        for ax in axes[row]:
+            ax.axvline(4, color="#009E73", ls="--", lw=1.1)
+            ax.grid(axis="y", alpha=0.15)
+            ax.set_xticks([2, 4, 6, 8])
+    for ax, title in zip(axes[0], ["Population widths", "Second differences", "Descent-chain interior weights"]):
+        ax.set_title(title, pad=12)
+    for ax in axes[-1]:
+        ax.set_xlabel("Embedding dimension k")
+    fig.tight_layout()
+    fig.savefig(IMAGE_DIR / "population_examples.png", dpi=180, bbox_inches="tight")
+    fig.savefig(PDF_DIR / "population_examples.pdf", bbox_inches="tight")
+    plt.close(fig)

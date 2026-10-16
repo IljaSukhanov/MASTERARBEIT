@@ -1,8 +1,6 @@
 method,correct,under,over,total
 First difference,9,41,0,50
 Second difference,15,35,0,50
-Perron first difference,8,42,0,50
-Perron second difference,15,35,0,50
 Descent chain,50,0,0,50
 Local drift,50,0,0,50
 Drop-to-tail energy,50,0,0,50

@@ -5,7 +5,7 @@ import numpy as np
 from Code.Code_AR_processes.ar_tools.lp_widths import (
     lp_width_descent, lp_width_curve, exact_empirical_width_low_dimension,
 )
-from Code.Code_AR_processes.ar3_descent_chain_lp import earlier_bend_certificate
+from Code.Code_AR_processes.ar_tools.breakpoint_selectors import earlier_bend_certificate
 
 
 class LPWidthTests(unittest.TestCase):

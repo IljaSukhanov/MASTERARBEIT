@@ -1,0 +1,64 @@
+{
+  "convention": "Euclidean coefficients; normal-cycle/Lipschitz--Killing intrinsic volumes",
+  "method": "Our boundary-integral derivation; adaptive quadrature; independent closed-mesh checks",
+  "values": {
+    "V0": 1.0,
+    "V1": 9.832991784702918,
+    "V2": 13.568717996370772,
+    "V3": 5.333333333333333,
+    "surface_area": 27.137435992741544,
+    "saddle_area": 13.281029532190527,
+    "planar_area": 13.856406460551018,
+    "smooth_integrated_mean_curvature": 4.188999563583965,
+    "edge_integrated_mean_curvature": 26.70225519004751,
+    "edge_contributions": {
+      "ridge": 2.7020434354241596,
+      "sides": 12.336052217224857,
+      "ends": 11.664159537398495
+    },
+    "quadrature_error_estimates": {
+      "saddle_area": 4.1366409621771345e-11,
+      "smooth_mean": 2.0814583342649274e-11,
+      "side_angle_integral": 5.5912743643415866e-14,
+      "end_angle_integral": 9.156904463442433e-14
+    }
+  },
+  "mesh_convergence": [
+    {
+      "n": 20,
+      "vertices": 863,
+      "triangles": 1722,
+      "boundary_euler_characteristic": 2,
+      "V1": 9.832443055836263,
+      "V2": 13.577202272970386,
+      "V3": 5.34
+    },
+    {
+      "n": 40,
+      "vertices": 3323,
+      "triangles": 6642,
+      "boundary_euler_characteristic": 2,
+      "V1": 9.832854617647225,
+      "V2": 13.570839062352107,
+      "V3": 5.335000000000001
+    },
+    {
+      "n": 80,
+      "vertices": 13043,
+      "triangles": 26082,
+      "boundary_euler_characteristic": 2,
+      "V1": 9.832957493886854,
+      "V2": 13.569248262667887,
+      "V3": 5.333749999999998
+    },
+    {
+      "n": 160,
+      "vertices": 51683,
+      "triangles": 103362,
+      "boundary_euler_characteristic": 2,
+      "V1": 9.832983212058148,
+      "V2": 13.56885056293266,
+      "V3": 5.3334374999999925
+    }
+  ]
+}
