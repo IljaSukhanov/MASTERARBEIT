@@ -28,7 +28,7 @@ where $\phi_i\in\mathbb{R}$, $i=1,\dots,p$ are the coefficients with $\phi_p\ne0
 
 It is well known that there exists a stationary process $\{X_t\}_{t\in\mathbb{Z}}$ that can be written in the form \eqref{eq:def_arma} if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert=1$. Another important property that we will need for the geometric interpretation of the embedded AR process is causality: An ARMA process $\{X_t\}_{t\in\mathbb{Z}}$ is called causal if there exist constants $\psi_j$, $j\ge0$ with $\sum_{j\ge0}|\psi_j|<+\infty$, such that $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$ for all $t\in\mathbb{Z}$. It turns out that this property is stronger than stationarity, as an ARMA process is causal if and only if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert\le1$. In what follows, we will exclusively work with causal ARMA processes.
 
-\todo[inline]{Define $\psi_j$ as the coefficients of $1/\phi$}
+\todo[inline]{Polish: Define $\psi_j$ as the coefficients of $1/\phi$}
 
 An important second order object for stationary sequences $X$ is its auto covariance function $\gamma_X(h)=\operatorname{Cov}[X_{t+h},X_t]$. The auto covariance matrix $\Gamma_k$ of $(X_t,\dots,X_{t+k-1})$ is
 \begin{align*}
@@ -350,8 +350,6 @@ The next Proposition shows that in our setting, Brunel's condition fails and the
     See Appendix Section~\ref{sec:proof_sliding_window_fails_brunel}.
 \end{proof}
 
-\todo[inline]{decrease overlap to increase convergence speed?}
-
 The next Lemma now shows that the support of a stationary and ergodic process is in fact dense in $\mathcal{Z}$ with probability 1. 
 
 \begin{Lem}\label{lem:ergodic_implies_dense}
@@ -412,7 +410,7 @@ The first coordinate of $\|q_{\phi}\|_2^{-1}q_{\phi}$ is $(1+\phi_1^2+\dots+\phi
 
 Thus, we have shown that a continuous transformation of every empirical minimizer is a strongly consistent estimator for the AR coefficients $\phi$.
 
-\todo[inline]{cite classical argmin consistency theorem}
+This is reminiscent of the classical argmax theorem which can be found, for example, in~\cite{Vaart_1998}.
 
 \subsection{Minimization via Projected sub-gradient descent}
 
@@ -493,25 +491,19 @@ In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is 
 
 \todo[inline]{rework completely}
 
-The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_k=m^*$ for all $k\ge p+1$ and $m_k>m*$ for all $k\le p$.
+The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_1\ge\dots\ge m_p\ge m_{p+1}=\dots=m_K$.
 
-\textbf{fit two affine lines}
+\textbf{Second derivative}
 
-Define $S_{q}(a,b)=\sum_{l=1}^{q}(al+b-\hat{m}_l)^2$ and $T_{q}(c,d)=\sum_{l=q}^{T}(cl+d-\hat{m}_l)^2$ for $q=2,\dots,T-1$.
+A natural break point selector is the discrete version of the second derivative. 
 
-Two affine lines are fitted through $(1,\hat{m}_1),\dots,(q,\hat{m}_{q})$ and $(q,\hat{m}_{q}),\dots,(K,\hat{m}_K)$ for all $q=2,\dots,K-1$ and we select the $q$ with the best fit.
+\textbf{Descent chain}
+
+The descent chain is motivated by the manuscript~[] where different kinds of Markov chains are constructed whose stationary distribution provides inside on which scale is the most distinct. We ask if there is a construction of a Markov chain using the observations $m_1\ge\dots m_p\ge m_{p+1}\ge\dots\ge m_K$ whose stationary distribution peaks at the break point $m_{p+1}$.
+
 \begin{align*}
-    S_{AA}(q)=\min_{a,b,c,d}\left(\sum_{l=1}^{q}(al+b-\hat{m}_l)^2+\sum_{l=q}^{K}(cl+d-\hat{m}_l)^2\right),\quad\hat{q}_{AA}=\arg\min_{2\le q\le K-1}S_{AA}(q)
+    \hat{k}_{\text{DC}}=\min\arg\max_{2\le k\le K-1}\frac{\hat{m}_{k-1}-\hat{m}_k}{\hat{m}_k-\hat{m}_K}
 \end{align*}
-
-\textbf{fit one affine line and one constant line}
-
-Since we know that the true minimum width $m_k$ has a breaking point at $k=p+1$, we can use a modified L-method, that is, fit an affine curve through the points $(1,\hat{m}_1),\dots,(q,\hat{m}_{q})$ and a constant line through $(q,\hat{m}_{q}),\dots,(K,\hat{m}_K)$ for all $q=2,\dots,K-1$ and select the $q$ with the best fit.
-\begin{align*}
-    S_{AC}(q)=\min_{a,b,d}\left(\sum_{l=1}^{q}(al+b-\hat{m}_l)^2+\sum_{l=q}^{K}(d-\hat{m}_l)^2\right),\quad\hat{q}_{AC}=\arg\min_{2\le q\le K-1}S_{AC}(q)
-\end{align*}
-
-
 
 \section{Numerical Results}
 
@@ -523,7 +515,12 @@ For our experiments, we want to sample the coefficients $\phi_1,\dots,\phi_p$ in
 \end{align*}
 This allows for fair and principled numerical experiments.
 
-\todo[inline]{Explain Jones algorithm better}
+\textbf{Choosing the starting direction}
+
+\begin{itemize}
+    \item $u_0^{(l)}\sim U(\mathbb{S}^{k-1})$ random, $l=1,\dots,L$ (multiple descents in parallel)
+    \item let $\hat{u}_k$ be the direction that was found in dimension $k$ and use $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ as starting point in dimension $k+1$ or $u_0=(0,\hat{u}_k)$
+\end{itemize}
 
 \subsection{Simulated Data}
 
