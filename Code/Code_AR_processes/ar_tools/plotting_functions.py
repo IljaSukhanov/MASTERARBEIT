@@ -9,7 +9,6 @@ import numpy as np
 import pandas as pd
 
 from .breakpoint_selectors import descent_chain
-from .functions import is_stationary, jones_ar_coefficients
 from .experiment_settings import (
     AR_DIRECTORY, GRADIENT_IMAGE_DIRECTORY, GRADIENT_PDF_PATH,
     POPULATION_IMAGE_DIRECTORY, POPULATION_PDF_DIRECTORY,
@@ -21,8 +20,6 @@ __all__ = [
     "plot_embedding_k2",
     "plot_embedding_k3",
     "save_figure",
-    "plot_ar2_jones_coefficient_sample",
-    "plot_ar3_jones_coefficient_sample",
     "plot_ar3_lp_descent_results",
     "plot_ar3_gradient_examples",
     "make_ar3_gradient_previews",
@@ -279,100 +276,6 @@ def plot_embedding_k3(
 def save_figure(figure, name, *, pdf_directory, image_directory):
     figure.savefig(Path(pdf_directory) / f"{name}.pdf", bbox_inches="tight")
     figure.savefig(Path(image_directory) / f"{name}.png", dpi=160, bbox_inches="tight")
-
-
-def plot_ar2_jones_coefficient_sample(*, ar_directory=AR_DIRECTORY, seed=42, sample_count=500,
-                                      name="ar2_jones_coefficient_sample") -> None:
-    AR_DIR = Path(ar_directory)
-    SEED, SAMPLE_COUNT, NAME = seed, sample_count, name
-    rng = np.random.default_rng(SEED)
-    coefficients = np.stack([
-        jones_ar_coefficients(2, rng=rng) for _ in range(SAMPLE_COUNT)
-    ])
-    assert coefficients.shape == (SAMPLE_COUNT, 2)
-    assert np.isfinite(coefficients).all()
-    assert all(is_stationary(phi)[0] for phi in coefficients)
-
-    csv_path = AR_DIR / "outputs" / "csv" / NAME / "coefficients.csv"
-    png_path = AR_DIR / "outputs" / "images" / NAME / f"{NAME}.png"
-    pdf_path = AR_DIR / "outputs" / "pdfs" / NAME / f"{NAME}.pdf"
-    for path in (csv_path, png_path, pdf_path):
-        path.parent.mkdir(parents=True, exist_ok=True)
-    np.savetxt(csv_path, coefficients, delimiter=",", header="phi_1,phi_2", comments="")
-
-    plt.rcParams.update({"font.size": 12, "pdf.fonttype": 42})
-    fig, ax = plt.subplots(figsize=(9, 5.8), layout="constrained")
-    ax.fill([-2, 2, 0], [-1, -1, 1], color="#f1f5f9", zorder=0)
-    ax.plot([-2, 2, 0, -2], [-1, -1, 1, -1], color="#7b8794", lw=1.2,
-            label="Stationarity boundary", zorder=2)
-    points = ax.scatter(coefficients[:, 0], coefficients[:, 1], s=25,
-                        color="#1764ab", edgecolors="white", linewidths=0.6,
-                        label=f"{SAMPLE_COUNT} Jones draws", zorder=3)
-    assert points.get_offsets().shape == (SAMPLE_COUNT, 2)
-    ax.axhline(0, color="#aab3bd", lw=0.8, zorder=1)
-    ax.axvline(0, color="#aab3bd", lw=0.8, zorder=1)
-    ax.set(xlabel=r"$\varphi_1$", ylabel=r"$\varphi_2$",
-           title=f"Jones sampler: {SAMPLE_COUNT} AR(2) coefficient pairs",
-           xlim=(-2.15, 2.15), ylim=(-1.15, 1.15))
-    ax.set_aspect("equal", adjustable="box")
-    ax.set_xticks(np.arange(-2, 2.1, 0.5))
-    ax.set_yticks(np.arange(-1, 1.1, 0.5))
-    ax.grid(color="#e2e6eb", linewidth=0.65, zorder=0)
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.legend(loc="upper left", frameon=False, fontsize=10)
-    fig.savefig(png_path, dpi=200)
-    fig.savefig(pdf_path, metadata={"Title": f"{SAMPLE_COUNT} Jones AR(2) coefficient pairs",
-                                  "Subject": f"Seed {SEED}; sampler: ar_tools.functions.jones_ar_coefficients"})
-    plt.close(fig)
-    print(f"Saved {SAMPLE_COUNT} coefficient pairs; seed={SEED}; all stationarity checks passed.")
-    for path in (png_path, pdf_path, csv_path):
-        print(path)
-
-
-def plot_ar3_jones_coefficient_sample(*, ar_directory=AR_DIRECTORY, seed=42, sample_count=500,
-                                      name="ar3_jones_coefficient_sample") -> None:
-    AR_DIR = Path(ar_directory)
-    SEED, SAMPLE_COUNT, NAME = seed, sample_count, name
-    rng = np.random.default_rng(SEED)
-    coefficients = np.stack([
-        jones_ar_coefficients(3, rng=rng) for _ in range(SAMPLE_COUNT)
-    ])
-    assert coefficients.shape == (SAMPLE_COUNT, 3)
-    assert np.isfinite(coefficients).all()
-    assert all(is_stationary(phi)[0] for phi in coefficients)
-
-    csv_path = AR_DIR / "outputs" / "csv" / NAME / "coefficients.csv"
-    png_path = AR_DIR / "outputs" / "images" / NAME / f"{NAME}.png"
-    pdf_path = AR_DIR / "outputs" / "pdfs" / NAME / f"{NAME}.pdf"
-    for path in (csv_path, png_path, pdf_path):
-        path.parent.mkdir(parents=True, exist_ok=True)
-    np.savetxt(csv_path, coefficients, delimiter=",", header="phi_1,phi_2,phi_3", comments="")
-
-    plt.rcParams.update({"font.size": 12, "pdf.fonttype": 42})
-    fig = plt.figure(figsize=(9, 7.5), layout="constrained")
-    ax = fig.add_subplot(projection="3d")
-    points = ax.scatter(*coefficients.T, s=22, color="#1764ab", alpha=0.85,
-                        edgecolors="white", linewidths=0.35, depthshade=True)
-    assert all(len(axis_values) == SAMPLE_COUNT for axis_values in points._offsets3d)
-    spans = np.ptp(coefficients, axis=0)
-    limits = np.column_stack((coefficients.min(axis=0) - 0.06 * spans,
-                              coefficients.max(axis=0) + 0.06 * spans))
-    ax.set(xlabel=r"$\varphi_1$", ylabel=r"$\varphi_2$", zlabel=r"$\varphi_3$",
-           title=f"Jones sampler: {SAMPLE_COUNT} AR(3) coefficient triples",
-           xlim=limits[0], ylim=limits[1], zlim=limits[2])
-    ax.set_box_aspect(spans)
-    ax.view_init(elev=24, azim=-55)
-    ax.set_proj_type("ortho")
-    for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
-        axis.pane.set_facecolor((0.96, 0.97, 0.98, 1))
-        axis._axinfo["grid"]["color"] = (0.85, 0.88, 0.91, 1)
-    fig.savefig(png_path, dpi=200)
-    fig.savefig(pdf_path, metadata={"Title": f"{SAMPLE_COUNT} Jones AR(3) coefficient triples",
-                                  "Subject": f"Seed {SEED}; sampler: ar_tools.functions.jones_ar_coefficients"})
-    plt.close(fig)
-    print(f"Saved {SAMPLE_COUNT} coefficient triples; seed={SEED}; all stationarity checks passed.")
-    for path in (png_path, pdf_path, csv_path):
-        print(path)
 
 
 def plot_ar3_lp_descent_results(widths, *, ar_directory=AR_DIRECTORY,

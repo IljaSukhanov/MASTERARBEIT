@@ -27,7 +27,6 @@ class ExperimentToolsTests(unittest.TestCase):
 
     def test_every_former_script_experiment_has_a_notebook_entry_point(self):
         required = {
-            "plot_ar2_jones_coefficient_sample", "plot_ar3_jones_coefficient_sample",
             "run_ar3_coefficient_mse_experiment", "run_ar3_warm_start_experiment",
             "run_ar3_population_selector_experiment", "run_ar3_lp_descent_experiment",
             "fit_ar3_gradient_examples", "plot_ar3_gradient_examples",
@@ -57,7 +56,6 @@ class ExperimentToolsTests(unittest.TestCase):
 
     def test_notebook_setup_finds_the_project_without_launchers(self):
         notebook_names = [
-            "ar2_jones_coefficient_sample", "ar3_jones_coefficient_sample",
             "ar3_gradient_figure_2_4_examples", "ar3_descent_chain_lp",
             "ar3_order_selection_warm_starts", "ar3_population_breakpoint_selectors",
         ]
