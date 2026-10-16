@@ -696,7 +696,7 @@ The conditional maximum likelihood approach with innovations assumed to be from 
 
 This is a $L^{\infty}$-analog of ordinary least squares.
 
-Define a hyperplane $H_{\beta,b}$ by $H_{\beta,b}:=\{x\in\mathbb{R}^{k}:\langle x,\beta\rangle=b\}$. The distance of a point $z\in\mathbb{R}^{(k)}$ from the hyperplane $H_{\beta,b}$ is $d(z,H_{\beta,b})=\inf_{x\in H_{\beta,b}}\|z-x\|=(\langle\beta,z\rangle-b)/\|\beta\|$. This allows us to rewrite the above $L^{\infty}$-minimization in the following way:
+Define a hyperplane $H_{\beta,b}$ by $H_{\beta,b}:=\{x\in\mathbb{R}^{k}:\langle x,\beta\rangle=b\}$. The distance of a point $z\in\mathbb{R}^{(k)}$ from the hyperplane $H_{\beta,b}$ is $d(z,H_{\beta,b})=\inf_{x\in H_{\beta,b}}\|z-x\|=(|\langle\beta,z\rangle-b|)/\|\beta\|$. This allows us to rewrite the above $L^{\infty}$-minimization in the following way:
 \begin{align*}
     \min_{\phi}\sqrt{1+\|\phi\|^2}\max_td(Y_t,H_{q_{\phi},0})
 \end{align*}
@@ -714,7 +714,7 @@ The minimum width approach can also be formulated in terms of a hyperplane fitti
 and therefore
 \begin{align*}
     \min_{u\in\mathbb{S}^{k-1}}\hat{w}_k(u)&=2\min_{u\in\mathbb{S}^{k-1}}\frac{1}{2}\left(\max_t\langle Y_t,u\rangle-\min_t\langle Y_t,u\rangle\right)\\&
-    =2\min_{c,u\in\mathbb{S}^{k-1}}\max_td(Y_t,H_{u,c})\\&
+    =2\min_{c\in\mathbb{R},u\in\mathbb{S}^{k-1}}\max_td(Y_t,H_{u,c})\\&
     =2\min_{H}\max_t d(Y_t,H)
 \end{align*}
 
@@ -738,8 +738,8 @@ A visualization is given in Figure~\ref{fig:vis_min_problems}.
 
 We can write the $L^{\infty}$-problem in terms of the width function $w_k$ as well. Namely, the problem can be reformulated as
 \begin{align*}
-    \min_{u\in\mathbb{S}^{k-1},u_1\ne0}\frac{w_k(u)}{|u_1|}=2\min_{q\in\mathbb{R}^k,q_1=1}h_{\mathcal{Z}^{(k)}}(q)=\rho_{\mathcal{Z}^{(k)}}(e_0),
+    \frac{1}{2}\min_{u\in\mathbb{S}^{k-1},u_0\ne0}\frac{w_k(u)}{|u_1|}=\min_{q\in\mathbb{R}^k,q_0=1}h_{\mathcal{Z}^{(k)}}(q)=\rho_{\mathcal{Z}^{(k)}}(e_0),
 \end{align*}
-where $\rho_{\mathcal{Z}^{(k)}}$ is the radial function of $\mathcal{Z}^{(k)}$.
+where $\rho_{\mathcal{Z}^{(k)}}(v):=\max\{r\ge0:rv\in\mathcal{Z}^{(k)}\}$ is the radial function of $\mathcal{Z}^{(k)}$. The radial function is the reciprocal of the well known Minkowski-functional.
 
 \textcolor{red}{Using this formulation, we see that is also has the \enquote{break point property} like the minimum width (see Proposition~\ref{prop:minimum_width})}
