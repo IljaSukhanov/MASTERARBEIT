@@ -80,19 +80,19 @@
     \end{align}
     Next, we use the simple formula for the support function of the zonoid $\mathcal{Z}^{(k)}$ to obtain
     \begin{align*}
-        w_k(u)=2h_{\mathcal{Z}^{(k)}}(u)=2\sum_{j=0}^{\infty}|\langle g_j^{(k)},u\rangle|=2\|a\|_1.
+        w_k(u)=(b-a)h_{\mathcal{Z}^{(k)}}(u)=(b-a)\sum_{j=0}^{\infty}|\langle g_j^{(k)},u\rangle|=(b-a)\|a\|_1.
     \end{align*}
     Therefore, we obtain
     \begin{align*}
-        w_k(u)=2\|a\|_1\ge\frac{2}{\|q_{\phi}\|_2}.
+        w_k(u)=(b-a)\|a\|_1\ge\frac{b-a}{\|q_{\phi}\|_2}.
     \end{align*}
     Plugging in the directions from the set in Equation~\eqref{eq:minimizers} in $w_k$ we easily see that the above lower bound is actually attained. It remains to show that there are no other minimizing directions. Inequality~\eqref{eq:young_convolution_inequality} becomes an equality iff $a$ has exactly one nonzero entry (see Lemma~\ref{lem:young_convolution_equality} in the Appendix~\ref{chap:appendix}). This means $a=c\delta_r$ and it follows $\tilde{u}=c\tau_rq_{\phi}$, which forces $u$ to have the form $\pm q_r^{(k)}/\|q_{\phi}\|_2$ for some $r=0,\dots,k-(p+1)$.
 
-    Now let $k<p+1$. We have shown above that $w_k(u)$ attains the lower bound $2/\|q_{\phi}\|_2$ if and only if $u$ has the specific form above. But if $k<p+1$ there are no permitted $r$ that would lead to the specific form. Since $w_k$ is continuous it attains its minimum on $\mathbb{S}^{k-1}$ and therefore $m_k>2/\|q_{\phi}\|_2$.
+    Now let $k<p+1$. We have shown above that $w_k(u)$ attains the lower bound $(b-a)/\|q_{\phi}\|_2$ if and only if $u$ has the specific form above. But if $k<p+1$ there are no permitted $r$ that would lead to the specific form. Since $w_k$ is continuous it attains its minimum on $\mathbb{S}^{k-1}$ and therefore $m_k>(b-a)/\|q_{\phi}\|_2$.
 
     We are left to show $m_{k-1}\ge m_k$ for $k=2,\dots,p$. Let $v=(v_0,\dots,v_{k-2})\in\mathbb{S}^{k-2}$ and $u=(v_0,\dots,v_{k-2},0)\in\mathbb{S}^{k-1}$ and thus
     \begin{align*}
-        w_{k}(u)=2\sum_{j}\left|\sum_{l=0}^{k-1}u_l\psi_{j-l}\right|=2\sum_{j}\left|\sum_{l=0}^{k-2}v_l\psi_{j-l}\right|=w_{k-1}(v).
+        w_{k}(u)=(b-a)\sum_{j}\left|\sum_{l=0}^{k-1}u_l\psi_{j-l}\right|=(b-a)\sum_{j}\left|\sum_{l=0}^{k-2}v_l\psi_{j-l}\right|=w_{k-1}(v).
     \end{align*}
     Let $v$ be a minimizing direction. Then $m_{k-1}=w_{k-1}(v)=w_k(u)\ge\min_{u\in\mathbb{S}^{k-1}}w_k(u)=m_k$.
 \end{proof}
