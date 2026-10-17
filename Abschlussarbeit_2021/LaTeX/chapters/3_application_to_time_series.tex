@@ -501,7 +501,7 @@ A natural break point selector is the discrete version of the second derivative.
 
 \textbf{Descent chain}
 
-The descent chain is motivated by the manuscript~[] where different kinds of Markov chains are constructed whose stationary distribution provides inside on which scale is the most distinct. We ask if there is a construction of a Markov chain using the observations $m_1\ge\dots m_p\ge m_{p+1}\ge\dots\ge m_K$ whose stationary distribution peaks at the break point $m_{p+1}$.
+The descent chain is motivated by the manuscript~\cite{Baralic2026} where different kinds of Markov chains are constructed whose stationary distribution provides inside on which scale is the most distinct. We ask if there is a construction of a Markov chain using the observations $m_1\ge\dots m_p\ge m_{p+1}\ge\dots\ge m_K$ whose stationary distribution peaks at the break point $m_{p+1}$.
 
 \begin{align*}
     \hat{k}_{\text{DC}}=\min\arg\max_{2\le k\le K-1}\frac{\hat{m}_{k-1}-\hat{m}_k}{\hat{m}_k-\hat{m}_K}
@@ -523,6 +523,7 @@ This allows for fair and principled numerical experiments.
 
 \begin{itemize}
     \item $u_0^{(l)}\sim U(\mathbb{S}^{k-1})$ random, $l=1,\dots,L$ (multiple descents in parallel)
+    \item unit eigenvector corresponding to the minimum eigenvalue of $YY^{T}$ where $Y=(Y_K^{(k)}\dots Y_T^{(k)})\in\mathbb{R}^{k\times(T-K+1)}$ \textcolor{red}{precedence!}
     \item let $\hat{u}_k$ be the direction that was found in dimension $k$ and use $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ as starting point in dimension $k+1$ or $u_0=(0,\hat{u}_k)$
 \end{itemize}
 
@@ -697,6 +698,10 @@ Minimum width
 
 \todo[inline]{Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
 
+In this final Section of the Chapter we assess the novelty of our approach and position it among existing literature.
+
+First of all, special estimation methods for auto-regressive processes with bounded innovations have been considered before with the main precedent being Horváth's paper where the maximum likelihood estimation with uniform density is formulated as Linear Program (LP). In the time after, exact and very fast LP solvers have been developed.
+
 The conditional maximum likelihood approach with innovations assumed to be from $U[-h,h]$ leads to $L^{\infty}$-regression:
 \begin{align*}
     \min_{\phi\in\mathbb{R}^{p}}\max_{t}\left|\underbrace{X_t-\sum_{j=1}^{p}\phi_jX_{t-j}}_{=\langle Y_t^{(p+1)},q_{\phi}\rangle}\right|=\min_{\phi\in\mathbb{R}^{p}}\max_t|X_t-\phi^{T}(X_{t-1},\dots,X_{t-p})|
@@ -746,8 +751,17 @@ A visualization is given in Figure~\ref{fig:vis_min_problems}.
 
 We can write the $L^{\infty}$-problem in terms of the width function $w_k$ as well. Namely, the problem can be reformulated as
 \begin{align*}
-    \frac{1}{2}\min_{u\in\mathbb{S}^{k-1},u_0\ne0}\frac{w_k(u)}{|u_1|}=\min_{q\in\mathbb{R}^k,q_0=1}h_{\mathcal{Z}^{(k)}}(q)=\rho_{\mathcal{Z}^{(k)}}(e_0),
+    \frac{1}{2}\min_{u\in\mathbb{S}^{k-1},u_0\ne0}\frac{w_k(u)}{|u_0|}=\min_{q\in\mathbb{R}^k,q_0=1}h_{\mathcal{Z}^{(k)}}(q)=\rho_{\mathcal{Z}^{(k)}}(e_0),
 \end{align*}
-where $\rho_{\mathcal{Z}^{(k)}}(v):=\max\{r\ge0:rv\in\mathcal{Z}^{(k)}\}$ is the radial function of $\mathcal{Z}^{(k)}$. The radial function is the reciprocal of the well known Minkowski-functional.
+where $\rho_{\mathcal{Z}^{(k)}}(v):=\max\{r\ge0:rv\in\mathcal{Z}^{(k)}\}$ is the radial (gauge) function of $\mathcal{Z}^{(k)}$. The radial function is the reciprocal of the well known Minkowski-functional.
 
 \textcolor{red}{Using this formulation, we see that is also has the \enquote{break point property} like the minimum width (see Proposition~\ref{prop:minimum_width})}
+
+
+Let $\mathcal{N}_k=\{u\in\mathbb{R}^{k}:u_0=1\}$. Let $u=(u_0,\dots,u_{k-1})\in\mathcal{N}_k$ and let $\Tilde{u}$ be a sequence defined by $u$ at the indices $0,\dots,k-1$ and zero everywhere else. Define the sequence $a=\Tilde{u}\ast\psi$. We already know that $\Tilde{u}=q_{\phi}\ast a$ and $h_k(u)=1+\sum_{j\ge1}|a_j|$. We have $h_k(u)\ge1$ and $h_k(u)=1$ iff $a=\delta_0$ iff $\Tilde{u}=q_{\phi}$.
+
+For $k\le p$ any $u\in\mathcal{N}_k$ has the padded form $\Tilde{u}=(\dots,0,1,u_1,\dots,u_{k-1},0,\dots)$. In particular, $\Tilde{u}_p=0$, but $(q_{\phi})_p\ne0$ and since $h_k(u)=1$ iff $\Tilde{u}=q_{\phi}$ we have $h_k(u)>1$.
+
+Since $\mathcal{N}_k$ is nonempty and compact and $h_k$ is continuous, the minimum is still attained and we have $\min_{u\in\mathcal{N}_k}h_k(u)>1$ for $k\le p$. We still have the monotonicity because $\min_{u\in\mathcal{N}_k}h_k(u)=h_k(\Tilde{u})=h_{k+1}((\Tilde{u},0))\ge\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)$.
+
+The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
