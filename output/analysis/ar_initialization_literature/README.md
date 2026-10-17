@@ -2,6 +2,8 @@
 
 Research note, 17 October 2026. These sources provide methodological precedent and ideas to test. Their results do not establish global recovery for the AR empirical-width problem. The experiment proposals below are adaptations, not claims proved in these papers.
 
+For a method-by-method list with published precedent and explicit adaptation notes, see the [starting-direction catalogue](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_initialization_literature/starting_direction_catalogue.md).
+
 ## References and precise reading locations
 
 1. **Ugray, Z., Lasdon, L., Plummer, J., Glover, F., Kelly, J., and Martí, R. (2007). _Scatter Search and Local NLP Solvers: A Multistart Framework for Global Optimization_. INFORMS Journal on Computing, 19(3), 328–340.**
@@ -71,4 +73,4 @@ An elementary multistart calculation, not a guarantee about this optimizer: cond
 
 ## Citation files
 
-[additional_references.bib](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_initialization_literature/additional_references.bib) contains the six additional entries. This note and that file are separate from the thesis sources.
+[additional_references.bib](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_initialization_literature/additional_references.bib) contains the additional entries, including the references added for the starting-direction catalogue. This note and that file are separate from the thesis sources.

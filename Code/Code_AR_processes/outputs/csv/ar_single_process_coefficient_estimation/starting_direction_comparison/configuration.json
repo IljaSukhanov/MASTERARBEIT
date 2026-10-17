@@ -1,0 +1,37 @@
+{
+  "p": 3,
+  "sample_size": 2000,
+  "burnin": 1000,
+  "innovation_half_width": 1.0,
+  "coefficient_seed": 20260910,
+  "process_seed": 20260911,
+  "optimizer_seed": 20260912,
+  "number_of_starts": 12,
+  "true_coefficients": [
+    -1.0201963953001298,
+    -0.40421234501085473,
+    -0.37447884869725645
+  ],
+  "point_cloud_shape": [
+    1997,
+    4
+  ],
+  "spectral_matrix": "uncentered point_cloud.T @ point_cloud",
+  "spectral_eigenvalues": [
+    165.4680854232133,
+    532.511284110326,
+    1145.6858059752583,
+    85217.4446697701
+  ],
+  "optimizer": {
+    "iterations": 10000,
+    "initial_step": 0.005470209162471137,
+    "patience": 200,
+    "improvement_tolerance": 1e-10,
+    "step_schedule": "geometric",
+    "geometric_decay": 0.997
+  },
+  "execution": "sequential starts; numerical library threads limited to one",
+  "timing": "one execution per case; fit includes initialization and all descents",
+  "selection": "smallest recorded empirical width; true coefficients used only for evaluation"
+}

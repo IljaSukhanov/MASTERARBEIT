@@ -29,7 +29,6 @@ class ExperimentToolsTests(unittest.TestCase):
         required = {
             "run_ar3_coefficient_mse_experiment", "run_ar3_warm_start_experiment",
             "run_ar3_population_selector_experiment", "run_ar3_lp_descent_experiment",
-            "fit_ar3_gradient_examples", "plot_ar3_gradient_examples",
         }
         called = set()
         for path in AR_DIR.glob("*.ipynb"):
@@ -56,7 +55,7 @@ class ExperimentToolsTests(unittest.TestCase):
 
     def test_notebook_setup_finds_the_project_without_launchers(self):
         notebook_names = [
-            "ar3_gradient_figure_2_4_examples", "ar3_descent_chain_lp",
+            "ar3_descent_chain_lp",
             "ar3_order_selection_warm_starts", "ar3_population_breakpoint_selectors",
         ]
         for directory in (AR_DIR, AR_DIR.parents[1]):
