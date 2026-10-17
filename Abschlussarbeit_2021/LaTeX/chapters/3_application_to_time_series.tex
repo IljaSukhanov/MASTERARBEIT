@@ -526,6 +526,14 @@ This allows for fair and principled numerical experiments.
     \item let $\hat{u}_k$ be the direction that was found in dimension $k$ and use $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ as starting point in dimension $k+1$ or $u_0=(0,\hat{u}_k)$
 \end{itemize}
 
+\textbf{Termination condition}
+
+\begin{itemize}
+    \item improvement patience: no improvement of the empirical width for a certain amount of iterations
+    \item maximum number of iterations
+    \item norm of the gradient becomes small
+\end{itemize}
+
 \subsection{Simulated Data}
 
 \subsubsection{First exemplary experiment}
