@@ -755,13 +755,12 @@ We can write the $L^{\infty}$-problem in terms of the width function $w_k$ as we
 \end{align*}
 where $\rho_{\mathcal{Z}^{(k)}}(v):=\max\{r\ge0:rv\in\mathcal{Z}^{(k)}\}$ is the radial (gauge) function of $\mathcal{Z}^{(k)}$. The radial function is the reciprocal of the well known Minkowski-functional.
 
-\textcolor{red}{Using this formulation, we see that is also has the \enquote{break point property} like the minimum width (see Proposition~\ref{prop:minimum_width})}
-
+Using this formulation, we see that is also has the \enquote{break point property} like the minimum width (see Proposition~\ref{prop:minimum_width}).
 
 Let $\mathcal{N}_k=\{u\in\mathbb{R}^{k}:u_0=1\}$. Let $u=(u_0,\dots,u_{k-1})\in\mathcal{N}_k$ and let $\Tilde{u}$ be a sequence defined by $u$ at the indices $0,\dots,k-1$ and zero everywhere else. Define the sequence $a=\Tilde{u}\ast\psi$. We already know that $\Tilde{u}=q_{\phi}\ast a$ and $h_k(u)=1+\sum_{j\ge1}|a_j|$. We have $h_k(u)\ge1$ and $h_k(u)=1$ iff $a=\delta_0$ iff $\Tilde{u}=q_{\phi}$.
 
 For $k\le p$ any $u\in\mathcal{N}_k$ has the padded form $\Tilde{u}=(\dots,0,1,u_1,\dots,u_{k-1},0,\dots)$. In particular, $\Tilde{u}_p=0$, but $(q_{\phi})_p\ne0$ and since $h_k(u)=1$ iff $\Tilde{u}=q_{\phi}$ we have $h_k(u)>1$.
 
-Since $\mathcal{N}_k$ is nonempty and compact and $h_k$ is continuous, the minimum is still attained and we have $\min_{u\in\mathcal{N}_k}h_k(u)>1$ for $k\le p$. We still have the monotonicity because $\min_{u\in\mathcal{N}_k}h_k(u)=h_k(\Tilde{u})=h_{k+1}((\Tilde{u},0))\ge\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)$.
+Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coercive, the minimum is still attained and we have $\min_{u\in\mathcal{N}_k}h_k(u)>1$ for $k\le p$. We still have the monotonicity because $\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)\le h_{k+1}((u,0))=h_k(u)$ for all $u\in\mathcal{N}_k$ and hence $\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)\le\min_{u\in\mathcal{N}_k}h_k(u)$.
 
 The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
