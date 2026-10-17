@@ -73,6 +73,7 @@ def projected_subgradient_empirical_width(
     best_width = np.inf
     best_direction = direction.copy()
     iterations_without_improvement = 0
+    termination_reason = "iteration_limit"
 
     # main loop
     for iteration in range(iterations):
@@ -99,6 +100,7 @@ def projected_subgradient_empirical_width(
         step_history[iteration] = step
 
         if iterations_without_improvement >= patience:
+            termination_reason = "patience"
             width_history = width_history[:iteration + 1]
             best_width_history = best_width_history[:iteration + 1]
             step_history = step_history[:iteration + 1]
@@ -108,12 +110,6 @@ def projected_subgradient_empirical_width(
         riemannian_subgradient = (
             subgradient - (direction @ subgradient) * direction
         ) # xi_t = g_t - (u_t^T g_t) u_t
-        if np.linalg.norm(riemannian_subgradient) <= np.finfo(float).eps:
-            width_history = width_history[:iteration + 1]
-            best_width_history = best_width_history[:iteration + 1]
-            step_history = step_history[:iteration + 1]
-            break
-
         candidate = direction - step * riemannian_subgradient # u_{t+1} = u_t - gamma_t xi_t
         candidate_norm = np.linalg.norm(candidate)
         # is the fallback mathematically necessary?
@@ -128,6 +124,7 @@ def projected_subgradient_empirical_width(
         "width_history": width_history,
         "best_width_history": best_width_history,
         "step_history": step_history,
+        "termination_reason": termination_reason,
         "step_schedule": step_schedule,
         "geometric_decay": geometric_decay,
     }

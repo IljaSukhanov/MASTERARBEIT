@@ -52,7 +52,7 @@
   "population_direction_truncation_bound": 1e-08,
   "directional_population_width_truncation_target": 1e-09,
   "source_hashes": {
-    "ar_tools/descent.py": "2f7a9c994db59c8293e5a07acf18cf3c990c2e2c9fcabc40f247cbd3d539c940",
-    "ar_tools/functions.py": "d5a39602124b8c8c58a6c2f778e6b695fa37880b4b4be7e2269374b96fbfc66f"
+    "ar_tools/descent.py": "85bcb28baafed97c96deec438c57f21729784779e6a9fd1d5d2a522076ef4d20",
+    "ar_tools/functions.py": "51b60454093e4e45b1a2b7372c994d730a49d65196415f7444622214b9ff8b56"
   }
 }

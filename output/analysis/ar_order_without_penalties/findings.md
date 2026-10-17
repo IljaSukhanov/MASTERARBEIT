@@ -43,13 +43,13 @@ The mathematical empirical minimum is the infimum over all unit directions. A pa
 
 For replication 1 at k=4:
 
-- Original 500-iteration result: 2.154225.
+- Original 500-iteration result: 2.154442.
 - Feasible true recurrence direction: 1.422520.
 - Data-only LP and nested warm starts, with 1,000 iterations: 1.421508.
 
-The revised starts use a minimax-regression direction, the previous dimension's best direction padded with zero, the smallest covariance eigenvector, and two random directions. They do not use true coefficients or the innovation bound. They improve this numerical miss but do not certify a global minimum.
+The revised starts use a minimax-regression direction, the previous dimension's best direction padded with zero, and three random directions. They do not use true coefficients or the innovation bound. They improve this numerical miss but do not certify a global minimum.
 
-Sources: [oracle audit](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_order_without_penalties/optimizer_audit.csv), [data-only initialization audit](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_order_without_penalties/initialization_audit_widths.csv), and [audit selections](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_order_without_penalties/initialization_audit_selections.csv). On the first ten AR(3) curves, the drop-to-tail-energy selector improves from 4/10 to 5/10 correct selections. Both L-method variants remain at 4/10. This small audit does not establish an improved general selection rate.
+Sources: [oracle audit](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_order_without_penalties/optimizer_audit.csv), [data-only initialization audit](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_order_without_penalties/initialization_audit_widths.csv), and [audit selections](/Users/iljasukhanov/MASTERARBEIT/output/analysis/ar_order_without_penalties/initialization_audit_selections.csv). In the refreshed audit on the first ten AR(3) curves, the drop-to-tail-energy selector gives 5/10 correct selections for the original curves and 4/10 for the data-initialized curves. This small audit does not establish an improved general selection rate.
 
 Moreover, the original approximate curves have at least one upward step in 48/50 AR(1), 47/50 AR(2), and 45/50 AR(3) cases. The exact empirical minima, with the present nested sliding-window construction, are nonincreasing: padding a k-dimensional direction with zero gives a feasible direction in dimension k+1, and its projected point set is a subset of the old set. Thus upward steps are further evidence of numerical error. Source data: [the 150 width curves](/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar_width_comparison/width_curves.csv); embedding definition: [functions.py](/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/ar_tools/functions.py:174). This nesting argument is a deduction made here.
 

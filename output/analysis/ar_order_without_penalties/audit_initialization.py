@@ -28,9 +28,8 @@ def data_initialized_width_curve(series,seed,replication,iterations=1000):
             b_ub=np.r_[-y,y],bounds=[(None,None)]*(k-1)+[(0,None)],method='highs')
         if not fit.success:raise RuntimeError(fit.message)
         lp_direction=np.r_[1.,-fit.x[:-1]]
-        _,evec=np.linalg.eigh(np.cov(cloud,rowvar=False))
         rng=np.random.default_rng(np.random.SeedSequence([seed,replication,k,20]))
-        dirs=np.vstack([lp_direction,np.r_[best_directions[-1],0.],evec[:,0],rng.normal(size=(2,k))])
+        dirs=np.vstack([lp_direction,np.r_[best_directions[-1],0.],rng.normal(size=(3,k))])
         dirs/=np.linalg.norm(dirs,axis=1,keepdims=True)
         best=np.full(len(dirs),np.inf)
         kept=dirs.copy()
