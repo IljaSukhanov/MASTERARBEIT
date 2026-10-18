@@ -60,7 +60,7 @@
     0.997,
     0.999
   ],
-  "input_process_csv": "Code/Code_AR_processes/outputs/csv/ar3_single_path_geometric_descent/process.csv",
+  "input_process_csv": "Code/Code_AR_processes/outputs/csv/ar3_geo/process.csv",
   "selection_metric": "best recorded empirical width",
   "scope": "one existing path and one identical starting direction; diagnostic only",
   "sources": {

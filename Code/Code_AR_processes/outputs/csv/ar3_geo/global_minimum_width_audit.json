@@ -18,6 +18,6 @@
   "hull_vertices": 119,
   "runtime_seconds": 0.03506208399994648,
   "method": "Global floating-point convex-hull calculation on P-P, using exact_empirical_width_low_dimension",
-  "sample_csv": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_single_path_geometric_descent/process.csv",
-  "configuration_json": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_single_path_geometric_descent/configuration.json"
+  "sample_csv": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_geo/process.csv",
+  "configuration_json": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_geo/configuration.json"
 }
