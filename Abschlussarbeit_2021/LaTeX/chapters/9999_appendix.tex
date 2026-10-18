@@ -126,6 +126,8 @@
 
 \subsection{Proof of Proposition~\ref{prop:sliding_window_fails_brunel}}\label{sec:proof_sliding_window_fails_brunel}
 
+\todo[inline]{Extend to Beta distributed innovations}
+
 \begin{proof}
     Let $\{U_t\}\stackrel{\text{iid}}{\sim}\text{Beta}(\alpha,\beta)$, $Z_t=a+(b-a)U_t$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Set $c=(b+a)/2$ and $d=(b-a)/2$. Also set $\kappa:=\min\{\alpha,\beta\}$. Then, $X_t=\sum_{\psi_j\ge0}\psi_jZ_{t-j}+\sum_{\psi_j<0}\psi_jZ_{t-j}\le b\sum_{\psi_j\ge0}\psi_j+a\sum_{\psi_j<0}\psi_j=c\sum_{j=0}^{\infty}\psi_j+d\sum_{j=0}^{\infty}|\psi_j|$ and similarly $X_t\ge c\sum_{j=0}^{\infty}\psi_j-d\sum_{j=0}^{\infty}|\psi_j|$. Thus, $\operatorname{supp}(X_t)=[G-H,G+H]$, where $G:=c\sum_{j=0}^{\infty}\psi_j$ and $H:=d\sum_{j=0}^{\infty}|\psi_j|$. Consequently,
     \begin{align*}
@@ -138,7 +140,7 @@
     \end{align*}
     where in step $(\ast)$ we have used the independence of the innovations and in step $(\ast\ast)$ the following reasoning.
 
-    For $U\sim\text{Beta}(\alpha,\beta)$ and $0<s\le1/2$ we have $\mathbb{P}(U\le s)\le C_{\alpha,\beta} s^{\alpha}$ for some constant $C_{\alpha,\beta}>0$. \textcolor{red}{It is also well known that $1-U\sim\text{Beta}(\beta,\alpha)$.} By definition of $D_{t-j_m}$ we have $D_{t-j_m}/(b-a)=1-U_{t-j_m}$ for $\psi_{j_m}>0$ and $D_{t-j_m}/(b-a)=U_{t-j_m}$ for $\psi_{j_m}<0$ and therefore $\mathbb{P}(D_{t-j_m}/(b-a)\le s)\le\max\{C_{\alpha,\beta},C_{\beta,\alpha}\}s^{\min\{\alpha,\beta\}}$. Set $D_{\alpha,\beta}=\max\{C_{\alpha,\beta},C_{\beta,\alpha}\}$ and $\kappa=\min\{\alpha,\beta\}$. Applying these considerations to our setting yields
+    For $U\sim\text{Beta}(\alpha,\beta)$ and $0<s\le1/2$ we have $\mathbb{P}(U\le s)\le C_{\alpha,\beta} s^{\alpha}$ for some constant $C_{\alpha,\beta}>0$. \textcolor{red}{It is also well known that $1-U\sim\text{Beta}(\beta,\alpha)$.} By definition of $D_{t-j_m}$ we have $D_{t-j_m}/(b-a)=1-U_{t-j_m}$ for $\psi_{j_m}>0$ and $D_{t-j_m}=U_{t-j_m}$ for $\psi_{j_m}<0$ and therefore $\mathbb{P}(D_{t-j_m}/(b-a)\le s)\le\max\{C_{\alpha,\beta},C_{\beta,\alpha}\}s^{\min\{\alpha,\beta\}}$. Set $D_{\alpha,\beta}=\max\{C_{\alpha,\beta},C_{\beta,\alpha}\}$ and $\kappa=\min\{\alpha,\beta\}$. Applying these considerations to our setting yields
     \begin{align*}
         \mathbb{P}(D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1})&=\mathbb{P}(D_{t-j_m}/(b-a)\le\epsilon(b-a)^{-1}|\psi_{j_m}|^{-1})\\&
         \le D_{\alpha,\beta}\left(\frac{\epsilon}{(b-a)|\psi_{j_m}|}\right)^{\kappa}.
