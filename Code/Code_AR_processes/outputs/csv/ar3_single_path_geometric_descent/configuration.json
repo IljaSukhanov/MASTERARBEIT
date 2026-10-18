@@ -1,0 +1,45 @@
+{
+  "T": 1000,
+  "p": 3,
+  "phi": [
+    0.5,
+    -0.2,
+    0.1
+  ],
+  "burnin": 1000,
+  "innovations": "iid uniform(-1, 1)",
+  "process_seed": 20261018,
+  "optimizer_seed": 20261019,
+  "embedding_dimension": 4,
+  "newest_first": true,
+  "number_of_starts": 1,
+  "max_iterations": 2000,
+  "patience": 200,
+  "improvement_tolerance": 1e-10,
+  "gamma_0": 0.1,
+  "beta": 0.75,
+  "step_schedule": "geometric",
+  "lipschitz_normalization": false,
+  "initial_direction": [
+    0.04690430049805569,
+    -0.8115615349421885,
+    0.31282302194507183,
+    0.4912327539346498
+  ],
+  "best_direction": [
+    0.019777254447283826,
+    -0.8872189195490139,
+    0.44837408640379817,
+    -0.10682756031271837
+  ],
+  "estimated_phi": [
+    44.860570607203925,
+    -22.671199766324346,
+    5.4015364264775325
+  ],
+  "best_recorded_width": 1.8840714544900843,
+  "evaluated_directions": 279,
+  "last_improvement_iteration": 78,
+  "termination_reason": "patience",
+  "companion_spectral_radius": 0.5000000000000011
+}

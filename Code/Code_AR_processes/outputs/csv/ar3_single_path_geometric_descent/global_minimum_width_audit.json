@@ -1,0 +1,23 @@
+{
+  "global_empirical_minimum_width": 1.7353878581484992,
+  "global_minimizing_direction": [
+    0.8508236531393207,
+    -0.46026285514119863,
+    0.2336064821536773,
+    -0.09841355054928448
+  ],
+  "empirical_width_at_true_ar_direction": 1.7500212836546107,
+  "population_minimum_width_from_thesis_formula": 1.7541160386140584,
+  "best_grid_width": 1.7445723574252994,
+  "best_grid_gamma_0": 0.3,
+  "best_grid_beta": 0.97,
+  "grid_absolute_gap": 0.009184499276800207,
+  "grid_relative_gap_percent": 0.5292476395795109,
+  "embedding_points": 497,
+  "embedding_dimension": 4,
+  "hull_vertices": 119,
+  "runtime_seconds": 0.03506208399994648,
+  "method": "Global floating-point convex-hull calculation on P-P, using exact_empirical_width_low_dimension",
+  "sample_csv": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_single_path_geometric_descent/process.csv",
+  "configuration_json": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_single_path_geometric_descent/configuration.json"
+}
