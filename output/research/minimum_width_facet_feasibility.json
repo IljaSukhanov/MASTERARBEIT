@@ -1,0 +1,132 @@
+{
+  "date": "2026-10-18",
+  "method": "existing exact_empirical_width_low_dimension; global geometric calculation in floating-point arithmetic",
+  "data_source": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_order_selection_warm_starts/processes",
+  "saved_results_source": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_descent_chain_lp/width_curves.csv",
+  "embedding": "common endpoints, max_dimension=10; slice first k coordinates",
+  "selection": "minimum, median and maximum recorded k=4 hull vertex counts among 50 replications",
+  "saved_hull_summary": [
+    {
+      "k": 2,
+      "replications": 50,
+      "hull_vertices_min": 7,
+      "hull_vertices_median": 15.0,
+      "hull_vertices_max": 20
+    },
+    {
+      "k": 3,
+      "replications": 50,
+      "hull_vertices_min": 36,
+      "hull_vertices_median": 56.5,
+      "hull_vertices_max": 82
+    },
+    {
+      "k": 4,
+      "replications": 50,
+      "hull_vertices_min": 124,
+      "hull_vertices_median": 167.0,
+      "hull_vertices_max": 224
+    }
+  ],
+  "benchmarks": [
+    {
+      "replication": 49,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 2,
+      "hull_vertices": 16,
+      "pairwise_difference_rows": 256,
+      "elapsed_seconds": 0.0011337919968354981,
+      "global_width": 3.466236636566193,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 49,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 3,
+      "hull_vertices": 41,
+      "pairwise_difference_rows": 1681,
+      "elapsed_seconds": 0.002158916999178473,
+      "global_width": 3.193800082132424,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 49,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 4,
+      "hull_vertices": 124,
+      "pairwise_difference_rows": 15376,
+      "elapsed_seconds": 0.033319207999738865,
+      "global_width": 1.5672176312726656,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 50,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 2,
+      "hull_vertices": 13,
+      "pairwise_difference_rows": 169,
+      "elapsed_seconds": 0.0005755419988417998,
+      "global_width": 2.0134134271090836,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 50,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 3,
+      "hull_vertices": 52,
+      "pairwise_difference_rows": 2704,
+      "elapsed_seconds": 0.002776917001028778,
+      "global_width": 1.9883984917498436,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 50,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 4,
+      "hull_vertices": 167,
+      "pairwise_difference_rows": 27889,
+      "elapsed_seconds": 0.051135417001205496,
+      "global_width": 1.6988691797815645,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 18,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 2,
+      "hull_vertices": 15,
+      "pairwise_difference_rows": 225,
+      "elapsed_seconds": 0.0006095409989939071,
+      "global_width": 2.63805575338096,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 18,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 3,
+      "hull_vertices": 82,
+      "pairwise_difference_rows": 6724,
+      "elapsed_seconds": 0.00425445899963961,
+      "global_width": 1.917349324330084,
+      "absolute_difference_from_saved": 0.0
+    },
+    {
+      "replication": 18,
+      "sample_size": 2000,
+      "cloud_points": 1991,
+      "k": 4,
+      "hull_vertices": 224,
+      "pairwise_difference_rows": 50176,
+      "elapsed_seconds": 0.0746578749967739,
+      "global_width": 1.842066910977573,
+      "absolute_difference_from_saved": 0.0
+    }
+  ]
+}
