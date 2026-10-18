@@ -62,6 +62,10 @@ the reusable numerical APIs remain in `kde_tools/`.
   historical checkpoints and plots are kept separately.
 - `experiment_1_joint_N_lambda_limit.ipynb`: joint grid/localization limits,
   mesh diagnostics, and repeated-sampling experiments.
+- `similarity_max_eigenvalue_vs_n.ipynb`: largest similarity eigenvalue versus
+  bandwidth-grid size on one fixed sample, with editable r and lambda_N rules.
+  Includes the maximum row-sum bound, the rescaled eigenvalue and Q-r reference,
+  small-grid numerical validation, CSV results, and automatic PDF exports.
 - `fast_l2_bandwidth_distributions_vs_n_lambda.ipynb`: FFT-based L²
   distributions with shared divergence-based spectral selection. The final
   saved-run comparison overlays the continuous Q-hat minimizer distribution
