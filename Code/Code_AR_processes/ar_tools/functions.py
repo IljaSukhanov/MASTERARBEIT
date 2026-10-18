@@ -16,7 +16,6 @@ from .support_geometry import (
 
 __all__ = [
     "jones_ar_coefficients",
-    "centered_beta_support",
     "simulate_beta_ar",
     "simulate_uniform_ar",
     "sliding_window_point_cloud",
@@ -68,37 +67,24 @@ def jones_ar_coefficients(
 
 
 ### work through later:
-def centered_beta_support(
-    alpha: float = 1.0,
-    beta: float = 1.0,
-    support_width: float = 2.0,
-) -> tuple[float, float]:
-    if not np.isfinite(alpha) or alpha <= 0:
-        raise ValueError("alpha must be a positive finite number")
-    if not np.isfinite(beta) or beta <= 0:
-        raise ValueError("beta must be a positive finite number")
-    if not np.isfinite(support_width) or support_width <= 0:
-        raise ValueError("support_width must be a positive finite number")
-
-    beta_mean = alpha / (alpha + beta)
-    return (
-        float(-support_width * beta_mean),
-        float(support_width * (1.0 - beta_mean)),
-    )
-
-
-### work through later:
 def simulate_beta_ar(
     phi: ArrayLike,
     sample_size: int,
     burnin: int = 500,
-    support_width: float = 2.0,
+    innovation_bounds: ArrayLike = (-1.0, 1.0),
     alpha: float = 1.0,
     beta: float = 1.0,
     rng: np.random.Generator | int | None = None,
     *,
     intercept: float = 0.0,
 ) -> NDArray[np.float64]:
+    """Simulate AR innovations Z = a + (b - a) U, U ~ Beta(alpha, beta).
+
+    ``innovation_bounds=(a, b)`` fixes the support independently of the
+    shape parameters, following the thesis's Beta innovation definition.
+    The innovation mean is a + (b - a) * alpha / (alpha + beta).
+    Initialize the AR history at its stationary mean, then discard burn-in.
+    """
     phi = np.asarray(phi, dtype=float)
     if phi.ndim != 1 or len(phi) == 0 or not np.all(np.isfinite(phi)):
         raise ValueError("phi must be a nonempty finite one-dimensional vector")
@@ -108,12 +94,19 @@ def simulate_beta_ar(
         raise ValueError("burnin must be a non-negative integer")
     if not np.isfinite(intercept):
         raise ValueError("intercept must be finite")
-
-    innovation_lower, innovation_upper = centered_beta_support(
-        alpha=alpha,
-        beta=beta,
-        support_width=support_width,
-    )
+    if not np.isfinite(alpha) or alpha <= 0:
+        raise ValueError("alpha must be a positive finite number")
+    if not np.isfinite(beta) or beta <= 0:
+        raise ValueError("beta must be a positive finite number")
+    bounds = np.asarray(innovation_bounds, dtype=float)
+    if (
+        bounds.shape != (2,)
+        or not np.all(np.isfinite(bounds))
+        or bounds[0] >= bounds[1]
+    ):
+        raise ValueError("innovation_bounds must contain finite ordered endpoints")
+    innovation_lower, innovation_upper = bounds
+    support_width = innovation_upper - innovation_lower
 
     generator = np.random.default_rng(rng)
     order = len(phi)
@@ -126,11 +119,10 @@ def simulate_beta_ar(
         )
     else:
         beta_draws = generator.beta(alpha, beta, size=total_length)
-        innovations = support_width * (
-            beta_draws - alpha / (alpha + beta)
-        )
+        innovations = innovation_lower + support_width * beta_draws
     series = np.empty(total_length, dtype=float)
-    series[:order] = intercept / (1.0 - np.sum(phi))
+    innovation_mean = innovation_lower + support_width * alpha / (alpha + beta)
+    series[:order] = (intercept + innovation_mean) / (1.0 - np.sum(phi))
 
     for time_index in range(order, total_length):
         recent_values = series[time_index - np.arange(1, order + 1)]
@@ -154,7 +146,7 @@ def simulate_uniform_ar(
         phi=phi,
         sample_size=sample_size,
         burnin=burnin,
-        support_width=2.0 * half_width,
+        innovation_bounds=(-half_width, half_width),
         alpha=1.0,
         beta=1.0,
         rng=rng,

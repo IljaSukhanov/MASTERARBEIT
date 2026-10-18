@@ -129,18 +129,26 @@
 \todo[inline]{Extend to Beta distributed innovations}
 
 \begin{proof}
-    Let $\{Z_t\}\stackrel{\text{iid}}{\sim}U[-1,1]$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Then, $\operatorname{supp}(X_t)=[-H,H]$, where $H=\sum_{j=0}^{\infty}|\psi_j|$. Consequently
+    Let $\{U_t\}\stackrel{\text{iid}}{\sim}\text{Beta}(\alpha,\beta)$, $Z_t=a+(b-a)U_t$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Set $c=(b+a)/2$ and $d=(b-a)/2$. Also set $\kappa:=\min\{\alpha,\beta\}$. Then, $X_t=\sum_{\psi_j\ge0}\psi_jZ_{t-j}+\sum_{\psi_j<0}\psi_jZ_{t-j}\le b\sum_{\psi_j\ge0}\psi_j+a\sum_{\psi_j<0}\psi_j=c\sum_{j=0}^{\infty}\psi_j+d\sum_{j=0}^{\infty}|\psi_j|$ and similarly $X_t\ge c\sum_{j=0}^{\infty}\psi_j-d\sum_{j=0}^{\infty}|\psi_j|$. Thus, $\operatorname{supp}(X_t)=[G-H,G+H]$, where $G:=c\sum_{j=0}^{\infty}\psi_j$ and $H:=d\sum_{j=0}^{\infty}|\psi_j|$. Consequently,
     \begin{align*}
-        H-X_t=\sum_{j=0}^{\infty}|\psi_j|-\sum_{j=0}^{\infty}\psi_jZ_{t-j}=\sum_{j=0}^{\infty}|\psi_j|\underbrace{(1-\operatorname{sgn}(\psi_j)Z_{t-j})}_{=D_{t-j}\in[0,2]}.
+        G+H-X_t=\sum_{j=0}^{\infty}|\psi_j|\left(\underbrace{d-\operatorname{sgn}(\psi_j)(Z_{t-j}-c)}_{=:D_{t-j}}\right),
     \end{align*}
-    There exist infinitely many nonzero $\psi_j$. (Assume, for contradiction, that only finitely many $\psi_j$ are nonzero. Then, the set $\{j\in\mathbb{N}_0:\psi_j\ne0\}$ is nonempty ($\psi_0=1$) and finite. Let $J$ be its maximum. This would mean that $1/\phi(z)=\sum_{j=0}^{J}\psi_jz^{j}$ is a polynomial of order $J$. By assumption, the polynomial $\phi$ has degree $p$. But now we have $0=\deg(\phi\cdot(1/\phi))=\deg(\phi)+\deg(1/\phi)=p+J$. This would force $p=0$ and $J=0$, which contradicts our assumption that $p\ge1$.) Thus, for each $\alpha>0$ no matter how large we find distinct indices $j_1,\dots,j_M$ where $M>\alpha$ such that $\psi_{j_m}\ne0$ for all $m=1,\dots,M$. Let $\epsilon>0$. Then $H-X_t\le\epsilon$ implies $D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}$ for all $m=1,\dots,M$. Now, it follows
+    where $D_{t-j}=(b-a)(\frac{1}{2}-\operatorname{sgn}(\psi_j)(U_{t-j}-\frac{1}{2}))\ge0$. There exist infinitely many nonzero $\psi_j$. (Assume, for contradiction, that only finitely many $\psi_j$ are nonzero. Then, the set $\{j\in\mathbb{N}_0:\psi_j\ne0\}$ is nonempty ($\psi_0=1$) and finite. Let $J$ be its maximum. This would mean that $1/\phi(z)=\sum_{j=0}^{J}\psi_jz^{j}$ is a polynomial of order $J$. By assumption, the polynomial $\phi$ has degree $p$. But now we have $0=\deg(\phi\cdot(1/\phi))=\deg(\phi)+\deg(1/\phi)=p+J$. This would force $p=0$ and $J=0$, which contradicts our assumption that $p\ge1$.) Thus, for each $q>0$ no matter how large we find distinct indices $j_1,\dots,j_{M(q)}$ where $\kappa M(q)>q$ such that $\psi_{j_m}\ne0$ for all $m=1,\dots,M(q)$. Let $0<\epsilon<2^{-1}(b-a)\min_m|\psi_{j_m}|$. Then $G+H-X_t\le\epsilon$ implies $D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}$ for all $m=1,\dots,M(q)$. Now, it follows
     \begin{align*}
-        \mathbb{P}(H-X_t\le\epsilon)&\le\mathbb{P}\left(\bigcap_{m=1}^{M}\left\{D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}\right\}\right)\stackrel{(\ast)}{=}\prod_{m=1}^{M}\mathbb{P}(D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1})\\&
-        \stackrel{(\ast\ast)}{=}\prod_{m=1}^{M}\min\left\{\frac{\epsilon}{2|\psi_{j_m}|},1\right\}\le\prod_{m=1}^{M}\frac{\epsilon}{2|\psi_{j_m}|}=C_M\epsilon^M,
+        \mathbb{P}(G+H-X_t\le\epsilon)&\le\mathbb{P}\left(\bigcap_{m=1}^{M(q)}\left\{D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1}\right\}\right)\stackrel{(\ast)}{=}\prod_{m=1}^{M(q)}\mathbb{P}(D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1})\\&
+        \stackrel{(\ast\ast)}{\le}C_q\epsilon^{\kappa M(q)},
     \end{align*}
-    where in step $(\ast)$ we have used the independence of the innovations and in step $(\ast\ast)$ that $D_{t-j_m}\sim\mathcal{U}[0,2]$. Because $H-X_t\le\epsilon\iff Y_t^{(k)}\in C_{Z^{(k)}}(e_1,\epsilon)$, we conclude
+    where in step $(\ast)$ we have used the independence of the innovations and in step $(\ast\ast)$ the following reasoning.
+
+    For $U\sim\text{Beta}(\alpha,\beta)$ and $0<s\le1/2$ we have $\mathbb{P}(U\le s)\le C_{\alpha,\beta} s^{\alpha}$ for some constant $C_{\alpha,\beta}>0$. \textcolor{red}{It is also well known that $1-U\sim\text{Beta}(\beta,\alpha)$.} By definition of $D_{t-j_m}$ we have $D_{t-j_m}/(b-a)=1-U_{t-j_m}$ for $\psi_{j_m}>0$ and $D_{t-j_m}=U_{t-j_m}$ for $\psi_{j_m}<0$ and therefore $\mathbb{P}(D_{t-j_m}/(b-a)\le s)\le\max\{C_{\alpha,\beta},C_{\beta,\alpha}\}s^{\min\{\alpha,\beta\}}$. Set $D_{\alpha,\beta}=\max\{C_{\alpha,\beta},C_{\beta,\alpha}\}$ and $\kappa=\min\{\alpha,\beta\}$. Applying these considerations to our setting yields
     \begin{align*}
-        \frac{\mathbb{P}(Y_t^{(k)}\in C_{\mathcal{Z}^{(k)}}(e_1,\epsilon))}{\epsilon^{\alpha}}=\frac{\mathbb{P}(H-X_t\le\epsilon)}{\epsilon^{\alpha}}\le C_M\epsilon^{M-\alpha}\stackrel{\epsilon\to0}{\to}0.
+        \mathbb{P}(D_{t-j_m}\le\epsilon|\psi_{j_m}|^{-1})&=\mathbb{P}(D_{t-j_m}/(b-a)\le\epsilon(b-a)^{-1}|\psi_{j_m}|^{-1})\\&
+        \le D_{\alpha,\beta}\left(\frac{\epsilon}{(b-a)|\psi_{j_m}|}\right)^{\kappa}.
+    \end{align*}
+    
+    Because $G+H-X_t\le\epsilon\iff Y_t^{(k)}\in C_{\mathcal{Z}^{(k)}}(e_1,\epsilon)$, we conclude
+    \begin{align*}
+        \frac{\mathbb{P}(Y_t^{(k)}\in C_{\mathcal{Z}^{(k)}}(e_1,\epsilon))}{\epsilon^q}=\frac{\mathbb{P}(G+H-X_t\le\epsilon)}{\epsilon^q}\le C_q\epsilon^{\kappa M(q)-q}\stackrel{\epsilon\to0}{\to}0.
     \end{align*}
 \end{proof}
 
