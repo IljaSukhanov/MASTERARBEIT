@@ -810,6 +810,22 @@ For the Gaussian Kernel, the energy functional $\hat{Q}_r$ can be written down e
 \end{align*}
 where $d_{ij}=X_i-X_j$. Using standard optimization methods, we can minimize $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_2(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths} and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_2$.
 
+The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks at the minimizer of the energy functional (after proper scaling). The next result aims to give the answer.
+
+\begin{Prop}
+    Assume that $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer.
+\end{Prop}
+
+\begin{proof}
+    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. By Proposition~\ref{prop:main_thm}, $a_{i_N,N}\to\sqrt{\pi/\hat{Q}_r(h_0)}$, whenever $h_{i_N}\to h_0\in[h_{\min},h_{\max}]$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$. The main difficulty lies in showing that $\rho_N\to\hat{Q}_r(h^{\ast})$.
+
+    Let $v^{(N)}$ be the Perron vector of $A^{(N)}$ and let $i_N^{\ast}\in\arg\max_{1\le i\le N}v^{(N)}_i$. Then
+    \begin{align*}
+        \rho_Nv_{i_N^{\ast}}^{(N)}=\sum_{j=1}^{N}A^{(N)}_{i_N^{\ast}j}\underbrace{v_j^{(N)}}_{\le v_{i_N^{\ast}}^{(N)}}\le a_{i_N^{\ast}}v_{i_N^{\ast}}^{(N)}
+    \end{align*}
+    and thus $\rho_N\le a_{i_N^{\ast},N}$.
+\end{proof}
+
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
 The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_r(h)]$ to the asymptotic minimizer of $\operatorname{MISE}(h)$.
