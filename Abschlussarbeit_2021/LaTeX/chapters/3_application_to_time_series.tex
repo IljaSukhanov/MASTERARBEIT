@@ -457,13 +457,13 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
     \begin{algorithmic}[1]
         \Require $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$, $u_0\in\mathbb{S}^{d-1}$, $\{\gamma_t\}_{t\ge 0}$, $\gamma_t=\beta^{t}\gamma_0$ for some $\gamma_0>0$ and $\beta\in(0,1)$
         \Ensure $\hat{u}$
-        \State Initialize $\hat{w}\gets\hat{w}_k(u_0)$, $\hat{u}\gets u_0$, \textcolor{blue}{$\hat{\phi}\gets -\hat{u}[2:k]/\hat{u}_0$}
+        \State Initialize $\hat{w}\gets\hat{w}_k(u_0)$, $\hat{u}\gets u_0$, \textcolor{blue}{$\hat{\phi}\gets$}
         \For{$t=0,1,\dots$}
             \State $(i_t,j_t)\gets\arg\max_{(i,j)}\langle x_i-x_j,u\rangle$
             \State $g_t\gets x_{i_t}-x_{j_t}$
             \State $\xi_t\gets(I-u_tu_t^{T})g_t$
             \State $u_{t+1}\gets (u_t-\gamma_t\xi_t)/\|u_t-\eta_t\xi_t\|$
-            \State if $\hat{w}_k(u_{t+1})<\hat{w}$, set $\hat{u}\gets u_{t+1}$, \textcolor{blue}{$\hat{\phi}\gets-\hat{u}[2:k]/\hat{u}_0$}
+            \State if $\hat{w}_k(u_{t+1})<\hat{w}$, set $\hat{u}\gets u_{t+1}$
         \EndFor
         \State\Return $\hat{u}$
     \end{algorithmic}
@@ -726,6 +726,8 @@ Minimum width
 
 \section{Literature positioning and novelty assessment}
 
+\todo[inline]{19.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
+
 In this final Section of the Chapter we assess the novelty of our approach and position it among existing literature.
 
 First of all, special estimation methods for auto-regressive processes with bounded innovations have been considered before with the main precedent being Horváth's paper where the maximum likelihood estimation with uniform density is formulated as Linear Program (LP). In the time after, exact and very fast LP solvers have been developed.
@@ -746,7 +748,9 @@ Geometrically, this is a hyperplane fitting problem, where the optimal hyperplan
 
 The map $\phi\mapsto q_{\phi}$ maps each $\phi\in\mathbb{R}^{p}$ inside the hyperplane $H_{e_1,1}\subseteq\mathbb{R}^{p+1}$.
 
-A radial projection on $S\subseteq\mathbb{R}^{k}\setminus\{0\}$ is a map $r:S\to\mathbb{S}^{k-1}$, $r(x)=x/\|x\|$. The radial projection of $q_{\phi}\in H_{e_1,1}$ is given by $r(q_{\phi})=(1,-\phi)/\sqrt{1+\|\phi\|^2}$. The inverse $r^{-1}$ on $\mathbb{S}^{k-1}_{+}$ is given by $r^{-1}(u)=u/u_0$, where $u=(u_0,\dots,u_{k-1})\in\mathbb{S}^{k-1}_{+}$. This is the coefficient recovery mentioned in Remark~\ref{rem:minimizer_estimates_coefficients}.
+\todo[inline]{19.10: Connect to radial projection and its inverse}
+
+A radial projection on $S\subseteq\mathbb{R}^{k}\setminus\{0\}$ is a map $r:S\to\mathbb{S}^{k-1}$, $r(x)=x/\|x\|$. The radial projection of $q_{\phi}\in H_{e_1,1}$ is given by $r(q_{\phi})=(1,-\phi)/(1+\|\phi\|^2)$. The inverse $r^{-1}$ on $\mathbb{S}^{k-1}_{+}$ is given by $r^{-1}(u)=u/u_0$, where $u=(u_0,\dots,u_{k-1})\in\mathbb{S}^{k-1}_{+}$. This is the coefficient recovery mentioned in Remark~\ref{rem:minimizer_estimates_coefficients}.
 
 The minimum width approach can also be formulated in terms of a hyperplane fitting problem:
 \begin{align*}
@@ -792,14 +796,3 @@ For $k\le p$ any $u\in\mathcal{N}_k$ has the padded form $\Tilde{u}=(\dots,0,1,u
 Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coercive, the minimum is still attained and we have $\min_{u\in\mathcal{N}_k}h_k(u)>1$ for $k\le p$. We still have the monotonicity because $\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)\le h_{k+1}((u,0))=h_k(u)$ for all $u\in\mathcal{N}_k$ and hence $\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)\le\min_{u\in\mathcal{N}_k}h_k(u)$.
 
 The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
-
-\todo[inline]{19.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
-
-\begin{itemize}
-    \item \cite{10.1145/1008731.1008736}
-    \item \cite{gritzmann_computational_1993}
-    \item \cite{ahn_minimum-width_2025}
-    \item \cite{ahn_k_2025}
-\end{itemize}
-
-The problem of determining the minimum width of a point cloud is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. \cite{10.1145/323233.323234} gives algorithms for exact computation together with runtime complexity, but only for two and three dimensional point clouds.

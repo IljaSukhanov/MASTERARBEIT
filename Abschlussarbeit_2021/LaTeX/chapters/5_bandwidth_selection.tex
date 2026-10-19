@@ -817,13 +817,7 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 \end{Prop}
 
 \begin{proof}
-    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. By Proposition~\ref{prop:main_thm}, $a_{i_N,N}\to\sqrt{\pi/\hat{Q}_r(h_0)}$, whenever $h_{i_N}\to h_0\in[h_{\min},h_{\max}]$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$. The main difficulty lies in showing that $\rho_N\to\hat{Q}_r(h^{\ast})$.
-
-    Let $v^{(N)}$ be the Perron vector of $A^{(N)}$ and let $i_N^{\ast}\in\arg\max_{1\le i\le N}v^{(N)}_i$. Then
-    \begin{align*}
-        \rho_Nv_{i_N^{\ast}}^{(N)}=\sum_{j=1}^{N}A^{(N)}_{i_N^{\ast}j}\underbrace{v_j^{(N)}}_{\le v_{i_N^{\ast}}^{(N)}}\le a_{i_N^{\ast}}v_{i_N^{\ast}}^{(N)}
-    \end{align*}
-    and thus $\rho_N\le a_{i_N^{\ast},N}$.
+    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$. The main difficulty lies in showing that $\rho_N\to\hat{Q}_r(h^{\ast})$.
 \end{proof}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}

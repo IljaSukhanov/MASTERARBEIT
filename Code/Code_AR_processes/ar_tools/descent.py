@@ -30,7 +30,16 @@ def projected_subgradient_empirical_width(
         step_schedule="inverse_sqrt",
         geometric_decay=0.99, # beta
         record_directions=False,
+        record_best_coefficients=False,
 ):
+    """Search sphere widths, optionally tracking phi at each best-width update.
+
+    ``record_best_coefficients`` computes -u[1:]/u[0] whenever a new best
+    evaluated direction is accepted. It never feeds coefficients back into
+    the search. Use improvement_tolerance=0 for the strict '<' rule.
+    At u[0]=0 the coefficient estimate is undefined and recorded as NaN;
+    the sphere search itself continues unchanged.
+    """
     points = np.asarray(points, dtype=float)
 
     ### input checks ###
@@ -53,6 +62,10 @@ def projected_subgradient_empirical_width(
         raise ValueError("improvement_tolerance must be nonnegative.")
     if not isinstance(record_directions, (bool, np.bool_)):
         raise ValueError("record_directions must be a boolean.")
+    if not isinstance(record_best_coefficients, (bool, np.bool_)):
+        raise ValueError("record_best_coefficients must be a boolean.")
+    if record_best_coefficients and points.shape[1] < 2:
+        raise ValueError("Coefficient tracking requires a current value and at least one lag.")
     ### end input checks ###
 
     generator = np.random.default_rng(rng)
@@ -74,6 +87,11 @@ def projected_subgradient_empirical_width(
     best_width_history = np.empty(iterations)
     step_history = np.empty(iterations)
     direction_history = np.empty((iterations, dimension)) if record_directions else None
+    best_coefficient_history = (
+        np.empty((iterations, dimension - 1)) if record_best_coefficients else None
+    )
+    best_update_history = np.zeros(iterations, dtype=bool) if record_best_coefficients else None
+    best_coefficients = np.full(dimension - 1, np.nan) if record_best_coefficients else None
     best_width = np.inf
     best_direction = direction.copy()
     iterations_without_improvement = 0
@@ -91,12 +109,22 @@ def projected_subgradient_empirical_width(
         if width < best_width - improvement_tolerance:
             best_width = float(width)
             best_direction = direction.copy()
+            if record_best_coefficients:
+                best_update_history[iteration] = True
+                if direction[0] == 0.0:
+                    best_coefficients = np.full(dimension - 1, np.nan)
+                else:
+                    with np.errstate(over="ignore", invalid="ignore"):
+                        best_coefficients = -direction[1:] / direction[0]
+                    best_coefficients = np.where(np.isfinite(best_coefficients), best_coefficients, np.nan)
             iterations_without_improvement = 0
         else:
             iterations_without_improvement += 1
 
         width_history[iteration] = width
         best_width_history[iteration] = best_width
+        if record_best_coefficients:
+            best_coefficient_history[iteration] = best_coefficients
 
         if step_schedule == "inverse_sqrt":
             step = initial_step / np.sqrt(iteration + 1.0) # gamma_t = gamma_0 / sqrt(t+1)
@@ -135,6 +163,11 @@ def projected_subgradient_empirical_width(
         "geometric_decay": geometric_decay,
         **({"direction_history": direction_history[:len(width_history)]}
            if direction_history is not None else {}),
+        **({"coefficients": best_coefficients.copy(),
+            "coefficient_valid": bool(np.all(np.isfinite(best_coefficients))),
+            "best_coefficient_history": best_coefficient_history[:len(width_history)],
+            "best_update_history": best_update_history[:len(width_history)]}
+           if record_best_coefficients else {}),
     }
 
 
