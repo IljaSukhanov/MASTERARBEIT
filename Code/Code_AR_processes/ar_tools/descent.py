@@ -29,6 +29,7 @@ def projected_subgradient_empirical_width(
         initial_direction=None,
         step_schedule="inverse_sqrt",
         geometric_decay=0.99, # beta
+        record_directions=False,
 ):
     points = np.asarray(points, dtype=float)
 
@@ -50,6 +51,8 @@ def projected_subgradient_empirical_width(
         raise ValueError("patience must be a positive integer.")
     if improvement_tolerance < 0:
         raise ValueError("improvement_tolerance must be nonnegative.")
+    if not isinstance(record_directions, (bool, np.bool_)):
+        raise ValueError("record_directions must be a boolean.")
     ### end input checks ###
 
     generator = np.random.default_rng(rng)
@@ -70,6 +73,7 @@ def projected_subgradient_empirical_width(
     width_history = np.empty(iterations)
     best_width_history = np.empty(iterations)
     step_history = np.empty(iterations)
+    direction_history = np.empty((iterations, dimension)) if record_directions else None
     best_width = np.inf
     best_direction = direction.copy()
     iterations_without_improvement = 0
@@ -77,6 +81,8 @@ def projected_subgradient_empirical_width(
 
     # main loop
     for iteration in range(iterations):
+        if direction_history is not None:
+            direction_history[iteration] = direction
         projections = points @ direction # p_i = x_i^T u_t
         maximum_index = int(np.argmax(projections)) # i_max = argmax_i p_i
         minimum_index = int(np.argmin(projections)) # i_min = argmin_i p_i
@@ -127,6 +133,8 @@ def projected_subgradient_empirical_width(
         "termination_reason": termination_reason,
         "step_schedule": step_schedule,
         "geometric_decay": geometric_decay,
+        **({"direction_history": direction_history[:len(width_history)]}
+           if direction_history is not None else {}),
     }
 
 

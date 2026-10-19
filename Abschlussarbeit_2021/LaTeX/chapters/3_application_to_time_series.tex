@@ -457,7 +457,7 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
     \begin{algorithmic}[1]
         \Require $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$, $u_0\in\mathbb{S}^{d-1}$, $\{\gamma_t\}_{t\ge 0}$, $\gamma_t=\beta^{t}\gamma_0$ for some $\gamma_0>0$ and $\beta\in(0,1)$
         \Ensure $\hat{u}$
-        \State Initialize $\hat{w}\gets\hat{w}_k(u_0)$, $\hat{u}\gets u_0$
+        \State Initialize $\hat{w}\gets\hat{w}_k(u_0)$, $\hat{u}\gets u_0$, \textcolor{blue}{$\hat{\phi}\gets$}
         \For{$t=0,1,\dots$}
             \State $(i_t,j_t)\gets\arg\max_{(i,j)}\langle x_i-x_j,u\rangle$
             \State $g_t\gets x_{i_t}-x_{j_t}$
@@ -741,7 +741,7 @@ This is a $L^{\infty}$-analog of ordinary least squares.
 
 Define a hyperplane $H_{\beta,b}$ by $H_{\beta,b}:=\{x\in\mathbb{R}^{k}:\langle x,\beta\rangle=b\}$. The distance of a point $z\in\mathbb{R}^{(k)}$ from the hyperplane $H_{\beta,b}$ is $d(z,H_{\beta,b})=\inf_{x\in H_{\beta,b}}\|z-x\|=(|\langle\beta,z\rangle-b|)/\|\beta\|$. This allows us to rewrite the above $L^{\infty}$-minimization in the following way:
 \begin{align*}
-    \min_{\phi}\sqrt{1+\|\phi\|^2}\max_td(Y_t,H_{q_{\phi},0})
+    \min_{\phi\in\mathbb{R}^{p}}\sqrt{1+\|\phi\|^2}\max_td(Y_t,H_{q_{\phi},0})
 \end{align*}
 
 Geometrically, this is a hyperplane fitting problem, where the optimal hyperplane minimizes the maximum distance \textcolor{red}{along the response axis} to any point. The enclosing parallel slab has minimal vertical half width.
@@ -749,6 +749,8 @@ Geometrically, this is a hyperplane fitting problem, where the optimal hyperplan
 The map $\phi\mapsto q_{\phi}$ maps each $\phi\in\mathbb{R}^{p}$ inside the hyperplane $H_{e_1,1}\subseteq\mathbb{R}^{p+1}$.
 
 \todo[inline]{19.10: Connect to radial projection and its inverse}
+
+A radial projection on $S\subseteq\mathbb{R}^{k}\setminus\{0\}$ is a map $r:S\to\mathbb{S}^{k-1}$, $r(x)=x/\|x\|$. The radial projection of $q_{\phi}\in H_{e_1,1}$ is given by $r(q_{\phi})=(1,-\phi)/(1+\|\phi\|^2)$. The inverse $r^{-1}$ on $\mathbb{S}^{k-1}_{+}$ is given by $r^{-1}(u)=u/u_0$, where $u=(u_0,\dots,u_{k-1})\in\mathbb{S}^{k-1}_{+}$. This is the coefficient recovery mentioned in Remark~\ref{rem:minimizer_estimates_coefficients}.
 
 The minimum width approach can also be formulated in terms of a hyperplane fitting problem:
 \begin{align*}
