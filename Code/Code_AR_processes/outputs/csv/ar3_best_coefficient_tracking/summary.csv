@@ -1,0 +1,3 @@
+start,minimum_width,phi_1,phi_2,phi_3,coefficient_l2_error,best_updates_after_initialization,same_directions,same_widths,same_final_coefficients
+Zero coefficients,1.7476115639678276,0.5006682119812731,-0.20307305128754674,0.10251508717884733,0.004026886512556782,68,True,True,True
+Earlier random direction,1.8629524394659138,27.493001234020998,-14.014123403868751,4.045696398062786,30.578107219101366,73,True,True,True
