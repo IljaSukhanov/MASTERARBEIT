@@ -1,0 +1,284 @@
+{
+  "date": "2026-10-19",
+  "timezone": "Europe/Berlin",
+  "export_snapshots": [
+    {
+      "commit": "197f9c5c8be06792858b721f7b832e85b4cb75a5",
+      "date": "2026-10-18 15:33:53 +0200",
+      "tree": "9a37717d3b30c89c1ec01206ee90eac987c8ead8",
+      "parents": "222304372497ed14374aef5860ebe5ee325b193f"
+    },
+    {
+      "commit": "1583f4bfe5050a6d317d99f6a62b28cb0f3a651c",
+      "date": "2026-10-18 15:44:15 +0200",
+      "tree": "9a37717d3b30c89c1ec01206ee90eac987c8ead8",
+      "parents": "222304372497ed14374aef5860ebe5ee325b193f"
+    },
+    {
+      "commit": "dc7c153f838d16e39ef4b437bfcc4dad3ec76e63",
+      "date": "2026-10-18 16:36:04 +0200",
+      "tree": "9a37717d3b30c89c1ec01206ee90eac987c8ead8",
+      "parents": "222304372497ed14374aef5860ebe5ee325b193f"
+    },
+    {
+      "commit": "d7225eabd98e8b6106822fdc88fb92cbfd7e4918",
+      "date": "2026-10-18 16:49:50 +0200",
+      "tree": "9a37717d3b30c89c1ec01206ee90eac987c8ead8",
+      "parents": "222304372497ed14374aef5860ebe5ee325b193f"
+    },
+    {
+      "commit": "75e66f84e075308be866fbeeeecfb28582b67895",
+      "date": "2026-10-18 16:53:38 +0200",
+      "tree": "9a37717d3b30c89c1ec01206ee90eac987c8ead8",
+      "parents": "222304372497ed14374aef5860ebe5ee325b193f"
+    },
+    {
+      "commit": "6f5f17447bc2b5a513f65f251cb5c9a73ba52a7e",
+      "date": "2026-10-18 16:57:21 +0200",
+      "tree": "9a37717d3b30c89c1ec01206ee90eac987c8ead8",
+      "parents": "222304372497ed14374aef5860ebe5ee325b193f"
+    }
+  ],
+  "tree_sizes": [
+    {
+      "ref": "2223043",
+      "commit": "222304372497ed14374aef5860ebe5ee325b193f",
+      "files": 1653,
+      "bytes": 224635324,
+      "groups": {
+        "(root files)": [
+          3,
+          18148
+        ],
+        ".matplotlib-cache": [
+          1,
+          125096
+        ],
+        "Abschlussarbeit_2021": [
+          102,
+          53837289
+        ],
+        "Code": [
+          1426,
+          107020233
+        ],
+        "Reports": [
+          9,
+          4355329
+        ],
+        "output": [
+          112,
+          59279229
+        ]
+      },
+      "largest_files": [
+        [
+          "output/analysis/brain_field_inspection/eeg2.edf",
+          40443904
+        ],
+        [
+          "Abschlussarbeit_2021/data/covid_interval_reconstruction/time_series_covid19_confirmed_US.csv",
+          17801222
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar_projected_subgradient_eta0_beta_tuning/50a9174d5186210f/trajectory_histories.csv",
+          10842661
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar_projected_subgradient_eta0_beta_tuning/685def7e60c3548b/trajectory_histories.csv",
+          10839860
+        ],
+        [
+          "Abschlussarbeit_2021/poster_new_colored.pdf",
+          9385853
+        ],
+        [
+          "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/continuous_minimizers.csv",
+          7995870
+        ],
+        [
+          "Code/Code_kde/outputs/data/spectral_lambda_jump_study/2ce04db2a16e/peak_switches/checkpoint.json",
+          4401955
+        ],
+        [
+          "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/b4afbc6cd382/continuous_minimizers.csv",
+          3914921
+        ]
+      ]
+    },
+    {
+      "ref": "7263de6",
+      "commit": "7263de61477fe5f18a8a2c43e6020acc238c8277",
+      "files": 1677,
+      "bytes": 224308372,
+      "groups": {
+        "(root files)": [
+          4,
+          18511
+        ],
+        ".matplotlib-cache": [
+          1,
+          125096
+        ],
+        "Abschlussarbeit_2021": [
+          102,
+          53837289
+        ],
+        "Code": [
+          1451,
+          109417020
+        ],
+        "Reports": [
+          9,
+          4355329
+        ],
+        "output": [
+          110,
+          56555127
+        ]
+      },
+      "largest_files": [
+        [
+          "output/analysis/brain_field_inspection/eeg2.edf",
+          40443904
+        ],
+        [
+          "Abschlussarbeit_2021/data/covid_interval_reconstruction/time_series_covid19_confirmed_US.csv",
+          17801222
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar_projected_subgradient_eta0_beta_tuning/50a9174d5186210f/trajectory_histories.csv",
+          10842661
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar_projected_subgradient_eta0_beta_tuning/685def7e60c3548b/trajectory_histories.csv",
+          10839860
+        ],
+        [
+          "Abschlussarbeit_2021/poster_new_colored.pdf",
+          9385853
+        ],
+        [
+          "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/continuous_minimizers.csv",
+          7995870
+        ],
+        [
+          "Code/Code_kde/outputs/data/spectral_lambda_jump_study/2ce04db2a16e/peak_switches/checkpoint.json",
+          4401955
+        ],
+        [
+          "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/b4afbc6cd382/continuous_minimizers.csv",
+          3914921
+        ]
+      ]
+    },
+    {
+      "ref": "HEAD",
+      "commit": "9bd03c0d5012aa9f2b21a8e495b6af999726469f",
+      "files": 1687,
+      "bytes": 215330598,
+      "groups": {
+        "(root files)": [
+          4,
+          18511
+        ],
+        ".matplotlib-cache": [
+          1,
+          125096
+        ],
+        "Abschlussarbeit_2021": [
+          31,
+          20589851
+        ],
+        "Code": [
+          1501,
+          131060761
+        ],
+        "Reports": [
+          9,
+          4355329
+        ],
+        "output": [
+          141,
+          59181050
+        ]
+      },
+      "largest_files": [
+        [
+          "output/analysis/brain_field_inspection/eeg2.edf",
+          40443904
+        ],
+        [
+          "Abschlussarbeit_2021/data/covid_interval_reconstruction/time_series_covid19_confirmed_US.csv",
+          17801222
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar_projected_subgradient_eta0_beta_tuning/50a9174d5186210f/trajectory_histories.csv",
+          10842661
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar_projected_subgradient_eta0_beta_tuning/685def7e60c3548b/trajectory_histories.csv",
+          10839860
+        ],
+        [
+          "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/continuous_minimizers.csv",
+          7995870
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar3_coefficient_space_descent/fixed_schedule_histories.csv",
+          5934250
+        ],
+        [
+          "Code/Code_AR_processes/outputs/csv/ar3_failed_coefficient_tracking/iteration_history.csv",
+          5216488
+        ],
+        [
+          "Code/Code_kde/outputs/data/spectral_lambda_jump_study/2ce04db2a16e/peak_switches/checkpoint.json",
+          4401955
+        ]
+      ]
+    }
+  ],
+  "read_only_merge_checks": [
+    {
+      "base": "2223043",
+      "ours": "7263de6",
+      "theirs": "0b6cfae",
+      "seconds": 0.0258,
+      "exit_code": 0,
+      "conflict_markers": 0
+    },
+    {
+      "base": "2223043",
+      "ours": "563f76d",
+      "theirs": "197f9c5",
+      "seconds": 0.0233,
+      "exit_code": 0,
+      "conflict_markers": 0
+    },
+    {
+      "base": "2223043",
+      "ours": "a801b59",
+      "theirs": "1583f4b",
+      "seconds": 0.0248,
+      "exit_code": 0,
+      "conflict_markers": 0
+    },
+    {
+      "base": "2223043",
+      "ours": "49e37ac",
+      "theirs": "d7225ea",
+      "seconds": 0.0262,
+      "exit_code": 0,
+      "conflict_markers": 0
+    },
+    {
+      "base": "2223043",
+      "ours": "4749ee4",
+      "theirs": "6f5f174",
+      "seconds": 0.0239,
+      "exit_code": 0,
+      "conflict_markers": 0
+    }
+  ]
+}
