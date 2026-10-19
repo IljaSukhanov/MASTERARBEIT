@@ -70,6 +70,45 @@ class CoefficientDescentTests(unittest.TestCase):
         widths = np.ptp(self.points @ traced["direction_history"].T, axis=0)
         np.testing.assert_allclose(widths, traced["width_history"], atol=1e-14)
 
+    def test_best_coefficient_tracking_leaves_all_search_outputs_identical(self):
+        settings = dict(
+            iterations=150, initial_direction=direction_from_coefficients(self.phi),
+            initial_step=0.1, step_schedule="geometric", geometric_decay=0.97,
+            improvement_tolerance=0.0, patience=151, record_directions=True,
+        )
+        plain = projected_subgradient_empirical_width(self.points, **settings)
+        tracked = projected_subgradient_empirical_width(self.points, record_best_coefficients=True, **settings)
+        for key in ("direction", "width_history", "best_width_history", "step_history", "direction_history"):
+            np.testing.assert_array_equal(plain[key], tracked[key])
+        self.assertEqual(plain["minimum_width"], tracked["minimum_width"])
+        improvements = np.r_[True, np.diff(plain["best_width_history"]) < 0]
+        best_indices = np.maximum.accumulate(np.where(improvements, np.arange(150), 0))
+        best_directions = plain["direction_history"][best_indices]
+        expected = -best_directions[:, 1:] / best_directions[:, :1]
+        np.testing.assert_array_equal(tracked["best_coefficient_history"], expected)
+        np.testing.assert_array_equal(tracked["best_update_history"], improvements)
+        np.testing.assert_array_equal(tracked["coefficients"], -plain["direction"][1:] / plain["direction"][0])
+
+    def test_best_coefficient_history_is_trimmed_at_patience_stop(self):
+        result = projected_subgradient_empirical_width(
+            self.points, initial_direction=direction_from_coefficients(self.phi),
+            iterations=20, patience=2, improvement_tolerance=100,
+            record_best_coefficients=True,
+        )
+        self.assertEqual(result["termination_reason"], "patience")
+        self.assertEqual(len(result["best_coefficient_history"]), 3)
+        np.testing.assert_array_equal(result["best_update_history"], [True, False, False])
+        np.testing.assert_allclose(result["best_coefficient_history"], np.tile(self.phi, (3, 1)))
+
+    def test_undefined_coefficients_do_not_stop_or_modify_sphere_search(self):
+        settings = dict(iterations=4, initial_direction=[0., 1.], record_directions=True)
+        points = np.array([[0., 0.], [0., 1.]])
+        plain = projected_subgradient_empirical_width(points, **settings)
+        tracked = projected_subgradient_empirical_width(points, record_best_coefficients=True, **settings)
+        np.testing.assert_array_equal(tracked["direction_history"], plain["direction_history"])
+        self.assertFalse(tracked["coefficient_valid"])
+        self.assertTrue(np.all(np.isnan(tracked["best_coefficient_history"])))
+
     def test_history_best_state_and_patience_remain_aligned(self):
         result = coefficient_width_descent(
             self.points, self.phi, iterations=30, patience=2,
