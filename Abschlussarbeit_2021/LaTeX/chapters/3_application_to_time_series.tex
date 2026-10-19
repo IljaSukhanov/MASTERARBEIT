@@ -28,8 +28,6 @@ where $\phi_i\in\mathbb{R}$, $i=1,\dots,p$ are the coefficients with $\phi_p\ne0
 
 It is well known that there exists a stationary process $\{X_t\}_{t\in\mathbb{Z}}$ that can be written in the form \eqref{eq:def_arma} if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert=1$. Another important property that we will need for the geometric interpretation of the embedded AR process is causality: An ARMA process $\{X_t\}_{t\in\mathbb{Z}}$ is called causal if there exist constants $\psi_j$, $j\ge0$ with $\sum_{j\ge0}|\psi_j|<+\infty$, such that $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$ for all $t\in\mathbb{Z}$. It turns out that this property is stronger than stationarity, as an ARMA process is causal if and only if $\phi(z)\neq0$ for all $z\in\mathbb{C},\lvert z\rvert\le1$. In what follows, we will exclusively work with causal ARMA processes.
 
-\todo[inline]{Polish: Define $\psi_j$ as the coefficients of $1/\phi$}
-
 An important second order object for stationary sequences $X$ is its auto covariance function $\gamma_X(h)=\operatorname{Cov}[X_{t+h},X_t]$. The auto covariance matrix $\Gamma_k$ of $(X_t,\dots,X_{t+k-1})$ is
 \begin{align*}
     \Gamma_k=\begin{pmatrix}
@@ -522,7 +520,7 @@ Sample many different AR(3) processes.
 
 \subsection{Elbow point selection}\label{sec:elbow_point_selection}
 
-\todo[inline]{rework completely}
+\todo[inline]{20.10: rework completely}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_1\ge\dots\ge m_p\ge m_{p+1}=\dots=m_K$.
 
@@ -726,8 +724,6 @@ Minimum width
 
 \section{Literature positioning and novelty assessment}
 
-\todo[inline]{19.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
-
 In this final Section of the Chapter we assess the novelty of our approach and position it among existing literature.
 
 First of all, special estimation methods for auto-regressive processes with bounded innovations have been considered before with the main precedent being Horváth's paper where the maximum likelihood estimation with uniform density is formulated as Linear Program (LP). In the time after, exact and very fast LP solvers have been developed.
@@ -747,8 +743,6 @@ Define a hyperplane $H_{\beta,b}$ by $H_{\beta,b}:=\{x\in\mathbb{R}^{k}:\langle 
 Geometrically, this is a hyperplane fitting problem, where the optimal hyperplane minimizes the maximum distance \textcolor{red}{along the response axis} to any point. The enclosing parallel slab has minimal vertical half width.
 
 The map $\phi\mapsto q_{\phi}$ maps each $\phi\in\mathbb{R}^{p}$ inside the hyperplane $H_{e_1,1}\subseteq\mathbb{R}^{p+1}$.
-
-\todo[inline]{19.10: Connect to radial projection and its inverse}
 
 A radial projection on $S\subseteq\mathbb{R}^{k}\setminus\{0\}$ is a map $r:S\to\mathbb{S}^{k-1}$, $r(x)=x/\|x\|$. The radial projection of $q_{\phi}\in H_{e_1,1}$ is given by $r(q_{\phi})=(1,-\phi)/(1+\|\phi\|^2)$. The inverse $r^{-1}$ on $\mathbb{S}^{k-1}_{+}$ is given by $r^{-1}(u)=u/u_0$, where $u=(u_0,\dots,u_{k-1})\in\mathbb{S}^{k-1}_{+}$. This is the coefficient recovery mentioned in Remark~\ref{rem:minimizer_estimates_coefficients}.
 
