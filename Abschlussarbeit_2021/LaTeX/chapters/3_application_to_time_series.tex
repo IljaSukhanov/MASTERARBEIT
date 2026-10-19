@@ -726,8 +726,6 @@ Minimum width
 
 \section{Literature positioning and novelty assessment}
 
-\todo[inline]{19.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
-
 In this final Section of the Chapter we assess the novelty of our approach and position it among existing literature.
 
 First of all, special estimation methods for auto-regressive processes with bounded innovations have been considered before with the main precedent being Horváth's paper where the maximum likelihood estimation with uniform density is formulated as Linear Program (LP). In the time after, exact and very fast LP solvers have been developed.
@@ -747,8 +745,6 @@ Define a hyperplane $H_{\beta,b}$ by $H_{\beta,b}:=\{x\in\mathbb{R}^{k}:\langle 
 Geometrically, this is a hyperplane fitting problem, where the optimal hyperplane minimizes the maximum distance \textcolor{red}{along the response axis} to any point. The enclosing parallel slab has minimal vertical half width.
 
 The map $\phi\mapsto q_{\phi}$ maps each $\phi\in\mathbb{R}^{p}$ inside the hyperplane $H_{e_1,1}\subseteq\mathbb{R}^{p+1}$.
-
-\todo[inline]{19.10: Connect to radial projection and its inverse}
 
 A radial projection on $S\subseteq\mathbb{R}^{k}\setminus\{0\}$ is a map $r:S\to\mathbb{S}^{k-1}$, $r(x)=x/\|x\|$. The radial projection of $q_{\phi}\in H_{e_1,1}$ is given by $r(q_{\phi})=(1,-\phi)/(1+\|\phi\|^2)$. The inverse $r^{-1}$ on $\mathbb{S}^{k-1}_{+}$ is given by $r^{-1}(u)=u/u_0$, where $u=(u_0,\dots,u_{k-1})\in\mathbb{S}^{k-1}_{+}$. This is the coefficient recovery mentioned in Remark~\ref{rem:minimizer_estimates_coefficients}.
 
@@ -797,11 +793,12 @@ Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coerciv
 
 The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
 
-\begin{itemize}
-    \item \cite{10.1145/1008731.1008736}
-    \item \cite{gritzmann_computational_1993}
-    \item \cite{ahn_minimum-width_2025}
-    \item \cite{ahn_k_2025}
-\end{itemize}
+\todo[inline]{19.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
 
-The problem of determining the minimum width of a point cloud is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. \cite{10.1145/323233.323234} gives algorithms for exact computation together with runtime complexity, but only for two and three dimensional point clouds.
+The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{20.10: find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
+
+% \begin{itemize}
+%     \item \cite{ahn_minimum-width_2025} (Minimum-width double-slabs and widest empty slabs in
+% high dimensions)
+%     \item \cite{ahn_k_2025} (On k -enclosing slab problem)
+% \end{itemize}
