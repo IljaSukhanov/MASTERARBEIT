@@ -746,8 +746,6 @@ Geometrically, this is a hyperplane fitting problem, where the optimal hyperplan
 
 The map $\phi\mapsto q_{\phi}$ maps each $\phi\in\mathbb{R}^{p}$ inside the hyperplane $H_{e_1,1}\subseteq\mathbb{R}^{p+1}$.
 
-\todo[inline]{19.10: Connect to radial projection and its inverse}
-
 A radial projection on $S\subseteq\mathbb{R}^{k}\setminus\{0\}$ is a map $r:S\to\mathbb{S}^{k-1}$, $r(x)=x/\|x\|$. The radial projection of $q_{\phi}\in H_{e_1,1}$ is given by $r(q_{\phi})=(1,-\phi)/(1+\|\phi\|^2)$. The inverse $r^{-1}$ on $\mathbb{S}^{k-1}_{+}$ is given by $r^{-1}(u)=u/u_0$, where $u=(u_0,\dots,u_{k-1})\in\mathbb{S}^{k-1}_{+}$. This is the coefficient recovery mentioned in Remark~\ref{rem:minimizer_estimates_coefficients}.
 
 The minimum width approach can also be formulated in terms of a hyperplane fitting problem:
@@ -796,3 +794,12 @@ Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coerciv
 The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
 
 \todo[inline]{19.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
+
+\begin{itemize}
+    \item \cite{10.1145/1008731.1008736}
+    \item \cite{gritzmann_computational_1993}
+    \item \cite{ahn_minimum-width_2025}
+    \item \cite{ahn_k_2025}
+\end{itemize}
+
+The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. \cite{10.1145/323233.323234} gives algorithms for exact computation together with runtime complexity, but only for two and three dimensional point clouds.
