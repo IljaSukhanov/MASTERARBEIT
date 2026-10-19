@@ -1,0 +1,18 @@
+--- a/Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex
++++ b/Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex
+@@ -795,4 +795,13 @@
+ 
+ Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coercive, the minimum is still attained and we have $\min_{u\in\mathcal{N}_k}h_k(u)>1$ for $k\le p$. We still have the monotonicity because $\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)\le h_{k+1}((u,0))=h_k(u)$ for all $u\in\mathcal{N}_k$ and hence $\min_{u\in\mathcal{N}_{k+1}}h_{k+1}(u)\le\min_{u\in\mathcal{N}_k}h_k(u)$.
+ 
+-The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
+\ No newline at end of file
++The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
++
++\begin{itemize}
++    \item \cite{10.1145/1008731.1008736}
++    \item \cite{gritzmann_computational_1993}
++    \item \cite{ahn_minimum-width_2025}
++    \item \cite{ahn_k_2025}
++\end{itemize}
++
++The problem of determining the minimum width of a point cloud is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. \cite{10.1145/323233.323234} gives algorithms for exact computation together with runtime complexity, but only for two and three dimensional point clouds.

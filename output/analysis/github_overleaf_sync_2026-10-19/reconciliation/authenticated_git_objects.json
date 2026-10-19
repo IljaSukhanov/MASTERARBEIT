@@ -1,0 +1,454 @@
+{
+  "commits": [
+    {
+      "sha": "3198f8351d93234a100888fc0f066b9a0f919fd5",
+      "node_id": "C_kwDOTB1z69oAKDMxOThmODM1MWQ5MzIzNGExMDA4ODhmYzBmMDY2YjlhMGY5MTlmZDU",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/commits/3198f8351d93234a100888fc0f066b9a0f919fd5",
+      "html_url": "https://github.com/IljaSukhanov/MASTERARBEIT/commit/3198f8351d93234a100888fc0f066b9a0f919fd5",
+      "author": {
+        "name": "IljaSukhanov",
+        "email": "ilja.sukhanov@uni-ulm.de",
+        "date": "2026-10-19T14:37:05Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-10-19T14:37:05Z"
+      },
+      "tree": {
+        "sha": "ad425eef9d17377eb64141d04700759bcde19d06",
+        "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/ad425eef9d17377eb64141d04700759bcde19d06"
+      },
+      "message": "Merge overleaf-2026-10-19-1435 into main",
+      "parents": [
+        {
+          "sha": "9bd03c0d5012aa9f2b21a8e495b6af999726469f",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/commits/9bd03c0d5012aa9f2b21a8e495b6af999726469f",
+          "html_url": "https://github.com/IljaSukhanov/MASTERARBEIT/commit/9bd03c0d5012aa9f2b21a8e495b6af999726469f"
+        },
+        {
+          "sha": "ed10b1a404ffd76737c8d57bf0991ed058b8d864",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/commits/ed10b1a404ffd76737c8d57bf0991ed058b8d864",
+          "html_url": "https://github.com/IljaSukhanov/MASTERARBEIT/commit/ed10b1a404ffd76737c8d57bf0991ed058b8d864"
+        }
+      ],
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq1isRCRC1aQ7uu5UhlAAAVCkQAFJa2vbudr9fAbWfONtcQCwv\ndh4sKVHU2rlv/peTkf1IDbi8jCoRKvkoMbRMnoCpfzJIhGukFRuuMA+FZnsP7Xgc\nrQtWd0hZQgPj+6KPn4QKGWc5qjsCXu3XKgRsrNzmzgEnH5hOUKgQdM7gaRF3nnZA\n2pIeh8anGUyqd+2W1zVCi8HETOrLKjIceEns8YFu0vwTMdDaqNF4utq8BqMTaRh4\nffbd8ej1uWzNpzyEobvBGVXfI5HYw9B+a4434B+PhW7f0HdksfxyEcWOI9cm/8eh\nFGV3lsfM4c0teDt2yAKOHVM67Q/TUdMEeLeo4wMvjuP8QskZtl4C8OWyFUivhQAe\nmUSwjir4Zs2CzOqKj55wLfLxfbM5WAqLzOw9xe+lUqV8PGdqQCZfLkvcgQn/vGCQ\nTKgGDHRKc9mZNJJUmqNm3SbTrGXK2UIVtuy3PHtvFL1wwMV0WPM2AVc2zA3TVtEp\nHRaTtPW5WZm0mINmv7squrTbB1DjZQcP86rqthqg1r1yNy4kZ40xmKZqOgffy0nK\nE7mZ69eHvYiut18trxlGYswadaOATNUdM434+F4NA6WHQBatsJueQFk+BoLSwIAR\ng8Jdm4qG75tiQ/aTz6vjsVr0lov46YLauwmuE4wApM5c+HcFG5nhiP9gkcZWolIl\nodpQ2rYxgmONicfH3way\n=yQZU\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree ad425eef9d17377eb64141d04700759bcde19d06\nparent 9bd03c0d5012aa9f2b21a8e495b6af999726469f\nparent ed10b1a404ffd76737c8d57bf0991ed058b8d864\nauthor IljaSukhanov <ilja.sukhanov@uni-ulm.de> 1792420625 +0200\ncommitter GitHub <noreply@github.com> 1792420625 +0200\n\nMerge overleaf-2026-10-19-1435 into main\n",
+        "verified_at": "2026-10-19T14:37:06Z"
+      }
+    },
+    {
+      "sha": "ed10b1a404ffd76737c8d57bf0991ed058b8d864",
+      "node_id": "C_kwDOTB1z69oAKGVkMTBiMWE0MDRmZmQ3NjczN2M4ZDU3YmYwOTkxZWQwNThiOGQ4NjQ",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/commits/ed10b1a404ffd76737c8d57bf0991ed058b8d864",
+      "html_url": "https://github.com/IljaSukhanov/MASTERARBEIT/commit/ed10b1a404ffd76737c8d57bf0991ed058b8d864",
+      "author": {
+        "name": "IljaSukhanov",
+        "email": "ilja.sukhanov@uni-ulm.de",
+        "date": "2026-10-19T14:37:04Z"
+      },
+      "committer": {
+        "name": "IljaSukhanov",
+        "email": "ilja.sukhanov@uni-ulm.de",
+        "date": "2026-10-19T14:37:04Z"
+      },
+      "tree": {
+        "sha": "a95237a12ca5c288e7c06337badbc6fb5f7cba9a",
+        "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/a95237a12ca5c288e7c06337badbc6fb5f7cba9a"
+      },
+      "message": "Updates from Overleaf",
+      "parents": [
+        {
+          "sha": "15e0ae519ea41d52cb9fae991283188d0e167bc5",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/commits/15e0ae519ea41d52cb9fae991283188d0e167bc5",
+          "html_url": "https://github.com/IljaSukhanov/MASTERARBEIT/commit/15e0ae519ea41d52cb9fae991283188d0e167bc5"
+        }
+      ],
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    {
+      "sha": "0f15121fb694529de54c4ee4fe98dda450782e7f",
+      "node_id": "C_kwDOTB1z69oAKDBmMTUxMjFmYjY5NDUyOWRlNTRjNGVlNGZlOThkZGE0NTA3ODJlN2Y",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/commits/0f15121fb694529de54c4ee4fe98dda450782e7f",
+      "html_url": "https://github.com/IljaSukhanov/MASTERARBEIT/commit/0f15121fb694529de54c4ee4fe98dda450782e7f",
+      "author": {
+        "name": "IljaSukhanov",
+        "email": "ilja.sukhanov@uni-ulm.de",
+        "date": "2026-10-19T14:39:40Z"
+      },
+      "committer": {
+        "name": "IljaSukhanov",
+        "email": "ilja.sukhanov@uni-ulm.de",
+        "date": "2026-10-19T14:39:40Z"
+      },
+      "tree": {
+        "sha": "dfe54235809c9e7a3988c1661078734ffc2b27ac",
+        "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/dfe54235809c9e7a3988c1661078734ffc2b27ac"
+      },
+      "message": "Preserve approved Overleaf literature edits after synchronization\n\nImport chapter 3 exactly from Overleaf export 15e0ae5. Keep its bibliography entries and all other files from current main unchanged.",
+      "parents": [
+        {
+          "sha": "3198f8351d93234a100888fc0f066b9a0f919fd5",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/commits/3198f8351d93234a100888fc0f066b9a0f919fd5",
+          "html_url": "https://github.com/IljaSukhanov/MASTERARBEIT/commit/3198f8351d93234a100888fc0f066b9a0f919fd5"
+        }
+      ],
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    }
+  ],
+  "trees": [
+    {
+      "sha": "ad425eef9d17377eb64141d04700759bcde19d06",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/ad425eef9d17377eb64141d04700759bcde19d06",
+      "tree": [
+        {
+          "path": ".DS_Store",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9ef6e67e24a398df1dbdbb9d4f337190b4e83700",
+          "size": 16388,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/9ef6e67e24a398df1dbdbb9d4f337190b4e83700"
+        },
+        {
+          "path": ".gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c72b8f8e934478ee663987b42d8af9b5c619448b",
+          "size": 67,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/c72b8f8e934478ee663987b42d8af9b5c619448b"
+        },
+        {
+          "path": ".matplotlib-cache",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "f2bb1dda0632caca4e2b49b3507917ff63ecd5f6",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/f2bb1dda0632caca4e2b49b3507917ff63ecd5f6"
+        },
+        {
+          "path": "AGENTS.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe09c2933db6441fd598c1c87a822391986831c",
+          "size": 1693,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/ebe09c2933db6441fd598c1c87a822391986831c"
+        },
+        {
+          "path": "Abschlussarbeit_2021",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "4cf8f68ec9e0fb3f343d911663c32658516868f4",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/4cf8f68ec9e0fb3f343d911663c32658516868f4"
+        },
+        {
+          "path": "Code",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "d09245682b9b06f6f6112ca70207bd4849fb4e14",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/d09245682b9b06f6f6112ca70207bd4849fb4e14"
+        },
+        {
+          "path": "Reports",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "5d6e95c55044acc427aa3b3983b21f20405dbe8b",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/5d6e95c55044acc427aa3b3983b21f20405dbe8b"
+        },
+        {
+          "path": "TODO.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a58d90187d8ca15d68b9a3d78602ee39adff0225",
+          "size": 363,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/a58d90187d8ca15d68b9a3d78602ee39adff0225"
+        },
+        {
+          "path": "output",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "d379fcf8e3e87e8225348de1de1f24f9cfb2f75d",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/d379fcf8e3e87e8225348de1de1f24f9cfb2f75d"
+        }
+      ],
+      "truncated": false
+    },
+    {
+      "sha": "dfe54235809c9e7a3988c1661078734ffc2b27ac",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/dfe54235809c9e7a3988c1661078734ffc2b27ac",
+      "tree": [
+        {
+          "path": ".DS_Store",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9ef6e67e24a398df1dbdbb9d4f337190b4e83700",
+          "size": 16388,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/9ef6e67e24a398df1dbdbb9d4f337190b4e83700"
+        },
+        {
+          "path": ".gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c72b8f8e934478ee663987b42d8af9b5c619448b",
+          "size": 67,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/c72b8f8e934478ee663987b42d8af9b5c619448b"
+        },
+        {
+          "path": ".matplotlib-cache",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "f2bb1dda0632caca4e2b49b3507917ff63ecd5f6",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/f2bb1dda0632caca4e2b49b3507917ff63ecd5f6"
+        },
+        {
+          "path": "AGENTS.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe09c2933db6441fd598c1c87a822391986831c",
+          "size": 1693,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/ebe09c2933db6441fd598c1c87a822391986831c"
+        },
+        {
+          "path": "Abschlussarbeit_2021",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "d9287365d05e5e342ff2f5d64d8aef6cd7430914",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/d9287365d05e5e342ff2f5d64d8aef6cd7430914"
+        },
+        {
+          "path": "Code",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "d09245682b9b06f6f6112ca70207bd4849fb4e14",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/d09245682b9b06f6f6112ca70207bd4849fb4e14"
+        },
+        {
+          "path": "Reports",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "5d6e95c55044acc427aa3b3983b21f20405dbe8b",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/5d6e95c55044acc427aa3b3983b21f20405dbe8b"
+        },
+        {
+          "path": "TODO.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a58d90187d8ca15d68b9a3d78602ee39adff0225",
+          "size": 363,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/a58d90187d8ca15d68b9a3d78602ee39adff0225"
+        },
+        {
+          "path": "output",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "d379fcf8e3e87e8225348de1de1f24f9cfb2f75d",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/d379fcf8e3e87e8225348de1de1f24f9cfb2f75d"
+        }
+      ],
+      "truncated": false
+    },
+    {
+      "sha": "a95237a12ca5c288e7c06337badbc6fb5f7cba9a",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/a95237a12ca5c288e7c06337badbc6fb5f7cba9a",
+      "tree": [
+        {
+          "path": ".DS_Store",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9ef6e67e24a398df1dbdbb9d4f337190b4e83700",
+          "size": 16388,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/9ef6e67e24a398df1dbdbb9d4f337190b4e83700"
+        },
+        {
+          "path": ".gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c72b8f8e934478ee663987b42d8af9b5c619448b",
+          "size": 67,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/c72b8f8e934478ee663987b42d8af9b5c619448b"
+        },
+        {
+          "path": ".matplotlib-cache",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "f2bb1dda0632caca4e2b49b3507917ff63ecd5f6",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/f2bb1dda0632caca4e2b49b3507917ff63ecd5f6"
+        },
+        {
+          "path": "AGENTS.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe09c2933db6441fd598c1c87a822391986831c",
+          "size": 1693,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/ebe09c2933db6441fd598c1c87a822391986831c"
+        },
+        {
+          "path": "Abschlussarbeit_2021",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "4cf8f68ec9e0fb3f343d911663c32658516868f4",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/4cf8f68ec9e0fb3f343d911663c32658516868f4"
+        },
+        {
+          "path": "Code",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "a8a333c060073abf0c640bfa1e1389393df24813",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/a8a333c060073abf0c640bfa1e1389393df24813"
+        },
+        {
+          "path": "Reports",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "5d6e95c55044acc427aa3b3983b21f20405dbe8b",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/5d6e95c55044acc427aa3b3983b21f20405dbe8b"
+        },
+        {
+          "path": "TODO.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a58d90187d8ca15d68b9a3d78602ee39adff0225",
+          "size": 363,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/a58d90187d8ca15d68b9a3d78602ee39adff0225"
+        },
+        {
+          "path": "output",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "4ee26bb310b30a14bcf387008ce544d8ff57a6a1",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/4ee26bb310b30a14bcf387008ce544d8ff57a6a1"
+        }
+      ],
+      "truncated": false
+    },
+    {
+      "sha": "4cf8f68ec9e0fb3f343d911663c32658516868f4",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/4cf8f68ec9e0fb3f343d911663c32658516868f4",
+      "tree": [
+        {
+          "path": ".DS_Store",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7618446cf9a89513d002e5822ed757eeba77ef9e",
+          "size": 10244,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/7618446cf9a89513d002e5822ed757eeba77ef9e"
+        },
+        {
+          "path": "Application_to_point_processes.tex",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "eaa93e1551482db6a303aebf16a7ed068a08082a",
+          "size": 6727,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/eaa93e1551482db6a303aebf16a7ed068a08082a"
+        },
+        {
+          "path": "LaTeX",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "f0064e22697fbdcbf36cdc9591a14b55a61c2e05",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/f0064e22697fbdcbf36cdc9591a14b55a61c2e05"
+        },
+        {
+          "path": "data",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "c605faad0b8d640b2f040cccd1aa66b1cb30022c",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/c605faad0b8d640b2f040cccd1aa66b1cb30022c"
+        }
+      ],
+      "truncated": false
+    },
+    {
+      "sha": "f0064e22697fbdcbf36cdc9591a14b55a61c2e05",
+      "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/f0064e22697fbdcbf36cdc9591a14b55a61c2e05",
+      "tree": [
+        {
+          "path": ".DS_Store",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d65cbdd09af4b77b5b0b3ef7b33f51ef585bca75",
+          "size": 10244,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/d65cbdd09af4b77b5b0b3ef7b33f51ef585bca75"
+        },
+        {
+          "path": "Nutzungshinweise.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c9d155e9e78c13d74099f1f0c35ab5e22adad696",
+          "size": 1638,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/c9d155e9e78c13d74099f1f0c35ab5e22adad696"
+        },
+        {
+          "path": "abschlussarbeit_2021.pdf",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1751023438932e619592cd52ec0e2bd89e0d003a",
+          "size": 1158678,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/1751023438932e619592cd52ec0e2bd89e0d003a"
+        },
+        {
+          "path": "abschlussarbeit_2021.tex",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6588643bff702e1832bb2f021a182ea0a6445afe",
+          "size": 6560,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/6588643bff702e1832bb2f021a182ea0a6445afe"
+        },
+        {
+          "path": "bibliography.bib",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "adda63631cf2c0a145bc6690e6c943a693a88f4c",
+          "size": 45805,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/adda63631cf2c0a145bc6690e6c943a693a88f4c"
+        },
+        {
+          "path": "chapters",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "ace9eca41c1e059a7649f66521513ca9f6abf50e",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/ace9eca41c1e059a7649f66521513ca9f6abf50e"
+        },
+        {
+          "path": "images",
+          "mode": "040000",
+          "type": "tree",
+          "sha": "3cafdef5b1895ea51e2f1e471e562ef55cd83087",
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/trees/3cafdef5b1895ea51e2f1e471e562ef55cd83087"
+        },
+        {
+          "path": "references.bib",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f34ac641b035f197a49440bedf103eaed748d4d4",
+          "size": 111555,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/f34ac641b035f197a49440bedf103eaed748d4d4"
+        },
+        {
+          "path": "setspace.sty",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c32920424a78c3bca4d99042388f91437c54612c",
+          "size": 21972,
+          "url": "https://api.github.com/repos/IljaSukhanov/MASTERARBEIT/git/blobs/c32920424a78c3bca4d99042388f91437c54612c"
+        }
+      ],
+      "truncated": false
+    }
+  ],
+  "expected_local_head": "9bd03c0d5012aa9f2b21a8e495b6af999726469f",
+  "target": "0f15121fb694529de54c4ee4fe98dda450782e7f"
+}
