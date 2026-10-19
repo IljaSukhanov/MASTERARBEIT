@@ -795,11 +795,10 @@ The above realization that the \enquote{break point property} also holds for $\{
 
 \todo[inline]{19.10: Is there literature of how to determine the minimum width of a point cloud in $\mathbb{R}^k$?}
 
-\begin{itemize}
-    \item \cite{10.1145/1008731.1008736}
-    \item \cite{gritzmann_computational_1993}
-    \item \cite{ahn_minimum-width_2025}
-    \item \cite{ahn_k_2025}
-\end{itemize}
+The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{20.10: find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
 
-The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. \cite{10.1145/323233.323234} gives algorithms for exact computation together with runtime complexity, but only for two and three dimensional point clouds.
+% \begin{itemize}
+%     \item \cite{ahn_minimum-width_2025} (Minimum-width double-slabs and widest empty slabs in
+% high dimensions)
+%     \item \cite{ahn_k_2025} (On k -enclosing slab problem)
+% \end{itemize}
