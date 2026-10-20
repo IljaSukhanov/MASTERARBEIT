@@ -84,13 +84,11 @@ def simulate_beta_ar(
     b: float | None = None,
     L: float | None = None,
 ) -> NDArray[np.float64]:
-    """Simulate an AR process with shared scaled-Beta innovations.
+    """Simulate an AR process with mean-zero, variance-1/3 Beta innovations.
 
-    By default innovations are centered with width L=2. For alpha=beta=1
-    this is Uniform[-1,1]. Explicit a,b or the compatible older argument
-    innovation_bounds=(a,b) select a fixed interval without recentering.
-    L, if supplied with endpoints, must equal b-a. For fixed endpoints the
-    innovation mean is a + (b-a) * alpha / (alpha+beta).
+    alpha=beta=1 gives Uniform[-1,1]. The support endpoints and width are
+    determined by alpha,beta, as in beta_innovation_bounds. Legacy a,b,L
+    and innovation_bounds are checks only and cannot override normalization.
     Initialize the AR history at its stationary mean, then discard burn-in.
     """
     phi = np.asarray(phi, dtype=float)
@@ -109,25 +107,16 @@ def simulate_beta_ar(
         if bounds.shape != (2,):
             raise ValueError("innovation_bounds must contain two ordered endpoints")
         a, b = bounds
-    centered = a is None and b is None
-    innovation_lower, innovation_upper = beta_innovation_bounds(alpha, beta, a, b, L)
+    beta_innovation_bounds(alpha, beta, a, b, L)
 
     generator = np.random.default_rng(rng)
     order = len(phi)
     total_length = burnin + order + sample_size
     innovations = sample_beta_innovations(
-        total_length, alpha=alpha, beta=beta,
-        a=innovation_lower, b=innovation_upper, rng=generator,
+        total_length, alpha=alpha, beta=beta, rng=generator,
     )
     series = np.empty(total_length, dtype=float)
-    # The centered mode is exactly zero in theory; avoid cancellation here.
-    shape_scale = max(alpha, beta)
-    mean_fraction = (alpha / shape_scale) / (alpha / shape_scale + beta / shape_scale)
-    innovation_mean = (
-        0.0 if centered else
-        innovation_lower + (innovation_upper - innovation_lower) * mean_fraction
-    )
-    series[:order] = (intercept + innovation_mean) / (1.0 - np.sum(phi))
+    series[:order] = intercept / (1.0 - np.sum(phi))
 
     for time_index in range(order, total_length):
         recent_values = series[time_index - np.arange(1, order + 1)]
@@ -145,7 +134,11 @@ def simulate_uniform_ar(
     *,
     intercept: float = 0.0,
 ) -> NDArray[np.float64]:
-    """Compatibility wrapper for uniform innovations on [-half_width, half_width]."""
+    """Compatibility wrapper for the normalized Uniform[-1,1] baseline.
+
+    half_width is retained as a consistency check; only 1 is compatible
+    with the shared variance-1/3 normalization.
+    """
     if not np.isfinite(half_width) or half_width <= 0:
         raise ValueError("half_width must be a positive finite number")
     return simulate_beta_ar(

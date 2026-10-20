@@ -1,10 +1,11 @@
-"""Shared scaled-Beta innovation sampling for the AR code.
+"""Mean-zero, variance-1/3 Beta innovations shared by all AR generators.
 
-With no endpoints, use Z = L * (U - alpha / (alpha + beta)), L=2 by
-default. Explicit endpoints instead use Z = a + (b - a) * U, which need
-not have mean zero. L is the support width, never an extra multiplier.
+For U ~ Beta(alpha, beta), use Z = a + (b-a)*U, where
+a = -sqrt(alpha*(alpha+beta+1)/(3*beta)) and
+b = sqrt(beta*(alpha+beta+1)/(3*alpha)). Both shapes default to 1,
+recovering Uniform[-1,1]. The endpoints and width are derived parameters.
 
-Reference: NIST/SEMATECH e-Handbook, section 1.3.6.6.17 (density and mean),
+Reference: NIST/SEMATECH e-Handbook, section 1.3.6.6.17 (mean and variance),
 https://itl.nist.gov/div898/handbook/eda/section3/eda366h.htm.
 """
 
@@ -17,7 +18,10 @@ __all__ = ["beta_innovation_bounds", "sample_beta_innovations"]
 
 
 def _finite_scalar(value: float, name: str, *, positive: bool = False) -> float:
-    if isinstance(value, (bool, np.bool_, str, bytes)) or not np.isscalar(value):
+    if (
+        isinstance(value, (bool, np.bool_, complex, np.complexfloating, str, bytes))
+        or not np.isscalar(value)
+    ):
         raise ValueError(f"{name} must be a finite scalar")
     try:
         number = float(value)
@@ -36,41 +40,43 @@ def beta_innovation_bounds(
     b: float | None = None,
     L: float | None = None,
 ) -> tuple[float, float]:
-    """Resolve support endpoints for centered or fixed-support innovations.
+    """Return the unique ordered support with mean zero and variance 1/3.
 
-    Omit both a and b for centered innovations of width L (default 2):
-    a = -L * alpha / (alpha + beta), b = L * beta / (alpha + beta).
-    Supply both a and b for a fixed interval; its mean may be nonzero.
-    If L is also supplied, it must agree with b - a. Partial endpoints,
-    invalid shapes, and inconsistent or nonfinite widths are rejected.
+    L = (alpha+beta)*sqrt((alpha+beta+1)/(3*alpha*beta)),
+    a = -L*alpha/(alpha+beta), b = L*beta/(alpha+beta).
 
-    None distinguishes an omitted L from an explicitly requested width.
+    Optional legacy a,b,L arguments are consistency checks only. They must
+    match these derived values, so no caller can override the normalization.
+    Omit them in new code; alpha and beta are the distribution parameters.
     """
     alpha = _finite_scalar(alpha, "alpha", positive=True)
     beta = _finite_scalar(beta, "beta", positive=True)
-    width = None if L is None else _finite_scalar(L, "L", positive=True)
-
     if (a is None) != (b is None):
-        raise ValueError("Supply both a and b, or omit both for centered innovations")
-    if a is None:
-        width = 2.0 if width is None else width
-        # Scale before adding to avoid overflow in alpha + beta.
-        shape_scale = max(alpha, beta)
-        scaled_alpha, scaled_beta = alpha / shape_scale, beta / shape_scale
-        shape_sum = scaled_alpha + scaled_beta
-        lower = -width * (scaled_alpha / shape_sum)
-        upper = width * (scaled_beta / shape_sum)
+        raise ValueError("Supply both a and b as checks, or omit both")
+    if alpha == 1.0 and beta == 1.0:
+        # Keep the uniform baseline endpoints and seeded draws exactly unchanged.
+        lower, upper = -1.0, 1.0
     else:
-        lower = _finite_scalar(a, "a")
-        upper = _finite_scalar(b, "b")
+        # Logarithms avoid overflowing intermediate products of valid shapes.
+        log_alpha, log_beta = np.log(alpha), np.log(beta)
+        log_total_plus_one = np.logaddexp(np.logaddexp(log_alpha, log_beta), 0.0)
+        log_scale = 0.5 * (log_total_plus_one - np.log(3.0))
+        with np.errstate(over="ignore", under="ignore"):
+            lower = -float(np.exp(log_scale + 0.5 * (log_alpha - log_beta)))
+            upper = float(np.exp(log_scale + 0.5 * (log_beta - log_alpha)))
 
     support_width = upper - lower
-    if not lower < upper or not np.isfinite(support_width):
-        raise ValueError("Require finite ordered endpoints a < b and a finite width")
-    if width is not None and not np.isclose(
-        support_width, width, rtol=1e-12, atol=0.0,
-    ):
-        raise ValueError("L must equal b - a; the endpoints and width are not independent")
+    if not lower < 0 < upper or not np.isfinite(support_width):
+        raise ValueError("The normalized Beta support is not representable with finite floats")
+    for name, requested, derived in (("a", a, lower), ("b", b, upper), ("L", L, support_width)):
+        if requested is None:
+            continue
+        value = _finite_scalar(requested, name, positive=(name == "L"))
+        if not np.isclose(value, derived, rtol=1e-12, atol=0.0):
+            raise ValueError(
+                f"{name} is determined by alpha,beta for mean-zero, variance-1/3 "
+                f"innovations; expected {derived:g}, got {value:g}"
+            )
     return lower, upper
 
 
@@ -83,12 +89,13 @@ def sample_beta_innovations(
     L: float | None = None,
     rng: np.random.Generator | int | None = None,
 ) -> NDArray[np.float64] | float:
-    """Sample scaled-Beta innovations; defaults are Uniform[-1, 1].
+    """Sample Beta innovations with population mean zero and variance 1/3.
 
-    Without a,b, the distribution has mean zero and width L (default 2).
-    With explicit a,b, sample on exactly that interval without recentering.
-    See beta_innovation_bounds for endpoint and width validation. Centering
-    uses the population mean, not the sample mean: draws stay independent.
+    alpha=beta=1 gives Uniform[-1,1]. Every other shape uses the support
+    derived by beta_innovation_bounds, preserving the same two moments.
+    Legacy a,b,L arguments only check the derived values; they cannot
+    select another mean or variance. Normalization uses population moments,
+    not sample moments: the draws remain independent.
 
     size and rng follow NumPy's Generator conventions. A seed reproduces
     a draw; an existing Generator is advanced in place. The alpha=beta=1

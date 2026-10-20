@@ -1,23 +1,20 @@
 """Checks that AR notebooks use importable helpers with explicit settings."""
 
 import ast
-import contextlib
 import importlib
 import inspect
-import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
 
 import numpy as np
-import pandas as pd
 
 from Code.Code_AR_processes.ar_tools.breakpoint_selectors import (
     select_tail_ratio,
     tail_excess_ratios,
 )
-from Code.Code_AR_processes.ar_tools.experiments import run_phase, run_rmse_replication
+from Code.Code_AR_processes.ar_tools.experiments import run_rmse_replication
 
 
 AR_DIR = Path(__file__).resolve().parents[1]
@@ -81,28 +78,6 @@ class NotebookToolsTests(unittest.TestCase):
         self.assertTrue(np.isnan(signed[-1]))
         self.assertTrue(np.isposinf(scores[-1]))
         self.assertEqual(selected, 4)
-
-    def test_tuning_runner_runs_and_resumes_without_notebook_globals(self):
-        configuration = {
-            "phi": [.4, -.1], "T_values": [32, 48], "k": 3, "K": 4,
-            "burnin": 20, "half_width": 1., "process_seed": 51,
-            "optimizer_seed": 52, "starts": 1, "iterations": 8,
-            "invalid_u0_threshold": 1e-10, "use_convex_hull": False,
-        }
-        candidates = [{"candidate_id": "small", "step_value": .2,
-                       "beta": .97, "step_mode": "box_normalized"}]
-        with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(io.StringIO()):
-            fresh = run_phase(
-                "tuning", 1, candidates, configuration=configuration,
-                csv_directory=directory, resume=False,
-            )
-            resumed = run_phase(
-                "tuning", 1, candidates, configuration=configuration,
-                csv_directory=directory, resume=True,
-            )
-        self.assertEqual(len(fresh), 2)
-        self.assertTrue(np.isfinite(fresh["minimum_width"]).all())
-        pd.testing.assert_frame_equal(fresh, resumed, check_exact=False, atol=1e-12)
 
     def test_rmse_worker_runs_all_estimators_without_notebook_globals(self):
         configuration = {

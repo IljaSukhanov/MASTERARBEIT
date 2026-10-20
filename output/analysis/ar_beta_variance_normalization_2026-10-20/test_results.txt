@@ -1,0 +1,75 @@
+test_ar1_notebook_preserves_its_original_uniform_draws (test_beta_innovations.BetaInnovationTests.test_ar1_notebook_preserves_its_original_uniform_draws) ... ok
+test_ar_residuals_and_stationary_mean_use_the_normalization (test_beta_innovations.BetaInnovationTests.test_ar_residuals_and_stationary_mean_use_the_normalization) ... ok
+test_both_simulators_call_the_single_sampler (test_beta_innovations.BetaInnovationTests.test_both_simulators_call_the_single_sampler) ... ok
+test_default_preserves_the_uniform_random_stream (test_beta_innovations.BetaInnovationTests.test_default_preserves_the_uniform_random_stream) ... ok
+test_endpoints_satisfy_both_population_conditions (test_beta_innovations.BetaInnovationTests.test_endpoints_satisfy_both_population_conditions) ... ok
+test_initial_history_uses_zero_innovation_mean (test_beta_innovations.BetaInnovationTests.test_initial_history_uses_zero_innovation_mean) ... ok
+test_legacy_arguments_are_consistency_checks_only (test_beta_innovations.BetaInnovationTests.test_legacy_arguments_are_consistency_checks_only) ... ok
+test_no_endpoint_or_width_override_can_break_normalization (test_beta_innovations.BetaInnovationTests.test_no_endpoint_or_width_override_can_break_normalization) ... ok
+test_normalized_samples_match_the_full_beta_distribution (test_beta_innovations.BetaInnovationTests.test_normalized_samples_match_the_full_beta_distribution) ... ok
+test_plotting_refreshes_the_simulator_and_uses_normalized_supports (test_beta_innovations.BetaInnovationTests.test_plotting_refreshes_the_simulator_and_uses_normalized_supports) ... ok
+test_rejects_invalid_shapes_and_derived_parameter_checks (test_beta_innovations.BetaInnovationTests.test_rejects_invalid_shapes_and_derived_parameter_checks) ... ok
+test_scalar_empty_and_shaped_samples (test_beta_innovations.BetaInnovationTests.test_scalar_empty_and_shaped_samples) ... ok
+test_uniform_wrapper_and_general_simulator_are_identical (test_beta_innovations.BetaInnovationTests.test_uniform_wrapper_and_general_simulator_are_identical) ... ok
+test_constant_direction_keeps_full_history (test_descent_diagnostics.DescentDiagnosticsTests.test_constant_direction_keeps_full_history) ... ok
+test_constant_width_uses_patience_counter (test_descent_diagnostics.DescentDiagnosticsTests.test_constant_width_uses_patience_counter) ... ok
+test_notebook_descent_cell_refreshes_a_stale_function_binding (test_descent_diagnostics.DescentDiagnosticsTests.test_notebook_descent_cell_refreshes_a_stale_function_binding) ... ok
+test_patience_records_aligned_width_and_step_histories (test_descent_diagnostics.DescentDiagnosticsTests.test_patience_records_aligned_width_and_step_histories) ... ok
+test_padded_candidates_keep_computed_widths_nonincreasing (test_descent_warm_starts.DescentWarmStartTests.test_padded_candidates_keep_computed_widths_nonincreasing) ... ok
+test_previous_coefficients_define_a_unit_start (test_descent_warm_starts.DescentWarmStartTests.test_previous_coefficients_define_a_unit_start) ... ok
+test_previous_direction_is_padded_from_dimension_two (test_descent_warm_starts.DescentWarmStartTests.test_previous_direction_is_padded_from_dimension_two) ... ok
+test_warm_start_options_are_boolean_and_mutually_exclusive (test_descent_warm_starts.DescentWarmStartTests.test_warm_start_options_are_boolean_and_mutually_exclusive) ... ok
+test_every_former_script_experiment_has_a_notebook_entry_point (test_experiment_tools.ExperimentToolsTests.test_every_former_script_experiment_has_a_notebook_entry_point) ... ok
+test_experiment_folder_has_no_top_level_python_files (test_experiment_tools.ExperimentToolsTests.test_experiment_folder_has_no_top_level_python_files) ... ok
+test_mse_worker_is_picklable_and_uses_explicit_settings (test_experiment_tools.ExperimentToolsTests.test_mse_worker_is_picklable_and_uses_explicit_settings) ... ok
+test_notebook_setup_finds_the_project_without_launchers (test_experiment_tools.ExperimentToolsTests.test_notebook_setup_finds_the_project_without_launchers) ... ok
+test_shared_tools_do_not_import_the_script_launchers (test_experiment_tools.ExperimentToolsTests.test_shared_tools_do_not_import_the_script_launchers) ... ok
+test_falls_back_for_a_lower_dimensional_cloud (test_geometric_width_hull.GeometricWidthHullTests.test_falls_back_for_a_lower_dimensional_cloud) ... ok
+test_one_start_uses_seeded_random_direction (test_geometric_width_hull.GeometricWidthHullTests.test_one_start_uses_seeded_random_direction) ... ok
+test_preserves_descent_results_and_full_projections (test_geometric_width_hull.GeometricWidthHullTests.test_preserves_descent_results_and_full_projections) ... ok
+test_rejects_a_non_boolean_option (test_geometric_width_hull.GeometricWidthHullTests.test_rejects_a_non_boolean_option) ... ok
+test_rejects_invalid_max_k (test_geometric_width_hull.GeometricWidthHullTests.test_rejects_invalid_max_k) ... ok
+test_returns_every_dimension_through_max_k (test_geometric_width_hull.GeometricWidthHullTests.test_returns_every_dimension_through_max_k) ... ok
+test_certificate_rejects_a_larger_true_drop (test_lp_widths.LPWidthTests.test_certificate_rejects_a_larger_true_drop) ... ok
+test_curve_is_monotone_on_common_times (test_lp_widths.LPWidthTests.test_curve_is_monotone_on_common_times) ... ok
+test_earlier_bend_certificate_cannot_be_repaired_by_lower_tail (test_lp_widths.LPWidthTests.test_earlier_bend_certificate_cannot_be_repaired_by_lower_tail) ... ok
+test_global_hull_audit_matches_a_rectangle (test_lp_widths.LPWidthTests.test_global_hull_audit_matches_a_rectangle) ... ok
+test_lp_steps_retain_feasible_nonincreasing_widths (test_lp_widths.LPWidthTests.test_lp_steps_retain_feasible_nonincreasing_widths) ... ok
+test_notebook_calls_match_shared_function_signatures (test_notebook_tools.NotebookToolsTests.test_notebook_calls_match_shared_function_signatures) ... ok
+test_notebooks_have_no_local_function_definitions (test_notebook_tools.NotebookToolsTests.test_notebooks_have_no_local_function_definitions) ... 
+  test_notebooks_have_no_local_function_definitions (test_notebook_tools.NotebookToolsTests.test_notebooks_have_no_local_function_definitions) (notebook='ar3_failed_coefficient_tracking.ipynb', cell=2) ... FAIL
+test_rmse_worker_runs_all_estimators_without_notebook_globals (test_notebook_tools.NotebookToolsTests.test_rmse_worker_runs_all_estimators_without_notebook_globals) ... ok
+test_tail_selectors_keep_their_distinct_zero_denominator_rules (test_notebook_tools.NotebookToolsTests.test_tail_selectors_keep_their_distinct_zero_denominator_rules) ... ok
+test_tuning_runner_runs_and_resumes_without_notebook_globals (test_notebook_tools.NotebookToolsTests.test_tuning_runner_runs_and_resumes_without_notebook_globals) ... ok
+test_cumulative_rules_ignore_a_flat_prefix (test_population_breakpoint_selectors.PopulationBreakpointTests.test_cumulative_rules_ignore_a_flat_prefix) ... ok
+test_difference_selector_methods (test_population_breakpoint_selectors.PopulationBreakpointTests.test_difference_selector_methods) ... ok
+test_first_difference_preserves_earliest_tie_rule (test_population_breakpoint_selectors.PopulationBreakpointTests.test_first_difference_preserves_earliest_tie_rule) ... ok
+test_population_selector_methods (test_population_breakpoint_selectors.PopulationBreakpointTests.test_population_selector_methods) ... ok
+test_sse_of_an_analytical_plateau_is_exactly_zero (test_population_breakpoint_selectors.PopulationBreakpointTests.test_sse_of_an_analytical_plateau_is_exactly_zero) ... ok
+test_seasonal_ar3_has_flat_prefix_and_exact_plateau (test_population_widths.PopulationWidthTests.test_seasonal_ar3_has_flat_prefix_and_exact_plateau) ... ok
+test_three_dimensional_sweep_matches_every_generator_pair (test_population_widths.PopulationWidthTests.test_three_dimensional_sweep_matches_every_generator_pair) ... ok
+test_two_dimensional_sweep_matches_every_facet (test_population_widths.PopulationWidthTests.test_two_dimensional_sweep_matches_every_facet) ... ok
+test_grid_selection_is_order_independent_and_preserves_inputs (test_schedule_tuning.ScheduleTuningTests.test_grid_selection_is_order_independent_and_preserves_inputs) ... ok
+test_invalid_grids_and_directions_are_rejected (test_schedule_tuning.ScheduleTuningTests.test_invalid_grids_and_directions_are_rejected) ... ok
+test_notebook_bottom_runs_and_exports_a_small_search (test_schedule_tuning.ScheduleTuningTests.test_notebook_bottom_runs_and_exports_a_small_search) ... ok
+test_singleton_grid_reproduces_direct_descents (test_schedule_tuning.ScheduleTuningTests.test_singleton_grid_reproduces_direct_descents) ... ok
+test_ar2_history_sets_the_finite_support_extrema (test_support_geometry.SupportGeometryTests.test_ar2_history_sets_the_finite_support_extrema) ... ok
+test_existing_imports_reexport_the_moved_functions (test_support_geometry.SupportGeometryTests.test_existing_imports_reexport_the_moved_functions) ... ok
+test_negative_ar1_has_exact_translated_parallelogram (test_support_geometry.SupportGeometryTests.test_negative_ar1_has_exact_translated_parallelogram) ... ok
+test_rejects_nonstationary_coefficients_and_reversed_bounds (test_support_geometry.SupportGeometryTests.test_rejects_nonstationary_coefficients_and_reversed_bounds) ... ok
+test_flat_prefix_does_not_hide_later_genuine_drop (test_warm_start_experiment.DescentChainTests.test_flat_prefix_does_not_hide_later_genuine_drop) ... ok
+test_one_ulp_tail_difference_does_not_create_a_false_breakpoint (test_warm_start_experiment.DescentChainTests.test_one_ulp_tail_difference_does_not_create_a_false_breakpoint) ... ok
+test_substantive_upward_step_is_rejected (test_warm_start_experiment.DescentChainTests.test_substantive_upward_step_is_rejected) ... ok
+
+======================================================================
+FAIL: test_notebooks_have_no_local_function_definitions (test_notebook_tools.NotebookToolsTests.test_notebooks_have_no_local_function_definitions) (notebook='ar3_failed_coefficient_tracking.ipynb', cell=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/tests/test_notebook_tools.py", line 40, in test_notebooks_have_no_local_function_definitions
+    self.assertFalse(any(
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 61 tests in 3.390s
+
+FAILED (failures=1)

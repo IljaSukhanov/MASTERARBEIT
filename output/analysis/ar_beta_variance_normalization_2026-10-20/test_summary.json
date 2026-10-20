@@ -1,0 +1,13 @@
+{
+  "tests_run": 61,
+  "passed": 60,
+  "normalization_tests_passed": 13,
+  "failures": [
+    {
+      "test": "test_notebook_tools.NotebookToolsTests.test_notebooks_have_no_local_function_definitions (notebook='ar3_failed_coefficient_tracking.ipynb', cell=2)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/tests/test_notebook_tools.py\", line 40, in test_notebooks_have_no_local_function_definitions\n    self.assertFalse(any(\nAssertionError: True is not false\n"
+    }
+  ],
+  "errors": [],
+  "preexisting_failure": "The same notebook-convention check failed before edits: ar3_failed_coefficient_tracking.ipynb defines a local save_figure in cell 2."
+}
