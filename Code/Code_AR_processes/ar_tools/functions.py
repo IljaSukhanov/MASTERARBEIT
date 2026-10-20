@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
+from .innovations import beta_innovation_bounds, sample_beta_innovations
 from .support_geometry import (
     ar_impulse_response,
     ar_window_zonotope_generators,
@@ -16,6 +17,8 @@ from .support_geometry import (
 
 __all__ = [
     "jones_ar_coefficients",
+    "beta_innovation_bounds",
+    "sample_beta_innovations",
     "simulate_beta_ar",
     "simulate_uniform_ar",
     "sliding_window_point_cloud",
@@ -71,18 +74,23 @@ def simulate_beta_ar(
     phi: ArrayLike,
     sample_size: int,
     burnin: int = 500,
-    innovation_bounds: ArrayLike = (-1.0, 1.0),
+    innovation_bounds: ArrayLike | None = None,
     alpha: float = 1.0,
     beta: float = 1.0,
     rng: np.random.Generator | int | None = None,
     *,
     intercept: float = 0.0,
+    a: float | None = None,
+    b: float | None = None,
+    L: float | None = None,
 ) -> NDArray[np.float64]:
-    """Simulate AR innovations Z = a + (b - a) U, U ~ Beta(alpha, beta).
+    """Simulate an AR process with shared scaled-Beta innovations.
 
-    ``innovation_bounds=(a, b)`` fixes the support independently of the
-    shape parameters, following the thesis's Beta innovation definition.
-    The innovation mean is a + (b - a) * alpha / (alpha + beta).
+    By default innovations are centered with width L=2. For alpha=beta=1
+    this is Uniform[-1,1]. Explicit a,b or the compatible older argument
+    innovation_bounds=(a,b) select a fixed interval without recentering.
+    L, if supplied with endpoints, must equal b-a. For fixed endpoints the
+    innovation mean is a + (b-a) * alpha / (alpha+beta).
     Initialize the AR history at its stationary mean, then discard burn-in.
     """
     phi = np.asarray(phi, dtype=float)
@@ -94,34 +102,31 @@ def simulate_beta_ar(
         raise ValueError("burnin must be a non-negative integer")
     if not np.isfinite(intercept):
         raise ValueError("intercept must be finite")
-    if not np.isfinite(alpha) or alpha <= 0:
-        raise ValueError("alpha must be a positive finite number")
-    if not np.isfinite(beta) or beta <= 0:
-        raise ValueError("beta must be a positive finite number")
-    bounds = np.asarray(innovation_bounds, dtype=float)
-    if (
-        bounds.shape != (2,)
-        or not np.all(np.isfinite(bounds))
-        or bounds[0] >= bounds[1]
-    ):
-        raise ValueError("innovation_bounds must contain finite ordered endpoints")
-    innovation_lower, innovation_upper = bounds
-    support_width = innovation_upper - innovation_lower
+    if innovation_bounds is not None:
+        if a is not None or b is not None:
+            raise ValueError("Use a,b or innovation_bounds, not both")
+        bounds = np.asarray(innovation_bounds, dtype=float)
+        if bounds.shape != (2,):
+            raise ValueError("innovation_bounds must contain two ordered endpoints")
+        a, b = bounds
+    centered = a is None and b is None
+    innovation_lower, innovation_upper = beta_innovation_bounds(alpha, beta, a, b, L)
 
     generator = np.random.default_rng(rng)
     order = len(phi)
     total_length = burnin + order + sample_size
-    if alpha == 1.0 and beta == 1.0:
-        innovations = generator.uniform(
-            innovation_lower,
-            innovation_upper,
-            size=total_length,
-        )
-    else:
-        beta_draws = generator.beta(alpha, beta, size=total_length)
-        innovations = innovation_lower + support_width * beta_draws
+    innovations = sample_beta_innovations(
+        total_length, alpha=alpha, beta=beta,
+        a=innovation_lower, b=innovation_upper, rng=generator,
+    )
     series = np.empty(total_length, dtype=float)
-    innovation_mean = innovation_lower + support_width * alpha / (alpha + beta)
+    # The centered mode is exactly zero in theory; avoid cancellation here.
+    shape_scale = max(alpha, beta)
+    mean_fraction = (alpha / shape_scale) / (alpha / shape_scale + beta / shape_scale)
+    innovation_mean = (
+        0.0 if centered else
+        innovation_lower + (innovation_upper - innovation_lower) * mean_fraction
+    )
     series[:order] = (intercept + innovation_mean) / (1.0 - np.sum(phi))
 
     for time_index in range(order, total_length):
@@ -140,6 +145,7 @@ def simulate_uniform_ar(
     *,
     intercept: float = 0.0,
 ) -> NDArray[np.float64]:
+    """Compatibility wrapper for uniform innovations on [-half_width, half_width]."""
     if not np.isfinite(half_width) or half_width <= 0:
         raise ValueError("half_width must be a positive finite number")
     return simulate_beta_ar(

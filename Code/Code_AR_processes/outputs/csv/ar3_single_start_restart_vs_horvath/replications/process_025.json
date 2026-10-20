@@ -1,0 +1,183 @@
+{
+  "results": [
+    {
+      "replication": 25,
+      "method": "Single-start descent + abort at 200",
+      "status": "ok",
+      "coefficient_mse": 3.162095578735372e-06,
+      "coefficient_l2_error": 0.0030799816129655896,
+      "stationary": true,
+      "spectral_radius": 0.8380518382232696,
+      "normalized_directional_width": 1.2990606897397297,
+      "maximum_absolute_residual": 0.9988093321671321,
+      "median_fit_seconds": 0.04904166699270718,
+      "series_sha256": "918874fec04e86e72dc7e207066f9cb3a4ba0df378488e192f4b8d1a04c19d5e",
+      "attempts": 5,
+      "restarts": 4,
+      "evaluated_states": 2364,
+      "initial_step": 0.007700012295279906,
+      "termination_reason": "patience",
+      "final_checkpoint_radius": 0.9153139373521073,
+      "lp_radius": NaN,
+      "lp_duality_gap": NaN,
+      "true_phi_1": -1.144605434007357,
+      "estimated_phi_1": -1.1468798607189268,
+      "squared_error_phi_1": 5.173016866301958e-06,
+      "true_phi_2": 0.003801315616571821,
+      "estimated_phi_2": 0.0017274244072930103,
+      "squared_error_phi_2": 4.301024747923928e-06,
+      "true_phi_3": 0.21845778678337768,
+      "estimated_phi_3": 0.21834712910411308,
+      "squared_error_phi_3": 1.2245121980227752e-08
+    },
+    {
+      "replication": 25,
+      "method": "Horvath L-infinity",
+      "status": "ok",
+      "coefficient_mse": 1.8122885451825835e-06,
+      "coefficient_l2_error": 0.002331708737288547,
+      "stationary": true,
+      "spectral_radius": 0.839897801369473,
+      "normalized_directional_width": 1.2997156320821608,
+      "maximum_absolute_residual": 0.9979273794369361,
+      "median_fit_seconds": 0.006817125002271496,
+      "series_sha256": "918874fec04e86e72dc7e207066f9cb3a4ba0df378488e192f4b8d1a04c19d5e",
+      "attempts": 1,
+      "restarts": 0,
+      "evaluated_states": NaN,
+      "initial_step": NaN,
+      "termination_reason": "optimal_lp",
+      "final_checkpoint_radius": NaN,
+      "lp_radius": 0.9979273794369358,
+      "lp_duality_gap": 1.1102230246251565e-16,
+      "true_phi_1": -1.144605434007357,
+      "estimated_phi_1": -1.1449977568161884,
+      "squared_error_phi_1": 1.5391718632935238e-07,
+      "true_phi_2": 0.003801315616571821,
+      "estimated_phi_2": 0.0020605965672875386,
+      "squared_error_phi_2": 3.0301028085411757e-06,
+      "true_phi_3": 0.21845778678337768,
+      "estimated_phi_3": 0.2169568385362095,
+      "squared_error_phi_3": 2.252845640677222e-06
+    }
+  ],
+  "attempts": [
+    {
+      "replication": 25,
+      "attempt": 1,
+      "aborted": true,
+      "evaluated_states": 200,
+      "checkpoint_radius": 4.835493802875425,
+      "final_radius": 4.835493802875425,
+      "final_stationary": false,
+      "termination_reason": "stationarity_abort",
+      "minimum_width": 1.725258644863385
+    },
+    {
+      "replication": 25,
+      "attempt": 2,
+      "aborted": true,
+      "evaluated_states": 200,
+      "checkpoint_radius": 9.645539818597543,
+      "final_radius": 9.645539818597543,
+      "final_stationary": false,
+      "termination_reason": "stationarity_abort",
+      "minimum_width": 1.6695247200753172
+    },
+    {
+      "replication": 25,
+      "attempt": 3,
+      "aborted": true,
+      "evaluated_states": 200,
+      "checkpoint_radius": 1.0946356307628136,
+      "final_radius": 1.0946356307628136,
+      "final_stationary": false,
+      "termination_reason": "stationarity_abort",
+      "minimum_width": 1.9042465468230763
+    },
+    {
+      "replication": 25,
+      "attempt": 4,
+      "aborted": true,
+      "evaluated_states": 200,
+      "checkpoint_radius": 6.408635095807911,
+      "final_radius": 6.408635095807911,
+      "final_stationary": false,
+      "termination_reason": "stationarity_abort",
+      "minimum_width": 1.645185600109476
+    },
+    {
+      "replication": 25,
+      "attempt": 5,
+      "aborted": false,
+      "evaluated_states": 1564,
+      "checkpoint_radius": 0.9153139373521073,
+      "final_radius": 0.8380518382232696,
+      "final_stationary": true,
+      "termination_reason": "patience",
+      "minimum_width": 1.2990606897397297
+    }
+  ],
+  "timing": [
+    {
+      "replication": 25,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 1,
+      "elapsed_seconds": 0.04910466700675897
+    },
+    {
+      "replication": 25,
+      "method": "Horvath L-infinity",
+      "repeat": 1,
+      "elapsed_seconds": 0.006817125002271496
+    },
+    {
+      "replication": 25,
+      "method": "Horvath L-infinity",
+      "repeat": 2,
+      "elapsed_seconds": 0.006788499988033436
+    },
+    {
+      "replication": 25,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 2,
+      "elapsed_seconds": 0.04977591699571349
+    },
+    {
+      "replication": 25,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 3,
+      "elapsed_seconds": 0.04854858299950138
+    },
+    {
+      "replication": 25,
+      "method": "Horvath L-infinity",
+      "repeat": 3,
+      "elapsed_seconds": 0.006910374999279156
+    },
+    {
+      "replication": 25,
+      "method": "Horvath L-infinity",
+      "repeat": 4,
+      "elapsed_seconds": 0.006616708007641137
+    },
+    {
+      "replication": 25,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 4,
+      "elapsed_seconds": 0.04904166699270718
+    },
+    {
+      "replication": 25,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 5,
+      "elapsed_seconds": 0.04880670800048392
+    },
+    {
+      "replication": 25,
+      "method": "Horvath L-infinity",
+      "repeat": 5,
+      "elapsed_seconds": 0.007101125011104159
+    }
+  ]
+}

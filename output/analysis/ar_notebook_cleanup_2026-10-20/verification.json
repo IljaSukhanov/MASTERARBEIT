@@ -1,0 +1,99 @@
+{
+  "shared_input_samples_checked": 50,
+  "retained_cache_checks": {
+    "ar3_conditional_restarts_2000_200": "configuration accepted; all cached estimates and summaries exactly unchanged",
+    "ar3_early_abort_200_12starts": "configuration accepted; all cached estimates and summaries exactly unchanged",
+    "ar3_single_start_restart_vs_horvath": "configuration accepted; all cached estimates and summaries exactly unchanged",
+    "ar3_order_selection_warm_starts": "all selections and summary exactly unchanged without the removed derivative table"
+  },
+  "independent_validations": {
+    "ar3_conditional_restarts_2000_200": {
+      "processes": 50,
+      "terminal_candidates_checked": 600,
+      "policy_results_checked": 100,
+      "selected_widths_checked": true,
+      "coefficient_ratios_and_mses_checked": true,
+      "independent_polynomial_root_check": true,
+      "stopping_counts_checked": true,
+      "first_stationary_selection_and_cap_checked": true,
+      "complete_traces_checked": 48,
+      "max_width_error": 0.0,
+      "total_evaluated_states": {
+        "Fixed 12 starts": 600005,
+        "Stationarity-triggered starts": 78908
+      },
+      "filtering_used": false
+    },
+    "ar3_early_abort_200_12starts": {
+      "processes": 50,
+      "policy_results_checked": 100,
+      "attempts_per_policy_checked": 600,
+      "all_600_prefixes_match_public_optimizer": true,
+      "checkpoint_roots_independently_checked": true,
+      "all_1200_candidate_widths_and_coefficients_checked": true,
+      "all_1200_trace_stopping_counts_checked": true,
+      "all_final_selections_and_iteration_costs_checked": true,
+      "maximum_candidate_width_error": 0.0,
+      "baseline_evaluations": 600005,
+      "policy_evaluations": 432283,
+      "aborted_runs_that_would_recover": 47
+    },
+    "ar3_single_start_restart_vs_horvath": {
+      "processes": 50,
+      "estimates_checked": 100,
+      "actual_descent_attempts_checked": 98,
+      "no_extra_draw_without_abort": true,
+      "first_nonaborted_result_returned": true,
+      "stationarity_roots_independently_checked": true,
+      "all_50_lps_independently_solved_on_full_data": true,
+      "maximum_lp_objective_difference": 2.0816681711721685e-13,
+      "maximum_selected_width_error": 0.0,
+      "all_timing_medians_checked": true,
+      "timing_samples_checked": 500,
+      "no_processes_dropped": true
+    }
+  },
+  "preexisting_warm_cache_difference": {
+    "source_hashes": {
+      "existing": {
+        "ar_tools/functions.py": "d5a39602124b8c8c58a6c2f778e6b695fa37880b4b4be7e2269374b96fbfc66f",
+        "ar_tools/descent.py": "2f7a9c994db59c8293e5a07acf18cf3c990c2e2c9fcabc40f247cbd3d539c940"
+      },
+      "current": {
+        "ar_tools/functions.py": "5ffa84e936ddc73f110395d7d2d0985e7f14ba478852aeebaeb3113688e98195",
+        "ar_tools/descent.py": "645f26b079bb0ed598229643447c0e798dc6b1836c49539179ded45f8d9ac54a"
+      }
+    }
+  },
+  "retained_output_files_unchanged": 388,
+  "seed_reconstruction": {
+    "settings": {
+      "order": 3,
+      "sample_size": 2000,
+      "burnin": 1000,
+      "number_of_starts": 12,
+      "optimization_iterations": 5000,
+      "initial_step_scale": 0.2,
+      "replication_count": 50,
+      "experiment_seed": 20260913,
+      "geometric_decay": 0.997,
+      "improvement_tolerance": 1e-10
+    },
+    "summary": {
+      "series_exact": 0,
+      "phi_exact": 36,
+      "directions_exact": 50,
+      "maximum_series_difference": 4.440892098500626e-14,
+      "maximum_phi_difference": 4.440892098500626e-16
+    }
+  },
+  "ar_test_suite": {
+    "tests_run": 55,
+    "passed": 54,
+    "failed": 1,
+    "preexisting_failure": "test_notebooks_have_no_local_function_definitions: ar3_failed_coefficient_tracking.ipynb cell 2 contains save_figure; the same definition is present in HEAD"
+  },
+  "remaining_notebooks_parse": 19,
+  "protected_thesis_files_changed": [],
+  "active_sources_referencing_removed_families": []
+}

@@ -1,0 +1,403 @@
+{
+  "results": [
+    {
+      "replication": 34,
+      "minimum_width": 1.27301529421438,
+      "stationary": true,
+      "spectral_radius": 0.838524566841555,
+      "evaluated_states": 14429,
+      "termination_reason": "patience",
+      "best_iteration": 1691,
+      "coefficient_mse": 6.551126218548319e-07,
+      "method": "Fixed 12 starts",
+      "selected_attempt": 10,
+      "attempts_used": 12,
+      "restarts_used": 11,
+      "status": "ok",
+      "series_sha256": "e6db0683813438513418ad67205e5447df88093aa5c2a0db06ab8b83b3b20921",
+      "initial_step": 0.006791752600633173,
+      "true_spectral_radius": 0.8379751750016919,
+      "true_phi_1": -0.8082348091215904,
+      "estimated_phi_1": -0.8071476861333858,
+      "true_phi_2": 0.687583052186505,
+      "estimated_phi_2": 0.688468018341341,
+      "true_phi_3": 0.5797950632607318,
+      "estimated_phi_3": 0.5798134038953013,
+      "u_0": 0.6373618103131489,
+      "u_1": 0.5144451104240441,
+      "u_2": -0.4388032225127433,
+      "u_3": -0.36955092075053825
+    },
+    {
+      "replication": 34,
+      "minimum_width": 1.2761479116790717,
+      "stationary": true,
+      "spectral_radius": 0.8421543572521082,
+      "evaluated_states": 3018,
+      "termination_reason": "patience",
+      "best_iteration": 817,
+      "coefficient_mse": 5.248072733626081e-05,
+      "method": "Stationarity-triggered starts",
+      "selected_attempt": 2,
+      "attempts_used": 2,
+      "restarts_used": 1,
+      "status": "ok",
+      "series_sha256": "e6db0683813438513418ad67205e5447df88093aa5c2a0db06ab8b83b3b20921",
+      "initial_step": 0.006791752600633173,
+      "true_spectral_radius": 0.8379751750016919,
+      "true_phi_1": -0.8082348091215904,
+      "estimated_phi_1": -0.8129420662202947,
+      "true_phi_2": 0.687583052186505,
+      "estimated_phi_2": 0.6934655314098308,
+      "true_phi_3": 0.5797950632607318,
+      "estimated_phi_3": 0.5898290231372023,
+      "u_0": -0.6337665637684227,
+      "u_1": -0.5152154998512377,
+      "u_2": 0.43949526693345164,
+      "u_3": 0.3738139132045502
+    }
+  ],
+  "attempts": [
+    {
+      "replication": 34,
+      "attempt": 1,
+      "initial_direction": [
+        0.15615159499453699,
+        -0.8564055087017696,
+        -0.24071993960502897,
+        -0.42923209889578023
+      ],
+      "direction": [
+        0.07039783756185357,
+        -0.611884884991902,
+        -0.7770338812086196,
+        -0.12984367308009565
+      ],
+      "coefficients": [
+        8.691813643484181,
+        11.037752125921415,
+        1.8444270105031457
+      ],
+      "minimum_width": 3.1259539695686804,
+      "stationary": false,
+      "spectral_radius": 9.833367657409996,
+      "evaluated_states": 2000,
+      "termination_reason": "iteration_limit",
+      "best_iteration": 1960,
+      "coefficient_mse": 66.32540480624735
+    },
+    {
+      "replication": 34,
+      "attempt": 2,
+      "initial_direction": [
+        0.09023847061168226,
+        0.0070452270303302846,
+        -0.6166985137837291,
+        0.7819784692014836
+      ],
+      "direction": [
+        -0.6337665637684227,
+        -0.5152154998512377,
+        0.43949526693345164,
+        0.3738139132045502
+      ],
+      "coefficients": [
+        -0.8129420662202947,
+        0.6934655314098308,
+        0.5898290231372023
+      ],
+      "minimum_width": 1.2761479116790717,
+      "stationary": true,
+      "spectral_radius": 0.8421543572521082,
+      "evaluated_states": 1018,
+      "termination_reason": "patience",
+      "best_iteration": 817,
+      "coefficient_mse": 5.248072733626081e-05
+    },
+    {
+      "replication": 34,
+      "attempt": 3,
+      "initial_direction": [
+        -0.46944890666452416,
+        -0.5388091969421499,
+        0.6856695428647528,
+        0.13841839223773372
+      ],
+      "direction": [
+        -0.6371965457438012,
+        -0.5144854697717379,
+        0.43882528013316535,
+        0.3697534813926314
+      ],
+      "coefficients": [
+        -0.8074203685005505,
+        0.6886811974489337,
+        0.5802816789614218
+      ],
+      "minimum_width": 1.2731179554782612,
+      "stationary": true,
+      "spectral_radius": 0.8386886206997305,
+      "evaluated_states": 1528,
+      "termination_reason": "patience",
+      "best_iteration": 1327,
+      "coefficient_mse": 7.020104609175308e-07
+    },
+    {
+      "replication": 34,
+      "attempt": 4,
+      "initial_direction": [
+        0.35497942728457915,
+        0.23858688333992695,
+        -0.4059871298183112,
+        -0.8076139893072322
+      ],
+      "direction": [
+        0.6334507454572437,
+        0.5151210317273619,
+        -0.43956490649526225,
+        -0.37439707361251073
+      ],
+      "coefficients": [
+        -0.8131982406233214,
+        0.6939212079985337,
+        0.5910437019728499
+      ],
+      "minimum_width": 1.2755661157160127,
+      "stationary": true,
+      "spectral_radius": 0.8426594146455019,
+      "evaluated_states": 999,
+      "termination_reason": "patience",
+      "best_iteration": 798,
+      "coefficient_mse": 6.377991474856397e-05
+    },
+    {
+      "replication": 34,
+      "attempt": 5,
+      "initial_direction": [
+        -0.6537180427775707,
+        -0.3027617725137414,
+        -0.6901148342831371,
+        0.06877168860627064
+      ],
+      "direction": [
+        -0.6334424379848957,
+        -0.51500327736555,
+        0.4397280431415761,
+        0.3743815568873206
+      ],
+      "coefficients": [
+        -0.8130230096421643,
+        0.6941878484498718,
+        0.5910269575216677
+      ],
+      "minimum_width": 1.275545292298707,
+      "stationary": true,
+      "spectral_radius": 0.8427778374896726,
+      "evaluated_states": 1003,
+      "termination_reason": "patience",
+      "best_iteration": 802,
+      "coefficient_mse": 6.423521553155098e-05
+    },
+    {
+      "replication": 34,
+      "attempt": 6,
+      "initial_direction": [
+        0.6875603128893019,
+        -0.011588884463323313,
+        0.6420425487193249,
+        0.3389806477226307
+      ],
+      "direction": [
+        -0.6373403884745202,
+        -0.5144540692240713,
+        0.4388025089378674,
+        0.3695762411570515
+      ],
+      "coefficients": [
+        -0.8071888719549402,
+        0.6884900390325882,
+        0.5798726204087512
+      ],
+      "minimum_width": 1.273025400376696,
+      "stationary": true,
+      "spectral_radius": 0.838542126882325,
+      "evaluated_states": 1590,
+      "termination_reason": "patience",
+      "best_iteration": 1389,
+      "coefficient_mse": 6.408749355857664e-07
+    },
+    {
+      "replication": 34,
+      "attempt": 7,
+      "initial_direction": [
+        -0.6124787040366882,
+        -0.7740077984855533,
+        -0.06100391229357324,
+        -0.14852706039629282
+      ],
+      "direction": [
+        -0.6334152088593573,
+        -0.5152321155172221,
+        0.4394011608337586,
+        0.374496542284772
+      ],
+      "coefficients": [
+        -0.8134192364042582,
+        0.6937016268128835,
+        0.5912338968923064
+      ],
+      "minimum_width": 1.2757665307333683,
+      "stationary": true,
+      "spectral_radius": 0.8426053536319844,
+      "evaluated_states": 996,
+      "termination_reason": "patience",
+      "best_iteration": 795,
+      "coefficient_mse": 6.505405218622521e-05
+    },
+    {
+      "replication": 34,
+      "attempt": 8,
+      "initial_direction": [
+        -0.21869279284690743,
+        0.6245673855219603,
+        0.7468562109899249,
+        -0.06553505477876145
+      ],
+      "direction": [
+        -0.06480673373183961,
+        0.6153548154861411,
+        0.7743773058744948,
+        0.13220562192125812
+      ],
+      "coefficients": [
+        9.495229585746221,
+        11.949025375646151,
+        2.039998227164246
+      ],
+      "minimum_width": 3.1272763520870916,
+      "stationary": false,
+      "spectral_radius": 10.636643681631753,
+      "evaluated_states": 302,
+      "termination_reason": "patience",
+      "best_iteration": 101,
+      "coefficient_mse": 78.37121834026358
+    },
+    {
+      "replication": 34,
+      "attempt": 9,
+      "initial_direction": [
+        0.572053922145471,
+        0.6520372427653255,
+        0.008084595578957276,
+        0.49753028402228977
+      ],
+      "direction": [
+        0.6333702910540923,
+        0.5148386603372078,
+        -0.43983919418615286,
+        -0.3745994013475185
+      ],
+      "coefficients": [
+        -0.8128557142779509,
+        0.6944424144904973,
+        0.5914382260084983
+      ],
+      "minimum_width": 1.2750514387154621,
+      "stationary": true,
+      "spectral_radius": 0.8430430799917371,
+      "evaluated_states": 1002,
+      "termination_reason": "patience",
+      "best_iteration": 801,
+      "coefficient_mse": 6.798895148416198e-05
+    },
+    {
+      "replication": 34,
+      "attempt": 10,
+      "initial_direction": [
+        0.9399508367911915,
+        -0.2698797428155956,
+        -0.13572486142795268,
+        0.15885877635085163
+      ],
+      "direction": [
+        0.6373618103131489,
+        0.5144451104240441,
+        -0.4388032225127433,
+        -0.36955092075053825
+      ],
+      "coefficients": [
+        -0.8071476861333858,
+        0.688468018341341,
+        0.5798134038953013
+      ],
+      "minimum_width": 1.27301529421438,
+      "stationary": true,
+      "spectral_radius": 0.838524566841555,
+      "evaluated_states": 1892,
+      "termination_reason": "patience",
+      "best_iteration": 1691,
+      "coefficient_mse": 6.551126218548319e-07
+    },
+    {
+      "replication": 34,
+      "attempt": 11,
+      "initial_direction": [
+        -0.5567579637877775,
+        -0.6935396109745976,
+        -0.3077755903636348,
+        0.3380792270229086
+      ],
+      "direction": [
+        -0.6339502607716712,
+        -0.5152429418264963,
+        0.439369010421874,
+        0.37361296878776956
+      ],
+      "coefficients": [
+        -0.8127497908105925,
+        0.6930654305387546,
+        0.5893411390555972
+      ],
+      "minimum_width": 1.2758748432652884,
+      "stationary": true,
+      "spectral_radius": 0.8419087146483016,
+      "evaluated_states": 1051,
+      "termination_reason": "patience",
+      "best_iteration": 850,
+      "coefficient_mse": 4.718969837685112e-05
+    },
+    {
+      "replication": 34,
+      "attempt": 12,
+      "initial_direction": [
+        0.5042098656350714,
+        0.24157741683152065,
+        0.3129050566184702,
+        0.7677911100135667
+      ],
+      "direction": [
+        -0.634069893699433,
+        -0.5153849108298643,
+        0.4390542770907703,
+        0.373584134247138
+      ],
+      "coefficients": [
+        -0.8128203467016701,
+        0.6924382965561433,
+        0.5891844699761559
+      ],
+      "minimum_width": 1.2755442600763778,
+      "stationary": true,
+      "spectral_radius": 0.8416464973846589,
+      "evaluated_states": 1048,
+      "termination_reason": "patience",
+      "best_iteration": 847,
+      "coefficient_mse": 4.425383708495987e-05
+    }
+  ],
+  "path_check": {
+    "replication": 34,
+    "series_sha256": "e6db0683813438513418ad67205e5447df88093aa5c2a0db06ab8b83b3b20921",
+    "true_width_difference": 0.0
+  }
+}

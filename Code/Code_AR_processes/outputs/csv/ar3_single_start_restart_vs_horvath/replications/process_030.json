@@ -1,0 +1,139 @@
+{
+  "results": [
+    {
+      "replication": 30,
+      "method": "Single-start descent + abort at 200",
+      "status": "ok",
+      "coefficient_mse": 1.3823401678608079e-05,
+      "coefficient_l2_error": 0.006439736410430495,
+      "stationary": true,
+      "spectral_radius": 0.972377628365938,
+      "normalized_directional_width": 1.1639222275244103,
+      "maximum_absolute_residual": 0.9978519948397013,
+      "median_fit_seconds": 0.04216899999300949,
+      "series_sha256": "d8a0f3730d7c54b501d0447c0c5b93d9a727c4784c2deb50af07dfe81ed1e7bd",
+      "attempts": 1,
+      "restarts": 0,
+      "evaluated_states": 2000,
+      "initial_step": 0.006987695924085071,
+      "termination_reason": "iteration_limit",
+      "final_checkpoint_radius": 0.9787159390377282,
+      "lp_radius": NaN,
+      "lp_duality_gap": NaN,
+      "true_phi_1": -0.9005576255051173,
+      "estimated_phi_1": -0.8969640633854505,
+      "squared_error_phi_1": 1.2913688707903937e-05,
+      "true_phi_2": 0.64486710383519,
+      "estimated_phi_2": 0.6500008758012955,
+      "squared_error_phi_2": 2.6355614599971123e-05,
+      "true_phi_3": 0.841835214415277,
+      "estimated_phi_3": 0.8433187580539844,
+      "squared_error_phi_3": 2.2009017279491817e-06
+    },
+    {
+      "replication": 30,
+      "method": "Horvath L-infinity",
+      "status": "ok",
+      "coefficient_mse": 1.3672886662169324e-05,
+      "coefficient_l2_error": 0.0064045811718259895,
+      "stationary": true,
+      "spectral_radius": 0.9722761812388151,
+      "normalized_directional_width": 1.1639034324200386,
+      "maximum_absolute_residual": 0.9976675731832021,
+      "median_fit_seconds": 0.005452541998238303,
+      "series_sha256": "d8a0f3730d7c54b501d0447c0c5b93d9a727c4784c2deb50af07dfe81ed1e7bd",
+      "attempts": 1,
+      "restarts": 0,
+      "evaluated_states": NaN,
+      "initial_step": NaN,
+      "termination_reason": "optimal_lp",
+      "final_checkpoint_radius": NaN,
+      "lp_radius": 0.9976675731832008,
+      "lp_duality_gap": 1.1102230246251565e-16,
+      "true_phi_1": -0.9005576255051173,
+      "estimated_phi_1": -0.8968740000837652,
+      "squared_error_phi_1": 1.3569096244831757e-05,
+      "true_phi_2": 0.64486710383519,
+      "estimated_phi_2": 0.6499549962391991,
+      "squared_error_phi_2": 2.5886649114773362e-05,
+      "true_phi_3": 0.841835214415277,
+      "estimated_phi_3": 0.843085380255037,
+      "squared_error_phi_3": 1.5629146269028486e-06
+    }
+  ],
+  "attempts": [
+    {
+      "replication": 30,
+      "attempt": 1,
+      "aborted": false,
+      "evaluated_states": 2000,
+      "checkpoint_radius": 0.9787159390377282,
+      "final_radius": 0.972377628365938,
+      "final_stationary": true,
+      "termination_reason": "iteration_limit",
+      "minimum_width": 1.1639222275244108
+    }
+  ],
+  "timing": [
+    {
+      "replication": 30,
+      "method": "Horvath L-infinity",
+      "repeat": 1,
+      "elapsed_seconds": 0.005382791001466103
+    },
+    {
+      "replication": 30,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 1,
+      "elapsed_seconds": 0.04216899999300949
+    },
+    {
+      "replication": 30,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 2,
+      "elapsed_seconds": 0.04247287500766106
+    },
+    {
+      "replication": 30,
+      "method": "Horvath L-infinity",
+      "repeat": 2,
+      "elapsed_seconds": 0.005510874994797632
+    },
+    {
+      "replication": 30,
+      "method": "Horvath L-infinity",
+      "repeat": 3,
+      "elapsed_seconds": 0.005452541998238303
+    },
+    {
+      "replication": 30,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 3,
+      "elapsed_seconds": 0.041673375002574176
+    },
+    {
+      "replication": 30,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 4,
+      "elapsed_seconds": 0.04193895900971256
+    },
+    {
+      "replication": 30,
+      "method": "Horvath L-infinity",
+      "repeat": 4,
+      "elapsed_seconds": 0.0055327089939964935
+    },
+    {
+      "replication": 30,
+      "method": "Horvath L-infinity",
+      "repeat": 5,
+      "elapsed_seconds": 0.0051922909915447235
+    },
+    {
+      "replication": 30,
+      "method": "Single-start descent + abort at 200",
+      "repeat": 5,
+      "elapsed_seconds": 0.0421714159892872
+    }
+  ]
+}

@@ -70,7 +70,8 @@ class ScheduleTuningTests(unittest.TestCase):
 
     def test_notebook_bottom_runs_and_exports_a_small_search(self):
         notebook = json.loads((
-            Path(__file__).resolve().parents[1] / "ar_single_process_coefficient_estimation.ipynb"
+            Path(__file__).resolve().parents[1] / "xx_notebooks_tuning"
+            / "ar_single_process_coefficient_estimation.ipynb"
         ).read_text())
         sources = {cell["id"]: "".join(cell["source"])
                    for cell in notebook["cells"] if cell["cell_type"] == "code"}

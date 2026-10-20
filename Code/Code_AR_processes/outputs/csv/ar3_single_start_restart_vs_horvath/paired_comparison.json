@@ -1,0 +1,10 @@
+{
+  "descent_better": 6,
+  "horvath_better": 44,
+  "tied": 0,
+  "descent_attempts": 98,
+  "descent_aborts": 48,
+  "processes_with_restart": 14,
+  "maximum_attempts": 11,
+  "safety_limit_reached": false
+}
