@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from output.analysis.ar3_conditional_restarts_2000_200.run_experiment import (
-    AR_DIR, OUT, NAME, FIXED, CONDITIONAL,
+    AR_DIR, OUT, NAME, FIXED, CONDITIONAL, replication_path,
 )
 from Code.Code_AR_processes.ar_tools.functions import sliding_window_point_cloud
 from Code.Code_AR_processes.ar_tools.coefficient_recovery_inputs import load_process
@@ -34,7 +34,7 @@ def validate():
     max_width_error = 0.0
     total_states = {FIXED: 0, CONDITIONAL: 0}
     for replication in range(1, 51):
-        record = json.loads((OUT / "replications" / f"process_{replication:03d}.json").read_text())
+        record = json.loads(replication_path(replication).read_text())
         attempts = record["attempts"]
         assert len(attempts) == 12
         series, _, _ = load_process(replication)

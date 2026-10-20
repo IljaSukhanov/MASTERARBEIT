@@ -23,6 +23,9 @@ if str(ROOT) not in sys.path:
 from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empirical_width
 from Code.Code_AR_processes.ar_tools.functions import is_stationary, sliding_window_point_cloud
 from Code.Code_AR_processes.ar_tools.coefficient_recovery_inputs import INPUT_DATA, load_process
+from output.analysis.ar3_conditional_restarts_2000_200.run_experiment import (
+    replication_path as source_replication_path,
+)
 
 AR_DIR = ROOT / "Code/Code_AR_processes"
 NAME = "ar3_early_abort_200_12starts"
@@ -123,7 +126,7 @@ def candidate(run, start, true_phi):
 
 
 def fit_process(replication):
-    source = json.loads((SOURCE / "replications" / f"process_{replication:03d}.json").read_text())
+    source = json.loads(source_replication_path(replication).read_text())
     true_phi = np.array([source["results"][0][f"true_phi_{j}"] for j in range(1,4)])
     series, input_phi, _ = load_process(replication)
     np.testing.assert_array_equal(true_phi, input_phi)
@@ -209,7 +212,7 @@ def main():
         input_data=str(INPUT_DATA), input_data_sha256=digest(INPUT_DATA),
         source_configuration=str(SOURCE/"configuration.json"),
         source_configuration_sha256=digest(SOURCE/"configuration.json"),
-        source_replication_sha256={str(i):digest(SOURCE/"replications"/f"process_{i:03d}.json") for i in range(1,51)},
+        source_replication_sha256={str(i):digest(source_replication_path(i)) for i in range(1,51)},
         optimizer_sha256=digest(AR_DIR/"ar_tools/descent.py"),
         checkpoint_direction="Best-width incumbent after exactly 200 evaluated states",
         abort_condition="Undefined coefficients or companion spectral radius >= 1",

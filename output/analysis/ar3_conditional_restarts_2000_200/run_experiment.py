@@ -43,6 +43,12 @@ PATIENCE = 200
 MAX_ATTEMPTS = 12
 
 
+def replication_path(replication):
+    """Resolve the renamed process-16 cache after Overleaf rejected its old path."""
+    filename = "replication_016.json" if replication == 16 else f"process_{replication:03d}.json"
+    return OUT / "replications" / filename
+
+
 def choose_terminal_results(attempts):
     """Selection uses only the final best-width result of each completed attempt."""
     fixed = min(attempts, key=lambda a: a["minimum_width"])
@@ -172,7 +178,7 @@ def main():
     started = perf_counter()
     with threadpool_limits(limits=1):
         for replication in range(1, 51):
-            cache = OUT / "replications" / f"process_{replication:03d}.json"
+            cache = replication_path(replication)
             if cache.exists():
                 record = json.loads(cache.read_text())
             else:
