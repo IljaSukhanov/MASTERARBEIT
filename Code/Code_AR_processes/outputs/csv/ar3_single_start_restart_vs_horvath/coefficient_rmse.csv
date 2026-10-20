@@ -1,7 +1,0 @@
-method,coefficient,rmse
-Single-start descent + abort at 200,phi_1,0.1418973558433189
-Single-start descent + abort at 200,phi_2,0.2313510283400704
-Single-start descent + abort at 200,phi_3,0.11531889700968317
-Horvath L-infinity,phi_1,0.002682808621622131
-Horvath L-infinity,phi_2,0.003028984230412901
-Horvath L-infinity,phi_3,0.002168271144724329

@@ -1,8 +1,0 @@
-variant,method,correct,under,over,total
-Independent rerun,First difference,7,40,3,50
-Independent rerun,Second difference,11,36,3,50
-Original saved,First difference,9,41,0,50
-Original saved,Second difference,15,35,0,50
-Padded warm start,First difference,9,41,0,50
-Padded warm start,Second difference,15,35,0,50
-Padded warm start,Descent chain,19,6,25,50

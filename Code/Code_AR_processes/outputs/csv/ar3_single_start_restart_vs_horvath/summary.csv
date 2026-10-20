@@ -1,3 +1,0 @@
-method,processes,stationary_estimates,mean_coefficient_mse,median_coefficient_mse,maximum_coefficient_mse,mse_above_1,mean_attempts,maximum_attempts,total_restarts,mean_evaluated_states,mean_fit_ms,median_fit_ms
-Single-start descent + abort at 200,50,49,0.02898553530562116,3.4146205841567066e-05,0.7020856093035213,0,1.96,11,48,1220.36,28.472600020759273,25.46106250520097
-Horvath L-infinity,50,50,7.024535775128638e-06,1.6910351324027199e-06,9.611694216154103e-05,0,1.0,1,0,,5.962015839468222,5.899145995499566

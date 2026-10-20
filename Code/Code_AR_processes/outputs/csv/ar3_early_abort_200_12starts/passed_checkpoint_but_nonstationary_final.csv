@@ -1,2 +1,0 @@
-replication,start,aborted,checkpoint_best_rho,checkpoint_best_width,baseline_final_rho,baseline_final_stationary,baseline_final_mse,would_recover_stationarity,baseline_evaluations,policy_evaluations,saved_evaluations,baseline_winning_start,policy_winning_start
-43,2,False,0.9316812604659468,1.856665756779476,1.0082980892621507,False,0.0004793498267944,False,494,494,0,False,True

@@ -1,3 +1,0 @@
-method,processes,stationary_estimates,failed_no_survivor,mean_coefficient_mse,median_coefficient_mse,maximum_coefficient_mse,mse_above_1,total_attempts,total_aborted,total_evaluated_states
-"12 starts, no early abort",50,46,0,218.2957255815649,1.52543372205611e-05,7680.8802434918225,4,600,0,600005
-"12 starts, stationarity abort at 200",50,49,0,0.006609701229797486,1.52543372205611e-05,0.269066213521302,0,600,179,432283
