@@ -13,7 +13,7 @@ from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empiri
 class DescentDiagnosticsTests(unittest.TestCase):
     def test_notebook_descent_cell_refreshes_a_stale_function_binding(self):
         notebook_path = (
-            Path(__file__).resolve().parents[1]
+            Path(__file__).resolve().parents[1] / "xx_notebooks_tuning"
             / "ar_single_process_coefficient_estimation.ipynb"
         )
         notebook = json.loads(notebook_path.read_text())

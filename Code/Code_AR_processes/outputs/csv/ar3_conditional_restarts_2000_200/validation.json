@@ -1,0 +1,17 @@
+{
+  "processes": 50,
+  "terminal_candidates_checked": 600,
+  "policy_results_checked": 100,
+  "selected_widths_checked": true,
+  "coefficient_ratios_and_mses_checked": true,
+  "independent_polynomial_root_check": true,
+  "stopping_counts_checked": true,
+  "first_stationary_selection_and_cap_checked": true,
+  "complete_traces_checked": 48,
+  "max_width_error": 0.0,
+  "total_evaluated_states": {
+    "Fixed 12 starts": 600005,
+    "Stationarity-triggered starts": 78908
+  },
+  "filtering_used": false
+}
