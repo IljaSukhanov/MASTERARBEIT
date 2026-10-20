@@ -1,0 +1,28 @@
+{
+  "tests_run": 65,
+  "passed": 64,
+  "failures": [
+    {
+      "test": "test_notebook_tools.NotebookToolsTests.test_notebooks_have_no_local_function_definitions (notebook='ar3_failed_coefficient_tracking.ipynb', cell=2)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/tests/test_notebook_tools.py\", line 40, in test_notebooks_have_no_local_function_definitions\n    self.assertFalse(any(\nAssertionError: True is not false\n"
+    }
+  ],
+  "errors": [],
+  "sampling_tests_passed": 17,
+  "preexisting_failure": "Notebook convention check: ar3_failed_coefficient_tracking.ipynb already defines a local save_figure in cell 2. The same failure occurred before the sampling edits.",
+  "uniform_paths_bitwise_unchanged": 24,
+  "notebooks_parsed": 19,
+  "protected_thesis_sources_unchanged": true,
+  "protected_thesis_sources_checked": 11,
+  "new_default": {
+    "alpha": 1,
+    "beta": 1,
+    "L": 2,
+    "support": [
+      -1,
+      1
+    ],
+    "mean": 0
+  },
+  "width_interpretation": "L=b-a; omitted endpoints select centered sampling, supplied endpoints select fixed support."
+}

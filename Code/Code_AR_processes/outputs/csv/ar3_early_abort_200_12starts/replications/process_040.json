@@ -1,0 +1,762 @@
+{
+  "results": [
+    {
+      "minimum_width": 1.7217869699187005,
+      "spectral_radius": 0.9285684882749389,
+      "stationary": true,
+      "coefficient_mse": 1.954866671335205e-05,
+      "termination_reason": "patience",
+      "best_iteration": 1045,
+      "replication": 40,
+      "method": "12 starts, no early abort",
+      "selected_start": 4,
+      "attempts": 12,
+      "restarts": 11,
+      "aborted_attempts": 0,
+      "completed_attempts": 12,
+      "evaluated_states": 10654,
+      "status": "ok",
+      "series_sha256": "076cecd4abc3b1f4be7bb1c7f68f9f0746e832d004c1a3d048da1e83b9252806",
+      "true_phi_1": 0.003056751723593959,
+      "estimated_phi_1": 0.007235229168526374,
+      "true_phi_2": 0.3459060531973421,
+      "estimated_phi_2": 0.35178862027286295,
+      "true_phi_3": 0.4703155321360213,
+      "estimated_phi_3": 0.46775004368657447,
+      "u_0": -0.863032305864698,
+      "u_1": 0.006244236512772839,
+      "u_2": 0.30360494413104955,
+      "u_3": 0.4036833987711376
+    },
+    {
+      "minimum_width": 1.7217869699187005,
+      "spectral_radius": 0.9285684882749389,
+      "stationary": true,
+      "coefficient_mse": 1.954866671335205e-05,
+      "termination_reason": "patience",
+      "best_iteration": 1045,
+      "replication": 40,
+      "method": "12 starts, stationarity abort at 200",
+      "selected_start": 4,
+      "attempts": 12,
+      "restarts": 11,
+      "aborted_attempts": 1,
+      "completed_attempts": 11,
+      "evaluated_states": 10007,
+      "status": "ok",
+      "series_sha256": "076cecd4abc3b1f4be7bb1c7f68f9f0746e832d004c1a3d048da1e83b9252806",
+      "true_phi_1": 0.003056751723593959,
+      "estimated_phi_1": 0.007235229168526374,
+      "true_phi_2": 0.3459060531973421,
+      "estimated_phi_2": 0.35178862027286295,
+      "true_phi_3": 0.4703155321360213,
+      "estimated_phi_3": 0.46775004368657447,
+      "u_0": -0.863032305864698,
+      "u_1": 0.006244236512772839,
+      "u_2": 0.30360494413104955,
+      "u_3": 0.4036833987711376
+    }
+  ],
+  "events": [
+    {
+      "replication": 40,
+      "start": 1,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9546929691659215,
+      "checkpoint_best_width": 1.8168081585342089,
+      "baseline_final_rho": 0.9285340676013437,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 1.9330341558880662e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 1086,
+      "policy_evaluations": 1086,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 2,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9051430673857657,
+      "checkpoint_best_width": 1.8066491760998515,
+      "baseline_final_rho": 0.928523733910057,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 1.896713523850901e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 1093,
+      "policy_evaluations": 1093,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 3,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9492397704521057,
+      "checkpoint_best_width": 1.7933081236854613,
+      "baseline_final_rho": 0.9255599467953369,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 7.330309888375203e-06,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 491,
+      "policy_evaluations": 491,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 4,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9508920075741647,
+      "checkpoint_best_width": 1.8022458458540553,
+      "baseline_final_rho": 0.9285684882749389,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 1.954866671335205e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 1246,
+      "policy_evaluations": 1246,
+      "saved_evaluations": 0,
+      "baseline_winning_start": true,
+      "policy_winning_start": true
+    },
+    {
+      "replication": 40,
+      "start": 5,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9512060007016073,
+      "checkpoint_best_width": 1.8075040744858675,
+      "baseline_final_rho": 0.9273538292418714,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 4.843286722034934e-06,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 646,
+      "policy_evaluations": 646,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 6,
+      "aborted": true,
+      "checkpoint_best_rho": 15.24691853020762,
+      "checkpoint_best_width": 3.288945600939188,
+      "baseline_final_rho": 14.728376686486826,
+      "baseline_final_stationary": false,
+      "baseline_final_mse": 521.9330292326915,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 847,
+      "policy_evaluations": 200,
+      "saved_evaluations": 647,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 7,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9469087179084703,
+      "checkpoint_best_width": 1.7806794562480817,
+      "baseline_final_rho": 0.9286553267701971,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 2.0448210508243003e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 809,
+      "policy_evaluations": 809,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 8,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9453710064698181,
+      "checkpoint_best_width": 1.7772774482863163,
+      "baseline_final_rho": 0.9263067510049048,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 1.1733665218282147e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 485,
+      "policy_evaluations": 485,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 9,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9486663109269391,
+      "checkpoint_best_width": 1.7932657991021101,
+      "baseline_final_rho": 0.9284735792711181,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 1.9051231141735947e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 1131,
+      "policy_evaluations": 1131,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 10,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9472292864740326,
+      "checkpoint_best_width": 1.7849454997854464,
+      "baseline_final_rho": 0.9260949707976813,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 3.168569300957277e-06,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 573,
+      "policy_evaluations": 573,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 11,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9050973660771818,
+      "checkpoint_best_width": 1.8182717046618402,
+      "baseline_final_rho": 0.9285240377964361,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 1.8691392467307484e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 1092,
+      "policy_evaluations": 1092,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    },
+    {
+      "replication": 40,
+      "start": 12,
+      "aborted": false,
+      "checkpoint_best_rho": 0.9552722756323144,
+      "checkpoint_best_width": 1.8197602075351584,
+      "baseline_final_rho": 0.9286077942195138,
+      "baseline_final_stationary": true,
+      "baseline_final_mse": 2.0034403770436416e-05,
+      "would_recover_stationarity": false,
+      "baseline_evaluations": 1155,
+      "policy_evaluations": 1155,
+      "saved_evaluations": 0,
+      "baseline_winning_start": false,
+      "policy_winning_start": false
+    }
+  ],
+  "baseline_candidates": [
+    {
+      "start": 1,
+      "direction": [
+        -0.8630156990775831,
+        0.006098154689402673,
+        0.30365556018609485,
+        0.40368306432532375
+      ],
+      "coefficients": [
+        0.007066099372144171,
+        0.3518540398635285,
+        0.4677586569477151
+      ],
+      "minimum_width": 1.7217927518173823,
+      "spectral_radius": 0.9285340676013437,
+      "stationary": true,
+      "coefficient_mse": 1.9330341558880662e-05,
+      "evaluated_states": 1086,
+      "termination_reason": "patience",
+      "best_iteration": 885
+    },
+    {
+      "start": 2,
+      "direction": [
+        -0.8630197872376235,
+        0.006102427202511509,
+        0.30359083891015864,
+        0.40372293686189203
+      ],
+      "coefficients": [
+        0.007071016554607999,
+        0.3517773791512941,
+        0.46780264234049496
+      ],
+      "minimum_width": 1.721807030565374,
+      "spectral_radius": 0.928523733910057,
+      "stationary": true,
+      "coefficient_mse": 1.896713523850901e-05,
+      "evaluated_states": 1093,
+      "termination_reason": "patience",
+      "best_iteration": 892
+    },
+    {
+      "start": 3,
+      "direction": [
+        0.8642139846038207,
+        -0.004110744383353054,
+        -0.3008861433246814,
+        -0.40321807914700564
+      ],
+      "coefficients": [
+        0.004756627937741058,
+        0.34816162279833485,
+        0.46657203693811067
+      ],
+      "minimum_width": 1.7241076241247741,
+      "spectral_radius": 0.9255599467953369,
+      "stationary": true,
+      "coefficient_mse": 7.330309888375203e-06,
+      "evaluated_states": 491,
+      "termination_reason": "patience",
+      "best_iteration": 290
+    },
+    {
+      "start": 4,
+      "direction": [
+        -0.863032305864698,
+        0.006244236512772839,
+        0.30360494413104955,
+        0.4036833987711376
+      ],
+      "coefficients": [
+        0.007235229168526374,
+        0.35178862027286295,
+        0.46775004368657447
+      ],
+      "minimum_width": 1.7217869699187005,
+      "spectral_radius": 0.9285684882749389,
+      "stationary": true,
+      "coefficient_mse": 1.954866671335205e-05,
+      "evaluated_states": 1246,
+      "termination_reason": "patience",
+      "best_iteration": 1045
+    },
+    {
+      "start": 5,
+      "direction": [
+        -0.8631302076437808,
+        0.0043277254897147515,
+        0.3012931129920231,
+        0.4052283004782184
+      ],
+      "coefficients": [
+        0.005013989142529039,
+        0.3490702912768043,
+        0.46948687103007597
+      ],
+      "minimum_width": 1.722681208667149,
+      "spectral_radius": 0.9273538292418714,
+      "stationary": true,
+      "coefficient_mse": 4.843286722034934e-06,
+      "evaluated_states": 646,
+      "termination_reason": "patience",
+      "best_iteration": 445
+    },
+    {
+      "start": 6,
+      "direction": [
+        -0.025408351119752617,
+        0.43341358922924134,
+        -0.8836578297719073,
+        0.17508830985421187
+      ],
+      "coefficients": [
+        17.057918760115953,
+        -34.77824379894317,
+        6.8909749014802095
+      ],
+      "minimum_width": 3.284413100778872,
+      "spectral_radius": 14.728376686486826,
+      "stationary": false,
+      "coefficient_mse": 521.9330292326915,
+      "evaluated_states": 847,
+      "termination_reason": "patience",
+      "best_iteration": 646
+    },
+    {
+      "start": 7,
+      "direction": [
+        -0.8629925958185126,
+        0.006270580398098586,
+        0.30376086535057967,
+        0.4036505866035168
+      ],
+      "coefficients": [
+        0.007266088293783333,
+        0.35198548263612284,
+        0.46773354552442137
+      ],
+      "minimum_width": 1.721814652792942,
+      "spectral_radius": 0.9286553267701971,
+      "stationary": true,
+      "coefficient_mse": 2.0448210508243003e-05,
+      "evaluated_states": 809,
+      "termination_reason": "patience",
+      "best_iteration": 608
+    },
+    {
+      "start": 8,
+      "direction": [
+        -0.8630334001504836,
+        0.0012543622342360563,
+        0.30311653876798017,
+        0.4040942225835456
+      ],
+      "coefficients": [
+        0.0014534341707022444,
+        0.3512222571167315,
+        0.468225473675857
+      ],
+      "minimum_width": 1.723744760735836,
+      "spectral_radius": 0.9263067510049048,
+      "stationary": true,
+      "coefficient_mse": 1.1733665218282147e-05,
+      "evaluated_states": 485,
+      "termination_reason": "patience",
+      "best_iteration": 284
+    },
+    {
+      "start": 9,
+      "direction": [
+        0.8630488449040407,
+        -0.0060888846774226355,
+        -0.3035947846508119,
+        -0.40365805272038546
+      ],
+      "coefficients": [
+        0.007055086990006501,
+        0.35177010715374696,
+        0.46771171191969646
+      ],
+      "minimum_width": 1.721810703233372,
+      "spectral_radius": 0.9284735792711181,
+      "stationary": true,
+      "coefficient_mse": 1.9051231141735947e-05,
+      "evaluated_states": 1131,
+      "termination_reason": "patience",
+      "best_iteration": 930
+    },
+    {
+      "start": 10,
+      "direction": [
+        0.8636798980739432,
+        -0.0035229759913798886,
+        -0.3006425143085266,
+        -0.4045475261244275
+      ],
+      "coefficients": [
+        0.004079029741500678,
+        0.34809483812113384,
+        0.4683998400641166
+      ],
+      "minimum_width": 1.7233002768648875,
+      "spectral_radius": 0.9260949707976813,
+      "stationary": true,
+      "coefficient_mse": 3.168569300957277e-06,
+      "evaluated_states": 573,
+      "termination_reason": "patience",
+      "best_iteration": 372
+    },
+    {
+      "start": 11,
+      "direction": [
+        -0.8630152800018573,
+        0.006095870763373638,
+        0.3035506066671782,
+        0.40376292057956464
+      ],
+      "coefficients": [
+        0.007063456354284387,
+        0.35173259813722524,
+        0.4678514157694817
+      ],
+      "minimum_width": 1.7218296036299596,
+      "spectral_radius": 0.9285240377964361,
+      "stationary": true,
+      "coefficient_mse": 1.8691392467307484e-05,
+      "evaluated_states": 1092,
+      "termination_reason": "patience",
+      "best_iteration": 891
+    },
+    {
+      "start": 12,
+      "direction": [
+        -0.8630215107234154,
+        0.006282038490066463,
+        0.30367085463993,
+        0.4036563142864704
+      ],
+      "coefficients": [
+        0.00727912156534851,
+        0.35186939243887705,
+        0.46772451123276326
+      ],
+      "minimum_width": 1.7217884939269403,
+      "spectral_radius": 0.9286077942195138,
+      "stationary": true,
+      "coefficient_mse": 2.0034403770436416e-05,
+      "evaluated_states": 1155,
+      "termination_reason": "patience",
+      "best_iteration": 954
+    }
+  ],
+  "policy_candidates": [
+    {
+      "start": 1,
+      "direction": [
+        -0.8630156990775831,
+        0.006098154689402673,
+        0.30365556018609485,
+        0.40368306432532375
+      ],
+      "coefficients": [
+        0.007066099372144171,
+        0.3518540398635285,
+        0.4677586569477151
+      ],
+      "minimum_width": 1.7217927518173823,
+      "spectral_radius": 0.9285340676013437,
+      "stationary": true,
+      "coefficient_mse": 1.9330341558880662e-05,
+      "evaluated_states": 1086,
+      "termination_reason": "patience",
+      "best_iteration": 885
+    },
+    {
+      "start": 2,
+      "direction": [
+        -0.8630197872376235,
+        0.006102427202511509,
+        0.30359083891015864,
+        0.40372293686189203
+      ],
+      "coefficients": [
+        0.007071016554607999,
+        0.3517773791512941,
+        0.46780264234049496
+      ],
+      "minimum_width": 1.721807030565374,
+      "spectral_radius": 0.928523733910057,
+      "stationary": true,
+      "coefficient_mse": 1.896713523850901e-05,
+      "evaluated_states": 1093,
+      "termination_reason": "patience",
+      "best_iteration": 892
+    },
+    {
+      "start": 3,
+      "direction": [
+        0.8642139846038207,
+        -0.004110744383353054,
+        -0.3008861433246814,
+        -0.40321807914700564
+      ],
+      "coefficients": [
+        0.004756627937741058,
+        0.34816162279833485,
+        0.46657203693811067
+      ],
+      "minimum_width": 1.7241076241247741,
+      "spectral_radius": 0.9255599467953369,
+      "stationary": true,
+      "coefficient_mse": 7.330309888375203e-06,
+      "evaluated_states": 491,
+      "termination_reason": "patience",
+      "best_iteration": 290
+    },
+    {
+      "start": 4,
+      "direction": [
+        -0.863032305864698,
+        0.006244236512772839,
+        0.30360494413104955,
+        0.4036833987711376
+      ],
+      "coefficients": [
+        0.007235229168526374,
+        0.35178862027286295,
+        0.46775004368657447
+      ],
+      "minimum_width": 1.7217869699187005,
+      "spectral_radius": 0.9285684882749389,
+      "stationary": true,
+      "coefficient_mse": 1.954866671335205e-05,
+      "evaluated_states": 1246,
+      "termination_reason": "patience",
+      "best_iteration": 1045
+    },
+    {
+      "start": 5,
+      "direction": [
+        -0.8631302076437808,
+        0.0043277254897147515,
+        0.3012931129920231,
+        0.4052283004782184
+      ],
+      "coefficients": [
+        0.005013989142529039,
+        0.3490702912768043,
+        0.46948687103007597
+      ],
+      "minimum_width": 1.722681208667149,
+      "spectral_radius": 0.9273538292418714,
+      "stationary": true,
+      "coefficient_mse": 4.843286722034934e-06,
+      "evaluated_states": 646,
+      "termination_reason": "patience",
+      "best_iteration": 445
+    },
+    {
+      "start": 6,
+      "direction": [
+        -0.024240997679627854,
+        0.4268783732009854,
+        -0.8853021733045797,
+        0.18283131697541363
+      ],
+      "coefficients": [
+        17.60976915400368,
+        -36.52086374516623,
+        7.542235653488188
+      ],
+      "minimum_width": 3.288945600939188,
+      "spectral_radius": 15.24691853020762,
+      "stationary": false,
+      "coefficient_mse": 573.0556970616404,
+      "evaluated_states": 200,
+      "termination_reason": "stationarity_abort",
+      "best_iteration": 146
+    },
+    {
+      "start": 7,
+      "direction": [
+        -0.8629925958185126,
+        0.006270580398098586,
+        0.30376086535057967,
+        0.4036505866035168
+      ],
+      "coefficients": [
+        0.007266088293783333,
+        0.35198548263612284,
+        0.46773354552442137
+      ],
+      "minimum_width": 1.721814652792942,
+      "spectral_radius": 0.9286553267701971,
+      "stationary": true,
+      "coefficient_mse": 2.0448210508243003e-05,
+      "evaluated_states": 809,
+      "termination_reason": "patience",
+      "best_iteration": 608
+    },
+    {
+      "start": 8,
+      "direction": [
+        -0.8630334001504836,
+        0.0012543622342360563,
+        0.30311653876798017,
+        0.4040942225835456
+      ],
+      "coefficients": [
+        0.0014534341707022444,
+        0.3512222571167315,
+        0.468225473675857
+      ],
+      "minimum_width": 1.723744760735836,
+      "spectral_radius": 0.9263067510049048,
+      "stationary": true,
+      "coefficient_mse": 1.1733665218282147e-05,
+      "evaluated_states": 485,
+      "termination_reason": "patience",
+      "best_iteration": 284
+    },
+    {
+      "start": 9,
+      "direction": [
+        0.8630488449040407,
+        -0.0060888846774226355,
+        -0.3035947846508119,
+        -0.40365805272038546
+      ],
+      "coefficients": [
+        0.007055086990006501,
+        0.35177010715374696,
+        0.46771171191969646
+      ],
+      "minimum_width": 1.721810703233372,
+      "spectral_radius": 0.9284735792711181,
+      "stationary": true,
+      "coefficient_mse": 1.9051231141735947e-05,
+      "evaluated_states": 1131,
+      "termination_reason": "patience",
+      "best_iteration": 930
+    },
+    {
+      "start": 10,
+      "direction": [
+        0.8636798980739432,
+        -0.0035229759913798886,
+        -0.3006425143085266,
+        -0.4045475261244275
+      ],
+      "coefficients": [
+        0.004079029741500678,
+        0.34809483812113384,
+        0.4683998400641166
+      ],
+      "minimum_width": 1.7233002768648875,
+      "spectral_radius": 0.9260949707976813,
+      "stationary": true,
+      "coefficient_mse": 3.168569300957277e-06,
+      "evaluated_states": 573,
+      "termination_reason": "patience",
+      "best_iteration": 372
+    },
+    {
+      "start": 11,
+      "direction": [
+        -0.8630152800018573,
+        0.006095870763373638,
+        0.3035506066671782,
+        0.40376292057956464
+      ],
+      "coefficients": [
+        0.007063456354284387,
+        0.35173259813722524,
+        0.4678514157694817
+      ],
+      "minimum_width": 1.7218296036299596,
+      "spectral_radius": 0.9285240377964361,
+      "stationary": true,
+      "coefficient_mse": 1.8691392467307484e-05,
+      "evaluated_states": 1092,
+      "termination_reason": "patience",
+      "best_iteration": 891
+    },
+    {
+      "start": 12,
+      "direction": [
+        -0.8630215107234154,
+        0.006282038490066463,
+        0.30367085463993,
+        0.4036563142864704
+      ],
+      "coefficients": [
+        0.00727912156534851,
+        0.35186939243887705,
+        0.46772451123276326
+      ],
+      "minimum_width": 1.7217884939269403,
+      "spectral_radius": 0.9286077942195138,
+      "stationary": true,
+      "coefficient_mse": 2.0034403770436416e-05,
+      "evaluated_states": 1155,
+      "termination_reason": "patience",
+      "best_iteration": 954
+    }
+  ]
+}

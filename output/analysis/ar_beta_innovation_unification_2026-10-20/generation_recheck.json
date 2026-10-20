@@ -1,0 +1,273 @@
+{
+  "python_and_notebook_files_scanned": 119,
+  "parse_errors": [],
+  "ar_notebooks_scanned": 19,
+  "production_sampler_and_simulator_calls": {
+    "sample_beta_innovations": 2,
+    "simulate_beta_ar": 2,
+    "simulate_uniform_ar": 29
+  },
+  "generation_call_sites": [
+    {
+      "file": "Code/Code_AR_processes/ar1_sliding_window_embedding.ipynb",
+      "section": "cell 4",
+      "line": 16,
+      "call": "sample_beta_innovations",
+      "expression": "sample_beta_innovations(size=total_steps, a=-innovation_radius, b=innovation_radius, rng=rng)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar3_coefficient_tracker.ipynb",
+      "section": "cell 4",
+      "line": 10,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(TRUE_PHI, T, burnin=BURNIN, rng=PROCESS_SEED)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar3_failed_coefficient_tracking.ipynb",
+      "section": "cell 4",
+      "line": 6,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(TRUE_PHI, T, burnin=BURNIN, rng=PROCESS_SEED)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar3_minimum_width_k4.ipynb",
+      "section": "cell 3",
+      "line": 9,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, sample_size=sample_size, burnin=burnin, half_width=1.0, rng=process_seed)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar3_minimum_width_k4.ipynb",
+      "section": "cell 6",
+      "line": 13,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(true_phi, sample_size=sample_size, burnin=burnin, half_width=1.0, rng=process_generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar3_minimum_width_k4.ipynb",
+      "section": "cell 12",
+      "line": 25,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(true_phi, sample_size=comparison_config['sample_size'], burnin=comparison_config['burnin'], half_width=comparison_config['innovation_half_width'], rng=innovation_rng)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar3_minimum_width_vs_T.ipynb",
+      "section": "cell 4",
+      "line": 31,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, sample_size=int(T_values[-1]), burnin=burnin, half_width=innovations_half_width, rng=process_seed)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_beta_sliding_window_2d.ipynb",
+      "section": "cell 6",
+      "line": 39,
+      "call": "simulate_beta_ar",
+      "expression": "simulate_beta_ar(phi, sample_size=sample_size, burnin=burnin, innovation_bounds=innovation_bounds, L=innovation_width, alpha=alpha, beta=beta, rng=process_seed)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_thesis_figures_2_1_to_2_3.ipynb",
+      "section": "cell 4",
+      "line": 11,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(single_ar1_phi, single_ar1_T, single_ar1_burnin, 1.0, rng=single_ar1_generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_thesis_figures_2_1_to_2_3.ipynb",
+      "section": "cell 6",
+      "line": 10,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(single_ar2_phi, single_ar2_T, single_ar2_burnin, 1.0, rng=single_ar2_generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_thesis_figures_2_1_to_2_3.ipynb",
+      "section": "cell 8",
+      "line": 10,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(single_ar3_phi, single_ar3_T, single_ar3_burnin, 1.0, rng=single_ar3_generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_tools/experiments.py",
+      "section": "module",
+      "line": 160,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, sample_size=int(T_values[-1]), burnin=burnin, half_width=innovations_half_width, rng=np.random.default_rng(np.random.SeedSequence([process_seed, phase_index, int(replication)])))"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_tools/experiments.py",
+      "section": "module",
+      "line": 525,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(true_phi, sample_size=max(CONFIG['sample_sizes']), burnin=CONFIG['burnin'], half_width=1.0, rng=generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_tools/experiments.py",
+      "section": "module",
+      "line": 66,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(true_phi, sample_size=max(configuration['T_values']), burnin=configuration['burnin'], half_width=configuration['half_width'], rng=process_generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_tools/experiments.py",
+      "section": "module",
+      "line": 686,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, configuration['sample_size'], configuration['burnin'], configuration['half_width'], rng=generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_tools/functions.py",
+      "section": "module",
+      "line": 118,
+      "call": "sample_beta_innovations",
+      "expression": "sample_beta_innovations(total_length, alpha=alpha, beta=beta, a=innovation_lower, b=innovation_upper, rng=generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/ar_tools/functions.py",
+      "section": "module",
+      "line": 151,
+      "call": "simulate_beta_ar",
+      "expression": "simulate_beta_ar(phi=phi, sample_size=sample_size, burnin=burnin, innovation_bounds=(-half_width, half_width), alpha=1.0, beta=1.0, rng=rng, intercept=intercept)"
+    },
+    {
+      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_bic_order_selection.ipynb",
+      "section": "cell 4",
+      "line": 16,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi_replication, sample_size=bic_all_order_sample_size, burnin=bic_all_order_burnin, half_width=1.0, rng=process_generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_order_minimum_width.ipynb",
+      "section": "cell 4",
+      "line": 71,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(coefficients, sample_size=settings['sample_size'], burnin=settings['burnin'], half_width=settings['half_width'], rng=generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_order_minimum_width.ipynb",
+      "section": "cell 5",
+      "line": 17,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(coefficients, sample_size=settings['sample_size'], burnin=settings['burnin'], half_width=settings['half_width'], rng=generator)"
+    },
+    {
+      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_unshifted_residual_width_ratio.ipynb",
+      "section": "cell 4",
+      "line": 9,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(coefficients, sample_size=SAMPLE_SIZE, burnin=1000, half_width=KNOWN_INNOVATION_WIDTH / 2, rng=process_rng)"
+    },
+    {
+      "file": "Code/Code_AR_processes/xx_notebooks_tuning/ar3_single_path_geometric_descent.ipynb",
+      "section": "cell 6",
+      "line": 1,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi=phi, sample_size=T, burnin=burnin, half_width=1.0, rng=process_seed)"
+    },
+    {
+      "file": "Code/Code_AR_processes/xx_notebooks_tuning/ar_projected_subgradient_eta0_beta_tuning.ipynb",
+      "section": "cell 4",
+      "line": 4,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(schedule_comparison_phi, sample_size=1000, burnin=500, half_width=1.0, rng=20260806)"
+    },
+    {
+      "file": "Code/Code_AR_processes/xx_notebooks_tuning/ar_single_process_coefficient_estimation.ipynb",
+      "section": "cell 6",
+      "line": 6,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(true_phi, sample_size=sample_size, burnin=burnin, half_width=innovation_half_width, rng=process_seed)"
+    },
+    {
+      "file": "output/analysis/ar3_conditional_restarts_2000_200/run_experiment.py",
+      "section": "module",
+      "line": 61,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(true_phi, settings['sample_size'], burnin=settings['burnin'], half_width=1.0, rng=rng)"
+    },
+    {
+      "file": "output/analysis/ar3_stationarity_restarts/run_analysis.py",
+      "section": "module",
+      "line": 94,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(TRUE_PHI, 1000, burnin=1000, rng=20261018)"
+    },
+    {
+      "file": "output/analysis/ar_order_without_penalties/audit_initialization.py",
+      "section": "module",
+      "line": 68,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, 2000, 1000, 1.0, rng=rng)"
+    },
+    {
+      "file": "output/analysis/ar_order_without_penalties/diagnose.py",
+      "section": "module",
+      "line": 50,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, settings['sample_size'], settings['burnin'], 1.0, rng=rng)"
+    },
+    {
+      "file": "output/analysis/ar_order_without_penalties/diagnose.py",
+      "section": "module",
+      "line": 114,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, 2000, 1000, 1.0, rng=rng)"
+    },
+    {
+      "file": "output/analysis/ar_order_without_penalties/estimate_support_plugin.py",
+      "section": "module",
+      "line": 63,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, 2000, 1000, 1.0, rng=rng)"
+    },
+    {
+      "file": "output/analysis/ar_order_without_penalties/validate_feasibility.py",
+      "section": "module",
+      "line": 20,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, 2000, 1000, 1.0, rng=rng)"
+    },
+    {
+      "file": "output/analysis/width_harmonics/build_example.py",
+      "section": "module",
+      "line": 52,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar([phi], T, burnin=1000, rng=seed)"
+    },
+    {
+      "file": "output/research/minimum_width_high_dimension_benchmark.py",
+      "section": "module",
+      "line": 35,
+      "call": "simulate_uniform_ar",
+      "expression": "simulate_uniform_ar(phi, sample_size=2000, burnin=1000, half_width=1.0, rng=np.random.default_rng(np.random.SeedSequence([seed, order, rep0, 1])))"
+    }
+  ],
+  "runtime_routing_checks": [
+    {
+      "entry_point": "simulate_beta_ar",
+      "sampler_calls": 1,
+      "arguments": {
+        "alpha": 2,
+        "beta": 5,
+        "a": -0.5714285714285715,
+        "b": 1.4285714285714286
+      }
+    },
+    {
+      "entry_point": "simulate_uniform_ar",
+      "sampler_calls": 1,
+      "arguments": {
+        "alpha": 1.0,
+        "beta": 1.0,
+        "a": -1.5,
+        "b": 1.5
+      }
+    }
+  ],
+  "production_innovation_bypasses_found": [],
+  "qualifications": [
+    "Some restart studies load saved AR paths through coefficient_recovery_inputs.load_process instead of sampling a new process.",
+    "jones_ar_coefficients samples partial autocorrelations with Generator.beta; those are AR coefficient draws, not innovations.",
+    "Gaussian draws in AR optimization code generate search directions, not process innovations.",
+    "Tests include independent reference draws and a uniform white-noise fixture for LP geometry; these are not experiment generators.",
+    "simulate_uniform_ar explicitly passes alpha=beta=1; existing uniform experiments stay uniform even though they share the general sampler."
+  ]
+}

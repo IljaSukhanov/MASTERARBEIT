@@ -1,0 +1,14 @@
+{
+  "processes": 50,
+  "estimates_checked": 100,
+  "actual_descent_attempts_checked": 98,
+  "no_extra_draw_without_abort": true,
+  "first_nonaborted_result_returned": true,
+  "stationarity_roots_independently_checked": true,
+  "all_50_lps_independently_solved_on_full_data": true,
+  "maximum_lp_objective_difference": 2.0816681711721685e-13,
+  "maximum_selected_width_error": 0.0,
+  "all_timing_medians_checked": true,
+  "timing_samples_checked": 500,
+  "no_processes_dropped": true
+}

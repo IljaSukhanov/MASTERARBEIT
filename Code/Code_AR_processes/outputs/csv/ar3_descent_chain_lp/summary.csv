@@ -1,7 +1,0 @@
-cap,transform,correct,under,over,total
-5,identity,42,8,0,50
-5,log,46,4,0,50
-8,identity,39,11,0,50
-8,log,41,9,0,50
-10,identity,36,13,1,50
-10,log,40,9,1,50
