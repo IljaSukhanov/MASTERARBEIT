@@ -21,11 +21,16 @@ from Code.Code_AR_processes.ar_tools.experiments import run_phase, run_rmse_repl
 
 
 AR_DIR = Path(__file__).resolve().parents[1]
+NOTEBOOK_PATHS = sorted([
+    *AR_DIR.glob("*.ipynb"),
+    *(AR_DIR / "xx_notebooks_tuning").glob("*.ipynb"),
+    *(AR_DIR / "xx_notebooks_order_selection").glob("*.ipynb"),
+])
 
 
 class NotebookToolsTests(unittest.TestCase):
     def test_notebooks_have_no_local_function_definitions(self):
-        for path in AR_DIR.glob("*.ipynb"):
+        for path in NOTEBOOK_PATHS:
             notebook = json.loads(path.read_text())
             for index, cell in enumerate(notebook["cells"], start=1):
                 if cell["cell_type"] != "code":
@@ -38,7 +43,7 @@ class NotebookToolsTests(unittest.TestCase):
                     ))
 
     def test_notebook_calls_match_shared_function_signatures(self):
-        for path in AR_DIR.glob("*.ipynb"):
+        for path in NOTEBOOK_PATHS:
             notebook = json.loads(path.read_text())
             trees = [ast.parse("".join(cell["source"]))
                      for cell in notebook["cells"] if cell["cell_type"] == "code"]

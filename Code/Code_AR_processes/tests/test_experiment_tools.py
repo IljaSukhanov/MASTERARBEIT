@@ -19,6 +19,11 @@ from Code.Code_AR_processes.ar_tools.experiments import (
 
 
 AR_DIR = Path(__file__).resolve().parents[1]
+NOTEBOOK_PATHS = sorted([
+    *AR_DIR.glob("*.ipynb"),
+    *(AR_DIR / "xx_notebooks_tuning").glob("*.ipynb"),
+    *(AR_DIR / "xx_notebooks_order_selection").glob("*.ipynb"),
+])
 
 
 class ExperimentToolsTests(unittest.TestCase):
@@ -31,7 +36,7 @@ class ExperimentToolsTests(unittest.TestCase):
             "run_ar3_population_selector_experiment", "run_ar3_lp_descent_experiment",
         }
         called = set()
-        for path in AR_DIR.glob("*.ipynb"):
+        for path in NOTEBOOK_PATHS:
             notebook = json.loads(path.read_text())
             trees = [ast.parse("".join(cell["source"]))
                      for cell in notebook["cells"] if cell["cell_type"] == "code"]
@@ -58,10 +63,11 @@ class ExperimentToolsTests(unittest.TestCase):
             "ar3_descent_chain_lp",
             "ar3_order_selection_warm_starts", "ar3_population_breakpoint_selectors",
         ]
-        for directory in (AR_DIR, AR_DIR.parents[1]):
+        order_directory = AR_DIR / "xx_notebooks_order_selection"
+        for directory in (AR_DIR, AR_DIR.parents[1], order_directory):
             for name in notebook_names:
                 with self.subTest(notebook=name, directory=directory), contextlib.chdir(directory):
-                    notebook = json.loads((AR_DIR / f"{name}.ipynb").read_text())
+                    notebook = json.loads((order_directory / f"{name}.ipynb").read_text())
                     setup = next(cell for cell in notebook["cells"] if cell["cell_type"] == "code")
                     namespace = {"__name__": "__notebook_setup__"}
                     exec(compile("".join(setup["source"]), name, "exec"), namespace)

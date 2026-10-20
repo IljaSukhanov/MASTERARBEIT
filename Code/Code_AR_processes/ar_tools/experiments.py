@@ -751,13 +751,16 @@ def run_ar3_warm_start_experiment(*, ar_directory=AR_DIRECTORY, data_directory=N
         "runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
     }, indent=2) + "\n")
 
-    # Reproduce the saved derivative selections to verify signs and order indexing.
-    old_derivatives = pd.read_csv(AR_DIR / "outputs/csv/ar3_implied_support_width/derivative_selector_results.csv")
-    for label, column in [("First difference", "first_difference_order"),
-                          ("Second difference", "second_difference_order")]:
+    # Verify signs and order indexing directly from the retained source curves.
+    historical_orders = {"First difference": {}, "Second difference": {}}
+    for replication, group in original.groupby("replication"):
+        m = group.sort_values("k").minimum_width.to_numpy()
+        historical_orders["First difference"][replication] = int(np.argmax((m[:-1] - m[1:])[:-1]) + 1)
+        historical_orders["Second difference"][replication] = int(np.argmax(np.diff(m, n=2)) + 1)
+    for label, orders in historical_orders.items():
         actual = selections[(selections.variant == VARIANTS[0]) & (selections.method == label)]
         actual = actual.set_index("replication").selected_order.sort_index()
-        expected = old_derivatives.set_index("replication")[column].sort_index()
+        expected = pd.Series(orders).sort_index()
         assert np.array_equal(actual, expected)
     # Keep importing the plotting helpers from changing the caller's style.
     import matplotlib

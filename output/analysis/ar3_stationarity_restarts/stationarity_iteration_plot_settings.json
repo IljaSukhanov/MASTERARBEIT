@@ -1,0 +1,42 @@
+{
+  "source": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar3_failed_coefficient_tracking/iteration_history.csv",
+  "measure": "spectral radius of companion matrix of the best-width coefficient estimate",
+  "true_phi": [
+    0.5,
+    -0.2,
+    0.1
+  ],
+  "true_spectral_radius": 0.5000000000000011,
+  "true_companion_eigenvalues": [
+    {
+      "real": 0.5000000000000011,
+      "imag": 0.0
+    },
+    {
+      "real": -2.0843514089755593e-17,
+      "imag": 0.44721359549995787
+    },
+    {
+      "real": -2.0843514089755593e-17,
+      "imag": -0.44721359549995787
+    }
+  ],
+  "failed_initial_direction": [
+    0.04690430049805569,
+    -0.8115615349421885,
+    0.31282302194507183,
+    0.4912327539346498
+  ],
+  "working_initial_direction": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "failed_final_rho": 26.979116095632083,
+  "working_final_rho": 0.5025182341046838,
+  "iterations": 5000,
+  "restart_applied": false,
+  "measure_axis": "symlog, linear threshold 1, zero included without clipping",
+  "validation": "failed rho matches saved audit; true rho=0.5; both runs aligned and finite"
+}
