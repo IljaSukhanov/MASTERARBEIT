@@ -1,0 +1,14 @@
+{
+  "processes": 50,
+  "policy_results_checked": 100,
+  "attempts_per_policy_checked": 600,
+  "all_600_prefixes_match_public_optimizer": true,
+  "checkpoint_roots_independently_checked": true,
+  "all_1200_candidate_widths_and_coefficients_checked": true,
+  "all_1200_trace_stopping_counts_checked": true,
+  "all_final_selections_and_iteration_costs_checked": true,
+  "maximum_candidate_width_error": 0.0,
+  "baseline_evaluations": 600005,
+  "policy_evaluations": 432283,
+  "aborted_runs_that_would_recover": 47
+}
