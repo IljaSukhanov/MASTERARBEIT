@@ -502,7 +502,7 @@ In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is 
 
 \subsection{Elbow point selection}\label{sec:elbow_point_selection}
 
-\todo[inline]{20.10: rework completely (put below coefficient estimation experiments?)}
+\todo[inline]{21.10: rework completely (put below coefficient estimation experiments?)}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_1\ge\dots\ge m_p\ge m_{p+1}=\dots=m_K$.
 
@@ -547,17 +547,23 @@ Another idea is to use the transformation in Remark~\ref{rem:minimizer_estimates
 \textbf{Tuning experiments}
 
 \todo[inline]{20.10: Make extensive tuning experiments}
-\todo[inline]{20.10: Goal is to determine principled paramters to use for all further experiments}
+\todo[inline]{20.10: Goal is to determine principled parameters to use for all further experiments}
 
-The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in\{0.05,0.1,0.2,0.4,0.8\}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in\{0.05,0.1,0.2,0.4,0.8\}$. Precedence for dividing the step size by the Lipschitz-constant can be found in~\cite[Theorem~4]{li2021weaklyconvexoptimizationstiefel} or~\cite[Theorem~3.2]{bubeck_convex_2015}.
+The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we use the grid $\gamma_0\in\{0.1,0.2,\dots,0.9\}$.
+
+% 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in\{0.1,0.2,\dots,0.9\}$. 
+
+% Precedence for dividing the step size by the Lipschitz-constant can be found in~\cite[Theorem~4]{li2021weaklyconvexoptimizationstiefel} or~\cite[Theorem~3.2]{bubeck_convex_2015}.
 
 We take one fixed realization of an AR(3) process with coefficients $\phi_1=0.6$, $\phi_2=-0.3$, $\phi_3=0.2$ and $T=500$.
 
 We sample one fixed starting direction $u_0\in U(\mathbb{S}^{2})$ and determine which configuration yields the lowest function value.
 
+\todo[inline]{idea: compare with exact minimum width $(b-a)/\sqrt{1+\|\phi\|^2}$ and see which one reaches the exact value after fewest iterations}
+
 \textbf{First experiment}
 
-Sample one AR(3) process and tune $\beta$ and $\gamma_0$.
+Sample one AR(3) process and tune $\beta$ and $\gamma_0$. Which configuration achieves the lowest function value.
 
 \textbf{Second experiment}
 
