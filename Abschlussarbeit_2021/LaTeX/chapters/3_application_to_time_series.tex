@@ -199,7 +199,9 @@ where $B(\alpha,\beta)=\Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha+\beta)$ and $\G
 
 We can define a Beta distributed random variable on $[a,b]$ by setting $Z=a+(b-a)U$, where $U\sim\text{Beta}(\alpha,\beta)$.
 
-\textcolor{red}{In our setting, the innovations $Z_t$ will be of the form $(b-a)U_t+a$ with $U_t\sim\text{Beta}(\alpha,\beta)$.}
+\textcolor{red}{In our setting, the innovations $Z_t$ will be of the form $(b-a)U_t+a$ with $U_t\sim\text{Beta}(\alpha,\beta)$. Since we want $Z_t$ to be centered and $\mathbb{E}[U_t]=\alpha/(\alpha+\beta)$, we must choose $a$ and $b$ so that $b\alpha+a\beta=0$. Since this does not determine $a$ and $b$ uniquely we take $\text{Var}[Z_t]=\text{Var}[U]$, where $U\sim\mathcal{U}[-1,1]$ is the default case, thus $\text{Var}[Z_t]=1/3$. This second condition forces $a=-L\alpha/(\alpha+\beta)$ and $b=L\beta/(\alpha+\beta)$ with $L=(\alpha+\beta)\sqrt{(\alpha+\beta+1)/(3\alpha\beta)}$. We thus have centered Beta distributed innovations with variance always equal to the default case. Setting $\alpha=\beta=1$ recovers $Z_t\sim\mathcal{U}[-1,1]$.}
+
+\textcolor{green}{Initially, just uniformly distributed innovations were considered as a means simplify the study of the shape of the resulting sliding window point cloud. Later, a generalization to Beta distributed innovations was considered.}
 
 \subsection{Convex--Geometric Definitions and Connection to sliding-window support}
 
@@ -457,13 +459,13 @@ A classical minimization approach is the projected sub-gradient descent; see Alg
     \begin{algorithmic}[1]
         \Require $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$, $u_0\in\mathbb{S}^{d-1}$, $\{\gamma_t\}_{t\ge 0}$, $\gamma_t=\beta^{t}\gamma_0$ for some $\gamma_0>0$ and $\beta\in(0,1)$
         \Ensure $\hat{u}$
-        \State Initialize $\hat{w}\gets\hat{w}_k(u_0)$, $\hat{u}\gets u_0$, \textcolor{blue}{$\hat{\phi}\gets$}
+        \State Initialize $\hat{w}\gets\hat{w}_k(u_0)$, $\hat{u}\gets u_0$, \textcolor{blue}{$\hat{\phi}\gets-\hat{u}[2:d]/\hat{u}_1$}
         \For{$t=0,1,\dots$}
             \State $(i_t,j_t)\gets\arg\max_{(i,j)}\langle x_i-x_j,u\rangle$
             \State $g_t\gets x_{i_t}-x_{j_t}$
             \State $\xi_t\gets(I-u_tu_t^{T})g_t$
             \State $u_{t+1}\gets (u_t-\gamma_t\xi_t)/\|u_t-\eta_t\xi_t\|$
-            \State if $\hat{w}_k(u_{t+1})<\hat{w}$, set $\hat{u}\gets u_{t+1}$
+            \State if $\hat{w}_k(u_{t+1})<\hat{w}$, set $\hat{u}\gets u_{t+1}$, \textcolor{blue}{$\hat{\phi}\gets-\hat{u}[2:d]/\hat{u}_1$}
         \EndFor
         \State\Return $\hat{u}$
     \end{algorithmic}
@@ -547,9 +549,9 @@ Another idea is to use the transformation in Remark~\ref{rem:minimizer_estimates
 \todo[inline]{20.10: Make extensive tuning experiments}
 \todo[inline]{20.10: Goal is to determine principled paramters to use for all further experiments}
 
-The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in\{0.05,0.1,0.2,0.4,0.8\}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in\{0.05,0.1,0.2,0.4,0.8\}$. Precedence for dividing the step size by the Lipschitz-constant can be found in~[\todo{20.10: Give precedence and numerical evidence for dividing by $L$}].
+The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in\{0.05,0.1,0.2,0.4,0.8\}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in\{0.05,0.1,0.2,0.4,0.8\}$. Precedence for dividing the step size by the Lipschitz-constant can be found in~\cite[Theorem~4]{li2021weaklyconvexoptimizationstiefel} or~\cite[Theorem~3.2]{bubeck_convex_2015}.
 
-We take one fixed realization of an AR(3) process with coefficients $\phi_1=?$, $\phi_2=?$, $\phi_3=?$ and $T=500$.
+We take one fixed realization of an AR(3) process with coefficients $\phi_1=0.6$, $\phi_2=-0.3$, $\phi_3=0.2$ and $T=500$.
 
 We sample one fixed starting direction $u_0\in U(\mathbb{S}^{2})$ and determine which configuration yields the lowest function value.
 

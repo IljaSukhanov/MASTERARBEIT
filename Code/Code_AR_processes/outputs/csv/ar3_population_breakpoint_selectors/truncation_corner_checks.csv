@@ -1,0 +1,401 @@
+replication,method,corner_orders,stable_at_all_eight_corners
+1,First difference,[1],True
+1,Second difference,[2],True
+1,Descent chain,[3],True
+1,Local drift,[3],True
+1,Drop-to-tail energy,[3],True
+1,Tail SSE ratio,[3],True
+1,Tail variance ratio,[3],True
+1,Minimum width — first tied minimum,[3],True
+2,First difference,[1],True
+2,Second difference,[1],True
+2,Descent chain,[3],True
+2,Local drift,[3],True
+2,Drop-to-tail energy,[3],True
+2,Tail SSE ratio,[3],True
+2,Tail variance ratio,[3],True
+2,Minimum width — first tied minimum,[3],True
+3,First difference,[1],True
+3,Second difference,[1],True
+3,Descent chain,[3],True
+3,Local drift,[3],True
+3,Drop-to-tail energy,[3],True
+3,Tail SSE ratio,[3],True
+3,Tail variance ratio,[3],True
+3,Minimum width — first tied minimum,[3],True
+4,First difference,[1],True
+4,Second difference,[1],True
+4,Descent chain,[3],True
+4,Local drift,[3],True
+4,Drop-to-tail energy,[3],True
+4,Tail SSE ratio,[3],True
+4,Tail variance ratio,[3],True
+4,Minimum width — first tied minimum,[3],True
+5,First difference,[2],True
+5,Second difference,[2],True
+5,Descent chain,[3],True
+5,Local drift,[3],True
+5,Drop-to-tail energy,[3],True
+5,Tail SSE ratio,[3],True
+5,Tail variance ratio,[3],True
+5,Minimum width — first tied minimum,[3],True
+6,First difference,[3],True
+6,Second difference,[3],True
+6,Descent chain,[3],True
+6,Local drift,[3],True
+6,Drop-to-tail energy,[3],True
+6,Tail SSE ratio,[3],True
+6,Tail variance ratio,[3],True
+6,Minimum width — first tied minimum,[3],True
+7,First difference,[3],True
+7,Second difference,[3],True
+7,Descent chain,[3],True
+7,Local drift,[3],True
+7,Drop-to-tail energy,[3],True
+7,Tail SSE ratio,[3],True
+7,Tail variance ratio,[3],True
+7,Minimum width — first tied minimum,[3],True
+8,First difference,[3],True
+8,Second difference,[3],True
+8,Descent chain,[3],True
+8,Local drift,[3],True
+8,Drop-to-tail energy,[3],True
+8,Tail SSE ratio,[3],True
+8,Tail variance ratio,[3],True
+8,Minimum width — first tied minimum,[3],True
+9,First difference,[2],True
+9,Second difference,[2],True
+9,Descent chain,[3],True
+9,Local drift,[3],True
+9,Drop-to-tail energy,[3],True
+9,Tail SSE ratio,[3],True
+9,Tail variance ratio,[3],True
+9,Minimum width — first tied minimum,[3],True
+10,First difference,[2],True
+10,Second difference,[3],True
+10,Descent chain,[3],True
+10,Local drift,[3],True
+10,Drop-to-tail energy,[3],True
+10,Tail SSE ratio,[3],True
+10,Tail variance ratio,[3],True
+10,Minimum width — first tied minimum,[3],True
+11,First difference,[1],True
+11,Second difference,[1],True
+11,Descent chain,[3],True
+11,Local drift,[3],True
+11,Drop-to-tail energy,[3],True
+11,Tail SSE ratio,[3],True
+11,Tail variance ratio,[3],True
+11,Minimum width — first tied minimum,[3],True
+12,First difference,[1],True
+12,Second difference,[1],True
+12,Descent chain,[3],True
+12,Local drift,[3],True
+12,Drop-to-tail energy,[3],True
+12,Tail SSE ratio,[3],True
+12,Tail variance ratio,[3],True
+12,Minimum width — first tied minimum,[3],True
+13,First difference,[1],True
+13,Second difference,[1],True
+13,Descent chain,[3],True
+13,Local drift,[3],True
+13,Drop-to-tail energy,[3],True
+13,Tail SSE ratio,[3],True
+13,Tail variance ratio,[3],True
+13,Minimum width — first tied minimum,[3],True
+14,First difference,[1],True
+14,Second difference,[1],True
+14,Descent chain,[3],True
+14,Local drift,[3],True
+14,Drop-to-tail energy,[3],True
+14,Tail SSE ratio,[3],True
+14,Tail variance ratio,[3],True
+14,Minimum width — first tied minimum,[3],True
+15,First difference,[1],True
+15,Second difference,[1],True
+15,Descent chain,[3],True
+15,Local drift,[3],True
+15,Drop-to-tail energy,[3],True
+15,Tail SSE ratio,[3],True
+15,Tail variance ratio,[3],True
+15,Minimum width — first tied minimum,[3],True
+16,First difference,[1],True
+16,Second difference,[1],True
+16,Descent chain,[3],True
+16,Local drift,[3],True
+16,Drop-to-tail energy,[3],True
+16,Tail SSE ratio,[3],True
+16,Tail variance ratio,[3],True
+16,Minimum width — first tied minimum,[3],True
+17,First difference,[3],True
+17,Second difference,[3],True
+17,Descent chain,[3],True
+17,Local drift,[3],True
+17,Drop-to-tail energy,[3],True
+17,Tail SSE ratio,[3],True
+17,Tail variance ratio,[3],True
+17,Minimum width — first tied minimum,[3],True
+18,First difference,[2],True
+18,Second difference,[2],True
+18,Descent chain,[3],True
+18,Local drift,[3],True
+18,Drop-to-tail energy,[3],True
+18,Tail SSE ratio,[3],True
+18,Tail variance ratio,[3],True
+18,Minimum width — first tied minimum,[3],True
+19,First difference,[2],True
+19,Second difference,[2],True
+19,Descent chain,[3],True
+19,Local drift,[3],True
+19,Drop-to-tail energy,[3],True
+19,Tail SSE ratio,[3],True
+19,Tail variance ratio,[3],True
+19,Minimum width — first tied minimum,[3],True
+20,First difference,[2],True
+20,Second difference,[3],True
+20,Descent chain,[3],True
+20,Local drift,[3],True
+20,Drop-to-tail energy,[3],True
+20,Tail SSE ratio,[3],True
+20,Tail variance ratio,[3],True
+20,Minimum width — first tied minimum,[3],True
+21,First difference,[2],True
+21,Second difference,[2],True
+21,Descent chain,[3],True
+21,Local drift,[3],True
+21,Drop-to-tail energy,[3],True
+21,Tail SSE ratio,[3],True
+21,Tail variance ratio,[3],True
+21,Minimum width — first tied minimum,[3],True
+22,First difference,[2],True
+22,Second difference,[2],True
+22,Descent chain,[3],True
+22,Local drift,[3],True
+22,Drop-to-tail energy,[3],True
+22,Tail SSE ratio,[3],True
+22,Tail variance ratio,[3],True
+22,Minimum width — first tied minimum,[3],True
+23,First difference,[3],True
+23,Second difference,[3],True
+23,Descent chain,[3],True
+23,Local drift,[3],True
+23,Drop-to-tail energy,[3],True
+23,Tail SSE ratio,[3],True
+23,Tail variance ratio,[3],True
+23,Minimum width — first tied minimum,[3],True
+24,First difference,[1],True
+24,Second difference,[1],True
+24,Descent chain,[3],True
+24,Local drift,[3],True
+24,Drop-to-tail energy,[3],True
+24,Tail SSE ratio,[3],True
+24,Tail variance ratio,[3],True
+24,Minimum width — first tied minimum,[3],True
+25,First difference,[1],True
+25,Second difference,[1],True
+25,Descent chain,[3],True
+25,Local drift,[3],True
+25,Drop-to-tail energy,[3],True
+25,Tail SSE ratio,[3],True
+25,Tail variance ratio,[3],True
+25,Minimum width — first tied minimum,[3],True
+26,First difference,[2],True
+26,Second difference,[2],True
+26,Descent chain,[3],True
+26,Local drift,[3],True
+26,Drop-to-tail energy,[3],True
+26,Tail SSE ratio,[3],True
+26,Tail variance ratio,[3],True
+26,Minimum width — first tied minimum,[3],True
+27,First difference,[2],True
+27,Second difference,[2],True
+27,Descent chain,[3],True
+27,Local drift,[3],True
+27,Drop-to-tail energy,[3],True
+27,Tail SSE ratio,[3],True
+27,Tail variance ratio,[3],True
+27,Minimum width — first tied minimum,[3],True
+28,First difference,[1],True
+28,Second difference,[1],True
+28,Descent chain,[3],True
+28,Local drift,[3],True
+28,Drop-to-tail energy,[3],True
+28,Tail SSE ratio,[3],True
+28,Tail variance ratio,[3],True
+28,Minimum width — first tied minimum,[3],True
+29,First difference,[3],True
+29,Second difference,[3],True
+29,Descent chain,[3],True
+29,Local drift,[3],True
+29,Drop-to-tail energy,[3],True
+29,Tail SSE ratio,[3],True
+29,Tail variance ratio,[3],True
+29,Minimum width — first tied minimum,[3],True
+30,First difference,[2],True
+30,Second difference,[3],True
+30,Descent chain,[3],True
+30,Local drift,[3],True
+30,Drop-to-tail energy,[3],True
+30,Tail SSE ratio,[3],True
+30,Tail variance ratio,[3],True
+30,Minimum width — first tied minimum,[3],True
+31,First difference,[1],True
+31,Second difference,[1],True
+31,Descent chain,[3],True
+31,Local drift,[3],True
+31,Drop-to-tail energy,[3],True
+31,Tail SSE ratio,[3],True
+31,Tail variance ratio,[3],True
+31,Minimum width — first tied minimum,[3],True
+32,First difference,[2],True
+32,Second difference,[2],True
+32,Descent chain,[3],True
+32,Local drift,[3],True
+32,Drop-to-tail energy,[3],True
+32,Tail SSE ratio,[3],True
+32,Tail variance ratio,[3],True
+32,Minimum width — first tied minimum,[3],True
+33,First difference,[2],True
+33,Second difference,[2],True
+33,Descent chain,[3],True
+33,Local drift,[3],True
+33,Drop-to-tail energy,[3],True
+33,Tail SSE ratio,[3],True
+33,Tail variance ratio,[3],True
+33,Minimum width — first tied minimum,[3],True
+34,First difference,[1],True
+34,Second difference,[1],True
+34,Descent chain,[3],True
+34,Local drift,[3],True
+34,Drop-to-tail energy,[3],True
+34,Tail SSE ratio,[3],True
+34,Tail variance ratio,[3],True
+34,Minimum width — first tied minimum,[3],True
+35,First difference,[2],True
+35,Second difference,[2],True
+35,Descent chain,[3],True
+35,Local drift,[3],True
+35,Drop-to-tail energy,[3],True
+35,Tail SSE ratio,[3],True
+35,Tail variance ratio,[3],True
+35,Minimum width — first tied minimum,[3],True
+36,First difference,[1],True
+36,Second difference,[1],True
+36,Descent chain,[3],True
+36,Local drift,[3],True
+36,Drop-to-tail energy,[3],True
+36,Tail SSE ratio,[3],True
+36,Tail variance ratio,[3],True
+36,Minimum width — first tied minimum,[3],True
+37,First difference,[3],True
+37,Second difference,[3],True
+37,Descent chain,[3],True
+37,Local drift,[3],True
+37,Drop-to-tail energy,[3],True
+37,Tail SSE ratio,[3],True
+37,Tail variance ratio,[3],True
+37,Minimum width — first tied minimum,[3],True
+38,First difference,[2],True
+38,Second difference,[2],True
+38,Descent chain,[3],True
+38,Local drift,[3],True
+38,Drop-to-tail energy,[3],True
+38,Tail SSE ratio,[3],True
+38,Tail variance ratio,[3],True
+38,Minimum width — first tied minimum,[3],True
+39,First difference,[1],True
+39,Second difference,[1],True
+39,Descent chain,[3],True
+39,Local drift,[3],True
+39,Drop-to-tail energy,[3],True
+39,Tail SSE ratio,[3],True
+39,Tail variance ratio,[3],True
+39,Minimum width — first tied minimum,[3],True
+40,First difference,[2],True
+40,Second difference,[2],True
+40,Descent chain,[3],True
+40,Local drift,[3],True
+40,Drop-to-tail energy,[3],True
+40,Tail SSE ratio,[3],True
+40,Tail variance ratio,[3],True
+40,Minimum width — first tied minimum,[3],True
+41,First difference,[2],True
+41,Second difference,[2],True
+41,Descent chain,[3],True
+41,Local drift,[3],True
+41,Drop-to-tail energy,[3],True
+41,Tail SSE ratio,[3],True
+41,Tail variance ratio,[3],True
+41,Minimum width — first tied minimum,[3],True
+42,First difference,[1],True
+42,Second difference,[3],True
+42,Descent chain,[3],True
+42,Local drift,[3],True
+42,Drop-to-tail energy,[3],True
+42,Tail SSE ratio,[3],True
+42,Tail variance ratio,[3],True
+42,Minimum width — first tied minimum,[3],True
+43,First difference,[2],True
+43,Second difference,[2],True
+43,Descent chain,[3],True
+43,Local drift,[3],True
+43,Drop-to-tail energy,[3],True
+43,Tail SSE ratio,[3],True
+43,Tail variance ratio,[3],True
+43,Minimum width — first tied minimum,[3],True
+44,First difference,[1],True
+44,Second difference,[1],True
+44,Descent chain,[3],True
+44,Local drift,[3],True
+44,Drop-to-tail energy,[3],True
+44,Tail SSE ratio,[3],True
+44,Tail variance ratio,[3],True
+44,Minimum width — first tied minimum,[3],True
+45,First difference,[1],True
+45,Second difference,[1],True
+45,Descent chain,[3],True
+45,Local drift,[3],True
+45,Drop-to-tail energy,[3],True
+45,Tail SSE ratio,[3],True
+45,Tail variance ratio,[3],True
+45,Minimum width — first tied minimum,[3],True
+46,First difference,[2],True
+46,Second difference,[3],True
+46,Descent chain,[3],True
+46,Local drift,[3],True
+46,Drop-to-tail energy,[3],True
+46,Tail SSE ratio,[3],True
+46,Tail variance ratio,[3],True
+46,Minimum width — first tied minimum,[3],True
+47,First difference,[3],True
+47,Second difference,[3],True
+47,Descent chain,[3],True
+47,Local drift,[3],True
+47,Drop-to-tail energy,[3],True
+47,Tail SSE ratio,[3],True
+47,Tail variance ratio,[3],True
+47,Minimum width — first tied minimum,[3],True
+48,First difference,[3],True
+48,Second difference,[3],True
+48,Descent chain,[3],True
+48,Local drift,[3],True
+48,Drop-to-tail energy,[3],True
+48,Tail SSE ratio,[3],True
+48,Tail variance ratio,[3],True
+48,Minimum width — first tied minimum,[3],True
+49,First difference,[1],True
+49,Second difference,[3],True
+49,Descent chain,[3],True
+49,Local drift,[3],True
+49,Drop-to-tail energy,[3],True
+49,Tail SSE ratio,[3],True
+49,Tail variance ratio,[3],True
+49,Minimum width — first tied minimum,[3],True
+50,First difference,[1],True
+50,Second difference,[1],True
+50,Descent chain,[3],True
+50,Local drift,[3],True
+50,Drop-to-tail energy,[3],True
+50,Tail SSE ratio,[3],True
+50,Tail variance ratio,[3],True
+50,Minimum width — first tied minimum,[3],True

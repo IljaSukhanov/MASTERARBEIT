@@ -1,0 +1,73 @@
+filename,status,bytes,MB,references,absolute_path
+3d_emb_ar2.pdf,no_tex_references,110916,0.110916,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/3d_emb_ar2.pdf
+3d_emb_ar2_cropped.png,no_tex_references,367201,0.367201,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/3d_emb_ar2_cropped.png
+3d_emb_ar2_with_plane.png,no_tex_references,149778,0.149778,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/3d_emb_ar2_with_plane.png
+AR1_experiment.pdf,used_in_current_thesis,44496,0.044496,Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:617,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/AR1_experiment.pdf
+AR1_experiment.png,no_tex_references,81909,0.081909,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/AR1_experiment.png
+AR2_experiment.pdf,used_in_current_thesis,44841,0.044841,Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:624,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/AR2_experiment.pdf
+AR2_experiment.png,no_tex_references,92912,0.092912,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/AR2_experiment.png
+AR3_experiment.pdf,used_in_current_thesis,46655,0.046655,Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:631,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf
+AR3_experiment.png,no_tex_references,97514,0.097514,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/AR3_experiment.png
+ar_min_width_four_curve_direction_bank_diagnostic_p123.pdf,no_tex_references,22176,0.022176,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/ar_min_width_four_curve_direction_bank_diagnostic_p123.pdf
+comparison_P2_P3.png,no_tex_references,156572,0.156572,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/comparison_P2_P3.png
+COVID-projections_coloring.pdf,used_in_other_tex,408901,0.408901,Abschlussarbeit_2021/poster_new_colored.tex:696,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.pdf
+COVID-projections_coloring.png,no_tex_references,1377496,1.377496,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/COVID-projections_coloring.png
+COVID_Girvan-Newman_4communities.pdf,used_in_other_tex,253605,0.253605,Abschlussarbeit_2021/poster_new_colored.tex:702,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.pdf
+COVID_Girvan-Newman_4communities.png,no_tex_references,746757,0.746757,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/COVID_Girvan-Newman_4communities.png
+covid_Li_histogram.pdf,no_tex_references,31296,0.031296,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/covid_Li_histogram.pdf
+covid_Li_histogram.png,no_tex_references,218532,0.218532,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/covid_Li_histogram.png
+eight_dataset.pdf,used_in_other_tex,590891,0.590891,Abschlussarbeit_2021/poster_new_colored.tex:599,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/eight_dataset.pdf
+eight_dataset.png,no_tex_references,1521974,1.521974,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/eight_dataset.png
+eight_fail.pdf,used_in_other_tex,592275,0.592275,Abschlussarbeit_2021/poster_new_colored.tex:633,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/eight_fail.pdf
+eight_fail.png,no_tex_references,2794305,2.794305,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/eight_fail.png
+eight_proper.pdf,used_in_other_tex,433414,0.433414,Abschlussarbeit_2021/poster_new_colored.tex:640,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/eight_proper.pdf
+eight_proper.png,no_tex_references,1927731,1.927731,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/eight_proper.png
+eps_crit stability.png,no_tex_references,31012,0.031012,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/eps_crit stability.png
+equal_minima_h1_h2_hellinger_kdes_repeat.png,no_tex_references,98409,0.098409,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/equal_minima_h1_h2_hellinger_kdes_repeat.png
+equal_minima_hellinger_grid_consistency_repeat.png,no_tex_references,122270,0.122270,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/equal_minima_hellinger_grid_consistency_repeat.png
+equal_minima_mixture_pdf_clean.png,no_tex_references,29857,0.029857,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/equal_minima_mixture_pdf_clean.png
+Functional scale choice 2.png,no_tex_references,1073841,1.073841,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional scale choice 2.png
+Functional scale choice 3.pdf,used_in_other_tex,566019,0.566019,Abschlussarbeit_2021/poster_new_colored.tex:338,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.pdf
+Functional scale choice 3.png,no_tex_references,419726,0.419726,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional scale choice 3.png
+Functional scale choice.png,no_tex_references,199913,0.199913,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional scale choice.png
+Functional with multiple equal maxima 2.png,no_tex_references,1563343,1.563343,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 2.png
+Functional with multiple equal maxima 3.pdf,used_in_other_tex,204400,0.204400,Abschlussarbeit_2021/poster_new_colored.tex:350,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3.pdf
+Functional with multiple equal maxima 3.png,no_tex_references,221115,0.221115,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima 3.png
+Functional with multiple equal maxima.png,no_tex_references,1199631,1.199631,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Functional with multiple equal maxima.png
+functional.pdf,used_in_other_tex,44810,0.044810,Abschlussarbeit_2021/poster_new_colored.tex:610,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/functional.pdf
+functional.png,no_tex_references,64287,0.064287,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/functional.png
+kde-bandwidth-distributions-normal.png,no_tex_references,160751,0.160751,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/kde-bandwidth-distributions-normal.png
+logo_uulm_sw.pdf,used_in_current_thesis,48212,0.048212,Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.tex:137; Abschlussarbeit_2021/poster_new_colored.tex:221,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf
+logo_uulm_sw.png,no_tex_references,39184,0.039184,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.png
+M_alpha_N_image3.pdf,used_in_other_tex,64405,0.064405,Abschlussarbeit_2021/poster_new_colored.tex:554,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.pdf
+M_alpha_N_image3.png,no_tex_references,951885,0.951885,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/M_alpha_N_image3.png
+Mapper illustration 2 new.png,no_tex_references,324682,0.324682,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Mapper illustration 2 new.png
+Mapper illustration 2.png,no_tex_references,73255,0.073255,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Mapper illustration 2.png
+Mapper illustration 3.pdf,used_in_other_tex,30122,0.030122,Abschlussarbeit_2021/poster_new_colored.tex:546,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.pdf
+Mapper illustration 3.png,commented_reference_only,152006,0.152006,Abschlussarbeit_2021/poster_new_colored.tex:547,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3.png
+Mapper illustration 3_verticalized.png,no_tex_references,747739,0.747739,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Mapper illustration 3_verticalized.png
+Mapper illustration vertical(1).png,no_tex_references,592860,0.592860,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Mapper illustration vertical(1).png
+Mapper illustration.png,no_tex_references,237171,0.237171,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Mapper illustration.png
+mapper_algorithm_placeholder.png,no_tex_references,428921,0.428921,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/mapper_algorithm_placeholder.png
+mapper_algorithm_placeholder.webp,no_tex_references,286272,0.286272,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/mapper_algorithm_placeholder.webp
+matern_pp_types1and2.png,no_tex_references,18710,0.018710,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/matern_pp_types1and2.png
+matern_type_I_II.pdf,used_in_other_tex,13146,0.013146,Abschlussarbeit_2021/Application_to_point_processes.tex:54,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/matern_type_I_II.pdf
+mise_equal_minima_three_component.png,no_tex_references,72812,0.072812,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/mise_equal_minima_three_component.png
+PNG-Bild.png,used_in_current_thesis,144057,0.144057,Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:777,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/PNG-Bild.png
+principal_eigenvector.pdf,used_in_other_tex,46038,0.046038,Abschlussarbeit_2021/poster_new_colored.tex:615,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.pdf
+principal_eigenvector.png,no_tex_references,60595,0.060595,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/principal_eigenvector.png
+proj_subgradient_descent_visualization.png,used_in_current_thesis,227765,0.227765,Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:474,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png
+stationary distribution.pdf,used_in_other_tex,33888,0.033888,Abschlussarbeit_2021/poster_new_colored.tex:501,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/stationary distribution.pdf
+stationary distribution.png,no_tex_references,36439,0.036439,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/stationary distribution.png
+Strictly increasing functional 2.pdf,used_in_other_tex,82433,0.082433,Abschlussarbeit_2021/poster_new_colored.tex:494,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.pdf
+Strictly increasing functional 2.png,no_tex_references,837723,0.837723,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/Strictly increasing functional 2.png
+strictly increasing functional.png,no_tex_references,29229,0.029229,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/strictly increasing functional.png
+threshold choice examplary 2.png,no_tex_references,45763,0.045763,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/threshold choice examplary 2.png
+threshold choice exemplary.png,no_tex_references,57688,0.057688,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/threshold choice exemplary.png
+threshold_choice_exemplary.png,no_tex_references,45313,0.045313,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/threshold_choice_exemplary.png
+threshold_stability.pdf,used_in_other_tex,53427,0.053427,Abschlussarbeit_2021/poster_new_colored.tex:626,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/threshold_stability.pdf
+threshold_stability.png,no_tex_references,65005,0.065005,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/threshold_stability.png
+zonotope_approximation_n3.pdf,no_tex_references,57548,0.057548,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/zonotope_approximation_n3.pdf
+zonotope_approximation_n3.png,no_tex_references,173702,0.173702,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/zonotope_approximation_n3.png
+zonotope_approximation_n4.pdf,no_tex_references,60271,0.060271,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/zonotope_approximation_n4.pdf
+zonotope_approximation_n5.pdf,no_tex_references,58407,0.058407,,/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/images/zonotope_approximation_n5.pdf
