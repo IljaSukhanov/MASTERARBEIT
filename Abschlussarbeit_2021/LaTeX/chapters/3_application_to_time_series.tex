@@ -502,7 +502,7 @@ In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is 
 
 \subsection{Elbow point selection}\label{sec:elbow_point_selection}
 
-\todo[inline]{21.10: rework completely (put below coefficient estimation experiments?)}
+\todo[inline]{22.10: rework completely (put below coefficient estimation experiments?)}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_1\ge\dots\ge m_p\ge m_{p+1}=\dots=m_K$.
 
@@ -557,8 +557,8 @@ It can be shown that an AR($p$) process is stable if and only if the principal e
 
 \textbf{Tuning experiments}
 
-\todo[inline]{20.10: Make extensive tuning experiments}
-\todo[inline]{20.10: Goal is to determine principled parameters to use for all further experiments}
+\todo[inline]{21.10: Make extensive tuning experiments}
+\todo[inline]{21.10: Goal is to determine principled parameters to use for all further experiments}
 
 The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we use the grid $\gamma_0\in\{0.1,0.2,\dots,0.9\}$.
 
@@ -582,7 +582,7 @@ The results of our tuning experiment are given in...
 
 \subsubsection{Coefficient estimation experiments}
 
-\todo[inline]{20.10: Complete coefficient estimation experiments}
+\todo[inline]{21.10: Complete coefficient estimation experiments}
 
 Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
 
@@ -597,7 +597,7 @@ As innovation distribution, we choose the Beta distribution $\text{Beta}(\alpha,
     \item $\alpha=2$, $\beta=1/2$
 \end{itemize}
 
-\todo[inline]{add images of time series with Beta distributed innovations and for AR(1) their 2d sliding window point clouds}
+\todo[inline]{21.10: add images of time series with Beta distributed innovations and for AR(1) their 2d sliding window point clouds}
 
 Figure~[] shows on the left side 5 AR(1) processes with $\text{Beta}(\alpha,\beta)$-distributed innovations for different $\alpha$ and $\beta$. On the right the corresponding sliding window point clouds are shown. We see that the parameters $\alpha$ and $\beta$ control the position of the point cloud inside the support zonoid, whose borders are marked using a black dashed line.
 
@@ -803,6 +803,7 @@ A visualization is given in Figure~\ref{fig:vis_min_problems}.
     \includegraphics[width=0.5\linewidth]{Abschlussarbeit_2021/LaTeX/images/PNG-Bild.png}
     \caption{A visualization of the different minimization problems}
     \label{fig:vis_min_problems}
+    \todo[inline]{21.10: replace with Python image and true data}
 \end{figure}
 
 We can write the $L^{\infty}$-problem in terms of the width function $w_k$ as well. Namely, the problem can be reformulated as
@@ -821,7 +822,7 @@ Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coerciv
 
 The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
 
-The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
+The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{22.10: find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
 
 \todo[inline]{Has Gradient descent been used before to find the minimum width of a point cloud?}
 \todo[inline]{Could the Gradient descent approach escape the curse of dimensionality? (Future work)}
