@@ -589,17 +589,26 @@ Here we compare the four presented coefficient estimation methods presented in S
 Our experiment looks like this: We sample $L=100$ causal AR($p$)-processes for $p\in\{1,2,3,4,5\}$. We assume that we know the true order $p$ and compute the estimates $\hat{\phi}_1^{(l)},\dots,\hat{\phi}_p^{(l)}$, $l=1,\dots,L$. As a measure of error we use $\operatorname{MAE}=L^{-1}\sum_{l=1}^{L}\|\hat{\phi}^{(l)}-\phi^{(l)}\|_1$ (mean absolute error) and median absolute error.
 
 As innovation distribution, we choose the Beta distribution $\text{Beta}(\alpha,\beta)$ on the interval $[-1,1]$ with different choices of $\alpha>0$ and $\beta>0$:
-\begin{itemize}
-    \item $\alpha=1$, $\beta=1$ (corresponds to default uniform distribution)
-    \item $\alpha=1/2$, $\beta={1/2}$
-    \item $\alpha=2$, $\beta=2$
-    \item $\alpha=1/2$, $\beta=2$
-    \item $\alpha=2$, $\beta=1/2$
-\end{itemize}
+\begin{align*}
+    (\alpha,\beta)\in\{(1,1),(1/2,1/2),(2,2),(1/2,2),(2,1/2)\}.
+\end{align*}
 
-\todo[inline]{21.10: add images of time series with Beta distributed innovations and for AR(1) their 2d sliding window point clouds}
+Figure~\ref{fig:beta-ar1-time-series-and-clouds} shows on the left side 5 AR(1) processes with $\text{Beta}(\alpha,\beta)$-distributed innovations for different $\alpha$ and $\beta$. On the right the corresponding sliding window point clouds are shown. We see that the parameters $\alpha$ and $\beta$ control the position of the point cloud inside the support zonoid, whose borders are marked using a black dashed line.
 
-Figure~[] shows on the left side 5 AR(1) processes with $\text{Beta}(\alpha,\beta)$-distributed innovations for different $\alpha$ and $\beta$. On the right the corresponding sliding window point clouds are shown. We see that the parameters $\alpha$ and $\beta$ control the position of the point cloud inside the support zonoid, whose borders are marked using a black dashed line.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{../../Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf}
+
+    \medskip
+
+    \includegraphics[width=\linewidth]{../../Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf}
+
+    \caption{AR(1) time series with different Beta innovation
+    distributions on $[-1,1]$ (top) and their corresponding
+    sliding-window point clouds (bottom).
+    Black dashed lines indicate the support boundary.}
+    \label{fig:beta-ar1-time-series-and-clouds}
+\end{figure}
 
 Table~\ref{tab:ar-coefficient-mae} shows the results. We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly. Figure~\ref{fig:best_method_frequency_by_order} shows a distribution of how often each method was best.
 
@@ -798,12 +807,11 @@ Combining the above formulations, we can also write the minimum width problem li
 
 A visualization is given in Figure~\ref{fig:vis_min_problems}.
 
-\begin{figure}
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\linewidth]{Abschlussarbeit_2021/LaTeX/images/PNG-Bild.png}
+    \includegraphics[width=0.4\linewidth]{../../Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf}
     \caption{A visualization of the different minimization problems}
     \label{fig:vis_min_problems}
-    \todo[inline]{21.10: replace with Python image and true data}
 \end{figure}
 
 We can write the $L^{\infty}$-problem in terms of the width function $w_k$ as well. Namely, the problem can be reformulated as
