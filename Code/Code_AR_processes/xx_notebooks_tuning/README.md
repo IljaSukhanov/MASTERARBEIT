@@ -7,12 +7,13 @@ PDF/PNG figures; it writes no JSON/CSV data and computes no empirical global opt
 
 | Notebook | Purpose |
 |---|---|
-| [ar_tuning_experiments.ipynb](ar_tuning_experiments.ipynb) | Experiments 2 and 3: independent paths with fixed coefficients, and paths with Jones-sampled coefficient vectors (both default 100). Show width and coefficient-error win counts for experiment 2, and width win counts for experiment 3. Further sections repeat experiment 3 with stationarity-triggered restarts, evaluate 100 fresh paths of fixed Jones model 6, and repeat experiment 3 with gamma0=c/L. |
+| [ar_tuning_experiments.ipynb](ar_tuning_experiments.ipynb) | Experiments 2 and 3: independent paths with fixed coefficients, and paths with Jones-sampled coefficient vectors (both default 100). Further sections repeat experiment 3 with stationarity-triggered restarts, evaluate 100 fresh paths of fixed Jones model 6, and repeat experiment 3 with gamma0=c/L. Experiment 4 reuses the original 100 Jones models and paths with deterministic u0=e1 and both absolute and diameter-normalized steps. |
 
 Experiment 2 uses phi=(0.6,-0.3,0.2).
 Experiment 3 samples a fresh causal AR(3) coefficient vector for each path
 using the existing `jones_ar_coefficients` sampler. All use uniform innovations on [-1,1].
-The notebook uses one fixed starting direction, scales 0.1,0.2,...,0.9,
+Experiments 2 and 3 use one fixed Gaussian-generated starting direction;
+experiment 4 uses e1=(1,0,0,0). All use scales 0.1,0.2,...,0.9,
 half-lives H in {2,5,10,20,50,100,200,1000}, beta=2^(-1/H), and a best-value
 tracking rule that accepts every strictly smaller width (tolerance zero).
 The notebook uses a 2,000-iteration cap and patience of 200.
@@ -109,7 +110,7 @@ gamma0=0.2, H=50 choice on these same new paths for comparison.
 fixed-path runner defaults to one worker for existing callers. Output folders
 use `model6_<run-id>`. Earlier notebook cells and outputs are preserved.
 
-The final section repeats Experiment 3 with the explicitly requested
+The diameter-normalized restart section repeats Experiment 3 with the explicitly requested
 data-dependent step rule `gamma0=c/L`. Here L is the exact maximum Euclidean
 distance between two points of each empirical window cloud, computed once
 per model by `scipy.spatial.distance.pdist` in the shared half-life tuner.
@@ -125,6 +126,30 @@ conditional on finite estimates. The comparison also shows paired L1 errors
 on common finite models and width co-wins in the combined 144-configuration
 absolute + normalized grid. Outputs use separate `jones_scaled_<run-id>`
 folders. Existing sections and outputs are retained.
+
+Experiment 4 follows these sections. It regenerates the original Experiment 3
+models and their exact innovation paths from the same coefficient and process
+seeds, verifies their coefficients, partial autocorrelations, seeds and reference
+widths against `jones_cases`, and replaces the initial direction by e1=(1,0,0,0).
+It evaluates both absolute gamma0=s and normalized gamma0=s/L, each with the
+same 9 scales and 8 half-lives: 72 configurations per rule, 144 per model and
+14,400 runs on 100 models. L is the same exact empirical cloud diameter used
+by the existing normalized tuner. The 2,000-evaluation cap, patience 200 and
+zero improvement tolerance match the original Experiment 3. Stationarity
+checking and random restarts are explicitly disabled, so every configuration
+starts once at e1. `e1_n_jobs=4` parallelizes independent models.
+
+Separate PDF/PNG matrices show width and coefficient-MAE co-winner counts
+within each rule's 72-configuration grid, using the existing tolerances 1e-8
+and 1e-2. A separate common-reference ranking compares all 144 configurations
+together; within-rule counts are not directly compared across rules. Tables
+retain all tied width leaders, effective gamma0 ranges, post-fit nonstationarity,
+undefined coefficients and coefficient MAE summaries. Per-model grid-best
+diagnostics report population discrepancies and missed feasible improvements
+without computing a global empirical optimum. Coefficients and stationarity
+are diagnostics only and do not filter width results. All numerical results
+remain in the notebook, and figures use separate `experiment4_e1_<run-id>`
+directories. Earlier experiments and thesis sources remain unchanged.
 
 Figures are saved under `Code/Code_AR_processes/outputs/pdfs/<experiment>/<run-id>/`
 and the corresponding `outputs/images/` folder. The experiment names match the
