@@ -542,7 +542,18 @@ An alternative possibility for the order selection experiments is to take $u_0=(
 
 We implement a maximum number of iterations $\text{iter}_{\max}=2000$ and an improvement patience $\text{pat}=200$, that is, if the function value has not improved for $\text{pat}$, the descent is terminated prematurely.
 
-Another idea is to use the transformation in Remark~\ref{rem:minimizer_estimates_coefficients} to obtain a preliminary estimate $\hat{\phi}$ and compute the principal eigenvalue $\rho(M_{\phi})$ of the companion matrix $M_{\phi}$ to test for stationarity ($\rho(M_{\phi})<1$) and abort if this test fails (restart the descent with a new starting direction).
+Another idea is to use the transformation in Remark~\ref{rem:minimizer_estimates_coefficients} to obtain a preliminary estimate $\hat{\phi}$ and compute the principal eigenvalue $\hat{\rho}:=\rho(M_{\hat{\phi}})$ of the companion matrix $M_{\hat{\phi}}$. The descent can be restarted with a new starting direction if $\hat{\rho}\gg1$.
+
+The companion matrix $M_{\phi}$ of an AR($p$) process is given by
+\begin{align*}
+    M_{\phi}=\begin{pmatrix}
+        0 & 1 & 0 & \dots & 0\\
+        0 & 0 & 1 & \dots & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots\\
+        \phi_p & \phi_{p-1} & \phi_{p-2} & \dots & \phi_1
+    \end{pmatrix}
+\end{align*}
+It can be shown that an AR($p$) process is stable if and only if the principal eigenvalue of the companion matrix is strictly less than 1.
 
 \textbf{Tuning experiments}
 
@@ -551,27 +562,21 @@ Another idea is to use the transformation in Remark~\ref{rem:minimizer_estimates
 
 The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we use the grid $\gamma_0\in\{0.1,0.2,\dots,0.9\}$.
 
-% 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in\{0.1,0.2,\dots,0.9\}$. 
+We sample one fixed starting direction $u_0\in U(\mathbb{S}^{2})$ and determine which configuration yields the lowest function value. 
 
-% Precedence for dividing the step size by the Lipschitz-constant can be found in~\cite[Theorem~4]{li2021weaklyconvexoptimizationstiefel} or~\cite[Theorem~3.2]{bubeck_convex_2015}.
+\textcolor{red}{Repeat under many $u_0$?}
 
-We take one fixed realization of an AR(3) process with coefficients $\phi_1=0.6$, $\phi_2=-0.3$, $\phi_3=0.2$ and $T=500$.
+We take 100 realizations of an AR(3) process with coefficients $\phi_1=0.6$, $\phi_2=-0.3$, $\phi_3=0.2$ and $T=500$.
 
-We sample one fixed starting direction $u_0\in U(\mathbb{S}^{2})$ and determine which configuration yields the lowest function value.
-
-\todo[inline]{idea: compare with exact minimum width $(b-a)/\sqrt{1+\|\phi\|^2}$ and see which one reaches the exact value after fewest iterations}
-
-\textbf{First experiment}
-
-Sample one AR(3) process and tune $\beta$ and $\gamma_0$. Which configuration achieves the lowest function value.
-
-\textbf{Second experiment}
-
-Sample many AR(3) processes (same coefficients) and tune $\beta$ and $\gamma_0$ on each of them.
+For each realization $l$ we run the descent for every pair $(\beta,\gamma_0)$ and record the achieved minimum width $\hat{m}$. The best configuration $(\beta,\gamma_0)$ is the one which had the lowest achieved minimum widths most often.
 
 \textbf{Third experiment}
 
-Sample many different AR(3) processes.
+\todo[inline]{Does the selected schedule work on fresh realizations?}
+
+Sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, 100 independent realizations are generated and the best configuration is looked for. Afterwards we have 100 best configurations and we choose the one configuration which was best most often.
+
+\textcolor{red}{All subsequent experiments are performed using different seeds.}
 
 \subsection{Simulated Data}
 
@@ -585,12 +590,16 @@ Our experiment looks like this: We sample $L=100$ causal AR($p$)-processes for $
 
 As innovation distribution, we choose the Beta distribution $\text{Beta}(\alpha,\beta)$ on the interval $[-1,1]$ with different choices of $\alpha>0$ and $\beta>0$:
 \begin{itemize}
-    \item $\alpha=1$, $\beta=1$ (corresponds to uniform distribution, default)
+    \item $\alpha=1$, $\beta=1$ (corresponds to default uniform distribution)
     \item $\alpha=1/2$, $\beta={1/2}$
     \item $\alpha=2$, $\beta=2$
     \item $\alpha=1/2$, $\beta=2$
     \item $\alpha=2$, $\beta=1/2$
 \end{itemize}
+
+\todo[inline]{add images of time series with Beta distributed innovations and for AR(1) their 2d sliding window point clouds}
+
+Figure~[] shows on the left side 5 AR(1) processes with $\text{Beta}(\alpha,\beta)$-distributed innovations for different $\alpha$ and $\beta$. On the right the corresponding sliding window point clouds are shown. We see that the parameters $\alpha$ and $\beta$ control the position of the point cloud inside the support zonoid, whose borders are marked using a black dashed line.
 
 Table~\ref{tab:ar-coefficient-mae} shows the results. We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly. Figure~\ref{fig:best_method_frequency_by_order} shows a distribution of how often each method was best.
 
@@ -647,7 +656,7 @@ Minimum width
     \label{fig:best_method_frequency_by_order}
 \end{figure}
 
-\subsubsection{First exemplary experiment and error decomposition analysis}
+\subsubsection{First exemplary order selection experiment and error decomposition analysis discussion}
 
 Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$. The coefficients used are $\phi=0.6$ for the AR(1) process, $\phi_1=0.6,\phi_2=-0.3$ for the AR(2) process, and $\phi_1=0.6,\phi_2=-0.3,\phi_3=0.3$ for the AR(3) process. The observed time series had length $T=2000$.
 

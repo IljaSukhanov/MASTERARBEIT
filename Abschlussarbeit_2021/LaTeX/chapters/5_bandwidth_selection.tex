@@ -578,19 +578,10 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 \todo[inline]{How does software compute eigenvectors}
 \todo[inline]{stable Perron vector computation}
-\todo[inline]{Power method (compute Perron vector through Power iteration)}
 
-In our numerical experiments, we restrict ourselves to these four divergences:
-\begin{itemize}
-    \item $L_2$ divergence ($\beta$-divergence, $\beta=1$)
-    \item Total variation: $1-\operatorname{TV}(p,q)=\int\min\{p,q\}$ \textcolor{red}{TBD}
-    \item squared Hellinger: $1-H^2(p,q)=\int\sqrt{pq}$ \textcolor{red}{TBD}
-    \item Jensen-Shannon $D_{\operatorname{JS}}(p,q)$ \textcolor{red}{TBD}
-\end{itemize}
+In our numerical experiments, we restrict ourselves to the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
-\todo[inline]{add spectral bandwidth choices for total variation, squared Hellinger and Jensen Shannon}
-
-We will start our explorations using the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We use the similarity transformation $S=\exp{(-\lambda D)}$ and vary the penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the Perron vector. Later, we will explore the other symmetric divergences: Total variation, squared Hellinger, and Jensen-Shannon. We leave the asymmetric parametrized divergences as future work; see  Outlook~\ref{chap:outlook}.
+We use the similarity transformation $S=\exp{(-\lambda D)}$ and vary the penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the Perron vector. 
 
 In our experiments, we focus first on the case $f\sim N(0,1)$, that is, normally distributed data. This is the simplest case in which there is only one \enquote{optimal} bandwidth (the one minimizing a certain error criterion). We start with this simple case to see if there is even a connection between our spectral pipeline and the notion of \enquote{optimal} bandwidth selection. Experimentation with other data distributions is future work; see the Outlook chapter~\ref{chap:outlook}. Especially Gaussian mixture models are interesting because in such cases there might not exist a unique optimal bandwidth and the Perron vector could serve as a ranking procedure for multiple candidate bandwidths.
 
