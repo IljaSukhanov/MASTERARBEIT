@@ -536,6 +536,8 @@ This allows for fair and principled numerical experiments.
 
 The choice of the starting direction is arguably the most critical step in the algorithm because Theorem~\ref{thm:conv_grad_descent} guarantees fast convergence only if the starting direction is already close to the set of minimizers. We implement multiple random starting directions $u_0^{(l)}\sim U(\mathbb{S}^{k-1})$, $l=1,\dots,L$ and run the descent $L$ times and take the direction $\hat{u}$ with the lowest value $\hat{w}(\hat{u})$ out of all runs.
 
+\todo[inline]{What about just choosing $u_0=e_1$?}
+
 An alternative possibility for the order selection experiments is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
 
 \textbf{Termination condition}
@@ -559,6 +561,7 @@ It can be shown that an AR($p$) process is stable if and only if the principal e
 
 \todo[inline]{21.10: Make extensive tuning experiments}
 \todo[inline]{21.10: Goal is to determine principled parameters to use for all further experiments}
+\todo[inline]{bring back dividing by $L$}
 
 The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we use the grid $\gamma_0\in\{0.1,0.2,\dots,0.9\}$.
 
@@ -830,7 +833,7 @@ Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coerciv
 
 The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
 
-The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{22.10: find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
+The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{23.10: find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
 
 \todo[inline]{Has Gradient descent been used before to find the minimum width of a point cloud?}
 \todo[inline]{Could the Gradient descent approach escape the curse of dimensionality? (Future work)}
