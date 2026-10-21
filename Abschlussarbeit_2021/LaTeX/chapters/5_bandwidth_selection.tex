@@ -239,35 +239,6 @@ Total variation and squared Hellinger are related by the following chain of ineq
     =\sqrt{4-4\left(\int\sqrt{pq}\right)}=2\sqrt{1-\int\sqrt{pq}}=2\sqrt{D_H(p,q)}
 \end{align*}
 
-\textbf{Numerical Approximation}
-
-We decide to use the classical quadrature formula
-\begin{align*}
-    \int_a^bf(x)\,dx\approx Q_M(f)=(b-a)\sum_{m=0}^{M}w_mf(x_m),
-\end{align*}
-where $w_m$ are the quadrature weights and $x_m$ the (equidistant) quadrature nodes. As quadrature weights we choose $w_m=1/(2M)$ for $m=0,M$ and $w_m=1/M$ for $m=1,\dots,M-1$. This choice corresponds to the composite trapezoidal rule.
-
-Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We first aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f(p(x),q(x))\,dx|$, where $f$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are kernel density estimates with a Gaussian kernel. It holds
-\begin{align*}
-    \tau_h:=\int_{A^c}\hat{f}_h=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}.
-\end{align*}
-Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
-\begin{align*}
-    \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)=:\delta_L
-\end{align*}
-and thus $\tau_h\le 2\Phi(-L)$ for any $h\le h_{\max}$. Using the upper bound for the above truncation error, we choose $L$ such that $\delta_L\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
-
-Replacing $\int p^{\alpha}q^{1-\alpha}$ in Equation~\eqref{eq:alpha_divergence1} with the truncated integral $\int_a^bp^{\alpha}q^{1-\alpha}$ leads to the truncation error
-\begin{align*}
-    E_{\text{trunc}}=\frac{1}{\alpha(1-\alpha)}\int_{A^c}p^{\alpha}q^{1-\alpha}\stackrel{\text{Hölder}}{\le}\frac{1}{\alpha(1-\alpha)}\left(\int_{A^c}p\right)^{\alpha}\left(\int_{A^c}q\right)^{1-\alpha}\le\frac{\delta_L}{\alpha(1-\alpha)}
-\end{align*}
-for the $\alpha$-divergence and truncating the total variation yields
-\begin{align*}
-    \frac{1}{2}\int_{A^c}|p-q|\le\frac{1}{2}\int_{A^c}p+\frac{1}{2}\int_{A^c}q\le\delta_L.
-\end{align*}
-
-As a consequence, we see that approximating $\alpha$-divergence and total variation using the composite trapezoidal rule allows clean error control. 
-
 \subsubsection*{JS divergence}
 
 Another important divergence that belongs to the class of $f$-divergences is the Jensen Shannon divergence. The function $f$ is set to be
@@ -285,19 +256,6 @@ The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrizat
     \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}(p\|\frac{p+q}{2})+\operatorname{KL}(q\|\frac{p+q}{2})\right),
 \end{align}
 that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their equally weighted mixture.
-
-\textbf{Numerical Approximation}
-
-\todo[inline]{Gauss-Hermite seems slow, just use composite trapezoidal again but derive truncation error bound}
-
-For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$ by $\sum_{m=1}^{M}w_mf(x_m)$ with the nodes $x_m$ being the $M$-th Hermite Polynomial $H_M$ and weights $w_m=(2^{M-1}M!\sqrt{\pi})/(M^2H_{M-1}^2(x_m))$. For reference on Gauss-Hermite quadrature, see~\cite[Section~25.4.46]{abramowitz_stegun1972}. We can write (and consequently approximate) the KL-divergence between two kernel density estimates $\hat{f}_h$ and $\hat{f}_g$ as
-\begin{align*}
-    D_{\text{KL}}(\hat{f}_h\|\hat{f}_g)&=\frac{1}{\sqrt{\pi}}\frac{1}{n}\sum_{i=1}^{n}\int_{-\infty}^{+\infty}e^{-x^2}\log{\left(\hat{f}_h(X_j+h\sqrt{2}x)-\hat{f}_g(X_j+h\sqrt{2}x)\right)}\,dx\\&
-    \approx\frac{1}{\sqrt{\pi}}\frac{1}{n}\sum_{i=1}^{n}\sum_{m=1}^{M}w_m\log{\left(\hat{f}_h(X_j+h\sqrt{2}x_m)-\hat{f}_g(X_j+h\sqrt{2}x_m)\right)}.
-\end{align*}
-Using the formula in Equation~\eqref{eq:JS_KL_formula} we can also approximate the JS-divergence between $\hat{f}_h$ and $\hat{f}_g$.
-
-One advantage of the Gauss-Hermite quadrature is that we do not need to care about the truncation error because there is none.
 
 \subsection{Bregman divergences}
 
