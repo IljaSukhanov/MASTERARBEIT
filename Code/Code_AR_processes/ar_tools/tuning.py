@@ -3,6 +3,7 @@
 from time import perf_counter
 
 import numpy as np
+from scipy.spatial.distance import pdist
 from threadpoolctl import threadpool_limits
 
 from . import descent
@@ -188,11 +189,14 @@ def tune_geometric_half_life_schedules(
     progress=False,
     stationarity_check=False,
     max_restarts=100,
+    step_rule="absolute",
 ):
-    """Tune absolute geometric steps from one fixed starting direction.
+    """Tune geometric steps from one fixed starting direction.
 
-    The parameterization is beta = 2**(-1/H), with each scale used directly
-    as gamma0. The existing fixed-cloud tuner performs the optimization.
+    beta = 2**(-1/H). The default absolute rule uses each scale as gamma0.
+    Opt-in diameter_normalized uses gamma0 = scale/L, where L is the exact
+    Euclidean diameter of this empirical cloud, computed once per search.
+    The existing fixed-cloud tuner performs the optimization in both cases.
     """
     points = np.asarray(points, dtype=float)
     direction = np.asarray(initial_direction, dtype=float)
@@ -215,8 +219,14 @@ def tune_geometric_half_life_schedules(
     betas = np.exp2(-1.0 / half_lives)
     if np.any((betas <= 0) | (betas >= 1)):
         raise ValueError("Half-lives must produce representable beta values in (0, 1).")
+    if step_rule not in {"absolute", "diameter_normalized"}:
+        raise ValueError("step_rule must be absolute or diameter_normalized.")
+    diameter = float(pdist(points, metric="euclidean").max()) if step_rule == "diameter_normalized" else None
+    if diameter is not None and (not np.isfinite(diameter) or diameter <= 0):
+        raise ValueError("Diameter-normalized steps require a positive finite cloud diameter.")
+    initial_steps = scales if diameter is None else scales / diameter
     search = tune_geometric_width_schedule(
-        points, direction[None, :], scales, betas,
+        points, direction[None, :], initial_steps, betas,
         iterations=iterations, patience=patience,
         improvement_tolerance=improvement_tolerance,
         optimizer_seed=optimizer_seed, progress=progress,
@@ -227,15 +237,17 @@ def tune_geometric_half_life_schedules(
     candidates, per_start, histories = [], [], {}
     for scale_index, scale in enumerate(scales):
         for h_index, (half_life, beta) in enumerate(zip(half_lives, betas)):
-            original = effective[(float(scale), float(beta))]
+            original = effective[(float(initial_steps[scale_index]), float(beta))]
             effective_id = original["candidate_id"]
-            candidate_id = f"absolute_s{scale_index:02d}_h{h_index:02d}"
-            row = dict(original, candidate_id=candidate_id, step_rule="absolute",
+            candidate_id = f"{step_rule}_s{scale_index:02d}_h{h_index:02d}"
+            row = dict(original, candidate_id=candidate_id, step_rule=step_rule,
                        step_value=float(scale), half_life=float(half_life))
+            if diameter is not None:
+                row["cloud_diameter"] = diameter
             candidates.append(row)
             histories[candidate_id] = search["histories"][effective_id]
             per_start.append(dict(start_details[effective_id],
-                                  candidate_id=candidate_id, step_rule="absolute",
+                                  candidate_id=candidate_id, step_rule=step_rule,
                                   step_value=float(scale), half_life=float(half_life)))
     ordered = sorted(candidates, key=lambda row: (
         row["minimum_width"] if np.isfinite(row["minimum_width"]) else np.inf,
@@ -243,7 +255,7 @@ def tune_geometric_half_life_schedules(
         row["beta"], row["step_rule"],
     ))
     selected = ordered[0]
-    best_by_rule = {"absolute": selected}
+    best_by_rule = {step_rule: selected}
     return {
         "candidates": candidates, "per_start": per_start, "histories": histories,
         "selected": dict(selected), "best_by_rule": best_by_rule,
@@ -392,10 +404,16 @@ def tune_fixed_ar_realizations(
     optimizer_seed,
     progress=False,
     summarize=True,
+    stationarity_check=False,
+    max_restarts=100,
+    n_jobs=1,
 ):
     """Run paired grids on fixed-coefficient AR(3) paths at one size.
 
     Set summarize=False to return raw runs without aggregate width selection.
+    Optional checkpoints/restarts use the same optimizer as Jones tuning.
+    n_jobs controls independent realization workers; seeded paths and starts
+    do not depend on the number of workers. Exhausted fits have NaN widths.
     """
     return tune_ar_sample_sizes(
         phi, [sample_size], initial_direction, scale_grid, half_life_grid,
@@ -403,6 +421,7 @@ def tune_fixed_ar_realizations(
         iterations=iterations, patience=patience,
         improvement_tolerance=improvement_tolerance, optimizer_seed=optimizer_seed,
         progress=progress, summarize=summarize,
+        stationarity_check=stationarity_check, max_restarts=max_restarts, n_jobs=n_jobs,
     )
 
 
@@ -480,6 +499,7 @@ def tune_ar_sample_sizes(
     phi, sample_sizes, initial_direction, scale_grid, half_life_grid, *,
     replications, process_seed, burnin, iterations, patience,
     improvement_tolerance, optimizer_seed, progress=False, summarize=True,
+    stationarity_check=False, max_restarts=100, n_jobs=1,
 ):
     """Select by mean achieved minimum width across paired paths and sizes.
 
@@ -499,6 +519,7 @@ def tune_ar_sample_sizes(
         clouds, initial_direction, scale_grid, half_life_grid, replications=replications,
         iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
         optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
+        stationarity_check=stationarity_check, max_restarts=max_restarts, n_jobs=n_jobs,
     )
 
 
@@ -506,7 +527,7 @@ def tune_jones_ar_realizations(
     sample_size, initial_direction, scale_grid, half_life_grid, *, replications,
     coefficient_seed, process_seed, burnin, iterations, patience,
     improvement_tolerance, optimizer_seed, progress=False, summarize=True,
-    stationarity_check=False, max_restarts=100,
+    stationarity_check=False, max_restarts=100, step_rule="absolute", n_jobs=1,
 ):
     """Tune paired grids on distinct Jones-sampled causal AR(3) models.
 
@@ -522,6 +543,8 @@ def tune_jones_ar_realizations(
     Exhausted candidates have NaN scores and explicit failure flags; use
     summarize=False and summarize_configuration_wins(allow_nonfinite=True)
     to retain them in the design without awarding them win credit.
+    step_rule="diameter_normalized" interprets scale_grid as c in gamma0=c/L,
+    with L the empirical cloud diameter. n_jobs parallelizes independent models.
     """
     clouds = _ar_realization_cases(
         None, [sample_size], initial_direction, replications=replications,
@@ -532,15 +555,44 @@ def tune_jones_ar_realizations(
         iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
         optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
         stationarity_check=stationarity_check, max_restarts=max_restarts,
+        step_rule=step_rule, n_jobs=n_jobs,
     )
 
 
 def _tune_ar_cases(
     clouds, initial_direction, scale_grid, half_life_grid, *, replications,
     iterations, patience, improvement_tolerance, optimizer_seed, progress, summarize,
-    stationarity_check=False, max_restarts=100,
+    stationarity_check=False, max_restarts=100, n_jobs=1, step_rule="absolute",
 ):
     """Run the same grid and aggregation for either AR coefficient design."""
+    if (isinstance(n_jobs, (bool, np.bool_))
+            or not isinstance(n_jobs, (int, np.integer)) or n_jobs < 1):
+        raise ValueError("n_jobs must be a positive integer.")
+    if n_jobs != 1:
+        from joblib import Parallel, delayed
+
+        completed = Parallel(n_jobs=int(n_jobs), return_as="generator")(
+            delayed(_tune_ar_cases)(
+                [case], initial_direction, scale_grid, half_life_grid,
+                replications=replications, iterations=iterations, patience=patience,
+                improvement_tolerance=improvement_tolerance, optimizer_seed=optimizer_seed,
+                progress=False, summarize=False, stationarity_check=stationarity_check,
+                max_restarts=max_restarts, n_jobs=1, step_rule=step_rule,
+            ) for case in clouds
+        )
+        rows, cases = [], []
+        for batch in completed:
+            rows.extend(batch["results"])
+            cases.extend(batch["cases"])
+            if progress:
+                case = batch["cases"][0]
+                details = (f"{case['restart_count']} restarts; {case['failed_runs']} failed runs; "
+                           if stationarity_check else "")
+                print(f"Path {case['replication']}/{replications}, T={case['T']}: "
+                      f"best achieved width={case['grid_best_width']:.10f}; "
+                      f"{len(batch['results'])} {step_rule} schedules; {details}"
+                      f"{case['runtime_seconds']:.1f}s", flush=True)
+        return _finish_ar_tuning(rows, cases, initial_direction, summarize=summarize)
     rows, cases = [], []
     for case in clouds:
         started = perf_counter()
@@ -551,6 +603,7 @@ def _tune_ar_cases(
             patience=patience, improvement_tolerance=improvement_tolerance,
             optimizer_seed=optimizer_seed,
             stationarity_check=stationarity_check, max_restarts=max_restarts,
+            step_rule=step_rule,
         )
         for candidate in search["candidates"]:
             rows.append(dict(
@@ -602,15 +655,21 @@ def _tune_ar_cases(
             print(f"Path {case['replication']}/{replications}, T={case['T']}: "
                   f"best achieved width={winner['minimum_width']:.10f}, "
                   f"{diagnostics}"
-                  f"{len(search['candidates'])} absolute schedules; "
+                  f"{len(search['candidates'])} {step_rule} schedules; "
                   f"{restart_text}"
                   f"{cases[-1]['runtime_seconds']:.1f}s", flush=True)
+    return _finish_ar_tuning(rows, cases, initial_direction, summarize=summarize)
+
+
+def _finish_ar_tuning(rows, cases, initial_direction, *, summarize):
+    """Assemble raw case results, optionally applying the existing summary."""
     result = {"results": rows, "cases": cases,
               "initial_direction": np.asarray(initial_direction) / np.linalg.norm(initial_direction)}
     if summarize:
         ranking = summarize_geometric_replications(rows)
         result.update(ranking=ranking, selected=dict(ranking[0]),
-                      best_by_rule={"absolute": ranking[0]})
+                      best_by_rule={rule: next(row for row in ranking if row["step_rule"] == rule)
+                                    for rule in {row["step_rule"] for row in ranking}})
     return result
 
 

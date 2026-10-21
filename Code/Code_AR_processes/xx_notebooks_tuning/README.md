@@ -1,13 +1,13 @@
 # AR tuning notebooks
 
 This folder contains the tuning notebook. It uses the current shared
-geometric optimizer, absolute initial steps, achieved-width selection,
+geometric optimizer, absolute or opt-in data-dependent initial steps, achieved-width selection,
 and explicit fixed seeds. It displays tables in the notebook and exports only
 PDF/PNG figures; it writes no JSON/CSV data and computes no empirical global optimum.
 
 | Notebook | Purpose |
 |---|---|
-| [ar_tuning_experiments.ipynb](ar_tuning_experiments.ipynb) | Experiments 2 and 3: independent paths with fixed coefficients, and paths with Jones-sampled coefficient vectors (both default 100). Show width and coefficient-error win counts for experiment 2, and width win counts for experiment 3. A final section repeats experiment 3 with stationarity-triggered restarts. |
+| [ar_tuning_experiments.ipynb](ar_tuning_experiments.ipynb) | Experiments 2 and 3: independent paths with fixed coefficients, and paths with Jones-sampled coefficient vectors (both default 100). Show width and coefficient-error win counts for experiment 2, and width win counts for experiment 3. Further sections repeat experiment 3 with stationarity-triggered restarts, evaluate 100 fresh paths of fixed Jones model 6, and repeat experiment 3 with gamma0=c/L. |
 
 Experiment 2 uses phi=(0.6,-0.3,0.2).
 Experiment 3 samples a fresh causal AR(3) coefficient vector for each path
@@ -76,7 +76,7 @@ The model table retains this reference and the empirical width in the
 true-coefficient direction. Neither benchmark changes the tuning score.
 
 Experiments 2 and the original experiment 3 leave `stationarity_check=False`.
-The final section repeats experiment 3 with `stationarity_check=True`, using
+The following section repeats experiment 3 with `stationarity_check=True`, using
 the same models, realizations, common first direction, grid and win tolerance.
 After `patience` evaluations of each attempt, the shared optimizer checks
 coefficients recovered from that attempt's best-width direction. Companion
@@ -93,6 +93,38 @@ attempts; total evaluations can exceed 2,000 per configuration.
 An input-pairing assertion checks coefficients, seeds and reference widths
 against the original experiment. Variables and PDF/PNG output directories
 use a separate `jones_stationarity_` prefix.
+
+The model-6 section uses the Experiment 2 design for Jones model 6, with exact
+coefficients (0.8981283425999981, -0.2059579137943896, -0.08127461108863643).
+It generates 100 independent new paths using `model6_process_seed=20261025`;
+the previously failed path is not reused. It keeps the same grid, common
+first direction, budgets and tolerances, and enables the existing stationarity
+checkpoint/restart rule. Failed fits receive no credit and all paths remain
+in the denominators. The matrix shows width and coefficient-MAE counts, with
+red and green leader boxes as in Experiment 2. Its final tables report
+failure counts, mean attempts including failed fits, and raw coefficient L1
+errors conditional on finite returned estimates. They also show the earlier
+gamma0=0.2, H=50 choice on these same new paths for comparison.
+`model6_n_jobs=4` runs independent realizations in parallel; the shared
+fixed-path runner defaults to one worker for existing callers. Output folders
+use `model6_<run-id>`. Earlier notebook cells and outputs are preserved.
+
+The final section repeats Experiment 3 with the explicitly requested
+data-dependent step rule `gamma0=c/L`. Here L is the exact maximum Euclidean
+distance between two points of each empirical window cloud, computed once
+per model by `scipy.spatial.distance.pdist` in the shared half-life tuner.
+The c grid is 0.1,...,0.9; all other scientific settings, Jones draws,
+innovation seeds and the common first direction match the absolute-step
+stationarity repeat. The stationarity check remains enabled, with 100 maximum
+restarts and a fresh full budget per attempt. The optimizer itself is unchanged.
+`step_rule="diameter_normalized"` is opt-in; existing calls default to absolute
+steps. `jones_scaled_n_jobs=4` parallelizes independent models.
+The matrix displays width and coefficient-MAE co-winner counts. Tables report
+each leader's actual gamma0 range, failed fits, mean attempts and raw L1 errors
+conditional on finite estimates. The comparison also shows paired L1 errors
+on common finite models and width co-wins in the combined 144-configuration
+absolute + normalized grid. Outputs use separate `jones_scaled_<run-id>`
+folders. Existing sections and outputs are retained.
 
 Figures are saved under `Code/Code_AR_processes/outputs/pdfs/<experiment>/<run-id>/`
 and the corresponding `outputs/images/` folder. The experiment names match the

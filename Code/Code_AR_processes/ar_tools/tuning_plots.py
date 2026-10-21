@@ -1,4 +1,4 @@
-"""Shared matrix figures for absolute-step AR tuning experiments."""
+"""Shared matrix figures for AR tuning experiments."""
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch, Rectangle
@@ -12,11 +12,15 @@ def plot_tuning_matrices(
     filename, pdf_directory, image_directory, maximize=False, precision=7,
     secondary_metric=None,
 ):
-    """Plot the absolute-step grid, optionally adding a second score and boxes.
+    """Plot one step-rule grid, optionally adding a second score and boxes.
 
     When supplied, secondary_metric follows the same maximize/minimize rule.
     The primary score controls the colors. All tied best entries are boxed.
     """
+    rules = ranking["step_rule"].unique()
+    if len(rules) != 1 or rules[0] not in {"absolute", "diameter_normalized"}:
+        raise ValueError("Supply exactly one supported step rule per tuning matrix.")
+    step_rule = rules[0]
     matrices = {}
     fig, ax = plt.subplots(
         figsize=(9, max(5.0, (.48 if secondary_metric else .32) * len(scales) + 2)),
@@ -30,7 +34,7 @@ def plot_tuning_matrices(
     matrix = rows.pivot(index="step_value", columns="half_life", values=metric).reindex(
         index=scales, columns=half_lives,
     )
-    matrices["absolute"] = matrix
+    matrices[step_rule] = matrix
     values = matrix.to_numpy()
     if secondary_metric:
         secondary_values = rows.pivot(
@@ -67,7 +71,9 @@ def plot_tuning_matrices(
                                    fill=False, edgecolor="#198754", linewidth=2))
     ax.set(xticks=np.arange(len(half_lives)), xticklabels=[f"{h:g}" for h in half_lives],
            yticks=np.arange(len(scales)), yticklabels=[f"{s:g}" for s in scales],
-           xlabel="Half-life H", ylabel="Initial step gamma_0", title="Absolute steps")
+           xlabel="Half-life H",
+           ylabel=("Scale c (gamma_0 = c/L)" if step_rule == "diameter_normalized" else "Initial step gamma_0"),
+           title=("Diameter-normalized steps" if step_rule == "diameter_normalized" else "Absolute steps"))
     fig.suptitle(title)
     if secondary_metric:
         fig.legend(handles=[Patch(fill=False, edgecolor="red", linewidth=2,

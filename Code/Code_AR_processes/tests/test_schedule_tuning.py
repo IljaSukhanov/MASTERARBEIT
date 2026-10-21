@@ -129,6 +129,28 @@ class ScheduleTuningTests(unittest.TestCase):
         np.testing.assert_array_equal(result["histories"]["grid_000"],
                                       result["best_results"][1]["best_width_history"])
 
+    def test_parallel_fixed_paths_preserve_seeds_restarts_and_results(self):
+        settings = dict(
+            self.settings, replications=2, process_seed=20261025, burnin=20,
+            summarize=False, stationarity_check=True, max_restarts=3,
+        )
+        args = ([0.8981283425999981, -0.2059579137943896, -0.08127461108863643],
+                40, [0.1, -0.8, 0.3, 0.5], [0.05, 0.2], [2, 20])
+        serial = tune_fixed_ar_realizations(*args, n_jobs=1, **settings)
+        parallel = tune_fixed_ar_realizations(*args, n_jobs=2, **settings)
+        self.assertEqual(len(parallel["results"]), 8)
+        self.assertEqual(len(parallel["cases"]), 2)
+        for actual, expected in zip(parallel["results"], serial["results"]):
+            for key in ["candidate_id", "replication", "process_seed", "restart_count",
+                        "attempt_count", "total_evaluations", "stationarity_check_passed",
+                        "restart_limit_reached"]:
+                self.assertEqual(actual[key], expected[key])
+            for key in ["minimum_width", "checkpoint_spectral_radius", "u_0", "u_1", "u_2", "u_3"]:
+                np.testing.assert_allclose(actual[key], expected[key], atol=1e-12, rtol=1e-12, equal_nan=True)
+        for jobs in [0, True, 1.5]:
+            with self.subTest(n_jobs=jobs), self.assertRaisesRegex(ValueError, "n_jobs"):
+                tune_fixed_ar_realizations(*args, n_jobs=jobs, **settings)
+
     def test_invalid_grids_and_directions_are_rejected(self):
         for gamma, beta in (([], [0.9]), ([0.1], []), ([0.0], [0.9]),
                             ([np.nan], [0.9]), ([0.1], [1.0]), ([0.1], [0.0])):
@@ -175,6 +197,51 @@ class ScheduleTuningTests(unittest.TestCase):
             self.assertEqual(other["gamma0"], row["gamma0"])
             self.assertEqual(other["beta"], row["beta"])
 
+    def test_diameter_normalized_grid_reuses_direct_optimizer_and_rescales(self):
+        cloud = np.array([[0., 0.], [3., 0.], [0., 4.]])  # Diameter is exactly 5.
+        direction = np.array([0.4, 0.9])
+        settings = dict(self.settings, step_rule="diameter_normalized", improvement_tolerance=0.)
+        result = tune_geometric_half_life_schedules(cloud, direction, [.1, .9], [4], **settings)
+        scaled = tune_geometric_half_life_schedules(2 * cloud, direction, [.1, .9], [4], **settings)
+        for row, other in zip(result["candidates"], scaled["candidates"]):
+            self.assertEqual(row["cloud_diameter"], 5.)
+            self.assertEqual(other["cloud_diameter"], 10.)
+            self.assertEqual(row["gamma0"], row["step_value"] / 5.)
+            self.assertEqual(other["gamma0"], row["gamma0"] / 2.)
+            direct = projected_subgradient_empirical_width(
+                cloud, initial_direction=direction, initial_step=row["gamma0"],
+                geometric_decay=row["beta"], step_schedule="geometric",
+                rng=np.random.SeedSequence([17, 0, 2, 21, 0]),
+                iterations=30, patience=8, improvement_tolerance=0.,
+            )
+            np.testing.assert_array_equal(result["histories"][row["candidate_id"]],
+                                          direct["best_width_history"])
+            np.testing.assert_array_equal([row["u_0"], row["u_1"]], [other["u_0"], other["u_1"]])
+            self.assertEqual(other["minimum_width"], 2 * row["minimum_width"])
+        with self.assertRaisesRegex(ValueError, "positive finite cloud diameter"):
+            tune_geometric_half_life_schedules(np.ones((3, 2)), direction, [.1], [4], **settings)
+        with self.assertRaisesRegex(ValueError, "step_rule"):
+            tune_geometric_half_life_schedules(cloud, direction, [.1], [4],
+                                               **dict(settings, step_rule="unknown"))
+
+    def test_parallel_normalized_jones_paths_preserve_inputs_and_actual_steps(self):
+        args = (40, [.1, -.8, .3, .5], [.1, .9], [4])
+        settings = dict(self.settings, replications=2, process_seed=20261024,
+                        coefficient_seed=20261023, burnin=20, summarize=False,
+                        stationarity_check=True, max_restarts=3, step_rule="diameter_normalized")
+        serial = tune_jones_ar_realizations(*args, n_jobs=1, **settings)
+        parallel = tune_jones_ar_realizations(*args, n_jobs=2, **settings)
+        for row, other in zip(serial["results"], parallel["results"]):
+            for key in set(row) - {"runtime_seconds"}:
+                np.testing.assert_equal(row[key], other[key])
+            phi = [row[f"phi_{j}"] for j in range(1, 4)]
+            cloud = sliding_window_point_cloud(simulate_uniform_ar(
+                phi, sample_size=40, burnin=20, rng=row["process_seed"],
+            ), 4)
+            expected_diameter = np.linalg.norm(cloud[:, None, :] - cloud[None, :, :], axis=2).max()
+            self.assertAlmostEqual(row["cloud_diameter"], expected_diameter)
+            self.assertAlmostEqual(row["gamma0"] * expected_diameter, row["step_value"])
+
     def test_single_grid_pair_produces_one_candidate(self):
         result = tune_geometric_half_life_schedules(
             np.array([[0., 0.], [1., 0.]]), [0.4, 0.9], [0.03], [4], **self.settings,
@@ -197,7 +264,7 @@ class ScheduleTuningTests(unittest.TestCase):
         for removed in ["exact_empirical_width_low_dimension", "audit_width", "target_relative_gap",
                         "mean_minimum_width", "mean_width_rank", "mean_score",
                         "jones_mean", "realization_selected", "realization_ranking",
-                        "diameter_normalized", "lipschitz_rule", "simulate_uniform_ar",
+                        "lipschitz_rule", "simulate_uniform_ar",
                         "sliding_window_point_cloud", "point_cloud", "save_figure",
                         "tune_geometric_half_life_schedules"]:
             self.assertNotIn(removed, "\n".join(sources.values()))
@@ -344,10 +411,53 @@ class ScheduleTuningTests(unittest.TestCase):
                                    ("JONES_STATIONARITY_IMAGE_DIR", ".png")]:
                 self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
                 self.assertNotEqual(namespace[output], namespace[output.replace("_STATIONARITY", "")])
+            exec(sources["model6-settings"], namespace)
+            self.assertEqual(namespace["model6_number_of_realizations"], 100)
+            self.assertTrue(namespace["model6_stationarity_check"])
+            namespace.update(model6_number_of_realizations=2, model6_n_jobs=1)
+            with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
+                       side_effect=AssertionError("The notebook must not aggregate widths.")):
+                for cell_id in ["run-model6-realizations", "model6-width-win-counts",
+                                "model6-coefficient-win-counts", "model6-win-matrices", "model6-selection"]:
+                    exec(sources[cell_id], namespace)
+            self.assertEqual(len(namespace["model6_results"]), 8)
+            self.assertEqual(len(namespace["model6_cases"]), 2)
+            self.assertEqual(len(namespace["model6_combined_win_ranking"]), 4)
+            self.assertEqual(namespace["model6_width_win_experiment"]["cases"], 2)
+            self.assertEqual(namespace["model6_coefficient_win_experiment"]["cases"], 2)
+            self.assertNotEqual(namespace["model6_process_seed"], namespace["realization_process_seed"])
+            self.assertTrue(namespace["model6_results"]["stationarity_check"].all())
+            np.testing.assert_allclose(namespace["model6_cases"][["phi_1", "phi_2", "phi_3"]],
+                                       np.broadcast_to(namespace["model6_phi"], (2, 3)))
+            self.assertTrue(namespace["jones_results"].equals(original_results))
+            self.assertTrue(namespace["jones_cases"].equals(original_cases))
+            for output, suffix in [("MODEL6_PDF_DIR", ".pdf"), ("MODEL6_IMAGE_DIR", ".png")]:
+                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
             self.assertEqual(list(Path(directory).rglob("*.json")), [])
             self.assertEqual(list(Path(directory).rglob("*.csv")), [])
             self.assertLess(ids.index("epsilon-win-matrices"), ids.index("jones-description"))
             self.assertLess(ids.index("jones-selection"), ids.index("jones-stationarity-description"))
+            self.assertLess(ids.index("jones-stationarity-selection"), ids.index("model6-description"))
+            exec(sources["jones-scaled-settings"], namespace)
+            self.assertTrue(namespace["jones_scaled_check"])
+            namespace["jones_scaled_n_jobs"] = 1
+            for cell_id in ["run-jones-scaled-realizations", "jones-scaled-width-win-counts",
+                            "jones-scaled-coefficient-win-counts", "jones-scaled-win-matrices",
+                            "jones-scaled-selection", "jones-scaled-comparison"]:
+                exec(sources[cell_id], namespace)
+            scaled_results = namespace["jones_scaled_results"]
+            self.assertEqual(len(scaled_results), 8)
+            self.assertTrue(scaled_results["step_rule"].eq("diameter_normalized").all())
+            self.assertTrue(scaled_results["stationarity_check"].all())
+            np.testing.assert_allclose(scaled_results["gamma0"] * scaled_results["cloud_diameter"],
+                                       scaled_results["step_value"])
+            self.assertEqual(namespace["jones_scaled_win_matrices"]["diameter_normalized"].shape, (2, 2))
+            self.assertEqual(len(namespace["jones_scaled_union_counts"]), 8)
+            self.assertTrue(namespace["jones_stationarity_results"].equals(repeated))
+            for output, suffix in [("JONES_SCALED_PDF_DIR", ".pdf"), ("JONES_SCALED_IMAGE_DIR", ".png")]:
+                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
+            self.assertEqual(list(Path(directory).rglob("*.json")), [])
+            self.assertEqual(list(Path(directory).rglob("*.csv")), [])
 
     def test_notebook_setup_refreshes_a_cached_module_missing_new_helper(self):
         notebook = json.loads((
