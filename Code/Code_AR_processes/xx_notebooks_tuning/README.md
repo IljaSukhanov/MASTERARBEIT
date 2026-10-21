@@ -7,7 +7,7 @@ PDF/PNG figures; it writes no JSON/CSV data and computes no empirical global opt
 
 | Notebook | Purpose |
 |---|---|
-| [ar_tuning_experiments.ipynb](ar_tuning_experiments.ipynb) | Thesis experiments 2 and 3: independent paths with fixed coefficients, and paths with Jones-sampled coefficient vectors (both default 100). Both use one common fixed starting direction and absolute steps. Show width and coefficient-error win counts for experiment 2, plus model diagnostics for experiment 3. |
+| [ar_tuning_experiments.ipynb](ar_tuning_experiments.ipynb) | Experiments 2 and 3: independent paths with fixed coefficients, and paths with Jones-sampled coefficient vectors (both default 100). Show width and coefficient-error win counts for experiment 2, and width win counts for experiment 3. A final section repeats experiment 3 with stationarity-triggered restarts. |
 
 Experiment 2 uses phi=(0.6,-0.3,0.2).
 Experiment 3 samples a fresh causal AR(3) coefficient vector for each path
@@ -70,18 +70,29 @@ partial autocorrelations, spectral radius and both seeds. Shared runners in
 duplicating the optimizer. Only win-count matrices are exported,
 under a separate `jones_<run-id>` directory; iteration plots and JSON/CSV data
 exports are absent. Sampling reference: [Jones (1987), pp. 134–138](https://doi.org/10.2307/2347544).
-Its final post-fit diagnostic reports nonstationary recovered estimates,
-undefined coefficients and coefficient MAE above 1 across the full grid,
-the leading shared configurations and each model's lowest-width grid result.
-These diagnostics do not filter results or alter tuning decisions.
 Each progress line also reports the theoretical population minimum
 2/sqrt(1+||phi||^2) and the signed attained-empirical-minus-population gap.
-The model table and final width diagnostic retain this reference and the
-empirical width in the true-coefficient direction. The latter is a feasible
-direction on the same cloud: a larger attained width demonstrates a missed
-available improvement. Its positive gap gives a lower bound on empirical
-suboptimality. The population discrepancy can be negative and is not an
-empirical optimization gap. Neither benchmark changes the tuning score.
+The model table retains this reference and the empirical width in the
+true-coefficient direction. Neither benchmark changes the tuning score.
+
+Experiments 2 and the original experiment 3 leave `stationarity_check=False`.
+The final section repeats experiment 3 with `stationarity_check=True`, using
+the same models, realizations, common first direction, grid and win tolerance.
+After `patience` evaluations of each attempt, the shared optimizer checks
+coefficients recovered from that attempt's best-width direction. Companion
+spectral radius >= 1 or undefined estimates trigger a random new direction,
+a reset step schedule and a fresh full iteration budget. Failed attempts'
+best widths are discarded. The checkpoint repeats on restarted attempts;
+a passed attempt has no further or final stationarity check.
+The configurable `jones_stationarity_max_restarts` defaults to 100. Exhausting
+it records an undefined width and an explicit failure flag, with no win credit.
+All 100 models remain in the denominator, including any with no successful
+configuration. The ranking reports failed-run counts alongside restart counts.
+The new results report restarts and total evaluations including discarded
+attempts; total evaluations can exceed 2,000 per configuration.
+An input-pairing assertion checks coefficients, seeds and reference widths
+against the original experiment. Variables and PDF/PNG output directories
+use a separate `jones_stationarity_` prefix.
 
 Figures are saved under `Code/Code_AR_processes/outputs/pdfs/<experiment>/<run-id>/`
 and the corresponding `outputs/images/` folder. The experiment names match the

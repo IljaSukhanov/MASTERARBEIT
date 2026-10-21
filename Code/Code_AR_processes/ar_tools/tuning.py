@@ -28,6 +28,8 @@ def tune_geometric_width_schedule(
     improvement_tolerance,
     optimizer_seed,
     progress=False,
+    stationarity_check=False,
+    max_restarts=100,
 ):
     """Select gamma_m = gamma0 * beta**m by attained empirical width.
 
@@ -36,6 +38,10 @@ def tune_geometric_width_schedule(
     by total evaluations, then gamma0 and beta. True coefficients are not
     inputs to this search. Histories retain the best width across starts at
     each iteration, holding each stopped run at its last recorded best width.
+    Optional stationarity checkpoints/restarts use the shared optimizer.
+    Evaluation counts include discarded attempts. Starts that exhaust the
+    restart limit are excluded from width selection. If every start fails,
+    the candidate has NaN width/direction and explicit failure metadata.
     """
     points = np.asarray(points, dtype=float)
     directions = np.array(initial_directions, dtype=float, copy=True)
@@ -92,16 +98,20 @@ def tune_geometric_width_schedule(
                             optimizer_seed, 0, dimension, 21, start_index,
                         ]),
                         step_schedule="geometric",
+                        stationarity_check=stationarity_check,
+                        max_restarts=max_restarts,
                     )
                     for start_index, direction in enumerate(directions)
                 ]
-                selected_index = int(np.argmin([run["minimum_width"] for run in runs]))
+                eligible = [index for index, run in enumerate(runs)
+                            if run.get("stationarity_check_passed", True)]
+                selected_index = min(eligible, key=lambda index: runs[index]["minimum_width"]) if eligible else 0
                 selected = runs[selected_index]
-                direction = selected["direction"].copy()
+                direction = selected["direction"].copy() if eligible else np.full(dimension, np.nan)
                 if direction[0] < 0:
                     direction *= -1
-                width = float(selected["minimum_width"])
-                if (
+                width = float(selected["minimum_width"]) if eligible else np.nan
+                if eligible and (
                     not np.isfinite(width) or not np.all(np.isfinite(direction))
                     or not np.isclose(np.linalg.norm(direction), 1.0)
                     or not np.isclose(np.ptp(points @ direction), width)
@@ -111,31 +121,46 @@ def tune_geometric_width_schedule(
                     "candidate_id": candidate_id,
                     "gamma0": float(gamma0), "beta": float(beta),
                     "minimum_width": width, "selected_start": selected_index + 1,
-                    "total_evaluations": sum(len(run["width_history"]) for run in runs),
+                    "total_evaluations": sum(
+                        run.get("total_evaluations", len(run["width_history"])) for run in runs
+                    ),
                     "patience_stops": sum(run["termination_reason"] == "patience" for run in runs),
                     "runtime_seconds": perf_counter() - started,
                 }
+                if stationarity_check:
+                    row.update(
+                        stationarity_check=True,
+                        stationarity_check_passed=bool(eligible),
+                        restart_limit_reached=any(run["restart_limit_reached"] for run in runs),
+                        restart_count=sum(run["restart_count"] for run in runs),
+                        attempt_count=sum(run["attempt_count"] for run in runs),
+                        final_evaluations=len(selected["width_history"]),
+                        checkpoint_spectral_radius=selected["checkpoint"]["spectral_radius"],
+                    )
                 row.update({f"u_{j}": float(value) for j, value in enumerate(direction)})
                 rows.append(row)
-                longest = max(len(run["best_width_history"]) for run in runs)
+                valid_runs = [runs[index] for index in eligible]
+                longest = max(len(run["best_width_history"]) for run in (valid_runs or runs))
                 histories[candidate_id] = np.minimum.reduce([
                     np.pad(
                         run["best_width_history"],
                         (0, longest - len(run["best_width_history"])), mode="edge",
                     )
-                    for run in runs
-                ])
+                    for run in valid_runs
+                ]) if valid_runs else np.full(longest, np.nan)
                 for start_index, run in enumerate(runs):
                     per_start.append({
                         "candidate_id": candidate_id,
                         "gamma0": float(gamma0), "beta": float(beta),
                         "start": start_index + 1,
-                        "minimum_width": float(run["minimum_width"]),
-                        "evaluations": len(run["width_history"]),
+                        "minimum_width": (float(run["minimum_width"])
+                                          if run.get("stationarity_check_passed", True) else np.nan),
+                        "evaluations": run.get("total_evaluations", len(run["width_history"])),
                         "termination_reason": run["termination_reason"],
-                        "selected": start_index == selected_index,
+                        "selected": bool(eligible) and start_index == selected_index,
                     })
-                key = (width, row["total_evaluations"], float(gamma0), float(beta))
+                key = (width if np.isfinite(width) else np.inf,
+                       row["total_evaluations"], float(gamma0), float(beta))
                 if winning_key is None or key < winning_key:
                     winning_key, winning_row, winning_results = key, row, runs
                 if progress:
@@ -161,6 +186,8 @@ def tune_geometric_half_life_schedules(
     improvement_tolerance,
     optimizer_seed,
     progress=False,
+    stationarity_check=False,
+    max_restarts=100,
 ):
     """Tune absolute geometric steps from one fixed starting direction.
 
@@ -193,6 +220,7 @@ def tune_geometric_half_life_schedules(
         iterations=iterations, patience=patience,
         improvement_tolerance=improvement_tolerance,
         optimizer_seed=optimizer_seed, progress=progress,
+        stationarity_check=stationarity_check, max_restarts=max_restarts,
     )
     effective = {(row["gamma0"], row["beta"]): row for row in search["candidates"]}
     start_details = {row["candidate_id"]: row for row in search["per_start"]}
@@ -210,7 +238,8 @@ def tune_geometric_half_life_schedules(
                                   candidate_id=candidate_id, step_rule="absolute",
                                   step_value=float(scale), half_life=float(half_life)))
     ordered = sorted(candidates, key=lambda row: (
-        row["minimum_width"], row["total_evaluations"], row["gamma0"],
+        row["minimum_width"] if np.isfinite(row["minimum_width"]) else np.inf,
+        row["total_evaluations"], row["gamma0"],
         row["beta"], row["step_rule"],
     ))
     selected = ordered[0]
@@ -477,6 +506,7 @@ def tune_jones_ar_realizations(
     sample_size, initial_direction, scale_grid, half_life_grid, *, replications,
     coefficient_seed, process_seed, burnin, iterations, patience,
     improvement_tolerance, optimizer_seed, progress=False, summarize=True,
+    stationarity_check=False, max_restarts=100,
 ):
     """Tune paired grids on distinct Jones-sampled causal AR(3) models.
 
@@ -486,6 +516,12 @@ def tune_jones_ar_realizations(
     spectral radius. Coefficients, partial autocorrelations and seeds are
     returned with every result and case. Nothing is exported. Set summarize=False
     to return raw runs without aggregate width ranking and selection.
+    stationarity_check=True enables a checkpoint after patience evaluations
+    of each attempt, with a fresh full budget on every restart. The initial
+    direction, coefficient draws and simulated paths are unchanged.
+    Exhausted candidates have NaN scores and explicit failure flags; use
+    summarize=False and summarize_configuration_wins(allow_nonfinite=True)
+    to retain them in the design without awarding them win credit.
     """
     clouds = _ar_realization_cases(
         None, [sample_size], initial_direction, replications=replications,
@@ -495,12 +531,14 @@ def tune_jones_ar_realizations(
         clouds, initial_direction, scale_grid, half_life_grid, replications=replications,
         iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
         optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
+        stationarity_check=stationarity_check, max_restarts=max_restarts,
     )
 
 
 def _tune_ar_cases(
     clouds, initial_direction, scale_grid, half_life_grid, *, replications,
     iterations, patience, improvement_tolerance, optimizer_seed, progress, summarize,
+    stationarity_check=False, max_restarts=100,
 ):
     """Run the same grid and aggregation for either AR coefficient design."""
     rows, cases = [], []
@@ -512,6 +550,7 @@ def _tune_ar_cases(
             case["points"], case["initial_direction"], scale_grid, half_life_grid, iterations=iterations,
             patience=patience, improvement_tolerance=improvement_tolerance,
             optimizer_seed=optimizer_seed,
+            stationarity_check=stationarity_check, max_restarts=max_restarts,
         )
         for candidate in search["candidates"]:
             rows.append(dict(
@@ -541,6 +580,12 @@ def _tune_ar_cases(
                       "grid_winner_step_value": winner["step_value"],
                       "grid_winner_half_life": winner["half_life"],
                       "runtime_seconds": perf_counter() - started})
+        if stationarity_check:
+            cases[-1].update(
+                restart_count=sum(row["restart_count"] for row in search["candidates"]),
+                total_evaluations=sum(row["total_evaluations"] for row in search["candidates"]),
+                failed_runs=sum(not row["stationarity_check_passed"] for row in search["candidates"]),
+            )
         if progress:
             if "coefficient_seed" in metadata:
                 diagnostics = (
@@ -552,10 +597,13 @@ def _tune_ar_cases(
                                                 suppress_small=False, max_line_width=200)
                 error_text = f"{coefficient_error:.8g}" if np.isfinite(coefficient_error) else "undefined"
                 diagnostics = f"estimated phi={estimates_text}, coefficient MAE={error_text}, "
+            restart_text = (f"{cases[-1]['restart_count']} restarts; {cases[-1]['failed_runs']} failed runs; "
+                            if stationarity_check else "")
             print(f"Path {case['replication']}/{replications}, T={case['T']}: "
                   f"best achieved width={winner['minimum_width']:.10f}, "
                   f"{diagnostics}"
                   f"{len(search['candidates'])} absolute schedules; "
+                  f"{restart_text}"
                   f"{cases[-1]['runtime_seconds']:.1f}s", flush=True)
     result = {"results": rows, "cases": cases,
               "initial_direction": np.asarray(initial_direction) / np.linalg.norm(initial_direction)}

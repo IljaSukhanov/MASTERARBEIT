@@ -69,6 +69,66 @@ class ScheduleTuningTests(unittest.TestCase):
         self.assertTrue(np.all(np.diff(history) <= 0))
         self.assertAlmostEqual(history[-1], selected["minimum_width"])
 
+    def test_stationarity_tuning_reuses_optimizer_and_counts_discarded_attempts(self):
+        cloud = np.array([[-1., 0.], [1., 0.]])
+        settings = dict(self.settings, stationarity_check=True, max_restarts=20)
+        result = tune_geometric_width_schedule(
+            cloud, [[0., 1.]], [0.03], [0.97], **settings,
+        )
+        direct = projected_subgradient_empirical_width(
+            cloud, initial_direction=[0., 1.], initial_step=0.03,
+            geometric_decay=0.97, step_schedule="geometric",
+            rng=np.random.SeedSequence([17, 0, 2, 21, 0]),
+            **{key: value for key, value in settings.items() if key != "optimizer_seed"},
+        )
+        row = result["selected"]
+        self.assertGreater(row["restart_count"], 0)
+        self.assertTrue(row["stationarity_check_passed"])
+        self.assertFalse(row["restart_limit_reached"])
+        self.assertEqual(row["restart_count"], direct["restart_count"])
+        self.assertEqual(row["total_evaluations"], direct["total_evaluations"])
+        self.assertEqual(result["per_start"][0]["evaluations"], direct["total_evaluations"])
+        self.assertEqual(row["total_evaluations"],
+                         8 * row["restart_count"] + row["final_evaluations"])
+        self.assertGreater(row["minimum_width"], 0.)  # Failed attempt's width was zero.
+        np.testing.assert_array_equal(result["direction"], direct["direction"])
+        np.testing.assert_array_equal(result["histories"][row["candidate_id"]],
+                                      direct["best_width_history"])
+
+    def test_stationarity_tuning_does_not_rank_an_exhausted_attempt(self):
+        with patch("Code.Code_AR_processes.ar_tools.descent.is_stationary",
+                   return_value=(False, np.array([2.]))):
+            result = tune_geometric_half_life_schedules(
+                self.cloud, self.directions[0], [0.03], [4],
+                stationarity_check=True, max_restarts=0, **self.settings,
+            )
+        row = result["candidates"][0]
+        self.assertFalse(row["stationarity_check_passed"])
+        self.assertTrue(row["restart_limit_reached"])
+        self.assertTrue(np.isnan(row["minimum_width"]))
+        self.assertTrue(np.isnan(result["direction"]).all())
+        self.assertTrue(np.isnan(result["histories"][row["candidate_id"]]).all())
+        self.assertFalse(result["per_start"][0]["selected"])
+        summary = summarize_configuration_wins(
+            [dict(row, replication=1, T=10)], allow_nonfinite=True,
+        )
+        self.assertEqual(summary["total_points"], 0)
+        self.assertEqual(summary["undefined_cases"], 1)
+        self.assertEqual(summary["ranking"][0]["wins"], 0)
+
+    def test_stationarity_tuning_selects_a_passed_start_over_a_failed_smaller_width(self):
+        result = tune_geometric_width_schedule(
+            np.array([[-1., 0.], [1., 0.]]), [[0., 1.], [1., 0.]], [0.03], [0.97],
+            stationarity_check=True, max_restarts=0, **self.settings,
+        )
+        self.assertEqual(result["selected"]["selected_start"], 2)
+        self.assertEqual(result["selected"]["minimum_width"], 2.)
+        self.assertTrue(result["selected"]["stationarity_check_passed"])
+        self.assertTrue(np.isnan(result["per_start"][0]["minimum_width"]))
+        self.assertFalse(result["per_start"][0]["selected"])
+        np.testing.assert_array_equal(result["histories"]["grid_000"],
+                                      result["best_results"][1]["best_width_history"])
+
     def test_invalid_grids_and_directions_are_rejected(self):
         for gamma, beta in (([], [0.9]), ([0.1], []), ([0.0], [0.9]),
                             ([np.nan], [0.9]), ([0.1], [1.0]), ([0.1], [0.0])):
@@ -238,8 +298,7 @@ class ScheduleTuningTests(unittest.TestCase):
             with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
                        side_effect=AssertionError("The notebook must not aggregate widths.")):
                 for cell_id in ["run-jones-realizations", "jones-models",
-                                "jones-win-counts", "jones-win-matrices", "jones-selection",
-                                "jones-coefficient-diagnostics", "jones-width-benchmarks"]:
+                                "jones-win-counts", "jones-win-matrices", "jones-selection"]:
                     exec(sources[cell_id], namespace)
             self.assertEqual(len(namespace["jones_results"]), 8)
             self.assertEqual(len(namespace["jones_cases"]), 2)
@@ -248,29 +307,10 @@ class ScheduleTuningTests(unittest.TestCase):
             self.assertNotIn("selected", namespace["jones_experiment"])
             self.assertNotIn("mean_score", namespace["jones_win_ranking"].columns)
             self.assertNotIn("mean_minimum_width", namespace["jones_win_ranking"].columns)
-            self.assertEqual(set(namespace["jones_leading_failure_ids"]),
-                             set(namespace["jones_win_leaders"]["candidate_id"]))
             self.assertTrue(namespace["jones_results"]["selected_start"].eq(1).all())
             self.assertTrue(namespace["jones_results"]["total_evaluations"].between(1, 30).all())
             self.assertTrue(namespace["jones_cases"]["spectral_radius"].lt(1).all())
             self.assertEqual(namespace["jones_cases"][["phi_1", "phi_2", "phi_3"]].drop_duplicates().shape[0], 2)
-            diagnostics = namespace["jones_coefficient_diagnostics"]
-            self.assertEqual(len(diagnostics), 8)
-            self.assertEqual(namespace["jones_failure_counts"].iloc[0]["runs"], 8)
-            self.assertEqual(len(namespace["jones_grid_winner_coefficients"]), 2)
-            for row in diagnostics.to_dict("records"):
-                estimate = np.array([row[f"estimated_phi_{j}"] for j in range(1, 4)])
-                self.assertEqual(row["nonstationary_estimate"], not is_stationary(estimate)[0])
-                self.assertEqual(row["undefined_coefficients"], False)
-            self.assertEqual(namespace["jones_failure_by_configuration"]["nonstationary_estimates"].sum(),
-                             diagnostics["nonstationary_estimate"].sum())
-            width_diagnostics = namespace["jones_width_diagnostics"]
-            self.assertEqual(len(width_diagnostics), 2)
-            np.testing.assert_allclose(
-                width_diagnostics["grid_population_width_gap"],
-                width_diagnostics["grid_best_width"] - width_diagnostics["population_minimum_width"],
-            )
-            self.assertTrue((width_diagnostics["empirical_suboptimality_lower_bound"] >= 0).all())
             expected = set()
             for replication, rows in namespace["jones_results"].groupby("replication"):
                 threshold = rows["minimum_width"].min() + 1e-8
@@ -280,9 +320,34 @@ class ScheduleTuningTests(unittest.TestCase):
                               for row in namespace["jones_win_winners"].to_dict("records")}, expected)
             for output, suffix in [("JONES_PDF_DIR", ".pdf"), ("JONES_IMAGE_DIR", ".png")]:
                 self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
+            original_results = namespace["jones_results"].copy(deep=True)
+            original_cases = namespace["jones_cases"].copy(deep=True)
+            with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
+                       side_effect=AssertionError("The notebook must not aggregate widths.")):
+                for cell_id in ["jones-stationarity-settings", "run-jones-stationarity-realizations",
+                                "jones-stationarity-models", "jones-stationarity-win-counts",
+                                "jones-stationarity-win-matrices", "jones-stationarity-selection"]:
+                    exec(sources[cell_id], namespace)
+            self.assertTrue(namespace["jones_results"].equals(original_results))
+            self.assertTrue(namespace["jones_cases"].equals(original_cases))
+            repeated = namespace["jones_stationarity_results"]
+            self.assertEqual(len(repeated), 8)
+            self.assertTrue(repeated["stationarity_check_passed"].all())
+            self.assertNotIn("stationarity_check", namespace["jones_results"].columns)
+            self.assertNotIn("stationarity_check", namespace["realization_results"].columns)
+            np.testing.assert_array_equal(
+                repeated["total_evaluations"], repeated["restart_count"] * 12 + repeated["final_evaluations"],
+            )
+            self.assertEqual(namespace["jones_stationarity_win_experiment"]["cases"], 2)
+            self.assertEqual(len(namespace["jones_stationarity_win_ranking"]), 4)
+            for output, suffix in [("JONES_STATIONARITY_PDF_DIR", ".pdf"),
+                                   ("JONES_STATIONARITY_IMAGE_DIR", ".png")]:
+                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
+                self.assertNotEqual(namespace[output], namespace[output.replace("_STATIONARITY", "")])
             self.assertEqual(list(Path(directory).rglob("*.json")), [])
             self.assertEqual(list(Path(directory).rglob("*.csv")), [])
             self.assertLess(ids.index("epsilon-win-matrices"), ids.index("jones-description"))
+            self.assertLess(ids.index("jones-selection"), ids.index("jones-stationarity-description"))
 
     def test_notebook_setup_refreshes_a_cached_module_missing_new_helper(self):
         notebook = json.loads((
