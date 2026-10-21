@@ -562,7 +562,7 @@ It can be shown that an AR($p$) process is stable if and only if the principal e
 
 The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we use the grid $\gamma_0\in\{0.1,0.2,\dots,0.9\}$.
 
-We sample one fixed starting direction $u_0\in U(\mathbb{S}^{2})$ and determine which configuration yields the lowest function value. 
+We sample one fixed starting direction $u_0\in U(\mathbb{S}^{3})$ and determine which configuration yields the lowest function value. 
 
 \textcolor{red}{Repeat under many $u_0$?}
 
@@ -572,9 +572,9 @@ For each realization $l$ we run the descent for every pair $(\beta,\gamma_0)$ an
 
 \textbf{Third experiment}
 
-\todo[inline]{Does the selected schedule work on fresh realizations?}
+Sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, 1 independent realizations are generated and the best configuration is looked for. Afterwards we have 100 best configurations and we choose the one configuration which was best most often.
 
-Sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, 100 independent realizations are generated and the best configuration is looked for. Afterwards we have 100 best configurations and we choose the one configuration which was best most often.
+The results of our tuning experiment are given in...
 
 \textcolor{red}{All subsequent experiments are performed using different seeds.}
 
@@ -607,7 +607,7 @@ Table~\ref{tab:ar-coefficient-mae} shows the results. We see that the $L^{\infty
 \centering
 \caption{Coefficient estimation errors for 100 simulated AR($p$)
 processes per true order. Each entry reports the mean
-$\ell_1$ coefficient error, with the median per-process error
+$L_1$ coefficient error, with the median per-process error
 in parentheses below. The lowest values are shown in bold.}
 \label{tab:ar-coefficient-mae}
 \begin{tabular}{lccccc}
