@@ -45,7 +45,13 @@ def _inputs():
 
 
 def source_settings():
-    return json.loads(str(_inputs()["settings"]))
+    settings = json.loads(str(_inputs()["settings"]))
+    # The archived dataset key named the old step-scale setting. Its numeric
+    # value now supplies an absolute initial step; no cloud scaling is used.
+    archived_key = "initial_step_scale"
+    if archived_key in settings:
+        settings["initial_step"] = settings.pop(archived_key)
+    return settings
 
 
 def load_process(replication):

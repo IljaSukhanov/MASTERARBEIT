@@ -16,8 +16,9 @@ from threadpoolctl import threadpool_limits
 from .classical_selectors import (
     conditional_gaussian_qml, horvath_linf_coefficients, yule_walker_coefficients,
 )
+from .coefficient_errors import COEFFICIENT_ERROR_METRIC, coefficient_mae
 from .descent import (
-    batched_geometric_width_curves, fit_ar3_mse_prefix, fit_ar3_warm_start_rows,
+    batched_geometric_width_curves, fit_ar3_mae_prefix, fit_ar3_warm_start_rows,
 )
 from .breakpoint_selectors import (
     all_population_selectors, descent_chain, earlier_bend_certificate, width_selectors,
@@ -25,7 +26,7 @@ from .breakpoint_selectors import (
 from .lp_widths import exact_empirical_width_low_dimension, lp_width_curve
 from .population_widths import population_ar3_widths
 from .experiment_settings import (
-    AR_DIRECTORY, AR3_MSE_CONFIGURATION, AR3_MSE_OUTPUT_DIRECTORY, WARM_START_VARIANTS,
+    AR_DIRECTORY, AR3_MAE_CONFIGURATION, AR3_MAE_OUTPUT_DIRECTORY, WARM_START_VARIANTS,
 )
 from .functions import (
     ar_impulse_response, is_stationary, jones_ar_coefficients,
@@ -41,7 +42,7 @@ def count_outcomes(selected_orders, *, true_order):
     }
 
 
-def run_rmse_replication(replication, configuration, cache_directory, resume=True):
+def run_mae_replication(replication, configuration, cache_directory, resume=True):
     """Fit all four methods to one independently seeded, nested sample path."""
     cache_path = Path(cache_directory) / f"replication_{replication:04d}.csv"
     expected_rows = len(configuration["T_values"]) * len(configuration["methods"])
@@ -51,7 +52,10 @@ def run_rmse_replication(replication, configuration, cache_directory, resume=Tru
                 and not cached.duplicated(["T", "method"]).any()
                 and (cached["replication"] == replication).all()
                 and set(cached["T"]) == set(configuration["T_values"])
-                and set(cached["method"]) == set(configuration["methods"])):
+                and set(cached["method"]) == set(configuration["methods"])
+                and "coefficient_mae" in cached
+                and "coefficient_error_metric" in cached
+                and cached["coefficient_error_metric"].eq(COEFFICIENT_ERROR_METRIC).all()):
             return cached
         raise RuntimeError(f"Incomplete or inconsistent cache: {cache_path}")
     true_phi = np.asarray(configuration["phi"], dtype=float)
@@ -81,14 +85,11 @@ def run_rmse_replication(replication, configuration, cache_directory, resume=Tru
                     if method == "Gradient descent":
                         series_for_k = prefix[common_K - k:]
                         cloud = sliding_window_point_cloud(series_for_k, k)
-                        lipschitz_bound = float(np.linalg.norm(np.ptp(cloud, axis=0)))
-                        if not np.isfinite(lipschitz_bound) or lipschitz_bound <= 0:
-                            raise ValueError("Invalid Lipschitz upper bound.")
                         _, widths, _, directions = batched_geometric_width_curves(
                             series_for_k, k, seed=configuration["optimizer_seed"],
                             replication=replication - 1,
                             starts=configuration["starts"], iterations=configuration["iterations"],
-                            initial_step=configuration["initial_step_scale"] / lipschitz_bound,
+                            initial_step=configuration["initial_step"],
                             geometric_decay=configuration["geometric_decay"],
                             return_directions=True, use_convex_hull=configuration["use_convex_hull"],
                         )
@@ -119,28 +120,27 @@ def run_rmse_replication(replication, configuration, cache_directory, resume=Tru
                     if estimate.shape != true_phi.shape or not np.all(np.isfinite(estimate)):
                         raise ValueError("The coefficient estimate is invalid.")
                     errors = estimate - true_phi
-                    squared_error = float(errors @ errors)
-                    if not np.isfinite(squared_error):
-                        raise ValueError("The squared coefficient error is not finite.")
+                    mae = coefficient_mae(estimate, true_phi)
+                    if not np.isfinite(mae):
+                        raise ValueError("The coefficient MAE is not finite.")
                     estimated_stationary = bool(is_stationary(estimate)[0])
                 except Exception as exc:
                     status, error_message = "failed", f"{type(exc).__name__}: {exc}"
                     errors = np.full(order, np.nan)
-                    squared_error = np.nan
+                    mae = np.nan
                     estimated_stationary = np.nan
                 elapsed = perf_counter() - start_time
                 row = {
                     "replication": replication, "T": T, "method": method,
                     "status": status, "error_message": error_message,
-                    "squared_coefficient_error": squared_error,
-                    "coefficient_error": float(np.sqrt(squared_error)),
-                    "estimated_coefficient_norm": float(np.linalg.norm(estimate)),
+                    "coefficient_mae": mae,
+                    "coefficient_error_metric": COEFFICIENT_ERROR_METRIC,
                     "estimated_stationary": estimated_stationary,
                     "runtime_seconds": elapsed, **extra,
                 }
                 for j in range(order):
                     row[f"estimated_phi_{j + 1}"] = float(estimate[j])
-                    row[f"phi_error_{j + 1}"] = float(errors[j])
+                    row[f"absolute_error_phi_{j + 1}"] = float(abs(errors[j]))
                 rows.append(row)
     result = pd.DataFrame(rows)
     temporary_path = cache_path.with_suffix(f".tmp.{os.getpid()}")
@@ -298,7 +298,7 @@ def fit_ar3_gradient_examples(*, ar_directory=AR_DIRECTORY, project_directory=No
         "optimizer": "batched_geometric_width_curves, padded previous direction",
         "warm_start_previous_direction": True,
         "reference_figure": str(ROOT / "Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf"),
-        "reference_notebook": str(AR_DIR / "ar_thesis_figures_2_1_to_2_3.ipynb"),
+        "reference_notebook": str(AR_DIR / "xx_notebooks_figures" / "ar_thesis_figures_2_1_to_2_3.ipynb"),
         "figure_selector": "Original descent chain on raw widths",
         "population_direction_source": "Recomputed global truncated zonotope minima in ar_tools/population_widths.py",
         "population_direction_truncation_bound": 1e-8,
@@ -395,7 +395,7 @@ def fit_ar3_gradient_examples(*, ar_directory=AR_DIRECTORY, project_directory=No
     return curves, summary
 
 
-def run_ar3_mse_process(replication_index: int, *, configuration, cache_directory) -> pd.DataFrame:
+def run_ar3_mae_process(replication_index: int, *, configuration, cache_directory) -> pd.DataFrame:
     CONFIG = configuration
     CACHE_DIR = Path(cache_directory)
     cache_path = CACHE_DIR / f"process_{replication_index + 1:03d}.csv"
@@ -405,6 +405,9 @@ def run_ar3_mse_process(replication_index: int, *, configuration, cache_director
             len(cached) == len(CONFIG["sample_sizes"])
             and cached["T"].tolist() == CONFIG["sample_sizes"]
             and cached["replication"].eq(replication_index + 1).all()
+            and "coefficient_mae" in cached
+            and "coefficient_error_metric" in cached
+            and cached["coefficient_error_metric"].eq(COEFFICIENT_ERROR_METRIC).all()
         ):
             return cached
 
@@ -427,22 +430,25 @@ def run_ar3_mse_process(replication_index: int, *, configuration, cache_director
             "T": sample_size,
             "status": "ok",
             "error_message": "",
+            "coefficient_error_metric": COEFFICIENT_ERROR_METRIC,
         }
         for index, value in enumerate(true_phi, start=1):
             row[f"true_phi_{index}"] = float(value)
         try:
-            result = fit_ar3_mse_prefix(series, replication_index, sample_size, configuration=CONFIG)
+            result = fit_ar3_mae_prefix(series, replication_index, sample_size, configuration=CONFIG)
             estimate = result.pop("estimate")
             row.update(result)
-            squared_errors = (estimate - true_phi) ** 2
-            for index, (value, error) in enumerate(zip(estimate, squared_errors), start=1):
+            absolute_errors = np.abs(estimate - true_phi)
+            for index, (value, error) in enumerate(zip(estimate, absolute_errors), start=1):
                 row[f"estimated_phi_{index}"] = float(value)
-                row[f"squared_error_phi_{index}"] = float(error)
-            row["coefficient_mse"] = float(np.mean(squared_errors))
+                row[f"absolute_error_phi_{index}"] = float(error)
+            row["coefficient_mae"] = coefficient_mae(estimate, true_phi)
+            if not np.isfinite(row["coefficient_mae"]):
+                raise ValueError("The coefficient MAE is not finite.")
         except Exception as exc:
             row["status"] = "failed"
             row["error_message"] = f"{type(exc).__name__}: {exc}"
-            row["coefficient_mse"] = np.nan
+            row["coefficient_mae"] = np.nan
         row["runtime_seconds"] = perf_counter() - start_time
         rows.append(row)
 
@@ -453,9 +459,10 @@ def run_ar3_mse_process(replication_index: int, *, configuration, cache_director
     return frame
 
 
-def run_ar3_coefficient_mse_experiment(*, configuration=None,
-                                       output_directory=AR3_MSE_OUTPUT_DIRECTORY, n_jobs=4) -> None:
-    CONFIG = AR3_MSE_CONFIGURATION if configuration is None else configuration
+def run_ar3_coefficient_mae_experiment(*, configuration=None,
+                                       output_directory=AR3_MAE_OUTPUT_DIRECTORY, n_jobs=4) -> None:
+    CONFIG = dict(AR3_MAE_CONFIGURATION if configuration is None else configuration)
+    CONFIG["coefficient_error_metric"] = COEFFICIENT_ERROR_METRIC
     OUTPUT_DIR = Path(output_directory)
     CACHE_DIR = OUTPUT_DIR / "processes"
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -470,7 +477,7 @@ def run_ar3_coefficient_mse_experiment(*, configuration=None,
     frames = []
     with parallel_config(backend="loky", inner_max_num_threads=1):
         completed = Parallel(n_jobs=n_jobs, return_as="generator_unordered")(
-            delayed(run_ar3_mse_process)(index, configuration=CONFIG, cache_directory=CACHE_DIR) for index in range(CONFIG["replications"])
+            delayed(run_ar3_mae_process)(index, configuration=CONFIG, cache_directory=CACHE_DIR) for index in range(CONFIG["replications"])
         )
         for count, frame in enumerate(completed, start=1):
             frames.append(frame)
@@ -496,22 +503,22 @@ def run_ar3_coefficient_mse_experiment(*, configuration=None,
     summary_rows = []
     for sample_size in CONFIG["sample_sizes"]:
         group = results.loc[results["T"] == sample_size]
-        losses = group["coefficient_mse"].to_numpy(dtype=float)
+        losses = group["coefficient_mae"].to_numpy(dtype=float)
         failed_count = int((group["status"] != "ok").sum())
         summary_rows.append(
             {
                 "T": sample_size,
                 "processes": len(group),
                 "failed_fits": failed_count,
-                # A failed fit makes the unconditional MSE unavailable.
-                "coefficient_mse": float(np.mean(losses)),
-                "median_process_mse": float(np.median(losses)),
-                "max_process_mse": float(np.max(losses)),
+                # A failed fit makes the unconditional MAE unavailable.
+                "coefficient_mae": float(np.mean(losses)),
+                "median_process_mae": float(np.median(losses)),
+                "max_process_mae": float(np.max(losses)),
                 "mean_runtime_seconds": float(group["runtime_seconds"].mean()),
             }
         )
     summary = pd.DataFrame(summary_rows)
-    summary.to_csv(OUTPUT_DIR / "mse_summary.csv", index=False)
+    summary.to_csv(OUTPUT_DIR / "mae_summary.csv", index=False)
     print(f"Finished {expected} fits; failed fits: {len(failures)}")
     print(summary.to_string(index=False, float_format=lambda value: f"{value:.8g}"))
     print(f"Results: {OUTPUT_DIR}")

@@ -3,10 +3,10 @@
 from time import perf_counter
 
 import numpy as np
-from scipy.spatial.distance import pdist
 from threadpoolctl import threadpool_limits
 
 from . import descent
+from .coefficient_errors import coefficient_mae
 from .functions import is_stationary, jones_ar_coefficients, simulate_uniform_ar, sliding_window_point_cloud
 
 __all__ = [
@@ -162,13 +162,10 @@ def tune_geometric_half_life_schedules(
     optimizer_seed,
     progress=False,
 ):
-    """Compare absolute and diameter-normalized steps from one paired start.
+    """Tune absolute geometric steps from one fixed starting direction.
 
-    The thesis parameterization is beta = 2**(-1/H). For each scale s, the
-    absolute rule uses gamma0=s and the normalized rule uses gamma0=s/L,
-    with L the actual Euclidean diameter of the supplied cloud. The existing
-    fixed-cloud tuner performs the optimization; shared effective schedules
-    are evaluated only once and then receive both rule labels if needed.
+    The parameterization is beta = 2**(-1/H), with each scale used directly
+    as gamma0. The existing fixed-cloud tuner performs the optimization.
     """
     points = np.asarray(points, dtype=float)
     direction = np.asarray(initial_direction, dtype=float)
@@ -191,12 +188,8 @@ def tune_geometric_half_life_schedules(
     betas = np.exp2(-1.0 / half_lives)
     if np.any((betas <= 0) | (betas >= 1)):
         raise ValueError("Half-lives must produce representable beta values in (0, 1).")
-    diameter = float(pdist(points).max())
-    if not np.isfinite(diameter) or diameter <= 0:
-        raise ValueError("The cloud must have positive finite Euclidean diameter.")
-    actual_steps = np.unique(np.r_[scales, scales / diameter])
     search = tune_geometric_width_schedule(
-        points, direction[None, :], actual_steps, betas,
+        points, direction[None, :], scales, betas,
         iterations=iterations, patience=patience,
         improvement_tolerance=improvement_tolerance,
         optimizer_seed=optimizer_seed, progress=progress,
@@ -204,38 +197,30 @@ def tune_geometric_half_life_schedules(
     effective = {(row["gamma0"], row["beta"]): row for row in search["candidates"]}
     start_details = {row["candidate_id"]: row for row in search["per_start"]}
     candidates, per_start, histories = [], [], {}
-    for rule in ("absolute", "diameter_normalized"):
-        for scale_index, scale in enumerate(scales):
-            gamma0 = float(scale if rule == "absolute" else scale / diameter)
-            for h_index, (half_life, beta) in enumerate(zip(half_lives, betas)):
-                original = effective[(gamma0, float(beta))]
-                effective_id = original["candidate_id"]
-                candidate_id = f"{rule}_s{scale_index:02d}_h{h_index:02d}"
-                row = dict(original, candidate_id=candidate_id, step_rule=rule,
-                           step_value=float(scale), half_life=float(half_life),
-                           lipschitz_constant=diameter)
-                candidates.append(row)
-                histories[candidate_id] = search["histories"][effective_id]
-                per_start.append(dict(start_details[effective_id],
-                                      candidate_id=candidate_id, step_rule=rule,
-                                      step_value=float(scale), half_life=float(half_life)))
-    # Use the same numerical ordering as the underlying tuner. Rule labels
-    # resolve the otherwise identical candidates when L=1.
+    for scale_index, scale in enumerate(scales):
+        for h_index, (half_life, beta) in enumerate(zip(half_lives, betas)):
+            original = effective[(float(scale), float(beta))]
+            effective_id = original["candidate_id"]
+            candidate_id = f"absolute_s{scale_index:02d}_h{h_index:02d}"
+            row = dict(original, candidate_id=candidate_id, step_rule="absolute",
+                       step_value=float(scale), half_life=float(half_life))
+            candidates.append(row)
+            histories[candidate_id] = search["histories"][effective_id]
+            per_start.append(dict(start_details[effective_id],
+                                  candidate_id=candidate_id, step_rule="absolute",
+                                  step_value=float(scale), half_life=float(half_life)))
     ordered = sorted(candidates, key=lambda row: (
         row["minimum_width"], row["total_evaluations"], row["gamma0"],
         row["beta"], row["step_rule"],
     ))
     selected = ordered[0]
-    best_by_rule = {
-        rule: next(row for row in ordered if row["step_rule"] == rule)
-        for rule in ("absolute", "diameter_normalized")
-    }
+    best_by_rule = {"absolute": selected}
     return {
         "candidates": candidates, "per_start": per_start, "histories": histories,
         "selected": dict(selected), "best_by_rule": best_by_rule,
         "direction": np.array([selected[f"u_{j}"] for j in range(points.shape[1])]),
         "initial_direction": direction / np.linalg.norm(direction),
-        "diameter": diameter, "effective_schedule_count": len(effective),
+        "effective_schedule_count": len(effective),
     }
 
 
@@ -282,7 +267,9 @@ def summarize_geometric_replications(results):
     return [dict(row, rank=index + 1) for index, row in enumerate(summaries)]
 
 
-def summarize_configuration_wins(results, *, score_key="minimum_width", epsilon=1e-8):
+def summarize_configuration_wins(
+    results, *, score_key="minimum_width", epsilon=1e-8, allow_nonfinite=False,
+):
     """Give every qualifying configuration a full point on each paired case.
 
     Each (replication, T) case must contain every candidate exactly once.
@@ -291,9 +278,11 @@ def summarize_configuration_wins(results, *, score_key="minimum_width", epsilon=
     achieved score among supplied candidates on that case.
     Points are never split between tied configurations or allocated by speed.
     Each configuration can win at most once per case, while total points can
-    exceed the number of cases. Equal final counts use the full-precision
-    mean score, then mean evaluations and labels for display order only.
-    Nothing is exported.
+    exceed the number of cases. Equal final counts use parameter labels for
+    display order only; no average objective value enters the summary.
+    With allow_nonfinite=True, undefined scores receive no credit and the
+    reference uses only finite scores. An entirely undefined case awards no
+    points but remains in the denominator. Nothing is exported.
     """
     if not results:
         raise ValueError("Supply at least one replication result.")
@@ -305,7 +294,7 @@ def summarize_configuration_wins(results, *, score_key="minimum_width", epsilon=
     candidates, cases = {}, {}
     labels = ("step_rule", "step_value", "half_life", "beta")
     for row in results:
-        if not np.isfinite(row[score_key]):
+        if not allow_nonfinite and not np.isfinite(row[score_key]):
             raise ValueError("All comparison scores must be finite.")
         candidate_id = row["candidate_id"]
         candidates.setdefault(candidate_id, []).append(row)
@@ -319,9 +308,10 @@ def summarize_configuration_wins(results, *, score_key="minimum_width", epsilon=
     for case, rows in sorted(cases.items()):
         if len(rows) != len(candidates) or {row["candidate_id"] for row in rows} != expected_ids:
             raise ValueError("Every candidate must occur once in every paired case.")
-        minimum_score = float(min(row[score_key] for row in rows))
+        finite_rows = [row for row in rows if np.isfinite(row[score_key])]
+        minimum_score = float(min(row[score_key] for row in finite_rows)) if finite_rows else np.nan
         winning_threshold = minimum_score + epsilon
-        co_winners = [row for row in rows if float(row[score_key]) <= winning_threshold]
+        co_winners = [row for row in finite_rows if float(row[score_key]) <= winning_threshold]
         for row in sorted(co_winners, key=lambda row: row["candidate_id"]):
             counts[row["candidate_id"]] += 1
             winners.append(dict(row, winning_score=float(row[score_key]),
@@ -330,18 +320,19 @@ def summarize_configuration_wins(results, *, score_key="minimum_width", epsilon=
                                 co_winners=len(co_winners)))
         case_summaries.append({"replication": case[0], "T": case[1],
                                "minimum_score": minimum_score, "winning_threshold": winning_threshold,
-                               "co_winners": len(co_winners)})
+                               "co_winners": len(co_winners),
+                               "undefined_scores": len(rows) - len(finite_rows)})
     ranking = []
     for candidate_id, rows in candidates.items():
         ranking.append({
             "candidate_id": candidate_id, **{key: rows[0][key] for key in labels},
             "wins": counts[candidate_id], "win_rate": counts[candidate_id] / len(cases),
-            "mean_score": float(np.mean([row[score_key] for row in rows])),
+            "undefined_scores": sum(not np.isfinite(row[score_key]) for row in rows),
             "mean_evaluations": float(np.mean([row["total_evaluations"] for row in rows])),
         })
     ranking.sort(key=lambda row: (
-        -row["wins"], row["mean_score"], row["mean_evaluations"],
-        row["step_rule"], row["step_value"], row["half_life"], row["candidate_id"],
+        -row["wins"], row["step_rule"], row["step_value"],
+        row["half_life"], row["candidate_id"],
     ))
     ranking = [dict(row, rank=index + 1) for index, row in enumerate(ranking)]
     total_points = sum(row["wins"] for row in ranking)
@@ -351,6 +342,7 @@ def summarize_configuration_wins(results, *, score_key="minimum_width", epsilon=
             "case_summaries": case_summaries, "cases": len(cases),
             "score_key": score_key, "total_points": total_points,
             "epsilon": epsilon,
+            "undefined_cases": sum(not np.isfinite(case["minimum_score"]) for case in case_summaries),
             "tied_cases": sum(case["co_winners"] > 1 for case in case_summaries),
             "maximum_co_winners": max(case["co_winners"] for case in case_summaries)}
 
@@ -370,14 +362,18 @@ def tune_fixed_ar_realizations(
     improvement_tolerance,
     optimizer_seed,
     progress=False,
+    summarize=True,
 ):
-    """Tune one shared schedule on fixed-coefficient AR(3) paths at one size."""
+    """Run paired grids on fixed-coefficient AR(3) paths at one size.
+
+    Set summarize=False to return raw runs without aggregate width selection.
+    """
     return tune_ar_sample_sizes(
         phi, [sample_size], initial_direction, scale_grid, half_life_grid,
         replications=replications, process_seed=process_seed, burnin=burnin,
         iterations=iterations, patience=patience,
         improvement_tolerance=improvement_tolerance, optimizer_seed=optimizer_seed,
-        progress=progress,
+        progress=progress, summarize=summarize,
     )
 
 
@@ -436,6 +432,7 @@ def _ar_realization_cases(
             }
         else:
             realized_phi = phi
+            metadata = {f"phi_{j+1}": float(value) for j, value in enumerate(realized_phi)}
         series = simulate_uniform_ar(realized_phi, sample_size=int(sizes[-1]), burnin=burnin,
                                      half_width=1.0, rng=realized_seed)
         true_direction = np.r_[1.0, -realized_phi]
@@ -453,16 +450,17 @@ def _ar_realization_cases(
 def tune_ar_sample_sizes(
     phi, sample_sizes, initial_direction, scale_grid, half_life_grid, *,
     replications, process_seed, burnin, iterations, patience,
-    improvement_tolerance, optimizer_seed, progress=False,
+    improvement_tolerance, optimizer_seed, progress=False, summarize=True,
 ):
     """Select by mean achieved minimum width across paired paths and sizes.
 
     One longest AR(3) path is simulated per replication; smaller sizes use its
     prefixes. All grids, starting directions and optimizer fallback seeds are
-    paired within every cloud. Normalization uses each cloud's actual diameter.
+    paired within every cloud. Each initial step is used directly on every path.
     The theoretical population minimum and the empirical width at the true
     coefficient direction are reported only as diagnostics; they do not
     change optimization or ranking. No numerical global optimum is computed.
+    With summarize=False, aggregate width ranking and selection are skipped.
     """
     clouds = _ar_realization_cases(
         phi, sample_sizes, initial_direction, replications=replications,
@@ -471,14 +469,14 @@ def tune_ar_sample_sizes(
     return _tune_ar_cases(
         clouds, initial_direction, scale_grid, half_life_grid, replications=replications,
         iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
-        optimizer_seed=optimizer_seed, progress=progress,
+        optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
     )
 
 
 def tune_jones_ar_realizations(
     sample_size, initial_direction, scale_grid, half_life_grid, *, replications,
     coefficient_seed, process_seed, burnin, iterations, patience,
-    improvement_tolerance, optimizer_seed, progress=False,
+    improvement_tolerance, optimizer_seed, progress=False, summarize=True,
 ):
     """Tune paired grids on distinct Jones-sampled causal AR(3) models.
 
@@ -486,7 +484,8 @@ def tune_jones_ar_realizations(
     All candidates share its one realized cloud and the supplied fixed start.
     The existing Jones sampler is used without truncation or rejection by
     spectral radius. Coefficients, partial autocorrelations and seeds are
-    returned with every result and case. Nothing is exported.
+    returned with every result and case. Nothing is exported. Set summarize=False
+    to return raw runs without aggregate width ranking and selection.
     """
     clouds = _ar_realization_cases(
         None, [sample_size], initial_direction, replications=replications,
@@ -495,13 +494,13 @@ def tune_jones_ar_realizations(
     return _tune_ar_cases(
         clouds, initial_direction, scale_grid, half_life_grid, replications=replications,
         iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
-        optimizer_seed=optimizer_seed, progress=progress,
+        optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
     )
 
 
 def _tune_ar_cases(
     clouds, initial_direction, scale_grid, half_life_grid, *, replications,
-    iterations, patience, improvement_tolerance, optimizer_seed, progress,
+    iterations, patience, improvement_tolerance, optimizer_seed, progress, summarize,
 ):
     """Run the same grid and aggregation for either AR coefficient design."""
     rows, cases = [], []
@@ -523,9 +522,16 @@ def _tune_ar_cases(
                 ),
             ))
         winner = search["selected"]
+        winning_direction = np.array([winner[f"u_{j}"] for j in range(4)])
+        estimated_phi = np.full(3, np.nan)
+        if np.all(np.isfinite(winning_direction)) and abs(winning_direction[0]) > 1e-10:
+            estimated_phi = -winning_direction[1:] / winning_direction[0]
+        true_phi = np.array([metadata[f"phi_{j+1}"] for j in range(3)])
+        coefficient_error = coefficient_mae(estimated_phi, true_phi)
         cases.append({**metadata,
-                      "diameter": search["diameter"],
                       "grid_best_width": winner["minimum_width"],
+                      **{f"estimated_phi_{j+1}": float(value) for j, value in enumerate(estimated_phi)},
+                      "coefficient_mae": coefficient_error,
                       "grid_population_width_gap": winner["minimum_width"] - metadata["population_minimum_width"],
                       "grid_empirical_true_direction_gap": (
                           winner["minimum_width"] - metadata["empirical_true_direction_width"]
@@ -536,18 +542,28 @@ def _tune_ar_cases(
                       "grid_winner_half_life": winner["half_life"],
                       "runtime_seconds": perf_counter() - started})
         if progress:
+            if "coefficient_seed" in metadata:
+                diagnostics = (
+                    f"population min={metadata['population_minimum_width']:.10f}, "
+                    f"empirical-population gap={cases[-1]['grid_population_width_gap']:+.10f}, "
+                )
+            else:
+                estimates_text = np.array2string(estimated_phi, precision=6, separator=", ",
+                                                suppress_small=False, max_line_width=200)
+                error_text = f"{coefficient_error:.8g}" if np.isfinite(coefficient_error) else "undefined"
+                diagnostics = f"estimated phi={estimates_text}, coefficient MAE={error_text}, "
             print(f"Path {case['replication']}/{replications}, T={case['T']}: "
                   f"best achieved width={winner['minimum_width']:.10f}, "
-                  f"population min={metadata['population_minimum_width']:.10f}, "
-                  f"empirical-population gap={cases[-1]['grid_population_width_gap']:+.10f}, "
-                  f"L={search['diameter']:.6g}, {len(search['candidates'])} schedules; "
+                  f"{diagnostics}"
+                  f"{len(search['candidates'])} absolute schedules; "
                   f"{cases[-1]['runtime_seconds']:.1f}s", flush=True)
-    ranking = summarize_geometric_replications(rows)
-    return {"results": rows, "cases": cases, "ranking": ranking,
-            "selected": dict(ranking[0]),
-            "best_by_rule": {rule: next(row for row in ranking if row["step_rule"] == rule)
-                             for rule in ("absolute", "diameter_normalized")},
-            "initial_direction": np.asarray(initial_direction) / np.linalg.norm(initial_direction)}
+    result = {"results": rows, "cases": cases,
+              "initial_direction": np.asarray(initial_direction) / np.linalg.norm(initial_direction)}
+    if summarize:
+        ranking = summarize_geometric_replications(rows)
+        result.update(ranking=ranking, selected=dict(ranking[0]),
+                      best_by_rule={"absolute": ranking[0]})
+    return result
 
 
 def compare_ar_schedules(
@@ -558,8 +574,8 @@ def compare_ar_schedules(
     """Evaluate frozen schedules on fresh paired AR(3) paths, without selection.
 
     Each schedule supplies candidate_id, step_rule, step_value and half_life.
-    The two allowed rules and stopping settings match the tuning helpers.
-    Repeated effective schedules share one numerical run on each cloud.
+    Only absolute steps are supported, with step_value used directly as gamma0.
+    Repeated schedules share one numerical run on each cloud.
     With record_histories=True, optimizer results are retained under
     (replication, T, candidate_id), ending at their actual stopping iterations.
     All results are returned in memory; nothing is saved or retuned.
@@ -569,26 +585,21 @@ def compare_ar_schedules(
     if len({row["candidate_id"] for row in schedules}) != len(schedules):
         raise ValueError("Frozen schedule identifiers must be distinct.")
     for row in schedules:
-        if (row["step_rule"] not in {"absolute", "diameter_normalized"}
+        if (row["step_rule"] != "absolute"
                 or not np.isfinite(row["step_value"]) or row["step_value"] <= 0
                 or not np.isfinite(row["half_life"]) or row["half_life"] <= 0):
-            raise ValueError("Require a known step rule and positive finite scale and half-life.")
+            raise ValueError("Require absolute steps and positive finite initial step and half-life.")
     rows, cases, histories = [], [], {}
     for case in _ar_realization_cases(
         phi, sample_sizes, initial_direction, replications=replications,
         process_seed=process_seed, burnin=burnin,
     ):
         metadata = {key: case[key] for key in ("replication", "T", "process_seed")}
-        diameter = float(pdist(case["points"]).max())
-        if not np.isfinite(diameter) or diameter <= 0:
-            raise ValueError("The cloud must have positive finite diameter.")
         evaluated = {}
         recorded = {}
         for schedule in schedules:
             beta = float(np.exp2(-1.0 / schedule["half_life"]))
             gamma0 = float(schedule["step_value"])
-            if schedule["step_rule"] == "diameter_normalized":
-                gamma0 /= diameter
             key = (gamma0, beta)
             if key not in evaluated:
                 search = tune_geometric_width_schedule(
@@ -602,10 +613,10 @@ def compare_ar_schedules(
             rows.append(dict(evaluated[key], **metadata,
                              candidate_id=schedule["candidate_id"], step_rule=schedule["step_rule"],
                              step_value=float(schedule["step_value"]),
-                             half_life=float(schedule["half_life"]), lipschitz_constant=diameter))
+                             half_life=float(schedule["half_life"])))
             if record_histories:
                 histories[(case["replication"], case["T"], schedule["candidate_id"])] = recorded[key]
-        cases.append(dict(metadata, diameter=diameter))
+        cases.append(dict(metadata))
         if progress:
             print(f"Fresh path {case['replication']}/{replications}, T={case['T']}: "
                   f"evaluated {len(schedules)} frozen schedules", flush=True)

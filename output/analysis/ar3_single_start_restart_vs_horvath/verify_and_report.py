@@ -13,6 +13,7 @@ from scipy.optimize import linprog
 ROOT=Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0,str(ROOT))
+from Code.Code_AR_processes.ar_tools.coefficient_errors import coefficient_mae
 from Code.Code_AR_processes.ar_tools.functions import sliding_window_point_cloud
 from output.analysis.ar3_single_start_restart_vs_horvath.run_experiment import (
     AR_DIR,OUT,NAME,GD,LP,
@@ -38,7 +39,7 @@ def validate():
         for method in [GD,LP]:
             row=group.loc[method]
             phi=row[[f"estimated_phi_{j}" for j in range(1,4)]].to_numpy(dtype=float)
-            np.testing.assert_allclose(np.mean((phi-truth)**2),row.coefficient_mse,rtol=1e-12)
+            np.testing.assert_allclose(coefficient_mae(phi, truth),row.coefficient_mae,rtol=1e-12)
             rho=float(max(abs(np.roots(np.r_[1.,-phi]))))
             np.testing.assert_allclose(rho,row.spectral_radius,rtol=1e-10,atol=1e-12)
             assert bool(rho<1)==row.stationary
@@ -108,26 +109,26 @@ def plot_and_report():
     comparison=json.loads((OUT/"paired_comparison.json").read_text())
     gd=results[results.method==GD].set_index("replication")
     lp=results[results.method==LP].set_index("replication")
-    paired=pd.DataFrame(dict(descent_mse=gd.coefficient_mse,horvath_mse=lp.coefficient_mse,
+    paired=pd.DataFrame(dict(descent_mae=gd.coefficient_mae,horvath_mae=lp.coefficient_mae,
         descent_fit_ms=1000*gd.median_fit_seconds,horvath_fit_ms=1000*lp.median_fit_seconds,
         descent_attempts=gd.attempts,descent_stationary=gd.stationary,horvath_stationary=lp.stationary))
     paired.to_csv(OUT/"paired_process_comparison.csv")
-    coefficient_rmse=[]
+    per_coefficient_maes=[]
     for method in [GD,LP]:
         f=results[results.method==method]
         for j in range(1,4):
-            coefficient_rmse.append(dict(method=method,coefficient=f"phi_{j}",
-                rmse=float(np.sqrt(f[f"squared_error_phi_{j}"].mean()))))
-    pd.DataFrame(coefficient_rmse).to_csv(OUT/"coefficient_rmse.csv",index=False)
-    image_dir=AR_DIR/"outputs/images"/NAME
-    pdf_dir=AR_DIR/"outputs/pdfs"/NAME
+            per_coefficient_maes.append(dict(method=method,coefficient=f"phi_{j}",
+                mae=float(f[f"absolute_error_phi_{j}"].mean())))
+    pd.DataFrame(per_coefficient_maes).to_csv(OUT/"coefficient_mae.csv",index=False)
+    image_dir=AR_DIR/"outputs/images"/NAME/"mae"
+    pdf_dir=AR_DIR/"outputs/pdfs"/NAME/"mae"
     image_dir.mkdir(parents=True,exist_ok=True)
     pdf_dir.mkdir(parents=True,exist_ok=True)
     plt.rcParams.update({"font.size":10,"axes.spines.top":False,"axes.spines.right":False})
     fig,axes=plt.subplots(1,2,figsize=(11,4.7),layout="constrained")
     for ax,x,y,title,xlabel,ylabel in [
-        (axes[0],paired.horvath_mse,paired.descent_mse,"Paired coefficient recovery",
-         r"Horváth $L^\infty$: coefficient MSE","Your descent: coefficient MSE"),
+        (axes[0],paired.horvath_mae,paired.descent_mae,"Paired coefficient recovery",
+         r"Horváth $L^\infty$: coefficient MAE","Your descent: coefficient MAE"),
         (axes[1],paired.horvath_fit_ms,paired.descent_fit_ms,"Fit time including preparation and restarts",
          r"Horváth $L^\infty$: milliseconds","Your descent: milliseconds")]:
         colors=np.where(paired.descent_attempts>1,"#ce653a","#247b86")
@@ -149,8 +150,8 @@ def plot_and_report():
     a,b=summary.loc[GD],summary.loc[LP]
     speed_ratio=float(a.mean_fit_ms/b.mean_fit_ms)
     paired_speed_ratio=float(np.median(paired.descent_fit_ms/paired.horvath_fit_ms))
-    wins=paired[paired.descent_mse<paired.horvath_mse]
-    worst=paired.sort_values("descent_mse",ascending=False).head(5)
+    wins=paired[paired.descent_mae<paired.horvath_mae]
+    worst=paired.sort_values("descent_mae",ascending=False).head(5)
     final_nonstationary=gd[~gd.stationary]
     report=rf"""# One initial descent direction with conditional restarts versus Horváth L-infinity
 
@@ -158,7 +159,7 @@ def plot_and_report():
 
 Use the same original 50 coefficient-recovery AR(3) paths, each with 2000 observations after 1000 burn-in observations and Uniform[-1,1] innovations. The known order is 3. Both methods receive the same observations, with no true coefficients or innovation half-width supplied to fitting.
 
-The descent uses **one initial random direction**. After 200 evaluated iterations, inspect the recovered coefficients of its best-width incumbent. If undefined or with companion spectral radius at least 1, discard that attempt and only then draw a new random direction. Reset the geometric schedule and patience for the new attempt. Each attempt uses `max_it=2000`, improvement patience 200, tolerance `1e-10`, and `gamma_t=(0.2/diameter(P))*0.997**t`.
+The descent uses **one initial random direction**. After 200 evaluated iterations, inspect the recovered coefficients of its best-width incumbent. If undefined or with companion spectral radius at least 1, discard that attempt and only then draw a new random direction. Reset the geometric schedule and patience for the new attempt. Each attempt uses `max_it=2000`, improvement patience 200, tolerance `1e-10`, and `gamma_t=0.2*0.997**t`.
 
 Return the first attempt that passes the checkpoint and reaches its usual stopping point. Do not run additional directions to improve that result. Do not apply a final stationarity filter or restart if it becomes nonstationary after the single checkpoint. This implements the requested resampling-only-on-trigger rule exactly. There is an administrative 100-attempt safety guard; no process reached it (maximum actual attempts: {comparison['maximum_attempts']}). There is no 12-start allocation or cap.
 
@@ -178,14 +179,14 @@ Your method still minimizes normalized directional width on the sphere, whereas 
 
 | Measure | Your descent with conditional resampling | Horváth L-infinity |
 |---|---:|---:|
-| Mean coefficient MSE | {a.mean_coefficient_mse:.9g} | {b.mean_coefficient_mse:.9g} |
-| Median coefficient MSE | {a.median_coefficient_mse:.9g} | {b.median_coefficient_mse:.9g} |
-| Maximum coefficient MSE | {a.maximum_coefficient_mse:.9g} | {b.maximum_coefficient_mse:.9g} |
+| Mean coefficient MAE | {a.mean_coefficient_mae:.9g} | {b.mean_coefficient_mae:.9g} |
+| Median coefficient MAE | {a.median_coefficient_mae:.9g} | {b.median_coefficient_mae:.9g} |
+| Maximum coefficient MAE | {a.maximum_coefficient_mae:.9g} | {b.maximum_coefficient_mae:.9g} |
 | Stationary returned estimates | {int(a.stationary_estimates)}/50 | {int(b.stationary_estimates)}/50 |
 | Mean fit time | {a.mean_fit_ms:.3f} ms | {b.mean_fit_ms:.3f} ms |
 | Median fit time | {a.median_fit_ms:.3f} ms | {b.median_fit_ms:.3f} ms |
 
-Horváth has lower coefficient MSE on {comparison['horvath_better']} paths, your descent on {comparison['descent_better']}, with {comparison['tied']} ties (comparison tolerance: absolute `1e-10` plus relative `1e-6`). MSE is the average of the three squared coefficient errors, then averaged over all 50 processes for the aggregate. No processes were excluded.
+Horváth has lower coefficient MAE on {comparison['horvath_better']} paths, your descent on {comparison['descent_better']}, with {comparison['tied']} ties (comparison tolerance: absolute `1e-10` plus relative `1e-6`). MAE is the average of the three absolute coefficient errors, then averaged over all 50 processes for the aggregate. No processes were excluded.
 
 Your method used {comparison['descent_attempts']} actual attempts: 50 initial directions plus {comparison['descent_aborts']} triggered resamples. {comparison['processes_with_restart']} processes needed resampling; {50-comparison['processes_with_restart']} finished from their first direction. Mean attempts were {a.mean_attempts:.3g}, maximum {comparison['maximum_attempts']}, and mean evaluated iterations including aborted attempts were {a.mean_evaluated_states:.2f}.
 
@@ -193,7 +194,7 @@ The ratio of mean per-process fit times is {speed_ratio:.3f}:1 (descent / LP); t
 
 On these 50 paths, Horváth performed better in both aggregate coefficient accuracy and measured fit time. The first run that passes the 200-iteration stationarity checkpoint can still yield a less accurate coefficient vector. Passing also does not guarantee the returned vector remains stationary: the descent's nonstationary returned estimate is process {', '.join(map(str,final_nonstationary.index))}. The 200-iteration trigger's two limitations were previously documented in [the checkpoint examples]({AR_DIR}/outputs/csv/ar3_early_abort_200_12starts/checkpoint_counterexamples.md).
 
-Processes where descent has lower coefficient MSE:
+Processes where descent has lower coefficient MAE:
 
 {markdown_table(wins)}
 
@@ -203,13 +204,13 @@ Largest descent errors:
 
 ## Timing protocol and limits
 
-Each method was warmed up three times, then timed five times per path with the method order alternating. Report the median fit time per path, then the mean and median of those 50 medians. Each timing starts with the in-memory series. Descent includes point-cloud construction, full-cloud diameter computation, conditional random draws, all aborted attempts, the surviving attempt, the checkpoint, and trace recording. Horváth includes its cloud/hull construction, LP assembly and solve, and full-data feasibility/optimality checks. File I/O, saving traces, true-error scoring, and plotting are excluded from both. Repeated timing fits use the same deterministic random stream; they do not add independent starting-direction experiments.
+Each method was warmed up three times, then timed five times per path with the method order alternating. Report the median fit time per path, then the mean and median of those 50 medians. Each timing starts with the in-memory series. Descent includes point-cloud construction, conditional random draws, all aborted attempts, the surviving attempt, the checkpoint, and trace recording. Horváth includes its cloud/hull construction, LP assembly and solve, and full-data feasibility/optimality checks. File I/O, saving traces, true-error scoring, and plotting are excluded from both. Repeated timing fits use the same deterministic random stream; they do not add independent starting-direction experiments.
 
 BLAS libraries were limited to one thread; HiGHS uses the existing estimator's solver defaults. Environment and versions are saved in the configuration. Only the requested settings and original 50 paths were tested. No additional tuning was performed.
 
 ## Files and verification
 
-[Configuration]({OUT}/configuration.json), [summary]({OUT}/summary.csv), [all 100 results]({OUT}/per_process_results.csv), [actual descent attempts]({OUT}/descent_attempts.csv), [500 timing samples]({OUT}/timing_measurements.csv), [paired comparison]({OUT}/paired_process_comparison.csv), [coefficient RMSE]({OUT}/coefficient_rmse.csv), [validation]({OUT}/validation.json), [plot PDF]({pdf_dir}/comparison.pdf).
+[Configuration]({OUT}/configuration.json), [summary]({OUT}/summary.csv), [all 100 results]({OUT}/per_process_results.csv), [actual descent attempts]({OUT}/descent_attempts.csv), [500 timing samples]({OUT}/timing_measurements.csv), [paired comparison]({OUT}/paired_process_comparison.csv), [coefficient MAE]({OUT}/coefficient_mae.csv), [validation]({OUT}/validation.json), [plot PDF]({pdf_dir}/comparison.pdf).
 
 The experiment reproduces each consumed direction's previous trajectory exactly and verifies it returns the first nonaborted attempt. An independent audit checks all actual abort decisions, stopping counts, coefficient errors and root diagnostics; solves all 50 LPs independently on the complete observation set; verifies hull-reduced estimates and full-data objective/feasibility; and recomputes all timing medians. See [run_experiment.py]({ROOT}/output/analysis/{NAME}/run_experiment.py) and [verification code]({ROOT}/output/analysis/{NAME}/verify_and_report.py).
 """

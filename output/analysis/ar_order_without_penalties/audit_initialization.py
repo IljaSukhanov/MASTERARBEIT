@@ -9,6 +9,7 @@ from threadpoolctl import threadpool_limits
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
 from Code.Code_AR_processes.ar_tools.functions import jones_ar_coefficients,simulate_uniform_ar,sliding_window_point_cloud
+from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empirical_width
 OUT=Path(__file__).resolve().parent
 INPUT=ROOT/'Code/Code_AR_processes/outputs/csv/ar_width_comparison'
 old=pd.read_csv(INPUT/'width_curves.csv')
@@ -31,21 +32,14 @@ def data_initialized_width_curve(series,seed,replication,iterations=1000):
         rng=np.random.default_rng(np.random.SeedSequence([seed,replication,k,20]))
         dirs=np.vstack([lp_direction,np.r_[best_directions[-1],0.],rng.normal(size=(3,k))])
         dirs/=np.linalg.norm(dirs,axis=1,keepdims=True)
-        best=np.full(len(dirs),np.inf)
-        kept=dirs.copy()
-        indices=np.arange(len(dirs))
-        for iteration in range(iterations):
-            projections=cloud@dirs.T
-            maxi=np.argmax(projections,axis=0);mini=np.argmin(projections,axis=0)
-            current=projections[maxi,indices]-projections[mini,indices]
-            improved=current<best
-            best[improved]=current[improved];kept[improved]=dirs[improved]
-            subgradient=cloud[maxi]-cloud[mini]
-            tangent=subgradient-np.sum(dirs*subgradient,axis=1,keepdims=True)*dirs
-            dirs-=.2*.99**iteration*tangent
-            dirs/=np.linalg.norm(dirs,axis=1,keepdims=True)
-        winner=int(np.argmin(best))
-        widths.append(float(best[winner]));best_directions.append(kept[winner])
+        runs = [projected_subgradient_empirical_width(
+            cloud, initial_direction=direction, iterations=iterations,
+            initial_step=.2, geometric_decay=.99, step_schedule="geometric",
+            patience=iterations + 1, improvement_tolerance=0.,
+        ) for direction in dirs]
+        winner = min(runs, key=lambda run: run["minimum_width"])
+        widths.append(winner["minimum_width"])
+        best_directions.append(winner["direction"])
     return np.array(widths)
 
 

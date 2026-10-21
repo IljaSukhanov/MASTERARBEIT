@@ -12,6 +12,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+from Code.Code_AR_processes.ar_tools.coefficient_errors import coefficient_mae
 from Code.Code_AR_processes.ar_tools.functions import sliding_window_point_cloud
 from output.analysis.ar3_early_abort_200_12starts.run_experiment import (
     AR_DIR, OUT, NAME, FIXED, TRIGGERED, CHECKPOINT, TOLERANCE,
@@ -77,7 +78,7 @@ def validate():
                     assert error<1e-10
                     phi=-u[1:]/u[0]
                     np.testing.assert_allclose(phi,candidate["coefficients"],rtol=1e-12,atol=1e-14)
-                    np.testing.assert_allclose(np.mean((phi-truth)**2),candidate["coefficient_mse"],rtol=1e-12)
+                    np.testing.assert_allclose(coefficient_mae(phi, truth),candidate["coefficient_mae"],rtol=1e-12)
                     root=float(np.max(abs(np.roots(np.r_[1.,-phi]))))
                     assert bool(root<1)==candidate["stationary"]
                 recovered_aborts+=int(event["aborted"] and record["baseline_candidates"][i]["stationary"])
@@ -112,13 +113,13 @@ def plot_and_report():
     comparison=json.loads((OUT/"paired_comparison.json").read_text())
     fixed=results[results.method==FIXED].set_index("replication")
     triggered=results[results.method==TRIGGERED].set_index("replication")
-    paired=pd.DataFrame(dict(fixed_mse=fixed.coefficient_mse,triggered_mse=triggered.coefficient_mse,
+    paired=pd.DataFrame(dict(fixed_mae=fixed.coefficient_mae,triggered_mae=triggered.coefficient_mae,
         fixed_stationary=fixed.stationary,triggered_stationary=triggered.stationary,
         fixed_evaluations=fixed.evaluated_states,triggered_evaluations=triggered.evaluated_states,
         aborted_attempts=triggered.aborted_attempts))
     paired.to_csv(OUT/"paired_process_comparison.csv")
-    image_dir=AR_DIR/"outputs/images"/NAME
-    pdf_dir=AR_DIR/"outputs/pdfs"/NAME
+    image_dir=AR_DIR/"outputs/images"/NAME/"mae"
+    pdf_dir=AR_DIR/"outputs/pdfs"/NAME/"mae"
     image_dir.mkdir(parents=True,exist_ok=True)
     pdf_dir.mkdir(parents=True,exist_ok=True)
     plt.rcParams.update({"font.size":10,"axes.spines.top":False,"axes.spines.right":False})
@@ -126,12 +127,12 @@ def plot_and_report():
     ax=axes[0]
     for mask,color,label in [(paired.fixed_stationary,"#247b86","Ordinary result stationary"),
                               (~paired.fixed_stationary,"#ce653a","Ordinary result nonstationary")]:
-        ax.scatter(paired.fixed_mse[mask],paired.triggered_mse[mask],color=color,s=40,label=label,alpha=.85)
-    low=float(paired[["fixed_mse","triggered_mse"]].min().min())*.5
-    high=float(paired[["fixed_mse","triggered_mse"]].max().max())*2
+        ax.scatter(paired.fixed_mae[mask],paired.triggered_mae[mask],color=color,s=40,label=label,alpha=.85)
+    low=float(paired[["fixed_mae","triggered_mae"]].min().min())*.5
+    high=float(paired[["fixed_mae","triggered_mae"]].max().max())*2
     ax.plot([low,high],[low,high],linestyle="--",color=".5",linewidth=1)
     ax.set(xscale="log",yscale="log",xlim=(low,high),ylim=(low,high),
-        xlabel="No early abort: coefficient MSE",ylabel="Abort at 200: coefficient MSE",title="Paired coefficient recovery")
+        xlabel="No early abort: coefficient MAE",ylabel="Abort at 200: coefficient MAE",title="Paired coefficient recovery")
     ax.legend(loc="upper left",fontsize=8)
     ax=axes[1]
     ax.plot(paired.index,paired.fixed_evaluations,".-",color="#5470aa",label="No early abort",linewidth=.8)
@@ -180,7 +181,7 @@ def plot_and_report():
     fig.savefig(pdf_dir/"02_checkpoint_examples.pdf")
     plt.close(fig)
 
-    changed=paired[abs(paired.triggered_mse-paired.fixed_mse)>1e-10]
+    changed=paired[abs(paired.triggered_mae-paired.fixed_mae)>1e-10]
     later_unstable=events[(~events.aborted)&(~events.baseline_final_stationary)]
     late_winners=triggered[~triggered.stationary]
     aborted_recoveries=events[events.would_recover_stationarity]
@@ -191,7 +192,7 @@ def plot_and_report():
 
 ## Frozen experiment
 
-Use the same 50 coefficient-recovery AR(3) paths, same ordered bank of 12 random starting directions for each path, same geometric schedule `gamma_t=(0.2/diameter(P))*0.997**t`, `max_it=2000`, improvement patience 200, and width-improvement tolerance `1e-10`.
+Use the same 50 coefficient-recovery AR(3) paths, same ordered bank of 12 random starting directions for each path, same geometric schedule `gamma_t=0.2*0.997**t`, `max_it=2000`, improvement patience 200, and width-improvement tolerance `1e-10`.
 
 Both modes use **all 12 attempts** (the initial attempt plus 11 restarts). The comparison changes one attempt's stopping rule:
 
@@ -204,7 +205,7 @@ Iteration counts follow the existing optimizer: the initial state is evaluated i
 
 This is a new exploratory test of the user's 200-iteration checkpoint, rather than the previous end-of-run stop-at-first-stationary policy or intermediate-iterate filtering experiment. The checkpoint was not tuned after seeing these results.
 
-Implementation: [run_experiment.py]({ROOT}/output/analysis/{NAME}/run_experiment.py). The checkpoint runner is kept local to this experiment; shared optimizer defaults and all earlier outputs are preserved. Every triggered trajectory is checked against the existing [public optimizer]({AR_DIR}/ar_tools/descent.py): a rejected attempt is its exact first 200 states and a surviving attempt is its exact full trajectory.
+Implementation: [run_experiment.py]({ROOT}/output/analysis/{NAME}/run_experiment.py). Checkpoint stopping uses the shared optimizer with `stationarity_check=True, max_restarts=0`; the twelve-start outer policy controls subsequent attempts. Every triggered trajectory is checked against the existing [public optimizer]({AR_DIR}/ar_tools/descent.py): a rejected attempt is its exact first 200 states and a surviving attempt is its exact full trajectory.
 
 The parameter check uses companion spectral radius below 1; equivalently the autoregressive polynomial has its roots outside the unit circle. See [statsmodels ArmaProcess.isstationary](https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima_process.ArmaProcess.isstationary.html) and the reciprocal-root equivalence in [is_invertible, Notes](https://www.statsmodels.org/stable/generated/statsmodels.tsa.statespace.tools.is_invertible.html#notes).
 
@@ -213,19 +214,19 @@ The parameter check uses companion spectral radius below 1; equivalently the aut
 | Measure | Ordinary 12 starts | 12 starts with abort at 200 |
 |---|---:|---:|
 | Stationary returned estimates | {int(a.stationary_estimates)}/50 | {int(b.stationary_estimates)}/50 |
-| Mean coefficient MSE | {a.mean_coefficient_mse:.9g} | {b.mean_coefficient_mse:.9g} |
-| Median coefficient MSE | {a.median_coefficient_mse:.9g} | {b.median_coefficient_mse:.9g} |
-| Maximum coefficient MSE | {a.maximum_coefficient_mse:.9g} | {b.maximum_coefficient_mse:.9g} |
-| Processes with MSE > 1 | {int(a.mse_above_1)} | {int(b.mse_above_1)} |
+| Mean coefficient MAE | {a.mean_coefficient_mae:.9g} | {b.mean_coefficient_mae:.9g} |
+| Median coefficient MAE | {a.median_coefficient_mae:.9g} | {b.median_coefficient_mae:.9g} |
+| Maximum coefficient MAE | {a.maximum_coefficient_mae:.9g} | {b.maximum_coefficient_mae:.9g} |
+| Processes with MAE > 1 | {int(a.mae_above_1)} | {int(b.mae_above_1)} |
 | Total attempts | {int(a.total_attempts)} | {int(b.total_attempts)} |
 | Attempts aborted at 200 | 0 | {int(b.total_aborted)} |
 | Total evaluated iterations | {int(a.total_evaluated_states):,} | {int(b.total_evaluated_states):,} |
 
-MSE is the mean of the three squared coefficient errors for a process, then averaged across all 50 processes for the aggregate. None of the 50 paths was removed.
+MAE is the mean of the three absolute coefficient errors for a process, then averaged across all 50 processes for the aggregate. None of the 50 paths was removed.
 
-The triggered rule improved coefficient MSE on {comparison['improved']} paths, worsened it on {comparison['worsened']}, and tied on {comparison['tied']} (absolute tolerance `1e-10` plus relative tolerance `1e-6`). It saved {100*comparison['iteration_saving_fraction']:.2f}% of iteration evaluations.
+The triggered rule improved coefficient MAE on {comparison['improved']} paths, worsened it on {comparison['worsened']}, and tied on {comparison['tied']} (absolute tolerance `1e-10` plus relative tolerance `1e-6`). It saved {100*comparison['iteration_saving_fraction']:.2f}% of iteration evaluations.
 
-The mean error reduction is driven by avoiding the four original MSE-above-1 cases. The median is unchanged. These are observed results on the selected 50 paths, not a general guarantee.
+The mean error reduction is driven by avoiding the four original MAE-above-1 cases. The median is unchanged. These are observed results on the selected 50 paths, not a general guarantee.
 
 Changed estimates:
 

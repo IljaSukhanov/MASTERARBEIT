@@ -20,21 +20,19 @@ from threadpoolctl import threadpool_limits
 ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+from Code.Code_AR_processes.ar_tools.coefficient_errors import coefficient_mae
 from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empirical_width
 from Code.Code_AR_processes.ar_tools.functions import is_stationary, sliding_window_point_cloud
 from Code.Code_AR_processes.ar_tools.coefficient_recovery_inputs import INPUT_DATA, load_process
-from output.analysis.ar3_conditional_restarts_2000_200.run_experiment import (
-    replication_path as source_replication_path,
-)
 
 AR_DIR = ROOT / "Code/Code_AR_processes"
 NAME = "ar3_early_abort_200_12starts"
-OUT = AR_DIR / "outputs/csv" / NAME
-SOURCE = AR_DIR / "outputs/csv/ar3_conditional_restarts_2000_200"
+OUT = AR_DIR / "outputs/csv" / NAME / "absolute_steps" / "mae"
 FIXED = "12 starts, no early abort"
 TRIGGERED = "12 starts, stationarity abort at 200"
 METHODS = [FIXED, TRIGGERED]
-MAX_IT, PATIENCE, CHECKPOINT, STARTS = 2000, 200, 200, 12
+MAX_IT, PATIENCE, STARTS = 2000, 200, 12
+CHECKPOINT = PATIENCE
 TOLERANCE, BETA = 1e-10, .997
 
 
@@ -59,96 +57,35 @@ def coefficient_state(direction):
     return phi, float(np.max(np.abs(values))), bool(stationary)
 
 
-def checkpoint_descent(points, initial_direction, initial_step):
-    """Experimental descent with a single checkpoint before update number 200.
-
-    The sphere update and best-width/patience bookkeeping follow the existing
-    public optimizer exactly. Every run is checked against that optimizer's
-    complete trajectory (or its first 200 evaluated states) in fit_process.
-    Initial state is evaluated iteration 1, as in the existing max_it count.
-    """
-    direction = np.asarray(initial_direction, dtype=float)
-    direction = direction / np.linalg.norm(direction)
-    directions = np.empty((MAX_IT, 4))
-    widths, best_widths = np.empty(MAX_IT), np.empty(MAX_IT)
-    updates = np.zeros(MAX_IT, dtype=bool)
-    best_width, stale = np.inf, 0
-    best_direction = direction.copy()
-    termination, checkpoint = "iteration_limit", None
-    for iteration in range(MAX_IT):
-        directions[iteration] = direction
-        projections = points @ direction
-        imax, imin = int(np.argmax(projections)), int(np.argmin(projections))
-        width = projections[imax] - projections[imin]
-        if width < best_width - TOLERANCE:
-            best_width = float(width)
-            best_direction = direction.copy()
-            stale = 0
-            updates[iteration] = True
-        else:
-            stale += 1
-        widths[iteration], best_widths[iteration] = width, best_width
-        step = initial_step * BETA**iteration
-        if iteration+1 == CHECKPOINT:
-            phi, rho, stationary = coefficient_state(best_direction)
-            checkpoint = dict(coefficients=phi.tolist(), spectral_radius=rho,
-                              stationary=stationary, direction=best_direction.tolist(),
-                              minimum_width=best_width)
-            if not stationary:
-                termination = "stationarity_abort"
-                break
-        if stale >= PATIENCE:
-            termination = "patience"
-            break
-        subgradient = points[imax] - points[imin]
-        tangent = subgradient - (direction @ subgradient) * direction
-        candidate = direction - step*tangent
-        norm = np.linalg.norm(candidate)
-        # The public optimizer's random fallback is never reached in this
-        # study. Fail explicitly if it would be needed rather than diverge.
-        assert norm > np.finfo(float).eps
-        direction = candidate/norm
-    length = iteration+1
-    return dict(direction=best_direction, minimum_width=best_width,
-                direction_history=directions[:length], width_history=widths[:length],
-                best_width_history=best_widths[:length], best_update_history=updates[:length],
-                termination_reason=termination, checkpoint=checkpoint)
-
-
 def candidate(run, start, true_phi):
     phi, rho, stationary = coefficient_state(run["direction"])
     return dict(start=start, direction=run["direction"].tolist(), coefficients=phi.tolist(),
                 minimum_width=run["minimum_width"], spectral_radius=rho,
-                stationary=stationary, coefficient_mse=float(np.mean((phi-true_phi)**2)),
+                stationary=stationary, coefficient_mae=float(coefficient_mae(phi, true_phi)),
                 evaluated_states=len(run["width_history"]),
                 termination_reason=run["termination_reason"],
                 best_iteration=int(np.flatnonzero(run["best_update_history"])[-1]))
 
 
 def fit_process(replication):
-    source = json.loads(source_replication_path(replication).read_text())
-    true_phi = np.array([source["results"][0][f"true_phi_{j}"] for j in range(1,4)])
-    series, input_phi, _ = load_process(replication)
-    np.testing.assert_array_equal(true_phi, input_phi)
-    assert hashlib.sha256(series.tobytes()).hexdigest() == source["results"][0]["series_sha256"]
+    series, true_phi, directions = load_process(replication)
     points = sliding_window_point_cloud(series, 4)
-    eta0 = source["results"][0]["initial_step"]
+    eta0 = .2
     baseline_candidates, policy_candidates, events = [], [], []
     traces = {}
-    for saved in source["attempts"]:
-        start = saved["attempt"]
-        initial = np.array(saved["initial_direction"])
+    for start, initial in enumerate(directions, 1):
         baseline = projected_subgradient_empirical_width(
             points, iterations=MAX_IT, patience=PATIENCE, improvement_tolerance=TOLERANCE,
             initial_direction=initial, initial_step=eta0, step_schedule="geometric",
             geometric_decay=BETA, record_directions=True, record_best_coefficients=True)
-        policy = checkpoint_descent(points, initial, eta0)
+        policy = projected_subgradient_empirical_width(
+            points, iterations=MAX_IT, patience=PATIENCE, improvement_tolerance=TOLERANCE,
+            initial_direction=initial, initial_step=eta0, step_schedule="geometric",
+            geometric_decay=BETA, record_directions=True, record_best_coefficients=True,
+            stationarity_check=True, max_restarts=0,
+        )
         full, early = candidate(baseline, start, true_phi), candidate(policy, start, true_phi)
-        # Independently reproduce the previous complete attempt, then verify
-        # the policy is an exact prefix, with no altered step schedule.
-        np.testing.assert_array_equal(full["direction"], saved["direction"])
-        assert full["minimum_width"] == saved["minimum_width"]
-        assert full["evaluated_states"] == saved["evaluated_states"]
+        # A checkpoint-aborted run must be an exact prefix of the same ordinary run.
         length = early["evaluated_states"]
         np.testing.assert_array_equal(policy["direction_history"], baseline["direction_history"][:length])
         np.testing.assert_array_equal(policy["width_history"], baseline["width_history"][:length])
@@ -168,7 +105,7 @@ def fit_process(replication):
             checkpoint_best_rho=checkpoint["spectral_radius"],
             checkpoint_best_width=checkpoint["minimum_width"],
             baseline_final_rho=full["spectral_radius"], baseline_final_stationary=full["stationary"],
-            baseline_final_mse=full["coefficient_mse"],
+            baseline_final_mae=full["coefficient_mae"],
             would_recover_stationarity=bool(aborted and full["stationary"]),
             baseline_evaluations=full["evaluated_states"], policy_evaluations=length,
             saved_evaluations=full["evaluated_states"]-length))
@@ -189,7 +126,7 @@ def fit_process(replication):
                    completed_attempts=STARTS if method == FIXED else len(survivors),
                    evaluated_states=sum(item["evaluated_states"] for item in options),
                    status="all_attempts_aborted" if method == TRIGGERED and not survivors else "ok",
-                   series_sha256=source["results"][0]["series_sha256"])
+                   series_sha256=hashlib.sha256(series.tobytes()).hexdigest())
         for j in range(3):
             row[f"true_phi_{j+1}"] = float(true_phi[j])
             row[f"estimated_phi_{j+1}"] = winner["coefficients"][j]
@@ -207,19 +144,17 @@ def fit_process(replication):
 def main():
     for subfolder in ["replications","traces"]:
         (OUT/subfolder).mkdir(parents=True,exist_ok=True)
-    configuration = dict(max_it=MAX_IT, improv_patience=PATIENCE, checkpoint=CHECKPOINT,
+    configuration = dict(coefficient_error_metric="mae_per_coefficient_v1", max_it=MAX_IT, improv_patience=PATIENCE, checkpoint=CHECKPOINT,
         starts_per_method=STARTS, improvement_tolerance=TOLERANCE, beta=BETA,
         input_data=str(INPUT_DATA), input_data_sha256=digest(INPUT_DATA),
-        source_configuration=str(SOURCE/"configuration.json"),
-        source_configuration_sha256=digest(SOURCE/"configuration.json"),
-        source_replication_sha256={str(i):digest(source_replication_path(i)) for i in range(1,51)},
         optimizer_sha256=digest(AR_DIR/"ar_tools/descent.py"),
-        checkpoint_direction="Best-width incumbent after exactly 200 evaluated states",
+        checkpoint_direction="Shared optimizer: best-width incumbent after exactly patience evaluated states",
+        initial_step=.2,
         abort_condition="Undefined coefficients or companion spectral radius >= 1",
         after_pass="Continue identical trajectory and original patience/step schedule; no further checks",
         after_abort="Discard the entire attempt from final selection; start next original random direction",
         final_selection="Smallest width among nonaborted completed attempts; no final stationarity filter",
-        all_aborted_fallback="Flag failed; retain lowest-width aborted prefix only for explicit MSE accounting",
+        all_aborted_fallback="Flag failed; retain lowest-width aborted prefix only for explicit MAE accounting",
         all_12_attempts_always_used=True, intermediate_stationary_filtering=False,
         truth_used_for_decisions=False, methods=METHODS)
     config_path=OUT/"configuration.json"
@@ -249,15 +184,15 @@ def main():
         assert len(group)==50 and group.attempts.eq(12).all()
         summary.append(dict(method=method,processes=50,stationary_estimates=int(group.stationary.sum()),
             failed_no_survivor=int((group.status!="ok").sum()),
-            mean_coefficient_mse=float(group.coefficient_mse.mean()),
-            median_coefficient_mse=float(group.coefficient_mse.median()),
-            maximum_coefficient_mse=float(group.coefficient_mse.max()),
-            mse_above_1=int((group.coefficient_mse>1).sum()),
+            mean_coefficient_mae=float(group.coefficient_mae.mean()),
+            median_coefficient_mae=float(group.coefficient_mae.median()),
+            maximum_coefficient_mae=float(group.coefficient_mae.max()),
+            mae_above_1=int((group.coefficient_mae>1).sum()),
             total_attempts=int(group.attempts.sum()),total_aborted=int(group.aborted_attempts.sum()),
             total_evaluated_states=int(group.evaluated_states.sum())))
     summary=pd.DataFrame(summary)
     summary.to_csv(OUT/"summary.csv",index=False)
-    paired=results.pivot(index="replication",columns="method",values="coefficient_mse")
+    paired=results.pivot(index="replication",columns="method",values="coefficient_mae")
     difference=paired[TRIGGERED]-paired[FIXED]
     tol=1e-10+1e-6*np.maximum(abs(paired[TRIGGERED]),abs(paired[FIXED]))
     comparison=dict(improved=int((difference < -tol).sum()),worsened=int((difference > tol).sum()),
@@ -268,7 +203,7 @@ def main():
         original_winners_aborted=int((events.baseline_winning_start & events.aborted).sum()),
         original_winners_aborted_but_would_recover=int((events.baseline_winning_start & events.would_recover_stationarity).sum()))
     (OUT/"paired_comparison.json").write_text(json.dumps(comparison,indent=2)+"\n")
-    paired.to_csv(OUT/"paired_mse.csv")
+    paired.to_csv(OUT/"paired_mae.csv")
     print(summary.to_string(index=False),flush=True)
     print(json.dumps(comparison,indent=2),flush=True)
     return summary

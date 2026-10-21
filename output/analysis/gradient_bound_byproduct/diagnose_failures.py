@@ -11,6 +11,8 @@ from scipy.optimize import linprog
 from threadpoolctl import threadpool_limits
 
 from check import INPUT, MAXIMUM_ORDER, OUT, canonical_direction
+from Code.Code_AR_processes.ar_tools.coefficient_errors import coefficient_mae
+
 
 
 def minimax_radius(response, lags, q):
@@ -67,7 +69,7 @@ def main():
             r3 = minimax_radius(response, lags, 3)
             estimate = float(canonical.loc[replication, "estimated_radius"])
             selected = int(canonical.loc[replication, "selected_order"])
-            coefficient_error = np.linalg.norm(-v[1:] / v[0] - np.pad(phi, (0, MAXIMUM_ORDER - 3)))
+            coefficient_error = coefficient_mae(-v[1:] / v[0], np.pad(phi, (0, MAXIMUM_ORDER - 3)))
             rows.append(dict(
                 replication=replication, selected_order=selected,
                 known_radius_selected_order=int(known.loc[replication, "selected_order"]),
@@ -77,14 +79,14 @@ def main():
                 achieved_width=achieved_width, truth_witness_width=witness_width,
                 certified_width_excess=achieved_width - witness_width,
                 relative_width_excess=(achieved_width - witness_width) / witness_width,
-                canonical_coefficient_l2_error=float(coefficient_error),
+                canonical_coefficient_mae=float(coefficient_error),
                 phi_1=phi[0], phi_2=phi[1], phi_3=phi[2],
             ))
     diagnostics = pd.DataFrame(rows)
-    diagnostics.to_csv(OUT / "failure_diagnostics.csv", index=False)
+    diagnostics.to_csv(OUT / "failure_diagnostics_mae.csv", index=False)
     columns = ["replication", "selected_order", "known_radius_selected_order", "estimated_radius",
                "order_2_minimax_radius", "order_3_minimax_radius", "relative_width_excess",
-               "canonical_coefficient_l2_error", "phi_3"]
+               "canonical_coefficient_mae", "phi_3"]
     print("Failed runs:", flush=True)
     print(diagnostics[diagnostics.selected_order != 3][columns].to_string(index=False), flush=True)
     new_under = diagnostics[(diagnostics.selected_order < 3) & (diagnostics.known_radius_selected_order == 3)]
@@ -99,7 +101,7 @@ def main():
         failed_median_relative_width_excess=float(diagnostics[diagnostics.selected_order != 3].relative_width_excess.median()),
         correct_median_relative_width_excess=float(diagnostics[diagnostics.selected_order == 3].relative_width_excess.median()),
     )
-    (OUT / "failure_summary.json").write_text(json.dumps(aggregate, indent=2) + "\n")
+    (OUT / "failure_summary_mae.json").write_text(json.dumps(aggregate, indent=2) + "\n")
     print(json.dumps(aggregate, indent=2), flush=True)
 
 

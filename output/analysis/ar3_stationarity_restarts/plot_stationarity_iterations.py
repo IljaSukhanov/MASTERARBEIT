@@ -19,7 +19,7 @@ from Code.Code_AR_processes.ar_tools.functions import is_stationary
 from output.analysis.ar3_stationarity_restarts.run_analysis import spectral_radii
 
 OUT = Path(__file__).resolve().parent
-SOURCE = ROOT / "Code/Code_AR_processes/outputs/csv/ar3_failed_coefficient_tracking"
+SOURCE = ROOT / "Code/Code_AR_processes/outputs/csv/ar3_failed_coefficient_tracking/mae"
 COLORS = {"failed": "#b34638", "working": "#167d77"}
 
 

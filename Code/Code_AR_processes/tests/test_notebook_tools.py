@@ -14,7 +14,7 @@ from Code.Code_AR_processes.ar_tools.breakpoint_selectors import (
     select_tail_ratio,
     tail_excess_ratios,
 )
-from Code.Code_AR_processes.ar_tools.experiments import run_rmse_replication
+from Code.Code_AR_processes.ar_tools.experiments import run_mae_replication
 
 
 AR_DIR = Path(__file__).resolve().parents[1]
@@ -22,6 +22,7 @@ NOTEBOOK_PATHS = sorted([
     *AR_DIR.glob("*.ipynb"),
     *(AR_DIR / "xx_notebooks_tuning").glob("*.ipynb"),
     *(AR_DIR / "xx_notebooks_order_selection").glob("*.ipynb"),
+    *(AR_DIR / "xx_notebooks_figures").glob("*.ipynb"),
 ])
 
 
@@ -79,21 +80,27 @@ class NotebookToolsTests(unittest.TestCase):
         self.assertTrue(np.isposinf(scores[-1]))
         self.assertEqual(selected, 4)
 
-    def test_rmse_worker_runs_all_estimators_without_notebook_globals(self):
+    def test_mae_worker_runs_all_estimators_without_notebook_globals(self):
         configuration = {
             "phi": [.4, -.1], "T_values": [48], "k": 3, "K": 4,
             "burnin": 20, "half_width": 1., "process_seed": 51,
             "optimizer_seed": 52, "starts": 1, "iterations": 8,
-            "initial_step_scale": .2, "geometric_decay": .97,
+            "initial_step": .2, "geometric_decay": .97,
             "invalid_u_0_threshold": 1e-10, "use_convex_hull": False,
             "methods": ["Gradient descent", "Yule-Walker", "Conditional QML",
                         "Horvath L-infinity LP"],
         }
         with tempfile.TemporaryDirectory() as directory:
-            result = run_rmse_replication(1, configuration, directory, resume=False)
+            result = run_mae_replication(1, configuration, directory, resume=False)
         self.assertEqual(len(result), 4)
         self.assertTrue(result["status"].eq("ok").all(), result["error_message"].tolist())
-        self.assertTrue(np.isfinite(result["squared_coefficient_error"]).all())
+        self.assertTrue(np.isfinite(result["coefficient_mae"]).all())
+        estimates = result[["estimated_phi_1", "estimated_phi_2"]].to_numpy()
+        absolute_errors = np.abs(estimates - np.array(configuration["phi"]))
+        np.testing.assert_allclose(result["coefficient_mae"], absolute_errors.mean(axis=1))
+        np.testing.assert_allclose(
+            result[["absolute_error_phi_1", "absolute_error_phi_2"]], absolute_errors,
+        )
 
 
 if __name__ == "__main__":

@@ -17,24 +17,24 @@ from time import perf_counter
 import numpy as np
 import pandas as pd
 import scipy
-from scipy.spatial.distance import pdist
 from threadpoolctl import threadpool_limits
 
 ROOT=Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0,str(ROOT))
+from Code.Code_AR_processes.ar_tools.coefficient_errors import coefficient_mae
+from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empirical_width
 from Code.Code_AR_processes.ar_tools.classical_selectors import horvath_linf_coefficients
 from Code.Code_AR_processes.ar_tools.functions import sliding_window_point_cloud, is_stationary
 from Code.Code_AR_processes.ar_tools.coefficient_recovery_inputs import INPUT_DATA, load_process
 from output.analysis.ar3_early_abort_200_12starts.run_experiment import (
-    checkpoint_descent, coefficient_state, json_default, digest,
+    coefficient_state, json_default, digest,
     MAX_IT, PATIENCE, CHECKPOINT, BETA, TOLERANCE,
 )
 
 AR_DIR=ROOT/"Code/Code_AR_processes"
 NAME="ar3_single_start_restart_vs_horvath"
-OUT=AR_DIR/"outputs/csv"/NAME
-PREVIOUS=AR_DIR/"outputs/csv/ar3_early_abort_200_12starts"
+OUT=AR_DIR/"outputs/csv"/NAME/"absolute_steps"/"mae"
 GD="Single-start descent + abort at 200"
 LP="Horvath L-infinity"
 METHODS=[GD,LP]
@@ -43,22 +43,21 @@ ATTEMPT_SAFETY_LIMIT=100
 
 
 def fit_descent(series,replication):
-    """Includes cloud construction, diameter, draws and all discarded attempts."""
+    """Fit using the unified optimizer's stationarity restart option."""
     points=sliding_window_point_cloud(series,4)
-    eta0=.2/float(pdist(points).max())
     rng=np.random.default_rng(np.random.SeedSequence([20260913,replication-1,4,20]))
-    attempts=[]
-    for attempt in range(1,ATTEMPT_SAFETY_LIMIT+1):
-        # Draw only now, after an abort or at the initial attempt. The shape
-        # preserves the original study's row-wise normalization bit for bit.
-        raw=rng.normal(size=(1,4))
-        direction=(raw/np.linalg.norm(raw,axis=1,keepdims=True))[0]
-        run=checkpoint_descent(points,direction,eta0)
-        attempts.append(dict(initial_direction=direction,run=run))
-        if run["termination_reason"]!="stationarity_abort":
-            return dict(coefficients=coefficient_state(run["direction"])[0],
-                        attempts=attempts,initial_step=eta0)
-    raise RuntimeError("Safety limit reached with no surviving attempt; do not silently drop this process")
+    direction=rng.normal(size=4)
+    direction/=np.linalg.norm(direction)
+    run=projected_subgradient_empirical_width(
+        points, iterations=MAX_IT, patience=PATIENCE, improvement_tolerance=TOLERANCE,
+        initial_direction=direction, initial_step=.2, step_schedule="geometric", geometric_decay=BETA,
+        rng=rng, stationarity_check=True, max_restarts=ATTEMPT_SAFETY_LIMIT-1,
+        record_directions=True, record_best_coefficients=True,
+    )
+    if run["restart_limit_reached"]:
+        raise RuntimeError("Safety limit reached with no attempt passing the stationarity checkpoint")
+    attempts=[dict(initial_direction=attempt["initial_direction"],run=attempt) for attempt in run["attempts"]]
+    return dict(coefficients=coefficient_state(run["direction"])[0], attempts=attempts, initial_step=.2)
 
 
 def fit_horvath(series):
@@ -88,8 +87,8 @@ def measure(series,replication):
 
 def fit_process(replication):
     series,true_phi,_=load_process(replication)
+    points=sliding_window_point_cloud(series,4)
     series_hash=hashlib.sha256(series.tobytes()).hexdigest()
-    previous=json.loads((PREVIOUS/"replications"/f"process_{replication:03d}.json").read_text())
     fits,timing=measure(series,replication)
     ledger=[]
     traces={}
@@ -99,13 +98,6 @@ def fit_process(replication):
         checkpoint=run["checkpoint"]
         aborted=run["termination_reason"]=="stationarity_abort"
         phi,rho,stationary=coefficient_state(run["direction"])
-        # Verify agreement with the corresponding previous attempt, but
-        # consult these recorded continuations only after the actual fit.
-        if index<len(previous["policy_candidates"]):
-            saved=previous["policy_candidates"][index]
-            np.testing.assert_array_equal(run["direction"],saved["direction"])
-            assert run["minimum_width"]==saved["minimum_width"]
-            assert len(run["width_history"])==saved["evaluated_states"]
         assert aborted==(not checkpoint["stationary"])
         assert aborted==(index<len(gd["attempts"])-1)
         ledger.append(dict(replication=replication,attempt=index+1,aborted=aborted,
@@ -114,18 +106,15 @@ def fit_process(replication):
             termination_reason=run["termination_reason"],minimum_width=run["minimum_width"]))
         for field in ["direction_history","width_history","best_width_history","best_update_history"]:
             traces[f"attempt_{index+1:03d}_{field}"]=run[field]
-    expected=next(c for c in previous["policy_candidates"] if c["termination_reason"]!="stationarity_abort")
-    assert len(gd["attempts"])==expected["start"]
-    points=sliding_window_point_cloud(series,4)
     rows=[]
     for method in METHODS:
         fit=fits[method]
         phi=fit["coefficients"]
-        errors=(phi-true_phi)**2
+        errors=np.abs(phi-true_phi)
         residuals=points[:,0]-points[:,1:]@phi
         stationary,roots=is_stationary(phi)
         row=dict(replication=replication,method=method,status="ok",
-            coefficient_mse=float(np.mean(errors)),coefficient_l2_error=float(np.sqrt(np.sum(errors))),
+            coefficient_mae=coefficient_mae(phi, true_phi),
             stationary=bool(stationary),spectral_radius=float(max(abs(roots))),
             normalized_directional_width=float(np.ptp(residuals)/np.sqrt(1+phi@phi)),
             maximum_absolute_residual=float(max(abs(residuals))),
@@ -144,7 +133,7 @@ def fit_process(replication):
         for j in range(3):
             row[f"true_phi_{j+1}"]=float(true_phi[j])
             row[f"estimated_phi_{j+1}"]=float(phi[j])
-            row[f"squared_error_phi_{j+1}"]=float(errors[j])
+            row[f"absolute_error_phi_{j+1}"]=float(errors[j])
         rows.append(row)
     np.savez_compressed(OUT/"traces"/f"process_{replication:03d}.npz",**traces)
     return dict(results=rows,attempts=ledger,timing=timing)
@@ -154,10 +143,10 @@ def main():
     assert (MAX_IT,PATIENCE,CHECKPOINT,BETA,TOLERANCE)==(2000,200,200,.997,1e-10)
     for subfolder in ["replications","traces"]:
         (OUT/subfolder).mkdir(parents=True,exist_ok=True)
-    configuration=dict(methods=METHODS,processes=50,known_order=3,sample_size=2000,
+    configuration=dict(coefficient_error_metric="mae_per_coefficient_v1", methods=METHODS,processes=50,known_order=3,sample_size=2000,
         same_original_coefficient_recovery_paths=True,max_it=MAX_IT,improvement_patience=PATIENCE,
         checkpoint=CHECKPOINT,improvement_tolerance=TOLERANCE,beta=BETA,
-        step="0.2/full point-cloud diameter, reset per attempted direction",
+        step="Absolute initial_step=0.2, reset per attempted direction",
         initial_directions="One draw from the original process-specific random stream; next draw only after abort",
         gd_return="First attempt that passes checkpoint and finishes; no more starts after that",
         gd_stationarity_check="Best-width incumbent after 200 evaluated states; reject undefined or radius >= 1",
@@ -165,12 +154,12 @@ def main():
         maximum_attempts_safety_limit=ATTEMPT_SAFETY_LIMIT,
         horvath="Existing no-intercept L-infinity LP, use_convex_hull=True; full-data residual and duality checks",
         timing_repetitions=TIMING_REPETITIONS,timing_warmup=3,
-        timing_scope="End-to-end fit from in-memory series; includes cloud/diameter/draws/all discarded GD attempts and LP hull/constraints/validation; excludes I/O, accuracy scoring and plotting",
+        timing_scope="End-to-end fit from in-memory series; includes cloud/draws/all discarded GD attempts and LP hull/constraints/validation; excludes I/O, accuracy scoring and plotting",
         timing_order="Alternate method order in repeated measurements; median per process",
         thread_limit="BLAS libraries limited to one thread; HiGHS uses the existing helper's solver defaults",
         truth_used_for_decisions=False,numpy_version=np.__version__,scipy_version=scipy.__version__,
         python_version=platform.python_version(),platform=platform.platform(),
-        checkpoint_runner_sha256=digest(ROOT/"output/analysis/ar3_early_abort_200_12starts/run_experiment.py"),
+        optimizer_sha256=digest(AR_DIR/"ar_tools/descent.py"),
         horvath_implementation_sha256=digest(AR_DIR/"ar_tools/classical_selectors.py"),
         input_data=str(INPUT_DATA),input_data_sha256=digest(INPUT_DATA))
     config_path=OUT/"configuration.json"
@@ -205,16 +194,16 @@ def main():
     summary=[]
     for method in METHODS:
         f=results[results.method==method]
-        assert len(f)==50 and f.coefficient_mse.notna().all()
+        assert len(f)==50 and f.coefficient_mae.notna().all()
         summary.append(dict(method=method,processes=50,stationary_estimates=int(f.stationary.sum()),
-            mean_coefficient_mse=float(f.coefficient_mse.mean()),median_coefficient_mse=float(f.coefficient_mse.median()),
-            maximum_coefficient_mse=float(f.coefficient_mse.max()),mse_above_1=int((f.coefficient_mse>1).sum()),
+            mean_coefficient_mae=float(f.coefficient_mae.mean()),median_coefficient_mae=float(f.coefficient_mae.median()),
+            maximum_coefficient_mae=float(f.coefficient_mae.max()),mae_above_1=int((f.coefficient_mae>1).sum()),
             mean_attempts=float(f.attempts.mean()),maximum_attempts=int(f.attempts.max()),
             total_restarts=int(f.restarts.sum()),mean_evaluated_states=float(f.evaluated_states.mean()),
             mean_fit_ms=float(1000*f.median_fit_seconds.mean()),median_fit_ms=float(1000*f.median_fit_seconds.median())))
     summary=pd.DataFrame(summary)
     summary.to_csv(OUT/"summary.csv",index=False)
-    pivot=results.pivot(index="replication",columns="method",values="coefficient_mse")
+    pivot=results.pivot(index="replication",columns="method",values="coefficient_mae")
     difference=pivot[GD]-pivot[LP]
     tolerance=1e-10+1e-6*np.maximum(abs(pivot[GD]),abs(pivot[LP]))
     comparison=dict(descent_better=int((difference < -tolerance).sum()),
@@ -224,7 +213,7 @@ def main():
         maximum_attempts=int(attempts.groupby("replication").size().max()),
         safety_limit_reached=False)
     (OUT/"paired_comparison.json").write_text(json.dumps(comparison,indent=2)+"\n")
-    pivot.to_csv(OUT/"paired_mse.csv")
+    pivot.to_csv(OUT/"paired_mae.csv")
     print(summary.to_string(index=False),flush=True)
     print(json.dumps(comparison,indent=2),flush=True)
     return summary

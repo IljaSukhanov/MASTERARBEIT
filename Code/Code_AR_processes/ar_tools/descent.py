@@ -5,16 +5,15 @@ from time import perf_counter
 
 import numpy as np
 from scipy.spatial import ConvexHull, QhullError
-from scipy.spatial.distance import pdist
 
 from .experiment_settings import WARM_START_VARIANTS
-from .functions import sliding_window_point_cloud
+from .functions import is_stationary, sliding_window_point_cloud
 
 __all__ = [
     "projected_subgradient_empirical_width",
     "batched_geometric_width_curves",
     "fit_minimum_width_known_order",
-    "fit_ar3_mse_prefix",
+    "fit_ar3_mae_prefix",
     "fit_ar3_warm_start_rows",
 ]
 
@@ -31,6 +30,8 @@ def projected_subgradient_empirical_width(
         geometric_decay=0.99, # beta
         record_directions=False,
         record_best_coefficients=False,
+        stationarity_check=False,
+        max_restarts=100,
 ):
     """Search sphere widths, optionally tracking phi at each best-width update.
 
@@ -38,7 +39,19 @@ def projected_subgradient_empirical_width(
     evaluated direction is accepted. It never feeds coefficients back into
     the search. Use improvement_tolerance=0 for the strict '<' rule.
     At u[0]=0 the coefficient estimate is undefined and recorded as NaN;
-    the sphere search itself continues unchanged.
+    the sphere search itself continues unchanged when stationarity_check=False.
+
+    stationarity_check=True checks the best direction after exactly patience
+    evaluated states of each attempt, before the next update. Undefined
+    coefficients or companion spectral radius >= 1 reject that attempt.
+    Restart with a newly drawn Gaussian direction normalized to unit length,
+    a fresh full iteration budget, a reset step schedule and a new incumbent.
+    A passing attempt continues without further stationarity checks or a
+    final coefficient filter. Returned histories describe the final attempt;
+    attempts and total_evaluations also account for discarded attempts.
+    max_restarts bounds fresh draws. On exhaustion return an explicitly
+    aborted result with restart_limit_reached=True; no success is implied.
+    max_restarts=0 supports inspecting a single checkpoint-aborted attempt.
     """
     points = np.asarray(points, dtype=float)
 
@@ -66,6 +79,13 @@ def projected_subgradient_empirical_width(
         raise ValueError("record_best_coefficients must be a boolean.")
     if record_best_coefficients and points.shape[1] < 2:
         raise ValueError("Coefficient tracking requires a current value and at least one lag.")
+    if not isinstance(stationarity_check, (bool, np.bool_)):
+        raise ValueError("stationarity_check must be a boolean.")
+    if (isinstance(max_restarts, (bool, np.bool_))
+            or not isinstance(max_restarts, (int, np.integer)) or max_restarts < 0):
+        raise ValueError("max_restarts must be a nonnegative integer.")
+    if stationarity_check and (points.shape[1] < 2 or iterations < patience):
+        raise ValueError("Stationarity checking requires at least two coordinates and iterations >= patience.")
     ### end input checks ###
 
     generator = np.random.default_rng(rng)
@@ -83,92 +103,133 @@ def projected_subgradient_empirical_width(
         raise ValueError("initial_direction must be nonzero.")
     direction = direction / direction_norm # u_0 <- u_0 / ||u_0|| (u_0 ~ U(S^{k-1}))
 
-    width_history = np.empty(iterations)
-    best_width_history = np.empty(iterations)
-    step_history = np.empty(iterations)
-    direction_history = np.empty((iterations, dimension)) if record_directions else None
-    best_coefficient_history = (
-        np.empty((iterations, dimension - 1)) if record_best_coefficients else None
-    )
-    best_update_history = np.zeros(iterations, dtype=bool) if record_best_coefficients else None
-    best_coefficients = np.full(dimension - 1, np.nan) if record_best_coefficients else None
-    best_width = np.inf
-    best_direction = direction.copy()
-    iterations_without_improvement = 0
-    termination_reason = "iteration_limit"
+    attempts = []
+    while True:
+        attempt_initial_direction = direction.copy()
+        checkpoint = None
+        width_history = np.empty(iterations)
+        best_width_history = np.empty(iterations)
+        step_history = np.empty(iterations)
+        direction_history = np.empty((iterations, dimension)) if record_directions else None
+        best_coefficient_history = (
+            np.empty((iterations, dimension - 1)) if record_best_coefficients else None
+        )
+        best_update_history = np.zeros(iterations, dtype=bool) if record_best_coefficients else None
+        best_coefficients = np.full(dimension - 1, np.nan) if record_best_coefficients or stationarity_check else None
+        best_width = np.inf
+        best_direction = direction.copy()
+        iterations_without_improvement = 0
+        termination_reason = "iteration_limit"
 
-    # main loop
-    for iteration in range(iterations):
-        if direction_history is not None:
-            direction_history[iteration] = direction
-        projections = points @ direction # p_i = x_i^T u_t
-        maximum_index = int(np.argmax(projections)) # i_max = argmax_i p_i
-        minimum_index = int(np.argmin(projections)) # i_min = argmin_i p_i
-        width = projections[maximum_index] - projections[minimum_index] # w(u_t) = p_{i_max} - p_{i_min}
+        # main loop
+        for iteration in range(iterations):
+            if direction_history is not None:
+                direction_history[iteration] = direction
+            projections = points @ direction # p_i = x_i^T u_t
+            maximum_index = int(np.argmax(projections)) # i_max = argmax_i p_i
+            minimum_index = int(np.argmin(projections)) # i_min = argmin_i p_i
+            width = projections[maximum_index] - projections[minimum_index] # w(u_t) = p_{i_max} - p_{i_min}
 
-        if width < best_width - improvement_tolerance:
-            best_width = float(width)
-            best_direction = direction.copy()
+            if width < best_width - improvement_tolerance:
+                best_width = float(width)
+                best_direction = direction.copy()
+                if record_best_coefficients:
+                    best_update_history[iteration] = True
+                if record_best_coefficients or stationarity_check:
+                    if direction[0] == 0.0:
+                        best_coefficients = np.full(dimension - 1, np.nan)
+                    else:
+                        with np.errstate(over="ignore", invalid="ignore"):
+                            best_coefficients = -direction[1:] / direction[0]
+                        best_coefficients = np.where(np.isfinite(best_coefficients), best_coefficients, np.nan)
+                iterations_without_improvement = 0
+            else:
+                iterations_without_improvement += 1
+
+            width_history[iteration] = width
+            best_width_history[iteration] = best_width
             if record_best_coefficients:
-                best_update_history[iteration] = True
-                if direction[0] == 0.0:
-                    best_coefficients = np.full(dimension - 1, np.nan)
-                else:
-                    with np.errstate(over="ignore", invalid="ignore"):
-                        best_coefficients = -direction[1:] / direction[0]
-                    best_coefficients = np.where(np.isfinite(best_coefficients), best_coefficients, np.nan)
-            iterations_without_improvement = 0
-        else:
-            iterations_without_improvement += 1
+                best_coefficient_history[iteration] = best_coefficients
 
-        width_history[iteration] = width
-        best_width_history[iteration] = best_width
-        if record_best_coefficients:
-            best_coefficient_history[iteration] = best_coefficients
+            if step_schedule == "inverse_sqrt":
+                step = initial_step / np.sqrt(iteration + 1.0) # gamma_t = gamma_0 / sqrt(t+1)
+            else:
+                step = initial_step * geometric_decay**iteration # gamma_t = gamma_0 * beta^t
 
-        if step_schedule == "inverse_sqrt":
-            step = initial_step / np.sqrt(iteration + 1.0) # gamma_t = gamma_0 / sqrt(t+1)
-        else:
-            step = initial_step * geometric_decay**iteration # gamma_t = gamma_0 * beta^t
+            step_history[iteration] = step
 
-        step_history[iteration] = step
+            if stationarity_check and iteration + 1 == patience:
+                checkpoint_phi = best_coefficients.copy()
+                stationary, radius = False, float("inf")
+                if np.all(np.isfinite(checkpoint_phi)):
+                    try:
+                        stationary, eigenvalues = is_stationary(checkpoint_phi)
+                        radius = float(np.max(np.abs(eigenvalues)))
+                    except np.linalg.LinAlgError:
+                        pass
+                checkpoint = {
+                    "coefficients": checkpoint_phi.tolist(), "spectral_radius": radius,
+                    "stationary": bool(stationary), "direction": best_direction.tolist(),
+                    "minimum_width": best_width, "evaluated_states": iteration + 1,
+                }
+                if not stationary:
+                    termination_reason = "stationarity_abort"
+                    width_history = width_history[:iteration + 1]
+                    best_width_history = best_width_history[:iteration + 1]
+                    step_history = step_history[:iteration + 1]
+                    break
 
-        if iterations_without_improvement >= patience:
-            termination_reason = "patience"
-            width_history = width_history[:iteration + 1]
-            best_width_history = best_width_history[:iteration + 1]
-            step_history = step_history[:iteration + 1]
-            break
+            if iterations_without_improvement >= patience:
+                termination_reason = "patience"
+                width_history = width_history[:iteration + 1]
+                best_width_history = best_width_history[:iteration + 1]
+                step_history = step_history[:iteration + 1]
+                break
 
-        subgradient = points[maximum_index] - points[minimum_index] # g_t = x_{i_max} - x_{i_min}
-        riemannian_subgradient = (
-            subgradient - (direction @ subgradient) * direction
-        ) # xi_t = g_t - (u_t^T g_t) u_t
-        candidate = direction - step * riemannian_subgradient # u_{t+1} = u_t - gamma_t xi_t
-        candidate_norm = np.linalg.norm(candidate)
-        # is the fallback mathematically necessary?
-        if candidate_norm <= np.finfo(float).eps:
-            candidate = generator.normal(size=dimension) # u_{t+1} ~ N(0, I_k)
-            candidate_norm = np.linalg.norm(candidate) # ||u_{t+1}||
-        direction = candidate / candidate_norm # u_{t+1} <- u_{t+1} / ||u_{t+1}|| (u_{t+1} ~ U(S^{k-1}))
+            subgradient = points[maximum_index] - points[minimum_index] # g_t = x_{i_max} - x_{i_min}
+            riemannian_subgradient = (
+                subgradient - (direction @ subgradient) * direction
+            ) # xi_t = g_t - (u_t^T g_t) u_t
+            candidate = direction - step * riemannian_subgradient # u_{t+1} = u_t - gamma_t xi_t
+            candidate_norm = np.linalg.norm(candidate)
+            # is the fallback mathematically necessary?
+            if candidate_norm <= np.finfo(float).eps:
+                candidate = generator.normal(size=dimension) # u_{t+1} ~ N(0, I_k)
+                candidate_norm = np.linalg.norm(candidate) # ||u_{t+1}||
+            direction = candidate / candidate_norm # u_{t+1} <- u_{t+1} / ||u_{t+1}|| (u_{t+1} ~ U(S^{k-1}))
 
-    return {
-        "minimum_width": best_width,
-        "direction": best_direction,
-        "width_history": width_history,
-        "best_width_history": best_width_history,
-        "step_history": step_history,
-        "termination_reason": termination_reason,
-        "step_schedule": step_schedule,
-        "geometric_decay": geometric_decay,
-        **({"direction_history": direction_history[:len(width_history)]}
-           if direction_history is not None else {}),
-        **({"coefficients": best_coefficients.copy(),
-            "coefficient_valid": bool(np.all(np.isfinite(best_coefficients))),
-            "best_coefficient_history": best_coefficient_history[:len(width_history)],
-            "best_update_history": best_update_history[:len(width_history)]}
-           if record_best_coefficients else {}),
-    }
+        result = {
+            "minimum_width": best_width,
+            "direction": best_direction,
+            "width_history": width_history,
+            "best_width_history": best_width_history,
+            "step_history": step_history,
+            "termination_reason": termination_reason,
+            "step_schedule": step_schedule,
+            "geometric_decay": geometric_decay,
+            **({"direction_history": direction_history[:len(width_history)]}
+               if direction_history is not None else {}),
+            **({"coefficients": best_coefficients.copy(),
+                "coefficient_valid": bool(np.all(np.isfinite(best_coefficients))),
+                "best_coefficient_history": best_coefficient_history[:len(width_history)],
+                "best_update_history": best_update_history[:len(width_history)]}
+               if record_best_coefficients else {}),
+        }
+
+        if not stationarity_check:
+            return result
+        attempt = dict(result, initial_direction=attempt_initial_direction.copy(), checkpoint=checkpoint)
+        attempts.append(attempt)
+        aborted = result["termination_reason"] == "stationarity_abort"
+        limit_reached = aborted and len(attempts) - 1 >= max_restarts
+        if not aborted or limit_reached:
+            return dict(result, checkpoint=checkpoint, attempts=attempts,
+                        restart_count=len(attempts) - 1, attempt_count=len(attempts),
+                        total_evaluations=sum(len(a["width_history"]) for a in attempts),
+                        stationarity_check_passed=bool(checkpoint["stationary"]),
+                        restart_limit_reached=bool(limit_reached))
+        direction = generator.normal(size=dimension)
+        direction /= np.linalg.norm(direction)
 
 
 
@@ -282,10 +343,7 @@ def batched_geometric_width_curves(
 
 
 def fit_minimum_width_known_order(series, point_cloud, order, *, seed, replication,
-                                  starts, iterations, step_scale, decay):
-    diameter = float(pdist(point_cloud).max())
-    if not np.isfinite(diameter) or diameter <= 0.0:
-        raise RuntimeError("Cannot normalize the minimum-width step: invalid diameter.")
+                                  starts, iterations, initial_step, decay):
     _, _, _, directions = batched_geometric_width_curves(
         series,
         order + 1,
@@ -293,7 +351,7 @@ def fit_minimum_width_known_order(series, point_cloud, order, *, seed, replicati
         replication=replication,
         starts=starts,
         iterations=iterations,
-        initial_step=step_scale / diameter,
+        initial_step=initial_step,
         geometric_decay=decay,
         return_directions=True,
     )
@@ -303,7 +361,7 @@ def fit_minimum_width_known_order(series, point_cloud, order, *, seed, replicati
     return -direction[1:] / direction[0]
 
 
-def fit_ar3_mse_prefix(series: np.ndarray, replication_index: int, sample_size: int,
+def fit_ar3_mae_prefix(series: np.ndarray, replication_index: int, sample_size: int,
                        *, configuration) -> dict:
     """Fit only k=4, with the same random starts and schedule as the 50-run study."""
     CONFIG = configuration
@@ -315,12 +373,7 @@ def fit_ar3_mse_prefix(series: np.ndarray, replication_index: int, sample_size: 
     except QhullError:
         pass
 
-    # A point-cloud diameter is attained by hull vertices. Thus the step-size
-    # normalization and every directional width use the original cloud values.
-    diameter = float(pdist(optimization_cloud).max())
-    if not np.isfinite(diameter) or diameter <= 0:
-        raise ValueError("The point-cloud diameter is invalid.")
-    initial_step = CONFIG["initial_step_scale"] / diameter
+    initial_step = CONFIG["initial_step"]
 
     generator = np.random.default_rng(
         np.random.SeedSequence([CONFIG["optimizer_seed"], replication_index, 4, 20])
@@ -358,7 +411,6 @@ def fit_ar3_mse_prefix(series: np.ndarray, replication_index: int, sample_size: 
         "minimum_width": float(result["minimum_width"]),
         "abs_u_0": float(abs(direction[0])),
         "best_start": best_start + 1,
-        "diameter": diameter,
         "initial_step": initial_step,
         "hull_vertices": len(optimization_cloud),
     }

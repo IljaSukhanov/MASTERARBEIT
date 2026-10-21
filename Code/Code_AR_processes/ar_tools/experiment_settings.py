@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+from .coefficient_errors import COEFFICIENT_ERROR_METRIC
+
 AR_DIRECTORY = Path(__file__).resolve().parents[1]
 PROJECT_DIRECTORY = AR_DIRECTORY.parents[1]
 WARM_START_VARIANTS = ("Original saved", "Independent rerun", "Padded warm start")
@@ -18,8 +20,9 @@ POPULATION_PDF_DIRECTORY = AR_DIRECTORY / "outputs/pdfs/ar3_population_breakpoin
 GRADIENT_DATA_DIRECTORY = AR_DIRECTORY / "outputs/csv/ar3_gradient_figure_2_4_examples"
 GRADIENT_IMAGE_DIRECTORY = AR_DIRECTORY / "outputs/images/ar3_gradient_figure_2_4_examples"
 GRADIENT_PDF_PATH = PROJECT_DIRECTORY / "output/pdf/ar3_gradient_figure_2_4_ten_examples.pdf"
-AR3_MSE_OUTPUT_DIRECTORY = AR_DIRECTORY / "outputs/csv/ar3_minimum_width_k4/mse_vs_T_100_processes"
-AR3_MSE_CONFIGURATION = {'order': 3,
+AR3_MAE_OUTPUT_DIRECTORY = AR_DIRECTORY / "outputs/csv/ar3_minimum_width_k4/mae_vs_T_100_processes/absolute_steps"
+AR3_MAE_CONFIGURATION = {'order': 3,
+ 'coefficient_error_metric': COEFFICIENT_ERROR_METRIC,
  'embedding_dimension': 4,
  'replications': 100,
  'sample_sizes': [100, 500, 1000, 1500, 2000],
@@ -29,8 +32,8 @@ AR3_MSE_CONFIGURATION = {'order': 3,
  'optimizer_seed': 20260929,
  'starts': 12,
  'iterations': 5000,
- 'initial_step_scale': 0.2,
+ 'initial_step': 0.2,
  'geometric_decay': 0.997,
  'hull_vertex_reduction': True,
- 'mse_definition': 'mean of three squared coefficient errors per fit; then mean over 100 '
+ 'mae_definition': 'mean of three absolute coefficient errors per fit; then mean over 100 '
                    'processes'}

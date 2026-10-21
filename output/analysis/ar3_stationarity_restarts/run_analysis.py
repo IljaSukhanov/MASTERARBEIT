@@ -19,13 +19,14 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from Code.Code_AR_processes.ar_tools.coefficient_errors import coefficient_mae
 from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empirical_width
 from Code.Code_AR_processes.ar_tools.functions import (
     is_stationary, simulate_uniform_ar, sliding_window_point_cloud,
 )
 from Code.Code_AR_processes.ar_tools.lp_widths import exact_empirical_width_low_dimension
 
-OUT = Path(__file__).resolve().parent
+OUT = Path(__file__).resolve().parent / "mae"
 TRUE_PHI = np.array([0.5, -0.2, 0.1])
 TOTAL_EVALUATIONS = 5000
 CHECKPOINT = 100  # Exploratory budget choice, not a calibrated statistical cutoff.
@@ -72,7 +73,7 @@ def diagnostics(result):
         "current_rho": rho, "best_rho": best_rho,
         "current_stationary": rho < 1, "best_stationary": best_rho < 1,
         "best_abs_u0": 1 / np.sqrt(1 + np.sum(best_phi**2, axis=1)),
-        "best_coefficient_error": np.linalg.norm(best_phi - TRUE_PHI, axis=1),
+        "best_coefficient_mae": coefficient_mae(best_phi, TRUE_PHI),
     })
 
 
@@ -84,13 +85,14 @@ def summary_row(method, result, global_width, *, evaluations, restarts=0):
         minimum_width=result["minimum_width"],
         relative_width_gap_percent=100 * (result["minimum_width"] / global_width - 1),
         phi_1=phi[0], phi_2=phi[1], phi_3=phi[2],
-        coefficient_l2_error=float(np.linalg.norm(phi - TRUE_PHI)),
+        coefficient_mae=float(coefficient_mae(phi, TRUE_PHI)),
         spectral_radius=rho, stationary=rho < 1,
         abs_u0=float(abs(result["direction"][0])),
     )
 
 
 def main():
+    OUT.mkdir(parents=True, exist_ok=True)
     series = simulate_uniform_ar(TRUE_PHI, 1000, burnin=1000, rng=20261018)
     points = sliding_window_point_cloud(series, 4)
     bad_u = np.random.default_rng(20261019).normal(size=4)
@@ -149,7 +151,7 @@ def main():
                 final_rho=float(diag.best_rho.iloc[-1]),
                 final_stationary=bool(diag.best_stationary.iloc[-1]),
                 final_width=result["minimum_width"],
-                final_coefficient_l2_error=float(diag.best_coefficient_error.iloc[-1]),
+                final_coefficient_mae=float(diag.best_coefficient_mae.iloc[-1]),
             ))
             if seed == 3:
                 recovering, recovering_d = result, diag
@@ -285,12 +287,12 @@ def main():
         "Keep the smallest original width among visited stationary estimates, retaining the unconstrained winner separately. "
         "This explicitly restricts acceptable outputs to stationary models; in this example the stationary and unrestricted winners coincide. "
         "The true coefficients enter diagnostics only. The checkpoint 100 is an exploratory budget choice, not a theoretically justified threshold.",
-        "| Method | Evaluated states | Width | Spectral radius | Coefficient L2 error |",
+        "| Method | Evaluated states | Width | Spectral radius | Coefficient MAE |",
         "|---|---:|---:|---:|---:|",
     ]
     for row in results.itertuples():
         report.append(f"| {row.method} | {row.evaluated_states} | {row.minimum_width:.10f} | "
-                      f"{row.spectral_radius:.8f} | {row.coefficient_l2_error:.8f} |")
+                      f"{row.spectral_radius:.8f} | {row.coefficient_mae:.8f} |")
     report.extend([
         "\nSource: [restart results](restart_results.csv), [restart trajectory](restart_history.csv), "
         "[settings and checks](configuration_and_results.json). "
@@ -298,7 +300,7 @@ def main():
         "It is not a guarantee for other data or starts.",
         "## Why not reject at the first unstable estimate?",
         f"On this same path, random initialization seed 3 begins with radius {recovering_d.best_rho.iloc[0]:.8f}, "
-        f"becomes stationary at evaluated state 1, and finishes with error {recovering_d.best_coefficient_error.iloc[-1]:.8f}. "
+        f"becomes stationary at evaluated state 1, and finishes with error {recovering_d.best_coefficient_mae.iloc[-1]:.8f}. "
         "An immediate rejection would discard that successful trajectory. "
         "Sources: [recovering initialization history](recovering_initialization_history.csv), "
         "[12 fixed-seed initialization audit](same_path_initialization_audit.csv). "

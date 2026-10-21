@@ -163,7 +163,7 @@ class BetaInnovationTests(unittest.TestCase):
             simulate_beta_ar([0.4], 10, innovation_bounds=(-1, 1), a=-1, b=1)
 
     def test_plotting_refreshes_the_simulator_and_uses_normalized_supports(self):
-        notebook = json.loads((AR_DIRECTORY / "ar_beta_sliding_window_2d.ipynb").read_text())
+        notebook = json.loads((AR_DIRECTORY / "xx_notebooks_figures" / "ar_beta_sliding_window_2d.ipynb").read_text())
         sources = {cell["id"]: "".join(cell["source"])
                    for cell in notebook["cells"] if cell["cell_type"] == "code"}
         namespace = {}
@@ -195,7 +195,7 @@ class BetaInnovationTests(unittest.TestCase):
         self.assertIn("variance 1/3", namespace["fig"]._suptitle.get_text())
 
     def test_ar1_notebook_preserves_its_original_uniform_draws(self):
-        notebook = json.loads((AR_DIRECTORY / "ar1_sliding_window_embedding.ipynb").read_text())
+        notebook = json.loads((AR_DIRECTORY / "xx_notebooks_figures" / "ar1_sliding_window_embedding.ipynb").read_text())
         source = next("".join(c["source"]) for c in notebook["cells"]
                       if c["id"] == "simulate-ar1")
         namespace = {"np": np, "sample_beta_innovations": sample_beta_innovations,

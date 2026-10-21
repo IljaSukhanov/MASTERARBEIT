@@ -13,8 +13,8 @@ import numpy as np
 import pandas as pd
 
 from Code.Code_AR_processes.ar_tools.experiments import (
-    run_ar3_coefficient_mse_experiment,
-    run_ar3_mse_process,
+    run_ar3_coefficient_mae_experiment,
+    run_ar3_mae_process,
 )
 
 
@@ -23,6 +23,7 @@ NOTEBOOK_PATHS = sorted([
     *AR_DIR.glob("*.ipynb"),
     *(AR_DIR / "xx_notebooks_tuning").glob("*.ipynb"),
     *(AR_DIR / "xx_notebooks_order_selection").glob("*.ipynb"),
+    *(AR_DIR / "xx_notebooks_figures").glob("*.ipynb"),
 ])
 
 
@@ -32,7 +33,7 @@ class ExperimentToolsTests(unittest.TestCase):
 
     def test_every_former_script_experiment_has_a_notebook_entry_point(self):
         required = {
-            "run_ar3_coefficient_mse_experiment", "run_ar3_warm_start_experiment",
+            "run_ar3_coefficient_mae_experiment", "run_ar3_warm_start_experiment",
             "run_ar3_population_selector_experiment", "run_ar3_lp_descent_experiment",
         }
         called = set()
@@ -73,25 +74,25 @@ class ExperimentToolsTests(unittest.TestCase):
                     exec(compile("".join(setup["source"]), name, "exec"), namespace)
                     self.assertEqual(namespace["PROJECT_ROOT"], AR_DIR.parents[1])
 
-    def test_mse_worker_is_picklable_and_uses_explicit_settings(self):
-        self.assertIs(pickle.loads(pickle.dumps(run_ar3_mse_process)), run_ar3_mse_process)
+    def test_mae_worker_is_picklable_and_uses_explicit_settings(self):
+        self.assertIs(pickle.loads(pickle.dumps(run_ar3_mae_process)), run_ar3_mae_process)
         configuration = {
             "order": 3, "embedding_dimension": 4, "replications": 1,
             "sample_sizes": [40, 56], "burnin": 20, "experiment_seed": 51,
             "optimizer_seed": 52, "starts": 2, "iterations": 12,
-            "initial_step_scale": .2, "geometric_decay": .97,
+            "initial_step": .2, "geometric_decay": .97,
         }
         with tempfile.TemporaryDirectory() as directory, contextlib.redirect_stdout(io.StringIO()):
-            run_ar3_coefficient_mse_experiment(
+            run_ar3_coefficient_mae_experiment(
                 configuration=configuration, output_directory=directory, n_jobs=1,
             )
             results = pd.read_csv(Path(directory) / "replication_results.csv")
-            resumed = run_ar3_mse_process(
+            resumed = run_ar3_mae_process(
                 0, configuration=configuration, cache_directory=Path(directory) / "processes",
             )
         self.assertEqual(results["T"].tolist(), [40, 56])
         self.assertTrue(results["status"].eq("ok").all(), results["error_message"].tolist())
-        self.assertTrue(np.isfinite(results["coefficient_mse"]).all())
+        self.assertTrue(np.isfinite(results["coefficient_mae"]).all())
         pd.testing.assert_frame_equal(results, resumed)
 
 

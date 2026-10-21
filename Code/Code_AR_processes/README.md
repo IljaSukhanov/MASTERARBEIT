@@ -1,4 +1,91 @@
-# Normalized Beta innovations for every AR generator
+# AR simulation and optimization tools
+
+## Coefficient accuracy: MAE only
+
+Every active coefficient comparison uses
+[`coefficient_mae`](ar_tools/coefficient_errors.py):
+
+\[
+\operatorname{MAE}(\widehat\phi,\phi)
+=\frac1p\sum_{j=1}^{p}|\widehat\phi_j-\phi_j|.
+\]
+
+Monte Carlo summaries average per-fit MAEs across replications. Per-coefficient
+summaries use mean absolute error as well. A fit with undefined or nonfinite
+coefficients has unavailable MAE; unconditional summaries retain that failure
+instead of silently dropping it. The implementation follows the uniform output
+average in [scikit-learn's `mean_absolute_error`, `multioutput`
+parameter](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_absolute_error.html).
+
+Coefficient rankings, co-winner counts, thresholds, bootstrap comparisons, plots,
+and generated reports use this same convention. Squared residuals in OLS/QML,
+the Horváth residual objective, width minimization, and stationarity checks keep
+their estimator-specific meanings.
+
+The updated notebooks clear stale saved displays. MAE experiment outputs use
+new `mae` or `mae_vs_T_100_processes` paths (or explicit `_mae` filenames),
+and replication caches identify the metric as `mae_per_coefficient_v1`.
+Tuning figures use configuration hashes that include the MAE implementation.
+Existing coefficient-error output files outside these paths
+are historical results under their original metrics; they are not relabelled
+or reused as MAE. Rerun the notebooks to generate the current results.
+
+## Shared empirical-width descent
+
+All empirical projected-subgradient updates use
+[`projected_subgradient_empirical_width`](ar_tools/descent.py).
+Initial steps are absolute values. Notebook and experiment callers use
+`initial_step`; no point-cloud diameter or Lipschitz bound scales the step.
+
+Enable checkpoint-triggered restarts with the boolean `stationarity_check`:
+
+```python
+from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empirical_width
+
+result = projected_subgradient_empirical_width(
+    point_cloud,
+    iterations=2000,
+    patience=200,
+    initial_step=0.8,
+    step_schedule="geometric",
+    geometric_decay=2**(-1/50),
+    stationarity_check=True,
+    rng=20261019,
+)
+```
+
+The option defaults to `False`. When enabled, each attempt checks its
+best-width direction after exactly `patience` evaluated states, before the
+next update. Coefficients are recovered as `-u[1:]/u[0]`, following the
+[thesis coefficient-recovery remark](../../Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex).
+The shared [companion-matrix check](ar_tools/functions.py) passes only when
+all eigenvalue moduli are below one. Undefined or nonfinite coefficients fail.
+
+A failed checkpoint discards that attempt's incumbent and draws a fresh
+normalized Gaussian direction from `rng`. The next attempt resets the step
+schedule, patience counter and full `iterations` budget. After passing the
+checkpoint, an attempt continues under ordinary width-based stopping; there
+is no further checkpoint or final stationarity filter.
+
+`max_restarts` defaults to 100. If that limit is exhausted, the result is
+explicitly marked `termination_reason="stationarity_abort"`,
+`restart_limit_reached=True` and `stationarity_check_passed=False`.
+Callers must handle that failure rather than treating the returned direction
+as an accepted fit. `max_restarts=0` checks a single attempt without drawing
+another direction, as used by the fixed twelve-start early-abort comparison.
+
+Top-level histories describe the final attempt. `attempts` retains each
+attempt's result and checkpoint; `total_evaluations` includes rejected
+attempts, and `restart_count` records fresh draws. Optional direction and
+coefficient histories retain their existing recording switches.
+
+The old local checkpoint update loop and the initialization audit's local
+vectorized update loop have been replaced by calls to the shared optimizer.
+Studies whose step sizes changed have cleared notebook outputs. Restart-study
+data and the large coefficient-experiment cache use `absolute_steps/` directories
+so historical fitted results cannot be silently reused under the new policy.
+
+## Normalized Beta innovations for every AR generator
 
 All AR innovation generation uses `ar_tools.innovations.sample_beta_innovations`.
 Every supported shape has population mean zero and population variance `1/3`.
@@ -77,8 +164,8 @@ The uniform special case preserves existing seeded values and generator state.
 | `ar_tools.functions.simulate_beta_ar` | Uses `sample_beta_innovations`, with zero innovation mean in AR history initialization. |
 | `ar_tools.functions.simulate_uniform_ar` | Compatibility wrapper selecting `alpha=beta=1` in the same simulator. Its legacy `half_width` must be `1`; other values conflict with variance `1/3`. |
 | Shared experiment runners, tuning and order-selection notebooks | Their uniform wrapper calls reach the same normalized sampler. Existing default experiments remain uniform. |
-| `ar1_sliding_window_embedding.ipynb` | Calls the sampler directly; its uniform radius is derived from `beta_innovation_bounds()`. Its teaching-example AR recurrence and seeded path are preserved. |
-| `ar_beta_sliding_window_2d.ipynb` | Every displayed shape is normalized; each support overlay uses that shape's computed endpoints. Fixed-support and free-width settings have been removed. |
+| [ar1_sliding_window_embedding.ipynb](xx_notebooks_figures/ar1_sliding_window_embedding.ipynb) | Calls the sampler directly; its uniform radius is derived from `beta_innovation_bounds()`. Its teaching-example AR recurrence and seeded path are preserved. |
+| [ar_beta_sliding_window_2d.ipynb](xx_notebooks_figures/ar_beta_sliding_window_2d.ipynb) | Every displayed shape is normalized; each support overlay uses that shape's computed endpoints. Fixed-support and free-width settings have been removed. |
 | Analysis and research scripts | Use the same shared simulators. Some restart studies load already-saved uniform paths instead of generating new ones. |
 
 The previous default for nonuniform shapes kept support width 2. It is now
