@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import numpy as np
 from scipy.stats import beta as beta_distribution, kstest
@@ -162,37 +162,70 @@ class BetaInnovationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             simulate_beta_ar([0.4], 10, innovation_bounds=(-1, 1), a=-1, b=1)
 
-    def test_plotting_refreshes_the_simulator_and_uses_normalized_supports(self):
-        notebook = json.loads((AR_DIRECTORY / "xx_notebooks_figures" / "ar_beta_sliding_window_2d.ipynb").read_text())
+    def test_ar1_figure_uses_fixed_support_beta_and_matching_time_series(self):
+        path = AR_DIRECTORY / "xx_notebooks_figures" / "ar_beta_sliding_window_2d.ipynb"
+        notebook = json.loads(path.read_text())
         sources = {cell["id"]: "".join(cell["source"])
                    for cell in notebook["cells"] if cell["cell_type"] == "code"}
         namespace = {}
-        stale = Mock(side_effect=TypeError("stale simulator"))
         with contextlib.redirect_stdout(io.StringIO()):
             for cell_id in ("setup", "settings", "theoretical-zonoid"):
                 exec(sources[cell_id], namespace)
+            self.assertEqual(namespace["beta_pairs"],
+                             [(1., 1.), (.5, .5), (2., 2.), (.5, 2.), (2., .5)])
             with tempfile.TemporaryDirectory() as directory:
-                namespace.update(
-                    sample_size=5_000, burnin=100, beta_pairs=[(2.0, 5.0), (5.0, 2.0)],
-                    PDF_DIR=Path(directory), IMAGE_DIR=Path(directory), simulate_beta_ar=stale,
-                )
-                with patch.object(ar_functions, "simulate_beta_ar", stale), patch.object(
-                    namespace["plt"], "show",
-                ):
+                namespace.update(burnin=100, time_series_points=120,
+                                 PDF_DIR=Path(directory), IMAGE_DIR=Path(directory))
+                with patch.object(namespace["plt"], "show"):
                     exec(sources["plot-clouds"], namespace)
-                self.assertTrue((Path(directory) / "beta_sliding_window_clouds_2d.pdf").is_file())
-                self.assertTrue((Path(directory) / "beta_sliding_window_clouds_2d.png").is_file())
-        stale.assert_not_called()
-        expected_bounds = [beta_innovation_bounds(2, 5), beta_innovation_bounds(5, 2)]
-        np.testing.assert_allclose(namespace["panel_innovation_bounds"], expected_bounds)
-        self.assertFalse(np.allclose(*namespace["zonoid_boundaries"]))
-        for cloud, (lower, upper) in zip(namespace["clouds"], expected_bounds):
-            self.assertEqual(cloud.shape, (4_999, 2))
-            residuals = cloud[:, 1] - 0.7 * cloud[:, 0]
-            self.assertTrue(np.all((residuals >= lower) & (residuals <= upper)))
-            self.assertAlmostEqual(residuals.mean(), 0, delta=0.025)
-            self.assertAlmostEqual(residuals.var(), 1 / 3, delta=0.02)
-        self.assertIn("variance 1/3", namespace["fig"]._suptitle.get_text())
+                for stem in ("beta_ar1_time_series", "beta_sliding_window_clouds_2d",
+                             "beta_ar1_time_series_overlay"):
+                    self.assertTrue((Path(directory) / f"{stem}.pdf").is_file())
+                    self.assertTrue((Path(directory) / f"{stem}.png").is_file())
+        self.assertEqual(namespace["time_series_axes"].shape, (5, 1))
+        self.assertEqual(sum(ax.get_visible() for ax in namespace["cloud_axes"].flat), 5)
+        self.assertEqual(len(namespace["overlay_lines"]), 5)
+        self.assertEqual(len({line.get_color() for line in namespace["overlay_lines"]}), 5)
+        self.assertEqual(namespace["panel_innovation_bounds"], [(-1., 1.)] * 5)
+        for row, ((alpha, beta), series, innovations, cloud, boundary) in enumerate(zip(
+            namespace["beta_pairs"], namespace["series_list"], namespace["innovation_samples"],
+            namespace["clouds"], namespace["zonoid_boundaries"],
+        )):
+            with self.subTest(alpha=alpha, beta=beta):
+                self.assertEqual(series.shape, (5_000,))
+                np.testing.assert_array_equal(cloud[:, 0], series[:-1])
+                np.testing.assert_array_equal(cloud[:, 1], series[1:])
+                np.testing.assert_allclose(series[1:] - .7 * series[:-1], innovations[1:], atol=1e-15)
+                self.assertTrue(np.all((innovations >= -1.) & (innovations <= 1.)))
+                self.assertLess(kstest(
+                    innovations, beta_distribution(alpha, beta, loc=-1., scale=2.).cdf,
+                ).statistic, .025)
+                self.assertAlmostEqual(innovations.mean(), (alpha - beta) / (alpha + beta), delta=.04)
+                self.assertAlmostEqual(innovations.var(),
+                    4 * alpha * beta / ((alpha + beta)**2 * (alpha + beta + 1)), delta=.03)
+                np.testing.assert_array_equal(boundary, namespace["support_boundary"])
+                np.testing.assert_array_equal(namespace["time_series_axes"][row, 0].lines[0].get_ydata(), series[:120])
+                np.testing.assert_array_equal(namespace["cloud_axes"].flat[row].collections[0].get_offsets(), cloud)
+                boundary_line = namespace["cloud_axes"].flat[row].lines[0]
+                self.assertEqual(boundary_line.get_color(), "black")
+                self.assertEqual(boundary_line.get_linestyle(), "--")
+                overlay_line = namespace["overlay_lines"][row]
+                np.testing.assert_array_equal(overlay_line.get_ydata(), series[:100])
+                np.testing.assert_array_equal(overlay_line.get_xdata(), np.arange(1, 101))
+                self.assertEqual(overlay_line.get_color(),
+                                 namespace["time_series_axes"][row, 0].lines[0].get_color())
+
+    def test_ar1_figure_rejects_a_higher_order_model(self):
+        path = AR_DIRECTORY / "xx_notebooks_figures" / "ar_beta_sliding_window_2d.ipynb"
+        notebook = json.loads(path.read_text())
+        sources = {cell["id"]: "".join(cell["source"])
+                   for cell in notebook["cells"] if cell["cell_type"] == "code"}
+        namespace = {}
+        for cell_id in ("setup", "settings", "theoretical-zonoid"):
+            exec(sources[cell_id], namespace)
+        namespace["phi"] = np.array([.4, -.1])
+        with self.assertRaisesRegex(ValueError, "AR\\(1\\)"):
+            exec(sources["plot-clouds"], namespace)
 
     def test_ar1_notebook_preserves_its_original_uniform_draws(self):
         notebook = json.loads((AR_DIRECTORY / "xx_notebooks_figures" / "ar1_sliding_window_embedding.ipynb").read_text())

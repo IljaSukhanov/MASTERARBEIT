@@ -85,11 +85,17 @@ Studies whose step sizes changed have cleared notebook outputs. Restart-study
 data and the large coefficient-experiment cache use `absolute_steps/` directories
 so historical fitted results cannot be silently reused under the new policy.
 
-## Normalized Beta innovations for every AR generator
+## Normalized Beta innovations in the shared AR generators
 
-All AR innovation generation uses `ar_tools.innovations.sample_beta_innovations`.
+Shared AR innovation generation uses `ar_tools.innovations.sample_beta_innovations`.
 Every supported shape has population mean zero and population variance `1/3`.
 The default `alpha=beta=1` is exactly uniform on `[-1,1]`.
+
+The [AR(1) Beta figure notebook](xx_notebooks_figures/ar_beta_sliding_window_2d.ipynb)
+is a figure-specific exception requested for the thesis TODO: it draws
+`2*Beta(alpha,beta)-1` locally so all five innovation distributions have fixed
+support `[-1,1]`. Their means and variances vary with shape. This does not change
+the shared samplers or the other experiments.
 
 ```python
 from Code.Code_AR_processes.ar_tools import (
@@ -165,7 +171,7 @@ The uniform special case preserves existing seeded values and generator state.
 | `ar_tools.functions.simulate_uniform_ar` | Compatibility wrapper selecting `alpha=beta=1` in the same simulator. Its legacy `half_width` must be `1`; other values conflict with variance `1/3`. |
 | Shared experiment runners, tuning and order-selection notebooks | Their uniform wrapper calls reach the same normalized sampler. Existing default experiments remain uniform. |
 | [ar1_sliding_window_embedding.ipynb](xx_notebooks_figures/ar1_sliding_window_embedding.ipynb) | Calls the sampler directly; its uniform radius is derived from `beta_innovation_bounds()`. Its teaching-example AR recurrence and seeded path are preserved. |
-| [ar_beta_sliding_window_2d.ipynb](xx_notebooks_figures/ar_beta_sliding_window_2d.ipynb) | Every displayed shape is normalized; each support overlay uses that shape's computed endpoints. Fixed-support and free-width settings have been removed. |
+| [ar_beta_sliding_window_2d.ipynb](xx_notebooks_figures/ar_beta_sliding_window_2d.ipynb) | Figure-specific fixed-support Beta draws on [-1,1], following the thesis TODO. Exports separate time-series panels, clouds with a common support boundary, and a colored overlay; does not call the normalized shared sampler. |
 | Analysis and research scripts | Use the same shared simulators. Some restart studies load already-saved uniform paths instead of generating new ones. |
 
 The previous default for nonuniform shapes kept support width 2. It is now
@@ -181,11 +187,10 @@ unrelated to AR innovation generation. Geometry helpers may still analyze
 arbitrary intervals; they do not generate processes.
 
 Restart an existing notebook kernel after updating the shared Python modules.
-The beta comparison notebook also refreshes its shared sampling module when its
-plotting cell is rerun. Its stale embedded outputs are cleared. No thesis files
-are edited by this change.
+The Beta figure notebook uses its own fixed-support sampling cell. No thesis files
+are edited by these code changes.
 
-## Verification
+## Historical normalization verification (20 October 2026)
 
 `tests/test_beta_innovations.py` checks the theoretical endpoint conditions,
 full transformed beta distributions, sampled means and variances across shapes,
