@@ -333,7 +333,7 @@ Finally, we approximate $G_{rs}$ by truncating the integral and applying the com
     G_{rs}\approx\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
 \end{align*}
 
-\todo[inline]{Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
+\todo[inline]{22.10: Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -760,6 +760,8 @@ For the Gaussian Kernel, the energy functional $\hat{Q}_r$ can be written down e
 where $d_{ij}=X_i-X_j$. Using standard optimization methods, we can minimize $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_2(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths} and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_2$.
 
 The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks at the minimizer of the energy functional (after proper scaling). The next result aims to give the answer.
+
+\todo[inline]{Last big result. Prove it}
 
 \begin{Prop}
     Assume that $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer.

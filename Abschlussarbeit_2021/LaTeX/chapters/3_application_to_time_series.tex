@@ -536,31 +536,16 @@ This allows for fair and principled numerical experiments.
 
 The choice of the starting direction is arguably the most critical step in the algorithm because Theorem~\ref{thm:conv_grad_descent} guarantees fast convergence only if the starting direction is already close to the set of minimizers. We implement multiple random starting directions $u_0^{(l)}\sim U(\mathbb{S}^{k-1})$, $l=1,\dots,L$ and run the descent $L$ times and take the direction $\hat{u}$ with the lowest value $\hat{w}(\hat{u})$ out of all runs.
 
-\todo[inline]{What about just choosing $u_0=e_1$? Seems to work better}
-
 An alternative possibility for the order selection experiments is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
 
 \textbf{Termination condition}
 
 We implement a maximum number of iterations $\text{iter}_{\max}=2000$ and an improvement patience $\text{pat}=200$, that is, if the function value has not improved for $\text{pat}$, the descent is terminated prematurely.
 
-Another idea is to use the transformation in Remark~\ref{rem:minimizer_estimates_coefficients} to obtain a preliminary estimate $\hat{\phi}$ and compute the principal eigenvalue $\hat{\rho}:=\rho(M_{\hat{\phi}})$ of the companion matrix $M_{\hat{\phi}}$. The descent can be restarted with a new starting direction if $\hat{\rho}\gg1$.
-
-The companion matrix $M_{\phi}$ of an AR($p$) process is given by
-\begin{align*}
-    M_{\phi}=\begin{pmatrix}
-        0 & 1 & 0 & \dots & 0\\
-        0 & 0 & 1 & \dots & 0\\
-        \vdots & \vdots & \vdots & \ddots & \vdots\\
-        \phi_p & \phi_{p-1} & \phi_{p-2} & \dots & \phi_1
-    \end{pmatrix}
-\end{align*}
-It can be shown that an AR($p$) process is stable if and only if the principal eigenvalue of the companion matrix is strictly less than 1.
-
 \textbf{Tuning experiments}
 
-\todo[inline]{Make extensive tuning experiments}
-\todo[inline]{Goal is to determine principled parameters to use for all further experiments}
+\todo[inline]{22.10: Make extensive tuning experiments}
+\todo[inline]{22.10: Goal is to determine principled parameters to use for all further experiments}
 \todo[inline]{Repeat under many $u_0$?}
 
 The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in{0.05,0.1,0.2,0.4,0.8}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in{0.05,0.1,0.2,0.4,0.8}$. Precedence for dividing the step size by the Lipschitz-constant can be found in Li et al. (2021, Theorem 4) or Bubeck (2015, Theorem 3.2).
@@ -569,7 +554,9 @@ A general approach for choosing the starting direction $u_0$ is to sample it uni
 
 We sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, $L$ independent realizations are generated and the best configuration is looked for. Afterwards we have $100L$ best configurations and we choose the one configuration which was best most often.
 
-The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Figure~[] below.
+The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Table~[] below.
+
+These tuning experiments show that normalizing the step size by dividing by $L$ leads to better performance. Also the deterministic starting direction $e_1$ performed better than a fixed random starting direction. The best configuration is $H=50$ and $c=0.2$. 
 
 \textcolor{red}{All subsequent experiments are performed using different seeds.}
 
@@ -577,7 +564,7 @@ The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest ob
 
 \subsubsection{Coefficient estimation experiments}
 
-\todo[inline]{Complete coefficient estimation experiments}
+\todo[inline]{22.10: Complete coefficient estimation experiments}
 
 Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
 
