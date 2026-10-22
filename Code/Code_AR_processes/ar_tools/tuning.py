@@ -31,6 +31,7 @@ def tune_geometric_width_schedule(
     progress=False,
     stationarity_check=False,
     max_restarts=100,
+    delta=1e-8,
 ):
     """Select gamma_m = gamma0 * beta**m by attained empirical width.
 
@@ -40,6 +41,8 @@ def tune_geometric_width_schedule(
     inputs to this search. Histories retain the best width across starts at
     each iteration, holding each stopped run at its last recorded best width.
     Optional stationarity checkpoints/restarts use the shared optimizer.
+    delta controls the meaningful best-width decrease required to reset
+    patience, independently of improvement_tolerance used for record updates.
     Evaluation counts include discarded attempts. Starts that exhaust the
     restart limit are excluded from width selection. If every start fails,
     the candidate has NaN width/direction and explicit failure metadata.
@@ -71,6 +74,10 @@ def tune_geometric_width_schedule(
             raise ValueError(f"{name} must be a positive integer.")
     if not np.isfinite(improvement_tolerance) or improvement_tolerance < 0:
         raise ValueError("improvement_tolerance must be finite and nonnegative.")
+    if (isinstance(delta, (bool, np.bool_))
+            or not isinstance(delta, (int, float, np.integer, np.floating))
+            or not np.isfinite(delta) or delta < 0):
+        raise ValueError("delta must be a finite nonnegative number.")
     if (
         isinstance(optimizer_seed, (bool, np.bool_))
         or not isinstance(optimizer_seed, (int, np.integer)) or optimizer_seed < 0
@@ -93,7 +100,7 @@ def tune_geometric_width_schedule(
                         initial_step=float(gamma0),
                         geometric_decay=float(beta),
                         patience=patience,
-                        improvement_tolerance=improvement_tolerance,
+                        improvement_tolerance=improvement_tolerance, delta=delta,
                         initial_direction=direction,
                         rng=np.random.SeedSequence([
                             optimizer_seed, 0, dimension, 21, start_index,
@@ -122,6 +129,7 @@ def tune_geometric_width_schedule(
                     "candidate_id": candidate_id,
                     "gamma0": float(gamma0), "beta": float(beta),
                     "minimum_width": width, "selected_start": selected_index + 1,
+                    "delta": float(delta),
                     "total_evaluations": sum(
                         run.get("total_evaluations", len(run["width_history"])) for run in runs
                     ),
@@ -190,6 +198,7 @@ def tune_geometric_half_life_schedules(
     stationarity_check=False,
     max_restarts=100,
     step_rule="absolute",
+    delta=1e-8,
 ):
     """Tune geometric steps from one fixed starting direction.
 
@@ -228,7 +237,7 @@ def tune_geometric_half_life_schedules(
     search = tune_geometric_width_schedule(
         points, direction[None, :], initial_steps, betas,
         iterations=iterations, patience=patience,
-        improvement_tolerance=improvement_tolerance,
+        improvement_tolerance=improvement_tolerance, delta=delta,
         optimizer_seed=optimizer_seed, progress=progress,
         stationarity_check=stationarity_check, max_restarts=max_restarts,
     )
@@ -407,6 +416,7 @@ def tune_fixed_ar_realizations(
     stationarity_check=False,
     max_restarts=100,
     n_jobs=1,
+    delta=1e-8,
 ):
     """Run paired grids on fixed-coefficient AR(3) paths at one size.
 
@@ -419,7 +429,7 @@ def tune_fixed_ar_realizations(
         phi, [sample_size], initial_direction, scale_grid, half_life_grid,
         replications=replications, process_seed=process_seed, burnin=burnin,
         iterations=iterations, patience=patience,
-        improvement_tolerance=improvement_tolerance, optimizer_seed=optimizer_seed,
+        improvement_tolerance=improvement_tolerance, delta=delta, optimizer_seed=optimizer_seed,
         progress=progress, summarize=summarize,
         stationarity_check=stationarity_check, max_restarts=max_restarts, n_jobs=n_jobs,
     )
@@ -433,14 +443,11 @@ def _ar_realization_cases(
     random_coefficients = phi is None
     if not random_coefficients:
         phi = np.asarray(phi, dtype=float)
-    direction = np.array(initial_direction, dtype=float, copy=True)
+    directions = np.array(initial_direction, dtype=float, copy=True)
     if not random_coefficients and (
             phi.shape != (3,) or not np.all(np.isfinite(phi)) or phi[-1] == 0
             or not is_stationary(phi)[0]):
         raise ValueError("Use finite causal AR(3) coefficients with nonzero phi_3.")
-    if (direction.shape != (4,) or not np.all(np.isfinite(direction))
-            or np.linalg.norm(direction) <= np.finfo(float).eps):
-        raise ValueError("initial_direction must be a finite nonzero four-vector.")
     sizes = np.asarray(sample_sizes)
     if (sizes.ndim != 1 or not len(sizes) or sizes.dtype.kind not in "iu"
             or np.any(sizes < 5) or len(np.unique(sizes)) != len(sizes)):
@@ -452,14 +459,21 @@ def _ar_realization_cases(
         if (isinstance(value, (bool, np.bool_))
                 or not isinstance(value, (int, np.integer)) or value < lower):
             raise ValueError(f"{name} must be an integer >= {lower}.")
+    if directions.shape not in {(4,), (replications, 4)}:
+        raise ValueError("initial_direction must be a four-vector or a (replications, 4) array.")
+    norms = np.linalg.norm(directions, axis=-1, keepdims=True)
+    if (not np.all(np.isfinite(directions)) or not np.all(np.isfinite(norms))
+            or np.any(norms <= np.finfo(float).eps)):
+        raise ValueError("Every initial_direction must be finite and nonzero.")
+    directions /= norms
     if random_coefficients:
         if (isinstance(coefficient_seed, (bool, np.bool_))
                 or not isinstance(coefficient_seed, (int, np.integer)) or coefficient_seed < 0):
             raise ValueError("coefficient_seed must be a nonnegative integer.")
         coefficient_seeds = np.random.SeedSequence(coefficient_seed).spawn(replications)
-    direction /= np.linalg.norm(direction)
     seeds = np.random.SeedSequence(process_seed).spawn(replications)
     for replication, seed in enumerate(seeds, start=1):
+        direction = directions if directions.ndim == 1 else directions[replication - 1]
         realized_seed = int(seed.generate_state(1, dtype=np.uint64)[0])
         metadata = {}
         if random_coefficients:
@@ -491,6 +505,7 @@ def _ar_realization_cases(
             yield {"replication": replication, "T": int(sample_size),
                    "process_seed": realized_seed,
                    "points": points, "initial_direction": direction, **metadata,
+                   **{f"initial_u_{j}": float(value) for j, value in enumerate(direction)},
                    "population_minimum_width": 2.0 / coefficient_normalizer,
                    "empirical_true_direction_width": float(np.ptp(points @ true_direction))}
 
@@ -500,6 +515,7 @@ def tune_ar_sample_sizes(
     replications, process_seed, burnin, iterations, patience,
     improvement_tolerance, optimizer_seed, progress=False, summarize=True,
     stationarity_check=False, max_restarts=100, n_jobs=1,
+    delta=1e-8,
 ):
     """Select by mean achieved minimum width across paired paths and sizes.
 
@@ -517,7 +533,7 @@ def tune_ar_sample_sizes(
     )
     return _tune_ar_cases(
         clouds, initial_direction, scale_grid, half_life_grid, replications=replications,
-        iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
+        iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance, delta=delta,
         optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
         stationarity_check=stationarity_check, max_restarts=max_restarts, n_jobs=n_jobs,
     )
@@ -529,11 +545,16 @@ def tune_jones_ar_realizations(
     improvement_tolerance, optimizer_seed, progress=False, summarize=True,
     stationarity_check=False, max_restarts=100, step_rule="absolute", n_jobs=1,
     coefficient_diagnostics=True,
+    delta=1e-8,
 ):
     """Tune paired grids on distinct Jones-sampled causal AR(3) models.
 
     Each model receives an independent coefficient seed and innovation seed.
-    All candidates share its one realized cloud and the supplied fixed start.
+    All candidates share its one realized cloud and starting direction.
+    initial_direction accepts one common four-vector or a (replications, 4)
+    array with one direction per model, indexed by replication - 1. Rows are
+    normalized separately and returned as initial_u_0, ..., initial_u_3 in
+    every result and case. Pass the same array to pair starts across step rules.
     The existing Jones sampler is used without truncation or rejection by
     spectral radius. Coefficients, partial autocorrelations and seeds are
     returned with every result and case. Nothing is exported. Set summarize=False
@@ -557,7 +578,7 @@ def tune_jones_ar_realizations(
     )
     return _tune_ar_cases(
         clouds, initial_direction, scale_grid, half_life_grid, replications=replications,
-        iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
+        iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance, delta=delta,
         optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
         stationarity_check=stationarity_check, max_restarts=max_restarts,
         step_rule=step_rule, n_jobs=n_jobs, coefficient_diagnostics=coefficient_diagnostics,
@@ -569,6 +590,7 @@ def _tune_ar_cases(
     iterations, patience, improvement_tolerance, optimizer_seed, progress, summarize,
     stationarity_check=False, max_restarts=100, n_jobs=1, step_rule="absolute",
     coefficient_diagnostics=True,
+    delta=1e-8,
 ):
     """Run the same grid and aggregation for either AR coefficient design."""
     if (isinstance(n_jobs, (bool, np.bool_))
@@ -581,7 +603,7 @@ def _tune_ar_cases(
             delayed(_tune_ar_cases)(
                 [case], initial_direction, scale_grid, half_life_grid,
                 replications=replications, iterations=iterations, patience=patience,
-                improvement_tolerance=improvement_tolerance, optimizer_seed=optimizer_seed,
+                improvement_tolerance=improvement_tolerance, delta=delta, optimizer_seed=optimizer_seed,
                 progress=False, summarize=False, stationarity_check=stationarity_check,
                 max_restarts=max_restarts, n_jobs=1, step_rule=step_rule,
                 coefficient_diagnostics=coefficient_diagnostics,
@@ -607,7 +629,7 @@ def _tune_ar_cases(
                     if key not in {"points", "initial_direction"}}
         search = tune_geometric_half_life_schedules(
             case["points"], case["initial_direction"], scale_grid, half_life_grid, iterations=iterations,
-            patience=patience, improvement_tolerance=improvement_tolerance,
+            patience=patience, improvement_tolerance=improvement_tolerance, delta=delta,
             optimizer_seed=optimizer_seed,
             stationarity_check=stationarity_check, max_restarts=max_restarts,
             step_rule=step_rule,
@@ -675,8 +697,9 @@ def _tune_ar_cases(
 
 def _finish_ar_tuning(rows, cases, initial_direction, *, summarize):
     """Assemble raw case results, optionally applying the existing summary."""
+    directions = np.asarray(initial_direction, dtype=float)
     result = {"results": rows, "cases": cases,
-              "initial_direction": np.asarray(initial_direction) / np.linalg.norm(initial_direction)}
+              "initial_direction": directions / np.linalg.norm(directions, axis=-1, keepdims=True)}
     if summarize:
         ranking = summarize_geometric_replications(rows)
         result.update(ranking=ranking, selected=dict(ranking[0]),
@@ -689,6 +712,7 @@ def compare_ar_schedules(
     phi, sample_sizes, initial_direction, schedules, *, replications, process_seed,
     burnin, iterations, patience, improvement_tolerance, optimizer_seed, progress=False,
     record_histories=False,
+    delta=1e-8,
 ):
     """Evaluate frozen schedules on fresh paired AR(3) paths, without selection.
 
@@ -724,7 +748,7 @@ def compare_ar_schedules(
                 search = tune_geometric_width_schedule(
                     case["points"], case["initial_direction"][None, :], [gamma0], [beta],
                     iterations=iterations, patience=patience,
-                    improvement_tolerance=improvement_tolerance, optimizer_seed=optimizer_seed,
+                    improvement_tolerance=improvement_tolerance, delta=delta, optimizer_seed=optimizer_seed,
                 )
                 evaluated[key] = search["selected"]
                 if record_histories:

@@ -228,10 +228,12 @@ class ScheduleTuningTests(unittest.TestCase):
         args = (40, [.1, -.8, .3, .5], [.1, .9], [4])
         settings = dict(self.settings, replications=2, process_seed=20261024,
                         coefficient_seed=20261023, burnin=20, summarize=False,
-                        stationarity_check=True, max_restarts=3, step_rule="diameter_normalized")
+                        stationarity_check=True, max_restarts=3, step_rule="diameter_normalized",
+                        delta=.001)
         serial = tune_jones_ar_realizations(*args, n_jobs=1, **settings)
         parallel = tune_jones_ar_realizations(*args, n_jobs=2, **settings)
         for row, other in zip(serial["results"], parallel["results"]):
+            self.assertEqual(row["delta"], .001)
             for key in set(row) - {"runtime_seconds"}:
                 np.testing.assert_equal(row[key], other[key])
             phi = [row[f"phi_{j}"] for j in range(1, 4)]
@@ -241,6 +243,54 @@ class ScheduleTuningTests(unittest.TestCase):
             expected_diameter = np.linalg.norm(cloud[:, None, :] - cloud[None, :, :], axis=2).max()
             self.assertAlmostEqual(row["cloud_diameter"], expected_diameter)
             self.assertAlmostEqual(row["gamma0"] * expected_diameter, row["step_value"])
+
+    def test_jones_uses_each_models_start_and_pairs_it_across_step_rules_and_workers(self):
+        directions = np.array([[.1, -.8, .3, .5], [.7, .2, -.4, .1]])
+        original = directions.copy()
+        expected = directions / np.linalg.norm(directions, axis=1, keepdims=True)
+        settings = dict(self.settings, replications=2, process_seed=20261024,
+                        coefficient_seed=20261023, burnin=20, summarize=False,
+                        coefficient_diagnostics=False)
+        args = (40, directions, [.1, .2], [4, 20])
+        absolute = tune_jones_ar_realizations(*args, **settings)
+        normalized = tune_jones_ar_realizations(*args, step_rule="diameter_normalized", **settings)
+        parallel = tune_jones_ar_realizations(
+            *args, step_rule="diameter_normalized", n_jobs=2, **settings,
+        )
+        for row, other in zip(normalized["results"], parallel["results"]):
+            for key in set(row) - {"runtime_seconds"}:
+                np.testing.assert_equal(row[key], other[key])
+        for experiment in (absolute, normalized, parallel):
+            np.testing.assert_allclose(experiment["initial_direction"], expected, atol=0, rtol=1e-15)
+            for row in experiment["results"] + experiment["cases"]:
+                np.testing.assert_array_equal(
+                    [row[f"initial_u_{j}"] for j in range(4)], expected[row["replication"] - 1],
+                )
+            # Check that the recorded per-model start is also used by the optimizer.
+            for row in experiment["results"][::4]:
+                phi = [row[f"phi_{j}"] for j in range(1, 4)]
+                cloud = sliding_window_point_cloud(simulate_uniform_ar(
+                    phi, sample_size=40, burnin=20, rng=row["process_seed"],
+                ), 4)
+                direct = tune_geometric_half_life_schedules(
+                    cloud, expected[row["replication"] - 1], [row["step_value"]],
+                    [row["half_life"]], step_rule=row["step_rule"], **self.settings,
+                )["selected"]
+                self.assertEqual(row["minimum_width"], direct["minimum_width"])
+                np.testing.assert_array_equal(
+                    [row[f"u_{j}"] for j in range(4)], [direct[f"u_{j}"] for j in range(4)],
+                )
+        # Changing the starts must preserve coefficients, innovations and width references.
+        e1 = tune_jones_ar_realizations(40, [1., 0., 0., 0.], [.1, .2], [4, 20], **settings)
+        model_keys = ["coefficient_seed", "process_seed", "population_minimum_width",
+                      "empirical_true_direction_width", "phi_1", "phi_2", "phi_3"]
+        for first, second in zip(absolute["cases"], e1["cases"]):
+            for key in model_keys:
+                self.assertEqual(first[key], second[key])
+        np.testing.assert_array_equal(directions, original)
+        for invalid in (directions[:1], np.zeros((2, 4)), np.full((2, 4), np.nan)):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, "initial_direction"):
+                tune_jones_ar_realizations(40, invalid, [.1], [4], **settings)
 
     def test_single_grid_pair_produces_one_candidate(self):
         result = tune_geometric_half_life_schedules(
@@ -259,8 +309,7 @@ class ScheduleTuningTests(unittest.TestCase):
         sources = {cell["id"]: "".join(cell["source"])
                    for cell in notebook["cells"] if cell["cell_type"] == "code"}
         all_source = "\n".join(sources.values())
-        for removed in ("coefficient_mae", "coefficient_wins", "coefficient_errors",
-                        "estimated_phi", "nonstationary_estimate", "coefficient_epsilon",
+        for removed in ("coefficient_wins", "estimated_phi", "nonstationary_estimate", "coefficient_epsilon",
                         "mean_minimum_width", "exact_empirical_width_low_dimension"):
             self.assertNotIn(removed, all_source)
         namespace = {}
@@ -269,7 +318,10 @@ class ScheduleTuningTests(unittest.TestCase):
             exec(sources["settings"], namespace)
             self.assertEqual(namespace["max_iterations"], 2000)
             self.assertEqual(namespace["patience"], 200)
+            self.assertEqual(namespace["delta"], 1e-8)
+            self.assertEqual(namespace["number_of_coefficient_realizations"], 100)
             namespace.update(T=48, burnin=20, max_iterations=30, patience=12,
+                             number_of_coefficient_realizations=2,
                              scale_grid=np.array([0.1, 0.2]),
                              half_life_grid=np.array([2, 20]), OUTPUT_ROOT=Path(directory))
             with patch.object(namespace["plt"], "show"):
@@ -283,15 +335,20 @@ class ScheduleTuningTests(unittest.TestCase):
                                side_effect=AssertionError("Selection must use width co-winners.")):
                         exec(source, namespace)
                     if cell_id == "jones-settings":
-                        self.assertEqual(namespace["number_of_coefficient_realizations"], 100)
-                        namespace["number_of_coefficient_realizations"] = 2
+                        namespace["jones_n_jobs"] = 1
                     elif cell_id == "jones-normalized-settings":
                         namespace["jones_normalized_n_jobs"] = 1
                     elif cell_id == "e1-settings":
                         namespace["e1_n_jobs"] = 1
-            expected_direction = np.random.default_rng(20261019).normal(size=4)
-            expected_direction /= np.linalg.norm(expected_direction)
-            np.testing.assert_array_equal(namespace["initial_direction"], expected_direction)
+            expected_directions = np.random.default_rng(20261025).normal(size=(2, 4))
+            expected_directions /= np.linalg.norm(expected_directions, axis=1, keepdims=True)
+            np.testing.assert_array_equal(namespace["initial_directions"], expected_directions)
+            for name in ("jones_results", "jones_normalized_results"):
+                for _, row in namespace[name].iterrows():
+                    np.testing.assert_allclose(
+                        row[[f"initial_u_{j}" for j in range(4)]].to_numpy(dtype=float),
+                        expected_directions[int(row["replication"]) - 1], rtol=1e-15, atol=0,
+                    )
             for results_name, ranking_name in (
                 ("jones_results", "jones_win_ranking"),
                 ("jones_normalized_results", "jones_normalized_ranking"),
@@ -313,7 +370,19 @@ class ScheduleTuningTests(unittest.TestCase):
                 }
                 self.assertEqual(ranking.set_index("candidate_id")["iteration_limit_count"].to_dict(),
                                  expected_max)
+                directions = results[[f"u_{j}" for j in range(4)]].to_numpy()
+                truth = results[[f"phi_{j}" for j in range(1, 4)]].to_numpy()
+                errors = np.abs(-directions[:, 1:] / directions[:, :1] - truth).mean(axis=1)
+                expected_mae = {
+                    candidate: float(np.mean(errors[rows.index]))
+                    for candidate, rows in results.groupby("candidate_id")
+                }
+                np.testing.assert_allclose(
+                    ranking.set_index("candidate_id")["mean_coefficient_mae"].sort_index(),
+                    [expected_mae[key] for key in sorted(expected_mae)], rtol=1e-14,
+                )
                 self.assertTrue(results["selected_start"].eq(1).all())
+                self.assertTrue(results["delta"].eq(1e-8).all())
                 self.assertNotIn("coefficient_mae", results.columns)
             for cases_name in ("jones_cases", "jones_normalized_cases"):
                 self.assertEqual(len(namespace[cases_name]), 2)
@@ -325,10 +394,25 @@ class ScheduleTuningTests(unittest.TestCase):
             self.assertEqual(len(namespace["factorial_ranking"]), 16)
             max_annotations = [text for ax in namespace["factorial_axes"].flat
                                for text in ax.texts if text.get_text().startswith("MAX ")]
-            self.assertEqual(len(max_annotations), 16)
-            self.assertTrue(all(text.get_color() == "#c75f00" for text in max_annotations))
-            self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 5)
-            self.assertEqual(len(list(Path(directory).rglob("*.png"))), 5)
+            self.assertEqual(max_annotations, [])
+            mae_annotations = [text for ax in namespace["factorial_axes"].flat
+                               for text in ax.texts if text.get_text().startswith("MAE ")]
+            self.assertEqual(len(mae_annotations), 16)
+            self.assertTrue(all(text.get_color() == "#198754" for text in mae_annotations))
+            incomplete = namespace["jones_results"].copy(deep=True)
+            missing_candidate = incomplete.loc[0, "candidate_id"]
+            incomplete.loc[0, "u_0"] = 0.
+            _, unavailable, _ = namespace["summarize_width_grid"](incomplete)
+            missing = unavailable.set_index("candidate_id").loc[missing_candidate]
+            self.assertTrue(np.isnan(missing["mean_coefficient_mae"]))
+            self.assertEqual(missing["undefined_coefficient_runs"], 1)
+            self.assertEqual(unavailable["mean_coefficient_mae"].isna().sum(), 1)
+            np.testing.assert_array_equal(
+                unavailable.set_index("candidate_id")["wins"].sort_index(),
+                namespace["jones_win_ranking"].set_index("candidate_id")["wins"].sort_index(),
+            )
+            self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 6)
+            self.assertEqual(len(list(Path(directory).rglob("*.png"))), 6)
             self.assertEqual(list(Path(directory).rglob("*.json")), [])
             self.assertEqual(list(Path(directory).rglob("*.csv")), [])
 

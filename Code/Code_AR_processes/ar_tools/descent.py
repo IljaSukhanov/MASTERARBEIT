@@ -32,12 +32,19 @@ def projected_subgradient_empirical_width(
         record_best_coefficients=False,
         stationarity_check=False,
         max_restarts=100,
+        delta=1e-8,
 ):
     """Search sphere widths, optionally tracking phi at each best-width update.
 
     ``record_best_coefficients`` computes -u[1:]/u[0] whenever a new best
     evaluated direction is accepted. It never feeds coefficients back into
     the search. Use improvement_tolerance=0 for the strict '<' rule.
+    delta independently controls patience: reset its counter when the best
+    width improves by at least delta from the last patience reference.
+    Smaller accepted gains accumulate against that reference. With delta=0,
+    every strict best-width update resets patience, as in the original rule.
+    Each restart resets the reference and counter. Best-width recording and
+    coefficient tracking still follow improvement_tolerance, not delta.
     At u[0]=0 the coefficient estimate is undefined and recorded as NaN;
     the sphere search itself continues unchanged when stationarity_check=False.
 
@@ -73,6 +80,10 @@ def projected_subgradient_empirical_width(
         raise ValueError("patience must be a positive integer.")
     if improvement_tolerance < 0:
         raise ValueError("improvement_tolerance must be nonnegative.")
+    if (isinstance(delta, (bool, np.bool_))
+            or not isinstance(delta, (int, float, np.integer, np.floating))
+            or not np.isfinite(delta) or delta < 0):
+        raise ValueError("delta must be a finite nonnegative number.")
     if not isinstance(record_directions, (bool, np.bool_)):
         raise ValueError("record_directions must be a boolean.")
     if not isinstance(record_best_coefficients, (bool, np.bool_)):
@@ -118,6 +129,7 @@ def projected_subgradient_empirical_width(
         best_coefficients = np.full(dimension - 1, np.nan) if record_best_coefficients or stationarity_check else None
         best_width = np.inf
         best_direction = direction.copy()
+        patience_reference = np.inf
         iterations_without_improvement = 0
         termination_reason = "iteration_limit"
 
@@ -142,6 +154,8 @@ def projected_subgradient_empirical_width(
                         with np.errstate(over="ignore", invalid="ignore"):
                             best_coefficients = -direction[1:] / direction[0]
                         best_coefficients = np.where(np.isfinite(best_coefficients), best_coefficients, np.nan)
+            if best_width < patience_reference and patience_reference - best_width >= delta:
+                patience_reference = best_width
                 iterations_without_improvement = 0
             else:
                 iterations_without_improvement += 1
@@ -207,6 +221,7 @@ def projected_subgradient_empirical_width(
             "termination_reason": termination_reason,
             "step_schedule": step_schedule,
             "geometric_decay": geometric_decay,
+            "delta": float(delta),
             **({"direction_history": direction_history[:len(width_history)]}
                if direction_history is not None else {}),
             **({"coefficients": best_coefficients.copy(),
