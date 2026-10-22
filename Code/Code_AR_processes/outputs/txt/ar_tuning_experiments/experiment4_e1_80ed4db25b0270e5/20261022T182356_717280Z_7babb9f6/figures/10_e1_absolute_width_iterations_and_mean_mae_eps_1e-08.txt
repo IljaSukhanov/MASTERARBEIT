@@ -1,4 +1,0 @@
-{
-  "pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/experiment4_e1_80ed4db25b0270e5/10_e1_absolute_width_iterations_and_mean_mae_eps_1e-08.pdf",
-  "png": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/images/ar_tuning_experiments/experiment4_e1_80ed4db25b0270e5/10_e1_absolute_width_iterations_and_mean_mae_eps_1e-08.png"
-}

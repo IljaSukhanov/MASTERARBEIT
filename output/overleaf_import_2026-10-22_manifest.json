@@ -1,0 +1,320 @@
+{
+  "source_commit": "fdee304",
+  "thesis_sources_modified": false,
+  "files_copied": [
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/Nutzungshinweise.txt",
+      "sha256": "9003e60cd738377cd20971a48098d6b622a335c397497dcdfe830c8b7fcf970e",
+      "bytes": 1638
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.tex",
+      "sha256": "edd5ad0e489fc394bd7a3643a244d2558b31cc7a6fadf890eead9a61e9556659",
+      "bytes": 6634
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/bibliography.bib",
+      "sha256": "3ec054cc8fe299223e780eb4b5bbf7691dd10ff0f9ac02380891d366f0d048de",
+      "bytes": 47605
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/chapters/0_abstract.tex",
+      "sha256": "eeef37018d6b0ac94956cee30fe2c5048fde07689a19c5e99f4e0d1244340c9c",
+      "bytes": 66
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/chapters/1_intro_methods.tex",
+      "sha256": "3c870ca075991023e64f441c19891d2e2641be4797d331e58ca59f8d3a71b956",
+      "bytes": 47
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "sha256": "03a6c4a75419e539df0cd525f0985a531ca0eb031c91ee97ccd449e89e7a1344",
+      "bytes": 62790
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "sha256": "c4e3a3274c2c6623d061e3da0f2341a897fd15179355bbceb6ad9aee95c38a03",
+      "bytes": 69208
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex",
+      "sha256": "c455ba792391ac5afd2b25c62b57a483b2c9d121f0531ca883ccff1fd3fb7ce3",
+      "bytes": 41075
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/chapters/999_outlook.tex",
+      "sha256": "e238dba84f6b2b23a0b01c239c2ee4166cfa5ae6c17ed475997e2fff1c5ffdb2",
+      "bytes": 13265
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/chapters/99_conclusion.tex",
+      "sha256": "c8dd63e47c45ff155d15dbfd2423bd07c84b7078ec5e5d26dfd268e55c23d204",
+      "bytes": 880
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/AR1_experiment.pdf",
+      "sha256": "c66c8129d81cf0601475fd28c9e37e8ea59aed54b178a034da5f474d559a25ea",
+      "bytes": 28825
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/AR1_experiment.png",
+      "sha256": "76e8d5311ba6698e96b2dc534d5f8ecb8b4c649d972810e70525ce9a6e43e599",
+      "bytes": 125933
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/AR2_experiment.pdf",
+      "sha256": "d94651fc5401354a79d684a9932838316ee97de6bd74ffada754132a4a84e858",
+      "bytes": 30432
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/AR2_experiment.png",
+      "sha256": "516f99c9c75dcd2939376440065748b1606001fb3ac53b0463971936fb57e246",
+      "bytes": 139480
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf",
+      "sha256": "44d2026e87c669d7e31dafa3d29b52f3e7a2f894a8477b8c2a5a7ce91e7581f9",
+      "bytes": 29824
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/AR3_experiment.png",
+      "sha256": "99e785592284b73bf0365218798a323cef8be357dcc4c34ba5c6180fb06b6b9e",
+      "bytes": 153712
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/PNG-Bild.png",
+      "sha256": "331d14b77f5984020ae580ec0e8d4714100bd4663f46e2f2078cdd45e1282aa5",
+      "bytes": 144057
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf",
+      "sha256": "733201a84a7566f5526cba6fdcd5efc74db28ed8977acbdf13e7a2f581bb0782",
+      "bytes": 48212
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/matern_type_I_II.pdf",
+      "sha256": "03cff2df6be363dfd62a57ae732b0531cd6665ae4b1865c8863b98a1dbf7f520",
+      "bytes": 13146
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png",
+      "sha256": "c88b219c90a3b6711a295b46568f345e309a16b09f3e31f8f0a88901632718aa",
+      "bytes": 227765
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/references.bib",
+      "sha256": "11190ec8ba4a7ba2fe77d09480dbe327ee106070dcb0c6b02dc82abe2d2506ec",
+      "bytes": 111555
+    },
+    {
+      "path": "Abschlussarbeit_2021/LaTeX/setspace.sty",
+      "sha256": "780a631839fd0503fde899d07c30fda47b6c6542f2a495500f7114c41a721cf4",
+      "bytes": 21972
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf",
+      "sha256": "7d08bc0618157db9dcbd8927e6b24eab9310ddf57cb1dcb5c2ad270810f08b02",
+      "bytes": 78895
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4/mean_and_median_l1_error_vs_order.pdf",
+      "sha256": "c1ca15ceff68cbe3472907b84250ac9eddb0b728a63a04eb7e49f04527adfaac",
+      "bytes": 23138
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf",
+      "sha256": "dc696c9bc951c911c52198d5ab919ca9ad6bbadc9e0c31f6236e3b109cb8cb5b",
+      "bytes": 33692
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf",
+      "sha256": "71b2df933fcc31af24a4bbd236b0383750d83d5b02d8d13b9521d0508c082162",
+      "bytes": 67517
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/factorial_2x2_77394040890a0afe/13_mean_coefficient_mae_vs_half_life_2x2.pdf",
+      "sha256": "9cdbfe2bd3f4e4173094ca2a5ed04d3864e81cd520e905a11b476194ee496b86",
+      "bytes": 39255
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf",
+      "sha256": "f3b3701620b7f1a86255a57cdb9b0b8e178c3c62cb83beb5e379a9890f07c0c3",
+      "bytes": 19995
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf",
+      "sha256": "d757cecf075e6f89ef52c53b708fbf1515309e4813eea149ee837a93d6d7c7f1",
+      "bytes": 23196
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf",
+      "sha256": "f8996a21a3e279fd391eff4841624d4f18c1b022df8e1e6c694b1bbc39c65418",
+      "bytes": 29112
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf",
+      "sha256": "903ab657807d5aa7b6f542ab7f15e22aeca392843b4bafa3a12e6264e7aaf0e3",
+      "bytes": 30243
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf",
+      "sha256": "8b33a2448b753a3c5ea04c723e794f0f1de7c148b4a4aad8858aff6e45083445",
+      "bytes": 30247
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf",
+      "sha256": "2f601f77ca2e4c5e7eeb62b5e2d0a180b107262b9a807d3f1e200eeaa67d91a4",
+      "bytes": 30040
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf",
+      "sha256": "90d24f501d89fff56d8d246bebc3ca9cc5b86a3b613652d6ec49ae39124c3e46",
+      "bytes": 27609
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf",
+      "sha256": "4a602bb0296b93eab4986617a381c05b1393633be1df68899a0aff069644c3e3",
+      "bytes": 28006
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+      "sha256": "709f745837b42a9899bf4642de240c833df9ae9b53b158630bf9641ca562fb8a",
+      "bytes": 29445
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf",
+      "sha256": "cbf69a104b0aaa095ed3f56a27bd0d14736d909e34ebd117d3e31e7d34195c9a",
+      "bytes": 23269
+    },
+    {
+      "path": "bibliography.bib",
+      "source": "Abschlussarbeit_2021/LaTeX/bibliography.bib",
+      "sha256": "3ec054cc8fe299223e780eb4b5bbf7691dd10ff0f9ac02380891d366f0d048de",
+      "bytes": 47605
+    },
+    {
+      "path": "references.bib",
+      "source": "Abschlussarbeit_2021/LaTeX/references.bib",
+      "sha256": "11190ec8ba4a7ba2fe77d09480dbe327ee106070dcb0c6b02dc82abe2d2506ec",
+      "bytes": 111555
+    }
+  ],
+  "graphics": [
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.tex",
+      "reference": "images/logo_uulm_sw.pdf",
+      "resolved": "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png",
+      "resolved": "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/factorial_2x2_77394040890a0afe/13_mean_coefficient_mae_vs_half_life_2x2.pdf",
+      "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/factorial_2x2_77394040890a0afe/13_mean_coefficient_mae_vs_half_life_2x2.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "../../Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf",
+      "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "../../Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf",
+      "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4/mean_and_median_l1_error_vs_order.pdf",
+      "resolved": "Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4/mean_and_median_l1_error_vs_order.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "Abschlussarbeit_2021/LaTeX/images/AR1_experiment.pdf",
+      "resolved": "Abschlussarbeit_2021/LaTeX/images/AR1_experiment.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "Abschlussarbeit_2021/LaTeX/images/AR2_experiment.pdf",
+      "resolved": "Abschlussarbeit_2021/LaTeX/images/AR2_experiment.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf",
+      "resolved": "Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+      "reference": "../../Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf",
+      "resolved": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+      "resolved": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf",
+      "resolved": "Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf"
+    },
+    {
+      "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+      "reference": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf",
+      "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf"
+    }
+  ],
+  "unresolved_graphics": [],
+  "validation": {
+    "zip": "output/overleaf_thesis_2026-10-22.zip",
+    "zip_bytes": 1373784,
+    "zip_sha256": "0dee5581532e0d82631065dbbceaa19eb8b68683cac25ad8344e66a53e50cffe",
+    "zip_files": 41,
+    "all_copied_bytes_match_sources": true,
+    "public_path_rules_passed": true,
+    "missing_graphic_references": 0,
+    "compile": "pdfLaTeX/latexmk successful, 106 pages",
+    "existing_source_warnings": [
+      "Unresolved reference eq:hat_Q_n_beta",
+      "Duplicate label fig:distribution_of_chosen_bandwidths"
+    ]
+  }
+}

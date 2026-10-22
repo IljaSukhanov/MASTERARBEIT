@@ -45,18 +45,7 @@ No coefficient MAE or line plots are shown.
 The matrix figure is displayed and exported as PDF and PNG under
 `../outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_<run-id>/`
 and the corresponding `../outputs/images/` folder. Tables and text logs are
-suppressed in the notebook. Each run creates a separate timestamped UTF-8
-text archive under
-`../outputs/txt/ar_tuning_experiments/hierarchical_process_wins_<run-id>/<timestamp>/`.
-It retains settings, configuration grids, coefficients, exact seeds and
-starting directions, retained series/clouds, every individual fit, process
-means and maxima, both sets of co-winners and final rankings, and unrounded
-mean/max figure data. The maximum ranking is saved in
-`process_max_win_ranking.txt`, its leaders in
-`highest_process_max_win_configurations.txt`, and its selection rule in
-`max_selection_rule.txt`. Tables are
-tab-separated and retain full floating-point precision. The archive includes
-source snapshots, environment versions, a manifest and completion status.
-Individual fits are exported one process at a time to bound memory usage;
-interrupted runs preserve completed exports. Iteration trajectories and
-discarded burn-in samples are not exported. [Export implementation](../ar_tools/tuning_exports.py).
+suppressed in the notebook. Only these figures are written to disk. Per-process
+means and maxima, co-winners, rankings and realization metadata remain in memory
+while the notebook kernel is running. Individual fits are summarized one process
+at a time.

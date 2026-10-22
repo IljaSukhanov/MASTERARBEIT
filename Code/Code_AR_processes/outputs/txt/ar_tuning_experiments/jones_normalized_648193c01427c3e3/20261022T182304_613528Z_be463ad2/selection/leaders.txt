@@ -1,3 +1,0 @@
-candidate_id	step_rule	step_value	half_life	beta	wins	win_rate	undefined_scores	mean_evaluations	rank	mean_coefficient_mae	undefined_coefficient_runs
-diameter_normalized_s07_h04	diameter_normalized	0.80000000000000004	50	0.9862327044933592	49	0.48999999999999999	0	1356.5799999999999	1	10.881479079776692	0
-diameter_normalized_s08_h04	diameter_normalized	0.90000000000000002	50	0.9862327044933592	49	0.48999999999999999	0	1354.0999999999999	2	10.308102295488773	0

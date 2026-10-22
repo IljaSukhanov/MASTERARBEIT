@@ -1,4 +1,0 @@
-{
-  "pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_2a1790165d71df18/02_hierarchical_100_processes_10_realizations_process_wins_vs_half_life_2x2.pdf",
-  "png": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_2a1790165d71df18/02_hierarchical_100_processes_10_realizations_process_wins_vs_half_life_2x2.png"
-}

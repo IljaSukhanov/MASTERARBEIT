@@ -1,5 +1,0 @@
-{
-  "complete": true,
-  "message": "Section figure and all supporting data saved.",
-  "updated_utc": "2026-10-22T18:23:51.607792+00:00"
-}

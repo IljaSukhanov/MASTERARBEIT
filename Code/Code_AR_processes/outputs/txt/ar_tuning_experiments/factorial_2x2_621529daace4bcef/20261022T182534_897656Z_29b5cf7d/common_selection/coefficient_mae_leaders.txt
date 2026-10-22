@@ -1,2 +1,0 @@
-candidate_id	step_rule	step_value	half_life	beta	wins	win_rate	undefined_scores	mean_evaluations	rank	mean_coefficient_mae	undefined_coefficient_runs	initialization
-e1::diameter_normalized_s00_h06	diameter_normalized	0.10000000000000001	200	0.99654026282786778	1	0.01	0	1152.8199999999999	157	0.025471619928094942	0	e1

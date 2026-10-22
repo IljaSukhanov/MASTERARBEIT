@@ -302,7 +302,7 @@ class ScheduleTuningTests(unittest.TestCase):
         self.assertEqual(len(result["per_start"]), 1)
         self.assertEqual(len(result["histories"]), 1)
 
-    def test_tuning_notebook_runs_and_exports_figures_and_text_data(self):
+    def test_tuning_notebook_runs_and_exports_only_figures(self):
         notebook = json.loads((
             Path(__file__).resolve().parents[1] / "xx_notebooks_tuning"
             / "ar_tuning_experiments.ipynb"
@@ -321,6 +321,7 @@ class ScheduleTuningTests(unittest.TestCase):
                         "mean_minimum_width", "exact_empirical_width_low_dimension"):
             self.assertNotIn(removed, all_source)
         namespace = {}
+        captured_runs = []
         with contextlib.redirect_stdout(io.StringIO()), tempfile.TemporaryDirectory() as directory:
             exec(sources["imports"], namespace)
             exec(sources["settings"], namespace)
@@ -340,6 +341,14 @@ class ScheduleTuningTests(unittest.TestCase):
                     if cell_id == "hierarchical-mean-width-settings":
                         namespace.update(hierarchical_number_of_processes=2,
                                          hierarchical_realizations_per_process=3, hierarchical_n_jobs=1)
+                    if cell_id == "hierarchical-width-summary-helper":
+                        summarize = namespace["summarize_process_widths"]
+
+                        def capture_process_runs(runs, model_id):
+                            captured_runs.append(runs.assign(model_id=model_id).copy())
+                            return summarize(runs, model_id)
+
+                        namespace["summarize_process_widths"] = capture_process_runs
             process_means = namespace["hierarchical_process_means"]
             self.assertEqual(len(process_means), 2 * 4 * 4)
             self.assertTrue(process_means["realization_count"].eq(3).all())
@@ -377,18 +386,10 @@ class ScheduleTuningTests(unittest.TestCase):
                 )
             self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 1)
             self.assertEqual(len(list(Path(directory).rglob("*.png"))), 1)
-            self.assertEqual(list(Path(directory).rglob("*.json")), [])
-            self.assertEqual(list(Path(directory).rglob("*.csv")), [])
-            archive = namespace["HIERARCHICAL_TEXT_ARCHIVE"].directory
-            self.assertTrue((archive / "README.txt").is_file())
-            self.assertTrue((archive / "configuration_grid.txt").is_file())
-            self.assertTrue((archive / "source/notebook_cells.txt").is_file())
-            self.assertTrue(json.loads((archive / "status.txt").read_text())["complete"])
-            self.assertEqual({p.suffix for p in archive.rglob("*") if p.is_file()}, {".txt"})
-            raw_paths = sorted((archive / "processes").glob("process_*/*/results.txt"))
-            self.assertEqual(len(raw_paths), 2 * 4)
-            raw = pd.concat([pd.read_csv(path, sep="\t", float_precision="round_trip")
-                             for path in raw_paths], ignore_index=True)
+            self.assertEqual({p.suffix for p in Path(directory).rglob("*") if p.is_file()},
+                             {".pdf", ".png"})
+            self.assertEqual(len(captured_runs), 2)
+            raw = pd.concat(captured_runs, ignore_index=True)
             self.assertEqual(len(raw), 2 * 3 * 4 * 4)
             keys = ["model_id", "initialization", "candidate_id"]
             reproduced = raw.groupby(keys)["minimum_width"].mean().sort_index()
@@ -397,31 +398,6 @@ class ScheduleTuningTests(unittest.TestCase):
             reproduced_max = raw.groupby(keys)["minimum_width"].max().sort_index()
             expected_max = process_means.set_index(keys)["max_achieved_width"].sort_index()
             np.testing.assert_array_equal(reproduced_max, expected_max)
-            restored_means = pd.read_csv(archive / "all_process_mean_widths_and_wins.txt",
-                                         sep="\t", float_precision="round_trip")
-            # Text readers may infer whole-valued H entries as integers.
-            pd.testing.assert_frame_equal(restored_means, process_means, check_dtype=False)
-            models = pd.read_csv(archive / "model_coefficients_and_seeds.txt", sep="\t",
-                                 float_precision="round_trip")
-            pd.testing.assert_frame_equal(models, namespace["hierarchical_models"])
-            self.assertEqual(len(list((archive / "inputs").glob("*/time_series.txt"))), 2)
-            self.assertEqual(len(list((archive / "inputs").glob("*/point_clouds.txt"))), 2)
-            matrix_paths = list((archive / "figures").glob("*/process_win_counts/*.txt"))
-            self.assertEqual(len(matrix_paths), 4)
-            for key, expected_matrix in namespace["hierarchical_matrices"].items():
-                path = next(path for path in matrix_paths if path.stem == "__".join(key))
-                matrix = pd.read_csv(path, sep="\t", index_col=0, float_precision="round_trip")
-                np.testing.assert_array_equal(matrix, expected_matrix)
-            max_matrix_paths = list((archive / "figures").glob("*/max_process_win_counts/*.txt"))
-            self.assertEqual(len(max_matrix_paths), 4)
-            for key, expected_matrix in namespace["hierarchical_max_matrices"].items():
-                path = next(path for path in max_matrix_paths if path.stem == "__".join(key))
-                matrix = pd.read_csv(path, sep="\t", index_col=0, float_precision="round_trip")
-                np.testing.assert_array_equal(matrix, expected_matrix)
-            restored_max_ranking = pd.read_csv(archive / "process_max_win_ranking.txt",
-                                               sep="\t", float_precision="round_trip")
-            pd.testing.assert_frame_equal(restored_max_ranking, namespace["hierarchical_max_ranking"],
-                                          check_dtype=False)
 
     def test_process_mean_and_max_criteria_preserve_independent_co_winners(self):
         notebook = json.loads((

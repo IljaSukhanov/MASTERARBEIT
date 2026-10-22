@@ -1,5 +1,0 @@
-{
-  "complete": true,
-  "message": "Mean/maximum experiment and all figure data saved.",
-  "updated_utc": "2026-10-22T19:30:25.257385+00:00"
-}

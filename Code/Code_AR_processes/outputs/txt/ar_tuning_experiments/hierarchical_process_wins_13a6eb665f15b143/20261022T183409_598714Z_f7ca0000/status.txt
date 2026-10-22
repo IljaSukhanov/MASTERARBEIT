@@ -1,5 +1,0 @@
-{
-  "complete": true,
-  "message": "Section 2 matrices, win-count curves and exact data saved.",
-  "updated_utc": "2026-10-22T18:39:48.520715+00:00"
-}

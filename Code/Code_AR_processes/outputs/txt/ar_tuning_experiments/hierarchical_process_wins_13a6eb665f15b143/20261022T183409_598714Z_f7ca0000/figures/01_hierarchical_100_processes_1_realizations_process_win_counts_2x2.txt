@@ -1,4 +1,0 @@
-{
-  "pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_13a6eb665f15b143/01_hierarchical_100_processes_1_realizations_process_win_counts_2x2.pdf",
-  "png": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_13a6eb665f15b143/01_hierarchical_100_processes_1_realizations_process_win_counts_2x2.png"
-}

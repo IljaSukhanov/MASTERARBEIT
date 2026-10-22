@@ -1,2 +1,0 @@
-candidate_id	step_rule	step_value	half_life	beta	wins	win_rate	undefined_scores	mean_evaluations	rank	mean_coefficient_mae	undefined_coefficient_runs
-absolute_s07_h07	absolute	0.80000000000000004	1000	0.99930709299045251	0	0	0	378.57999999999998	69	2.8992921067880189	0
