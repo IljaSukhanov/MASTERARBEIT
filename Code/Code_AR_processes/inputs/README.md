@@ -17,4 +17,4 @@ runtime agreed within `4.45e-14` for observations and `4.45e-16` for generating
 coefficients, and reproduced every starting direction exactly. Keeping the
 original input values avoids changing the existing fits because of rounding.
 The cleanup verification is recorded in
-[the removal record](../../../output/analysis/ar_notebook_cleanup_2026-10-20/removal_record.md).
+[verification.json](../../../output/analysis/ar_notebook_cleanup_2026-10-20/verification.json).
