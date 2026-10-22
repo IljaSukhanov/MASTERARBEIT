@@ -333,7 +333,7 @@ Finally, we approximate $G_{rs}$ by truncating the integral and applying the com
     G_{rs}\approx\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
 \end{align*}
 
-\todo[inline]{22.10: Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
+\todo[inline]{23.10: Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -530,7 +530,7 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 \section{Numerical Experiments}
 
-\todo[inline]{How does software compute eigenvectors}
+\todo[inline]{23.10: How does software compute eigenvectors}
 
 In our numerical experiments, we restrict ourselves to the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
@@ -670,7 +670,7 @@ Here we explain the results of the fixed $N$ and $\lambda\to\infty$ experiment.
 
 Let $\Sigma^{(\lambda)}$ be the scale similarity matrix with entries $\Sigma^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $\Sigma^{(\lambda)}=I_N+A^{(\lambda)}$. The matrices $\Sigma^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}=\min_{i\ne j}D_{ij}$ is the smallest distance between two distinct scales $h_i$ and $h_j$. The off diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$, which all lie between $0$ and $1$. One particular advantage of this construction is that large $\lambda$ become numerically manageable while the Perron vector does not change.
 
-\todo[inline]{stable Perron vector computation}
+\todo[inline]{23.10: stable Perron vector computation}
 
 Taking the limit $\lambda\to\infty$ we get
 \begin{align*}
@@ -686,7 +686,7 @@ Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show 
 
 This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}. In Figure~\ref{fig:chosen_bandwidths_vs_lambda} the chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ with the smallest consecutive jump $D_{j,j+1}$, that is, $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
-\todo[inline]{is there a connection to the minimum of the stationary distribution of a Laplacian}
+\todo[inline]{23.10: is there a connection to the minimum of the stationary distribution of a Laplacian}
 
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}
