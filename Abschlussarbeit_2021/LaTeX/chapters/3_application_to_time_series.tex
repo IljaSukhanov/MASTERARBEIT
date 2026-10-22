@@ -554,13 +554,18 @@ The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. 
 
 We sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, $L$ independent realizations are generated and the best configuration is looked for. Afterwards we have $100L$ best configurations and we choose the one configuration which was best most often.
 
-The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Figure~[] below.
+The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Figure~\ref{fig:tuning_experiment_results}.
 
-\todo[inline]{22.10: Input Figure here}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/factorial_2x2_77394040890a0afe/13_mean_coefficient_mae_vs_half_life_2x2.pdf}
+    \caption{}
+    \label{fig:tuning_experiment_results}
+\end{figure}
 
 These tuning experiments show that normalizing the step size by dividing by $L$ leads to better performance. Also the deterministic starting direction $e_1$ performed better than a fixed random starting direction. The best configuration is $H=50$ and $c=0.2$. 
 
-There exists an interesting probabilistic interpretation for why the starting direction $e_1$ worked better than uniformly drawn $u_0$. We know from Proposition~\ref{prop:minimum_width} that the optimal direction $u^{\ast}$ can be expressed using the AR coefficients as $u^{\ast}=(1,-\phi)/\sqrt{1+\|\phi\|^2}$. The angle between $u^{\ast}$ and $e_1$ is ... while the expected angle between $u^{\ast}$ and $u_0\sim U(\mathbb{S}^{3})$ is ...
+There exists an interesting probabilistic interpretation for why the starting direction $e_1$ worked better than uniformly drawn $u_0$. We know from Proposition~\ref{prop:minimum_width} that the optimal direction $u^{\ast}$ can be expressed using the AR coefficients as $u^{\ast}=(1,-\phi)/\sqrt{1+\|\phi\|^2}$. The angle between $u^{\ast}$ and $e_1$ is $\arctan{\|\phi\|}$ while the expected angle between $u^{\ast}$ and $u_0\sim U(\mathbb{S}^{3})$ is $\mathbb{E}[\angle{(u_0,u^{\ast})}]=\pi/4+1/\pi\approx1.1037$. If we draw $\phi$ uniformly from the causality region then $\mathbb{E}[\arctan{\|\phi\|}]\approx0.7556$.
 
 \textcolor{red}{All subsequent experiments are performed using different seeds.}
 

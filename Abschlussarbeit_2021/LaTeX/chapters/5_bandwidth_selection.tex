@@ -469,10 +469,6 @@ Yet another advantage of the exponential transformation is the obvious fact that
 
 \subsection{Bandwidth grid}
 
-\textcolor{red}{By properly scaling the data it we can take $h_{\max}=1$ without loss of generality.}
-
-\todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
-
 The choice of the correct bandwidth grid is essential. Set
 \begin{align*}
     \mathcal{H}_N=\{h_1,\dots,h_N\},\quad0<h_{\min}:=h_1<\dots<h_N=:h_{\max}.
@@ -535,7 +531,6 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 \section{Numerical Experiments}
 
 \todo[inline]{How does software compute eigenvectors}
-\todo[inline]{stable Perron vector computation}
 
 In our numerical experiments, we restrict ourselves to the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
@@ -675,6 +670,8 @@ Here we explain the results of the fixed $N$ and $\lambda\to\infty$ experiment.
 
 Let $\Sigma^{(\lambda)}$ be the scale similarity matrix with entries $\Sigma^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $\Sigma^{(\lambda)}=I_N+A^{(\lambda)}$. The matrices $\Sigma^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}=\min_{i\ne j}D_{ij}$ is the smallest distance between two distinct scales $h_i$ and $h_j$. The off diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$, which all lie between $0$ and $1$. One particular advantage of this construction is that large $\lambda$ become numerically manageable while the Perron vector does not change.
 
+\todo[inline]{stable Perron vector computation}
+
 Taking the limit $\lambda\to\infty$ we get
 \begin{align*}
     \lim\limits_{\lambda\to\infty}\Tilde{A}_{ij}^{(\lambda)}=\begin{cases}
@@ -688,6 +685,8 @@ In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with
 Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_j+(1/2)e_{j+1}$, that is, it concentrates at $\arg\min_{(j,j+1)}D_{j,j+1}$. We write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$ (where the limit is understood entry-wise). The matrix $B$ can be written as $B=e_j^{T}e_{j+1}+e_{j+1}e_j^{T}$. Direct calculations show that $e_{j}+e_{j+1}$ is an eigenvector with eigenvalue $1$, $e_j-e_{j+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j,j+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_j+(1/2)e_{j+1}$ is the sum normalized Perron vector of $B$.
 
 This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}. In Figure~\ref{fig:chosen_bandwidths_vs_lambda} the chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ with the smallest consecutive jump $D_{j,j+1}$, that is, $j_{\ast}\in\arg\min_jD_{j,j+1}$.
+
+\todo[inline]{is there a connection to the minimum of the stationary distribution of a Laplacian}
 
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}
