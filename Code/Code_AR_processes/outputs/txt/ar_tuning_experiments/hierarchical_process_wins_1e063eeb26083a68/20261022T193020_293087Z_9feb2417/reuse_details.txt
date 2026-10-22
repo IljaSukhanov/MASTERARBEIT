@@ -1,0 +1,6 @@
+{
+  "source_archive": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/txt/ar_tuning_experiments/hierarchical_process_wins_13a6eb665f15b143/20261022T183409_598714Z_f7ca0000",
+  "new_descents_run": 0,
+  "source_manifest_sha256": "908f539234c2aa7510fb917c773869e89cc5b3a246df8b33ed6cd741d3caa883",
+  "scope": "Recomputed mean and maximum summaries and figures from saved individual fits. Raw fit tables, retained series and point clouds remain in the linked source archive."
+}

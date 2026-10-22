@@ -1,0 +1,73 @@
+{
+  "experiment": "experiment_4_jones_ar3_e1",
+  "T": 500,
+  "p": 3,
+  "replications": 100,
+  "coefficient_sampling": "Jones1987_uniform_causal_AR3",
+  "coefficient_seed": 20261023,
+  "process_seed": 20261024,
+  "innovation_distribution": "Uniform(-1,1)",
+  "burnin": 2000,
+  "initial_direction": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "starts": 1,
+  "optimizer_seed": 20261019,
+  "initialization": "e1",
+  "initial_direction_seed": null,
+  "parallel_workers": 4,
+  "max_iterations": 2000,
+  "patience": 200,
+  "improvement_tolerance": 0.0,
+  "delta": 1e-08,
+  "scale_grid": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "half_life_grid": [
+    2,
+    5,
+    10,
+    20,
+    50,
+    100,
+    200,
+    1000
+  ],
+  "step_rules": [
+    "absolute",
+    "diameter_normalized"
+  ],
+  "coefficient_diagnostics": false,
+  "matrix_mae": "mean_per_run_coefficient_mae_all_runs_no_omission",
+  "epsilon": 1e-08,
+  "selection": "most_absolute_gap_co_winner_credits",
+  "source_sha256": "7607d40cc563314b809dc64aee45baf25e73bf3cd1309ad3038c90ac209a6e71",
+  "stationarity_check": false,
+  "max_restarts": 0,
+  "diameter": "max_pairwise_euclidean_distance",
+  "text_export_format_version": 1,
+  "shared_settings": {
+    "T": 500,
+    "p": 3,
+    "embedding_dimension": 4,
+    "burnin": 2000,
+    "innovation_distribution": "Uniform(-1,1)",
+    "optimizer_seed": 20261019,
+    "max_iterations": 2000,
+    "patience": 200,
+    "improvement_tolerance": 0.0,
+    "delta": 1e-08,
+    "epsilon_win_tolerance": 1e-08
+  }
+}

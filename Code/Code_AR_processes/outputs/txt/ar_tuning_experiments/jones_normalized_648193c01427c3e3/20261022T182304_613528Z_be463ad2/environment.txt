@@ -1,0 +1,10 @@
+{
+  "python": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 08:22:19) [Clang 14.0.6 ]",
+  "platform": "darwin",
+  "numpy": "1.26.4",
+  "pandas": "2.3.1",
+  "scipy": "1.13.1",
+  "joblib": "1.4.2",
+  "matplotlib": "3.9.2",
+  "ipython": "8.27.0"
+}

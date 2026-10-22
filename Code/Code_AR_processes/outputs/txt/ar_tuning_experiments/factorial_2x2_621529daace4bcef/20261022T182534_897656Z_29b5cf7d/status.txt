@@ -1,0 +1,5 @@
+{
+  "complete": true,
+  "message": "Common comparison figure and numerical data saved.",
+  "updated_utc": "2026-10-22T18:25:48.072987+00:00"
+}

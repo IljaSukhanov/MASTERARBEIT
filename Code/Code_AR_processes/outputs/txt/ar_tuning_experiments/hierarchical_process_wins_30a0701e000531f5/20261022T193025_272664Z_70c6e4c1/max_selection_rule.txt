@@ -1,0 +1,8 @@
+{
+  "score": "maximum achieved minimum width within each process; smaller is better",
+  "reference": "all four start/step grids together",
+  "absolute_co_winner_tolerance": 1e-08,
+  "full_credit_for_ties": true,
+  "highest_process_win_count": 55,
+  "total_process_win_credits": 1844
+}

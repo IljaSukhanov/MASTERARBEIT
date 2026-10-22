@@ -1,0 +1,77 @@
+{
+  "experiment": "process_wins_from_mean_and_max_achieved_width",
+  "processes": 100,
+  "realizations_per_process": 1,
+  "total_descents": 28800,
+  "coefficient_seed": 20261029,
+  "innovation_seed": 20261030,
+  "direction_seed": 20261031,
+  "start_bank": [
+    [
+      0.8411918665971204,
+      -0.4030623141183473,
+      0.00664214010164676,
+      0.36040657108782775
+    ]
+  ],
+  "random_starts": "same_realization_index_reused_across_all_processes",
+  "T": 500,
+  "p": 3,
+  "burnin": 2000,
+  "optimizer_seed": 20261019,
+  "scale_grid": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "half_life_grid": [
+    2,
+    5,
+    10,
+    20,
+    50,
+    100,
+    200,
+    1000
+  ],
+  "beta_grid": [
+    0.7071067811865476,
+    0.8705505632961241,
+    0.9330329915368074,
+    0.9659363289248456,
+    0.9862327044933592,
+    0.9930924954370359,
+    0.9965402628278678,
+    0.9993070929904525
+  ],
+  "iterations": 2000,
+  "patience": 200,
+  "delta": 1e-08,
+  "improvement_tolerance": 0.0,
+  "mean_win_tolerance": 1e-08,
+  "max_win_tolerance": 1e-08,
+  "starts": 1,
+  "stationarity_check": false,
+  "max_restarts": 0,
+  "source_sha256": "161426eaa92062975e4e699e96f45f9ade9c508a733a5106350049272ac1df1f",
+  "parallel_workers": 4,
+  "text_export_format_version": 1,
+  "shared_settings": {
+    "T": 500,
+    "p": 3,
+    "embedding_dimension": 4,
+    "burnin": 2000,
+    "innovation_distribution": "Uniform(-1,1)",
+    "optimizer_seed": 20261019,
+    "max_iterations": 2000,
+    "patience": 200,
+    "improvement_tolerance": 0.0,
+    "delta": 1e-08
+  }
+}

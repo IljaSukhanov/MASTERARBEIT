@@ -66,7 +66,28 @@ The last expression uses the definition \(\operatorname{erfc}(z)=(2/\sqrt\pi)\in
 
 ## Code-versus-chapter distinction
 
-The current optional [`kde_family_fft`](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/fourier/reconstruction.py:8) directly evaluates the empirical characteristic function at periodic-grid frequencies, applies Gaussian smoothing, reconstructs densities with `irfft`, clips negative values, and renormalizes. [`beta2_divergence_matrix_fft`](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/fourier/similarities.py:11) then forms a spatial Gram matrix. That is a different numerical route from the chapter's direct frequency integral. A future comparison must specify which route is measured.
+The current [`kde_family_fft`](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/fourier/reconstruction.py:8) directly evaluates the empirical characteristic function at periodic-grid frequencies, applies Gaussian smoothing, reconstructs densities with `irfft`, clips negative values, and renormalizes. [`beta2_divergence_matrix_fft`](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/fourier/similarities.py:11) then forms a spatial Gram matrix. The main [`spectral_scale_selection_kde.ipynb`](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/spectral_scale_selection_kde.ipynb:31) and the fast L2 notebook use this helper. It takes a different sequence of steps from the written direct frequency integral, but that observation alone does not establish a mathematical disagreement.
+
+### Qualification checked after the follow-up discussion
+
+Before clipping and renormalization, inverse-FFT reconstruction followed by the spatial Gram product is algebraically equal to a weighted frequency Gram product. Here is our derivation from [NumPy's DFT and inverse-DFT definitions and normalization](https://numpy.org/doc/stable/reference/routines.fft.html#implementation-details). Let \(L=2H\), \(M\) be even, \(\Delta x=L/M\), \(\omega_k=2\pi k/L\), and
+
+\[
+ A_{hk}=\frac1n\sum_j e^{-i(X_j+H)\omega_k}e^{-h^2\omega_k^2/2}.
+\]
+
+For \(k=0,M/2\), replace \(A_{hk}\) by its real part, as required by the even-length [`irfft` endpoint convention](https://numpy.org/doc/stable/reference/generated/numpy.fft.irfft.html#notes). Write the resulting coefficients as \(\widetilde A_{hk}\). Discrete Fourier orthogonality gives
+
+\[
+ \Delta x\sum_{m=0}^{M-1}f^{\rm raw}_h(x_m)f^{\rm raw}_s(x_m)
+ =\frac1L\sum_{k=0}^{M/2}c_k\operatorname{Re}
+ \left(\widetilde A_{hk}\overline{\widetilde A_{sk}}\right),
+ \qquad c_0=c_{M/2}=1,\quad c_k=2\text{ otherwise}.
+\]
+
+With \(\Delta\omega=2\pi/L\), this is the chapter's trapezoidal spectral sum, apart from treatment of the imaginary part at the highest frequency. The clipping and renormalization in the actual helper can break exact equivalence. Periodic-grid interpretation, frequency endpoints, clipping and renormalization should therefore be documented when describing the implementation.
+
+A fresh numerical check on one Gaussian sample (n=100, 20 bandwidths from 0.01 to 2, H=12, M=8192) found maximum absolute Gram differences of 2.55e-15 between raw spatial and discrete-frequency calculations, and 1.83e-15 between raw spatial calculation and the chapter's continuous-integrand trapezoidal sum. The implemented corrected half-squared distances differed from the exact Gaussian pair formula by at most 2.23e-14. This is one illustrative check, not validation of every experiment or selected bandwidth. [Settings and results](/Users/iljasukhanov/MASTERARBEIT/output/analysis/kde_fourier_parseval_audit_2026-10-22.json).
 
 ## Optional background comparisons
 

@@ -1,0 +1,4 @@
+{
+  "pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/factorial_2x2_621529daace4bcef/12_starting_direction_step_rule_2x2_width_iterations_and_mean_mae.pdf",
+  "png": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/images/ar_tuning_experiments/factorial_2x2_621529daace4bcef/12_starting_direction_step_rule_2x2_width_iterations_and_mean_mae.png"
+}

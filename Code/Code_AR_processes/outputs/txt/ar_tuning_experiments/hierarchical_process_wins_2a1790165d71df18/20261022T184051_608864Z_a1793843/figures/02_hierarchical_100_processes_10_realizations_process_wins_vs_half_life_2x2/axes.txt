@@ -1,0 +1,21 @@
+{
+  "x": "half_life",
+  "log_x": true,
+  "y": "process_wins",
+  "log_y": false,
+  "y_limits": [
+    0,
+    100
+  ],
+  "line_parameter": "step_value",
+  "row_order": [
+    "random_shared_bank",
+    "e1"
+  ],
+  "column_order": [
+    "absolute",
+    "diameter_normalized"
+  ],
+  "selection": "process wins after averaging achieved widths within each process",
+  "absolute_co_winner_tolerance": 1e-08
+}

@@ -1,0 +1,4 @@
+{
+  "pdf": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/jones_normalized_648193c01427c3e3/11_random_per_process_normalized_width_iterations_and_mean_mae_eps_1e-08.pdf",
+  "png": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/images/ar_tuning_experiments/jones_normalized_648193c01427c3e3/11_random_per_process_normalized_width_iterations_and_mean_mae_eps_1e-08.png"
+}

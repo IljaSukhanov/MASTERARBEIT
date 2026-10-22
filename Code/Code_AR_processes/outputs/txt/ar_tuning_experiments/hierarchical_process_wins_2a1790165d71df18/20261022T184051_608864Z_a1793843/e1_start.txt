@@ -1,0 +1,2 @@
+initial_u_0	initial_u_1	initial_u_2	initial_u_3
+1	0	0	0

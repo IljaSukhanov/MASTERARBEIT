@@ -1,0 +1,2 @@
+initialization	step_rule	candidate_id	step_value	half_life	beta	process_wins	process_count
+e1	diameter_normalized	diameter_normalized_s02_h04	0.29999999999999999	50	0.9862327044933592	53	100

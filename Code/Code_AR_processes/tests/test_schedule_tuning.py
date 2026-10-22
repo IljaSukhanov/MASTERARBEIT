@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import patch
 
 import numpy as np
+import pandas as pd
 
 from Code.Code_AR_processes.ar_tools.descent import projected_subgradient_empirical_width
 from Code.Code_AR_processes.ar_tools.tuning import (
@@ -301,7 +302,7 @@ class ScheduleTuningTests(unittest.TestCase):
         self.assertEqual(len(result["per_start"]), 1)
         self.assertEqual(len(result["histories"]), 1)
 
-    def test_tuning_notebook_runs_and_exports_only_figures(self):
+    def test_tuning_notebook_runs_and_exports_figures_and_text_data(self):
         notebook = json.loads((
             Path(__file__).resolve().parents[1] / "xx_notebooks_tuning"
             / "ar_tuning_experiments.ipynb"
@@ -309,6 +310,13 @@ class ScheduleTuningTests(unittest.TestCase):
         sources = {cell["id"]: "".join(cell["source"])
                    for cell in notebook["cells"] if cell["cell_type"] == "code"}
         all_source = "\n".join(sources.values())
+        self.assertNotIn("single_ar_", all_source)
+        self.assertFalse(any(cell["id"].startswith("single-ar-mean-width-")
+                             for cell in notebook["cells"]))
+        self.assertNotIn("mean-mae-half-life-curves", sources)
+        self.assertNotIn("jones-selection", sources)
+        self.assertNotIn("e1-common-contest", sources)
+        self.assertNotIn("progress=True", all_source)
         for removed in ("coefficient_wins", "estimated_phi", "nonstationary_estimate", "coefficient_epsilon",
                         "mean_minimum_width", "exact_empirical_width_low_dimension"):
             self.assertNotIn(removed, all_source)
@@ -319,117 +327,19 @@ class ScheduleTuningTests(unittest.TestCase):
             self.assertEqual(namespace["max_iterations"], 2000)
             self.assertEqual(namespace["patience"], 200)
             self.assertEqual(namespace["delta"], 1e-8)
-            self.assertEqual(namespace["number_of_coefficient_realizations"], 100)
             namespace.update(T=48, burnin=20, max_iterations=30, patience=12,
-                             number_of_coefficient_realizations=2,
                              scale_grid=np.array([0.1, 0.2]),
                              half_life_grid=np.array([2, 20]), OUTPUT_ROOT=Path(directory))
             with patch.object(namespace["plt"], "show"):
                 for cell_id, source in sources.items():
                     if cell_id in {"imports", "settings"}:
                         continue
-                    if cell_id == "e1-combined-results":
-                        namespace["tune_jones_ar_realizations"] = unittest.mock.Mock(
-                            side_effect=AssertionError("Comparison must reuse completed descents."))
                     with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
                                side_effect=AssertionError("Selection must use width co-winners.")):
                         exec(source, namespace)
-                    if cell_id == "jones-settings":
-                        namespace["jones_n_jobs"] = 1
-                    elif cell_id == "jones-normalized-settings":
-                        namespace["jones_normalized_n_jobs"] = 1
-                    elif cell_id == "e1-settings":
-                        namespace["e1_n_jobs"] = 1
-                    elif cell_id == "single-ar-mean-width-settings":
-                        namespace["single_ar_n_jobs"] = 1
-                    elif cell_id == "hierarchical-mean-width-settings":
-                        self.assertEqual(namespace["hierarchical_number_of_processes"], 100)
-                        self.assertEqual(namespace["hierarchical_realizations_per_process"], 100)
+                    if cell_id == "hierarchical-mean-width-settings":
                         namespace.update(hierarchical_number_of_processes=2,
                                          hierarchical_realizations_per_process=3, hierarchical_n_jobs=1)
-            expected_directions = np.random.default_rng(20261025).normal(size=(2, 4))
-            expected_directions /= np.linalg.norm(expected_directions, axis=1, keepdims=True)
-            np.testing.assert_array_equal(namespace["initial_directions"], expected_directions)
-            for name in ("jones_results", "jones_normalized_results"):
-                for _, row in namespace[name].iterrows():
-                    np.testing.assert_allclose(
-                        row[[f"initial_u_{j}" for j in range(4)]].to_numpy(dtype=float),
-                        expected_directions[int(row["replication"]) - 1], rtol=1e-15, atol=0,
-                    )
-            for results_name, ranking_name in (
-                ("jones_results", "jones_win_ranking"),
-                ("jones_normalized_results", "jones_normalized_ranking"),
-                ("e1_absolute_results", "e1_absolute_ranking"),
-                ("e1_normalized_results", "e1_normalized_ranking"),
-                ("factorial_results", "factorial_ranking"),
-            ):
-                results, ranking = namespace[results_name], namespace[ranking_name]
-                expected_wins = dict.fromkeys(results["candidate_id"].unique(), 0)
-                for _, rows in results.groupby(["replication", "T"]):
-                    for candidate in rows.loc[
-                        rows["minimum_width"] <= rows["minimum_width"].min() + 1e-8, "candidate_id"
-                    ]:
-                        expected_wins[candidate] += 1
-                self.assertEqual(ranking.set_index("candidate_id")["wins"].to_dict(), expected_wins)
-                expected_max = {
-                    candidate: sum(rows["total_evaluations"] == 30)
-                    for candidate, rows in results.groupby("candidate_id")
-                }
-                self.assertEqual(ranking.set_index("candidate_id")["iteration_limit_count"].to_dict(),
-                                 expected_max)
-                directions = results[[f"u_{j}" for j in range(4)]].to_numpy()
-                truth = results[[f"phi_{j}" for j in range(1, 4)]].to_numpy()
-                errors = np.abs(-directions[:, 1:] / directions[:, :1] - truth).mean(axis=1)
-                expected_mae = {
-                    candidate: float(np.mean(errors[rows.index]))
-                    for candidate, rows in results.groupby("candidate_id")
-                }
-                np.testing.assert_allclose(
-                    ranking.set_index("candidate_id")["mean_coefficient_mae"].sort_index(),
-                    [expected_mae[key] for key in sorted(expected_mae)], rtol=1e-14,
-                )
-                self.assertTrue(results["selected_start"].eq(1).all())
-                self.assertTrue(results["delta"].eq(1e-8).all())
-                self.assertNotIn("coefficient_mae", results.columns)
-            for cases_name in ("jones_cases", "jones_normalized_cases"):
-                self.assertEqual(len(namespace[cases_name]), 2)
-                self.assertNotIn("coefficient_mae", namespace[cases_name].columns)
-                self.assertNotIn("estimated_phi_1", namespace[cases_name].columns)
-            for experiment in namespace["e1_experiments"].values():
-                self.assertNotIn("coefficient_mae", experiment["cases"][0])
-            self.assertEqual(len(namespace["factorial_results"]), 32)
-            self.assertEqual(len(namespace["factorial_ranking"]), 16)
-            max_annotations = [text for ax in namespace["factorial_axes"].flat
-                               for text in ax.texts if text.get_text().startswith("MAX ")]
-            self.assertEqual(max_annotations, [])
-            mae_annotations = [text for ax in namespace["factorial_axes"].flat
-                               for text in ax.texts if text.get_text().startswith("MAE ")]
-            self.assertEqual(len(mae_annotations), 16)
-            self.assertTrue(all(text.get_color() == "#198754" for text in mae_annotations))
-            incomplete = namespace["jones_results"].copy(deep=True)
-            missing_candidate = incomplete.loc[0, "candidate_id"]
-            incomplete.loc[0, "u_0"] = 0.
-            _, unavailable, _ = namespace["summarize_width_grid"](incomplete)
-            missing = unavailable.set_index("candidate_id").loc[missing_candidate]
-            self.assertTrue(np.isnan(missing["mean_coefficient_mae"]))
-            self.assertEqual(missing["undefined_coefficient_runs"], 1)
-            self.assertEqual(unavailable["mean_coefficient_mae"].isna().sum(), 1)
-            np.testing.assert_array_equal(
-                unavailable.set_index("candidate_id")["wins"].sort_index(),
-                namespace["jones_win_ranking"].set_index("candidate_id")["wins"].sort_index(),
-            )
-            single_results = namespace["single_ar_results"]
-            self.assertEqual(len(single_results), 4 * 4 * 10)
-            self.assertEqual(single_results[["phi_1", "phi_2", "phi_3"]].drop_duplicates().shape[0], 1)
-            self.assertEqual(single_results["process_seed"].nunique(), 10)
-            for _, summary in namespace["single_ar_summary"].iterrows():
-                values = single_results.loc[
-                    single_results["initialization"].eq(summary["initialization"])
-                    & single_results["candidate_id"].eq(summary["candidate_id"]), "minimum_width"
-                ].to_numpy()
-                self.assertEqual(len(values), 10)
-                self.assertAlmostEqual(summary["mean_achieved_width"], float(np.mean(values)), places=14)
-            self.assertEqual(sum(len(ax.texts) for ax in namespace["single_ar_axes"].flat), 16)
             process_means = namespace["hierarchical_process_means"]
             self.assertEqual(len(process_means), 2 * 4 * 4)
             self.assertTrue(process_means["realization_count"].eq(3).all())
@@ -445,15 +355,112 @@ class ScheduleTuningTests(unittest.TestCase):
                 ["initialization", "candidate_id"]
             )["process_wins"].to_dict()
             self.assertEqual(actual_counts, expected_counts)
+            expected_max_counts = dict.fromkeys(expected_counts, 0)
+            for _, rows in process_means.groupby("model_id"):
+                threshold = rows["max_achieved_width"].min() + 1e-8
+                for _, row in rows.loc[rows["max_achieved_width"] <= threshold].iterrows():
+                    expected_max_counts[(row["initialization"], row["candidate_id"])] += 1
+            actual_max_counts = namespace["hierarchical_max_ranking"].set_index(
+                ["initialization", "candidate_id"]
+            )["max_process_wins"].to_dict()
+            self.assertEqual(actual_max_counts, expected_max_counts)
+            from matplotlib.colors import to_rgba
+            patches = [patch for ax in namespace["hierarchical_axes"].flat for patch in ax.patches]
+            self.assertEqual(sum(p.get_edgecolor() == to_rgba("red") for p in patches),
+                             len(namespace["hierarchical_leaders"]))
+            self.assertEqual(sum(p.get_edgecolor() == to_rgba(namespace["hierarchical_yellow"])
+                                 for p in patches), len(namespace["hierarchical_max_leaders"]))
             for _, rows in namespace["hierarchical_realization_metadata"].groupby("model_id"):
                 np.testing.assert_allclose(
                     rows.sort_values("replication")[[f"initial_u_{j}" for j in range(4)]],
                     namespace["hierarchical_start_bank"], atol=1e-15, rtol=0,
                 )
-            self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 8)
-            self.assertEqual(len(list(Path(directory).rglob("*.png"))), 8)
+            self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 1)
+            self.assertEqual(len(list(Path(directory).rglob("*.png"))), 1)
             self.assertEqual(list(Path(directory).rglob("*.json")), [])
             self.assertEqual(list(Path(directory).rglob("*.csv")), [])
+            archive = namespace["HIERARCHICAL_TEXT_ARCHIVE"].directory
+            self.assertTrue((archive / "README.txt").is_file())
+            self.assertTrue((archive / "configuration_grid.txt").is_file())
+            self.assertTrue((archive / "source/notebook_cells.txt").is_file())
+            self.assertTrue(json.loads((archive / "status.txt").read_text())["complete"])
+            self.assertEqual({p.suffix for p in archive.rglob("*") if p.is_file()}, {".txt"})
+            raw_paths = sorted((archive / "processes").glob("process_*/*/results.txt"))
+            self.assertEqual(len(raw_paths), 2 * 4)
+            raw = pd.concat([pd.read_csv(path, sep="\t", float_precision="round_trip")
+                             for path in raw_paths], ignore_index=True)
+            self.assertEqual(len(raw), 2 * 3 * 4 * 4)
+            keys = ["model_id", "initialization", "candidate_id"]
+            reproduced = raw.groupby(keys)["minimum_width"].mean().sort_index()
+            expected = process_means.set_index(keys)["mean_achieved_width"].sort_index()
+            np.testing.assert_array_equal(reproduced, expected)
+            reproduced_max = raw.groupby(keys)["minimum_width"].max().sort_index()
+            expected_max = process_means.set_index(keys)["max_achieved_width"].sort_index()
+            np.testing.assert_array_equal(reproduced_max, expected_max)
+            restored_means = pd.read_csv(archive / "all_process_mean_widths_and_wins.txt",
+                                         sep="\t", float_precision="round_trip")
+            # Text readers may infer whole-valued H entries as integers.
+            pd.testing.assert_frame_equal(restored_means, process_means, check_dtype=False)
+            models = pd.read_csv(archive / "model_coefficients_and_seeds.txt", sep="\t",
+                                 float_precision="round_trip")
+            pd.testing.assert_frame_equal(models, namespace["hierarchical_models"])
+            self.assertEqual(len(list((archive / "inputs").glob("*/time_series.txt"))), 2)
+            self.assertEqual(len(list((archive / "inputs").glob("*/point_clouds.txt"))), 2)
+            matrix_paths = list((archive / "figures").glob("*/process_win_counts/*.txt"))
+            self.assertEqual(len(matrix_paths), 4)
+            for key, expected_matrix in namespace["hierarchical_matrices"].items():
+                path = next(path for path in matrix_paths if path.stem == "__".join(key))
+                matrix = pd.read_csv(path, sep="\t", index_col=0, float_precision="round_trip")
+                np.testing.assert_array_equal(matrix, expected_matrix)
+            max_matrix_paths = list((archive / "figures").glob("*/max_process_win_counts/*.txt"))
+            self.assertEqual(len(max_matrix_paths), 4)
+            for key, expected_matrix in namespace["hierarchical_max_matrices"].items():
+                path = next(path for path in max_matrix_paths if path.stem == "__".join(key))
+                matrix = pd.read_csv(path, sep="\t", index_col=0, float_precision="round_trip")
+                np.testing.assert_array_equal(matrix, expected_matrix)
+            restored_max_ranking = pd.read_csv(archive / "process_max_win_ranking.txt",
+                                               sep="\t", float_precision="round_trip")
+            pd.testing.assert_frame_equal(restored_max_ranking, namespace["hierarchical_max_ranking"],
+                                          check_dtype=False)
+
+    def test_process_mean_and_max_criteria_preserve_independent_co_winners(self):
+        notebook = json.loads((
+            Path(__file__).resolve().parents[1] / "xx_notebooks_tuning"
+            / "ar_tuning_experiments.ipynb"
+        ).read_text())
+        helper = next("".join(cell["source"]) for cell in notebook["cells"]
+                      if cell.get("id") == "hierarchical-width-summary-helper")
+        namespace = dict(np=np, pd=pd, hierarchical_grid_size=1,
+                         hierarchical_realizations_per_process=2,
+                         hierarchical_mean_win_tolerance=1e-8,
+                         hierarchical_max_win_tolerance=1e-8)
+        exec(helper, namespace)
+        rows = []
+        for initialization, rule, widths in (
+            ("e1", "absolute", [0., 10.]),
+            ("e1", "diameter_normalized", [1., 9.]),
+            ("random_shared_bank", "absolute", [6., 6.]),
+            ("random_shared_bank", "diameter_normalized", [6., 6.]),
+        ):
+            for replication, width in enumerate(widths, start=1):
+                rows.append(dict(initialization=initialization, step_rule=rule,
+                                 candidate_id=f"{rule}_s00_h00", step_value=.1,
+                                 half_life=2., beta=np.exp2(-.5),
+                                 replication=replication, minimum_width=width))
+        runs = pd.DataFrame(rows)
+        summaries = namespace["summarize_process_widths"](runs, 1)
+        self.assertEqual(set(summaries.loc[summaries.process_win, "initialization"]), {"e1"})
+        self.assertEqual(set(summaries.loc[summaries.max_process_win, "initialization"]),
+                         {"random_shared_bank"})
+        self.assertEqual(int(summaries.process_win.sum()), 2)
+        self.assertEqual(int(summaries.max_process_win.sum()), 2)
+        self.assertTrue(summaries.process_best_mean.eq(5.).all())
+        self.assertTrue(summaries.process_best_max.eq(6.).all())
+        # At one realization the two criteria must agree, including all ties.
+        namespace["hierarchical_realizations_per_process"] = 1
+        single = namespace["summarize_process_widths"](runs.loc[runs.replication.eq(1)], 1)
+        np.testing.assert_array_equal(single.mean_achieved_width, single.max_achieved_width)
+        np.testing.assert_array_equal(single.process_win, single.max_process_win)
 
     def test_notebook_setup_refreshes_a_cached_module_missing_new_helper(self):
         notebook = json.loads((
@@ -464,11 +471,11 @@ class ScheduleTuningTests(unittest.TestCase):
                      if cell.get("id") == "imports")
         module = importlib.import_module("Code.Code_AR_processes.ar_tools.tuning")
         descent_module = importlib.import_module("Code.Code_AR_processes.ar_tools.descent")
-        # Emulate a kernel that imported tuning.py before the Jones runner existed.
-        del module.tune_jones_ar_realizations
+        # Emulate a kernel that imported tuning.py before the fixed-process runner existed.
+        del module.tune_fixed_ar_realizations
         namespace = {}
         try:
-            self.assertFalse(hasattr(module, "tune_jones_ar_realizations"))
+            self.assertFalse(hasattr(module, "tune_fixed_ar_realizations"))
             with patch.object(descent_module, "projected_subgradient_empirical_width",
                               side_effect=RuntimeError("Stale optimizer in the notebook kernel.")):
                 with contextlib.redirect_stdout(io.StringIO()):
@@ -481,8 +488,9 @@ class ScheduleTuningTests(unittest.TestCase):
                 )
                 self.assertEqual(result["termination_reason"], "patience")
                 self.assertEqual(len(result["width_history"]), 4)
-            self.assertTrue(callable(namespace["tune_jones_ar_realizations"]))
-            self.assertIs(namespace["tune_jones_ar_realizations"], module.tune_jones_ar_realizations)
+            self.assertTrue(callable(namespace["tuning_tools"].tune_fixed_ar_realizations))
+            self.assertIs(namespace["tuning_tools"].tune_fixed_ar_realizations,
+                          module.tune_fixed_ar_realizations)
         finally:
             importlib.reload(descent_module)
             importlib.reload(module)

@@ -1,0 +1,12 @@
+{
+  "candidate_id": "e1::diameter_normalized_s01_h04",
+  "step_rule": "diameter_normalized",
+  "step_value": 0.2,
+  "half_life": 50.0,
+  "beta": 0.9862327044933592,
+  "wins": 54,
+  "win_rate": 0.54,
+  "undefined_scores": 0,
+  "mean_evaluations": 1278.01,
+  "rank": 1
+}
