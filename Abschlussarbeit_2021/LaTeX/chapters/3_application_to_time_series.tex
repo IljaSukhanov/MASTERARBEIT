@@ -508,7 +508,7 @@ The last step is to employ an elbow point selector with the property that it wou
 
 \textbf{Second derivative}
 
-A natural break point selector is the discrete version of the second derivative. 
+A natural break point selector is the discrete version of the second derivative since it detects changes in slope. 
 
 \textbf{Descent chain}
 
@@ -534,9 +534,11 @@ This allows for fair and principled numerical experiments.
 
 \textbf{Choosing the starting direction}
 
-The choice of the starting direction is arguably the most critical step in the algorithm because Theorem~\ref{thm:conv_grad_descent} guarantees fast convergence only if the starting direction is already close to the set of minimizers. We implement multiple random starting directions $u_0^{(l)}\sim U(\mathbb{S}^{k-1})$, $l=1,\dots,L$ and run the descent $L$ times and take the direction $\hat{u}$ with the lowest value $\hat{w}(\hat{u})$ out of all runs.
+The choice of the starting direction is arguably the most critical step in the algorithm because Theorem~\ref{thm:conv_grad_descent} guarantees fast convergence only if the starting direction is already close to the set of minimizers. 
 
-An alternative possibility for the order selection experiments is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
+A general approach for choosing the starting direction $u_0$ is to sample it uniformly from $\mathbb{S}^{3}$, see~\cite[Section~7]{li2021weaklyconvexoptimizationstiefel}. As a second option we try out the simple deterministic starting direction $e_1=(1,0,0,0)$.
+
+An alternative possibility for the order selection experiments in Section~\ref{sec:order_selection_experiments} below is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
 
 \textbf{Termination condition}
 
@@ -548,15 +550,17 @@ We implement a maximum number of iterations $\text{iter}_{\max}=2000$ and an imp
 \todo[inline]{22.10: Goal is to determine principled parameters to use for all further experiments}
 \todo[inline]{Repeat under many $u_0$?}
 
-The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in{0.05,0.1,0.2,0.4,0.8}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in{0.05,0.1,0.2,0.4,0.8}$. Precedence for dividing the step size by the Lipschitz-constant can be found in Li et al. (2021, Theorem 4) or Bubeck (2015, Theorem 3.2).
-
-A general approach for choosing the starting direction $u_0$ is to sample it uniformly from $\mathbb{S}^{3}$, see~[]. As a second option we try out the simple deterministic starting direction $e_1=(1,0,0,0)$.
+The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in{0.05,0.1,0.2,0.4,0.8}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in{0.05,0.1,0.2,0.4,0.8}$. Precedence for dividing the step size by the Lipschitz-constant can be found in~\cite[Theorem~4]{li2021weaklyconvexoptimizationstiefel} or~\cite[Theorem~3.2]{bubeck_convex_2015}.
 
 We sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, $L$ independent realizations are generated and the best configuration is looked for. Afterwards we have $100L$ best configurations and we choose the one configuration which was best most often.
 
-The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Table~[] below.
+The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Figure~[] below.
+
+\todo[inline]{22.10: Input Figure here}
 
 These tuning experiments show that normalizing the step size by dividing by $L$ leads to better performance. Also the deterministic starting direction $e_1$ performed better than a fixed random starting direction. The best configuration is $H=50$ and $c=0.2$. 
+
+There exists an interesting probabilistic interpretation for why the starting direction $e_1$ worked better than uniformly drawn $u_0$. We know from Proposition~\ref{prop:minimum_width} that the optimal direction $u^{\ast}$ can be expressed using the AR coefficients as $u^{\ast}=(1,-\phi)/\sqrt{1+\|\phi\|^2}$. The angle between $u^{\ast}$ and $e_1$ is ... while the expected angle between $u^{\ast}$ and $u_0\sim U(\mathbb{S}^{3})$ is ...
 
 \textcolor{red}{All subsequent experiments are performed using different seeds.}
 
@@ -592,43 +596,44 @@ Figure~\ref{fig:beta-ar1-time-series-and-clouds} shows on the left side 5 AR(1) 
     \label{fig:beta-ar1-time-series-and-clouds}
 \end{figure}
 
-Table~\ref{tab:ar-coefficient-mae} shows the results. We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly. Figure~\ref{fig:best_method_frequency_by_order} shows a distribution of how often each method was best.
+Table~\ref{tab:ar-coefficient-mae} shows the results. 
+
+We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly.
 
 \begin{table}[htbp]
 \centering
 \caption{Coefficient estimation errors for 100 simulated AR($p$)
 processes per true order. Each entry reports the mean
-$L_1$ coefficient error, with the median per-process error
-in parentheses below. The lowest values are shown in bold.}
+$L_1$ coefficient error. The lowest values are shown in bold.}
 \label{tab:ar-coefficient-mae}
 \begin{tabular}{lccccc}
 \toprule
 Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
 \midrule
 OLS ($L_2$)
-& \shortstack{0.012681 \\ (0.011231)}
-& \shortstack{0.027507 \\ (0.021934)}
-& \shortstack{0.050458 \\ (0.045155)}
-& \shortstack{0.068460 \\ (0.062511)}
-& \shortstack{0.100692 \\ (0.080998)} \\
+& 0.0127
+& 0.0275
+& 0.0505
+& 0.0685
+& 0.1007 \\
 Yule--Walker
-& \shortstack{0.012586 \\ (0.010970)}
-& \shortstack{0.028103 \\ (0.022924)}
-& \shortstack{0.053082 \\ (0.048355)}
-& \shortstack{0.123852 \\ (0.066709)}
-& \shortstack{0.235747 \\ (0.094575)} \\
+& 0.0126
+& 0.0281
+& 0.0531
+& 0.1239
+& 0.2357 \\
 Horváth ($L_{\infty}$)
-& \shortstack{\textbf{0.001073} \\ (\textbf{0.000493})}
-& \shortstack{\textbf{0.002199} \\ (\textbf{0.001458})}
-& \shortstack{\textbf{0.004234} \\ (\textbf{0.003029})}
-& \shortstack{\textbf{0.007227} \\ (\textbf{0.006078})}
-& \shortstack{\textbf{0.012418} \\ (\textbf{0.011283})} \\
+& \textbf{0.0011}
+& \textbf{0.0022}
+& \textbf{0.0042}
+& \textbf{0.0072}
+& \textbf{0.0124} \\
 Minimum width
-& \shortstack{0.001742 \\ (0.001217)}
-& \shortstack{0.005930 \\ (0.003376)}
-& \shortstack{4.384671 \\ (0.008823)}
-& \shortstack{18.644876 \\ (0.017886)}
-& \shortstack{6.546884 \\ (0.044592)} \\
+& 0.0017
+& 0.0059
+& 4.3847
+& 18.6449
+& 6.5469 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -638,13 +643,6 @@ Minimum width
     \includegraphics[width=\linewidth]{Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4/mean_and_median_l1_error_vs_order.pdf}
     \caption{}
     \label{fig:mean_and_median_l1_error_vs_order}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4/best_method_frequency_by_order.pdf}
-    \caption{}
-    \label{fig:best_method_frequency_by_order}
 \end{figure}
 
 \subsubsection{First exemplary order selection experiment and error decomposition analysis discussion}
@@ -713,7 +711,7 @@ The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\h
     \label{fig:ar3_experiment}
 \end{figure}
 
-\subsubsection{Order selection experiments}
+\subsubsection{Order selection experiments}\label{sec:order_selection_experiments}
 
 Table~\ref{tab:geometric-bic-pacf-comparison} summarizes the results from 50 simulations for each true order $p\in\{1,2,3\}$. We compare the classical order selectors BIC and PACF cutoff with our minimum width approach, where we test the different methods of detecting the elbow point from Section~\ref{sec:elbow_point_selection}.
 
