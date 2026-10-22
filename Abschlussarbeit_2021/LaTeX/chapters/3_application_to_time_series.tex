@@ -536,7 +536,7 @@ This allows for fair and principled numerical experiments.
 
 The choice of the starting direction is arguably the most critical step in the algorithm because Theorem~\ref{thm:conv_grad_descent} guarantees fast convergence only if the starting direction is already close to the set of minimizers. We implement multiple random starting directions $u_0^{(l)}\sim U(\mathbb{S}^{k-1})$, $l=1,\dots,L$ and run the descent $L$ times and take the direction $\hat{u}$ with the lowest value $\hat{w}(\hat{u})$ out of all runs.
 
-\todo[inline]{What about just choosing $u_0=e_1$?}
+\todo[inline]{What about just choosing $u_0=e_1$? Seems to work better}
 
 An alternative possibility for the order selection experiments is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
 
@@ -561,25 +561,15 @@ It can be shown that an AR($p$) process is stable if and only if the principal e
 
 \todo[inline]{Make extensive tuning experiments}
 \todo[inline]{Goal is to determine principled parameters to use for all further experiments}
-\todo[inline]{bring back dividing by $L$}
+\todo[inline]{Repeat under many $u_0$?}
 
-The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we use the grid $\gamma_0\in\{0.1,0.2,\dots,0.9\}$.
+The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in{0.05,0.1,0.2,0.4,0.8}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in{0.05,0.1,0.2,0.4,0.8}$. Precedence for dividing the step size by the Lipschitz-constant can be found in Li et al. (2021, Theorem 4) or Bubeck (2015, Theorem 3.2).
 
-We sample one fixed starting direction $u_0\in U(\mathbb{S}^{3})$ and determine which configuration yields the lowest function value. 
+A general approach for choosing the starting direction $u_0$ is to sample it uniformly from $\mathbb{S}^{3}$, see~[]. As a second option we try out the simple deterministic starting direction $e_1=(1,0,0,0)$.
 
-\textcolor{red}{Repeat under many $u_0$?}
+We sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, $L$ independent realizations are generated and the best configuration is looked for. Afterwards we have $100L$ best configurations and we choose the one configuration which was best most often.
 
-We take 100 realizations of an AR(3) process with coefficients $\phi_1=0.6$, $\phi_2=-0.3$, $\phi_3=0.2$ and $T=500$.
-
-For each realization $l$ we run the descent for every pair $(\beta,\gamma_0)$ and record the achieved minimum width $\hat{m}$. The best configuration $(\beta,\gamma_0)$ is the one which had the lowest achieved minimum widths most often.
-
-\textbf{Third experiment}
-
-\todo[inline]{just throw all 100 times 100 process into one hat}
-
-Sample 100 different AR(3) processes uniformly using Jones' Algorithm. For each AR(3) process, 1 independent realizations are generated and the best configuration is looked for. Afterwards we have 100 best configurations and we choose the one configuration which was best most often.
-
-The results of our tuning experiment are given in...
+The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Figure~[] below.
 
 \textcolor{red}{All subsequent experiments are performed using different seeds.}
 
