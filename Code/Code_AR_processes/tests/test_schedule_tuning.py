@@ -340,6 +340,13 @@ class ScheduleTuningTests(unittest.TestCase):
                         namespace["jones_normalized_n_jobs"] = 1
                     elif cell_id == "e1-settings":
                         namespace["e1_n_jobs"] = 1
+                    elif cell_id == "single-ar-mean-width-settings":
+                        namespace["single_ar_n_jobs"] = 1
+                    elif cell_id == "hierarchical-mean-width-settings":
+                        self.assertEqual(namespace["hierarchical_number_of_processes"], 100)
+                        self.assertEqual(namespace["hierarchical_realizations_per_process"], 100)
+                        namespace.update(hierarchical_number_of_processes=2,
+                                         hierarchical_realizations_per_process=3, hierarchical_n_jobs=1)
             expected_directions = np.random.default_rng(20261025).normal(size=(2, 4))
             expected_directions /= np.linalg.norm(expected_directions, axis=1, keepdims=True)
             np.testing.assert_array_equal(namespace["initial_directions"], expected_directions)
@@ -411,8 +418,40 @@ class ScheduleTuningTests(unittest.TestCase):
                 unavailable.set_index("candidate_id")["wins"].sort_index(),
                 namespace["jones_win_ranking"].set_index("candidate_id")["wins"].sort_index(),
             )
-            self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 6)
-            self.assertEqual(len(list(Path(directory).rglob("*.png"))), 6)
+            single_results = namespace["single_ar_results"]
+            self.assertEqual(len(single_results), 4 * 4 * 10)
+            self.assertEqual(single_results[["phi_1", "phi_2", "phi_3"]].drop_duplicates().shape[0], 1)
+            self.assertEqual(single_results["process_seed"].nunique(), 10)
+            for _, summary in namespace["single_ar_summary"].iterrows():
+                values = single_results.loc[
+                    single_results["initialization"].eq(summary["initialization"])
+                    & single_results["candidate_id"].eq(summary["candidate_id"]), "minimum_width"
+                ].to_numpy()
+                self.assertEqual(len(values), 10)
+                self.assertAlmostEqual(summary["mean_achieved_width"], float(np.mean(values)), places=14)
+            self.assertEqual(sum(len(ax.texts) for ax in namespace["single_ar_axes"].flat), 16)
+            process_means = namespace["hierarchical_process_means"]
+            self.assertEqual(len(process_means), 2 * 4 * 4)
+            self.assertTrue(process_means["realization_count"].eq(3).all())
+            self.assertEqual(namespace["hierarchical_realization_metadata"]["process_seed"].nunique(), 6)
+            expected_counts = dict.fromkeys(zip(
+                process_means["initialization"], process_means["candidate_id"]
+            ), 0)
+            for _, rows in process_means.groupby("model_id"):
+                threshold = rows["mean_achieved_width"].min() + 1e-8
+                for _, row in rows.loc[rows["mean_achieved_width"] <= threshold].iterrows():
+                    expected_counts[(row["initialization"], row["candidate_id"])] += 1
+            actual_counts = namespace["hierarchical_ranking"].set_index(
+                ["initialization", "candidate_id"]
+            )["process_wins"].to_dict()
+            self.assertEqual(actual_counts, expected_counts)
+            for _, rows in namespace["hierarchical_realization_metadata"].groupby("model_id"):
+                np.testing.assert_allclose(
+                    rows.sort_values("replication")[[f"initial_u_{j}" for j in range(4)]],
+                    namespace["hierarchical_start_bank"], atol=1e-15, rtol=0,
+                )
+            self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 8)
+            self.assertEqual(len(list(Path(directory).rglob("*.png"))), 8)
             self.assertEqual(list(Path(directory).rglob("*.json")), [])
             self.assertEqual(list(Path(directory).rglob("*.csv")), [])
 

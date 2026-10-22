@@ -417,6 +417,8 @@ def tune_fixed_ar_realizations(
     max_restarts=100,
     n_jobs=1,
     delta=1e-8,
+    step_rule="absolute",
+    coefficient_diagnostics=True,
 ):
     """Run paired grids on fixed-coefficient AR(3) paths at one size.
 
@@ -424,6 +426,8 @@ def tune_fixed_ar_realizations(
     Optional checkpoints/restarts use the same optimizer as Jones tuning.
     n_jobs controls independent realization workers; seeded paths and starts
     do not depend on the number of workers. Exhausted fits have NaN widths.
+    step_rule supports absolute or diameter_normalized steps. Supply a
+    (replications, 4) array to use one starting direction per realization.
     """
     return tune_ar_sample_sizes(
         phi, [sample_size], initial_direction, scale_grid, half_life_grid,
@@ -432,6 +436,7 @@ def tune_fixed_ar_realizations(
         improvement_tolerance=improvement_tolerance, delta=delta, optimizer_seed=optimizer_seed,
         progress=progress, summarize=summarize,
         stationarity_check=stationarity_check, max_restarts=max_restarts, n_jobs=n_jobs,
+        step_rule=step_rule, coefficient_diagnostics=coefficient_diagnostics,
     )
 
 
@@ -516,6 +521,7 @@ def tune_ar_sample_sizes(
     improvement_tolerance, optimizer_seed, progress=False, summarize=True,
     stationarity_check=False, max_restarts=100, n_jobs=1,
     delta=1e-8,
+    step_rule="absolute", coefficient_diagnostics=True,
 ):
     """Select by mean achieved minimum width across paired paths and sizes.
 
@@ -526,6 +532,7 @@ def tune_ar_sample_sizes(
     coefficient direction are reported only as diagnostics; they do not
     change optimization or ranking. No numerical global optimum is computed.
     With summarize=False, aggregate width ranking and selection are skipped.
+    step_rule selects absolute or diameter-normalized steps on each cloud.
     """
     clouds = _ar_realization_cases(
         phi, sample_sizes, initial_direction, replications=replications,
@@ -536,6 +543,7 @@ def tune_ar_sample_sizes(
         iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance, delta=delta,
         optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
         stationarity_check=stationarity_check, max_restarts=max_restarts, n_jobs=n_jobs,
+        step_rule=step_rule, coefficient_diagnostics=coefficient_diagnostics,
     )
 
 
