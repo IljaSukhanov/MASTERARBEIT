@@ -528,6 +528,7 @@ def tune_jones_ar_realizations(
     coefficient_seed, process_seed, burnin, iterations, patience,
     improvement_tolerance, optimizer_seed, progress=False, summarize=True,
     stationarity_check=False, max_restarts=100, step_rule="absolute", n_jobs=1,
+    coefficient_diagnostics=True,
 ):
     """Tune paired grids on distinct Jones-sampled causal AR(3) models.
 
@@ -545,7 +546,11 @@ def tune_jones_ar_realizations(
     to retain them in the design without awarding them win credit.
     step_rule="diameter_normalized" interprets scale_grid as c in gamma0=c/L,
     with L the empirical cloud diameter. n_jobs parallelizes independent models.
+    Set coefficient_diagnostics=False to skip fitted-coefficient recovery and
+    MAE reporting; model-generation metadata and width references are retained.
     """
+    if not isinstance(coefficient_diagnostics, (bool, np.bool_)):
+        raise ValueError("coefficient_diagnostics must be a boolean.")
     clouds = _ar_realization_cases(
         None, [sample_size], initial_direction, replications=replications,
         process_seed=process_seed, burnin=burnin, coefficient_seed=coefficient_seed,
@@ -555,7 +560,7 @@ def tune_jones_ar_realizations(
         iterations=iterations, patience=patience, improvement_tolerance=improvement_tolerance,
         optimizer_seed=optimizer_seed, progress=progress, summarize=summarize,
         stationarity_check=stationarity_check, max_restarts=max_restarts,
-        step_rule=step_rule, n_jobs=n_jobs,
+        step_rule=step_rule, n_jobs=n_jobs, coefficient_diagnostics=coefficient_diagnostics,
     )
 
 
@@ -563,6 +568,7 @@ def _tune_ar_cases(
     clouds, initial_direction, scale_grid, half_life_grid, *, replications,
     iterations, patience, improvement_tolerance, optimizer_seed, progress, summarize,
     stationarity_check=False, max_restarts=100, n_jobs=1, step_rule="absolute",
+    coefficient_diagnostics=True,
 ):
     """Run the same grid and aggregation for either AR coefficient design."""
     if (isinstance(n_jobs, (bool, np.bool_))
@@ -578,6 +584,7 @@ def _tune_ar_cases(
                 improvement_tolerance=improvement_tolerance, optimizer_seed=optimizer_seed,
                 progress=False, summarize=False, stationarity_check=stationarity_check,
                 max_restarts=max_restarts, n_jobs=1, step_rule=step_rule,
+                coefficient_diagnostics=coefficient_diagnostics,
             ) for case in clouds
         )
         rows, cases = [], []
@@ -614,16 +621,8 @@ def _tune_ar_cases(
                 ),
             ))
         winner = search["selected"]
-        winning_direction = np.array([winner[f"u_{j}"] for j in range(4)])
-        estimated_phi = np.full(3, np.nan)
-        if np.all(np.isfinite(winning_direction)) and abs(winning_direction[0]) > 1e-10:
-            estimated_phi = -winning_direction[1:] / winning_direction[0]
-        true_phi = np.array([metadata[f"phi_{j+1}"] for j in range(3)])
-        coefficient_error = coefficient_mae(estimated_phi, true_phi)
         cases.append({**metadata,
                       "grid_best_width": winner["minimum_width"],
-                      **{f"estimated_phi_{j+1}": float(value) for j, value in enumerate(estimated_phi)},
-                      "coefficient_mae": coefficient_error,
                       "grid_population_width_gap": winner["minimum_width"] - metadata["population_minimum_width"],
                       "grid_empirical_true_direction_gap": (
                           winner["minimum_width"] - metadata["empirical_true_direction_width"]
@@ -633,6 +632,17 @@ def _tune_ar_cases(
                       "grid_winner_step_value": winner["step_value"],
                       "grid_winner_half_life": winner["half_life"],
                       "runtime_seconds": perf_counter() - started})
+        if coefficient_diagnostics:
+            winning_direction = np.array([winner[f"u_{j}"] for j in range(4)])
+            estimated_phi = np.full(3, np.nan)
+            if np.all(np.isfinite(winning_direction)) and abs(winning_direction[0]) > 1e-10:
+                estimated_phi = -winning_direction[1:] / winning_direction[0]
+            true_phi = np.array([metadata[f"phi_{j+1}"] for j in range(3)])
+            coefficient_error = coefficient_mae(estimated_phi, true_phi)
+            cases[-1].update(
+                **{f"estimated_phi_{j+1}": float(value) for j, value in enumerate(estimated_phi)},
+                coefficient_mae=coefficient_error,
+            )
         if stationarity_check:
             cases[-1].update(
                 restart_count=sum(row["restart_count"] for row in search["candidates"]),
@@ -645,11 +655,13 @@ def _tune_ar_cases(
                     f"population min={metadata['population_minimum_width']:.10f}, "
                     f"empirical-population gap={cases[-1]['grid_population_width_gap']:+.10f}, "
                 )
-            else:
+            elif coefficient_diagnostics:
                 estimates_text = np.array2string(estimated_phi, precision=6, separator=", ",
                                                 suppress_small=False, max_line_width=200)
                 error_text = f"{coefficient_error:.8g}" if np.isfinite(coefficient_error) else "undefined"
                 diagnostics = f"estimated phi={estimates_text}, coefficient MAE={error_text}, "
+            else:
+                diagnostics = ""
             restart_text = (f"{cases[-1]['restart_count']} restarts; {cases[-1]['failed_runs']} failed runs; "
                             if stationarity_check else "")
             print(f"Path {case['replication']}/{replications}, T={case['T']}: "

@@ -258,16 +258,11 @@ class ScheduleTuningTests(unittest.TestCase):
         ).read_text())
         sources = {cell["id"]: "".join(cell["source"])
                    for cell in notebook["cells"] if cell["cell_type"] == "code"}
-        for removed_cell in ["numerical-audit", "process-plot", "run-grid", "matrix-plots",
-                             "coefficient-recovery", "export-selection", "fixed-inputs"]:
-            self.assertNotIn(removed_cell, sources)
-        for removed in ["exact_empirical_width_low_dimension", "audit_width", "target_relative_gap",
-                        "mean_minimum_width", "mean_width_rank", "mean_score",
-                        "jones_mean", "realization_selected", "realization_ranking",
-                        "lipschitz_rule", "simulate_uniform_ar",
-                        "sliding_window_point_cloud", "point_cloud", "save_figure",
-                        "tune_geometric_half_life_schedules"]:
-            self.assertNotIn(removed, "\n".join(sources.values()))
+        all_source = "\n".join(sources.values())
+        for removed in ("coefficient_mae", "coefficient_wins", "coefficient_errors",
+                        "estimated_phi", "nonstationary_estimate", "coefficient_epsilon",
+                        "mean_minimum_width", "exact_empirical_width_low_dimension"):
+            self.assertNotIn(removed, all_source)
         namespace = {}
         with contextlib.redirect_stdout(io.StringIO()), tempfile.TemporaryDirectory() as directory:
             exec(sources["imports"], namespace)
@@ -275,187 +270,65 @@ class ScheduleTuningTests(unittest.TestCase):
             self.assertEqual(namespace["max_iterations"], 2000)
             self.assertEqual(namespace["patience"], 200)
             namespace.update(T=48, burnin=20, max_iterations=30, patience=12,
-                             scale_grid=np.array([0.05, 0.2]),
-                             half_life_grid=np.array([2, 20]),
-                             number_of_realizations=2, OUTPUT_ROOT=Path(directory))
-            with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
-                       side_effect=AssertionError("The notebook must not aggregate widths.")):
-                for cell_id in ["shared-setup", "run-realizations",
-                                "epsilon-win-counts", "coefficient-epsilon-counts", "epsilon-win-matrices"]:
-                    exec(sources[cell_id], namespace)
-            self.assertEqual(list(Path(directory).rglob("*.json")), [])
-            self.assertEqual(list(Path(directory).rglob("*.csv")), [])
+                             scale_grid=np.array([0.1, 0.2]),
+                             half_life_grid=np.array([2, 20]), OUTPUT_ROOT=Path(directory))
+            with patch.object(namespace["plt"], "show"):
+                for cell_id, source in sources.items():
+                    if cell_id in {"imports", "settings"}:
+                        continue
+                    if cell_id == "e1-combined-results":
+                        namespace["tune_jones_ar_realizations"] = unittest.mock.Mock(
+                            side_effect=AssertionError("Comparison must reuse completed descents."))
+                    with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
+                               side_effect=AssertionError("Selection must use width co-winners.")):
+                        exec(source, namespace)
+                    if cell_id == "jones-settings":
+                        self.assertEqual(namespace["number_of_coefficient_realizations"], 100)
+                        namespace["number_of_coefficient_realizations"] = 2
+                    elif cell_id == "jones-normalized-settings":
+                        namespace["jones_normalized_n_jobs"] = 1
+                    elif cell_id == "e1-settings":
+                        namespace["e1_n_jobs"] = 1
             expected_direction = np.random.default_rng(20261019).normal(size=4)
             expected_direction /= np.linalg.norm(expected_direction)
             np.testing.assert_array_equal(namespace["initial_direction"], expected_direction)
-            self.assertNotIn("series", namespace)
-            self.assertNotIn("point_cloud", namespace)
-            self.assertNotIn("selected", namespace)
-            self.assertNotIn("process_seed", namespace)
-            self.assertEqual(len(namespace["realization_results"]), 8)
-            self.assertTrue(namespace["realization_results"]["total_evaluations"].between(1, 30).all())
-            self.assertEqual(len(namespace["realization_cases"]), 2)
-            self.assertNotIn("ranking", namespace["realization_experiment"])
-            self.assertNotIn("selected", namespace["realization_experiment"])
-            self.assertEqual(namespace["max_iterations"], 30)
-            self.assertEqual(namespace["patience"], 12)
-            self.assertEqual(namespace["epsilon_win_tolerance"], 1e-8)
-            self.assertEqual(namespace["epsilon_win_experiment"]["epsilon"], 1e-8)
-            self.assertGreaterEqual(namespace["epsilon_win_ranking"]["wins"].sum(), 2)
-            self.assertTrue(namespace["epsilon_win_ranking"]["wins"].between(0, 2).all())
-            self.assertEqual(len(namespace["epsilon_win_ranking"]), 4)
-            self.assertNotIn("mean_score", namespace["epsilon_win_ranking"].columns)
-            self.assertNotIn("mean_minimum_width", namespace["epsilon_win_ranking"].columns)
-            self.assertEqual(len(namespace["epsilon_win_cases"]), 2)
-            self.assertEqual(len(namespace["epsilon_win_winners"]),
-                             namespace["epsilon_win_experiment"]["total_points"])
-            epsilon_expected = set()
-            for replication, rows in namespace["realization_results"].groupby("replication"):
-                threshold = rows["minimum_width"].min() + 1e-8
-                epsilon_expected.update((replication, candidate) for candidate in
-                                        rows.loc[rows["minimum_width"] <= threshold, "candidate_id"])
-            epsilon_actual = {(row["replication"], row["candidate_id"])
-                              for row in namespace["epsilon_win_winners"].to_dict("records")}
-            self.assertEqual(epsilon_actual, epsilon_expected)
-            self.assertEqual(namespace["coefficient_epsilon_win_tolerance"], 1e-2)
-            self.assertEqual(namespace["coefficient_win_experiment"]["epsilon"], 1e-2)
-            coefficient_expected = set()
-            for replication, rows in namespace["realization_results"].groupby("replication"):
-                directions = rows[[f"u_{j}" for j in range(4)]].to_numpy()
-                errors = np.mean(np.abs(-directions[:, 1:] / directions[:, :1]
-                                       - namespace["phi"]), axis=1)
-                threshold = errors.min() + 1e-2
-                coefficient_expected.update((replication, candidate) for candidate in
-                                            rows.loc[errors <= threshold, "candidate_id"])
-            coefficient_actual = {(row["replication"], row["candidate_id"])
-                                  for row in namespace["coefficient_win_winners"].to_dict("records")}
-            self.assertEqual(coefficient_actual, coefficient_expected)
-            self.assertEqual(len(namespace["combined_win_ranking"]), 4)
-            self.assertEqual(namespace["coefficient_win_ranking"]["undefined_coefficients"].sum(), 0)
-            for matrix in namespace["coefficient_win_matrices"].values():
-                self.assertEqual(matrix.shape, (2, 2))
-            # Changing only the coefficient tolerance recounts stored runs; widths are unchanged.
-            original_results = namespace["realization_results"].copy(deep=True)
-            original_width_counts = namespace["epsilon_win_ranking"].copy(deep=True)
-            original_coefficient_counts = namespace["coefficient_win_ranking"].set_index("candidate_id")
-            namespace["coefficient_epsilon_win_tolerance"] = 0.
-            original_runner = namespace["tune_fixed_ar_realizations"]
-            namespace["tune_fixed_ar_realizations"] = unittest.mock.Mock(
-                side_effect=AssertionError("Recounting must not rerun the optimizer."))
-            try:
-                exec(sources["coefficient-epsilon-counts"], namespace)
-            finally:
-                namespace["tune_fixed_ar_realizations"] = original_runner
-            self.assertTrue(namespace["realization_results"].equals(original_results))
-            self.assertTrue(namespace["epsilon_win_ranking"].equals(original_width_counts))
-            exact_counts = namespace["coefficient_win_ranking"].set_index("candidate_id")
-            self.assertTrue((exact_counts["coefficient_wins"]
-                             <= original_coefficient_counts["coefficient_wins"].reindex(exact_counts.index)).all())
-            namespace["coefficient_epsilon_win_tolerance"] = 1e-2
-            for matrix in namespace["epsilon_win_matrices"].values():
-                self.assertEqual(matrix.shape, (2, 2))
-            for output, suffix in [("PDF_DIR", ".pdf"), ("IMAGE_DIR", ".png")]:
-                self.assertTrue((namespace[output] / (namespace["epsilon_win_figure_stem"] + suffix)).is_file())
-                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
-            ids = [cell["id"] for cell in notebook["cells"]]
-            self.assertLess(ids.index("run-realizations"), ids.index("epsilon-win-frequency-description"))
-            exec(sources["jones-settings"], namespace)
-            self.assertEqual(namespace["number_of_coefficient_realizations"], 100)
-            namespace["number_of_coefficient_realizations"] = 2
-            with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
-                       side_effect=AssertionError("The notebook must not aggregate widths.")):
-                for cell_id in ["run-jones-realizations", "jones-models",
-                                "jones-win-counts", "jones-win-matrices", "jones-selection"]:
-                    exec(sources[cell_id], namespace)
-            self.assertEqual(len(namespace["jones_results"]), 8)
-            self.assertEqual(len(namespace["jones_cases"]), 2)
-            self.assertEqual(len(namespace["jones_win_ranking"]), 4)
-            self.assertNotIn("ranking", namespace["jones_experiment"])
-            self.assertNotIn("selected", namespace["jones_experiment"])
-            self.assertNotIn("mean_score", namespace["jones_win_ranking"].columns)
-            self.assertNotIn("mean_minimum_width", namespace["jones_win_ranking"].columns)
-            self.assertTrue(namespace["jones_results"]["selected_start"].eq(1).all())
-            self.assertTrue(namespace["jones_results"]["total_evaluations"].between(1, 30).all())
-            self.assertTrue(namespace["jones_cases"]["spectral_radius"].lt(1).all())
-            self.assertEqual(namespace["jones_cases"][["phi_1", "phi_2", "phi_3"]].drop_duplicates().shape[0], 2)
-            expected = set()
-            for replication, rows in namespace["jones_results"].groupby("replication"):
-                threshold = rows["minimum_width"].min() + 1e-8
-                expected.update((replication, candidate) for candidate in
-                                rows.loc[rows["minimum_width"] <= threshold, "candidate_id"])
-            self.assertEqual({(row["replication"], row["candidate_id"])
-                              for row in namespace["jones_win_winners"].to_dict("records")}, expected)
-            for output, suffix in [("JONES_PDF_DIR", ".pdf"), ("JONES_IMAGE_DIR", ".png")]:
-                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
-            original_results = namespace["jones_results"].copy(deep=True)
-            original_cases = namespace["jones_cases"].copy(deep=True)
-            with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
-                       side_effect=AssertionError("The notebook must not aggregate widths.")):
-                for cell_id in ["jones-stationarity-settings", "run-jones-stationarity-realizations",
-                                "jones-stationarity-models", "jones-stationarity-win-counts",
-                                "jones-stationarity-win-matrices", "jones-stationarity-selection"]:
-                    exec(sources[cell_id], namespace)
-            self.assertTrue(namespace["jones_results"].equals(original_results))
-            self.assertTrue(namespace["jones_cases"].equals(original_cases))
-            repeated = namespace["jones_stationarity_results"]
-            self.assertEqual(len(repeated), 8)
-            self.assertTrue(repeated["stationarity_check_passed"].all())
-            self.assertNotIn("stationarity_check", namespace["jones_results"].columns)
-            self.assertNotIn("stationarity_check", namespace["realization_results"].columns)
-            np.testing.assert_array_equal(
-                repeated["total_evaluations"], repeated["restart_count"] * 12 + repeated["final_evaluations"],
-            )
-            self.assertEqual(namespace["jones_stationarity_win_experiment"]["cases"], 2)
-            self.assertEqual(len(namespace["jones_stationarity_win_ranking"]), 4)
-            for output, suffix in [("JONES_STATIONARITY_PDF_DIR", ".pdf"),
-                                   ("JONES_STATIONARITY_IMAGE_DIR", ".png")]:
-                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
-                self.assertNotEqual(namespace[output], namespace[output.replace("_STATIONARITY", "")])
-            exec(sources["model6-settings"], namespace)
-            self.assertEqual(namespace["model6_number_of_realizations"], 100)
-            self.assertTrue(namespace["model6_stationarity_check"])
-            namespace.update(model6_number_of_realizations=2, model6_n_jobs=1)
-            with patch("Code.Code_AR_processes.ar_tools.tuning.summarize_geometric_replications",
-                       side_effect=AssertionError("The notebook must not aggregate widths.")):
-                for cell_id in ["run-model6-realizations", "model6-width-win-counts",
-                                "model6-coefficient-win-counts", "model6-win-matrices", "model6-selection"]:
-                    exec(sources[cell_id], namespace)
-            self.assertEqual(len(namespace["model6_results"]), 8)
-            self.assertEqual(len(namespace["model6_cases"]), 2)
-            self.assertEqual(len(namespace["model6_combined_win_ranking"]), 4)
-            self.assertEqual(namespace["model6_width_win_experiment"]["cases"], 2)
-            self.assertEqual(namespace["model6_coefficient_win_experiment"]["cases"], 2)
-            self.assertNotEqual(namespace["model6_process_seed"], namespace["realization_process_seed"])
-            self.assertTrue(namespace["model6_results"]["stationarity_check"].all())
-            np.testing.assert_allclose(namespace["model6_cases"][["phi_1", "phi_2", "phi_3"]],
-                                       np.broadcast_to(namespace["model6_phi"], (2, 3)))
-            self.assertTrue(namespace["jones_results"].equals(original_results))
-            self.assertTrue(namespace["jones_cases"].equals(original_cases))
-            for output, suffix in [("MODEL6_PDF_DIR", ".pdf"), ("MODEL6_IMAGE_DIR", ".png")]:
-                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
-            self.assertEqual(list(Path(directory).rglob("*.json")), [])
-            self.assertEqual(list(Path(directory).rglob("*.csv")), [])
-            self.assertLess(ids.index("epsilon-win-matrices"), ids.index("jones-description"))
-            self.assertLess(ids.index("jones-selection"), ids.index("jones-stationarity-description"))
-            self.assertLess(ids.index("jones-stationarity-selection"), ids.index("model6-description"))
-            exec(sources["jones-scaled-settings"], namespace)
-            self.assertTrue(namespace["jones_scaled_check"])
-            namespace["jones_scaled_n_jobs"] = 1
-            for cell_id in ["run-jones-scaled-realizations", "jones-scaled-width-win-counts",
-                            "jones-scaled-coefficient-win-counts", "jones-scaled-win-matrices",
-                            "jones-scaled-selection", "jones-scaled-comparison"]:
-                exec(sources[cell_id], namespace)
-            scaled_results = namespace["jones_scaled_results"]
-            self.assertEqual(len(scaled_results), 8)
-            self.assertTrue(scaled_results["step_rule"].eq("diameter_normalized").all())
-            self.assertTrue(scaled_results["stationarity_check"].all())
-            np.testing.assert_allclose(scaled_results["gamma0"] * scaled_results["cloud_diameter"],
-                                       scaled_results["step_value"])
-            self.assertEqual(namespace["jones_scaled_win_matrices"]["diameter_normalized"].shape, (2, 2))
-            self.assertEqual(len(namespace["jones_scaled_union_counts"]), 8)
-            self.assertTrue(namespace["jones_stationarity_results"].equals(repeated))
-            for output, suffix in [("JONES_SCALED_PDF_DIR", ".pdf"), ("JONES_SCALED_IMAGE_DIR", ".png")]:
-                self.assertEqual(len(list(namespace[output].glob("*" + suffix))), 1)
+            for results_name, ranking_name in (
+                ("jones_results", "jones_win_ranking"),
+                ("jones_normalized_results", "jones_normalized_ranking"),
+                ("e1_absolute_results", "e1_absolute_ranking"),
+                ("e1_normalized_results", "e1_normalized_ranking"),
+                ("factorial_results", "factorial_ranking"),
+            ):
+                results, ranking = namespace[results_name], namespace[ranking_name]
+                expected_wins = dict.fromkeys(results["candidate_id"].unique(), 0)
+                for _, rows in results.groupby(["replication", "T"]):
+                    for candidate in rows.loc[
+                        rows["minimum_width"] <= rows["minimum_width"].min() + 1e-8, "candidate_id"
+                    ]:
+                        expected_wins[candidate] += 1
+                self.assertEqual(ranking.set_index("candidate_id")["wins"].to_dict(), expected_wins)
+                expected_max = {
+                    candidate: sum(rows["total_evaluations"] == 30)
+                    for candidate, rows in results.groupby("candidate_id")
+                }
+                self.assertEqual(ranking.set_index("candidate_id")["iteration_limit_count"].to_dict(),
+                                 expected_max)
+                self.assertTrue(results["selected_start"].eq(1).all())
+                self.assertNotIn("coefficient_mae", results.columns)
+            for cases_name in ("jones_cases", "jones_normalized_cases"):
+                self.assertEqual(len(namespace[cases_name]), 2)
+                self.assertNotIn("coefficient_mae", namespace[cases_name].columns)
+                self.assertNotIn("estimated_phi_1", namespace[cases_name].columns)
+            for experiment in namespace["e1_experiments"].values():
+                self.assertNotIn("coefficient_mae", experiment["cases"][0])
+            self.assertEqual(len(namespace["factorial_results"]), 32)
+            self.assertEqual(len(namespace["factorial_ranking"]), 16)
+            max_annotations = [text for ax in namespace["factorial_axes"].flat
+                               for text in ax.texts if text.get_text().startswith("MAX ")]
+            self.assertEqual(len(max_annotations), 16)
+            self.assertTrue(all(text.get_color() == "#c75f00" for text in max_annotations))
+            self.assertEqual(len(list(Path(directory).rglob("*.pdf"))), 5)
+            self.assertEqual(len(list(Path(directory).rglob("*.png"))), 5)
             self.assertEqual(list(Path(directory).rglob("*.json")), [])
             self.assertEqual(list(Path(directory).rglob("*.csv")), [])
 
@@ -468,11 +341,11 @@ class ScheduleTuningTests(unittest.TestCase):
                      if cell.get("id") == "imports")
         module = importlib.import_module("Code.Code_AR_processes.ar_tools.tuning")
         descent_module = importlib.import_module("Code.Code_AR_processes.ar_tools.descent")
-        # Emulate a kernel that imported tuning.py before experiment 2 existed.
-        del module.tune_fixed_ar_realizations
+        # Emulate a kernel that imported tuning.py before the Jones runner existed.
+        del module.tune_jones_ar_realizations
         namespace = {}
         try:
-            self.assertFalse(hasattr(module, "tune_fixed_ar_realizations"))
+            self.assertFalse(hasattr(module, "tune_jones_ar_realizations"))
             with patch.object(descent_module, "projected_subgradient_empirical_width",
                               side_effect=RuntimeError("Stale optimizer in the notebook kernel.")):
                 with contextlib.redirect_stdout(io.StringIO()):
@@ -485,8 +358,8 @@ class ScheduleTuningTests(unittest.TestCase):
                 )
                 self.assertEqual(result["termination_reason"], "patience")
                 self.assertEqual(len(result["width_history"]), 4)
-            self.assertTrue(callable(namespace["tune_fixed_ar_realizations"]))
-            self.assertIs(namespace["tune_fixed_ar_realizations"], module.tune_fixed_ar_realizations)
+            self.assertTrue(callable(namespace["tune_jones_ar_realizations"]))
+            self.assertIs(namespace["tune_jones_ar_realizations"], module.tune_jones_ar_realizations)
         finally:
             importlib.reload(descent_module)
             importlib.reload(module)
