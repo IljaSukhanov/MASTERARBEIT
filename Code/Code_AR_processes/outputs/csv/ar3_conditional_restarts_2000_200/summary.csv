@@ -1,3 +1,0 @@
-method,processes,stationary_estimates,exhausted_without_stationary,mean_coefficient_mse,median_coefficient_mse,maximum_coefficient_mse,mse_above_1,mean_attempts,total_attempts,mean_evaluated_states,total_evaluated_states
-Fixed 12 starts,50,46,0,218.2957255815649,1.52543372205611e-05,7680.8802434918225,4,12.0,600,12000.1,600005
-Stationarity-triggered starts,50,50,0,0.030507215939088016,3.840804110856163e-05,0.7020856093035213,0,1.66,83,1578.16,78908

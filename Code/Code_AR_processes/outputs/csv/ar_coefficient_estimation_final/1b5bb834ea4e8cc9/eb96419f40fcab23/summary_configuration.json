@@ -1,6 +1,0 @@
-{
-  "bootstrap_count": 2000,
-  "bootstrap_seed": 2026102304,
-  "paired_difference": "minimum-width MAE minus comparator MAE; negative favors minimum width",
-  "resampling_unit": "coefficient-vector model_id within order; shared indices across shapes and methods"
-}

@@ -5,3 +5,6 @@ __pycache__/
 .matplotlib-cache/
 .DS_Store
 .pytest_cache/
+
+/Code/Code_AR_processes/outputs/csv/
+/Code/Code_kde/outputs/data/
