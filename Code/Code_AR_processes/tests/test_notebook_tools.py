@@ -10,10 +10,6 @@ import unittest
 
 import numpy as np
 
-from Code.Code_AR_processes.ar_tools.breakpoint_selectors import (
-    select_tail_ratio,
-    tail_excess_ratios,
-)
 from Code.Code_AR_processes.ar_tools.experiments import run_mae_replication
 
 
@@ -66,20 +62,6 @@ class NotebookToolsTests(unittest.TestCase):
                             *[None for _ in node.args],
                             **{keyword.arg: None for keyword in node.keywords},
                         )
-
-    def test_tail_selectors_keep_their_distinct_zero_denominator_rules(self):
-        widths = np.array([10., 7., 5., 2., 1., 1.])
-        orders = np.arange(1, 5)
-        signed, denominators = tail_excess_ratios(
-            widths, max_dimension=6, candidate_orders=orders,
-        )
-        selected, scores = select_tail_ratio(
-            widths, max_dimension=6, candidate_orders=orders,
-        )
-        self.assertEqual(denominators[-1], 0.)
-        self.assertTrue(np.isnan(signed[-1]))
-        self.assertTrue(np.isposinf(scores[-1]))
-        self.assertEqual(selected, 4)
 
     def test_mae_worker_runs_all_estimators_without_notebook_globals(self):
         configuration = {

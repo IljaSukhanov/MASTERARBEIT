@@ -117,12 +117,6 @@
       "call": "simulate_beta_ar"
     },
     {
-      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_bic_order_selection.ipynb",
-      "section": "cell 4",
-      "line": 16,
-      "call": "simulate_uniform_ar"
-    },
-    {
       "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_order_minimum_width.ipynb",
       "section": "cell 4",
       "line": 71,
@@ -132,12 +126,6 @@
       "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_order_minimum_width.ipynb",
       "section": "cell 5",
       "line": 17,
-      "call": "simulate_uniform_ar"
-    },
-    {
-      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_unshifted_residual_width_ratio.ipynb",
-      "section": "cell 4",
-      "line": 9,
       "call": "simulate_uniform_ar"
     },
     {

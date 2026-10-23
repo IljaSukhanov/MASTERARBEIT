@@ -35,7 +35,7 @@ class ExperimentToolsTests(unittest.TestCase):
     def test_retained_order_experiments_have_notebook_entry_points(self):
         required = {
             "run_ar3_warm_start_experiment",
-            "run_ar3_population_selector_experiment", "run_ar3_lp_descent_experiment",
+            "run_ar3_population_selector_experiment",
         }
         called = set()
         for path in NOTEBOOK_PATHS:
@@ -62,7 +62,6 @@ class ExperimentToolsTests(unittest.TestCase):
 
     def test_notebook_setup_finds_the_project_without_launchers(self):
         notebook_names = [
-            "ar3_descent_chain_lp",
             "ar3_order_selection_warm_starts", "ar3_population_breakpoint_selectors",
         ]
         order_directory = AR_DIR / "xx_notebooks_order_selection"

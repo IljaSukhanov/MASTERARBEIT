@@ -122,34 +122,3 @@ def chebyshev_ar_fit(point_cloud):
     if not result.success:
         raise RuntimeError(f"Chebyshev LP failed: {result.message}")
     return result.x[:order], result.x[order], result.x[-1]
-
-
-def unshifted_residual_widths(series, max_dimension):
-    """LP-optimized residual spans for dimensions 1,...,D on common rows."""
-    n = len(series) - max_dimension + 1
-    y = series[max_dimension - 1:]
-    lag_matrix = np.column_stack([
-        series[max_dimension - 1 - j:len(series) - j]
-        for j in range(1, max_dimension)
-    ])
-    ones = np.ones(n)
-    zeros = np.zeros(n)
-    widths = np.empty(max_dimension)
-    widths[0] = np.ptp(y)
-    for q in range(1, max_dimension):
-        lags = lag_matrix[:, :q]
-        constraints = np.vstack([
-            np.column_stack([-lags, -ones, zeros]),
-            np.column_stack([lags, zeros, ones]),
-        ])
-        result = linprog(
-            np.r_[np.zeros(q), 1.0, -1.0],
-            A_ub=constraints,
-            b_ub=np.r_[-y, y],
-            bounds=[(None, None)] * (q + 2),
-            method="highs",
-        )
-        if not result.success:
-            raise RuntimeError(f"LP failed at dimension {q + 1}: {result.message}")
-        widths[q] = result.fun
-    return widths, y, lag_matrix

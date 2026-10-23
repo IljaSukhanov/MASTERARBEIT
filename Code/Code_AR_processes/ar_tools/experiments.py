@@ -21,9 +21,8 @@ from .descent import (
     batched_geometric_width_curves, fit_ar3_mae_prefix, fit_ar3_warm_start_rows,
 )
 from .breakpoint_selectors import (
-    all_population_selectors, descent_chain, earlier_bend_certificate, width_selectors,
+    all_population_selectors, descent_chain, width_selectors,
 )
-from .lp_widths import exact_empirical_width_low_dimension, lp_width_curve
 from .population_widths import population_ar3_widths
 from .experiment_settings import (
     AR_DIRECTORY, AR3_MAE_CONFIGURATION, AR3_MAE_OUTPUT_DIRECTORY, WARM_START_VARIANTS,
@@ -147,139 +146,6 @@ def run_mae_replication(replication, configuration, cache_directory, resume=True
     result.to_csv(temporary_path, index=False)
     temporary_path.replace(cache_path)
     return result
-
-
-def save_ar3_audit_diagnostics(widths, *, data_directory):
-    DATA_DIR = Path(data_directory)
-    certificates, comparisons = [], []
-    for rep, group in widths.groupby("replication"):
-        group = group.sort_values("k")
-        values = group.minimum_width.to_numpy().copy()
-        values[:4] = group.global_audit_width.to_numpy()[:4]
-        assert np.all(np.diff(values) <= 1e-10)
-        for transform in ["identity", "log"]:
-            z = values if transform == "identity" else np.log(values)
-            comparisons.append({"replication": rep, "transform": transform,
-                                "selected_order_after_global_prefix_replacement": descent_chain(z)[0]})
-            certificates.append({"replication": rep, "transform": transform,
-                                 "terminal_upper_width": float(z[-1]),
-                                 **earlier_bend_certificate(z[:4], z[-1])})
-    pd.DataFrame(certificates).to_csv(DATA_DIR / "earlier_bend_certificates.csv", index=False)
-    pd.DataFrame(comparisons).to_csv(DATA_DIR / "global_prefix_selections.csv", index=False)
-
-
-def run_ar3_lp_descent_experiment(*, ar_directory=AR_DIRECTORY, data_directory=None,
-                                  source_directory=None):
-    AR_DIR = Path(ar_directory)
-    DATA_DIR = Path(data_directory) if data_directory is not None else AR_DIR / "outputs/csv/ar3_descent_chain_lp"
-    SOURCE = Path(source_directory) if source_directory is not None else AR_DIR / "outputs/csv/ar3_order_selection_warm_starts"
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / "replications").mkdir(exist_ok=True)
-    configuration = {
-        "replications": 50, "true_order": 3, "sample_size": 2000,
-        "max_fitted_k": 10, "common_times": "t=10,...,2000 for all fitted dimensions",
-        "lp_tolerance": 1e-9, "max_lp_iterations_per_start": 50,
-        "starts": ["previous direction padded with zero", "previous direction shifted by zero", "first coordinate axis"],
-        "source_process_folder": str(SOURCE / "processes"),
-        "algorithm_sha256": hashlib.sha256((AR_DIR / "ar_tools/lp_widths.py").read_bytes()).hexdigest(),
-        "caps": [5, 8, 10], "cap_5_note": "Assumes an order upper bound of 3; not an automatic data-driven cap choice",
-        "transformations": ["identity", "log"],
-        "global_audit": "Convex hull of P-P for dimensions 1–4, floating-point rather than interval-certified",
-    }
-    config_path = DATA_DIR / "configuration.json"
-    if config_path.exists() and json.loads(config_path.read_text()) != configuration:
-        raise RuntimeError("Preserve the existing differently configured LP experiment separately.")
-    config_path.write_text(json.dumps(configuration, indent=2) + "\n")
-    start = perf_counter()
-    rows = []
-    with threadpool_limits(limits=1):
-        for rep in range(1, 51):
-            checkpoint = DATA_DIR / "replications" / f"replication_{rep:03d}.csv"
-            if checkpoint.exists():
-                cached = pd.read_csv(checkpoint, float_precision="round_trip")
-                assert len(cached) == 10
-                rows.extend(cached.to_dict("records"))
-                continue
-            series = pd.read_csv(SOURCE / "processes" / f"process_{rep:03d}.csv",
-                                 float_precision="round_trip").X_t.to_numpy()
-            source_fit = pd.read_csv(SOURCE / "replications" / f"replication_{rep:03d}.csv")
-            phi = np.array(json.loads(source_fit.iloc[0].coefficients))
-            widths, directions, diagnostics = lp_width_curve(series)
-            cloud = sliding_window_point_cloud(series, 10)
-            result_rows = []
-            for i, (width, direction, diagnostic) in enumerate(zip(widths, directions, diagnostics)):
-                k = i + 1
-                exact, vertices = np.nan, np.nan
-                if k <= 4:
-                    exact, _, vertices = exact_empirical_width_low_dimension(cloud[:, :k])
-                oracle_width = np.nan
-                if k >= 4:
-                    q = np.r_[1.0, -phi, np.zeros(k - 4)]
-                    q /= np.linalg.norm(q)
-                    oracle_width = float(np.ptp(cloud[:, :k] @ q))
-                row = {"replication": rep, "k": k, "minimum_width": width,
-                       "coefficients": json.dumps(phi.tolist()), "global_audit_width": exact,
-                       "lp_minus_global_audit": width - exact,
-                       "hull_vertices": vertices, "known_direction_width": oracle_width,
-                       **diagnostic}
-                row.update({f"u_{j}": float(direction[j]) if j < k else np.nan for j in range(10)})
-                result_rows.append(row)
-            pd.DataFrame(result_rows).to_csv(checkpoint, index=False)
-            rows.extend(result_rows)
-            print(f"LP fit and global low-dimension audit {rep}/50 ({perf_counter() - start:.1f}s)", flush=True)
-
-    widths = pd.DataFrame(rows).sort_values(["replication", "k"])
-    widths.to_csv(DATA_DIR / "width_curves.csv", index=False)
-    selections, score_rows = [], []
-    for rep, group in widths.groupby("replication"):
-        m = group.sort_values("k").minimum_width.to_numpy()
-        for cap in configuration["caps"]:
-            for transform in configuration["transformations"]:
-                values = m[:cap] if transform == "identity" else np.log(m[:cap])
-                chain = descent_chain(values)
-                selections.append({"replication": rep, "cap": cap, "transform": transform,
-                                   "selected_order": chain[0], "true_order": 3})
-                for i in range(cap):
-                    score_rows.append({"replication": rep, "cap": cap, "transform": transform,
-                                       "k": i + 1, "drop": chain[1][i], "remaining_reduction": chain[2][i],
-                                       "alpha": chain[3][i], "stationary_probability": chain[4][i],
-                                       "odds": chain[5][i], "candidate": 0 < i < cap - 1})
-    selections = pd.DataFrame(selections)
-    summary = selections.groupby(["cap", "transform"]).selected_order.agg(
-        correct=lambda q: int((q == 3).sum()), under=lambda q: int((q < 3).sum()),
-        over=lambda q: int((q > 3).sum()), total="count").reset_index()
-    selections.to_csv(DATA_DIR / "selections.csv", index=False)
-    summary.to_csv(DATA_DIR / "summary.csv", index=False)
-    pd.DataFrame(score_rows).to_csv(DATA_DIR / "descent_chain_scores.csv", index=False)
-    save_ar3_audit_diagnostics(widths, data_directory=DATA_DIR)
-    physical_errors, norm_errors = [], []
-    for rep, group in widths.groupby("replication"):
-        series = pd.read_csv(SOURCE / "processes" / f"process_{rep:03d}.csv",
-                             float_precision="round_trip").X_t.to_numpy()
-        cloud = sliding_window_point_cloud(series, 10)
-        for row in group.itertuples():
-            direction = np.array([getattr(row, f"u_{j}") for j in range(row.k)])
-            physical_errors.append(abs(np.ptp(cloud[:, :row.k] @ direction) - row.minimum_width))
-            norm_errors.append(abs(np.linalg.norm(direction) - 1))
-    assert max(physical_errors) < 1e-10
-    assert max(norm_errors) < 1e-12
-    verification = {
-        "curves": 50, "monotonicity_violations_above_1e-12": int(sum(
-            np.any(np.diff(g.sort_values("k").minimum_width) > 1e-12) for _, g in widths.groupby("replication"))),
-        "maximum_lp_gap_global_k2_to_k4": float(widths[widths.k.between(2, 4)].lp_minus_global_audit.max()),
-        "k4_global_audit_matches_within_1e-8": int((widths[widths.k == 4].lp_minus_global_audit.abs() < 1e-8).sum()),
-        "k4_widths_above_known_feasible_direction_by_1e-8": int(((widths[widths.k == 4].minimum_width
-                                                               - widths[widths.k == 4].known_direction_width) > 1e-8).sum()),
-        "total_lp_solves": int(widths.lp_solves.sum()),
-        "starts_hitting_iteration_limit": int(widths.iteration_limit_starts.sum()),
-        "maximum_saved_direction_width_reconstruction_error": float(max(physical_errors)),
-        "maximum_saved_direction_unit_norm_error": float(max(norm_errors)),
-    }
-    (DATA_DIR / "verification.json").write_text(json.dumps(verification, indent=2) + "\n")
-    print("\nLP descent-chain results:", flush=True)
-    print(summary.to_string(index=False), flush=True)
-    print(json.dumps(verification, indent=2), flush=True)
-    return DATA_DIR
 
 
 def fit_ar3_gradient_examples(*, ar_directory=AR_DIRECTORY, project_directory=None,
@@ -805,9 +671,9 @@ def run_ar3_population_selector_experiment(*, ar_directory=AR_DIRECTORY, data_di
     paired = summary.merge(empirical, on="method", how="left", suffixes=("_population", "_warm_empirical"))
     paired.to_csv(DATA_DIR / "population_vs_warm_empirical.csv", index=False)
     (DATA_DIR / "coverage_notes.json").write_text(json.dumps({
-        "tested": "Two difference rules, descent chain, local drift, three cumulative-tail ratios, and first tied minimum width (8 total)",
+        "tested": "Two difference rules and descent chain (3 total)",
         "birth_death_inverse_rule": "Undefined on population plateau: similarity matrix singular and reciprocal-drop rates infinite. No stationary-chain accuracy assigned.",
-        "other_functionals": "BIC/PACF and residual/implied-innovation-width rules require series or a different functional; not evaluated by substituting geometric population widths into them.",
+        "other_functionals": "BIC/PACF require time-series data; not evaluated by substituting geometric population widths into them.",
         "tail_corner_checks": "Sensitivity check, not a proof over the entire uncertainty interval",
         "descent_chain_source": "/Users/iljasukhanov/Downloads/elbow_point_selection_preview.pdf, Definitions 1.2.8-1.2.10 and Eq. (1.6), pp. 5-6",
     }, indent=2) + "\n")

@@ -20,7 +20,6 @@ __all__ = [
     "plot_embedding_k2",
     "plot_embedding_k3",
     "save_figure",
-    "plot_ar3_lp_descent_results",
     "plot_ar3_gradient_examples",
     "make_ar3_gradient_previews",
     "save_ar3_warm_start_figure",
@@ -276,50 +275,6 @@ def plot_embedding_k3(
 def save_figure(figure, name, *, pdf_directory, image_directory):
     figure.savefig(Path(pdf_directory) / f"{name}.pdf", bbox_inches="tight")
     figure.savefig(Path(image_directory) / f"{name}.png", dpi=160, bbox_inches="tight")
-
-
-def plot_ar3_lp_descent_results(widths, *, ar_directory=AR_DIRECTORY,
-                                image_directory=None, pdf_directory=None):
-    AR_DIR = Path(ar_directory)
-    IMAGE_DIR = Path(image_directory) if image_directory is not None else AR_DIR / "outputs/images/ar3_descent_chain_lp"
-    PDF_DIR = Path(pdf_directory) if pdf_directory is not None else AR_DIR / "outputs/pdfs/ar3_descent_chain_lp"
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
-    PDF_DIR.mkdir(parents=True, exist_ok=True)
-    population = pd.read_csv(AR_DIR / "outputs/csv/ar3_population_breakpoint_selectors/population_width_curves.csv")
-    plt.rcParams.update({"font.size": 11, "axes.spines.top": False, "axes.spines.right": False})
-    fig, axes = plt.subplots(2, 3, figsize=(13, 7))
-    for column, rep in enumerate([1, 2, 5]):
-        group = widths[widths.replication == rep].sort_values("k")
-        m = group.minimum_width.to_numpy()
-        pop = population[population.replication == rep].sort_values("k")
-        k = np.arange(1, 11)
-        axes[0, column].plot(k, m, "o-", color="#0072B2", label="Empirical LP fit")
-        axes[0, column].plot(k, pop.population_width, "--", color="#777777", label="Population width")
-        axes[0, column].scatter(k[:4], group.global_audit_width.iloc[:4], s=55,
-                                facecolors="none", edgecolors="#D55E00", label="Global hull audit")
-        axes[0, column].axvline(4, color="#009E73", alpha=.5)
-        axes[0, column].set_title(f"Replication {rep}")
-        axes[0, column].set_ylabel("Minimum width")
-        axes[0, column].set_xticks([1, 2, 4, 6, 8, 10])
-        for label, z, color in [("Raw widths", m, "#0072B2"), ("Log widths", np.log(m), "#D55E00")]:
-            chain = descent_chain(z)
-            axes[1, column].plot(k[1:-1], chain[3][1:-1], "o-", color=color,
-                                 label=f"{label}: selected order {chain[0]}")
-        axes[1, column].axvline(4, color="#009E73", alpha=.5, label="True break dimension 4")
-        axes[1, column].set_ylim(0, 1.04)
-        axes[1, column].set_xlabel("Embedding dimension k")
-        axes[1, column].set_ylabel("Chain visit probability αₖ")
-        axes[1, column].legend(loc="lower right", fontsize=9, frameon=False)
-    axes[0, 0].legend(fontsize=9, frameon=False)
-    fig.suptitle("Original descent chain: corrected optimization helps, finite-sample failures remain", fontsize=14)
-    fig.tight_layout()
-    fig.savefig(IMAGE_DIR / "lp_descent_chain_examples.png", dpi=180)
-    fig.savefig(PDF_DIR / "lp_descent_chain_examples.pdf")
-    plt.close(fig)
 
 
 def plot_ar3_gradient_examples(curves, summary, *,

@@ -18,7 +18,6 @@ __all__ = [
     "yule_walker_coefficients",
     "conditional_gaussian_qml",
     "horvath_linf_coefficients",
-    "select_bic",
 ]
 
 
@@ -247,15 +246,3 @@ def horvath_linf_coefficients(series, order, use_convex_hull=True):
             or duality_gap > check_tolerance):
         raise RuntimeError("Horvath LP failed its full-data feasibility or optimality check.")
     return coefficients, radius, duality_gap
-
-
-def select_bic(y, lag_matrix, *, candidate_orders):
-    """No-intercept OLS BIC benchmark on the same common rows."""
-    n = len(y)
-    criteria = []
-    for q in candidate_orders:
-        lags = lag_matrix[:, :q]
-        coefficients = np.linalg.lstsq(lags, y, rcond=None)[0]
-        residuals = y - lags @ coefficients
-        criteria.append(np.log(np.mean(residuals**2)) + q * np.log(n) / n)
-    return int(candidate_orders[np.argmin(criteria)])

@@ -43,17 +43,8 @@ def data_initialized_width_curve(series,seed,replication,iterations=1000):
     return np.array(widths)
 
 
-def ratio_pick(y):
-    d=-np.diff(y)
-    ratios=[]
-    for q in range(1,len(y)-1):
-        denominator=np.sum(d[q:]**2)
-        ratios.append(d[q-1]**2/denominator if denominator>0 else (np.inf if d[q-1]!=0 else 0))
-    return 1+int(np.argmax(ratios))
-
-
 if __name__=='__main__':
- rows,selections=[],[]
+ rows=[]
  with threadpool_limits(limits=1):
   for replication in range(1,11):
    seed=20260816
@@ -64,9 +55,5 @@ if __name__=='__main__':
    baseline=old[(old.true_order==3)&(old.replication==replication)].sort_values('k').minimum_width.to_numpy()
    for k,(w0,w1) in enumerate(zip(baseline,improved),1):
     rows.append(dict(replication=replication,k=k,width_original=w0,width_data_initialized=w1))
-   for kind,w in [('original',baseline),('data_initialized',improved)]:
-    selections.append(dict(replication=replication,kind=kind,method='drop_to_tail_energy',order=ratio_pick(w)))
    print(f'Completed data-only initialization audit {replication}/10',flush=True)
  pd.DataFrame(rows).to_csv(OUT/'initialization_audit_widths.csv',index=False)
- f=pd.DataFrame(selections);f.to_csv(OUT/'initialization_audit_selections.csv',index=False)
- print(f.assign(correct=f.order==3).groupby(['kind','method']).correct.sum().to_string(),flush=True)

@@ -128,13 +128,6 @@
       "expression": "simulate_beta_ar(phi=phi, sample_size=sample_size, burnin=burnin, innovation_bounds=(-half_width, half_width), alpha=1.0, beta=1.0, rng=rng, intercept=intercept)"
     },
     {
-      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_bic_order_selection.ipynb",
-      "section": "cell 4",
-      "line": 16,
-      "call": "simulate_uniform_ar",
-      "expression": "simulate_uniform_ar(phi_replication, sample_size=bic_all_order_sample_size, burnin=bic_all_order_burnin, half_width=1.0, rng=process_generator)"
-    },
-    {
       "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_order_minimum_width.ipynb",
       "section": "cell 4",
       "line": 71,
@@ -147,13 +140,6 @@
       "line": 17,
       "call": "simulate_uniform_ar",
       "expression": "simulate_uniform_ar(coefficients, sample_size=settings['sample_size'], burnin=settings['burnin'], half_width=settings['half_width'], rng=generator)"
-    },
-    {
-      "file": "Code/Code_AR_processes/xx_notebooks_order_selection/ar_unshifted_residual_width_ratio.ipynb",
-      "section": "cell 4",
-      "line": 9,
-      "call": "simulate_uniform_ar",
-      "expression": "simulate_uniform_ar(coefficients, sample_size=SAMPLE_SIZE, burnin=1000, half_width=KNOWN_INNOVATION_WIDTH / 2, rng=process_rng)"
     },
     {
       "file": "Code/Code_AR_processes/xx_notebooks_tuning/ar3_single_path_geometric_descent.ipynb",

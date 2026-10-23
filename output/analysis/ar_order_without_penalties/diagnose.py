@@ -16,28 +16,7 @@ OUT = Path(__file__).resolve().parent
 INPUT = ROOT / 'Code/Code_AR_processes/outputs/csv/ar_width_comparison'
 settings = json.loads((INPUT / 'configuration.json').read_text())
 curves = pd.read_csv(INPUT / 'width_curves.csv')
-rows, candidate_rows, radius_rows = [], [], []
-for (p, replication), curve in curves.groupby(['true_order', 'replication']):
-    y = curve.sort_values('k').minimum_width.to_numpy()
-    drops = -np.diff(y)
-    for method in ('drop_to_tail_energy', 'tail_sse_ratio', 'tail_variance_ratio'):
-        scores = []
-        for q in range(1, len(y)-1):
-            if method == 'drop_to_tail_energy':
-                top, bottom = drops[q-1]**2, np.sum(drops[q:]**2)
-            else:
-                previous_tail, tail = y[q-1:], y[q:]
-                top = np.sum((previous_tail-previous_tail.mean())**2)
-                bottom = np.sum((tail-tail.mean())**2)
-                if method == 'tail_variance_ratio':
-                    top /= len(previous_tail)
-                    bottom /= len(tail)
-            score = top/bottom if bottom > 0 else (np.inf if top > 0 else 0.)
-            scores.append(score)
-            candidate_rows.append(dict(true_order=p,replication=replication,method=method,
-                                       candidate_order=q,numerator=top,denominator=bottom,score=score))
-        selected = 1 + int(np.argmax(scores))
-        rows.append(dict(true_order=p,replication=replication,method=method,selected_order=selected))
+rows, radius_rows = [], []
 
 # Known [-1,1] bound is additional information; this diagnostic uses the series,
 # not only the estimated spherical minimum-width curve.
@@ -90,7 +69,6 @@ with threadpool_limits(limits=1):
 
 results = pd.DataFrame(rows)
 results.to_csv(OUT/'selections.csv',index=False)
-pd.DataFrame(candidate_rows).to_csv(OUT/'ratio_candidate_scores.csv',index=False)
 pd.DataFrame(radius_rows).to_csv(OUT/'known_bound_radii.csv',index=False)
 summary=[]
 for (method,p),g in results.groupby(['method','true_order']):
