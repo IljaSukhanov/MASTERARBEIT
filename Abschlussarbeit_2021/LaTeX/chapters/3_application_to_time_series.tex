@@ -498,26 +498,6 @@ We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ i
 
 In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general. Note that this geometrically diminishing step size schedule is equivalently known as exponentially decaying step size schedule: $\gamma_t=\gamma_0e^{-dt}$ with $d:=-\log{\beta}>0$ for $\beta\in(0,1)$.
 
-
-
-\subsection{Elbow point selection}\label{sec:elbow_point_selection}
-
-\todo[inline]{23.10: rework completely (put below coefficient estimation experiments?)}
-
-The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_1\ge\dots\ge m_p\ge m_{p+1}=\dots=m_K$.
-
-\textbf{Second derivative}
-
-A natural break point selector is the discrete version of the second derivative since it detects changes in slope. 
-
-\textbf{Descent chain}
-
-The descent chain is motivated by the manuscript~\cite{Baralic2026} where different kinds of Markov chains are constructed whose stationary distribution provides inside on which scale is the most distinct. We ask if there is a construction of a Markov chain using the observations $m_1\ge\dots m_p\ge m_{p+1}\ge\dots\ge m_K$ whose stationary distribution peaks at the break point $m_{p+1}$.
-
-\begin{align*}
-    \hat{k}_{\text{DC}}=\min\arg\max_{2\le k\le K-1}\frac{\hat{m}_{k-1}-\hat{m}_k}{\hat{m}_k-\hat{m}_K}
-\end{align*}
-
 \section{Numerical Results}
 
 For our experiments, we will limit ourselves to AR($p$) time series with short-term dependence, that is, $1\le p\le 5$, while larger orders can be addressed in future work.
@@ -538,17 +518,11 @@ The choice of the starting direction is arguably the most critical step in the a
 
 A general approach for choosing the starting direction $u_0$ is to sample it uniformly from $\mathbb{S}^{3}$, see~\cite[Section~7]{li2021weaklyconvexoptimizationstiefel}. As a second option we try out the simple deterministic starting direction $e_1=(1,0,0,0)$.
 
-An alternative possibility for the order selection experiments in Section~\ref{sec:order_selection_experiments} below is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
-
 \textbf{Termination condition}
 
 We implement a maximum number of iterations $\text{iter}_{\max}=2000$ and an improvement patience $\text{pat}=200$, that is, if the function value has not improved for $\text{pat}$, the descent is terminated prematurely.
 
 \textbf{Tuning experiments}
-
-\todo[inline]{23.10: Make extensive tuning experiments}
-\todo[inline]{23.10: Goal is to determine principled parameters to use for all further experiments}
-\todo[inline]{Repeat under many $u_0$?}
 
 The goal is to determine $\gamma_0$ and $\beta$ that will work reasonably well. We parametrize $\beta$ via $\beta^{H}=1/2$ where $H$ is the number of iterations after which the step size halves. We consider the grid $H\in\{2,5,10,20,50,100,200,1000\}$. Regarding the initial step size, we compare two options: 1) not dependent on the data: $\gamma_0\in{0.05,0.1,0.2,0.4,0.8}$ and 2) data-dependent: $\gamma_0=cL^{-1}$, where $L=\operatorname{diam}(\mathcal{P}_k)$ is the Lipschitz-constant of the width $\hat{w}_k$ and $c\in{0.05,0.1,0.2,0.4,0.8}$. Precedence for dividing the step size by the Lipschitz-constant can be found in~\cite[Theorem~4]{li2021weaklyconvexoptimizationstiefel} or~\cite[Theorem~3.2]{bubeck_convex_2015}.
 
@@ -556,14 +530,16 @@ We sample 100 different AR(3) processes uniformly using Jones' Algorithm. For ea
 
 The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Figure~\ref{fig:tuning_experiment_results}.
 
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=0.5\linewidth]{01_hierarchical_process_wins}
-%     \caption{}
-%     \label{fig:tuning_experiment_results}
-% \end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_52049d95ff4e3942/01_hierarchical_100_processes_100_realizations_mean_and_max_process_win_counts_2x2.pdf}
+    \caption{}
+    \label{fig:tuning_experiment_results}
+\end{figure}
 
-These tuning experiments show that normalizing the step size by dividing by $L$ leads to better performance. Also the deterministic starting direction $e_1$ performed better than a fixed random starting direction. The best configuration is $H=50$ and $c=0.2$. 
+These tuning experiments show that normalizing the step size by dividing by $L$ leads to better performance. Also the deterministic starting direction $e_1$ performed better than a fixed random starting direction. The best configuration is $H=100$ and $c=0.1$. 
+
+\todo[inline]{Repeat under many $u_0$?}
 
 There exists an interesting probabilistic interpretation for why the starting direction $e_1$ worked better than uniformly drawn $u_0$. We know from Proposition~\ref{prop:minimum_width} that the optimal direction $u^{\ast}$ can be expressed using the AR coefficients as $u^{\ast}=(1,-\phi)/\sqrt{1+\|\phi\|^2}$. The angle between $u^{\ast}$ and $e_1$ is $\arctan{\|\phi\|}$ while the expected angle between $u^{\ast}$ and $u_0\sim U(\mathbb{S}^{3})$ is $\mathbb{E}[\angle{(u_0,u^{\ast})}]=\pi/4+1/\pi\approx1.1037$. If we draw $\phi$ uniformly from the causality region then $\mathbb{E}[\arctan{\|\phi\|}]\approx0.7556$.
 
@@ -572,8 +548,6 @@ There exists an interesting probabilistic interpretation for why the starting di
 \subsection{Simulated Data}
 
 \subsubsection{Coefficient estimation experiments}
-
-\todo[inline]{23.10: Complete coefficient estimation experiments}
 
 Here we compare the four presented coefficient estimation methods presented in Section~\ref{sec:classical_estimation_methods}, namely, OLS ($L_2$), Yule-Walker, Horváth's $L_{\infty}$ linear program and our minimum-width approach.
 
@@ -601,124 +575,118 @@ Figure~\ref{fig:beta-ar1-time-series-and-clouds} shows on the left side 5 AR(1) 
     \label{fig:beta-ar1-time-series-and-clouds}
 \end{figure}
 
-Table~\ref{tab:ar-coefficient-mae} shows the results. 
+Table~\ref{tab:coefficient-estimation-all} shows the results. 
 
 We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly.
 
 \begin{table}[htbp]
 \centering
-\caption{Coefficient estimation errors for 100 simulated AR($p$)
-processes per true order. Each entry reports the mean
-$L_1$ coefficient error. The lowest values are shown in bold.}
-\label{tab:ar-coefficient-mae}
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.1}
+\caption{Mean coefficient MAE over 100 processes per order and
+innovation distribution, with $T=1000$. Innovations are normalized
+to mean zero and variance $1/3$. Values are rounded to four decimal
+places. Bold values indicate the lowest unrounded mean MAE within
+each distribution and order.}
+\label{tab:coefficient-estimation-all}
+
 \begin{tabular}{lccccc}
 \toprule
 Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
 \midrule
+
+\multicolumn{6}{l}{$\operatorname{Beta}(1,1)$} \\
+\addlinespace[2pt]
 OLS ($L_2$)
-& 0.0127
-& 0.0275
-& 0.0505
-& 0.0685
-& 0.1007 \\
+ & 0.0177 & 0.0187 & 0.0222 & 0.0233 & 0.0298 \\
 Yule--Walker
-& 0.0126
-& 0.0281
-& 0.0531
-& 0.1239
-& 0.2357 \\
-Horváth ($L_{\infty}$)
-& \textbf{0.0011}
-& \textbf{0.0022}
-& \textbf{0.0042}
-& \textbf{0.0072}
-& \textbf{0.0124} \\
+ & 0.0178 & 0.0213 & 0.0310 & 0.0435 & 0.0530 \\
+Horv\'ath ($L_\infty$)
+ & \textbf{0.0016} & \textbf{0.0023} & \textbf{0.0034}
+ & \textbf{0.0042} & \textbf{0.0047} \\
 Minimum width
-& 0.0017
-& 0.0059
-& 4.3847
-& 18.6449
-& 6.5469 \\
+ & 0.0034 & 0.0141 & 0.0250 & 0.0534 & 0.1074 \\
+\midrule
+
+\multicolumn{6}{l}{$\operatorname{Beta}(0.5,0.5)$} \\
+\addlinespace[2pt]
+OLS ($L_2$)
+ & 0.0177 & 0.0208 & 0.0238 & 0.0244 & 0.0289 \\
+Yule--Walker
+ & 0.0184 & 0.0229 & 0.0351 & 0.0425 & 0.0631 \\
+Horv\'ath ($L_\infty$)
+ & \textbf{0.0000} & \textbf{0.0000} & \textbf{0.0000}
+ & \textbf{0.0001} & \textbf{0.0001} \\
+Minimum width
+ & 0.0001 & 0.0078 & 0.0173 & 0.0522 & 0.0879 \\
+\midrule
+
+\multicolumn{6}{l}{$\operatorname{Beta}(2,2)$} \\
+\addlinespace[2pt]
+OLS ($L_2$)
+ & 0.0252 & \textbf{0.0192} & \textbf{0.0242}
+ & \textbf{0.0270} & \textbf{0.0296} \\
+Yule--Walker
+ & 0.0248 & 0.0223 & 0.0290 & 0.0418 & 0.0575 \\
+Horv\'ath ($L_\infty$)
+ & \textbf{0.0230} & 0.0236 & 0.0286 & 0.0306 & 0.0342 \\
+Minimum width
+ & 0.0385 & 0.0582 & 0.0973 & 0.1242 & 0.1742 \\
+\midrule
+
+\multicolumn{6}{l}{$\operatorname{Beta}(1,2)$} \\
+\addlinespace[2pt]
+OLS ($L_2$)
+ & 0.0207 & \textbf{0.0190} & \textbf{0.0245}
+ & \textbf{0.0251} & \textbf{0.0308} \\
+Yule--Walker
+ & 0.0210 & 0.0201 & 0.0347 & 0.0383 & 0.0568 \\
+Horv\'ath ($L_\infty$)
+ & 0.0483 & 0.0476 & 0.0662 & 0.0668 & 0.0714 \\
+Minimum width
+ & \textbf{0.0137} & 0.0437 & 0.0608 & 0.1075 & 0.1554 \\
+\midrule
+
+\multicolumn{6}{l}{$\operatorname{Beta}(2,1)$} \\
+\addlinespace[2pt]
+OLS ($L_2$)
+ & 0.0196 & \textbf{0.0181} & \textbf{0.0232}
+ & \textbf{0.0260} & \textbf{0.0288} \\
+Yule--Walker
+ & 0.0195 & 0.0240 & 0.0298 & 0.0439 & 0.0685 \\
+Horv\'ath ($L_\infty$)
+ & 0.0516 & 0.0528 & 0.0574 & 0.0648 & 0.0706 \\
+Minimum width
+ & \textbf{0.0182} & 0.0352 & 0.0763 & 0.0941 & 0.1454 \\
+
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4/mean_and_median_l1_error_vs_order.pdf}
-    \caption{}
-    \label{fig:mean_and_median_l1_error_vs_order}
-\end{figure}
-
-\subsubsection{First exemplary order selection experiment and error decomposition analysis discussion}
-
-Figures~\ref{fig:ar1_experiment}, \ref{fig:ar2_experiment}, and \ref{fig:ar3_experiment} illustrate the proposed empirical minimum-width order selection for representative realizations of AR($p$) processes with $p\in\{1,2,3\}$. The coefficients used are $\phi=0.6$ for the AR(1) process, $\phi_1=0.6,\phi_2=-0.3$ for the AR(2) process, and $\phi_1=0.6,\phi_2=-0.3,\phi_3=0.3$ for the AR(3) process. The observed time series had length $T=2000$.
-
-The blue lines show the minimum width obtained by the projected sub-gradient descent, that is, $\hat{w}_k(\hat{u}_k)$ with $\hat{u}_k$ being the output of Algorithm~\ref{alg:projected_gradient_descent}. For reference, the dashed black line shows the theoretical minimum width $m_k$, which is equal to $2(1+\phi_1^2+\dots+\phi_p^2)^{-1/2}$ for $k\ge p+1$.
-
-The Figures also show the population width evaluated at the minimizer $\hat{u}_k$ obtained by Algorithm~\ref{alg:projected_gradient_descent}, that is, $w_k(\hat{u}_k)$ as a dashed orange line. The difference $w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)$ is always positive, due to the monotonicity of the support function with respect to set inclusion. Since we do not know the true support $\mathcal{Z}^{(k)}$, because we do not know the AR coefficients, we replace it with the convex hull of the sliding-window point cloud $\mathcal{P}_k$. Thus, the difference between the blue and orange lines can be interpreted as a \enquote{point filling error}, that is, the error we make by replacing $\mathcal{Z}^{(k)}$ with $\operatorname{conv}(\mathcal{P}_k)$.
-
-This error goes to zero for $T\to+\infty$ because
-\begin{align*}
-    0\le w_k(\hat{u}_k)-\hat{w}_k(\hat{u}_k)\le2d_H(\operatorname{conv}(\mathcal{P}_{k,T}),\mathcal{Z}^{(k)})\to0,\quad T\to+\infty
-\end{align*}
-as we have seen in the proof of Corollary~\ref{cor:main}.
-
-The closeness between $m_k$ (black) and $\hat{w}_k(\hat{u}_k)$ (blue) does not indicate that the minimization algorithm worked well. The reason for this can be demonstrated by the following error decomposition:
-\begin{align*}
-    \hat{w}_{k,T}(\hat{u}_{k,T})-w_k(u_k)=\left(\underbrace{w_k(\hat{u}_{k,T})-w_k(u_k)}_{\ge0}\right)-\left(\underbrace{w_k(\hat{u}_{k,T})-\hat{w}_k(\hat{u}_{k,T})}_{=:F_{k,T}(\hat{u}_{k,T})\ge0}\right)
-\end{align*}
-
-The second difference $F_{k,T}(\hat{u}_{k,T})$ is the \enquote{point filling error} in direction $\hat{u}_{k,T}$ that goes to zero for $T\to\infty$.
-
-The first difference can be further decomposed:
-\begin{align*}
-    0\le w_k(\hat{u}_k)-w_k(u_k)=\underbrace{w_k(\Tilde{u}_{k,T})-w_k(u_k)}_{=:E_{k,T}\ge0}+\underbrace{w_k(\hat{u}_{k,T})-w_k(\Tilde{u}_{k,T})}_{=:R_{k,T}}.
-\end{align*}
-Here $\Tilde{u}_k$ is the true minimizer of the empirical width $\hat{w}_k$. By our considerations in Section~\ref{sec:emp_min_width} any minimizer $\Tilde{u}_k$ of the empirical width converges towards the set of minimizing directions of the population width, thus the first difference $E_{k,T}$ goes to zero for $T\to\infty$.
-
-The second difference $R_{k,T}$ is not guaranteed to be nonnegative as well. This term measures the difference in population width between two directions.
-
-\textcolor{red}{It can be written as $R_{k,T}=\epsilon_{k,T}+F_{k,T}(\hat{u}_{k,T})-F_{k,T}(\Tilde{u}_{k,T})$, where $\epsilon_{k,T}:=\hat{w}_{k,T}(\hat{u}_{k,T})-\hat{w}_{k,T}(\Tilde{u}_{k,T})$ is the optimization error.}
-
-Note that by (the proof of) Corollary~\ref{cor:main} we have
-\begin{align*}
-    F_{k,T}(\hat{u}_{k,T})=|w_k(\hat{u}_{k,T})-\hat{w}_{k,T}(\hat{u}_{k,T})|\le\sup_{u\in\mathcal{S}^{k-1}}|w_k(u)-w_{k,T}(u)|=:\delta_{k,T}\to0,\quad T\to\infty.
-\end{align*}
-
-It follows $|R_{k,T}-\epsilon_{k,T}|\le\delta_{k,T}\to0$ for $T\to\infty$. The interpretation is that $R_{k,T}$ differs from the optimization error $\epsilon_{k,T}$ by a quantity that vanishes. The optimization error $\epsilon_{k,T}$ goes to zero for $T\to\infty$ under certain conditions by Theorem~\ref{thm:conv_grad_descent}.
-
-The vertical red dashed line indicates the selected order using $\hat{p}_{AC}=\hat{q}_{AC}-1$. For these three exemplary processes, the correct order was selected. Using Remark~\ref{rem:minimizer_estimates_coefficients} the following coefficient estimates are obtained from the minimizing directions:
-\begin{itemize}
-    \item AR(1) process: $\hat{\phi}=0.599652$
-    \item AR(2) process: $\hat{\phi}_1=0.605058,\hat{\phi}_2=-0.308672$
-    \item AR(3) process: $\hat{\phi}_1=0.602940,\hat{\phi}_2=-0.302585,\hat{\phi}_3=0.302667$
-\end{itemize}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR1_experiment.pdf}
-    \caption{Blue: $\hat{w}_k(\hat{u}_k)$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge1$)}
-    \label{fig:ar1_experiment}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR2_experiment.pdf}
-    \caption{Blue: $\hat{w}_k(\hat{u}_k)$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge2$)}
-    \label{fig:ar2_experiment}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf}
-    \caption{Blue: $\hat{w}_k(\hat{u}_k)$, Orange: $w_k(\hat{u}_k)$ (population width $w_k$ evaluated at empirical minimizer $\hat{u}_k$), Black: $m_k$ (only for $k\ge3$)}
-    \label{fig:ar3_experiment}
-\end{figure}
-
 \subsubsection{Order selection experiments}\label{sec:order_selection_experiments}
 
-Table~\ref{tab:geometric-bic-pacf-comparison} summarizes the results from 50 simulations for each true order $p\in\{1,2,3\}$. We compare the classical order selectors BIC and PACF cutoff with our minimum width approach, where we test the different methods of detecting the elbow point from Section~\ref{sec:elbow_point_selection}.
+An alternative possibility for the order selection experiments in Section~\ref{sec:order_selection_experiments} below is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
+
+\textbf{Elbow point selection}
+
+\todo[inline]{23.10: rework completely (put below coefficient estimation experiments?)}
+
+The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_1\ge\dots\ge m_p\ge m_{p+1}=\dots=m_K$.
+
+\textbf{Second derivative}
+
+A natural break point selector is the discrete version of the second derivative since it detects changes in slope. 
+
+\textbf{Descent chain}
+
+The descent chain is motivated by the manuscript~\cite{Baralic2026} where different kinds of Markov chains are constructed whose stationary distribution provides inside on which scale is the most distinct. We ask if there is a construction of a Markov chain using the observations $m_1\ge\dots m_p\ge m_{p+1}\ge\dots\ge m_K$ whose stationary distribution peaks at the break point $m_{p+1}$.
+
+\begin{align*}
+    \hat{k}_{\text{DC}}=\min\arg\max_{2\le k\le K-1}\frac{\hat{m}_{k-1}-\hat{m}_k}{\hat{m}_k-\hat{m}_K}
+\end{align*}
+
+Table~\ref{tab:geometric-bic-pacf-comparison} summarizes the results from 50 simulations for each true order $p\in\{1,2,3\}$. We compare the classical order selectors BIC and PACF cutoff with our minimum width approach, where we test the different methods of detecting the elbow point presented above.
 
 \begin{table}[htbp]
 \centering
