@@ -686,7 +686,16 @@ Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show 
 
 This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}. In Figure~\ref{fig:chosen_bandwidths_vs_lambda} the chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ with the smallest consecutive jump $D_{j,j+1}$, that is, $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
-\todo[inline]{23.10: is there a connection to the minimum of the stationary distribution of a Laplacian}
+\begin{Rem}[Markov Chain interpretation]
+    \todo[inline]{23.10: is there a connection to the minimum of the stationary distribution of a Laplacian (scale selection for monotone functionals)}
+    If $S^{(\lambda)}$ is the similarity matrix with $S^{(\lambda)}_{ij}=e^{-\lambda D_{ij}}$ we can define a matrix $W^{(\lambda)}=S^{(\lambda)}-I_N$ and interpret it as a weighted adjacency matrix on the state space $\{1,\dots,N\}$. The stationary distribution $q^{(\lambda)}$ of a random walk on $\{1,\dots,N\}$ with transition matrix $P^{(\lambda)}=\operatorname{diag}(s_1,\dots,s_N)^{-1}W^{(\lambda)}$ is given by
+    \begin{align*}
+        q^{(\lambda)}_i=\frac{\sum_{j\ne i}e^{-\lambda D_{ij}}}{\sum_k\sum_{j\ne k}e^{-\lambda D_{kj}}}.
+    \end{align*}
+    Letting $\lambda\to\infty$ we see that $q^{(\lambda)}\to(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$, where $j^{\ast}\in\{1,\dots,N\}$ is the scale for which $D_{j^{\ast},j^{\ast}+1}=\min_{i\ne j}D_{ij}$.
+
+    Let $\mathcal{L}^{(\lambda)}:=\operatorname{diag}(s_1,\dots,s_N)-W$ be the (weighted) Laplacian, where $s_i:=\sum_{j}w_{ij}$. A well known principle, see~[], says that the Dirichlet energy $\mathcal{E}_W(u):=e^{T}\mathcal{L}^{(\lambda)}u$ is minimized by the Perron vector of $W^{(\lambda)}$ or $S^{(\lambda)}$.
+\end{Rem}
 
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}

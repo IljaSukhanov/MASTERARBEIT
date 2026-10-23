@@ -556,12 +556,12 @@ We sample 100 different AR(3) processes uniformly using Jones' Algorithm. For ea
 
 The best configuration $(\beta,\gamma_0)$ is the one that achieves the lowest objective value most often. The results of our tuning experiment are given in Figure~\ref{fig:tuning_experiment_results}.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/factorial_2x2_77394040890a0afe/13_mean_coefficient_mae_vs_half_life_2x2.pdf}
-    \caption{}
-    \label{fig:tuning_experiment_results}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{01_hierarchical_process_wins}
+%     \caption{}
+%     \label{fig:tuning_experiment_results}
+% \end{figure}
 
 These tuning experiments show that normalizing the step size by dividing by $L$ leads to better performance. Also the deterministic starting direction $e_1$ performed better than a fixed random starting direction. The best configuration is $H=50$ and $c=0.2$. 
 
