@@ -18,6 +18,21 @@ differs; corrupted inputs raise an error instead of being regenerated.
 Changed designs are saved in a separate directory.
 See [the shared implementation](../ar_tools/final_coefficient_estimation.py).
 
+## Final order-selection sample
+
+[`ar_order_selection_final/030cde6f724e3c30/`](ar_order_selection_final/030cde6f724e3c30/README.md)
+contains 250 original series from the final coefficient-estimation archive:
+50 sampled without replacement from the full pool of 500 series at each
+true order p=1,...,5. All five Beta shapes are pooled; their counts are random.
+The root seed is `2026102305`, with a separate stream for each order.
+
+The numerical archive preserves the original float64 observations and the
+selected coefficient vectors exactly. Metadata maps the compact sample and
+model indices to their original identities. `shape_counts.csv` records the
+composition, and `manifest.json` records selected IDs, source and subset
+checksums, the sampling procedure, and verification results. Load this frozen
+sample for the final order-selection experiments without resampling.
+
 ## Historical AR(3) inputs
 
 `ar3_coefficient_recovery_50.npz` contains only the 50 simulated series, their
