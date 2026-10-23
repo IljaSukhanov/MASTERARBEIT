@@ -18,5 +18,7 @@ corresponding PDF and image directories. Settings or source changes get new IDs.
 
 The final notebook uses the tuned e1 start, diameter-normalized scale c=0.1,
 half-life H=100, cap 2000, patience 200, delta=1e-8, and no restarts.
-The two older estimation notebooks have been removed; their saved experiment
-data and figures remain available under `../outputs/`.
+The two older estimation notebooks have been removed. Superseded estimation
+outputs were cleaned up on 23 October 2026; figures referenced by the thesis
+remain under `../outputs/`. See the
+[cleanup record](../../../output/analysis/ar_cleanup_2026-10-23/removal_manifest.json).
