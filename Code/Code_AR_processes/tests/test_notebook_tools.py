@@ -20,6 +20,7 @@ from Code.Code_AR_processes.ar_tools.experiments import run_mae_replication
 AR_DIR = Path(__file__).resolve().parents[1]
 NOTEBOOK_PATHS = sorted([
     *AR_DIR.glob("*.ipynb"),
+    *(AR_DIR / "xx_notebooks_estimation").glob("*.ipynb"),
     *(AR_DIR / "xx_notebooks_tuning").glob("*.ipynb"),
     *(AR_DIR / "xx_notebooks_order_selection").glob("*.ipynb"),
     *(AR_DIR / "xx_notebooks_figures").glob("*.ipynb"),

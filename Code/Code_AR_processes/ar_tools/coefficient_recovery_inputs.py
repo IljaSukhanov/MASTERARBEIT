@@ -15,7 +15,7 @@ import numpy as np
 
 
 AR_DIR = Path(__file__).resolve().parents[1]
-SOURCE_NOTEBOOK = AR_DIR / "ar3_minimum_width_k4.ipynb"
+SOURCE_NOTEBOOK = AR_DIR / "xx_notebooks_estimation" / "ar3_minimum_width_k4.ipynb"
 SOURCE_DATA = AR_DIR / "outputs/csv/ar3_minimum_width_k4"
 INPUT_DATA = AR_DIR / "inputs/ar3_coefficient_recovery_50.npz"
 

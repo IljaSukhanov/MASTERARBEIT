@@ -197,7 +197,7 @@ def main():
     execute(notebook, 2, namespace)
     execute(notebook, 4, namespace, calculation_only=True)
     execute(notebook, 6, namespace)
-    original_divergence = namespace["beta2_divergence_matrix_fft"]
+    original_divergence = namespace["beta2_divergence_matrix_fourier"]
     diagnostics = []
 
     def divergence_with_progress(samples, h_grid, **kwargs):
@@ -217,7 +217,7 @@ def main():
         )
         return result.vector
 
-    namespace["beta2_divergence_matrix_fft"] = divergence_with_progress
+    namespace["beta2_divergence_matrix_fourier"] = divergence_with_progress
     namespace["perron_vector_from_divergence"] = vector_with_diagnostics
     execute(notebook, 7, namespace)
     execute(notebook, 8, namespace)

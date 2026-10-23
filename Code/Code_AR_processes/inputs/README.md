@@ -4,7 +4,7 @@
 generating AR(3) coefficients, and the 12 starting directions per series used by
 the retained restart comparisons. It contains no estimator results or descent
 trajectories. These samples follow the 50-process seed family in
-[ar3_minimum_width_k4.ipynb](../ar3_minimum_width_k4.ipynb), its Monte Carlo
+[ar3_minimum_width_k4.ipynb](../xx_notebooks_estimation/ar3_minimum_width_k4.ipynb), its Monte Carlo
 coefficient-recovery section.
 
 The retained experiments load this file through

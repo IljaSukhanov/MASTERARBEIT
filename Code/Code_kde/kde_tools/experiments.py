@@ -10,7 +10,7 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_kde_values,
 )
-from .fourier import beta2_divergence_matrix_fft
+from .fourier import beta2_divergence_matrix_fourier
 from .quadrature import (
     quadrature_grid_for_kdes,
     quadrature_similarity_matrices,
@@ -85,7 +85,7 @@ def beta2_bandwidth_selection_counts(
             )
             selected_index = int(selection["choice"]["selected_index"])
         else:
-            divergence = beta2_divergence_matrix_fft(
+            divergence = beta2_divergence_matrix_fourier(
                 samples=samples,
                 h_grid=h_grid,
                 half_width=half_width,

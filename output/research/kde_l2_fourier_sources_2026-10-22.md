@@ -2,6 +2,11 @@
 
 Research date: 22 October 2026. No files under `Abschlussarbeit_2021/` were changed.
 
+Update, 23 October 2026: the production L2 helper now implements direct frequency
+quadrature. The code-versus-chapter discussion below records the earlier
+reconstruction implementation. See the [migration report](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/analysis/fourier_quadrature_migration/README.md)
+for the current code and its validation.
+
 ## Recommendation
 
 Use **Silverman (1986), Section 3.5, pp. 61–66**, especially Eqs. (3.51), (3.56), and (3.61)–(3.62), as the methodological precedent. The application is least-squares cross-validation. [Book DOI](https://doi.org/10.1201/9781315140919); [original book text inspected, pp. 62–65](https://www.scribd.com/document/997694117/Silverman-1986).

@@ -1,0 +1,23 @@
+{
+  "unchanged_from_committed_baseline": true,
+  "baseline_calls": [
+    {
+      "path": "Code/Code_kde/outputs/analysis/spectral_lambda_jump_study/numerical_artefact_checks.py",
+      "cell": null,
+      "name": "eigh",
+      "count": 1
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/spectral_lambda_switch_distribution/switch_distribution_analysis.py",
+      "cell": null,
+      "name": "eigh",
+      "count": 1
+    },
+    {
+      "path": "Code/Code_kde/similarity_max_eigenvalue_vs_n.ipynb",
+      "cell": 7,
+      "name": "eigh",
+      "count": 2
+    }
+  ]
+}

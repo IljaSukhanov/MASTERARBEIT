@@ -1,5 +1,12 @@
 # AR simulation and optimization tools
 
+## Notebook folders
+
+- [Estimation](xx_notebooks_estimation/README.md): coefficient recovery, estimator comparisons, and sample-size experiments.
+- [Figures](xx_notebooks_figures/README.md): geometric illustrations and thesis figures.
+- [Order selection](xx_notebooks_order_selection/README.md): order selectors and related diagnostics.
+- [Tuning](xx_notebooks_tuning/README.md): starting directions and step-schedule comparisons.
+
 ## Coefficient accuracy: MAE only
 
 Every active coefficient comparison uses
@@ -204,10 +211,10 @@ Run the AR tests from the repository root:
 MPLBACKEND=Agg python3 -m unittest discover -s Code/Code_AR_processes/tests -v
 ```
 
-The pre-change suite has one unrelated failure in
-`test_notebooks_have_no_local_function_definitions`: the notebook
-`ar3_failed_coefficient_tracking.ipynb` already defines a local `save_figure`.
-It is not part of the innovation generation implementation.
+At the time of this verification, the pre-change suite had one unrelated failure in
+`test_notebooks_have_no_local_function_definitions`: the now-removed notebook
+`ar3_failed_coefficient_tracking.ipynb` defined a local `save_figure`.
+It was not part of the innovation generation implementation.
 
 All 13 normalization tests pass. The full AR suite has 60 passes and that same
 pre-existing failure (61 tests total). Twenty-four uniform AR paths match the

@@ -43,12 +43,41 @@ Numerical work lives in `kde_tools/`:
   interval endpoints.
 
 The optional Fourier implementation is isolated in `kde_tools/fourier/` and is
-never imported by the main package. FFT experiment runners import it explicitly;
-notebooks can import it with, for example:
+imported explicitly by Fourier experiment runners. L² inner products now follow
+the thesis's direct frequency integral, using composite trapezoidal quadrature
+and a real weighted Gram product `G = B @ B.T`. There is no inverse FFT, density
+clipping or density renormalization in this L² route. The mathematical reference
+is the numerical approximation after `eq:beta2_exact_formula02` in
+[`5_bandwidth_selection.tex`](../../Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex);
+see also [Parseval's formula, DLMF 1.14.7₅](https://dlmf.nist.gov/1.14.E7_5).
 
 ```python
-from kde_tools.fourier import kde_family_fft
+from kde_tools.fourier import (
+    FOURIER_L2_METHOD_VERSION,
+    beta2_divergence_matrix_fourier,
+    gaussian_kde_l2_gram_fourier,
+)
+
+divergence = beta2_divergence_matrix_fourier(
+    samples, h_grid, half_width=12.0, spatial_points=8192
+)
 ```
+
+The existing `half_width=H` and `spatial_points=m` parameters are retained as
+frequency-grid controls: spacing `pi/H`, cutoff `pi*m/(2*H)`, and `m/2+1` nodes.
+For an independently chosen cutoff and node count, call
+`gaussian_kde_l2_gram_fourier(samples, h_grid, frequency_cutoff=..., frequency_points=...)`.
+The old `beta2_divergence_matrix_fft` and `beta2_similarity_matrix_fft` names
+remain compatibility wrappers for direct quadrature. `kde_family_fft` still
+performs periodic reconstruction when density values are needed for other
+diagnostics; it is not used by the L² helper.
+
+`FOURIER_L2_METHOD_VERSION` identifies the new calculation as
+`frequency_trapezoid_v1`. Migrated notebooks include it in checkpoint settings
+or use method-specific output directories. Existing exports and saved FFT
+checkpoints remain historical; new sampling runs do not silently resume them.
+Restart notebook kernels and rerun setup after updating the helpers. Cached cell
+outputs in the migrated notebooks have been cleared rather than relabeled.
 
 The main exploratory workflow is `spectral_scale_selection_kde.ipynb`. Its
 beta-2 experiments use the optional Fourier implementation explicitly, while
@@ -66,7 +95,7 @@ the reusable numerical APIs remain in `kde_tools/`.
   bandwidth-grid size on one fixed sample, with editable r and lambda_N rules.
   Includes the maximum row-sum bound, the rescaled eigenvalue and Q-r reference,
   small-grid numerical validation, CSV results, and automatic PDF exports.
-- `fast_l2_bandwidth_distributions_vs_n_lambda.ipynb`: FFT-based L²
+- `fast_l2_bandwidth_distributions_vs_n_lambda.ipynb`: Fourier-quadrature L²
   distributions with shared divergence-based spectral selection. The final
   saved-run comparison overlays the continuous Q-hat minimizer distribution
   on the same samples at every n, with resumable minimizer checkpoints and

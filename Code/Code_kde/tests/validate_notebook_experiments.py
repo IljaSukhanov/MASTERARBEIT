@@ -5,6 +5,7 @@ Preview overrides are applied only in memory; notebook sources are never edited.
 """
 
 import ast
+import argparse
 import contextlib
 import importlib.util
 import io
@@ -27,6 +28,7 @@ os.environ.setdefault("OMP_NUM_THREADS", "1")
 import numpy as np
 from scipy.linalg import eigh
 from kde_tools.perron import PERRON_SOLVER_VERSION, perron_eigenpair_from_divergence
+from kde_tools.fourier import FOURIER_L2_METHOD_VERSION
 
 
 def load(name):
@@ -101,8 +103,9 @@ def strip_plot(s, marker="fig, ax = plt.subplots"):
     return s
 
 
-def main():
-    report = {"solver_version": PERRON_SOLVER_VERSION, "notebooks": {}, "checks": []}
+def main(report_path=None):
+    report = {"solver_version": PERRON_SOLVER_VERSION,
+              "l2_method": FOURIER_L2_METHOD_VERSION, "notebooks": {}, "checks": []}
     unit_log = io.StringIO()
     unit_result = unittest.TextTestRunner(stream=unit_log).run(
         unittest.TestLoader().discover(str(root / "tests"))
@@ -315,18 +318,21 @@ def main():
             cp = scratch / name / "n20" / "checkpoint.npz"
             with np.load(cp, allow_pickle=False) as z:
                 payload = {k: z[k].copy() for k in z.files}
-            old = json.loads(str(payload["configuration_json"].item()))
-            old["perron_solver"] = "legacy"
-            payload["configuration_json"] = np.array(json.dumps(old, sort_keys=True))
-            np.savez_compressed(cp, **payload)
-            try:
-                ns["run_l2_point"](
-                    20, full, h, settings, [1.0, 1e9], scratch / name, reuse=True
-                )
-            except ValueError:
-                pass
-            else:
-                raise AssertionError("Old solver checkpoint was accepted.")
+            current = json.loads(str(payload["configuration_json"].item()))
+            assert current["l2_method"] == FOURIER_L2_METHOD_VERSION
+            for obsolete_field in ("perron_solver", "l2_method"):
+                old = dict(current)
+                old[obsolete_field] = "legacy"
+                payload["configuration_json"] = np.array(json.dumps(old, sort_keys=True))
+                np.savez_compressed(cp, **payload)
+                try:
+                    ns["run_l2_point"](
+                        20, full, h, settings, [1.0, 1e9], scratch / name, reuse=True
+                    )
+                except ValueError:
+                    pass
+                else:
+                    raise AssertionError(f"Old {obsolete_field} checkpoint was accepted.")
             report["notebooks"][name] = {
                 "checkpoint_resume": "passed",
                 "legacy_checkpoint_rejection": "passed",
@@ -354,10 +360,11 @@ def main():
             "Four notebook experiment paths passed reduced-size numerical execution."
         )
         report["checks"].append(
-            "Current checkpoints resume, and legacy solver checkpoints are rejected."
+            "Current checkpoints resume; legacy solver and L2-method checkpoints are rejected."
         )
         report["captured_execution_log"] = captured.getvalue().splitlines()
-    output = root / "outputs/analysis/perron_refactor_validation/validation_report.json"
+    output = (Path(report_path) if report_path is not None else
+              root / "outputs/analysis/perron_refactor_validation/validation_report.json")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, indent=2) + "\n")
     print(
@@ -369,4 +376,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, help="Save this validation report separately.")
+    main(parser.parse_args().output)
