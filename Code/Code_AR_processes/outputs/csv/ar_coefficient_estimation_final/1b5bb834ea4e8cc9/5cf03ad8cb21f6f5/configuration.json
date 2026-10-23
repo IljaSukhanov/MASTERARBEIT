@@ -1,0 +1,28 @@
+{
+  "coefficient_error_metric": "mae_per_coefficient_v1",
+  "configuration": {
+    "delta": 1e-08,
+    "half_life": 100.0,
+    "improvement_tolerance": 0.0,
+    "iterations": 2000,
+    "optimizer_seed": 2026102303,
+    "patience": 200,
+    "scale": 0.1
+  },
+  "dataset_id": "1b5bb834ea4e8cc9",
+  "horvath_intercept": false,
+  "initial_direction": "e1",
+  "methods": [
+    "Minimum width",
+    "OLS",
+    "Yule-Walker",
+    "Horvath L-infinity"
+  ],
+  "numpy_version": "1.26.4",
+  "restarts": 0,
+  "schema_version": 1,
+  "scipy_version": "1.13.1",
+  "source_sha256": "d0324cbcd6123484686b0c4deda7a2cab03b7b582590ec934855e22dbee54fa4",
+  "stationarity_check": false,
+  "step_rule": "gamma_m = (scale / cloud_diameter) * 2**(-m/half_life)"
+}

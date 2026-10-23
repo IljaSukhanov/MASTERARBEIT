@@ -29,7 +29,7 @@ from Code.Code_AR_processes.ar_tools.functions import (
     is_stationary, jones_ar_coefficients, simulate_uniform_ar, sliding_window_point_cloud,
 )
 from Code.Code_AR_processes.ar_tools.coefficient_recovery_inputs import (
-    AR_DIR, SOURCE_DATA, SOURCE_NOTEBOOK, INPUT_DATA, digest, json_default,
+    AR_DIR, SOURCE_DATA, SOURCE_NOTEBOOK, SOURCE_NOTEBOOK_SHA256, INPUT_DATA, digest, json_default,
     load_process, source_settings,
 )
 
@@ -155,7 +155,7 @@ def main():
     for name in ["replications", "traces"]:
         (OUT / name).mkdir(parents=True, exist_ok=True)
     configuration = dict(coefficient_error_metric="mae_per_coefficient_v1",
-        original_source=str(SOURCE_NOTEBOOK), original_source_sha256=digest(SOURCE_NOTEBOOK),
+        original_source=str(SOURCE_NOTEBOOK), original_source_sha256=SOURCE_NOTEBOOK_SHA256,
         input_data=str(INPUT_DATA), input_data_sha256=digest(INPUT_DATA),
         original_settings=settings, optimizer_sha256=digest(AR_DIR / "ar_tools/descent.py"),
         max_it=MAX_IT, improv_patience=PATIENCE, max_attempts=MAX_ATTEMPTS,

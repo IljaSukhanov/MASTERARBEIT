@@ -1,0 +1,267 @@
+\documentclass[a4paper,12pt]{scrartcl}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[margin=25mm,headheight=18pt,headsep=8mm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,float,setspace}
+\usepackage{caption}
+\captionsetup{format=hang,labelfont=normalfont,font=normalsize,skip=6pt}
+\usepackage[headsepline]{scrlayer-scrpage}
+\clearpairofpagestyles
+\ihead{\itshape Coefficient estimation results}
+\cfoot{\pagemark}
+\setkomafont{pageheadfoot}{\normalfont\sffamily}
+\pagestyle{scrheadings}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Final AR coefficient estimation: results tables},pdfauthor={Ilja Sukhanov}}
+\setstretch{1.2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.4ex plus 0.35ex minus 0.3ex}
+
+\begin{document}
+\section*{Final coefficient estimation}
+For each known order $p\in\{1,2,3,4,5\}$, 100 Jones coefficient vectors were
+sampled and reused across five Beta innovation shapes, giving 2500 series of
+length $T=1000$. Innovations have population mean zero and variance $1/3$;
+2000 burn-in observations were discarded~\cite{experiment,implementation,jones}.
+
+The per-process coefficient error is
+\[
+e_l(p)=\frac{1}{p}\sum_{j=1}^{p}
+  \left|\widehat{\phi}^{(l)}_j-\phi^{(l)}_j\right|,
+\qquad l=1,\ldots,100.
+\]
+Tables report the mean of $e_l(p)$ over the 100 processes in each
+condition~\cite{implementation}. All finite errors, including large errors and
+errors from nonstationary estimates, are included. Column minima are shown in
+bold. Table formatting follows Table~2.1 of the compiled thesis~\cite{style}.
+\begin{table}[H]
+\centering
+\caption{Mean coefficient MAE with normalized $\operatorname{Beta}(1,1)$ innovations.}
+\label{tab:uniform}
+\begin{tabular}{lccccc}
+\toprule
+Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
+\midrule
+OLS ($L_2$)
+& 0.017736
+& 0.018727
+& 0.022171
+& 0.023314
+& 0.029758 \\
+Yule--Walker
+& 0.017808
+& 0.021261
+& 0.030959
+& 0.043539
+& 0.052979 \\
+Horv\'ath ($L_{\infty}$)
+& \textbf{0.001617}
+& \textbf{0.002331}
+& \textbf{0.003414}
+& \textbf{0.004219}
+& \textbf{0.004741} \\
+Minimum width
+& 0.003381
+& 0.014067
+& 0.024996
+& 0.053427
+& 0.107356 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\centering
+\caption{Mean coefficient MAE with normalized $\operatorname{Beta}(0.5,0.5)$ innovations.}
+\label{tab:symmetric_u}
+\begin{tabular}{lccccc}
+\toprule
+Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
+\midrule
+OLS ($L_2$)
+& 0.017727
+& 0.020761
+& 0.023768
+& 0.024429
+& 0.028886 \\
+Yule--Walker
+& 0.018447
+& 0.022932
+& 0.035126
+& 0.042471
+& 0.063128 \\
+Horv\'ath ($L_{\infty}$)
+& \textbf{0.000010}
+& \textbf{0.000020}
+& \textbf{0.000041}
+& \textbf{0.000056}
+& \textbf{0.000079} \\
+Minimum width
+& 0.000109
+& 0.007798
+& 0.017319
+& 0.052198
+& 0.087945 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Mean coefficient MAE with normalized $\operatorname{Beta}(2,2)$ innovations.}
+\label{tab:symmetric_peak}
+\begin{tabular}{lccccc}
+\toprule
+Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
+\midrule
+OLS ($L_2$)
+& 0.025190
+& \textbf{0.019233}
+& \textbf{0.024163}
+& \textbf{0.026980}
+& \textbf{0.029644} \\
+Yule--Walker
+& 0.024837
+& 0.022302
+& 0.028997
+& 0.041771
+& 0.057463 \\
+Horv\'ath ($L_{\infty}$)
+& \textbf{0.023048}
+& 0.023585
+& 0.028633
+& 0.030559
+& 0.034154 \\
+Minimum width
+& 0.038506
+& 0.058156
+& 0.097299
+& 0.124194
+& 0.174185 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\centering
+\caption{Mean coefficient MAE with normalized $\operatorname{Beta}(1,2)$ innovations.}
+\label{tab:right_skew}
+\begin{tabular}{lccccc}
+\toprule
+Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
+\midrule
+OLS ($L_2$)
+& 0.020671
+& \textbf{0.018956}
+& \textbf{0.024503}
+& \textbf{0.025070}
+& \textbf{0.030801} \\
+Yule--Walker
+& 0.020980
+& 0.020113
+& 0.034665
+& 0.038310
+& 0.056849 \\
+Horv\'ath ($L_{\infty}$)
+& 0.048276
+& 0.047616
+& 0.066165
+& 0.066795
+& 0.071414 \\
+Minimum width
+& \textbf{0.013709}
+& 0.043746
+& 0.060761
+& 0.107466
+& 0.155359 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Mean coefficient MAE with normalized $\operatorname{Beta}(2,1)$ innovations.}
+\label{tab:left_skew}
+\begin{tabular}{lccccc}
+\toprule
+Estimator & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
+\midrule
+OLS ($L_2$)
+& 0.019560
+& \textbf{0.018090}
+& \textbf{0.023199}
+& \textbf{0.026013}
+& \textbf{0.028755} \\
+Yule--Walker
+& 0.019531
+& 0.023971
+& 0.029798
+& 0.043879
+& 0.068484 \\
+Horv\'ath ($L_{\infty}$)
+& 0.051647
+& 0.052771
+& 0.057381
+& 0.064830
+& 0.070625 \\
+Minimum width
+& \textbf{0.018164}
+& 0.035222
+& 0.076280
+& 0.094145
+& 0.145433 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Experiment details}
+The true order is supplied to every estimator. OLS and Horv\'ath's LP use no
+intercept; Yule--Walker uses centered observations. Minimum width uses the fixed
+start $e_1$ and diameter-normalized steps
+\[
+\gamma_m=\frac{0.1}{L}\,2^{-m/100},
+\]
+where $L$ is the empirical point-cloud diameter. The cap is 2000 evaluated
+states, patience is 200, and the cumulative patience-reset threshold is
+$\delta=10^{-8}$. Every strict width improvement is retained; no restarts or
+stationarity filtering are used~\cite{implementation}.
+
+All 10000 fits completed without fitting errors~\cite{experiment}. The companion
+\texttt{results.csv} contains the unrounded results; \texttt{provenance.json}
+records the source files and checksums.
+
+\begingroup
+\setstretch{1}
+\setlength{\parskip}{0pt}
+\begin{thebibliography}{9}
+\footnotesize
+\bibitem{experiment}
+Saved final coefficient-estimation experiment,
+\texttt{accuracy\_summary.csv} and \texttt{completion.json},
+data set \texttt{1b5bb834ea4e8cc9}, run \texttt{eb96419f40fcab23}.
+A copy of the summary is provided as \texttt{results.csv};
+\texttt{provenance.json} records the source files and checksums.
+
+\bibitem{implementation}
+Project implementations in \path{Code/Code_AR_processes/ar_tools/}:
+\path{final_coefficient_estimation.py},
+\path{coefficient_errors.py}, and \path{innovations.py}.
+See \texttt{coefficient\_mae}, \texttt{beta\_innovation\_bounds}, and the
+final estimation runner.
+
+\bibitem{jones}
+M.~C. Jones (1987).
+Randomly choosing parameters from the stationarity and invertibility region
+of autoregressive--moving average models.
+\emph{Applied Statistics}, 36(2), 134--138.
+\url{https://doi.org/10.2307/2347544}.
+
+\bibitem{style}
+I.~Sukhanov, compiled thesis,
+\emph{Geometric Estimation of Autoregressive Processes and Spectral Scale
+Selection for Kernel Density Estimation}, Table~2.1, printed page~25.
+\end{thebibliography}
+\endgroup
+\end{document}

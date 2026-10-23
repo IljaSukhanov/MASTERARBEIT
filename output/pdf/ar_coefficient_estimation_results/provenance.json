@@ -1,0 +1,25 @@
+{
+  "source_summary": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar_coefficient_estimation_final/1b5bb834ea4e8cc9/eb96419f40fcab23/accuracy_summary.csv",
+  "source_summary_sha256": "ef2330e8d7797993c109e58349349ee5cbe4cf7509b95b807e235c805275634a",
+  "completion": {
+    "dataset_id": "1b5bb834ea4e8cc9",
+    "estimates_sha256": "166078fdd81b664b2aec68cce71d28af08630f594190212d29a2583bdc68e275",
+    "failed_fits": 0,
+    "fit_count": 10000,
+    "fit_id": "eb96419f40fcab23"
+  },
+  "metric": "mae_per_coefficient_v1",
+  "cell_format": "mean coefficient MAE only",
+  "precision": "six decimal places",
+  "bold_rule": "unrounded minimum mean coefficient MAE across estimators within each shape/order",
+  "style_reference": "/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.pdf",
+  "reference_pdf_page": 29,
+  "reference_printed_page": 25,
+  "reference_table": "2.1",
+  "style_reference_sha256": "ca8ce3d4f95f83b82d79fceadbd873b36fe485c98844c61019d76e0d622d2aa2",
+  "report_pdf_sha256": "3625531d0c6b6d4794298c618f96fa6dab3b56e69b5b132120bd8fb1709458c2",
+  "latex_source_sha256": "cbf6d1d06837ab101a8cea315414340ddb3e6084d3e60a7615cd0d2a9d3433f0",
+  "verified_table_values": 100,
+  "verified_bold_minima": 25,
+  "pages": 2
+}

@@ -32,9 +32,9 @@ class ExperimentToolsTests(unittest.TestCase):
     def test_experiment_folder_has_no_top_level_python_files(self):
         self.assertEqual(list(AR_DIR.glob("*.py")), [])
 
-    def test_every_former_script_experiment_has_a_notebook_entry_point(self):
+    def test_retained_order_experiments_have_notebook_entry_points(self):
         required = {
-            "run_ar3_coefficient_mae_experiment", "run_ar3_warm_start_experiment",
+            "run_ar3_warm_start_experiment",
             "run_ar3_population_selector_experiment", "run_ar3_lp_descent_experiment",
         }
         called = set()

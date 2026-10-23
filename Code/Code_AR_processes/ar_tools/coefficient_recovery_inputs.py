@@ -1,6 +1,6 @@
 """Shared inputs for the retained 50-process AR(3) coefficient studies.
 
-The samples belong to ar3_minimum_width_k4.ipynb's seed family. Store their
+The samples belong to the removed ar3_minimum_width_k4.ipynb's seed family. Store their
 original floating-point values independently of any particular restart study
 so existing fits can still be checked without rerunning a removed experiment.
 The input file contains no fitted coefficients, trajectories, or method results.
@@ -15,7 +15,9 @@ import numpy as np
 
 
 AR_DIR = Path(__file__).resolve().parents[1]
+# Historical provenance only; the original notebook is no longer required.
 SOURCE_NOTEBOOK = AR_DIR / "xx_notebooks_estimation" / "ar3_minimum_width_k4.ipynb"
+SOURCE_NOTEBOOK_SHA256 = "2d1538fccf59878ebc9454181046ba58894703511ba1f3115188ddf7e1b608db"
 SOURCE_DATA = AR_DIR / "outputs/csv/ar3_minimum_width_k4"
 INPUT_DATA = AR_DIR / "inputs/ar3_coefficient_recovery_50.npz"
 
