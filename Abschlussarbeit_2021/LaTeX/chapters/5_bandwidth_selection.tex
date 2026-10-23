@@ -690,9 +690,15 @@ This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda},
     \todo[inline]{23.10: is there a connection to the minimum of the stationary distribution of a Laplacian (scale selection for monotone functionals)}
     If $S^{(\lambda)}$ is the similarity matrix with $S^{(\lambda)}_{ij}=e^{-\lambda D_{ij}}$ we can define a matrix $W^{(\lambda)}=S^{(\lambda)}-I_N$ and interpret it as a weighted adjacency matrix on the state space $\{1,\dots,N\}$. The stationary distribution $q^{(\lambda)}$ of a random walk on $\{1,\dots,N\}$ with transition matrix $P^{(\lambda)}=\operatorname{diag}(s_1,\dots,s_N)^{-1}W^{(\lambda)}$ is given by
     \begin{align*}
-        q^{(\lambda)}_i=\frac{\sum_{j\ne i}e^{-\lambda D_{ij}}}{\sum_k\sum_{j\ne k}e^{-\lambda D_{kj}}}.
+        q^{(\lambda)}_i=\frac{\sum_{j\ne i}e^{-\lambda D_{ij}}}{\sum_k\sum_{j\ne k}e^{-\lambda D_{kj}}}=\frac{s_i}{\sum_ks_k}.
     \end{align*}
-    Letting $\lambda\to\infty$ we see that $q^{(\lambda)}\to(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$, where $j^{\ast}\in\{1,\dots,N\}$ is the scale for which $D_{j^{\ast},j^{\ast}+1}=\min_{i\ne j}D_{ij}$.
+    Letting $\lambda\to\infty$ we see that $q^{(\lambda)}\to(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$, where $j^{\ast}\in\{1,\dots,N\}$ is the scale for which $D_{j^{\ast},j^{\ast}+1}=\min_{i\ne j}D_{ij}$. 
+
+    \todo[inline]{How is $q^{(\lambda)}$ related to the Perron vector $v^{(\lambda)}$ of $S^{(\lambda)}$}
+
+    As $\lambda\to\infty$, minimizing $q_i^{(\lambda)}$ leads to maximizing $\min\{d_i,d_{i+1}\}$. 
+
+    \todo[inline]{Compare it to the inverse $\Sigma^{-1}$ of a min-matrix $\Sigma=(\Sigma_{ij})_{i,j=1}^{N}$, $\Sigma_{ij}=a_i\wedge a_j$ where $0<a_1<\dots<a_N$.}
 
     Let $\mathcal{L}^{(\lambda)}:=\operatorname{diag}(s_1,\dots,s_N)-W$ be the (weighted) Laplacian, where $s_i:=\sum_{j}w_{ij}$. A well known principle, see~[], says that the Dirichlet energy $\mathcal{E}_W(u):=e^{T}\mathcal{L}^{(\lambda)}u$ is minimized by the Perron vector of $W^{(\lambda)}$ or $S^{(\lambda)}$.
 \end{Rem}
