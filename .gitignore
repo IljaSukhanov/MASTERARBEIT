@@ -9,8 +9,5 @@ __pycache__/
 /Code/Code_AR_processes/outputs/csv/
 /Code/Code_kde/outputs/data/
 
-/Code/Code_AR_processes/outputs/csv/
-/Code/Code_kde/outputs/data/
-
-/Code/Code_AR_processes/outputs/csv/
-/Code/Code_kde/outputs/data/
+# Generated diagnostic tables remain local; keep them out of Overleaf sync.
+/output/analysis/**/*.csv

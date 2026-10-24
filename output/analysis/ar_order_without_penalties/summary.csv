@@ -1,4 +1,0 @@
-method,true_order,correct,under,over,total
-known_bound_minimum_feasible,1,49,1,0,50
-known_bound_minimum_feasible,2,50,0,0,50
-known_bound_minimum_feasible,3,49,1,0,50
