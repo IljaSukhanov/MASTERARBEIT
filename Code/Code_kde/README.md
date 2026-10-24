@@ -27,11 +27,21 @@ Numerical work lives in `kde_tools/`:
   notation is $\lambda=1/\tau$; compatibility entry points and spectral selection.
 - `perron.py`: the single symmetric Perron implementation used by active
   spectral KDE experiments. It constructs shifted off-diagonal exponents for
-  exponential similarities, uses SciPy's symmetric Lanczos solver, and checks
-  the eigenpair residual and spectral gap. The scalar and 2-by-2 cases are
-  handled in the same module because ARPACK requires fewer requested
-  eigenpairs than matrix rows. Algorithm reference:
-  [SciPy eigsh documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.eigsh.html).
+  exponential similarities, uses SciPy's symmetric `eigh` solver, and checks
+  the eigenpair residual and spectral gap. For matrices with at least two rows,
+  `subset_by_index=[N-2, N-1]` requests the two largest algebraic eigenpairs.
+  Algorithm reference:
+  [SciPy eigh documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.eigh.html).
+- `distribution_runs.py`: shared checkpointed Figure 3.5, localized, and exact-Gaussian
+  histogram experiments, with exact comparison selectors and eigenpair diagnostics.
+- `spectral_sweeps.py`: shared, resumable spectral sample-size sweeps for
+  the main, fast, and joint-limit notebooks. Matching numerical inputs reuse one cache;
+  the joint-limit view also stores eigenpair diagnostics.
+- `continuous_runs.py`: shared Q-hat/Q₀ and continuous ISE/Q-r sampling runner,
+  with a cache under `outputs/data/shared_continuous_minimizers/`. It verifies
+  actual sample prefixes and search settings and records the producer version
+  for imported results. Both continuous notebook views retain their CSVs,
+  numerical refinement checks, and figures.
 - `experiments.py`: one-repetition simulation runners.  Notebooks control the
   settings, repetition loops, summaries, and plots.
 - `qhat.py`: analytic Gaussian sample energy and continuous minimization of
@@ -79,44 +89,89 @@ checkpoints remain historical; new sampling runs do not silently resume them.
 Restart notebook kernels and rerun setup after updating the helpers. Cached cell
 outputs in the migrated notebooks have been cleared rather than relabeled.
 
-The main exploratory workflow is `spectral_scale_selection_kde.ipynb`. Its
-beta-2 experiments use the optional Fourier implementation explicitly, while
-the reusable numerical APIs remain in `kde_tools/`.
+## Notebook themes
 
-- `gaussian_symmetric_divergence_bandwidth_distributions.ipynb`: repeated
-  Gaussian-sample bandwidth distributions for `exp(-lambda * D)` with
-  L² and the sample-specific ISE choice. Includes preview and Figure 3.5
-  parameter profiles, resumable checkpoints, CSV results, and automatic PDF
-  exports. New configuration fingerprints include both retained methods;
-  historical checkpoints and plots are kept separately.
-- `experiment_1_joint_N_lambda_limit.ipynb`: joint grid/localization limits,
-  mesh diagnostics, and repeated-sampling experiments.
-- `similarity_max_eigenvalue_vs_n.ipynb`: largest similarity eigenvalue versus
-  bandwidth-grid size on one fixed sample, with editable r and lambda_N rules.
-  Includes the maximum row-sum bound, the rescaled eigenvalue and Q-r reference,
-  small-grid numerical validation, CSV results, and automatic PDF exports.
-- `fast_l2_bandwidth_distributions_vs_n_lambda.ipynb`: Fourier-quadrature L²
-  distributions with shared divergence-based spectral selection. The final
-  saved-run comparison overlays the continuous Q-hat minimizer distribution
-  on the same samples at every n, with resumable minimizer checkpoints and
-  automatic PDF export.
-- `continuous_ise_qhat_distributions_vs_n.ipynb`: continuous sample ISE,
-  Q-0, Q-1, and Q-13/14 bandwidth distributions for n=100,...,2000, using
-  1,000 paired Gaussian samples. The original 1,000-observation prefixes are
-  retained and extended with independent seeded observations. Verified
-  original checkpoints are imported for n<=1000. Saves
-  resumable checkpoints, CSVs, numerical validation, full-interval plots,
-  interior histograms with separate upper-boundary probability bars, and
-  green/ISE peak comparisons. Plots use two pages of ten sample sizes each.
-- `spectral_lambda_jump_study.ipynb`: 1,000-sample Figure 3.3 lambda sweeps,
-  adjacent-pair histograms of the largest upward index changes, jump-size
-  diagnostics, and resumable raw-sample/trajectory checkpoints. Experiment 2
-  counts coexisting Perron peaks, refines dominance crossings, and checks
-  sensitivity to the numerical prominence filter on the same samples.
-- `spectral_lambda_switch_distribution.ipynb`: 100 fresh Figure 3.3 samples;
-  coarse lambda scans followed by 201-point local fine grids and peak-height
-  roots. Saves crossing brackets, bandwidth changes, all detected switches,
-  explicit no-switch outcomes, distribution plots, and automatic PDF exports.
+The 8 notebooks are grouped into the following folders. The `xx_notebooks_*`
+prefix follows the neighboring AR code's folder convention. Notebook filenames
+are preserved, so automatic PDFs remain under `outputs/pdfs/<notebook-name>/`
+and saved data remain under their existing output directories.
+
+Open a notebook in its theme folder and run its cells in order. Setup locates
+`kde_tools/` from the project, the KDE directory, or the notebook's own folder.
+
+### [Overview](xx_notebooks_overview/README.md)
+
+Start here for the canonical spectral KDE experiments and comparisons.
+
+- [spectral_scale_selection_kde.ipynb](xx_notebooks_overview/spectral_scale_selection_kde.ipynb): Main L² spectral KDE workflow, thesis figure experiments, and selector comparisons.
+- [g_rs_approximation_vs_omega.ipynb](xx_notebooks_overview/g_rs_approximation_vs_omega.ipynb): Exact G_rs and its Fourier approximation versus the cutoff Omega, for one fixed sample and bandwidth pair and a fixed number K of trapezoidal intervals.
+
+The main notebook's section 2 contains three histogram profiles:
+`beta2_profile = "figure_3_5"` uses lambda = 1,
+`beta2_profile = "localized"` uses lambda = N^(3/2), and
+`beta2_profile = "exact_gaussian"` uses the former Gaussian L²/ISE benchmark.
+The exact profile preserves independent seeds `910000 + repetition`, exact pair
+divergence, selected ISE exports, and its three distribution plots. Its
+`beta2_gaussian_run_profile` selects preview (M=20, N=21) or thesis (M=1000, N=201)
+settings, with n=200 and lambda=1. The separate Gaussian benchmark notebook
+has been removed; its saved outputs remain under their original name.
+After changing the profile, run the settings, selections, and histogram cells. All three profiles retain
+checkpointing, CSV exports, and eigenpair diagnostics. The localized profile
+replaces its former standalone notebook.
+
+New checkpoints live under
+`outputs/data/spectral_scale_selection_kde/<profile>/<configuration>/`;
+PNGs use the corresponding path under `outputs/images/`. Every displayed
+figure is still automatically saved under `outputs/pdfs/spectral_scale_selection_kde/`.
+Earlier outputs stay in their original directories. Compatible old checkpoints
+are imported only after validating method versions, settings, grid, and sample
+hashes; historical solver results are kept separately.
+The [localized launcher](outputs/analysis/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/run_notebook.py)
+now runs these main-notebook cells with the localized profile.
+
+Section 3 of the main notebook, the fast L² notebook, and the repeated-sample
+and sample-size sections of the joint-limit notebook now use the same
+`spectral_sweeps.run_l2_point` runner and cache under
+`outputs/data/shared_spectral_sweeps/`. Cache identities include the actual
+sample prefixes, bandwidth grid, quadrature settings, and solver/method versions.
+Matching spectral choices can be reused across notebooks and lambda subsets;
+new lambdas share one divergence calculation per sample. Compatible earlier
+fast-notebook checkpoints are imported without modifying their files.
+The joint-limit notebook retains its original sample seeds, summaries,
+mesh diagnostics, and figures. Older selection-only caches gain checked
+eigenpair diagnostics when that notebook requests them.
+
+The main notebook retains its spatial-grid ISE and grid Q-hat comparisons,
+three-selector histograms, overlays, thesis PDFs, and rate plots. The fast
+notebook retains its spectral-only distributions, multi-lambda CSV exports,
+and separate continuous Q-hat comparison. Its new run identifiers include the
+shared runner version; earlier saved outputs remain historical.
+
+### [Asymptotics](xx_notebooks_asymptotics/README.md)
+
+Study bandwidth-grid size, localization scaling, and similarity eigenvalues.
+
+- [experiment_1_joint_N_lambda_limit.ipynb](xx_notebooks_asymptotics/experiment_1_joint_N_lambda_limit.ipynb): Joint N and lambda limits, mesh diagnostics, and fixed-sample scaling experiments.
+- [similarity_max_eigenvalue_vs_n.ipynb](xx_notebooks_asymptotics/similarity_max_eigenvalue_vs_n.ipynb): Largest similarity eigenvalue versus bandwidth-grid size, with numerical reference checks.
+
+### [Bandwidth distributions](xx_notebooks_bandwidth_distributions/README.md)
+
+Compare the sampling distributions of spectral and benchmark bandwidth choices.
+
+- [fast_l2_bandwidth_distributions_vs_n_lambda.ipynb](xx_notebooks_bandwidth_distributions/fast_l2_bandwidth_distributions_vs_n_lambda.ipynb): Spectral bandwidth distributions across sample sizes and lambda values, plus saved-sample Q-hat comparisons.
+
+### [Continuous minimizers](xx_notebooks_continuous_minimizers/README.md)
+
+Compare bandwidths obtained by continuously minimizing ISE and Q criteria.
+
+- [continuous_ise_qhat_distributions_vs_n.ipynb](xx_notebooks_continuous_minimizers/continuous_ise_qhat_distributions_vs_n.ipynb): Paired sampling distributions of continuous ISE, Q₀, Q₁, and Q₁₃/₁₄ minimizers across sample sizes.
+
+### [Lambda sensitivity](xx_notebooks_lambda_sensitivity/README.md)
+
+Inspect changes in the selected bandwidth as lambda varies.
+
+- [spectral_lambda_jump_study.ipynb](xx_notebooks_lambda_sensitivity/spectral_lambda_jump_study.ipynb): Lambda-sweep jumps, competing Perron peaks, and refined dominance crossings.
+- [spectral_lambda_switch_distribution.ipynb](xx_notebooks_lambda_sensitivity/spectral_lambda_switch_distribution.ipynb): Sampling distributions of switch locations and severity, using coarse and fine lambda scans.
 
 ## Central Perron API
 
@@ -137,10 +192,14 @@ Subtracting the identity and multiplying by a positive scalar preserve
 the eigenvectors. See Section 3.5.1 in
 [`5_bandwidth_selection.tex`](../../Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex).
 For diagnostics, call `perron_eigenpair_from_divergence`; its `PerronResult`
-includes the vector, two leading eigenvalues of B, spectral gap, relative
-residual, and Lanczos matrix-vector count. `which="LA"` selects the largest
-algebraic eigenvalues even when the closest-pair limit has a negative
-eigenvalue of the same magnitude.
+includes the vector, two leading eigenvalues of B, spectral gap, and relative
+residual. `eigh` selects the largest algebraic eigenvalues with
+`subset_by_index=[N-2, N-1]`, including when the closest-pair limit has a
+negative eigenvalue of the same magnitude; see the
+[`subset_by_index` and return-value documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.eigh.html).
+The compatibility field `matvecs` is zero for this direct solver.
+`tolerance` controls the residual check; `max_iterations` is accepted and
+validated for compatibility but has no effect on `eigh`.
 
 Peak selection uses a shared numerical tie convention: components within
 64 machine epsilons times the largest absolute weight count as tied, and
@@ -156,7 +215,8 @@ the divergence information. Symmetric Doob masses use
 `first_order_perron_vector` remains an explicitly labeled mathematical
 approximation for comparison plots, not an alternative numerical solver.
 
-Restart existing notebook kernels after this refactor and rerun setup.
+The current solver version is `stabilized_eigh_v1`. Restart existing notebook
+kernels after changing the solver and rerun setup.
 Cached notebook displays have been cleared because they belong to the old
 solvers. Existing exported PDFs and CSVs are retained as historical results;
 the expensive full Monte Carlo runs have not been regenerated by the refactor.
@@ -170,7 +230,8 @@ Run the lightweight checks from this directory with:
 python3 -m unittest discover -s tests
 ```
 
-For reduced numerical runs through four notebook workflows, including checkpoint
+For reduced numerical runs through four notebook workflows (all three main
+histogram profiles and both continuous views included), with checkpoint
 resuming and the original 101-point Figure 3.3 sweep, run:
 
 ```bash

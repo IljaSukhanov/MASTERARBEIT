@@ -43,7 +43,10 @@ def execute(notebook, cell, namespace, *, calculation_only=False):
 
 
 def setup(name):
-    notebook = json.loads((CODE / f"{name}.ipynb").read_text())
+    paths = list(CODE.glob(f"xx_notebooks_*/{name}.ipynb"))
+    if len(paths) != 1:
+        raise FileNotFoundError(f"Expected one categorized notebook for {name}.")
+    notebook = json.loads(paths[0].read_text())
     namespace = {
         "__name__": "__main__",
         "display": lambda value: None,

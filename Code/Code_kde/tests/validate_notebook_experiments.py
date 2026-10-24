@@ -10,6 +10,7 @@ import contextlib
 import importlib.util
 import io
 import json
+import hashlib
 import os
 import sys
 import tempfile
@@ -32,7 +33,10 @@ from kde_tools.fourier import FOURIER_L2_METHOD_VERSION
 
 
 def load(name):
-    return json.loads((root / (name + ".ipynb")).read_text())
+    paths = list(root.glob(f"xx_notebooks_*/{name}.ipynb"))
+    if len(paths) != 1:
+        raise FileNotFoundError(f"Expected one categorized notebook for {name}.")
+    return json.loads(paths[0].read_text())
 
 
 def textcell(n, i):
@@ -139,10 +143,59 @@ def main(report_path=None):
                 ns,
                 {"stationary_example_grid_fineness_N_values": "np.array([11,31,201])"},
             )
-            execute(
-                textcell(n, 12), ns, {"beta2_n": "30", "beta2_N": "21", "beta2_M": "3"}
-            )
+            ns.update(validation_data_root=scratch / "histogram_data",
+                      validation_image_root=scratch / "histogram_images",
+                      kde_thesis_figure_dir=scratch / "thesis_figures")
+            ns["kde_thesis_figure_dir"].mkdir()
+            histogram_overrides = {
+                "beta2_n": "30", "beta2_N": "21", "beta2_M": "3",
+                "beta2_data_root": "validation_data_root",
+                "beta2_image_root": "validation_image_root",
+            }
+            execute(textcell(n, 12), ns, histogram_overrides)
             execute(textcell(n, 13), ns)
+            baseline_choices = ns["beta2_run"]["selected_indices"].copy()
+            execute(textcell(n, 14), ns)
+            canonical_figure = ns["kde_thesis_figure_dir"] / "distribution_of_chosen_bandwidths.pdf"
+            canonical_hash = hashlib.sha256(canonical_figure.read_bytes()).hexdigest()
+            with patch("kde_tools.distribution_runs.perron_eigenpair_from_divergence",
+                       side_effect=AssertionError("A completed histogram checkpoint was recomputed.")):
+                execute(textcell(n, 13), ns)
+            assert ns["beta2_run"]["validation"]["reused_repetitions"] == 3
+            execute(textcell(n, 12), ns, histogram_overrides | {"beta2_profile": "'localized'"})
+            execute(textcell(n, 13), ns)
+            np.testing.assert_array_equal(ns["beta2_run"]["selected_indices"][:, 1:], baseline_choices[:, 1:])
+            assert ns["beta2_run"]["validation"]["reused_control_source"] is not None
+            execute(textcell(n, 14), ns)
+            assert hashlib.sha256(canonical_figure.read_bytes()).hexdigest() == canonical_hash
+            report["checks"].append(
+                "Both main-notebook histogram profiles run and export PDFs; checkpoints resume, "
+                "localized controls reuse matching baseline results, and the localized plot preserves Figure 3.5."
+            )
+            pdf_count = len(list(ns["pdf_output_directory"].glob("*.pdf")))
+            execute(textcell(n, 12), ns, histogram_overrides | {
+                "beta2_profile": "'exact_gaussian'", "beta2_gaussian_run_profile": "'preview'",
+            })
+            execute(textcell(n, 13), ns)
+            exact_result = ns["beta2_run"]
+            from kde_tools.similarities import beta2_divergence_matrix
+            from kde_tools.density import exact_oracle_ise_values
+            for repetition in range(3):
+                sample = np.random.default_rng(910000+repetition).normal(size=30)
+                spectral = perron_eigenpair_from_divergence(beta2_divergence_matrix(sample, ns["beta2_h_grid"]), 1).selected_index
+                errors = exact_oracle_ise_values(sample, ns["beta2_h_grid"], 1)
+                choices = [spectral, int(np.argmin(errors))]
+                np.testing.assert_array_equal(exact_result["selected_indices"][repetition], choices)
+                np.testing.assert_array_equal(exact_result["selected_ise_values"][repetition], errors[choices])
+            execute(textcell(n, 14), ns)
+            assert len(list(ns["pdf_output_directory"].glob("*.pdf"))) == pdf_count + 3
+            assert len(list(ns["beta2_image_directory"].glob("*.png"))) == 3
+            assert hashlib.sha256(canonical_figure.read_bytes()).hexdigest() == canonical_hash
+            with patch("kde_tools.distribution_runs.perron_eigenpair_from_divergence",
+                       side_effect=AssertionError("Repeated Gaussian benchmark")):
+                execute(textcell(n, 13), ns)
+            assert ns["beta2_run"]["validation"]["reused_repetitions"] == 3
+            report["checks"].append("Main exact-Gaussian profile preserves independent seeds, both selections, selected ISE values, three plots, and checkpoint reuse.")
             execute(
                 textcell(n, 16),
                 ns,
@@ -150,8 +203,16 @@ def main(report_path=None):
                     "beta2_n_sweep_values": "np.array([20,40])",
                     "beta2_n_sweep_N": "21",
                     "beta2_n_sweep_M": "3",
+                    "beta2_n_sweep_output_root": "validation_data_root / 'sample_size_sweep'",
+                    "beta2_n_sweep_cache_root": "validation_data_root / 'shared_spectral_sweeps'",
                 },
             )
+            main_sweep_samples = ns["beta2_n_sweep_full_samples"].copy()
+            main_sweep_grid = ns["beta2_n_sweep_h_grid"].copy()
+            main_sweep_settings = ns["beta2_n_sweep_settings"].copy()
+            main_sweep_result = ns["beta2_n_sweep_spectral_results"][20]
+            main_sweep_cache = ns["beta2_n_sweep_cache_root"]
+            shared_sweep_runner = ns["run_l2_point"]
             execute(
                 textcell(n, 21),
                 ns,
@@ -173,7 +234,8 @@ def main(report_path=None):
                 ns["perron_comparison_first_order_vector"], expected_first_order
             )
             report["notebooks"][name] = {
-                "cells": [3, 5, 7, 10, 12, 13, 16, 21],
+                "cells": [3, 5, 7, 10, 12, 13, 14, 16, 21],
+                "histogram_profiles": ["figure_3_5", "localized", "exact_gaussian"],
                 "figure_3_3_points": 101,
                 "status": "passed",
             }
@@ -214,7 +276,8 @@ def main(report_path=None):
             execute(
                 textcell(n, 31),
                 ns,
-                {"REPEATED_SAMPLE_M": "3", "REPEATED_SAMPLE_N": "31"},
+                {"REPEATED_SAMPLE_M": "3", "REPEATED_SAMPLE_N": "31",
+                 "joint_spectral_cache_root": "pdf_output_directory.parents[1] / 'data/shared_spectral_sweeps'"},
             )
             execute(strip_plot(textcell(n, 32), "repeated_histogram = "), ns)
             execute(
@@ -226,6 +289,20 @@ def main(report_path=None):
                     "SAMPLE_SIZE_SWEEP_N": "31",
                 },
             )
+            joint_choices = ns["repeated_selected_index"].copy()
+            joint_diagnostics = ns["repeated_diagnostics"].copy()
+            with patch("kde_tools.spectral_sweeps.beta2_divergence_matrix_fourier",
+                       side_effect=AssertionError("Repeated joint-limit sweep")):
+                execute(textcell(n, 31), ns, {
+                    "REPEATED_SAMPLE_M": "3", "REPEATED_SAMPLE_N": "31",
+                    "joint_spectral_cache_root": "pdf_output_directory.parents[1] / 'data/shared_spectral_sweeps'",
+                })
+                execute(textcell(n, 35), ns, {
+                    "SAMPLE_SIZE_SWEEP_VALUES": "np.array([20,40])",
+                    "SAMPLE_SIZE_SWEEP_M": "3", "SAMPLE_SIZE_SWEEP_N": "31",
+                })
+            np.testing.assert_array_equal(joint_choices, ns["repeated_selected_index"])
+            np.testing.assert_array_equal(joint_diagnostics, ns["repeated_diagnostics"])
             assert "solver_matvecs" in ns["repeated_sample_results"].columns
             assert "power_iterations" not in ns["repeated_sample_results"].columns
             assert set(ns["repeated_sample_results"]["perron_solver"]) == {
@@ -237,68 +314,41 @@ def main(report_path=None):
             }
 
             h = np.geomspace(0.05, 1.0, 11)
-            name = "gaussian_symmetric_divergence_bandwidth_distributions"
-            n, ns = setup(name, scratch / "pdfs")
-            from kde_tools.pdf_export import enable_automatic_pdf_saving
-
-            ns.update(
-                data_output_directory=scratch / "data" / name,
-                image_output_directory=scratch / "images" / name,
-                pdf_output_directory=enable_automatic_pdf_saving(
-                    name, output_root=scratch / "pdfs"
-                ),
-            )
-            ns["image_output_directory"].mkdir(parents=True)
-            execute(
-                textcell(n, 3), ns,
-                {
-                    "RUN_PROFILE": '"preview"',
-                    "PROFILES": '{"preview": {"sample_size": 20, "repetitions": 2, "grid_size": 11}}',
-                },
-            )
-            execute(textcell(n, 5), ns)
-            sample = np.random.default_rng(7).normal(size=20)
-            choices, errors = ns["select_one_sample"](sample, ns["h_grid"], ns["settings"])
-            assert set(choices) == {"L2", "ISE"}
-            reference_divergence = ns["beta2_divergence_matrix"](sample, ns["h_grid"])
-            assert choices["L2"] == perron_eigenpair_from_divergence(
-                reference_divergence, ns["settings"]["lambda_value"]
-            ).selected_index
-            assert choices["ISE"] == int(np.argmin(ns["exact_oracle_ise_values"](
-                sample, ns["h_grid"], ns["settings"]["sigma2"]
-            )))
-            execute(textcell(n, 7), ns)
-            first = ns["selected_indices"].copy()
-            execute(textcell(n, 7), ns)
-            np.testing.assert_array_equal(first, ns["selected_indices"])
-            assert ns["completed"] == ns["settings"]["repetitions"]
-            # Reject stale configurations before their saved choices are loaded.
-            current_configuration = ns["configuration_json"]
-            ns["configuration_json"] = '{"obsolete_configuration": true}'
-            try:
-                execute(textcell(n, 7), ns)
-            except ValueError:
-                pass
-            else:
-                raise AssertionError("Obsolete distribution checkpoint was accepted.")
-            ns["configuration_json"] = current_configuration
-            execute(textcell(n, 7), ns)
-            for i in (9, 11, 13):
-                execute(textcell(n, i), ns)
-            saved_settings = json.loads((ns["run_directory"] / "settings.json").read_text())
-            assert saved_settings["methods"] == ["L2", "ISE"]
-            assert len(list(ns["pdf_output_directory"].glob("*.pdf"))) == 3
-            report["notebooks"][name] = {
-                "methods": list(choices),
-                "checkpoint_resume": "passed",
-                "obsolete_checkpoint_rejection": "passed",
-                "csv_and_pdf_exports": "passed",
-                "status": "passed",
-            }
-
             name = "fast_l2_bandwidth_distributions_vs_n_lambda"
             n, ns = setup(name, scratch / "pdfs")
             definitions(n, ns)
+            assert ns["run_l2_point"] is shared_sweep_runner
+            with patch("kde_tools.spectral_sweeps.beta2_divergence_matrix_fourier",
+                       side_effect=AssertionError("The other notebook recomputed a shared sweep.")):
+                shared_result = ns["run_l2_point"](
+                    20, main_sweep_samples, main_sweep_grid, main_sweep_settings,
+                    [1.0], scratch / "fast_shared_sweep", cache_root=main_sweep_cache,
+                )
+            np.testing.assert_array_equal(shared_result["selected_indices"], main_sweep_result["selected_indices"])
+            assert shared_result["divergence_evaluations"] == 0
+            report["checks"].append(
+                "Main and fast notebooks use the same spectral runner and reuse a matching sweep without recomputing divergences."
+            )
+            ns.update(data_output_directory=scratch / "fast_public_data",
+                      image_output_directory=scratch / "fast_public_images",
+                      validation_sweep_cache=main_sweep_cache)
+            execute(textcell(n, 3), ns, {
+                "RUN_PROFILE": "'preview'",
+                "PROFILES": "{'preview': {'repetitions': 3, 'grid_size': 21}}",
+                "SAMPLE_SIZES": "[20, 40]",
+                "spectral_sweep_cache_root": "validation_sweep_cache",
+            })
+            execute(textcell(n, 7), ns)
+            with patch("kde_tools.spectral_sweeps.beta2_divergence_matrix_fourier",
+                       side_effect=AssertionError("The fast notebook repeated the main sweep.")):
+                execute(textcell(n, 9), ns)
+            execute(textcell(n, 11), ns)
+            assert all(result["divergence_evaluations"] == 0 for result in ns["results_by_n"].values())
+            execute(textcell(n, 15), ns, {"ADDITIONAL_LAMBDA_VALUES": "[1.0, 1000.0]"})
+            execute(textcell(n, 16), ns)
+            execute(textcell(n, 18), ns)
+            assert all(result["reused_selections"] == 3 and result["divergence_evaluations"] == 3
+                       for result in ns["additional_results_by_n"].values())
             settings = {
                 "repetitions": 2,
                 "maximum_sample_size": 40,
@@ -333,10 +383,53 @@ def main(report_path=None):
                     pass
                 else:
                     raise AssertionError(f"Old {obsolete_field} checkpoint was accepted.")
+            ns.update(
+                overlay_settings=dict(ns["settings"]), overlay_repetitions=3,
+                overlay_h_grid=ns["h_grid"].copy(), overlay_sample_sizes=[20,40],
+                overlay_common_configuration={"settings": dict(ns["settings"])}, OVERLAY_PROFILE="preview",
+                validation_continuous_cache=scratch / "shared_continuous",
+            )
+            execute(textcell(n, 23), ns, {
+                "QHAT_SCAN_POINTS": "65", "QHAT_SPATIAL_POINTS": "4096",
+                "continuous_cache_root": "validation_continuous_cache",
+                "continuous_import_directories": "[]",
+            })
+            fast_qhat_results = ns["overlay_qhat_results"]
             report["notebooks"][name] = {
+                "cross_notebook_sweep_reuse": "passed",
+                "public_sweep_cells_and_csv_exports": "passed",
+                "additional_lambdas_reuse_completed_columns": "passed",
                 "checkpoint_resume": "passed",
                 "legacy_checkpoint_rejection": "passed",
                 "status": "passed",
+            }
+
+            name = "continuous_ise_qhat_distributions_vs_n"
+            n, ns = setup(name, scratch / "pdfs")
+            ns.update(data_output_directory=scratch / "continuous_data",
+                      image_output_directory=scratch / "continuous_images",
+                      validation_continuous_cache=scratch / "shared_continuous")
+            execute(textcell(n, 3), ns, {
+                "RUN_PROFILE": "'preview'", "PROFILES": "{'preview': {'repetitions': 3}}",
+                "SAMPLE_SIZES": "[20,40]", "SAMPLE_BANK_REPETITIONS": "3",
+                "SAMPLE_BANK_BLOCK_SIZE": "40", "SAMPLE_BANK_MAXIMUM_N": "80",
+                "SCAN_POINTS": "65", "SPATIAL_POINTS": "4096",
+                "continuous_cache_root": "validation_continuous_cache",
+                "continuous_import_directories": "[]",
+            })
+            with patch("kde_tools.continuous_runs.continuous_qhat_minimum",
+                       side_effect=AssertionError("Continuous notebook repeated fast Q0")):
+                execute(textcell(n, 5), ns)
+            for current_n in [20,40]:
+                np.testing.assert_array_equal(ns["results_by_n"][current_n][:, 1, 0], fast_qhat_results[current_n]["h"])
+            with patch("kde_tools.continuous_runs.continuous_ise_qr_minima",
+                       side_effect=AssertionError("Repeated continuous checkpoint")):
+                execute(textcell(n, 5), ns)
+            for i in (7,9,11):
+                execute(textcell(n, i), ns)
+            report["notebooks"][name] = {
+                "cross_notebook_q0_reuse": "passed", "checkpoint_resume": "passed",
+                "csv_refinement_and_pdf_exports": "passed", "status": "passed",
             }
 
         analysis_path = (
@@ -357,7 +450,7 @@ def main(report_path=None):
             "Saved-results population references use the shared selector, including extreme lambda."
         )
         report["checks"].append(
-            "Four notebook experiment paths passed reduced-size numerical execution."
+            "Four notebook workflows passed reduced numerical execution, including all three main histogram profiles and both continuous views."
         )
         report["checks"].append(
             "Current checkpoints resume; legacy solver and L2-method checkpoints are rejected."

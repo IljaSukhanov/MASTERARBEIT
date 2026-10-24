@@ -22,7 +22,7 @@ from kde_tools.bandwidths import (
 )
 from kde_tools.pdf_export import enable_automatic_pdf_saving
 
-notebook_path = code / "spectral_scale_selection_kde.ipynb"
+notebook_path = code / "xx_notebooks_overview" / "spectral_scale_selection_kde.ipynb"
 notebook = json.loads(notebook_path.read_text())
 cells = {cell["id"]: cell for cell in notebook["cells"]}
 chapter = project / "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex"
@@ -34,6 +34,7 @@ old_figure_hash = hashlib.sha256(figure_path.read_bytes()).hexdigest()
 enable_automatic_pdf_saving("spectral_scale_selection_kde")
 namespace = {
     "np": np, "plt": plt, "seed": 20260818,
+    "code_directory": code,
     "bandwidth_grid_linear_in_psi_beta": bandwidth_grid_linear_in_psi_beta,
     "gaussian_mise_oracle_bandwidth": gaussian_mise_oracle_bandwidth,
     "kde_thesis_figure_dir": thesis_directory,

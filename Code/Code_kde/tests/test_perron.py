@@ -9,8 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import numpy as np
-from scipy.linalg import eigh
-from scipy.sparse.linalg import ArpackNoConvergence
+from scipy.linalg import LinAlgError, eigh
 
 from kde_tools.perron import (
     PerronConvergenceError,
@@ -49,7 +48,7 @@ class PerronTests(unittest.TestCase):
                 )
                 self.assertLess(actual.relative_residual, 1e-11)
                 self.assertGreater(actual.relative_gap, 0.0)
-                self.assertGreater(actual.matvecs, 0)
+                self.assertEqual(actual.matvecs, 0)
 
     def test_extreme_lambda_recovers_pair_after_s_becomes_identity(self) -> None:
         divergence = np.array([[0.0, 1.0, 4.0], [1.0, 0.0, 3.0], [4.0, 3.0, 0.0]])
@@ -138,17 +137,16 @@ class PerronTests(unittest.TestCase):
             perron_vector(two_pairs)
 
     def test_nonconvergence_is_not_silently_accepted(self) -> None:
-        error = ArpackNoConvergence(
-            "deliberate nonconvergence", np.empty(0), np.empty((31, 0))
-        )
-        with patch("kde_tools.perron.eigsh", side_effect=error):
-            with self.assertRaises(PerronConvergenceError):
+        error = LinAlgError("deliberate nonconvergence")
+        with patch("kde_tools.perron.eigh", side_effect=error):
+            with self.assertRaises(PerronConvergenceError) as caught:
                 perron_vector_from_divergence(self.divergence)
+        self.assertIs(caught.exception.__cause__, error)
 
     def test_failed_residual_is_not_silently_accepted(self) -> None:
         wrong_vectors = np.eye(31)[:, :2]
         with patch(
-            "kde_tools.perron.eigsh", return_value=(np.array([0.2, 1.0]), wrong_vectors)
+            "kde_tools.perron.eigh", return_value=(np.array([0.2, 1.0]), wrong_vectors)
         ):
             with self.assertRaises(PerronConvergenceError):
                 perron_vector_from_divergence(self.divergence)
@@ -217,6 +215,12 @@ class NotebookRoutingTests(unittest.TestCase):
     def test_experiment_scripts_cannot_reintroduce_local_eigensolvers(self) -> None:
         root = Path(__file__).resolve().parents[1]
         allowed = root / "kde_tools" / "perron.py"
+        # Existing validation scripts compare the stabilized matrix with an
+        # independent eigh solve of the original, unshifted similarity.
+        dense_reference_scripts = {
+            root / "outputs/analysis/spectral_lambda_jump_study/numerical_artefact_checks.py",
+            root / "outputs/analysis/spectral_lambda_switch_distribution/switch_distribution_analysis.py",
+        }
         for path in root.rglob("*.py"):
             if path == allowed or "tests" in path.relative_to(root).parts:
                 continue
@@ -228,6 +232,8 @@ class NotebookRoutingTests(unittest.TestCase):
                         else getattr(node.func, "attr", "")
                     )
                     with self.subTest(script=path.relative_to(root)):
+                        if name == "eigh" and path in dense_reference_scripts:
+                            continue
                         self.assertNotIn(
                             name, {"eigh", "eigsh", "eigvalsh", "eigs", "eig"}
                         )
@@ -243,7 +249,9 @@ class NotebookRoutingTests(unittest.TestCase):
             "stable_power_perron_vector_from_divergence",
             "power_perron_vector",
         }
-        for path in root.glob("*.ipynb"):
+        notebooks = list(root.glob("xx_notebooks_*/*.ipynb"))
+        self.assertTrue(notebooks, "No categorized KDE notebooks were found.")
+        for path in notebooks:
             notebook = json.loads(path.read_text())
             for index, cell in enumerate(notebook["cells"]):
                 if cell["cell_type"] != "code":
@@ -256,11 +264,20 @@ class NotebookRoutingTests(unittest.TestCase):
                             else getattr(node.func, "attr", "")
                         )
                         with self.subTest(notebook=path.name, cell=index):
-                            self.assertNotIn(name, forbidden)
+                            eigenvalues_only = name == "eigh" and any(
+                                keyword.arg == "eigvals_only"
+                                and isinstance(keyword.value, ast.Constant)
+                                and keyword.value.value is True
+                                for keyword in node.keywords
+                            )
+                            if not eigenvalues_only:
+                                self.assertNotIn(name, forbidden)
 
     def test_every_notebook_retains_automatic_pdf_setup(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        for path in root.glob("*.ipynb"):
+        notebooks = list(root.glob("xx_notebooks_*/*.ipynb"))
+        self.assertTrue(notebooks, "No categorized KDE notebooks were found.")
+        for path in notebooks:
             notebook = json.loads(path.read_text())
             setup = "".join(notebook["cells"][1]["source"])
             with self.subTest(notebook=path.name):

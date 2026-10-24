@@ -174,7 +174,7 @@ def main():
     )
     report = f"""# Analysis of saved fast L2 lambda experiments
 
-This is an original descriptive analysis of the existing completed runs. No simulations were rerun. All 40 checkpoints are complete (M=1000). Selection CSVs, frequency CSVs and checkpoint indices agree. The manifests agree in every setting except λ: standard-normal data, 201 geometric bandwidths from 0.01 to 2, FFT spatial grid 8192 on [-12,12], seed 20260830. The same seeded samples and their prefixes are used across λ and n in the [notebook]({(CODE / (NOTEBOOK + '.ipynb')).as_posix()}).
+This is an original descriptive analysis of the existing completed runs. No simulations were rerun. All 40 checkpoints are complete (M=1000). Selection CSVs, frequency CSVs and checkpoint indices agree. The manifests agree in every setting except λ: standard-normal data, 201 geometric bandwidths from 0.01 to 2, FFT spatial grid 8192 on [-12,12], seed 20260830. The same seeded samples and their prefixes are used across λ and n in the [notebook]({(CODE / 'xx_notebooks_bandwidth_distributions' / (NOTEBOOK + '.ipynb')).as_posix()}).
 
 ## Empirical findings
 

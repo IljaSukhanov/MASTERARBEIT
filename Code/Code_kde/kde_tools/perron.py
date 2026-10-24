@@ -2,12 +2,12 @@
 
 Exponential similarities are assembled from shifted divergence exponents,
 before underflow can turn the original similarity into the identity. The
-transformation is described in Section 3.5.1 of the thesis. Lanczos requests
-the two largest algebraic eigenpairs, so negative eigenvalues near the
+transformation is described in Section 3.5.1 of the thesis. SciPy's eigh
+requests the two largest algebraic eigenpairs, so negative eigenvalues near the
 closest-pair limit cannot be mistaken for the Perron eigenvalue.
 
 Algorithm reference:
-https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.eigsh.html
+https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.eigh.html
 """
 
 from __future__ import annotations
@@ -15,11 +15,10 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 
 import numpy as np
-from scipy.linalg import eigh
-from scipy.sparse.linalg import ArpackNoConvergence, LinearOperator, eigsh
+from scipy.linalg import LinAlgError, eigh
 
 
-PERRON_SOLVER_VERSION = "stabilized_lanczos_v1"
+PERRON_SOLVER_VERSION = "stabilized_eigh_v1"
 PERRON_TOLERANCE = 1e-12
 
 
@@ -39,7 +38,7 @@ class PerronResult:
     and relative_residual refer to its centered/scaled solver matrix, so the
     identity diagonal cannot hide poor accuracy. For divergence-based calls,
     the supplied matrix is B = exp(lambda*d_min) * (S - I), not S.
-    matvecs counts Lanczos matrix-vector products, not power iterations.
+    matvecs is retained for compatibility and is zero for the direct eigh solve.
     """
 
     vector: np.ndarray
@@ -94,10 +93,11 @@ def perron_eigenpair(
 ) -> PerronResult:
     """Solve a real symmetric nonnegative matrix with the shared backend.
 
-    Lanczos is used for N >= 3. The scalar and 2-by-2 cases are handled
-    centrally because ARPACK requires the requested eigenpair count < N.
+    SciPy's eigh computes the two largest algebraic eigenpairs for N >= 2.
     Nonconvergence, a failed residual check, and a numerically repeated
-    largest eigenvalue are explicit errors rather than silent last iterates.
+    largest eigenvalue are explicit errors. tolerance controls the residual
+    check; max_iterations is validated and retained for compatibility but
+    does not affect this direct solver.
     """
     values = _symmetric_nonnegative_matrix(matrix, "matrix")
     tolerance = float(tolerance)
@@ -125,37 +125,16 @@ def perron_eigenpair(
             "to perron_eigenpair_from_divergence before exponentiating."
         )
     values /= scale
-    matvecs = 0
-
-    def multiply(vector: np.ndarray) -> np.ndarray:
-        nonlocal matvecs
-        matvecs += 1
-        return values @ vector
-
-    if size == 2:
-        eigenvalues, eigenvectors = eigh(values, check_finite=False)
-    else:
-        operator = LinearOperator(
-            values.shape, matvec=multiply, rmatvec=multiply, dtype=values.dtype
+    try:
+        eigenvalues, eigenvectors = eigh(
+            values, subset_by_index=[size - 2, size - 1], check_finite=False
         )
-        try:
-            eigenvalues, eigenvectors = eigsh(
-                operator,
-                k=2,
-                which="LA",
-                tol=tolerance,
-                v0=np.ones(size) / np.sqrt(size),
-                ncv=min(size, 40),
-                maxiter=max_iterations,
-            )
-        except ArpackNoConvergence as error:
-            raise PerronConvergenceError(
-                f"Lanczos did not converge for a {size}-by-{size} matrix; "
-                f"{len(error.eigenvalues)} of 2 requested eigenpairs converged."
-            ) from error
-    order = np.argsort(eigenvalues)
-    leading = float(eigenvalues[order[-1]])
-    second = float(eigenvalues[order[-2]])
+    except LinAlgError as error:
+        raise PerronConvergenceError(
+            f"eigh failed for a {size}-by-{size} matrix: {error}"
+        ) from error
+    leading = float(eigenvalues[-1])
+    second = float(eigenvalues[-2])
     gap = leading - second
     resolution = 64.0 * np.finfo(float).eps * max(1.0, abs(leading), abs(second))
     if gap <= resolution:
@@ -163,7 +142,7 @@ def perron_eigenpair(
             "The two largest eigenvalues are numerically indistinguishable; "
             "a unique Perron vector cannot be reliably selected."
         )
-    vector = eigenvectors[:, order[-1]].copy()
+    vector = eigenvectors[:, -1].copy()
     if vector.sum() < 0.0:
         vector *= -1.0
     negative_tolerance = max(1e-14, 1e-10 * float(np.max(np.abs(vector))))
@@ -191,7 +170,7 @@ def perron_eigenpair(
         spectral_gap=scale * gap,
         relative_gap=gap / abs(leading),
         relative_residual=relative_residual,
-        matvecs=matvecs,
+        matvecs=0,
     )
 
 

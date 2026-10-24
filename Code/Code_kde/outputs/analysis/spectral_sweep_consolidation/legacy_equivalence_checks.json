@@ -1,0 +1,12 @@
+{
+  "main_sample_sizes": [
+    20,
+    40
+  ],
+  "repetitions": 3,
+  "bandwidth_candidates": 21,
+  "main_all_three_selector_results_match_previous_code": true,
+  "fast_multi_lambda_results_match_previous_code": true,
+  "main_histogram_overlay_and_rate_plot_cells_unchanged": true,
+  "fast_csv_plot_and_continuous_qhat_comparison_cells_unchanged": true
+}

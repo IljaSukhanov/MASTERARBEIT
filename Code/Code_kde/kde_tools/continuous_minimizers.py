@@ -128,7 +128,8 @@ def _minimum_from_scan(log_h, coarse_values, surrogate, exact):
 
 
 def continuous_ise_qr_minima(samples, h_min=0.01, h_max=2.0, *, sigma2=1.0,
-                             scan_points=257, half_width=16.0, spatial_points=32768):
+                             scan_points=257, half_width=16.0, spatial_points=32768,
+                             methods=METHODS):
     """Return continuous interval minimizers of ISE, Q_0, Q_1, Q_(13/14).
 
     Every method uses the same Gaussian KDE sample and the same closed
@@ -136,6 +137,9 @@ def continuous_ise_qr_minima(samples, h_min=0.01, h_max=2.0, *, sigma2=1.0,
     than restricting the selected bandwidth to a grid. This numerical search
     does not constitute a certificate that all stationary points were found.
     """
+    methods = tuple(methods)
+    if not methods or len(set(methods)) != len(methods) or set(methods) - set(METHODS):
+        raise ValueError("Choose unique methods from ISE, Q0, Q1, Q13_14.")
     samples = _samples(samples)
     if not 0 < h_min < h_max or not np.isfinite(h_max) or not 0 < sigma2 < np.inf:
         raise ValueError("Require finite 0 < h_min < h_max and positive variance.")
@@ -158,6 +162,8 @@ def continuous_ise_qr_minima(samples, h_min=0.01, h_max=2.0, *, sigma2=1.0,
     d2 = pdist(samples[:, None], metric="sqeuclidean")
     results = {}
     for name, r in R_VALUES.items():
+        if name not in methods:
+            continue
         def surrogate(z):
             h = np.exp(z)
             return h**(4-2*r)*np.sum(weights*omega**4*power*np.exp(-(h*omega)**2))/(4*half_width)
@@ -165,6 +171,11 @@ def continuous_ise_qr_minima(samples, h_min=0.01, h_max=2.0, *, sigma2=1.0,
         results[name] = _minimum_from_scan(
             log_h, q_coarse*np.exp(-2*r*log_h), surrogate,
             lambda z: qr_log_energy(d2, len(samples), z, r))
+    if "ISE" not in methods:
+        for result in results.values():
+            if result["boundary"]:
+                result["h"] = float(h_min if result["boundary"] == -1 else h_max)
+        return {name: results[name] for name in methods}
     kde_matrix, cross_matrix = _ise_scan_matrices(
         float(h_min), float(h_max), int(scan_points), float(half_width),
         int(spatial_points), float(sigma2))
@@ -183,4 +194,4 @@ def continuous_ise_qr_minima(samples, h_min=0.01, h_max=2.0, *, sigma2=1.0,
     for result in results.values():
         if result["boundary"]:
             result["h"] = float(h_min if result["boundary"] == -1 else h_max)
-    return {name: results[name] for name in METHODS}
+    return {name: results[name] for name in methods}

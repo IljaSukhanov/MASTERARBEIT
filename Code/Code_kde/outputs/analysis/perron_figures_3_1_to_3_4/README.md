@@ -34,8 +34,8 @@ PDF hashes, and visual comparison results are recorded in
 in [before/](before/).
 
 The computation executes the current figure-producing cells from
-[spectral_scale_selection_kde.ipynb](../../../spectral_scale_selection_kde.ipynb)
-and [experiment_1_joint_N_lambda_limit.ipynb](../../../experiment_1_joint_N_lambda_limit.ipynb)
+[spectral_scale_selection_kde.ipynb](../../../xx_notebooks_overview/spectral_scale_selection_kde.ipynb)
+and [experiment_1_joint_N_lambda_limit.ipynb](../../../xx_notebooks_asymptotics/experiment_1_joint_N_lambda_limit.ipynb)
 without changing their settings or notebook files. The shared automatic PDF
 exporter remains enabled; skipped unrelated figure slots retain their filenames.
 

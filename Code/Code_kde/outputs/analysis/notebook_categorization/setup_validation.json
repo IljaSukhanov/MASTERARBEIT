@@ -1,0 +1,63 @@
+{
+  "notebook_count": 11,
+  "theme_count": 5,
+  "local_markdown_links_checked": 73,
+  "cell_outputs_and_execution_counts_preserved": true,
+  "checks": [
+    {
+      "notebook": "xx_notebooks_asymptotics/experiment_1_joint_N_lambda_limit.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/experiment_1_joint_n_lambda_limit"
+    },
+    {
+      "notebook": "xx_notebooks_asymptotics/similarity_max_eigenvalue_vs_n.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/similarity_max_eigenvalue_vs_n"
+    },
+    {
+      "notebook": "xx_notebooks_bandwidth_distributions/fast_l2_bandwidth_distributions_vs_n_lambda.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/fast_l2_bandwidth_distributions_vs_n_lambda"
+    },
+    {
+      "notebook": "xx_notebooks_bandwidth_distributions/figure_3_5_bandwidth_distribution_n1000.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/figure_3_5_bandwidth_distribution_n1000"
+    },
+    {
+      "notebook": "xx_notebooks_bandwidth_distributions/gaussian_symmetric_divergence_bandwidth_distributions.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/gaussian_symmetric_divergence_bandwidth_distributions"
+    },
+    {
+      "notebook": "xx_notebooks_bandwidth_distributions/spectral_bandwidth_distribution_n1000_lambda_n3_2_m100.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m100"
+    },
+    {
+      "notebook": "xx_notebooks_bandwidth_distributions/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000"
+    },
+    {
+      "notebook": "xx_notebooks_continuous_minimizers/continuous_ise_qhat_distributions_vs_n.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/continuous_ise_qhat_distributions_vs_n"
+    },
+    {
+      "notebook": "xx_notebooks_lambda_sensitivity/spectral_lambda_jump_study.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/spectral_lambda_jump_study"
+    },
+    {
+      "notebook": "xx_notebooks_lambda_sensitivity/spectral_lambda_switch_distribution.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/spectral_lambda_switch_distribution"
+    },
+    {
+      "notebook": "xx_notebooks_overview/spectral_scale_selection_kde.ipynb",
+      "setup_from_theme_folder": "passed",
+      "automatic_pdf_directory": "outputs/pdfs/spectral_scale_selection_kde"
+    }
+  ]
+}
