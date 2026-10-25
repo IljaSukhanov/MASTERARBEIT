@@ -1,0 +1,29 @@
+diff --git a/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex b/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex
+--- a/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex
++++ b/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex
+@@ -125,8 +125,6 @@
+ \end{proof}
+ 
+ \subsection{Proof of Proposition~\ref{prop:sliding_window_fails_brunel}}\label{sec:proof_sliding_window_fails_brunel}
+-
+-\todo[inline]{Extend to Beta distributed innovations}
+ 
+ \begin{proof}
+     Let $\{U_t\}\stackrel{\text{iid}}{\sim}\text{Beta}(\alpha,\beta)$, $Z_t=a+(b-a)U_t$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Set $c=(b+a)/2$ and $d=(b-a)/2$. Also set $\kappa:=\min\{\alpha,\beta\}$. Then, $X_t=\sum_{\psi_j\ge0}\psi_jZ_{t-j}+\sum_{\psi_j<0}\psi_jZ_{t-j}\le b\sum_{\psi_j\ge0}\psi_j+a\sum_{\psi_j<0}\psi_j=c\sum_{j=0}^{\infty}\psi_j+d\sum_{j=0}^{\infty}|\psi_j|$ and similarly $X_t\ge c\sum_{j=0}^{\infty}\psi_j-d\sum_{j=0}^{\infty}|\psi_j|$. Thus, $\operatorname{supp}(X_t)=[G-H,G+H]$, where $G:=c\sum_{j=0}^{\infty}\psi_j$ and $H:=d\sum_{j=0}^{\infty}|\psi_j|$. Consequently,
+@@ -312,7 +310,15 @@
+     \end{align*}
+     where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.
+ 
+-    \textcolor{red}{We must now establish the continuity of $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$.}
++    The continuity of the operator $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ can be established by defining the dilation operator $T_h$ and the shift operator $g_a$ and computing
++    \begin{align*}
++        \|\partial_h\hat{f}_{h_1}-\partial\hat{f}_{h_2}\|_2&=\|\frac{1}{nh_2}\sum_j\tau_{X_j}T_{h_2}L-\frac{1}{nh_1}\sum_j\tau_{X_j}T_{h_1}L\|_2\\&
++        \le\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_1}T_{h_1}L\|_2\le\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_2}T_{h_1}L\|_2+\|\frac{1}{h_2}T_{h_1}L-\frac{1}{h_1}T_{h_1}L\|_2\\&
++        =\frac{1}{h_2}\|T_{h_2}L-T_{h_1}L\|_2+|\frac{1}{h_2}-\frac{1}{h_1}|\|T_{h_1}L\|_2
++    \end{align*}
++    Both terms on the right hand side vanish for $h_1\to h_2$. (A well known fact (see~\cite{de2009intermediate}) is that $(U(s))_{s\in\mathbb{R}}$, $U(s):L^2\to L^2$, $U(s)f(x):=e^{s/2}f(e^sx)$ is a strongly continuous unitary group. In particular, $\|U(s)f-U(s_0)f\|_2\to0$ as $s\to s_0$ for all $f\in L^2$. We now note that we can write $T_hf=h^{-1/2}U(-\log{h})f$ and thus $\|T_hf-T_{h_0}f\|_2\to0$ as $h\to h_0$.)
++
++    Since $\|d\Psi(h)-d\Psi(s)\|=\sup_{|\tau|\le 1}\|\tau\partial_h\hat{f}_h-\tau\partial_h\hat{f}_s\|_2=\|\partial_h\hat{f}_h-\partial_h\hat{f}_s\|_2$, the continuity of $d\Psi$ is established.
+ 
+     Fix a closed nonempty interval $J:=[a,b]\subseteq(0,\infty)$. Applying the bound from above:
+     \begin{align*}
