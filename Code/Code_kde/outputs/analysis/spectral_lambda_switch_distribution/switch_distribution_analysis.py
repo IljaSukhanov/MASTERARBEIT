@@ -27,7 +27,11 @@ import pandas as pd
 import scipy
 from threadpoolctl import threadpool_limits
 
-from kde_tools.fourier import beta2_divergence_matrix_fft
+from kde_tools.fourier import (
+    DEFAULT_FREQUENCY_CUTOFF, DEFAULT_FREQUENCY_INTERVALS,
+    DEFAULT_FOURIER_HALF_WIDTH, DEFAULT_FOURIER_SPATIAL_POINTS,
+    beta2_divergence_matrix_fft,
+)
 from kde_tools.perron import (PERRON_SOLVER_VERSION, PerronConvergenceError,
                               PerronDegeneracyError, perron_eigenpair_from_divergence)
 from repeated_peak_switch_analysis import crossing_event, resolved_peaks, roundoff_window
@@ -52,7 +56,10 @@ def settings_for(samples=100, sample_size=200, seed=2026101306, fine_points=201)
             "relative_peak_prominence": 1e-8, "minimum_candidate_index_displacement": 2,
             "numerical_bracket_target_relative_width": 1e-6,
             "one_event_per_sample": "largest absolute log bandwidth ratio; earliest lambda breaks ties",
-            "fft_half_width": 12.0, "fft_spatial_points": 8192,
+            "frequency_cutoff": DEFAULT_FREQUENCY_CUTOFF,
+            "frequency_intervals": DEFAULT_FREQUENCY_INTERVALS,
+            "fft_half_width": DEFAULT_FOURIER_HALF_WIDTH,
+            "fft_spatial_points": DEFAULT_FOURIER_SPATIAL_POINTS,
             "perron_solver": PERRON_SOLVER_VERSION,
             "numpy_version": np.__version__, "scipy_version": scipy.__version__,
             "shared_source_sha256": {str(p.relative_to(CODE_DIRECTORY)): hashlib.sha256(p.read_bytes()).hexdigest()
@@ -370,7 +377,10 @@ def plot_refinement_examples(summary):
             axes[row_index, 1].plot(lambdas, h_grid[fine["selected_indices"]], ".-", color="#2563a6", ms=3)
             axes[row_index, 1].set(title=f"201 fine lambda values; separation {event['severity_percent']:.1f}%")
             sample = np.random.default_rng(20260823).normal(size=200) if record["repetition"] == -1 else samples[record["repetition"]]
-            divergence = beta2_divergence_matrix_fft(sample, h_grid, half_width=12, spatial_points=8192)
+            divergence = beta2_divergence_matrix_fft(
+                sample, h_grid, half_width=summary["settings"]["fft_half_width"],
+                spatial_points=summary["settings"]["fft_spatial_points"],
+            )
             cut = (event["lower_peak_index"] + event["upper_peak_index"]) // 2
             gaps = []
             for value in lambdas:
@@ -410,7 +420,10 @@ def validate_independent_eigensolver(summary):
         for record in examples:
             event = representative_event(record["events"])
             sample = np.random.default_rng(20260823).normal(size=200) if record["repetition"] == -1 else samples[record["repetition"]]
-            divergence = beta2_divergence_matrix_fft(sample, h_grid, half_width=12, spatial_points=8192)
+            divergence = beta2_divergence_matrix_fft(
+                sample, h_grid, half_width=summary["settings"]["fft_half_width"],
+                spatial_points=summary["settings"]["fft_spatial_points"],
+            )
             for side, value, expected_h in (("below", event["lambda_just_below"], event["h_before"]),
                                             ("above", event["lambda_just_above"], event["h_after"])):
                 shared = perron_eigenpair_from_divergence(divergence, value)

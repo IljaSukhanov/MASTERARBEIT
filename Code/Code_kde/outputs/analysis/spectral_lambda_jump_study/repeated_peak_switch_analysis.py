@@ -191,8 +191,11 @@ def run_analysis(source_checkpoint=DEFAULT_SOURCE, output_directory=None,
     with threadpool_limits(limits=1):
         reference = np.random.default_rng(20260823).normal(size=200)
         reference_h_grid = bandwidth_grid_linear_in_psi_beta(grid_size=201)
-        reference_divergence = beta2_divergence_matrix_fft(reference, reference_h_grid,
-                                                        half_width=12.0, spatial_points=8192)
+        reference_divergence = beta2_divergence_matrix_fft(
+            reference, reference_h_grid,
+            half_width=source_configuration["fft_half_width"],
+            spatial_points=source_configuration["fft_spatial_points"],
+        )
         reference_event = crossing_event(
             reference_divergence, reference_h_grid, 17.86, 17.88,
             perron_eigenpair_from_divergence(reference_divergence, 17.86),

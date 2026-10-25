@@ -23,11 +23,14 @@ from scipy.signal import find_peaks
 from threadpoolctl import threadpool_limits
 
 from kde_tools.bandwidths import bandwidth_grid_linear_in_psi_beta
-from kde_tools.fourier import beta2_divergence_matrix_fft
+from kde_tools.fourier import DEFAULT_FOURIER_GRID_TAG, beta2_divergence_matrix_fft
 from kde_tools.perron import perron_eigenpair_from_divergence
 from kde_tools.similarities import beta2_divergence_matrix
 
-OUTPUT_DIRECTORY = CODE_DIRECTORY / "outputs/data/spectral_lambda_jump_study/numerical_artefact_checks"
+OUTPUT_DIRECTORY = (
+    CODE_DIRECTORY / "outputs/data/spectral_lambda_jump_study/numerical_artefact_checks"
+    / DEFAULT_FOURIER_GRID_TAG
+)
 
 
 def peak_record(result, h_grid):

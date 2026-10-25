@@ -6,6 +6,10 @@ Start here for the canonical spectral KDE experiments and comparisons.
 | --- | --- |
 | [spectral_scale_selection_kde.ipynb](spectral_scale_selection_kde.ipynb) | Main L² spectral KDE workflow, Figure 3.5, localized, and exact-Gaussian histogram profiles, and selector comparisons. |
 | [g_rs_approximation_vs_omega.ipynb](g_rs_approximation_vs_omega.ipynb) | One fixed sample and bandwidth pair: exact G_rs versus its Fourier approximation, sweeping Omega at fixed K and sweeping K for several fixed cutoffs Omega. |
+| [g_rs_k_validation.ipynb](g_rs_k_validation.ipynb) | Choose K at Omega = 450 using 200 normal samples of size 100 and all pairs of 50 bandwidths; calibration, independent verification, accuracy, and timing. |
+| [g_rs_error_vs_k_single_sample.ipynb](g_rs_error_vs_k_single_sample.ipynb) | Plot E_K versus K at Omega = 450 for one fixed normal sample of size 200, taking the maximum absolute Gram error over all pairs of 50 bandwidths. |
+| [g_rs_error_vs_k_repeated_samples.ipynb](g_rs_error_vs_k_repeated_samples.ipynb) | Retained experiment: maximum error over 200 normal samples of size 200 and all pairs of 50 bandwidths, versus K at Omega = 450. Reuses verified saved calculations. |
+| [g_rs_error_vs_k_sample_sizes.ipynb](g_rs_error_vs_k_sample_sizes.ipynb) | Historical sample-size comparison; the retained experiment is the n = 200 maximum-error notebook above. |
 
 Section 2 supports `beta2_profile = "figure_3_5"` (lambda = 1) and
 `beta2_profile = "localized"` (lambda = N^(3/2)), and

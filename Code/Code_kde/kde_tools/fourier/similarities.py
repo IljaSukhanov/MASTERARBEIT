@@ -8,13 +8,26 @@ from ..similarities import squared_l2_distance_from_gram
 
 FOURIER_L2_METHOD_VERSION = "frequency_trapezoid_v1"
 
+# Shared production grid: K intervals require K+1 trapezoidal nodes.
+DEFAULT_FREQUENCY_CUTOFF = 450.0
+DEFAULT_FREQUENCY_INTERVALS = 1536
+DEFAULT_FREQUENCY_POINTS = DEFAULT_FREQUENCY_INTERVALS + 1
+DEFAULT_FOURIER_GRID_TAG = (
+    f"omega{DEFAULT_FREQUENCY_CUTOFF:g}_k{DEFAULT_FREQUENCY_INTERVALS}"
+)
+
+# Compatibility controls for callers that still accept (half_width, spatial_points).
+# Their conversion below gives exactly the shared cutoff and interval count.
+DEFAULT_FOURIER_HALF_WIDTH = np.pi * DEFAULT_FREQUENCY_INTERVALS / DEFAULT_FREQUENCY_CUTOFF
+DEFAULT_FOURIER_SPATIAL_POINTS = 2 * DEFAULT_FREQUENCY_INTERVALS
+
 
 def gaussian_kde_l2_gram_fourier(
     samples: np.ndarray,
     h_grid: np.ndarray,
     *,
-    frequency_cutoff: float,
-    frequency_points: int,
+    frequency_cutoff: float = DEFAULT_FREQUENCY_CUTOFF,
+    frequency_points: int = DEFAULT_FREQUENCY_POINTS,
 ) -> np.ndarray:
     r"""Integrate the Gaussian KDE inner products directly in frequency space.
 
@@ -60,14 +73,15 @@ def gaussian_kde_l2_gram_fourier(
 def beta2_divergence_matrix_fourier(
     samples: np.ndarray,
     h_grid: np.ndarray,
-    half_width: float = 12.0,
-    spatial_points: int = 8192,
+    half_width: float = DEFAULT_FOURIER_HALF_WIDTH,
+    spatial_points: int = DEFAULT_FOURIER_SPATIAL_POINTS,
 ) -> np.ndarray:
     r"""Return half squared L2 distances using direct frequency quadrature.
 
     The grid controls are retained for existing experiments: half_width=H
     and spatial_points=m define delta_omega=pi/H, cutoff=pi*m/(2H), and
-    m/2+1 frequency nodes. No spatial KDE grid is reconstructed. For an
+    m/2+1 frequency nodes. Defaults give Omega=450 and K=1536 intervals.
+    No spatial KDE grid is reconstructed. For an
     independently chosen cutoff and node count use gaussian_kde_l2_gram_fourier.
     """
     half_width = float(half_width)
@@ -88,8 +102,8 @@ def beta2_divergence_matrix_fourier(
 def beta2_divergence_matrix_fft(
     samples: np.ndarray,
     h_grid: np.ndarray,
-    half_width: float = 12.0,
-    spatial_points: int = 8192,
+    half_width: float = DEFAULT_FOURIER_HALF_WIDTH,
+    spatial_points: int = DEFAULT_FOURIER_SPATIAL_POINTS,
 ) -> np.ndarray:
     """Compatibility name for beta2_divergence_matrix_fourier; no FFT is used."""
     return beta2_divergence_matrix_fourier(samples, h_grid, half_width, spatial_points)
@@ -99,8 +113,8 @@ def beta2_similarity_matrix_fourier(
     samples: np.ndarray,
     h_grid: np.ndarray,
     lambda_value: float = 1.0,
-    half_width: float = 12.0,
-    spatial_points: int = 8192,
+    half_width: float = DEFAULT_FOURIER_HALF_WIDTH,
+    spatial_points: int = DEFAULT_FOURIER_SPATIAL_POINTS,
 ) -> np.ndarray:
     """Return ``exp(-lambda * D_2)`` using direct frequency quadrature."""
     if not np.isfinite(lambda_value) or lambda_value <= 0.0:
@@ -120,8 +134,8 @@ def beta2_similarity_matrix_fft(
     samples: np.ndarray,
     h_grid: np.ndarray,
     lambda_value: float = 1.0,
-    half_width: float = 12.0,
-    spatial_points: int = 8192,
+    half_width: float = DEFAULT_FOURIER_HALF_WIDTH,
+    spatial_points: int = DEFAULT_FOURIER_SPATIAL_POINTS,
 ) -> np.ndarray:
     """Compatibility name for beta2_similarity_matrix_fourier; no FFT is used."""
     return beta2_similarity_matrix_fourier(

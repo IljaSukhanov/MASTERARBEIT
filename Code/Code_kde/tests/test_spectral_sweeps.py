@@ -10,7 +10,10 @@ from unittest.mock import patch
 
 import numpy as np
 
-from kde_tools.fourier import FOURIER_L2_METHOD_VERSION, beta2_divergence_matrix_fourier
+from kde_tools.fourier import (
+    DEFAULT_FOURIER_HALF_WIDTH, DEFAULT_FOURIER_SPATIAL_POINTS,
+    FOURIER_L2_METHOD_VERSION, beta2_divergence_matrix_fourier,
+)
 from kde_tools.perron import PERRON_SOLVER_VERSION, perron_eigenpair_from_divergence
 from kde_tools.spectral_sweeps import run_l2_point
 
@@ -71,6 +74,23 @@ class SpectralSweepTests(unittest.TestCase):
         second = self.run_point(output="changed")
         self.assertNotEqual(first["cache_directory"], second["cache_directory"])
         self.assertEqual(second["reused_selections"], 0)
+
+    def test_changed_frequency_grid_does_not_import_or_overwrite_old_results(self):
+        previous = self.run_point(output="old_grid")
+        checkpoint = previous["point_directory"] / "checkpoint.npz"
+        original_bytes = checkpoint.read_bytes()
+        self.settings = self.settings | {
+            "fft_half_width": DEFAULT_FOURIER_HALF_WIDTH,
+            "fft_spatial_points": DEFAULT_FOURIER_SPATIAL_POINTS,
+        }
+        current = self.run_point(
+            output="current_grid", import_directories=[self.root / "old_grid"]
+        )
+        self.assertNotEqual(previous["cache_directory"], current["cache_directory"])
+        self.assertEqual(current["reused_selections"], 0)
+        self.assertEqual(current["divergence_evaluations"], len(self.samples))
+        self.assertEqual(len(current["skipped_imports"]), 1)
+        self.assertEqual(checkpoint.read_bytes(), original_bytes)
 
     def test_compatible_legacy_checkpoint_import_is_read_only(self):
         directory = self.root / "legacy/n14"

@@ -3,6 +3,12 @@
 from .reconstruction import kde_family_fft
 from .similarities import (
     FOURIER_L2_METHOD_VERSION,
+    DEFAULT_FREQUENCY_CUTOFF,
+    DEFAULT_FREQUENCY_INTERVALS,
+    DEFAULT_FREQUENCY_POINTS,
+    DEFAULT_FOURIER_GRID_TAG,
+    DEFAULT_FOURIER_HALF_WIDTH,
+    DEFAULT_FOURIER_SPATIAL_POINTS,
     gaussian_kde_l2_gram_fourier,
     beta2_divergence_matrix_fourier,
     beta2_similarity_matrix_fourier,
@@ -13,6 +19,12 @@ from ..kullback_leibler import directional_kl_similarity_fft
 
 __all__ = [
     "FOURIER_L2_METHOD_VERSION",
+    "DEFAULT_FREQUENCY_CUTOFF",
+    "DEFAULT_FREQUENCY_INTERVALS",
+    "DEFAULT_FREQUENCY_POINTS",
+    "DEFAULT_FOURIER_GRID_TAG",
+    "DEFAULT_FOURIER_HALF_WIDTH",
+    "DEFAULT_FOURIER_SPATIAL_POINTS",
     "gaussian_kde_l2_gram_fourier",
     "beta2_divergence_matrix_fourier",
     "beta2_similarity_matrix_fourier",

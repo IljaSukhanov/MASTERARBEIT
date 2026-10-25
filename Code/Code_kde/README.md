@@ -69,14 +69,21 @@ from kde_tools.fourier import (
 )
 
 divergence = beta2_divergence_matrix_fourier(
-    samples, h_grid, half_width=12.0, spatial_points=8192
+    samples, h_grid  # Omega=450, K=1536 intervals (1537 frequency nodes).
 )
 ```
 
 The existing `half_width=H` and `spatial_points=m` parameters are retained as
 frequency-grid controls: spacing `pi/H`, cutoff `pi*m/(2*H)`, and `m/2+1` nodes.
+All active L² experiments use the shared defaults `DEFAULT_FREQUENCY_CUTOFF=450`
+and `DEFAULT_FREQUENCY_INTERVALS=1536`, defined in `kde_tools/fourier/similarities.py`.
+Their compatibility controls are `H=pi*1536/450` and `m=3072`; notebooks import
+these defaults rather than repeating numerical grid settings.
 For an independently chosen cutoff and node count, call
 `gaussian_kde_l2_gram_fourier(samples, h_grid, frequency_cutoff=..., frequency_points=...)`.
+This helper also defaults to cutoff 450 and 1537 nodes. The cutoff/K diagnostic
+notebooks retain their explicit comparison grids. Separate spatial density,
+continuous ISE, and Q-hat search grids keep their own controls.
 The old `beta2_divergence_matrix_fft` and `beta2_similarity_matrix_fft` names
 remain compatibility wrappers for direct quadrature. `kde_family_fft` still
 performs periodic reconstruction when density values are needed for other
@@ -88,10 +95,13 @@ or use method-specific output directories. Existing exports and saved FFT
 checkpoints remain historical; new sampling runs do not silently resume them.
 Restart notebook kernels and rerun setup after updating the helpers. Cached cell
 outputs in the migrated notebooks have been cleared rather than relabeled.
+The Omega=450/K=1536 update changes configuration identities and adds a grid
+namespace where outputs previously depended only on the numerical method.
+Existing results and checkpoints from other frequency grids remain historical.
 
 ## Notebook themes
 
-The 8 notebooks are grouped into the following folders. The `xx_notebooks_*`
+The 12 notebooks are grouped into the following folders. The `xx_notebooks_*`
 prefix follows the neighboring AR code's folder convention. Notebook filenames
 are preserved, so automatic PDFs remain under `outputs/pdfs/<notebook-name>/`
 and saved data remain under their existing output directories.
@@ -105,6 +115,10 @@ Start here for the canonical spectral KDE experiments and comparisons.
 
 - [spectral_scale_selection_kde.ipynb](xx_notebooks_overview/spectral_scale_selection_kde.ipynb): Main L² spectral KDE workflow, thesis figure experiments, and selector comparisons.
 - [g_rs_approximation_vs_omega.ipynb](xx_notebooks_overview/g_rs_approximation_vs_omega.ipynb): Exact G_rs and its Fourier approximation versus the cutoff Omega, for one fixed sample and bandwidth pair and a fixed number K of trapezoidal intervals.
+- [g_rs_k_validation.ipynb](xx_notebooks_overview/g_rs_k_validation.ipynb): Repeated-sample K validation at Omega = 450, with all Gram pairs on 50 bandwidths, calibration and independent verification, accuracy summaries, and timings.
+- [g_rs_error_vs_k_single_sample.ipynb](xx_notebooks_overview/g_rs_error_vs_k_single_sample.ipynb): E_K versus K at Omega = 450 for one fixed normal sample of size 200, comparing all Gram pairs on 50 bandwidths with the analytic reference.
+- [g_rs_error_vs_k_repeated_samples.ipynb](xx_notebooks_overview/g_rs_error_vs_k_repeated_samples.ipynb): Retained error experiment: maximum over 200 independent normal samples of size 200 and all pairs of 50 bandwidths, versus K at Omega = 450. Reuses verified saved calculations when available.
+- [g_rs_error_vs_k_sample_sizes.ipynb](xx_notebooks_overview/g_rs_error_vs_k_sample_sizes.ipynb): Historical comparison of five sample sizes; the retained experiment is the n = 200 maximum-error notebook above.
 
 The main notebook's section 2 contains three histogram profiles:
 `beta2_profile = "figure_3_5"` uses lambda = 1,

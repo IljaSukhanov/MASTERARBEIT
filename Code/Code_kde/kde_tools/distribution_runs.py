@@ -17,7 +17,12 @@ from pathlib import Path
 import numpy as np
 
 from .density import exact_oracle_ise_values
-from .fourier import FOURIER_L2_METHOD_VERSION, beta2_divergence_matrix_fourier
+from .fourier import (
+    DEFAULT_FOURIER_HALF_WIDTH,
+    DEFAULT_FOURIER_SPATIAL_POINTS,
+    FOURIER_L2_METHOD_VERSION,
+    beta2_divergence_matrix_fourier,
+)
 from .perron import PERRON_SOLVER_VERSION, perron_eigenpair_from_divergence
 from .similarities import beta2_divergence_matrix
 
@@ -117,8 +122,8 @@ def run_beta2_distribution(
     seed,
     data_root,
     profile="figure_3_5",
-    half_width=12.0,
-    spatial_points=8192,
+    half_width=DEFAULT_FOURIER_HALF_WIDTH,
+    spatial_points=DEFAULT_FOURIER_SPATIAL_POINTS,
     workers=4,
     reuse=True,
     import_directories=(),
@@ -161,6 +166,11 @@ def run_beta2_distribution(
         settings["lambda_rule"] = "N**(3/2)" if lambda_value == len(grid) ** 1.5 else "fixed"
     if exact_profile:
         settings.update(l2_method="exact_gaussian_pairs_v1", sigma2=float(sigma2), sampling="seed_plus_repetition")
+    else:
+        settings.update(
+            frequency_cutoff=float(np.pi * spatial_points / (2.0 * half_width)),
+            frequency_intervals=int(spatial_points // 2),
+        )
     settings_json = json.dumps(settings, sort_keys=True)
     identity = json.dumps({"settings": settings, "grid": grid.tolist(), "runner": RUNNER_VERSION}, sort_keys=True)
     configuration_id = hashlib.sha256(identity.encode()).hexdigest()[:16]

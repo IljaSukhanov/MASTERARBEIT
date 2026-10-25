@@ -10,7 +10,11 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_kde_values,
 )
-from .fourier import beta2_divergence_matrix_fourier
+from .fourier import (
+    DEFAULT_FOURIER_HALF_WIDTH,
+    DEFAULT_FOURIER_SPATIAL_POINTS,
+    beta2_divergence_matrix_fourier,
+)
 from .quadrature import (
     quadrature_grid_for_kdes,
     quadrature_similarity_matrices,
@@ -37,8 +41,8 @@ def beta2_bandwidth_selection_counts(
         lambda_value: float = 1.0,
         seed: int | None = None,
         m_x: int = 1_001,
-        half_width: float = 12.0,
-        spatial_points: int = 2_048,
+        half_width: float = DEFAULT_FOURIER_HALF_WIDTH,
+        spatial_points: int = DEFAULT_FOURIER_SPATIAL_POINTS,
 ) -> np.ndarray:
     n = int(n)
     h_grid = np.asarray(h_grid, dtype=float)
