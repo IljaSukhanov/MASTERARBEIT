@@ -664,13 +664,15 @@ Minimum width
 \end{tabular}
 \end{table}
 
+\todo[inline]{add plots visualizing the results of table}
+
 \subsubsection{Order selection experiments}\label{sec:order_selection_experiments}
 
 An alternative possibility for the order selection experiments in Section~\ref{sec:order_selection_experiments} below is to take $u_0=(\hat{u}_k,0)\in\mathbb{S}^k$ or $u_0=(0,\hat{u}_k)\in\mathbb{S}^{k}$ as starting direction for minimum width computation in dimension $k+1$, where $\hat{u}_k$ is the obtained directions from dimension $k$.
 
 \textbf{Elbow point selection}
 
-\todo[inline]{23.10: rework completely (put below coefficient estimation experiments?)}
+\todo[inline]{rework completely (put below coefficient estimation experiments?)}
 
 The last step is to employ an elbow point selector with the property that it would always pick the correct kink in the population case. That is, $\hat{k}=p+1$ is chosen given that $m_1\ge\dots\ge m_p\ge m_{p+1}=\dots=m_K$.
 
@@ -686,30 +688,38 @@ The descent chain is motivated by the manuscript~\cite{Baralic2026} where differ
     \hat{k}_{\text{DC}}=\min\arg\max_{2\le k\le K-1}\frac{\hat{m}_{k-1}-\hat{m}_k}{\hat{m}_k-\hat{m}_K}
 \end{align*}
 
-Table~\ref{tab:geometric-bic-pacf-comparison} summarizes the results from 50 simulations for each true order $p\in\{1,2,3\}$. We compare the classical order selectors BIC and PACF cutoff with our minimum width approach, where we test the different methods of detecting the elbow point presented above.
+Table~\ref{tab:final-ar-order-selection} summarizes the results from 50 simulations for each true order $p\in\{1,2,3,4,5\}$. We compare the classical order selectors BIC and PACF cutoff with our minimum width approach, where as elbow selector, the descent chain rule is used.
 
 \begin{table}[htbp]
 \centering
-\caption{AR-order selections for 50 processes per true order.
+\small
+\caption{AR-order selections for 50 processes per true order,
+pooled across five Beta innovation shapes.
 Each entry reports the number of exact selections, followed by
-(underselections/overselections).}
-\label{tab:geometric-bic-pacf-comparison}
-\begin{tabular}{lccc}
+(underselections/overselections). $T=1000$ and $K=10$.}
+\label{tab:final-ar-order-selection}
+\begin{tabular}{lccccc}
 \toprule
-Selector & AR(1) & AR(2) & AR(3) \\
+Selector & AR(1) & AR(2) & AR(3) & AR(4) & AR(5) \\
 \midrule
-Empirical minimum width (L-method)
-& \shortstack{\textbf{49/50} \\ (0/1)}
-& \shortstack{36/50 \\ (14/0)}
-& \shortstack{14/50 \\ (29/7)} \\
+\shortstack[l]{Empirical minimum width\\(descent chain)}
+& \shortstack{32/50 \\ (0/18)}
+& \shortstack{22/50 \\ (4/24)}
+& \shortstack{18/50 \\ (7/25)}
+& \shortstack{22/50 \\ (10/18)}
+& \shortstack{18/50 \\ (14/18)} \\
 BIC
-& \shortstack{47/50 \\ (3/0)}
+& \shortstack{\textbf{45/50} \\ (5/0)}
+& \shortstack{\textbf{42/50} \\ (8/0)}
 & \shortstack{\textbf{46/50} \\ (4/0)}
-& \shortstack{\textbf{43/50} \\ (7/0)} \\
+& \shortstack{\textbf{40/50} \\ (10/0)}
+& \shortstack{\textbf{42/50} \\ (7/1)} \\
 PACF cutoff
-& \shortstack{31/50 \\ (1/18)}
-& \shortstack{34/50 \\ (1/15)}
-& \shortstack{33/50 \\ (3/14)} \\
+& \shortstack{33/50 \\ (4/13)}
+& \shortstack{29/50 \\ (5/16)}
+& \shortstack{35/50 \\ (4/11)}
+& \shortstack{38/50 \\ (4/8)}
+& \shortstack{29/50 \\ (5/16)} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -783,7 +793,7 @@ Since $\mathcal{N}_k$ is nonempty and closed and $h_k$ is continuous and coerciv
 
 The above realization that the \enquote{break point property} also holds for $\{u\in\mathbb{R}^k:u_0=1\}$ and not just $\mathbb{S}^{k-1}$ like in Proposition~\ref{prop:minimum_width} motivates the question if the set $\mathcal{N}_k$ be characterized such that $m(\mathcal{N}_1)\ge\dots\ge m(\mathcal{N}_p)>\gamma=m(\mathcal{N}_{p+1})=\dots$ for some constant $\gamma$?
 
-The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{23.10: find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
+The problem of determining the minimum width $\min_{\|u\|=1}w(u)$, $w(u)=\max_{1\le i\le n}\langle x_i,u\rangle-\min_{1\le i\le n}\langle x_i,u\rangle$ of a point cloud $P=\{x_1,\dots,x_n\}\subseteq\mathbb{R}^{d}$ is well known in the computational geometry literature. More specifically, one looks for two parallel hyperplanes enclosing all points with smallest distance to each other. For $d=2$ the problem can be solved exactly with runtime complexity of $\mathbf{O}(n\log{n})$ (see~\cite[\todo{26.10: find specific passage in book!}]{atallah_computational_1986}). \cite{10.1145/323233.323234} gives an algorithm for exact computation in three dimensions with runtime complexity of $\mathbf{O}(n^2)$, although algorithms exist with faster sub-quadratic expected runtime complexity, see~\cite[Corollary~3.6]{agarwal_efficient_nodate}. The main reference for this kind of problem for dimensions $d\ge4$ is~\cite{doi:10.1142/S0218195902000748}, where an exact algorithm is presented with runtime efficiency $\mathbf{O}(n^{\lceil d/2\rceil})$.
 
-\todo[inline]{23.10: Has Gradient descent been used before to find the minimum width of a point cloud?}
+\todo[inline]{25.10: Has Gradient descent been used before to find the minimum width of a point cloud?}
 \todo[inline]{Could the Gradient descent approach escape the curse of dimensionality? (Future work)}
