@@ -222,10 +222,12 @@ previous implementation bit for bit. The audit found no innovation sampling
 bypass among the current generators; all 19 AR notebooks parse. Hashes confirm
 that all 24 protected thesis files are unchanged.
 
-An additional comparison with historical saved paths was unavailable because
-`inputs/ar3_coefficient_recovery_50.npz` is absent in the current workspace.
-No historical data were regenerated to replace it.
+At the time of that verification, an additional comparison with historical saved
+paths was unavailable because `inputs/ar3_coefficient_recovery_50.npz` was absent.
+No historical data were regenerated to replace it. The saved input is now
+[available](inputs/ar3_coefficient_recovery_50.npz); this does not change the
+historical verification result.
 
 See the [verification record](../../output/analysis/ar_beta_variance_normalization_2026-10-20/verification.json),
 [test log](../../output/analysis/ar_beta_variance_normalization_2026-10-20/test_results.txt),
-and [normalized Beta notebook preview](../../output/analysis/ar_beta_variance_normalization_2026-10-20/beta_sliding_window_clouds_2d.png).
+and the current [fixed-support Beta notebook figure](outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf).

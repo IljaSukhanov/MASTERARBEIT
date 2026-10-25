@@ -4,7 +4,7 @@ Research date: 22 October 2026. No files under `Abschlussarbeit_2021/` were chan
 
 Update, 23 October 2026: the production L2 helper now implements direct frequency
 quadrature. The code-versus-chapter discussion below records the earlier
-reconstruction implementation. See the [migration report](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/analysis/fourier_quadrature_migration/README.md)
+reconstruction implementation. See the [migration report](../analysis/archive/completed_maintenance.md#fourier-quadrature-migration)
 for the current code and its validation.
 
 ## Recommendation

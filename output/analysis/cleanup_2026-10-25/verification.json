@@ -1,0 +1,161 @@
+{
+  "date": "2026-10-25",
+  "scope": "Clear saved KDE notebook outputs, consolidate identical repeated-sample cache data, and repair AR documentation. No scientific methods or experiment settings changed.",
+  "backup_directory": "/private/tmp/MASTERARBEIT-cleanup-2026-10-25-hy44pi9i",
+  "notebook_cleanup": {
+    "notebooks": [
+      {
+        "path": "Code/Code_kde/xx_notebooks_overview/g_rs_approximation_vs_omega.ipynb",
+        "saved_output_cells_cleared": 6,
+        "bytes_saved": 245923
+      },
+      {
+        "path": "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_repeated_samples.ipynb",
+        "saved_output_cells_cleared": 4,
+        "bytes_saved": 128294
+      },
+      {
+        "path": "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_sample_sizes.ipynb",
+        "saved_output_cells_cleared": 5,
+        "bytes_saved": 174478
+      },
+      {
+        "path": "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_single_sample.ipynb",
+        "saved_output_cells_cleared": 3,
+        "bytes_saved": 130375
+      },
+      {
+        "path": "Code/Code_kde/xx_notebooks_overview/g_rs_k_validation.ipynb",
+        "saved_output_cells_cleared": 4,
+        "bytes_saved": 236857
+      }
+    ],
+    "saved_output_cells_cleared": 22,
+    "notebook_bytes_saved": 915927,
+    "metadata_preserved": true,
+    "source_unchanged_except_repeated_sample_cache_and_storage_documentation": true,
+    "code_cells_syntax_checked": 43,
+    "automatic_pdf_setup_enabled_in_all_12_kde_notebooks": true
+  },
+  "cache_cleanup": {
+    "checks": [
+      "Legacy cache reused across summary views without recomputing or copying numerical files.",
+      "Repeated resume preserves all numerical cache hashes and summary values.",
+      "Fresh computation matches the original notebook exactly on a reduced numerical run.",
+      "Changing summary choices reuses one calculation cache in either direction.",
+      "Changed numerical settings compute a distinct cache and leave prior data unchanged.",
+      "A cache with mismatched actual samples is rejected.",
+      "Full saved experiment resumes after duplicate removal without numerical recomputation or duplicate recreation."
+    ],
+    "check_count": 7,
+    "removed_duplicates": [
+      {
+        "path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/samples.npy",
+        "bytes": 320128,
+        "sha256": "64d5eed07e170a7da046a84f3e25710b4cf88a293ed729fd53cdf97c0f9c688d",
+        "retained_path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/0e555caeba7e/samples.npy"
+      },
+      {
+        "path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/bandwidths.npy",
+        "bytes": 528,
+        "sha256": "7bef5e29953939d33e5aba57833dd295287f21769ee31811aa13411887ac66af",
+        "retained_path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/0e555caeba7e/bandwidths.npy"
+      },
+      {
+        "path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/exact_grams.npy",
+        "bytes": 4000128,
+        "sha256": "db0251fef767758812c2d7f38b172a094e276f0ed2df2e2c8a564192a2ef86e6",
+        "retained_path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/0e555caeba7e/exact_grams.npy"
+      },
+      {
+        "path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/per_sample_results.npz",
+        "bytes": 152122,
+        "sha256": "3adcdefbbcb3c3df6046f3133321b2c4adf92a8188d0abff4a0ce24c8c15006b",
+        "retained_path": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/0e555caeba7e/per_sample_results.npz"
+      }
+    ],
+    "duplicate_bytes_removed": 4472906,
+    "retained_calculation_cache": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/0e555caeba7e",
+    "summary_view": "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f",
+    "backup_directory": "/private/tmp/MASTERARBEIT-cleanup-2026-10-25-hy44pi9i"
+  },
+  "documentation_changes": [
+    {
+      "path": "Code/Code_AR_processes/README.md",
+      "changes": [
+        "Preserved the dated verification result and clarified that its previously unavailable input is now present.",
+        "Replaced the missing PNG link with the existing current fixed-support Beta PDF, labelled accordingly."
+      ]
+    },
+    {
+      "path": "Code/Code_kde/xx_notebooks_overview/README.md",
+      "changes": [
+        "Documented shared numerical caches and relative cache_reference.json paths."
+      ]
+    }
+  ],
+  "preservation_checks": {
+    "protected_thesis_files": {
+      "files": 27,
+      "unchanged": true
+    },
+    "pdf_files": {
+      "files": 188,
+      "unchanged": true
+    },
+    "input_files": {
+      "files": 8,
+      "unchanged": true
+    },
+    "python_source_files": {
+      "files": 105,
+      "unchanged": true
+    },
+    "research_files": {
+      "files": 16,
+      "unchanged": true
+    },
+    "existing_summaries_and_reports": {
+      "files": 6,
+      "unchanged": true
+    }
+  },
+  "validation": {
+    "cache_checks_passed": 7,
+    "cache_checks": [
+      "Legacy cache reused across summary views without recomputing or copying numerical files.",
+      "Repeated resume preserves all numerical cache hashes and summary values.",
+      "Fresh computation matches the original notebook exactly on a reduced numerical run.",
+      "Changing summary choices reuses one calculation cache in either direction.",
+      "Changed numerical settings compute a distinct cache and leave prior data unchanged.",
+      "A cache with mismatched actual samples is rejected.",
+      "Full saved experiment resumes after duplicate removal without numerical recomputation or duplicate recreation."
+    ],
+    "modified_notebook_code_cells_parse": true,
+    "local_readme_links_resolve": true,
+    "only_expected_workspace_files_changed": true,
+    "full_monte_carlo_experiment_rerun": false,
+    "git_diff_whitespace_check": "passed"
+  },
+  "changed_paths": [
+    "Code/Code_AR_processes/README.md",
+    "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_repeated_samples.ipynb",
+    "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_sample_sizes.ipynb",
+    "Code/Code_kde/xx_notebooks_overview/README.md",
+    "Code/Code_kde/xx_notebooks_overview/g_rs_k_validation.ipynb",
+    "Code/Code_kde/xx_notebooks_overview/g_rs_approximation_vs_omega.ipynb",
+    "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_single_sample.ipynb"
+  ],
+  "removed_paths": [
+    "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/per_sample_results.npz",
+    "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/samples.npy",
+    "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/exact_grams.npy",
+    "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/bandwidths.npy"
+  ],
+  "added_paths": [
+    "Code/Code_kde/outputs/data/g_rs_error_vs_k_repeated_samples/b51a95fcb66f/cache_reference.json"
+  ],
+  "net_workspace_bytes_saved_before_this_report": 5388417,
+  "size_units": "MB = 1,000,000 bytes; workspace sizes exclude .git and the external temporary backup.",
+  "net_workspace_bytes_saved_including_this_report": 5381188
+}

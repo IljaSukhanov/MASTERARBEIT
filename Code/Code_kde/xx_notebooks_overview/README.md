@@ -29,4 +29,8 @@ enables automatic PDF exports under `../outputs/pdfs/<notebook-name>/`.
 Saved data, images, and checkpoints keep their existing locations in
 `../outputs/`.
 
+The repeated-sample error notebook shares verified numerical data across summary
+views. Each view keeps its settings, report, and CSV; `cache_reference.json`
+locates the numerical data relative to that view's folder, without copying it.
+
 [All KDE notebooks and code guide](../README.md)
