@@ -323,8 +323,6 @@ Finally, we approximate $G_{rs}$ by truncating the integral and applying the com
     G_{rs}\approx G_{rs}^{(\Omega,K)}:=\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
 \end{align*}
 
-\todo[inline]{25.10: Compare exact, quadrature and Fourier in terms of speed and accuracy OR find source that already does this like I do}
-
 We can give an upper bound for the truncation error:
 \begin{align*}
     |G_{rs}-G_{rs}^{(\Omega)}|&\le\frac{1}{\pi}\int_{\Omega}^{\infty}\exp{(-\frac{(h^2+s^2)\omega^2}{2})}\,d\omega\le\frac{1}{\pi}\int_{\Omega}^{\infty}\exp{(-h_{\min}^2\omega^2)}\,d\omega\\&
@@ -332,7 +330,14 @@ We can give an upper bound for the truncation error:
 \end{align*}
 where $\operatorname{erfc}(z):=2\pi^{-1/2}\int_z^{\infty}e^{-t^2}\,dt$ is the complementary error function. Fixing $h_{\min}=0.01$ and $\epsilon=10^{-8}$ and choosing $\Omega=450$ yields a truncation error of less than $\epsilon$.
 
-After having determined a well motivated truncation parameter $\Omega$, we determine a suitable number of nodes $K$ experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, set $E_K:=\max_l\max_{r,s}|G_{r,s}-G^{\Omega,K}_{r,s}|$ and choose $K$ so that $E_K\le\delta$ for some apriori error $\delta$. See Figure~[] for visualization.
+After having determined a well motivated truncation parameter $\Omega$, we determine a suitable number of nodes $K$ experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, set $E_K:=\max_l\max_{r,s}|G_{r,s}-G^{\Omega,K}_{r,s}|$ and choose $K$ so that $E_K\le\delta$ for some apriori error $\delta$. See Figure~\ref{fig:fourier_approx_experiment} for visualization. We choose $K=1536$.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf}
+    \caption{}
+    \label{fig:fourier_approx_experiment}
+\end{figure}
 
 Error control is of importance because we must ensure that we control the error on sine of the angle between the Perron vector $v$ of the true similarity matrix $S$ and the Perron vector $\Tilde{v}$ of the approximate similarity matrix which is actually computed in practice. In case of the $L^2$ divergence, the approximation gives a substantial efficiency advantage. Other divergences might not even have closed form expressions (see~\cite{hershey_approximating_2007}), and approximation becomes the only choice.
 
