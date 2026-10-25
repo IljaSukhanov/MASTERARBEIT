@@ -860,15 +860,48 @@ We recall that the asymptotic minimizer of the mean integrated squared error is 
 
 For $r=13/14$ we thus see that $h_{\operatorname{AMQ},r}(n)$ is asymptotically equivalent. This is because if $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$ and the right and the limit in Equation~\eqref{eq:h_amq_limit} becomes $1$.
 
-\todo[inline]{25.10: add figure!}
+Figure~\ref{fig:continuous_minimizers_comparison} visualizes our theoretical considerations. It compares the distribution of $M=1000$ selected bandwidths minimizing: 1) $\operatorname{ISE}$ (violet), 2) $\hat{Q}_0$ (blue), 3) $\hat{Q}_1$ (orange), 4) $\hat{Q}_{13/14}$ (green).
 
-Figure~[] visualizes our theoretical considerations. It compares the distribution of $M=1000$ selected bandwidths minimizing:
-\begin{itemize}
-    \item $\operatorname{ISE}$ (violet)
-    \item $\hat{Q}_0$ (blue)
-    \item $\hat{Q}_1$ (orange)
-    \item $\hat{Q}_{13/14}$ (green)
-\end{itemize}
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n100.pdf}
+        \caption{$n=100$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1000.pdf}
+        \caption{$n=1000$}
+    \end{subfigure}
+
+    \par\medskip
+
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1500.pdf}
+        \caption{$n=1500$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n2000.pdf}
+        \caption{$n=2000$}
+    \end{subfigure}
+
+    \caption{Sampling distributions of the continuous minimizers of
+    $\operatorname{ISE}$, $\widehat{Q}_0$, $\widehat{Q}_1$, and
+    $\widehat{Q}_{13/14}$, based on $M=1000$ repetitions for each
+    sample size. Insets show the relative frequency of minimizers
+    at the upper endpoint $h=2$.}
+    \label{fig:continuous_minimizers_comparison}
+\end{figure}
 
 
 \section{Literature Positioning}
