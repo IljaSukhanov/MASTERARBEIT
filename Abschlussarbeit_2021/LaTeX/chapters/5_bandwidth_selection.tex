@@ -343,6 +343,28 @@ where $\operatorname{erfc}(z):=2\pi^{-1/2}\int_z^{\infty}e^{-t^2}\,dt$ is the co
 
 After having determined a well motivated truncation parameter $\Omega$, we determine a suitable number of nodes $K$ experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, set $E_K:=\max_l\max_{r,s}|G_{r,s}-G^{\Omega,K}_{r,s}|$ and choose $K$ so that $E_K\le\delta$ for some apriori error $\delta$. See Figure~\ref{fig:fourier_approx_experiment} for visualization. We choose $K=1536$.
 
+Having chosen $\Omega$ and $K$ we carry out a small experiment comparing the runtime efficiency between exact formula and Fourier approximation. We sample $(X^{(l)}_1,\dots,X_{200}^{(l)}$, $l=1,\dots,100$ and measure the time it took to compute the exact $G_{hs}$ and the approximate $G_{hs}^{(\Omega,K)}$ for all bandwidth pairs $h,s$. The mean computation times and the maximum error that was made are presented in Table~\ref{tab:exact_fourier_gram_runtime}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lrr}
+        \hline
+        Method & Mean time (s) & Maximum absolute error \\
+        \hline
+        Exact formula         & 0.297500 & --- \\
+        Fourier approximation & 0.010111 & $9.182 \times 10^{-11}$ \\
+        \hline
+    \end{tabular}
+    \caption{Runtime comparison over 100 independent standard-normal
+        samples of size $n=200$, using 50 geometrically spaced
+        bandwidths in $[0.01,2]$, $\Omega=450$, and $K=1536$.
+        Times are arithmetic means for computing the complete Gram
+        matrix. The maximum absolute error is taken over all samples
+        and bandwidth pairs, including diagonal entries, using the
+        exact formula as reference.}
+    \label{tab:exact_fourier_gram_runtime}
+\end{table}
+
 \begin{figure}
     \centering
     \includegraphics[width=0.5\linewidth]{Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf}
@@ -351,8 +373,6 @@ After having determined a well motivated truncation parameter $\Omega$, we deter
 \end{figure}
 
 Error control is of importance because we must ensure that we control the error on sine of the angle between the Perron vector $v$ of the true similarity matrix $S$ and the Perron vector $\Tilde{v}$ of the approximate similarity matrix which is actually computed in practice. In case of the $L^2$ divergence, the approximation gives a substantial efficiency advantage. Other divergences might not even have closed form expressions (see~\cite{hershey_approximating_2007}), and approximation becomes the only choice.
-
-\todo[inline]{26.10: do an efficiency experiment}
 
 \section{Assembly of Scale Similarity Matrices}
 
@@ -815,6 +835,8 @@ Next, we state the main theorem of this thesis.
     See Appendix Section~\ref{sec:proof_main_thm}.
 \end{proof}
 
+\todo[inline]{Precedence: Laplace method!!}
+
 Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \begin{align*}
     \sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}=\underbrace{\theta_{\max}}_{>0}^{(N)}v_i^{(N)},\quad\text{for all }i=1,\dots,N.
@@ -822,10 +844,6 @@ Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 The Perron vector $v^{(N)}$ has large entries $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|=1$ we can see the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar to $\hat{f}_{h_j}$ (in terms of $L^2$-distance) where the bandwidths $h_j$ also have a large weight.
 
 The Proposition~\ref{prop:main_thm} establishes that for a large $N$ (finer and finer bandwidth grid) the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately equal to $\lambda_N^{-1/2}\Delta_{r,N}^{-1}\pi^{1/2}\hat{Q}_r^{-1/2}(h_{i_N})$ (a properly scaled energy functional). This means that large row sums correspond to a low value of the energy functional $\hat{Q}_r$ and since the energy functional $\hat{Q}_r$ is the squared $L^2$ norm of the Fréchet derivative of the kernel density estimate, its minimizer can be interpreted as the point at which the $L^2$-curve $h\mapsto\hat{f}_h$ changes most slowly. This provides an informal explanation for why the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
-
-The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
-
-\todo[inline]{Precedence: Laplace method!!}
 
 For the Gaussian Kernel, the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align*}
@@ -842,8 +860,18 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 \end{Prop}
 
 \begin{proof}
-    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$. The main difficulty lies in showing that $\rho_N\to\hat{Q}_r(h^{\ast})$.
+    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$ and by $v^{(N)}=(v^{(N)}_1,\dots,v^{(N)}_N)$ the corresponding principal eigenvector. That is, we have $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$. Let $i_{\text{crit}}^{(N)}\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. We have
+    \begin{align*}
+        \rho_Nv^{(N)}_{i_{\text{crit}}^{(N)}}=\sqrt{\lambda_N}\Delta_{r,N}\sum_{j=1}^{N}S^{(N)}_{i_{\text{crit}}^{(N)}j}v_j\le\sqrt{\lambda_N}\Delta_{r,N}v_{i_{\text{crit}}^{(N)}} R_{i_{\text{crit}}^{(N)}}^{(N)}
+    \end{align*}
+    and because every entry of the Perron vector is positive, $\rho_N\le a_{i_{\text{crit}}^{(N)},N}$.
+    
+    
+    
+    The main difficulty lies in showing that $\rho_N\to\hat{Q}_r(h^{\ast})$.
 \end{proof}
+
+\textcolor{red}{The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
