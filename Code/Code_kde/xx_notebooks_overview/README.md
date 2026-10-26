@@ -4,6 +4,7 @@ Start here for the canonical spectral KDE experiments and comparisons.
 
 | Notebook | Purpose |
 | --- | --- |
+| [classical_bandwidth_kde_illustration.ipynb](classical_bandwidth_kde_illustration.ipynb) | One sample of 50 standard normal observations, the true density, and KDEs using the existing CV, MISE-oracle, AMISE, robust Silverman, and direct plug-in choices. |
 | [spectral_scale_selection_kde.ipynb](spectral_scale_selection_kde.ipynb) | Main L² spectral KDE workflow, Figure 3.5, localized, and exact-Gaussian histogram profiles, and selector comparisons. |
 | [g_rs_approximation_vs_omega.ipynb](g_rs_approximation_vs_omega.ipynb) | One fixed sample and bandwidth pair: exact G_rs versus its Fourier approximation, sweeping Omega at fixed K and sweeping K for several fixed cutoffs Omega. |
 | [g_rs_k_validation.ipynb](g_rs_k_validation.ipynb) | Choose K at Omega = 450 using 200 normal samples of size 100 and all pairs of 50 bandwidths; calibration, independent verification, accuracy, and timing. |
