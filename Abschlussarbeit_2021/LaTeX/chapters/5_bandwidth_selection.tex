@@ -865,14 +865,34 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
         \rho_Nv^{(N)}_{i_{\text{crit}}^{(N)}}=\sqrt{\lambda_N}\Delta_{r,N}\sum_{j=1}^{N}S^{(N)}_{i_{\text{crit}}^{(N)}j}v_j\le\sqrt{\lambda_N}\Delta_{r,N}v_{i_{\text{crit}}^{(N)}} R_{i_{\text{crit}}^{(N)}}^{(N)}
     \end{align*}
     and because every entry of the Perron vector is positive, $\rho_N\le a_{i_{\text{crit}}^{(N)},N}$.
+
+    \textcolor{red}{There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$.}
     
     The main difficulty lies in showing that $\rho_N\to M:=\sqrt{\pi/\hat{Q}_r(h^{\ast})}$. It can be divided into showing $\limsup\rho_N\le M$ and $\liminf\rho_N\ge M$.
 
-    \textit{$\limsup\rho_N\le M$.}
+    \textit{$\limsup\rho_N\le M$.} It holds $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N\le M+\epsilon_N$ and therefore $\limsup\rho_N\le M$.
 
-    \textit{$\liminf\rho_N\ge M$}
+    \textit{$\liminf\rho_N\ge M$} We use the Rayleigh variational representation
+    \begin{align*}
+        \rho_N=\max_{x\ne 0}(x^{T}A^{(N)}x)/(x^{T}x)=(v^{(N)})^{T}A^{(N)}v^{(N)}\ge(y^{(N)})^{(T)}A^{(N)}y^{(N)}/((y^{(N)})^{T}(y^{(N)}))
+    \end{align*}
+    for all $y^{(N)}\in\mathbb{R}^{N}$, $y^{(N)}\ne0$. Let $0<\eta<M$. By the continuity of $m$ we can find a non-empty closed interval $J\subseteq(\alpha,\beta)$ such that $m(t)\ge M-\eta$ for all $t\in J$. Denote the interval by $J=[u,v]$, $u<v$. Define $y^{(N)}$ by $y^{(N)}_i=\mathbf{1}\{t_i\in J\}$. Let $I_N=\{i:t_i\in J\}$. 
 
-    Using Equation~[] we now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
+    For all sufficiently large $N$, $I_N$ is nonempty (this follows from $\Delta_{r,N}$ being eventually smaller than $v-u$, which is why for $i_N=\alpha+\lceil(u-\alpha)/\Delta_{r,N}\rceil$ we have $t_{i_N}\in J$). Because of that, $y^{(N)}\ne0$ for sufficiently large $N$. It follows
+    \begin{align*}
+        \rho_N&\ge(y^{(N)})^{(T)}A^{(N)}y^{(N)}/((y^{(N)})^{T}(y^{(N)}))=\frac{1}{\#I_N}\sum_{i,j\in I_N}A_{ij}^{(N)}\\&
+        =\frac{1}{\#I_N}\sum_{i\in I_N}a_{i,N}-\underbrace{\frac{1}{\#I_N}\sum_{i\in I_N}\sum_{j\notin I_N}A_{ij}^{(N)}}_{=:E_N}.
+    \end{align*}
+
+    Set $b_N:=\min\{a_{i,N}:i\in I_N\}$. Then $(1/\# I_N)\sum_{i\in I_N}a_{i,N}\ge b_{i,N}$. For a contradiction, assume that there exists a subsequence $(b_{N_l})$ such that $b_{N_l}$ converges towards a limit $b<M-\eta$. Choose $i_l\in I_{N_l}$ so that $b_{N_l}=\min_{i\in N_l}a_{i,N_l}=a_{i_l,N_l}$. Since $t_{i_l}\in J$ and $J$ is compact, there exists a further subsequence $t_{i_{l_k}}$ such that $t_{i_{l_k}}\to t_0\in J$ for $k\to\infty$. Now we are in a position to apply Proposition~\ref{prop:main_thm} and obtain $b_{i_{l_k}}\to m(t_0)$, but $m(t_0)\ge M-\eta$ by the definition of the set $J$, which is a contradiction. We have thus shown that $\lim\inf b_N\ge M-\eta$.
+
+    \textcolor{red}{It holds $E_N\to0$ for $N\to\infty$.}
+
+    Bringing the previous arguments together, we arrive at $\lim\inf\rho_N\ge\liminf b_n\ge M-\eta$ and since $\eta$ was arbitrary, $\liminf\rho_N\ge M$.    
+
+    We thus have $\rho_N\to M$ for $N\to\infty$.
+    
+    We now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
 \end{proof}
 
 \textcolor{red}{The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.}
