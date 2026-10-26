@@ -575,9 +575,9 @@ Figure~\ref{fig:beta-ar1-time-series-and-clouds} shows on the left side 5 AR(1) 
     \label{fig:beta-ar1-time-series-and-clouds}
 \end{figure}
 
-Table~\ref{tab:coefficient-estimation-all} shows the results. 
+Table~\ref{tab:coefficient-estimation-all} shows the results. Figure~\ref{fig:coefficient_mae_vs_order} illustrates the results.
 
-We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly.
+\textcolor{red}{We see that the $L^{\infty}$-regression approach works best across all orders and that for all methods except the Minimum width approach, the error increases for larger orders $p$. See Figure~\ref{fig:mean_and_median_l1_error_vs_order}. Strikingly the minimum width approach fails for orders $p\ge3$. This leads us to an investigation of why this is the case. From the table we also see that the median absolute errors of the Minimum width are much less of a failure. In fact, they beat OLS and Yule-Walker, but are still below $L^{\infty}$-regression. This indicates that there are some specific runs where the Minimum width approach failed badly.}
 
 \begin{table}[htbp]
 \centering
@@ -664,7 +664,26 @@ Minimum width
 \end{tabular}
 \end{table}
 
-\todo[inline]{add plots visualizing the results of table}
+\begin{figure}[htbp]
+    \centering
+    \graphicspath{{Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/}}
+
+    \includegraphics[width=0.19\linewidth]{01_beta_1_1_mean_mae_vs_order.pdf}%
+    \hfill
+    \includegraphics[width=0.19\linewidth]{02_beta_0p5_0p5_mean_mae_vs_order.pdf}%
+    \hfill
+    \includegraphics[width=0.19\linewidth]{03_beta_2_2_mean_mae_vs_order.pdf}%
+    \hfill
+    \includegraphics[width=0.19\linewidth]{04_beta_1_2_mean_mae_vs_order.pdf}%
+    \hfill
+    \includegraphics[width=0.19\linewidth]{05_beta_2_1_mean_mae_vs_order.pdf}
+
+    \caption{Mean coefficient MAE versus AR order $p$
+    for five Beta innovation distributions.
+    Each panel compares OLS, Yule--Walker,
+    Horv\'ath's $L_\infty$ estimator, and minimum width.}
+    \label{fig:coefficient_mae_vs_order}
+\end{figure}
 
 \subsubsection{Order selection experiments}\label{sec:order_selection_experiments}
 

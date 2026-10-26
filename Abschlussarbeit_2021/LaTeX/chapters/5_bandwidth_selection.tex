@@ -112,9 +112,18 @@ Of course, the ratio $R(f'')/R(f''')$ has to be estimated separately, which is d
 \end{align*}
 is solved numerically for $h$. \textcolor{red}{There exist consistency results for this plug in selector. It converges to the oracle bandwidth $h_{\text{oracle}}$ at a rate $n^{-5/14}$.}
 
-\todo[inline]{add figure}
+For illustration, the next Figure~\ref{fig:classical_bandwidth_comparison} shows 50 points sampled from $N(0,1)$ together with the true density $f$ and the kernel density estimates $\hat{f}_{h}$ with $h\in\{\hat{h}_{CV},h_{\text{oracle}},h_{\text{AMISE}},h_{\text{Sil}},h_{\text{SJ}}\}$.
 
-For illustration, the next Figure~[] shows 50 points sampled from $N(0,1)$ together with the true density $f$ and the kernel density estimates $\hat{f}_{h}$ with $h\in\{\hat{h}_{CV},h_{\text{oracle}},h_{\text{AMISE}},h_{\text{Sil}},h_{\text{SJ}}\}$.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf}
+    \caption{Gaussian kernel density estimates based on 50 observations
+    sampled from $N(0,1)$, using cross-validation, the MISE oracle,
+    AMISE, Silverman's robust rule, and the direct plug-in rule.
+    The black curve shows the true density, and the ticks indicate
+    the observations.}
+    \label{fig:classical_bandwidth_comparison}
+\end{figure}
 
 \textbf{Exact MISE representation for Gaussian mixture model}
 
