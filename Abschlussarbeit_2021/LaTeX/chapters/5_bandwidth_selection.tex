@@ -856,7 +856,7 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 \todo[inline]{26.10: Last big result. Prove it}
 
 \begin{Prop}
-    Assume that $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer.
+    Assume that $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$. And let $k_N\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. Then $h_{k_N}\to h^{\ast}$.
 \end{Prop}
 
 \begin{proof}
@@ -866,9 +866,13 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
     \end{align*}
     and because every entry of the Perron vector is positive, $\rho_N\le a_{i_{\text{crit}}^{(N)},N}$.
     
-    
-    
-    The main difficulty lies in showing that $\rho_N\to\hat{Q}_r(h^{\ast})$.
+    The main difficulty lies in showing that $\rho_N\to M:=\sqrt{\pi/\hat{Q}_r(h^{\ast})}$. It can be divided into showing $\limsup\rho_N\le M$ and $\liminf\rho_N\ge M$.
+
+    \textit{$\limsup\rho_N\le M$.}
+
+    \textit{$\liminf\rho_N\ge M$}
+
+    Using Equation~[] we now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
 \end{proof}
 
 \textcolor{red}{The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.}
@@ -879,12 +883,12 @@ The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_r(h)]$ 
 
 The expectation of the energy functional is
 \begin{align*}
-    \mathbb{E}[\hat{Q}_r]=\frac{1}{2}h^{2(1-r)}\left(\frac{1}{n}\|\partial_hK_h\|_2^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_2^2\right)
+    \mathbb{E}[\hat{Q}_r]=\frac{1}{2}h^{2(1-r)}\left(\frac{1}{n}\|\partial_hK_h\|_2^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_2^2\right).
 \end{align*}
 
 Similarly to the $\operatorname{AMISE}$ we do a leading term approximation:
 \begin{align*}
-    \mathbb{E}[\hat{Q}_r]=\underbrace{\frac{1}{2n}h^{-(1+2r)}\|L\|_2^2+\frac{n-1}{2n}h^{4-2r}\mu_2(K)^2\|f''\|_2^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r})
+    \mathbb{E}[\hat{Q}_r]=\underbrace{\frac{1}{2n}h^{-(1+2r)}\|L\|_2^2+\frac{n-1}{2n}h^{4-2r}\mu_2(K)^2\|f''\|_2^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r}).
 \end{align*}
 
 The minimizer of $\operatorname{AMQ}_r(h)$ is
