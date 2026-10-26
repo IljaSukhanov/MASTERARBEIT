@@ -112,6 +112,8 @@ Of course, the ratio $R(f'')/R(f''')$ has to be estimated separately, which is d
 \end{align*}
 is solved numerically for $h$. \textcolor{red}{There exist consistency results for this plug in selector. It converges to the oracle bandwidth $h_{\text{oracle}}$ at a rate $n^{-5/14}$.}
 
+\todo[inline]{add figure}
+
 For illustration, the next Figure~[] shows 50 points sampled from $N(0,1)$ together with the true density $f$ and the kernel density estimates $\hat{f}_{h}$ with $h\in\{\hat{h}_{CV},h_{\text{oracle}},h_{\text{AMISE}},h_{\text{Sil}},h_{\text{SJ}}\}$.
 
 \textbf{Exact MISE representation for Gaussian mixture model}
@@ -824,7 +826,7 @@ where $d_{ij}=X_i-X_j$. Using standard optimization methods, we can minimize $\h
 
 The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks at the minimizer of the energy functional (after proper scaling). The next result aims to give the answer.
 
-\todo[inline]{Last big result. Prove it}
+\todo[inline]{26.10: Last big result. Prove it}
 
 \begin{Prop}
     Assume that $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer.
