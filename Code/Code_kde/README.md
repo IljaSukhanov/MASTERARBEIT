@@ -101,7 +101,7 @@ Existing results and checkpoints from other frequency grids remain historical.
 
 ## Notebook themes
 
-The 12 notebooks are grouped into the following folders. The `xx_notebooks_*`
+The notebooks are grouped into the following folders. The `xx_notebooks_*`
 prefix follows the neighboring AR code's folder convention. Notebook filenames
 are preserved, so automatic PDFs remain under `outputs/pdfs/<notebook-name>/`
 and saved data remain under their existing output directories.
@@ -116,6 +116,7 @@ Start here for the canonical spectral KDE experiments and comparisons.
 - [spectral_scale_selection_kde.ipynb](xx_notebooks_overview/spectral_scale_selection_kde.ipynb): Main L² spectral KDE workflow, thesis figure experiments, and selector comparisons.
 - [g_rs_approximation_vs_omega.ipynb](xx_notebooks_overview/g_rs_approximation_vs_omega.ipynb): Exact G_rs and its Fourier approximation versus the cutoff Omega, for one fixed sample and bandwidth pair and a fixed number K of trapezoidal intervals.
 - [g_rs_k_validation.ipynb](xx_notebooks_overview/g_rs_k_validation.ipynb): Repeated-sample K validation at Omega = 450, with all Gram pairs on 50 bandwidths, calibration and independent verification, accuracy summaries, and timings.
+- [g_rs_runtime_comparison.ipynb](xx_notebooks_overview/g_rs_runtime_comparison.ipynb): Exact versus Fourier computation times over 100 standard-normal samples of size 200, with 50 bandwidths and the chosen Omega = 450, K = 1536; exports mean timings and maximum error as CSV, Markdown, and LaTeX tables.
 - [g_rs_error_vs_k_single_sample.ipynb](xx_notebooks_overview/g_rs_error_vs_k_single_sample.ipynb): E_K versus K at Omega = 450 for one fixed normal sample of size 200, comparing all Gram pairs on 50 bandwidths with the analytic reference.
 - [g_rs_error_vs_k_repeated_samples.ipynb](xx_notebooks_overview/g_rs_error_vs_k_repeated_samples.ipynb): Retained error experiment: maximum over 200 independent normal samples of size 200 and all pairs of 50 bandwidths, versus K at Omega = 450. Reuses verified saved calculations when available.
 - [g_rs_error_vs_k_sample_sizes.ipynb](xx_notebooks_overview/g_rs_error_vs_k_sample_sizes.ipynb): Historical comparison of five sample sizes; the retained experiment is the n = 200 maximum-error notebook above.
