@@ -1,0 +1,23 @@
+{
+  "all_60000_local_selections_and_source_files_preserved": true,
+  "all_60_local_histograms_preserved_exactly": true,
+  "ise_histograms_added_for_20_sample_sizes": true,
+  "all_20_ise_histograms_contain_1000_entries": true,
+  "ise_804_bins_match_4000_saved_bandwidths": true,
+  "all_80_histograms_have_correct_probability_totals": true,
+  "all_three_final_pdf_pages_visually_reviewed": true,
+  "original_thesis_figure_assets_unchanged": true,
+  "ise_reference_validation": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/ise_reference_validation.json",
+  "outputs": [
+    {
+      "path": "output/pdf/local_qr_minimizers_vs_n/selected_histograms.pdf",
+      "pages": 1,
+      "sha256": "a7a880ada99d9f002dbc42559ccc5df70a3a008e43c3e401744b15d169140a65"
+    },
+    {
+      "path": "output/pdf/local_qr_minimizers_vs_n/all_sample_sizes.pdf",
+      "pages": 2,
+      "sha256": "a088487d5030e86d37cdad72ad4a0f4138d3624579b28e9501d4ddbb4b7bed8f"
+    }
+  ]
+}
