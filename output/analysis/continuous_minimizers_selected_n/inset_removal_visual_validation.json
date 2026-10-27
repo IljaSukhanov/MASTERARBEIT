@@ -1,0 +1,41 @@
+{
+  "original_source_pdfs_unchanged": true,
+  "raster_comparisons": {
+    "100": {
+      "changed_pixel_bounds": [
+        148,
+        229,
+        498,
+        457
+      ],
+      "pixels_outside_inset_and_annotation_region_unchanged": true
+    },
+    "1000": {
+      "changed_pixel_bounds": [
+        148,
+        229,
+        498,
+        457
+      ],
+      "pixels_outside_inset_and_annotation_region_unchanged": true
+    },
+    "1500": {
+      "changed_pixel_bounds": [
+        148,
+        229,
+        498,
+        457
+      ],
+      "pixels_outside_inset_and_annotation_region_unchanged": true
+    },
+    "2000": {
+      "changed_pixel_bounds": [
+        148,
+        229,
+        498,
+        457
+      ],
+      "pixels_outside_inset_and_annotation_region_unchanged": true
+    }
+  }
+}
