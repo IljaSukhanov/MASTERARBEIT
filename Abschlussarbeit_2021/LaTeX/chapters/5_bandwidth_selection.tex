@@ -819,7 +819,23 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 
     There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$. Assume for a contradiction that for all null sequences $(\epsilon_N)$ and for all $N_0\in\mathbb{N}$ there exist $N\ge N_0$ and $1\le i\le N$ such that $a_{i,N}>m(t_i)+\epsilon_N$. This implies the existence of $d>0$ and $N_1<N_2<\dots$ and indices $i_1,i_2,\dots$ such that $a_{i_l,N_l}>m(t_{i_l})+d$. By compactness and continuity arguments $\lim\inf_{l\to\infty}a_{i_l,N_l}\ge m(t_0)+d$ for some $t_0\in[\alpha,\beta]$.
 
-    \textcolor{red}{But on the other hand $\lim\sup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$, because ...}
+    But on the other hand $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$, because
+    \begin{align*}
+        a_{i_l,N_l}=\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|\le A}S_{i_l,j}^{(N_l)}}_{=:P_{N_l}(A)}+\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|>A}S_{i_l,j}^{(N_l)}}_{=:T_{N_l}(A)}.
+    \end{align*}
+    In the proof of Proposition~\ref{prop:main_thm} we have already shown $\lim\sup_{l\to\infty}\sigma_{N_l}T_{N_l}(A)\le e^{-cA^2}/(cA)$.
+
+    In the proof of Proposition~\ref{prop:main_thm} we have also seen that
+    \begin{align*}
+        \sigma_{N_l}P_{N_l}(A)=\sigma_{N_l}\sum_{j:|t_{N_l,j}|\le A}e^{-t_{N_l,j}^2\hat{Q}_r(h_0)}+\mathbf{o}(1).
+    \end{align*}
+
+    Now we have
+    \begin{align*}
+        \sum_{j:|t_{N_l,j}|\le A}e^{-q_0t_{N_l,j}^2}\le\sum_{k\in\mathbb{Z},|\sigma_{N_l}k|\le A}e^{-q_0(\sigma_{N_l}k)^2}=:G_{N_l}(A).
+    \end{align*}
+
+    In the proof of Proposition~\ref{prop:main_thm} we have seen that $\sigma_{N_l}G_{N_l}(A)\to\int_{-A}^{A}e^{-q_0z^2}\,dz$ and thus we get $\limsup_{l\to\infty}\sigma_{N_l}P_{N_l}(A)\le\int_{-A}^{A}e^{-q_0z^2}\,dz$. In total we have $\limsup_{l\to\infty}a_{i_l,N_l}\le\int_{-A}^{A}e^{-q_0z^2}\,dz+e^{-cA^2}/(cA)$, and taking $A\to\infty$ yields $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$.
 
     Combining this would yield the contradiction $m(t_0)+d\le m(t_0)$.
 
