@@ -203,54 +203,52 @@ Since we will use divergences to construct scale similarity matrices, it is impo
 
 \textcolor{red}{In the following we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just the symmetric divergences since such divergences lead to symmetric scale similarity matrices of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the Outlook~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is to that the ideas in the Outlook can be better appreciated.}
 
-\subsubsection*{Amari alpha divergence}
+\textbf{$\alpha$-divergence}
 
 A prominent parametrized family of $f$-divergences is the so called $\alpha$-divergence (see \cite{cichocki_families_2010}) where the function $f=f_{\alpha}$ is given by
 \begin{align*}
-    f_{\alpha}(t)=\frac{1}{\alpha(\alpha-1)}\left(t^{\alpha}-\alpha t-(1-\alpha)\right)
+    f_{\alpha}(t)=\frac{1}{\alpha(\alpha-1)}\left(t^{\alpha}-\alpha t-(1-\alpha)\right).
 \end{align*}
 The actual divergence is then given by
 \begin{align}\label{eq:alpha_divergence1}
-    D_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right)
+    D_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right).
 \end{align}
 
-Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2=1-\int\sqrt{pq}$ is the squared Hellinger distance.
-
-By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
-
-In particular, by Proposition~\ref{prop:f_divergence_symmetric}, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance).
+Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2=1-\int\sqrt{pq}$ is the squared Hellinger distance. In particular, by Proposition~\ref{prop:f_divergence_symmetric}, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance). By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
 For completeness, we mention that in the literature there exists a second parameterization, where $\alpha=(1-\alpha_{A})/2$ is plugged into the formula in Equation~\eqref{eq:alpha_divergence1} to obtain
 \begin{align*}
     D_{\alpha_A}(p\|q)=\frac{4}{1-\alpha_A^2}\left(1-\int p(x)^{\frac{1-\alpha_A}{2}}q(x)^{\frac{1+\alpha_A}{2}}\right).
 \end{align*}
 
-\subsubsection*{\texorpdfstring{$\chi^{\alpha}$}{chi-alpha}-divergences (total variation)}
+\textbf{$\chi^{\alpha}$-divergences (total variation)}
 
-Another class of divergences are the $\chi^{\alpha}$-divergences (see~[]). They are determined by $f_{\alpha}(t)=(1/2)|t-1|^{\alpha}$, where $\alpha\ge1$. Setting $\alpha=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q)=(1/2)\int|p-q|$.
-
-The only symmetric $\chi^{\alpha}$-divergence is the total variation distance.
+Another class of divergences are the $\chi^{\alpha}$-divergences (see~[]). They are determined by $f_{\alpha}(t)=(1/2)|t-1|^{\alpha}$, where $\alpha\ge1$. Setting $\alpha=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q)=(1/2)\int|p-q|$, which is the only symmetric $\chi^{\alpha}$-divergence.
 
 Total variation and squared Hellinger are related by the following chain of inequalities:
 \begin{align*}
-    D_H(p,q)&=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2\le\frac{1}{2}\int|p-q|=d_{\text{TV}}(p,q)\\&
-    =\frac{1}{2}\int|p-q|=\frac{1}{2}\int(\sqrt{p}+\sqrt{q})|\sqrt{p}-\sqrt{q}|\\&
-    \le\sqrt{\int(\sqrt{p}+\sqrt{q})^2}\sqrt{\int(\sqrt{p}-\sqrt{q})^2}\\&
-    =\sqrt{\left(2+2\int\sqrt{pq}\right)\left(2-2\int\sqrt{pq}\right)}\\&
-    =\sqrt{4-4\left(\int\sqrt{pq}\right)}=2\sqrt{1-\int\sqrt{pq}}=2\sqrt{D_H(p,q)}
+    D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}.
 \end{align*}
 
-\subsubsection*{JS divergence}
+% \begin{align*}
+%     D_H(p,q)&=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2\le\frac{1}{2}\int|p-q|=d_{\text{TV}}(p,q)\\&
+%     =\frac{1}{2}\int|p-q|=\frac{1}{2}\int(\sqrt{p}+\sqrt{q})|\sqrt{p}-\sqrt{q}|\\&
+%     \le\sqrt{\int(\sqrt{p}+\sqrt{q})^2}\sqrt{\int(\sqrt{p}-\sqrt{q})^2}\\&
+%     =\sqrt{\left(2+2\int\sqrt{pq}\right)\left(2-2\int\sqrt{pq}\right)}\\&
+%     =\sqrt{4-4\left(\int\sqrt{pq}\right)}=2\sqrt{1-\int\sqrt{pq}}=2\sqrt{D_H(p,q)}
+% \end{align*}
+
+\textbf{Jensen Shannon divergence}
 
 Another important divergence that belongs to the class of $f$-divergences is the Jensen Shannon divergence. The function $f$ is set to be
 \begin{align*}
-    f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right)
+    f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right).
 \end{align*}
 The divergence is then given by
 \begin{align*}
     \operatorname{JS}(f,g)=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g),
 \end{align*}
-where $H(f)=-\int f\log{f}$ is the Shannon entropy.
+where $H(f):=-\int f\log{f}$ is the Shannon entropy.
 
 The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
 \begin{align}\label{eq:JS_KL_formula}
@@ -627,6 +625,7 @@ After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref
     \todo[inline]{explain $N^2$ and $N^3$ behavior}
     \todo[inline]{add experiments that show failure for exponents $\alpha>2$}
     \todo[inline]{repeat the experiments for different $r$ and under repeated sampling}
+    \todo[inline]{28.10: add plot that shows the minimum of $\hat{Q}_0$}
 \end{figure}
 
 \subsection{Repeated sampling experiments}
@@ -785,7 +784,7 @@ Next, we state the main theorem of this thesis.
     See Appendix Section~\ref{sec:proof_main_thm}.
 \end{proof}
 
-\todo[inline]{Precedence: Laplace method!!}
+\todo[inline]{28.10: mention Laplace method as precedence!!}
 
 Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \begin{align*}
@@ -808,6 +807,8 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 \textcolor{red}{The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
+
+\todo[inline]{28.10: advance this section}
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
