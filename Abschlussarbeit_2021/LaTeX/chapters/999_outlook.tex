@@ -1,10 +1,30 @@
 \chapter{Outlook}\label{chap:outlook}
 
+During the research many interesting questions arose that could not be explored further due to limited resources. We use this Outlook chapter to present those ideas that can be approached in future research.
+
 \textbf{Geometric Estimation of Autoregressive processes}
 
-\todo[inline]{decrease overlap to increase convergence speed?}
+\textbf{Other convex--geometric functionals}
 
-\todo[inline]{Is the minimum width in any way related to the Fourier transform}
+Seeing the support of the sliding window point cloud of an auto-regressive time series as a convex--geometric object, which is a zonoid in case of bounded innovations and using the minimum width as convex--geometric functional to infer information about the AR order and AR coefficients leads to the question if there could be other convex--geometric functionals that could recover something from the time series.
+
+A natural candidate would be the mean width, given by integrating $w_k(u)$ over $\mathbb{S}^{k-1}$:
+\begin{align*}
+    \overline{w}_k=\int_{\mathbb{S}^{k-1}}w_k(u)\,d\sigma(u).
+\end{align*}
+In practice one would estimate the integral by Monte Carlo simulation. The estimator would take the form
+\begin{align*}
+    \hat{\overline{w}}_k=\int_{\mathbb{S}^{k-1}}\hat{w}_{k,T}(u)\,d\sigma(u)\approx\frac{1}{M}\sum_{m=1}^{M}\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},U_k\rangle,
+\end{align*}
+where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
+
+\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
+
+\todo[inline]{spherical harmonics: $Q_0$ (mean width), $Q_2$, $Q_4$, ...}
+
+\todo[inline]{numerical analogues $\hat{Q}_0$, $\hat{Q}_2$, $\hat{Q}_4$}
+
+\textbf{General innovation distributions}
 
 \todo[inline]{Big Question: How to generalize this approach for a wide class of innovation distributions? We only get the nice zonotope formulas because of innovations with bounded support}
 
@@ -53,24 +73,6 @@ That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, su
 
 \todo[inline]{find reference or prove}
 
-\textbf{Other convex--geometric functionals}
-
-\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
-
-\todo[inline]{spherical harmonics: $Q_0$ (mean width), $Q_2$, $Q_4$, ...}
-
-\todo[inline]{numerical analogues $\hat{Q}_0$, $\hat{Q}_2$, $\hat{Q}_4$}
-
-Besides the minimum width $m_k$ we can ask if other convex--geometric functionals can be used. A natural candidate would be the mean width, given by integrating $w_k(u)$ over $\mathbb{S}^{k-1}$:
-\begin{align*}
-    \overline{w}_k=\int_{\mathbb{S}^{k-1}}w_k(u)\,d\sigma(u).
-\end{align*}
-In practice one would estimate the integral by Monte Carlo simulation. The estimator would take the form
-\begin{align*}
-    \hat{\overline{w}}_k=\int_{\mathbb{S}^{k-1}}\hat{w}_{k,T}(u)\,d\sigma(u)\approx\frac{1}{M}\sum_{m=1}^{M}\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},U_k\rangle,
-\end{align*}
-where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
-
 \textbf{Real-world Data}
 
 \todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
@@ -80,6 +82,10 @@ where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
     \item traffic occupancy
     \item industrial control, system identification
 \end{itemize}
+
+\todo[inline]{decrease overlap to increase convergence speed?}
+
+\todo[inline]{Is the minimum width in any way related to the Fourier transform}
 
 \textbf{Spectral Scale Selection for Kernel Density Estimation}
 
