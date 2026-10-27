@@ -563,9 +563,11 @@ Next we formulate a Lemma that gives the first order asymptotic approximation fo
 
 The stronger condition $j_N-i_N=\mathbf{O}(1)$ (the difference between the index sequences stays asymptotically bounded) would lead to the remainder $\mathbf{O}(N^{-2})$.
 
-\textbf{Motivation for why a geometric grid is the natural choice}
+\todo[inline]{27.10: remove the motivation for geometric grid and just do the experiments with a linear grid}
 
-The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the area under the curve the same. We can measure the width of a kernel $K$, for example, by $s(K)\coloneqq\sqrt{\mu_2(K)}=(\int x^2K(x)\,dx)^{1/2}$. The width of the stretched kernel is $s(K_h)=hs(K)$. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$. Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the same factor $q_N$. Thus, each step stretches the kernel by the same factor.
+\textcolor{red}{\textbf{Motivation for why a geometric grid is the natural choice}}
+
+\textcolor{red}{The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the area under the curve the same. We can measure the width of a kernel $K$, for example, by $s(K)\coloneqq\sqrt{\mu_2(K)}=(\int x^2K(x)\,dx)^{1/2}$. The width of the stretched kernel is $s(K_h)=hs(K)$. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$. Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the same factor $q_N$. Thus, each step stretches the kernel by the same factor.}
 
 \section{Numerical Experiments}
 
@@ -815,8 +817,12 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
     \end{align*}
     and because every entry of the Perron vector is positive, $\rho_N\le a_{i_{\text{crit}}^{(N)},N}$.
 
-    \textcolor{red}{There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$.}
-    
+    There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$. Assume for a contradiction that for all null sequences $(\epsilon_N)$ and for all $N_0\in\mathbb{N}$ there exist $N\ge N_0$ and $1\le i\le N$ such that $a_{i,N}>m(t_i)+\epsilon_N$. This implies the existence of $d>0$ and $N_1<N_2<\dots$ and indices $i_1,i_2,\dots$ such that $a_{i_l,N_l}>m(t_{i_l})+d$. By compactness and continuity arguments $\lim\inf_{l\to\infty}a_{i_l,N_l}\ge m(t_0)+d$ for some $t_0\in[\alpha,\beta]$.
+
+    \textcolor{red}{But on the other hand $\lim\sup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$, because ...}
+
+    Combining this would yield the contradiction $m(t_0)+d\le m(t_0)$.
+
     The main difficulty lies in showing that $\rho_N\to M:=\sqrt{\pi/\hat{Q}_r(h^{\ast})}$. It can be divided into showing $\limsup\rho_N\le M$ and $\liminf\rho_N\ge M$.
 
     \textit{$\limsup\rho_N\le M$.} It holds $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N\le M+\epsilon_N$ and therefore $\limsup\rho_N\le M$.
@@ -860,22 +866,22 @@ The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_r(h)]$ 
 
 The expectation of the energy functional is
 \begin{align*}
-    \mathbb{E}[\hat{Q}_r]=\frac{1}{2}h^{2(1-r)}\left(\frac{1}{n}\|\partial_hK_h\|_2^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_2^2\right).
+    \mathbb{E}[\hat{Q}_r]=\frac{1}{2}h^{2(1-r)}\left(\frac{1}{n}\|\partial_hK_h\|_{L^2}^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_{L^2}^2\right).
 \end{align*}
 
 Similarly to the $\operatorname{AMISE}$ we do a leading term approximation:
 \begin{align*}
-    \mathbb{E}[\hat{Q}_r]=\underbrace{\frac{1}{2n}h^{-(1+2r)}\|L\|_2^2+\frac{n-1}{2n}h^{4-2r}\mu_2(K)^2\|f''\|_2^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r}).
+    \mathbb{E}[\hat{Q}_r]=\underbrace{\frac{1}{2n}h^{-(1+2r)}\|L\|_{L^2}^2+\frac{n-1}{2n}h^{4-2r}\mu_2(K)^2\|f''\|_{L^2}^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r}).
 \end{align*}
 
 The minimizer of $\operatorname{AMQ}_r(h)$ is
 \begin{align*}
-    h_{\operatorname{AMQ},r}(n)=\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{(n-1)\mu_2(K)^2\|f''\|_2^2}\right)^{1/5}
+    h_{\operatorname{AMQ},r}(n)=\left(\frac{1+2r}{4-2r}\frac{\|L\|_{L^2}^2}{(n-1)\mu_2(K)^2\|f''\|_{L^2}^2}\right)^{1/5}
 \end{align*}
 
 We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise} and we get
 \begin{align}\label{eq:h_amq_limit}
-    \frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}\to\frac{1+2r}{4-2r}\left(\frac{\|L\|_2^2}{\|K\|_2^2}\right)^{1/5},\quad n\to\infty.
+    \frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}\to\frac{1+2r}{4-2r}\left(\frac{\|L\|_{L^2}^2}{\|K\|_{L^2}^2}\right)^{1/5},\quad n\to\infty.
 \end{align}
 
 For $r=13/14$ we thus see that $h_{\operatorname{AMQ},r}(n)$ is asymptotically equivalent. This is because if $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$ and the right and the limit in Equation~\eqref{eq:h_amq_limit} becomes $1$.
