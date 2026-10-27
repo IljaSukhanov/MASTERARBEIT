@@ -735,7 +735,7 @@ Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show 
 
 This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}. In Figure~\ref{fig:chosen_bandwidths_vs_lambda} the chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ with the smallest consecutive jump $D_{j,j+1}$, that is, $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
-\subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}
+\subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}\label{sec:perron_vector_concentrates}
 
 To explain the results, we need the concept of a Fréchet-derivative. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.2 therein.
 
@@ -803,8 +803,6 @@ For the Gaussian Kernel, the energy functional $\hat{Q}_r$ can be written down e
 where $d_{ij}=X_i-X_j$. Using standard optimization methods, we can minimize $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_2(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths} and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_2$.
 
 The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks at the minimizer of the energy functional (after proper scaling). The next result aims to give the answer.
-
-\todo[inline]{26.10: Last big result. Prove it}
 
 \begin{Prop}
     Assume that $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$. And let $k_N\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. Then $h_{k_N}\to h^{\ast}$.
@@ -877,6 +875,8 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 \textcolor{red}{The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
+
+In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
 The next result connects the asymptotic minimizer of $\mathbb{E}[\hat{Q}_r(h)]$ to the asymptotic minimizer of $\operatorname{MISE}(h)$.
 
