@@ -455,3 +455,69 @@
     \end{align*}
     We must make sure that $\hat{Q}_r(h_0)>0$. This follows from previously established results inside this proof. For all sufficiently large $N$ we have $0<c\le\delta_{N,i_N+1}^{-2}D_{i_N,i_N+1}=\hat{Q}_r(h_{i_N})+\delta_{N,i_N+1}^{-2}\rho_{N,i_N+1}$ and taking the limit gives $\hat{Q}_r(h_0)\ge c>0$.
 \end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:main_thm2}}\label{sec:proof_main_thm2}
+
+\begin{proof}
+    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$ and by $v^{(N)}=(v^{(N)}_1,\dots,v^{(N)}_N)$ the corresponding principal eigenvector. That is, we have $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$. Let $i_{\text{crit}}^{(N)}\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. We have
+    \begin{align*}
+        \rho_Nv^{(N)}_{i_{\text{crit}}^{(N)}}=\sqrt{\lambda_N}\Delta_{r,N}\sum_{j=1}^{N}S^{(N)}_{i_{\text{crit}}^{(N)}j}v_j\le\sqrt{\lambda_N}\Delta_{r,N}v_{i_{\text{crit}}^{(N)}} R_{i_{\text{crit}}^{(N)}}^{(N)}
+    \end{align*}
+    and because every entry of the Perron vector is positive, $\rho_N\le a_{i_{\text{crit}}^{(N)},N}$.
+
+    There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$. Assume for a contradiction that for all null sequences $(\epsilon_N)$ and for all $N_0\in\mathbb{N}$ there exist $N\ge N_0$ and $1\le i\le N$ such that $a_{i,N}>m(t_i)+\epsilon_N$. This implies the existence of $d>0$ and $N_1<N_2<\dots$ and indices $i_1,i_2,\dots$ such that $a_{i_l,N_l}>m(t_{i_l})+d$. By compactness and continuity arguments $\lim\inf_{l\to\infty}a_{i_l,N_l}\ge m(t_0)+d$ for some $t_0\in[\alpha,\beta]$.
+
+    But on the other hand $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$, because
+    \begin{align*}
+        a_{i_l,N_l}=\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|\le A}S_{i_l,j}^{(N_l)}}_{=:P_{N_l}(A)}+\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|>A}S_{i_l,j}^{(N_l)}}_{=:T_{N_l}(A)}.
+    \end{align*}
+    In the proof of Proposition~\ref{prop:main_thm} we have already shown $\lim\sup_{l\to\infty}\sigma_{N_l}T_{N_l}(A)\le e^{-cA^2}/(cA)$.
+
+    In the proof of Proposition~\ref{prop:main_thm} we have also seen that
+    \begin{align*}
+        \sigma_{N_l}P_{N_l}(A)=\sigma_{N_l}\sum_{j:|t_{N_l,j}|\le A}e^{-t_{N_l,j}^2\hat{Q}_r(h_0)}+\mathbf{o}(1).
+    \end{align*}
+
+    Now we have
+    \begin{align*}
+        \sum_{j:|t_{N_l,j}|\le A}e^{-q_0t_{N_l,j}^2}\le\sum_{k\in\mathbb{Z},|\sigma_{N_l}k|\le A}e^{-q_0(\sigma_{N_l}k)^2}=:G_{N_l}(A).
+    \end{align*}
+
+    In the proof of Proposition~\ref{prop:main_thm} we have seen that $\sigma_{N_l}G_{N_l}(A)\to\int_{-A}^{A}e^{-q_0z^2}\,dz$ and thus we get $\limsup_{l\to\infty}\sigma_{N_l}P_{N_l}(A)\le\int_{-A}^{A}e^{-q_0z^2}\,dz$. In total we have $\limsup_{l\to\infty}a_{i_l,N_l}\le\int_{-A}^{A}e^{-q_0z^2}\,dz+e^{-cA^2}/(cA)$, and taking $A\to\infty$ yields $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$.
+
+    Combining this would yield the contradiction $m(t_0)+d\le m(t_0)$.
+
+    The main difficulty lies in showing that $\rho_N\to M:=\sqrt{\pi/\hat{Q}_r(h^{\ast})}$. It can be divided into showing $\limsup\rho_N\le M$ and $\liminf\rho_N\ge M$.
+
+    \textit{$\limsup\rho_N\le M$.} It holds $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N\le M+\epsilon_N$ and therefore $\limsup\rho_N\le M$.
+
+    \textit{$\liminf\rho_N\ge M$} We use the Rayleigh variational representation
+    \begin{align*}
+        \rho_N&=\max_{x\ne 0}(x^{T}A^{(N)}x)/(x^{T}x)=(v^{(N)})^{T}A^{(N)}v^{(N)}/(v^{(N)})^{T}(v^{(N)})\\&
+        \ge(y^{(N)})^{(T)}A^{(N)}y^{(N)}/((y^{(N)})^{T}(y^{(N)}))
+    \end{align*}
+    for all $y^{(N)}\in\mathbb{R}^{N}$, $y^{(N)}\ne0$. Let $0<\eta<M$. By the continuity of $m$ we can find a non-empty closed interval $J\subseteq(\alpha,\beta)$ such that $m(t)\ge M-\eta$ for all $t\in J$. Denote the interval by $J=[u,v]$, $u<v$. Define $y^{(N)}$ by $y^{(N)}_i=\mathbf{1}\{t_i\in J\}$. Let $I_N=\{i:t_i\in J\}$. 
+
+    For all sufficiently large $N$, $I_N$ is nonempty (this follows from $\Delta_{r,N}$ being eventually smaller than $v-u$, which is why for $i_N=1+\lceil(u-\alpha)/\Delta_{r,N}\rceil$ we have $t_{i_N}\in J$). Because of that, $y^{(N)}\ne0$ for sufficiently large $N$. It follows
+    \begin{align*}
+        \rho_N&\ge(y^{(N)})^{(T)}A^{(N)}y^{(N)}/((y^{(N)})^{T}(y^{(N)}))=\frac{1}{\#I_N}\sum_{i,j\in I_N}A_{ij}^{(N)}\\&
+        =\frac{1}{\#I_N}\sum_{i\in I_N}a_{i,N}-\underbrace{\frac{1}{\#I_N}\sum_{i\in I_N}\sum_{j\notin I_N}A_{ij}^{(N)}}_{=:E_N}.
+    \end{align*}
+
+    Set $b_N:=\min\{a_{i,N}:i\in I_N\}$. Then $(1/\# I_N)\sum_{i\in I_N}a_{i,N}\ge b_{i,N}$. For a contradiction, assume that there exists a subsequence $(b_{N_l})$ such that $b_{N_l}$ converges towards a limit $b<M-\eta$. Choose $i_l\in I_{N_l}$ so that $b_{N_l}=\min_{i\in N_l}a_{i,N_l}=a_{i_l,N_l}$. Since $t_{i_l}\in J$ and $J$ is compact, there exists a further subsequence $t_{i_{l_k}}$ such that $t_{i_{l_k}}\to t_0\in J$ for $k\to\infty$. Now we are in a position to apply Proposition~\ref{prop:main_thm} and obtain $b_{i_{l_k}}\to m(t_0)$, but $m(t_0)\ge M-\eta$ by the definition of the set $J$, which is a contradiction. We have thus shown that $\lim\inf b_N\ge M-\eta$.
+
+    Next, we show that $E_N\to0$ for $N\to\infty$. From the proof of Proposition~\ref{prop:main_thm} we know that $A_{ij}^{(N)}\le\sigma_Ne^{-c\sigma_N^2(i-j)^2}$, where we have set $\sigma_N:=\sqrt{\lambda_N}\Delta_{r,N}$. Now we see
+    \begin{align*}
+        (\#I_N)E_N&=\sum_{i\in I_N,j\notin I_N}A_{ij}^{(N)}\le\sigma_N\sum_{k=1}^{\infty}\sum_{i\in I_N,j\notin I_N,|i-j|=k}e^{-c\sigma_N^2k^2}\\&
+        =\sigma_N\sum_{k=1}^{\infty}\underbrace{\#\{(i,j):i\in I_N,j\notin I_N,|i-j|=k\}}_{\le2k}e^{-c\sigma_N^2k^2}\\&
+        \le2\sigma_N\sum_{k=1}^{\infty}ke^{-c\sigma_N^2k^2}\le2\sigma_N\int_0^{\infty}(x+1)e^{-c\sigma_N^2x^2}\,dx\\&
+        =\frac{1}{c\sigma_N}+\frac{\sqrt{\pi}}{\sqrt{c}}.
+    \end{align*}
+    During the above calculations, we have bounded the number of index pairs $(i,j)$ with $i\in I_N$, $j\in I_N$ and $|i-j|=k$ above by $2k$. This can be done because $I_N$ is a set of consecutive indices which we can denote by $t_{j_1},\dots,t_{j_K}$ where only one of the first $k$ indices $i\in\{j_1,\dots,j_k\}$ can have an index $j$ such that $t_j$ is outside of $I_N$ and $|i-j|=k$. Similarly, only the last $k$ indices $i\in\{j_{K-k+1},\dots,j_{K}\}$ can have an index $j$ such that $t_j$ is outside of $I_N$ and $|i-j|=k$. In the last inequality, we have also used $\int_{k-1}^k(x+1)e^{-c\sigma_N^2x^2}\,dx\ge ke^{-c\sigma_N^2k^2}$ for all $k\in\mathbb{N}$.
+    
+    The number of nodes inside $I_N$ can be bounded below by $\#I_N\ge (v-u)/\Delta_{r,N}-1\to\infty$. Hence, $1/(\#I_N)\to0$ and $\sigma_N(\#I_N)\ge(u-v)\frac{\sigma_N}{\Delta_{r,N}}-\sigma_N=(u-v)\sqrt{\lambda_N}-\sqrt{\lambda_N}\Delta_{r,N}\to\infty$ and hence $1/\sigma_N(\#I_N)\to0$ too. Thus $E_N\to0$.
+
+    Bringing the previous arguments together, we arrive at $\lim\inf\rho_N\ge\liminf b_n\ge M-\eta$ and since $\eta$ was arbitrary, $\liminf\rho_N\ge M$. Thus, we have $\rho_N\to M$ for $N\to\infty$.
+    
+    We now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
+\end{proof}
