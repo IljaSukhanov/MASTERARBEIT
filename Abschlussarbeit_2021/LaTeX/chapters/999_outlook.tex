@@ -4,7 +4,7 @@ During the research many interesting questions arose that could not be explored 
 
 \textbf{Geometric Estimation of Autoregressive processes}
 
-\todo[inline]{28.10: Write outlook for AR part!}
+\todo[inline]{31.10: Write outlook for AR part!}
 
 \textbf{Other convex--geometric functionals}
 
@@ -83,39 +83,13 @@ That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, su
     \item industrial control, system identification
 \end{itemize}
 
-\todo[inline]{decrease overlap to increase convergence speed?}
-
-\todo[inline]{Is the minimum width in any way related to the Fourier transform}
-
 \textbf{Spectral Scale Selection for Kernel Density Estimation}
 
-\textbf{Rényi divergence}
-
-\todo[inline]{Rényi is not conditionally negative definite?}
-\todo[inline]{Rényi is unbounded?}
-
-\begin{Rem}[Rényi divergence]
-    The class of Rényi divergences is defined as
-    \begin{align*}
-        R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
-    \end{align*}
-    where $\alpha\in\mathbb{R}_{>0}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence.
-
-    The Rényi divergence is not a $f$-divergence, but the Rényi and Amari divergences are both strictly decreasing transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
-    \begin{align*}
-        R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t}\\
-        D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1)
-    \end{align*}
-    Thus, the Rényi and Amari divergences can be transformed into each other using a strictly increasing function.
-\end{Rem}
+Regarding the spectral scale methodology that we invented in Chapter~\ref{chap:kde}, the natural next step is to first test the other symmetric divergences: Hellinger, Jensen-Shannon, and Total Variation.
 
 \textbf{Bounded Divergences}
 
-From~[] we have the uniform bound $D_f(p,q)\le C_f:=f(0)+f^{\ast}(0)$ over all $p,q\in\mathcal{P}$. Here, $f^{\ast}(0)=\lim_{t\downarrow0}tf(t^{-1})$. It follows that a $f$-divergence is bounded if and only if $f(0)+f^{\ast}(0)<\infty$. In case $f$ is symmetric this is just equivalent to $2f(0)<\infty$.
-
-For bounded divergences, we can use a more straightforward transformation approach by setting $\Sigma^{(N)}_{ij}=C_f-D_f(\hat{f}_{h_i},\hat{f}_{h_j})$ and normalizing $\Tilde{\Sigma}^{(N)}_{ij}=C_f^{-1}\Sigma^{(N)}_{ij}=1-D_f(\hat{f}_{h_i},\hat{f}_{h_j})/C_f$.
-
-For example, the total variation divergence can be written as
+These three divergence also have the special property that they are bounded. From~[\todo{cite!}] we have the uniform bound $D_f(p,q)\le C_f:=f(0)+f^{\ast}(0)$ over all $p,q\in\mathcal{P}$. Here, $f^{\ast}(0)=\lim_{t\downarrow0}tf(t^{-1})$. It follows that a $f$-divergence is bounded if and only if $f(0)+f^{\ast}(0)<\infty$. In case $f$ is symmetric, this is equivalent to $2f(0)<\infty$. For bounded divergences, we can use a more straightforward transformation approach by setting $\Sigma^{(N)}_{ij}=C_f-D_f(\hat{f}_{h_i},\hat{f}_{h_j})$ and normalizing $\Tilde{\Sigma}^{(N)}_{ij}=C_f^{-1}\Sigma^{(N)}_{ij}=1-D_f(\hat{f}_{h_i},\hat{f}_{h_j})/C_f$. For example, the total variation divergence can be written as
 \begin{align*}
     d_{\text{TV}}(p,q)&=\frac{1}{2}\int|p-q|=1-1+\frac{1}{2}\int|p-q|\\&
     =1-\frac{1}{2}\int p-\frac{1}{2}\int q+\frac{1}{2}\int|p-q|\\&
@@ -124,15 +98,34 @@ For example, the total variation divergence can be written as
 \end{align*}
 Thus, $d_{\text{TV}}(p,q)\le1$ and $1-d_{\text{TV}}(p,q)=\int\min\{p,q\}$ is a similarity measure between $p$ and $q$. Similarly for the squared Hellinger distance we can write
 \begin{align*}
-    H^2(p,q)=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2=1-\int\sqrt{pq}
+    H^2(p,q)=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2=1-\int\sqrt{pq}.
 \end{align*}
-So again $H^2(p,q)\le 1$ and $1-H^2(p,q)=\int\sqrt{pq}$ is a similarity measure between $p$ and $q$. \textcolor{red}{For total variation, we use the $\min$ kernel and for squared Hellinger Bhattacharyya kernel (see~\cite{jebara_probability_nodate}).} The JS divergence can also is also bounded:
+So again $H^2(p,q)\le 1$ and $1-H^2(p,q)=\int\sqrt{pq}$ is a similarity measure between $p$ and $q$. \textcolor{red}{For total variation, we use the $\min$ kernel and for squared Hellinger Bhattacharyya kernel (see~\cite{jebara_probability_nodate}).} The JS divergence can also be bounded:
 \begin{align*}
     f(t)&=\frac{1}{2}t\log{\underbrace{\frac{2t}{1+t}}_{\le 2}}+\frac{1}{2}\log{\underbrace{\frac{2}{1+t}}_{\le 2}}\le\frac{1}{2}\log{2}(t+1),\quad t\ge0,\\
-    \operatorname{JS}(p,q)&=\int qf(p/q)\le\int q\frac{1}{2}\log{2}\left(\frac{p}{q}+1\right)=\log{2}
+    \operatorname{JS}(p,q)&=\int qf(p/q)\le\int q\frac{1}{2}\log{2}\left(\frac{p}{q}+1\right)=\log{2}.
 \end{align*}
 
+
+\textbf{Rényi divergence}
+
+Another popular class of parameterized divergences is the class of so called Rényi divergences. The class of Rényi divergences is defined as
+    \begin{align*}
+        R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
+    \end{align*}
+where $\alpha\in\mathbb{R}_{>0}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence. The Rényi divergence is not a $f$-divergence, but the Rényi and Amari divergences are both strictly decreasing transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
+    \begin{align*}
+        R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t},\quad\text{ and }\\
+        D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1).
+    \end{align*}
+Thus, the Rényi and Amari divergences can be transformed into each other using a strictly increasing function.
+
+\todo[inline]{Rényi is not conditionally negative definite?}
+\todo[inline]{Rényi is unbounded?}
+
 \textbf{Numerical Approximation of the $\alpha$-divergence and total variation}
+
+Following the need for rigorous error bounds when approximating the divergences, we give truncation bounds for the $\alpha$-divergence and the total variation divergence. 
 
 We decide to use the classical quadrature formula
 \begin{align*}
@@ -159,7 +152,7 @@ for the $\alpha$-divergence and truncating the total variation yields
     \frac{1}{2}\int_{A^c}|p-q|\le\frac{1}{2}\int_{A^c}p+\frac{1}{2}\int_{A^c}q\le\delta_L.
 \end{align*}
 
-As a consequence, we see that approximating $\alpha$-divergence and total variation using the composite trapezoidal rule allows clean error control. 
+As a consequence, we see that approximating $\alpha$-divergence and total variation using the composite trapezoidal rule allows clean error control.
 
 \textbf{Numerical Approximation of Jensen-Shannon divergence}
 
@@ -172,25 +165,19 @@ Using the formula in Equation~\eqref{eq:JS_KL_formula} we can also approximate t
 
 One advantage of the Gauss-Hermite quadrature is that we do not need to care about the truncation error because there is none.
 
-\textbf{Asymmetric divergences}
-
-\begin{itemize}
-    \item Kullback-Leibler: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$)
-\end{itemize}
-
-\textbf{Data coming from the Gaussian mixture model}
-
-Later we inspect data coming from a Gaussian mixture model. In such cases, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for the candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
-
 \textbf{Extension to asymmetric divergences}
 
 \todo[inline]{Stationary distribution construction for asymmetric scale similarity matrices}
 
 The fact that the similarity matrix $S$ is not symmetric in general is not a problem because the Doob h transform also works in this case. The resulting stationary distribution $\pi$ is given by
 \begin{align*}
-    \pi_i=\frac{l_ir_i}{\sum_{j=1}^{N}l_jr_j}
+    \pi_i=\frac{l_ir_i}{\sum_{j=1}^{N}l_jr_j},
 \end{align*}
 where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is, $Sr=\lambda_{\max}r$ and $S^{T}l=\lambda_{\max}l$.
+
+This construction gives rise to the study of our methodology for generally asymmetric divergences, most prominently the Kullback-Leibler divergence: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$).
+
+\textbf{Perron vector stability analysis}
 
 \todo[inline]{Mention Davis Kahan theorem and spectral gap}
 \todo[inline]{Matrix pertubation theory}
@@ -199,7 +186,9 @@ where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is,
 
 \todo[inline]{Power method (compute Perron vector through Power iteration)}
 
-\todo[inline]{add spectral bandwidth choices for total variation, squared Hellinger and Jensen Shannon}
+\textbf{Data coming from the Gaussian mixture model}
+
+In cases where the data comes from a Gaussian mixture model, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
 
 \textbf{Bandwidth grid that scales with sample size}
 
