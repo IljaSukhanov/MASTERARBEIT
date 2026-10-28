@@ -15,7 +15,9 @@ import pandas as pd
 from scipy import stats
 
 KDE_DIR = Path(__file__).resolve().parents[3]
-DATA_DIR = KDE_DIR / "outputs/data/local_energy_minimizers_n200"
+from kde_tools.energy_minimization import unified_energy_run_directory, energy_search_settings, energy_search_id
+
+DATA_DIR = unified_energy_run_directory(KDE_DIR / "outputs/data/local_energy_minimizers_n200")
 MODELS = {
     "normal": (stats.norm, {}, 2),
     "lognormal": (stats.lognorm, {"floc": 0}, 2),

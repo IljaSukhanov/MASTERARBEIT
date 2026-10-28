@@ -22,9 +22,10 @@ if str(KDE_DIR) not in sys.path:
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.optimize import minimize_scalar
 from threadpoolctl import threadpool_limits
 
+from kde_tools.qhat import minimize_qhat
+from kde_tools.energy_minimization import energy_search_settings
 from kde_tools.bandwidths import bandwidth_grid_linear_in_psi_beta
 from kde_tools.fourier import (
     DEFAULT_FREQUENCY_CUTOFF,
@@ -99,6 +100,10 @@ def grid_metric(h: float, squared_differences: np.ndarray) -> float:
 
 
 def run_experiment() -> tuple[pd.DataFrame, dict, np.ndarray, np.ndarray]:
+    global DATA_DIR
+    from kde_tools.energy_minimization import unified_energy_run_directory
+    if not DATA_DIR.name.startswith("unified_"):
+        DATA_DIR = unified_energy_run_directory(DATA_DIR)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     samples = np.random.default_rng(SEED).normal(size=N_DATA)
     settings = {
@@ -109,6 +114,7 @@ def run_experiment() -> tuple[pd.DataFrame, dict, np.ndarray, np.ndarray]:
         "frequency_cutoff": DEFAULT_FREQUENCY_CUTOFF,
         "frequency_intervals": DEFAULT_FREQUENCY_INTERVALS,
         "l2_method": FOURIER_L2_METHOD_VERSION, "perron_solver": PERRON_SOLVER_VERSION,
+        "energy_search": energy_search_settings(),
         "source_notebook": "xx_notebooks_asymptotics/experiment_1_joint_N_lambda_limit.ipynb",
         "only_experiment_change": GRID_DESCRIPTION,
     }
@@ -118,32 +124,19 @@ def run_experiment() -> tuple[pd.DataFrame, dict, np.ndarray, np.ndarray]:
     settings_path.write_text(json.dumps(settings, indent=2) + "\n")
     np.savetxt(DATA_DIR / "sample.csv", samples, delimiter=",", header="x", comments="")
 
-    # Search the complete interval and include both endpoints. A single bounded
-    # minimization can miss a boundary global minimum or competing local minima.
     squared_differences = (samples[:, None] - samples[None, :])**2
     metric_h = np.geomspace(H_MIN, H_MAX, 2001)
     metric_q = np.array([grid_metric(h, squared_differences) for h in metric_h])
-    local_indices = np.flatnonzero(
-        (metric_q[1:-1] < metric_q[:-2]) & (metric_q[1:-1] < metric_q[2:])
-    ) + 1
-    candidates = [H_MIN, H_MAX]
-    for i in local_indices:
-        optimum = minimize_scalar(
-            lambda h: grid_metric(h, squared_differences),
-            bounds=(metric_h[i-1], metric_h[i+1]), method="bounded",
-            options={"xatol": 1e-13},
-        )
-        if not optimum.success:
-            raise RuntimeError(optimum.message)
-        candidates.append(float(optimum.x))
-    candidate_q = [grid_metric(h, squared_differences) for h in candidates]
-    reference_index = int(np.argmin(candidate_q))
+    energy_analysis = minimize_qhat(samples, H_MIN, H_MAX, r=R)
+    best = energy_analysis["global_minimum"]
+    candidates = energy_analysis["endpoints"]+energy_analysis["local_minima"]
     reference = {
-        "h_reference": candidates[reference_index],
-        "q_reference": candidate_q[reference_index],
-        "reference_is_endpoint": reference_index < 2,
-        "candidate_h": candidates, "candidate_q": candidate_q,
-        "reference_method": "2001-point log scan, all detected local minima refined, both endpoints included",
+        "h_reference": best["h"], "q_reference": best["energy"],
+        "reference_is_endpoint": bool(best["boundary"]),
+        "candidate_h": [point["h"] for point in candidates],
+        "candidate_q": [point["energy"] for point in candidates],
+        "reference_method": "shared bandwidth-energy minimization engine",
+        "analysis": energy_analysis,
     }
     (DATA_DIR / "reference.json").write_text(json.dumps(reference, indent=2) + "\n")
     metric_column = "q_r1" if R == 1.0 else "q_r"

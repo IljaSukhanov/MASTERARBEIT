@@ -1,0 +1,106 @@
+figure_3_5: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp642dt62t/figure_3_5/2fd8f83f7b7feac6
+figure_3_5: completed 3/3
+localized: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp642dt62t/localized/192f52f591137ea9
+localized: completed 3/3
+localized: 0/2 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp4qfeepqt/localized/a29b076a64c712a8
+localized: completed 2/2
+localized: 2/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp4qfeepqt/localized/192f52f591137ea9
+localized: completed 3/3
+figure_3_5: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp6qsuqn2y/figure_3_5/2fd8f83f7b7feac6
+figure_3_5: completed 3/3
+figure_3_5: 3/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp6qsuqn2y/figure_3_5/2fd8f83f7b7feac6
+exact_gaussian: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp4r2oo_jz/exact_gaussian/7b615b803d3aae68
+exact_gaussian: completed 3/3
+exact_gaussian: 3/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmp4r2oo_jz/exact_gaussian/7b615b803d3aae68
+figure_3_5: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmpla5qqivl/figure_3_5/2fd8f83f7b7feac6
+figure_3_5: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmpla5qqivl/figure_3_5/2fd8f83f7b7feac6
+figure_3_5: completed 3/3
+figure_3_5: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmpf2sv2y5c/figure_3_5/2fd8f83f7b7feac6
+figure_3_5: completed 3/3
+localized: 0/2 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmpjcynjvl9/localized/a29b076a64c712a8
+localized: completed 2/2
+localized: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmpjcynjvl9/localized/192f52f591137ea9
+localized: completed 3/3
+figure_3_5: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmprufqjyqz/figure_3_5/2fd8f83f7b7feac6
+figure_3_5: completed 3/3
+localized: 0/3 repetitions cached; /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/tmprufqjyqz/localized/192f52f591137ea9
+localized: completed 3/3
+.....................................E........FFF.E................E..........................
+======================================================================
+ERROR: test_kde_tools (unittest.loader._FailedTest.test_kde_tools)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_kde_tools
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/tests/test_kde_tools.py", line 26, in <module>
+    from kde_tools.plotting_functions import (
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/plotting_functions.py", line 7, in <module>
+    import plotly.graph_objects as go
+ModuleNotFoundError: No module named 'plotly'
+
+
+======================================================================
+ERROR: test_notebooks_cannot_reintroduce_local_eigensolvers (test_perron.NotebookRoutingTests.test_notebooks_cannot_reintroduce_local_eigensolvers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/tests/test_perron.py", line 259, in test_notebooks_cannot_reintroduce_local_eigensolvers
+    for node in ast.walk(ast.parse("".join(cell["source"]))):
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/ast.py", line 52, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 1
+    %matplotlib inline
+    ^
+SyntaxError: invalid syntax
+
+======================================================================
+ERROR: test_zero_lambda_returns_exactly_uniform_vector (test_perron.PerronTests.test_zero_lambda_returns_exactly_uniform_vector)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/tests/test_perron.py", line 106, in test_zero_lambda_returns_exactly_uniform_vector
+    actual = perron_vector_from_divergence(self.divergence, 0.0)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/perron.py", line 221, in perron_vector_from_divergence
+    return perron_eigenpair_from_divergence(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/perron.py", line 207, in perron_eigenpair_from_divergence
+    result = perron_eigenpair(
+             ^^^^^^^^^^^^^^^^^
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/perron.py", line 136, in perron_eigenpair
+    leading = float(eigenvalues[-1])
+                    ~~~~~~~~~~~^^^^
+IndexError: index -1 is out of bounds for axis 0 with size 0
+
+======================================================================
+FAIL: test_every_notebook_retains_automatic_pdf_setup (test_perron.NotebookRoutingTests.test_every_notebook_retains_automatic_pdf_setup) (notebook='local_energy_minimizers_n200.ipynb')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/tests/test_perron.py", line 284, in test_every_notebook_retains_automatic_pdf_setup
+    self.assertIn("enable_automatic_pdf_saving(", setup)
+AssertionError: 'enable_automatic_pdf_saving(' not found in '## Setup\n\nEnable automatic PDF saving before plotting. The histogram PDF is saved under `../outputs/pdfs/local_energy_minimizers_n200/`. The paired samples, all local minima, selected minima, summaries, histogram counts, and validation are saved under `../outputs/data/local_energy_minimizers_n200/`.'
+
+======================================================================
+FAIL: test_every_notebook_retains_automatic_pdf_setup (test_perron.NotebookRoutingTests.test_every_notebook_retains_automatic_pdf_setup) (notebook='r13over14_joint_N_lambda_limit.ipynb')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/tests/test_perron.py", line 284, in test_every_notebook_retains_automatic_pdf_setup
+    self.assertIn("enable_automatic_pdf_saving(", setup)
+AssertionError: 'enable_automatic_pdf_saving(' not found in '## Setup\n\nEnable the shared automatic PDF exporter. Every displayed figure is saved under `../outputs/pdfs/r13over14_joint_n_lambda_limit/`. Data, sample, checkpoints, reference calculations, and validation diagnostics are stored separately under `../outputs/data/r13over14_joint_n_lambda_limit/`. The earlier r=1 results are preserved.'
+
+======================================================================
+FAIL: test_every_notebook_retains_automatic_pdf_setup (test_perron.NotebookRoutingTests.test_every_notebook_retains_automatic_pdf_setup) (notebook='linear_grid_joint_N_lambda_limit.ipynb')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/tests/test_perron.py", line 284, in test_every_notebook_retains_automatic_pdf_setup
+    self.assertIn("enable_automatic_pdf_saving(", setup)
+AssertionError: 'enable_automatic_pdf_saving(' not found in '## Setup\n\nEnable the shared automatic PDF exporter before creating or showing figures. Every displayed figure is saved under `../outputs/pdfs/linear_grid_joint_n_lambda_limit/`. The shared implementation below also saves the sample, full results, reference scan, and validation diagnostics under `../outputs/data/linear_grid_joint_n_lambda_limit/`. Completed grid sizes are reused on reruns.'
+
+----------------------------------------------------------------------
+Ran 92 tests in 3.957s
+
+FAILED (failures=3, errors=3)

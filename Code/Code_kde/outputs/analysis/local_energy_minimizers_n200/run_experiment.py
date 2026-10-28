@@ -23,22 +23,22 @@ if str(KDE_DIR) not in sys.path:
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.optimize import brentq
-from scipy.spatial.distance import pdist
 from threadpoolctl import threadpool_limits
 
-from kde_tools.qhat import _energy
+from kde_tools.qhat import _energy, GaussianQhatObjective, minimize_qhat
+from kde_tools.energy_minimization import (energy_search_id, energy_search_settings,
+                                            minimize_bandwidth_energy, search_config, DEFAULT_ENERGY_SEARCH)
 from kde_tools.pdf_export import enable_automatic_pdf_saving
 
 NAME = "local_energy_minimizers_n200"
-DATA_DIR = KDE_DIR / "outputs" / "data" / NAME
+DATA_DIR = KDE_DIR / "outputs" / "data" / NAME / ("unified_" + energy_search_id())
 IMAGE_DIR = KDE_DIR / "outputs" / "images" / NAME
 M, N_DATA, SEED, BANK_WIDTH = 1000, 200, 20260830, 1000
 METHODS = ("r0", "r13over14", "r1")
 R_VALUES = (0.0, 13.0/14.0, 1.0)
 R_LABELS = ("0", "13/14", "1")
-SCAN_POINTS, WORKERS = 1025, 4
-VERSION = "exact_local_minima_curvature_augmented_v1"
+SCAN_POINTS, WORKERS = DEFAULT_ENERGY_SEARCH.scan_points, 4
+VERSION = "unified_local_minima_v2_" + energy_search_id()
 
 
 def transformed(base: np.ndarray, z: float, r: float) -> np.ndarray:
@@ -46,96 +46,57 @@ def transformed(base: np.ndarray, z: float, r: float) -> np.ndarray:
     return np.exp(-2*r*z)*np.array([q, g-2*r*q, k-4*r*g+4*r*r*q])
 
 
-def roots_from_scan(d2: np.ndarray, n: int, z: np.ndarray, base: np.ndarray, r: float) -> list[dict]:
-    """Refine negative-to-positive energy-gradient crossings exactly.
-
-    Curvature roots augment the grid, exposing shallow gradient excursions
-    that could contain a nearby minimum/maximum pair between scan nodes.
-    """
+def roots_from_scan(d2, n, z, base, r):
+    """Compatibility adapter; all root searches use the shared engine."""
+    cached = {float(t): transformed(row, float(t), r) for t, row in zip(z, base)}
     def exact(t):
-        return transformed(_energy(d2, n, t), t, r)
-
-    curvature = base[:, 2]-4*r*base[:, 1]+4*r*r*base[:, 0]
-    nodes = {float(t): row for t, row in zip(z, base)}
-    for i in np.flatnonzero(curvature[:-1]*curvature[1:] < 0):
-        t = brentq(lambda t: exact(t)[2], z[i], z[i+1], xtol=2e-13)
-        nodes[float(t)] = _energy(d2, n, t)
-    zz = np.array(sorted(nodes))
-    gradients = np.array([nodes[t][1]-2*r*nodes[t][0] for t in zz])
-    result = []
-    for i in np.flatnonzero((gradients[:-1] < 0) & (gradients[1:] > 0)):
-        t = float(brentq(lambda t: exact(t)[1], zz[i], zz[i+1], xtol=2e-13))
-        value = exact(t)
-        if value[0] <= 0 or value[2] <= 0 or abs(value[1]/value[2]) > 1e-8:
-            raise ArithmeticError("Local minimum failed exact stationarity/curvature checks.")
-        if result and abs(t-np.log(result[-1]["h"])) < 1e-8:
-            continue
-        result.append({"h": float(np.exp(t)), "energy": float(value[0]),
-                       "log_derivative": float(value[1]), "log_curvature": float(value[2]),
-                       "newton_correction": float(abs(value[1]/value[2]))})
-    return result
+        t = float(t)
+        if t not in cached:
+            cached[t] = transformed(_energy(d2, n, t), t, r)
+        return cached[t]
+    report = minimize_bandwidth_energy(exact, float(np.exp(z[0])), float(np.exp(z[-1])),
+        config=search_config(scan_points=len(z), check_resolution=False, scan_backend="exact"))
+    return report["local_minima"]
 
 
-def same_roots(a: list[dict], b: list[dict]) -> bool:
+def same_roots(a, b):
     return len(a) == len(b) and all(abs(np.log(x["h"]/y["h"])) < 1e-7 for x, y in zip(a, b))
 
 
-def sample_minima(sample_id: int, samples: np.ndarray) -> tuple[list[dict], list[dict], dict]:
-    n = len(samples)
-    d2 = pdist(samples[:, None], metric="sqeuclidean")
-    positive = d2[d2 > 0]
-    if not len(positive):
-        # Coincident observations give a single Gaussian, whose Q_r decreases
-        # strictly for all r used here. This is also a validation case.
-        lower, upper = 1e-6, 10.0
-        minima = [[] for _ in R_VALUES]
-        resolution = {"scan_points": 0, "refinement_needed": False, "max_log_h_discrepancy": 0.0}
-    else:
-        # For h <= lower every nonzero pair has u=d^2/(4h^2)>=50.
-        # Its positive gradient contribution is bounded by
-        # (2*50^3+10.5*50)*exp(-50), far below the negative diagonal term.
-        # For h >= upper all u<=0.01: p(u)>0 and g(u)<0, so Q_r'<0.
-        # Therefore the tails outside these sample-specific bounds contain
-        # no stationary points for n=200 and r in [0,1].
-        lower = float(np.sqrt(positive.min()/200.0))
-        upper = float(5*np.sqrt(positive.max()))
-        z = np.linspace(np.log(lower), np.log(upper), SCAN_POINTS)
-        base = np.array([_energy(d2, n, t) for t in z])
-        minima = [roots_from_scan(d2, n, z, base, r) for r in R_VALUES]
-        coarse = [roots_from_scan(d2, n, z[::2], base[::2], r) for r in R_VALUES]
-        resolution = {"scan_points": SCAN_POINTS, "refinement_needed": False,
-                      "max_log_h_discrepancy": 0.0}
-        while not all(same_roots(a, b) for a, b in zip(coarse, minima)):
-            resolution["refinement_needed"] = True
-            if len(z) >= 8193:
-                raise ArithmeticError(f"Local minima did not stabilize for sample {sample_id}.")
-            coarse = minima
-            z = np.linspace(np.log(lower), np.log(upper), 2*len(z)-1)
-            base = np.array([_energy(d2, n, t) for t in z])
-            minima = [roots_from_scan(d2, n, z, base, r) for r in R_VALUES]
-            resolution["scan_points"] = len(z)
-        resolution["max_log_h_discrepancy"] = max(
-            [abs(np.log(a["h"]/b["h"])) for aa, bb in zip(coarse, minima)
-             for a, b in zip(aa, bb)] or [0.0]
-        )
-    rows, candidates = [], []
-    for method, r, points in zip(METHODS, R_VALUES, minima):
-        best = min(range(len(points)), key=lambda i: (points[i]["energy"], points[i]["h"])) if points else None
-        row = {"sample_id": sample_id, "method": method, "r": r,
-               "local_minimum_count": len(points),
-               "selected_h": points[best]["h"] if best is not None else np.nan,
-               "selected_energy": points[best]["energy"] if best is not None else np.nan,
-               "search_lower": lower, "search_upper": upper}
-        rows.append(row)
-        for i, point in enumerate(points):
-            candidates.append({"sample_id": sample_id, "method": method, "r": r,
-                               "candidate_id": i, "selected": i == best, **point})
-    return rows, candidates, {"sample_id": sample_id, **resolution}
+def sample_minima(sample_id, samples):
+    objective = GaussianQhatObjective(samples)
+    positive = objective.d2[objective.d2 > 0]
+    lower = float(np.sqrt(positive.min()/200.0)) if len(positive) else 1e-6
+    upper = float(5*np.sqrt(positive.max())) if len(positive) else 10.0
+    rows, candidates, analyses = [], [], {}
+    for method, r in zip(METHODS, R_VALUES):
+        report = minimize_qhat(objective, lower, upper, r=r,
+            config=search_config(scan_backend="exact", scan_points=SCAN_POINTS))
+        analyses[method] = report
+        points = report["local_minima"]
+        best = report["best_local_minimum"]
+        rows.append(dict(sample_id=sample_id, method=method, r=r,
+                         local_minimum_count=len(points), selected_h=best["h"] if best else np.nan,
+                         selected_energy=best["energy"] if best else np.nan,
+                         search_lower=lower, search_upper=upper,
+                         interval_minimum_h=report["global_minimum"]["h"],
+                         interval_minimum_energy=report["global_minimum"]["energy"],
+                         interval_minimum_boundary=report["global_minimum"]["boundary"]))
+        candidates.extend(dict(sample_id=sample_id, method=method, r=r,
+                               candidate_id=i, selected=point is best, **point)
+                          for i, point in enumerate(points))
+    resolution = dict(sample_id=sample_id,
+                      scan_points=max(a["diagnostics"]["scan_points"] for a in analyses.values()),
+                      refinement_needed=any(a["diagnostics"]["refinements"] > 1 for a in analyses.values()),
+                      max_log_h_discrepancy=max((a["diagnostics"]["maximum_log_h_discrepancy"] or 0.0) for a in analyses.values()),
+                      resolution_stable=all(a["diagnostics"]["resolution_stable"] for a in analyses.values()),
+                      analyses_json=json.dumps(analyses, sort_keys=True))
+    return rows, candidates, resolution
 
 
 def validate_reference_cases() -> dict:
-    source = KDE_DIR / "outputs/data/linear_grid_joint_n_lambda_limit/sample.csv"
-    sample = np.loadtxt(source, skiprows=1)
+    from kde_tools.experiment_inputs import load_reference_sample
+    sample, _ = load_reference_sample()
     rows, candidates, _ = sample_minima(-1, sample)
     expected = [0.1764236320307353, 0.5614864810366537, 0.5898122919784192]
     errors = []
@@ -158,14 +119,14 @@ def run_experiment() -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     full_bank = np.random.default_rng(SEED).normal(size=(M, BANK_WIDTH))
     samples = np.ascontiguousarray(full_bank[:, :N_DATA])
     settings = {
-        "version": VERSION, "M": M, "n": N_DATA, "seed": SEED,
+        "version": VERSION, "energy_search": energy_search_settings(), "M": M, "n": N_DATA, "seed": SEED,
         "distribution": "standard normal", "paired_across_r": True,
         "generated_bank_shape": [M, BANK_WIDTH], "used_prefix_columns": N_DATA,
         "sample_bank_sha256": hashlib.sha256(samples.tobytes()).hexdigest(),
         "r_values": list(R_VALUES), "methods": list(METHODS), "scan_points": SCAN_POINTS,
         "selection": "lowest energy among all detected interior local minima; no endpoint fallback",
         "search_bounds": "sample-adaptive bounds with negative-gradient Gaussian tails",
-        "resolution_check": "compare 513 and 1025 nodes for every sample; refine further on disagreement",
+        "resolution_check": "shared engine: compare nested scans using recorded controls",
         "qhat_source_sha256": hashlib.sha256((KDE_DIR/"kde_tools/qhat.py").read_bytes()).hexdigest(),
     }
     path = DATA_DIR / "settings.json"

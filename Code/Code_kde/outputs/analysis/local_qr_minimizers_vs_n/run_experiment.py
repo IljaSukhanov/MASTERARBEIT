@@ -1,7 +1,7 @@
 """Paired local Q0, Q13/14, Q1 histograms for n=100,200,...,2000.
 
 One selected interior minimum per sample and method, with missing outcomes
-retained. Reuse validated Q1 results and the earlier exact n=200 candidates.
+retained. All selections use the current shared minimizer and its settings.
 """
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import csv
@@ -26,13 +26,16 @@ from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.lines import Line2D
 from matplotlib.ticker import PercentFormatter
 import numpy as np
+from kde_tools.experiment_inputs import paired_gaussian_sample_bank, sampling_inputs
 from threadpoolctl import threadpool_limits
 
 from kde_tools.pdf_export import enable_automatic_pdf_saving
 from local_search import GridScanner, H_MIN, H_MAX, sample_minima, same_minima, exact_dense_minima
 
 NAME = 'local_qr_minimizers_vs_n'
-DATA_DIR = KDE_DIR/'outputs/data'/NAME
+from kde_tools.energy_minimization import unified_energy_run_directory, energy_search_settings, energy_search_id, DEFAULT_ENERGY_SEARCH
+
+DATA_DIR = unified_energy_run_directory(KDE_DIR/'outputs/data'/NAME)
 IMAGE_DIR = KDE_DIR/'outputs/images'/NAME
 DELIVERY_DIR = ROOT/'output/pdf'/NAME
 SAMPLE_SIZES, SELECTED_N, M, SEED = tuple(range(100, 2001, 100)), (100, 1000, 1500, 2000), 1000, 20260830
@@ -60,9 +63,11 @@ def selection(n, repetition, method, found, producer, diagnostics=None):
                local_minimum_count=len(found), selected_h=float(found[best]['h']) if best is not None else np.nan,
                selected_energy=float(found[best]['energy']) if best is not None else np.nan,
                producer=producer, curvature_fallback=bool(diagnostics.get('curvature_fallback', False)),
-               coarse_fine_signature_agrees=bool(diagnostics.get('coarse_fine_signature_agrees', True)))
+               coarse_fine_signature_agrees=bool(diagnostics.get('coarse_fine_signature_agrees', True)),
+               analysis_json=json.dumps(diagnostics.get('analysis'), sort_keys=True))
     points = [dict(n=n, repetition=repetition, method=method, r=METHODS[method], candidate=i,
-                   selected=i == best, **{key: float(point[key]) for key in
+                   selected=i == best, is_global_minimum=bool(point.get('is_global_minimum', False)),
+                   **{key: float(point[key]) if point[key] is not None else None for key in
                    ('h', 'energy', 'log_derivative', 'log_curvature', 'newton_correction')},
                    producer=producer) for i, point in enumerate(found)]
     return row, points
@@ -73,60 +78,19 @@ def insert(connection, row, points):
                        (row['n'], row['repetition'], row['method'], json.dumps(row), json.dumps(points)))
 
 
-def import_previous(connection, samples):
-    q1_dir = KDE_DIR/'outputs/data/local_q1_minimizers_selected_n'
-    q1_settings = json.loads((q1_dir/'settings.json').read_text())
-    assert q1_settings['sample_bank_sha256'] == hashlib.sha256(samples.tobytes()).hexdigest()
-    assert (q1_settings['h_min'], q1_settings['h_max'], q1_settings['endpoint_candidates']) == (H_MIN, H_MAX, False)
-    q1_points = {}
-    for point in csv.DictReader((q1_dir/'candidates.csv').open()):
-        q1_points.setdefault((int(point['n']), int(point['repetition'])), []).append(point)
-    imported = 0
-    for old in csv.DictReader((q1_dir/'selections.csv').open()):
-        n, repetition = int(old['n']), int(old['repetition'])
-        found = q1_points.get((n, repetition), [])
-        assert len(found) == int(old['local_minimum_count'])
-        row, points = selection(n, repetition, 'Q1', found, 'validated_q1_interval_results')
-        old_h = float(old['selected_h'] or 'nan')
-        assert (np.isnan(old_h) and np.isnan(row['selected_h'])) or old_h == row['selected_h']
-        insert(connection, row, points)
-        imported += 1
-    old_dir = KDE_DIR/'outputs/data/local_energy_minimizers_n200'
-    old_settings = json.loads((old_dir/'settings.json').read_text())
-    assert old_settings['sample_bank_sha256'] == hashlib.sha256(np.ascontiguousarray(samples[:, :200]).tobytes()).hexdigest()
-    assert old_settings['qhat_source_sha256'] == hashlib.sha256((KDE_DIR/'kde_tools/qhat.py').read_bytes()).hexdigest()
-    method_names = {'r0': 'Q0', 'r13over14': 'Q13_14', 'r1': 'Q1'}
-    old_points = {}
-    for point in csv.DictReader((old_dir/'candidates.csv').open()):
-        if H_MIN < float(point['h']) < H_MAX:
-            key = (int(point['sample_id']), method_names[point['method']])
-            old_points.setdefault(key, []).append(point)
-    for repetition in range(M):
-        for method in METHODS:
-            row, points = selection(200, repetition, method, old_points.get((repetition, method), []),
-                                    'validated_n200_exact_candidates_filtered_to_interval')
-            insert(connection, row, points)
-            imported += 1
-    connection.commit()
-    assert imported == 7000
-    return imported
-
-
 def run_experiment():
     for directory in (DATA_DIR, IMAGE_DIR, DELIVERY_DIR):
         directory.mkdir(parents=True, exist_ok=True)
-    samples = np.concatenate((np.random.default_rng(SEED).normal(size=(M, 1000)),
-        np.random.default_rng(np.random.SeedSequence([SEED, 1])).normal(size=(M, 1000))), axis=1)
+    samples = paired_gaussian_sample_bank(M, 2000)
     sample_hash = hashlib.sha256(samples.tobytes()).hexdigest()
-    original = KDE_DIR/'outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/settings.json'
-    assert sample_hash == json.loads(original.read_text())['sample_bank_sha256']
-    settings = dict(version='paired_local_qr_interval_vs_n_v1', sample_sizes=list(SAMPLE_SIZES),
+    assert sample_hash == sampling_inputs()['paired_sample_bank']['sample_bank_sha256']
+    settings = dict(version='unified_local_qr_interval_v2_'+energy_search_id(), energy_search=energy_search_settings(), sample_sizes=list(SAMPLE_SIZES),
                     selected_histogram_sizes=list(SELECTED_N), repetitions=M, seed=SEED, r_values=METHODS,
                     interval=[H_MIN, H_MAX], endpoints_excluded=True,
                     selection='lowest energy among detected interior local minima; no endpoint fallback',
                     normalization='bin count divided by all 1000 samples',
-                    sample_bank_sha256=sample_hash, scan_points=1025, spatial_points=65536,
-                    refined_scan_points=2049, refined_spatial_points=131072,
+                    sample_bank_sha256=sample_hash, scan_points=DEFAULT_ENERGY_SEARCH.scan_points, spatial_points=DEFAULT_ENERGY_SEARCH.spatial_points,
+                    refined_scan_points=2*DEFAULT_ENERGY_SEARCH.scan_points-1, refined_spatial_points=2*DEFAULT_ENERGY_SEARCH.spatial_points,
                     qhat_source_sha256=hashlib.sha256((KDE_DIR/'kde_tools/qhat.py').read_bytes()).hexdigest())
     path = DATA_DIR/'settings.json'
     if path.exists() and json.loads(path.read_text()) != settings:
@@ -134,8 +98,7 @@ def run_experiment():
     path.write_text(json.dumps(settings, indent=2)+'\n')
     connection = sqlite3.connect(DATA_DIR/'checkpoint.sqlite')
     connection.execute('CREATE TABLE IF NOT EXISTS results(n INTEGER, repetition INTEGER, method TEXT, selection_json TEXT, points_json TEXT, PRIMARY KEY(n,repetition,method))')
-    if connection.execute('SELECT count(*) FROM results').fetchone()[0] == 0:
-        import_previous(connection, samples)
+    # Historical candidates are not imported into a new search configuration.
     done = set(connection.execute('SELECT n,repetition,method FROM results'))
     jobs = [(n, repetition, {m:r for m,r in METHODS.items() if (n,repetition,m) not in done})
             for n in SAMPLE_SIZES for repetition in range(M)]
@@ -143,7 +106,7 @@ def run_experiment():
     print(f'Reusing {len(done)} selections; computing {60000-len(done)} selections in {len(jobs)} paired sample jobs.', flush=True)
     started = time.monotonic()
     with threadpool_limits(limits=1):
-        scanner, refined = GridScanner(), GridScanner(2049, 131072)
+        scanner, refined = GridScanner(), GridScanner(2*DEFAULT_ENERGY_SEARCH.scan_points-1, 2*DEFAULT_ENERGY_SEARCH.spatial_points)
 
         def compute(job):
             n, repetition, pending = job

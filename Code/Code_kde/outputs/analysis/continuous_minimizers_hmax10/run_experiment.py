@@ -26,18 +26,20 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.ticker import PercentFormatter
 import numpy as np
+from kde_tools.experiment_inputs import paired_gaussian_sample_bank, sampling_inputs
 from threadpoolctl import threadpool_limits
 
 from kde_tools.continuous_minimizers import METHODS, continuous_ise_qr_minima
 from kde_tools.pdf_export import enable_automatic_pdf_saving
+from kde_tools.energy_minimization import unified_energy_run_directory, energy_search_settings, DEFAULT_ENERGY_SEARCH
 
 NAME = "continuous_minimizers_hmax10"
-DATA_DIR = KDE_DIR/"outputs/data"/NAME
+DATA_DIR = unified_energy_run_directory(KDE_DIR/"outputs/data"/NAME)
 IMAGE_DIR = KDE_DIR/"outputs/images"/NAME
 DELIVERY_DIR = ROOT/"output/pdf/continuous_minimizers_selected_n_hmax10"
 SAMPLE_SIZES, M, SEED = (100, 1000, 1500, 2000), 1000, 20260830
-SEARCH = dict(h_min=0.01, h_max=10.0, scan_points=513,
-              spatial_points=65536, half_width=72.0, sigma2=1.0)
+SEARCH = dict(h_min=0.01, h_max=10.0, scan_points=2*DEFAULT_ENERGY_SEARCH.scan_points-1,
+              spatial_points=2*DEFAULT_ENERGY_SEARCH.spatial_points, half_width=72.0, sigma2=1.0)
 COLORS = ("#7B4AB2", "#0072B2", "#D55E00", "#009E73")
 STYLES = ("-", "-", "--", "-.")
 LABELS = ("ISE", r"$\widehat Q_0$", r"$\widehat Q_1$", r"$\widehat Q_{13/14}$")
@@ -55,15 +57,11 @@ def save_csv(path, rows):
 def main():
     for directory in (DATA_DIR, IMAGE_DIR, DELIVERY_DIR):
         directory.mkdir(parents=True, exist_ok=True)
-    samples = np.concatenate((
-        np.random.default_rng(SEED).normal(size=(M, 1000)),
-        np.random.default_rng(np.random.SeedSequence([SEED, 1])).normal(size=(M, 1000)),
-    ), axis=1)
-    original_settings = KDE_DIR/"outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/settings.json"
-    original = json.loads(original_settings.read_text())
+    samples = paired_gaussian_sample_bank(M, 2000)
+    original = sampling_inputs()["paired_sample_bank"]
     sample_hash = hashlib.sha256(samples.tobytes()).hexdigest()
     assert sample_hash == original["sample_bank_sha256"]
-    settings = dict(sample_sizes=SAMPLE_SIZES, repetitions=M, seed=SEED,
+    settings = dict(energy_search=energy_search_settings(), sample_sizes=SAMPLE_SIZES, repetitions=M, seed=SEED,
                     sample_bank_sha256=sample_hash, search=SEARCH,
                     selection="lowest exact objective among refined detected basins and both endpoints")
     (DATA_DIR/"settings.json").write_text(json.dumps(settings, indent=2)+"\n")
@@ -73,7 +71,9 @@ def main():
 
     def select(n, repetition):
         found = continuous_ise_qr_minima(samples[repetition, :n], **SEARCH)
-        return [dict(n=n, repetition=repetition, method=method, **found[method])
+        return [dict(n=n, repetition=repetition, method=method,
+                     **{key: value for key, value in found[method].items() if key != "analysis"},
+                     analysis_json=json.dumps(found[method]["analysis"], sort_keys=True))
                 for method in METHODS]
 
     started = time.monotonic()
@@ -99,7 +99,7 @@ def main():
     with threadpool_limits(limits=1):
         for n in SAMPLE_SIZES:
             for repetition in (0, M//2, M-1):
-                doubled = continuous_ise_qr_minima(samples[repetition, :n], **{**SEARCH, "scan_points": 1025})
+                doubled = continuous_ise_qr_minima(samples[repetition, :n], **{**SEARCH, "scan_points": 2*SEARCH["scan_points"]-1})
                 for method in METHODS:
                     stored, = [row for row in rows if int(row["n"]) == n and int(row["repetition"]) == repetition and row["method"] == method]
                     difference = abs(float(stored["h"])-doubled[method]["h"])

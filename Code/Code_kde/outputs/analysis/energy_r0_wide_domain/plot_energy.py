@@ -23,12 +23,13 @@ from scipy.optimize import brentq
 from scipy.spatial.distance import pdist
 
 from kde_tools.continuous_minimizers import qr_log_energy
+from kde_tools.qhat import minimize_qhat
+from kde_tools.experiment_inputs import load_reference_sample
 from kde_tools.pdf_export import enable_automatic_pdf_saving
 
 NAME = "energy_r0_wide_domain"
 DATA_DIR = KDE_DIR / "outputs" / "data" / NAME
 IMAGE_DIR = KDE_DIR / "outputs" / "images" / NAME
-SAMPLE_DIR = KDE_DIR / "outputs" / "data" / "linear_grid_joint_n_lambda_limit"
 H_MIN, H_MAX = 0.01, 100.0
 
 
@@ -36,8 +37,7 @@ def main() -> None:
     enable_automatic_pdf_saving(NAME)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
-    samples = np.loadtxt(SAMPLE_DIR / "sample.csv", skiprows=1)
-    previous = json.loads((SAMPLE_DIR / "settings.json").read_text())
+    samples, previous = load_reference_sample()
     sample_hash = hashlib.sha256(samples.tobytes()).hexdigest()
     if sample_hash != previous["sample_sha256"]:
         raise RuntimeError("The sample differs from the preceding experiments.")
@@ -50,14 +50,9 @@ def main() -> None:
     values = np.array([energy(t) for t in h])
     if not np.all(np.isfinite(values)) or np.any(values[:, 0] <= 0):
         raise RuntimeError("Nonpositive or nonfinite energy.")
-    critical = []
-    for i in np.flatnonzero(values[:-1, 1] * values[1:, 1] < 0):
-        z = brentq(lambda z: qr_log_energy(d2, len(samples), z, 0.0)[1],
-                   np.log(h[i]), np.log(h[i+1]), xtol=1e-13)
-        point_h = float(np.exp(z))
-        point = energy(point_h)
-        critical.append({"h": point_h, "q": float(point[0]),
-                         "kind": "minimum" if point[2] > 0 else "maximum"})
+    energy_analysis = minimize_qhat(samples, H_MIN, H_MAX, r=0., scan_backend="exact")
+    critical = [dict(h=point["h"], q=point["energy"], kind=point["kind"])
+                for point in energy_analysis["stationary_points"]]
     minimum, = [point for point in critical if point["kind"] == "minimum"]
     maximum, = [point for point in critical if point["kind"] == "maximum"]
     crossing = brentq(lambda t: energy(t)[0]-minimum["q"], maximum["h"], H_MAX)
@@ -84,6 +79,7 @@ def main() -> None:
         )
 
     summary = {
+        "energy_analysis": energy_analysis,
         "r": 0.0, "definition": "Q_0(h)=(h^2/2)||partial_h f_hat_h||_2^2",
         "sample_size": len(samples), "seed": previous["seed"],
         "sample_sha256": sample_hash, "h_min": H_MIN, "h_max": H_MAX,

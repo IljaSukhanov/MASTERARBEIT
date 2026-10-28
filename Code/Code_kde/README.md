@@ -8,6 +8,13 @@ the notebooks and the notebook validation runner. Shared numerical helpers
 and historical outputs are retained for optional future work.
 Numerical work lives in `kde_tools/`:
 
+- `energy_minimization.py`: the single continuous search used by all Q-r
+  experiments, including sample energies, Gaussian expected energies and the
+  continuous ISE comparison. It refines derivative roots, classifies detected
+  interior extrema, compares every detected minimum with both endpoints, and
+  checks agreement after scan refinement. `EnergySearchConfig` holds the central
+  defaults for scan resolution, exact/Fourier candidate discovery, root and
+  comparison tolerances, and refinement limits.
 - `density.py`: direct KDE evaluation, quadrature grids, and exact
   Gaussian/Gaussian-mixture integrals.
 - `quadrature.py`: shared spatial grids and composite trapezoidal integration,
@@ -44,13 +51,63 @@ Numerical work lives in `kde_tools/`:
   numerical refinement checks, and figures.
 - `experiments.py`: one-repetition simulation runners.  Notebooks control the
   settings, repetition loops, summaries, and plots.
-- `qhat.py`: analytic Gaussian sample energy and continuous minimization of
-  `Q_hat(h) = h**2 / 2 * ||partial_h f_hat_h||_2**2`. Candidate brackets come
-  from a Fourier scan; candidates are refined using the analytic pair
-  formula and compared with both bandwidth-interval endpoints.
+- `qhat.py`: analytic Gaussian sample energies and `minimize_qhat`, the public
+  Q-r entry point to the shared search. The historical `continuous_qhat_minimum`
+  name is a compatibility view, not a separate algorithm. The exact Gaussian
+  expected-energy objective uses the same one-half normalization as the sample
+  criterion; older joint-limit notebook formulas had an extra constant factor
+  of two, which did not change their minimizer locations.
 - `continuous_minimizers.py`: continuous ISE and Q-r minimizers in the thesis's
   r notation, sharing the analytic pair calculations and comparing both
   interval endpoints.
+
+## Control Q-r minimization
+
+Start with
+[`qhat_minimization_control.ipynb`](xx_notebooks_continuous_minimizers/qhat_minimization_control.ipynb).
+It runs the shared function on the saved fixed sample and displays interval
+and interior minima together, exports the full reports as JSON and CSV, and
+automatically saves its plot as PDF.
+
+```python
+from kde_tools import EnergySearchConfig, minimize_qhat
+
+controls = EnergySearchConfig(scan_points=513, scan_backend="exact")
+report = minimize_qhat(samples, h_min=0.01, h_max=2.0, r=13/14, config=controls)
+report["global_minimum"]       # Lowest energy among detected minima and endpoints.
+report["local_minima"]         # Each includes is_global_minimum.
+report["best_local_minimum"]   # None when no interior local minimum was detected.
+report["endpoints"]
+report["diagnostics"]          # Actual controls, resolution agreement and evaluations.
+```
+
+Change the defaults in `EnergySearchConfig` in `kde_tools/energy_minimization.py`
+to change shared controls across experiments, then restart notebook kernels.
+Explicit notebook/function arguments override individual defaults and are
+recorded in each report. `scan_backend="exact"` scans analytic pair derivatives;
+`"fourier"` uses an approximation only to propose candidate brackets. Every
+reported energy, root and endpoint comparison uses the exact objective.
+Refinement uses [SciPy brentq](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.brentq.html).
+`comparison_rtol` and `comparison_atol` define when candidates count as tied.
+
+The interval result and all interior minima are computed in one analysis.
+Experiments displaying local-minimum distributions select `best_local_minimum`
+and retain missing outcomes when it is `None`; interval comparisons select
+`global_minimum`. A finite scan does not certify exhaustive root isolation:
+`diagnostics["certified_global"]` is always false, and
+`diagnostics["resolution_stable"]` records the numerical resolution check.
+
+New continuous caches include the shared search version and controls. The local
+experiment runners write to `outputs/data/<experiment>/unified_<settings-id>/`
+and the pre-unification energy results have been removed. Raw inputs are kept
+in `inputs/`, independently of generated results. Shared sampling runs also export
+`n<N>_energy_analysis.json`, containing the endpoint/local/global reports for
+each newly computed sample and method. Selection-only historical imports do
+not contain those additional reports. The exact-grid Q-hat benchmark still
+selects on its prescribed grid using the shared Gaussian energy formula. The
+overview notebook's Fourier-based grid controls also retain their original
+discrete definition. These grid comparisons are separate from continuous
+interval minimization.
 
 The optional Fourier implementation is isolated in `kde_tools/fourier/` and is
 imported explicitly by Fourier experiment runners. L² inner products now follow

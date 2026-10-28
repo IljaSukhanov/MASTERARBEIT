@@ -15,13 +15,14 @@ import numpy as np
 
 from .continuous_minimizers import CONTINUOUS_SELECTOR_VERSION, METHODS, R_VALUES, continuous_ise_qr_minima
 from .qhat import QHAT_VERSION, continuous_qhat_minimum
+from .energy_minimization import energy_search_settings
 from .spectral_sweeps import _atomic_checkpoint, _sample_hash
 
 
-CONTINUOUS_RUNNER_VERSION = "shared_continuous_selectors_v1"
+CONTINUOUS_RUNNER_VERSION = "shared_unified_continuous_selectors_v2"
 FIELDS = ("h", "objective", "log_derivative", "log_curvature", "boundary", "interior_candidates")
-_QHAT_SOURCE = "1491254b17be17762329db34cdbe5f1b1b185df857d4a23dc4a3fc8fdae8bc56"
-_QR_SOURCE = "700b1392d667cadb0532b276643a41377e78c6f5bd26ca647a992b2d5ccdd597"
+_QHAT_SOURCE = hashlib.sha256(Path(__file__).with_name("qhat.py").read_bytes()).hexdigest()
+_QR_SOURCE = hashlib.sha256(Path(__file__).with_name("continuous_minimizers.py").read_bytes()).hexdigest()
 
 
 def _validate(values, done, methods, settings):
@@ -126,7 +127,8 @@ def run_continuous_point(n, full_samples, settings, methods, output_directory, *
     samples = np.ascontiguousarray(bank[:, :n])
     identity = {"runner": CONTINUOUS_RUNNER_VERSION, "settings": numerical,
                 "samples_sha256": _sample_hash(samples), "n": int(n), "M": len(samples),
-                "qhat_version": QHAT_VERSION, "qr_version": CONTINUOUS_SELECTOR_VERSION}
+                "qhat_version": QHAT_VERSION, "qr_version": CONTINUOUS_SELECTOR_VERSION,
+                "energy_search": energy_search_settings()}
     identity_json = json.dumps(identity, sort_keys=True)
     fingerprint = hashlib.sha256(identity_json.encode()).hexdigest()[:16]
     cache = (Path(cache_root) if cache_root is not None else Path(output_directory) / "shared_cache") / f"n{n}" / fingerprint
@@ -135,11 +137,13 @@ def run_continuous_point(n, full_samples, settings, methods, output_directory, *
     values = np.full((len(samples), len(METHODS), len(FIELDS)), np.nan)
     done = np.zeros(values.shape[:2], dtype=bool)
     producers = np.full(done.shape, "", dtype="U64")
+    analyses = {}
     if path.exists():
         with np.load(path, allow_pickle=False) as saved:
             if str(saved["identity_json"].item()) != identity_json or tuple(saved["methods"]) != METHODS or tuple(saved["fields"]) != FIELDS:
                 raise ValueError("Shared continuous checkpoint identity differs.")
             values, done, producers = (saved[key].copy() for key in ("values", "completed", "producers"))
+            analyses = json.loads(str(saved["analyses_json"].item()))
         if done.shape != (len(samples), len(METHODS)) or producers.shape != done.shape:
             raise ValueError("Shared continuous checkpoint shape differs.")
         _validate(values, done, METHODS, numerical)
@@ -175,10 +179,14 @@ def run_continuous_point(n, full_samples, settings, methods, output_directory, *
 
     def save():
         _atomic_checkpoint(path, identity_json=identity_json, methods=np.array(METHODS), fields=np.array(FIELDS),
-                           values=values, completed=done, producers=producers)
+                           values=values, completed=done, producers=producers,
+                           analyses_json=json.dumps(analyses, sort_keys=True))
         _atomic_checkpoint(output / f"n{n}.npz", configuration_json=config_json, identity_json=identity_json,
                            n=n, methods=np.array(methods), fields=np.array(FIELDS), values=values[:, columns],
                            completed=done[:, columns], producers=producers[:, columns])
+        (output / f"n{n}_energy_analysis.json").write_text(json.dumps(
+            {key: value for key, value in analyses.items() if key.split(":")[1] in methods},
+            sort_keys=True)+"\n")
 
     def select(repetition):
         missing = [method for method in methods if not done[repetition, METHODS.index(method)]]
@@ -201,11 +209,13 @@ def run_continuous_point(n, full_samples, settings, methods, output_directory, *
                     values[repetition, column] = [selection[field] for field in FIELDS]
                     done[repetition, column] = True
                     producers[repetition, column] = QHAT_VERSION if method == "Q0" else CONTINUOUS_SELECTOR_VERSION
+                    analyses[f"{repetition}:{method}"] = selection["analysis"]
                 if (repetition + 1) % 25 == 0:
                     save()
     finally:
         save()
     _validate(values, done, METHODS, numerical)
     return {"values": values[:, columns].copy(), "methods": methods, "fields": FIELDS,
+            "analyses": {key: value for key, value in analyses.items() if key.split(":")[1] in methods},
             "cache_directory": cache, "reused_selections": reused,
             "computed_selections": len(samples) * len(methods) - reused, "imports": imports}

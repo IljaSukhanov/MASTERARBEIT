@@ -1,8 +1,0 @@
-{
-  "latest_pdf_render_visually_reviewed": true,
-  "all_60_distance_rows_validated": true,
-  "cdf_integral_matches_scipy_weighted_wasserstein_to_1e_12": true,
-  "raw_data_checks_confirm_ranking": true,
-  "source_histogram_unchanged": true,
-  "pdf_sha256": "efe64a6992cbe5a3d39836fe71d52975bc73e65e72b6d3cf2fcd7c3b4c8d8ae2"
-}

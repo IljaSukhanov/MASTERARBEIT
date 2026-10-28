@@ -27,22 +27,24 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.ticker import PercentFormatter
 import numpy as np
-from scipy.optimize import brentq
-from scipy.spatial.distance import pdist
+from kde_tools.experiment_inputs import paired_gaussian_sample_bank, sampling_inputs
 from threadpoolctl import threadpool_limits
 
-from kde_tools.continuous_minimizers import qr_log_energy
+from kde_tools.qhat import minimize_qhat
+from kde_tools.energy_minimization import energy_search_id, energy_search_settings, search_config, DEFAULT_ENERGY_SEARCH
 from kde_tools.pdf_export import enable_automatic_pdf_saving
-from kde_tools.qhat import _energy, _scan_matrix
 
 NAME = "local_q1_minimizers_selected_n"
-DATA_DIR = KDE_DIR/"outputs/data"/NAME
+from kde_tools.energy_minimization import unified_energy_run_directory, energy_search_settings, energy_search_id
+
+DATA_DIR = unified_energy_run_directory(KDE_DIR/"outputs/data"/NAME)
 IMAGE_DIR = KDE_DIR/"outputs/images"/NAME
 DELIVERY_DIR = ROOT/"output/pdf"/NAME
 SAMPLE_SIZES, M, SEED = (100, 1000, 1500, 2000), 1000, 20260830
 H_MIN, H_MAX = 0.01, 2.0
-HALF_WIDTH, SPATIAL_POINTS, SCAN_POINTS = 16.0, 65536, 1025
-VERSION = "q1_local_interval_curvature_augmented_v1"
+HALF_WIDTH, SPATIAL_POINTS, SCAN_POINTS = (DEFAULT_ENERGY_SEARCH.half_width,
+    DEFAULT_ENERGY_SEARCH.spatial_points, DEFAULT_ENERGY_SEARCH.scan_points)
+VERSION = "unified_q1_local_interval_v2_" + energy_search_id()
 
 
 def save_csv(path, rows, fields=None):
@@ -56,64 +58,15 @@ def save_csv(path, rows, fields=None):
 
 class LocalSearch:
     def __init__(self, points=SCAN_POINTS, spatial_points=SPATIAL_POINTS):
-        self.spatial_points = spatial_points
-        self.z, self.omega, _, q0 = _scan_matrix(H_MIN, H_MAX, points, HALF_WIDTH, spatial_points)
-        u = (np.exp(self.z[:, None])*self.omega[None, :])**2
-        q1 = q0*np.exp(-2*self.z[:, None])
-        a = 2-2*u
-        self.matrices = np.stack((q1, q1*a, q1*(a*a-4*u)))
+        self.config = search_config(scan_points=points, spatial_points=spatial_points,
+                                    half_width=HALF_WIDTH)
 
-    def approximate(self, samples):
-        position = (samples+HALF_WIDTH)/(2*HALF_WIDTH/self.spatial_points)
-        left = np.floor(position).astype(int)
-        fraction = position-left
-        mass = (np.bincount(left % self.spatial_points, weights=1-fraction, minlength=self.spatial_points)
-                + np.bincount((left+1) % self.spatial_points, weights=fraction, minlength=self.spatial_points))
-        power = np.abs(np.fft.rfft(mass/len(samples))[:len(self.omega)])**2
-        return self.matrices @ power
+    def analyze(self, samples):
+        return minimize_qhat(samples, H_MIN, H_MAX, r=1., config=self.config)
 
     def minima(self, samples):
-        values = self.approximate(samples)
-        d2 = pdist(samples[:, None], metric="sqeuclidean")
-        cache = {}
-
-        def exact(z):
-            z = float(z)
-            if z not in cache:
-                cache[z] = qr_log_energy(d2, len(samples), z, 1.0)
-            return cache[z]
-
-        nodes = {float(self.z[0]), float(self.z[-1])}
-        # Exact curvature extrema expose shallow minimum/maximum pairs.
-        for index in np.flatnonzero(values[2, :-1]*values[2, 1:] < 0):
-            lo, hi = int(index), int(index+1)
-            for _ in range(9):
-                if exact(self.z[lo])[2]*exact(self.z[hi])[2] < 0:
-                    break
-                lo, hi = max(0, lo-1), min(len(self.z)-1, hi+1)
-            else:
-                raise ArithmeticError("Fourier curvature bracket did not bracket an exact extremum.")
-            nodes.add(float(brentq(lambda z: exact(z)[2], self.z[lo], self.z[hi], xtol=2e-13)))
-        # Also retain every bracket indicated directly by the scanned gradient.
-        for index in np.flatnonzero(values[1, :-1]*values[1, 1:] < 0):
-            nodes.update((float(self.z[index]), float(self.z[index+1])))
-        nodes = sorted(nodes)
-        result = []
-        for lo, hi in zip(nodes[:-1], nodes[1:]):
-            if exact(lo)[1] < 0 < exact(hi)[1]:
-                z = float(brentq(lambda t: exact(t)[1], lo, hi, xtol=2e-13))
-                value, gradient, curvature = exact(z)
-                h = float(np.exp(z))
-                if not H_MIN < h < H_MAX or value <= 0 or curvature <= 0 or abs(gradient/curvature) > 1e-8:
-                    raise ArithmeticError("Local-minimum interval, stationarity, or curvature check failed.")
-                if result and abs(np.log(result[-1]["h"])-z) < 1e-8:
-                    continue
-                result.append(dict(h=h, energy=float(value), log_derivative=float(gradient),
-                                   log_curvature=float(curvature), newton_correction=float(abs(gradient/curvature))))
-        def signature(array):
-            return (int(np.sum((array[1, :-1] < 0) & (array[1, 1:] > 0))),
-                    int(np.sum(array[2, :-1]*array[2, 1:] < 0)))
-        return result, signature(values) == signature(values[:, ::2])
+        report = self.analyze(samples)
+        return report["local_minima"], bool(report["diagnostics"]["resolution_stable"])
 
 
 def same_minima(first, second):
@@ -121,24 +74,18 @@ def same_minima(first, second):
 
 
 def independent_dense_minima(sample, points=1025):
-    # Reuse the earlier exact derivative scan, without any Fourier approximation.
-    import runpy
-    old = runpy.run_path(str(KDE_DIR/"outputs/analysis/local_energy_minimizers_n200/run_experiment.py"))
-    d2 = pdist(sample[:, None], metric="sqeuclidean")
-    z = np.linspace(np.log(H_MIN), np.log(H_MAX), points)
-    base = np.array([_energy(d2, len(sample), t) for t in z])
-    return old["roots_from_scan"](d2, len(sample), z, base, 1.0)
+    # Exact objective scans cross-check Fourier-assisted candidate discovery.
+    return minimize_qhat(sample, H_MIN, H_MAX, r=1.,
+        config=search_config(scan_backend="exact", scan_points=points))["local_minima"]
 
 
 def main():
     for directory in (DATA_DIR, IMAGE_DIR, DELIVERY_DIR):
         directory.mkdir(parents=True, exist_ok=True)
-    samples = np.concatenate((np.random.default_rng(SEED).normal(size=(M, 1000)),
-        np.random.default_rng(np.random.SeedSequence([SEED, 1])).normal(size=(M, 1000))), axis=1)
+    samples = paired_gaussian_sample_bank(M, 2000)
     sample_hash = hashlib.sha256(samples.tobytes()).hexdigest()
-    original_path = KDE_DIR/"outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/settings.json"
-    assert sample_hash == json.loads(original_path.read_text())["sample_bank_sha256"]
-    settings = dict(version=VERSION, sample_sizes=list(SAMPLE_SIZES), repetitions=M, seed=SEED,
+    assert sample_hash == sampling_inputs()["paired_sample_bank"]["sample_bank_sha256"]
+    settings = dict(version=VERSION, energy_search=energy_search_settings(), sample_sizes=list(SAMPLE_SIZES), repetitions=M, seed=SEED,
                     sample_bank_sha256=sample_hash, r=1.0, h_min=H_MIN, h_max=H_MAX,
                     endpoint_candidates=False, selection="lowest energy among detected interior local minima; no endpoint fallback",
                     scan_points=SCAN_POINTS, spatial_points=SPATIAL_POINTS,
@@ -153,23 +100,25 @@ def main():
     done = {(int(row["n"]), int(row["repetition"])) for row in rows}
     with threadpool_limits(limits=1):
         search = LocalSearch()
-        refined_search = LocalSearch(2049, 131072)
+        refined_search = LocalSearch(2*SCAN_POINTS-1, 2*SPATIAL_POINTS)
 
         def select(n, repetition):
             sample = samples[repetition, :n]
-            found, signature_agrees = search.minima(sample)
-            if not signature_agrees:
-                refined, _ = refined_search.minima(sample)
-                if not same_minima(found, refined):
-                    dense = independent_dense_minima(sample, 2049)
-                    if not same_minima(refined, dense):
-                        raise ArithmeticError("Local minima did not stabilize under refinement.")
-                found = refined
+            analysis = search.analyze(sample)
+            if analysis["diagnostics"]["resolution_stable"] is False:
+                analysis = minimize_qhat(sample, H_MIN, H_MAX, r=1.,
+                    config=search_config(search.config, scan_backend="exact"))
+            found = analysis["local_minima"]
+            signature_agrees = bool(analysis["diagnostics"]["resolution_stable"])
             best = min(range(len(found)), key=lambda i: (found[i]["energy"], found[i]["h"])) if found else None
             row = dict(n=n, repetition=repetition, local_minimum_count=len(found),
                        selected_h=found[best]["h"] if best is not None else np.nan,
                        selected_energy=found[best]["energy"] if best is not None else np.nan,
-                       scan_signature_agrees=signature_agrees)
+                       scan_signature_agrees=signature_agrees,
+                       interval_minimum_h=analysis["global_minimum"]["h"],
+                       interval_minimum_energy=analysis["global_minimum"]["energy"],
+                       interval_minimum_boundary=analysis["global_minimum"]["boundary"],
+                       analysis_json=json.dumps(analysis, sort_keys=True))
             points = [dict(n=n, repetition=repetition, candidate=i, selected=i == best, **point) for i, point in enumerate(found)]
             return row, points
 
@@ -211,11 +160,9 @@ def main():
             assert same_minima(original, exact)
             checks.append(dict(n=n, repetition=0, kind="independent exact 1025-node gradient/curvature scan",
                                minima=len(original), maximum_h_difference=max([abs(float(a["h"])-b["h"]) for a, b in zip(original, exact)] or [0.])))
-        # Check against 100 saved samples from the earlier n=200 exact experiment.
-        baseline_path = KDE_DIR/"outputs/data/local_energy_minimizers_n200/candidates.csv"
-        baseline = list(csv.DictReader(baseline_path.open()))
+        # Compare n=200 samples against fresh exact scans, independent of saved results.
         for repetition in range(0, M, 10):
-            expected = [dict(h=float(point["h"])) for point in baseline if int(point["sample_id"]) == repetition and point["method"] == "r1" and H_MIN < float(point["h"]) < H_MAX]
+            expected = independent_dense_minima(samples[repetition, :200])
             actual, _ = search.minima(samples[repetition, :200])
             assert same_minima(expected, actual)
         monotone, _ = search.minima(np.zeros(200))
@@ -232,11 +179,11 @@ def main():
                             multiple_local_minima=sum(count > 1 for count in counts), total_local_minima=sum(counts),
                             median_h=float(np.median(valid)), q05_h=float(np.quantile(valid, .05)), q95_h=float(np.quantile(valid, .95))))
     save_csv(DATA_DIR/"summary.csv", summary)
-    validation = dict(sample_bank_matches_figure39=True, endpoint_substitutions=0,
+    validation = dict(sample_bank_matches_canonical_input=True, endpoint_substitutions=0,
                       all_candidates_strictly_inside_interval=True,
                       all_candidates_have_positive_curvature=all(float(point["log_curvature"]) > 0 for point in candidates),
                       maximum_stationarity_correction=max(float(point["newton_correction"]) for point in candidates),
-                      baseline_n200_samples_checked=100, monotone_gaussian_has_no_local_minimum=True,
+                      fresh_exact_n200_samples_checked=len(range(0, M, 10)), monotone_gaussian_has_no_local_minimum=True,
                       checks=checks, numerical_search_is_not_an_exhaustiveness_certificate=True)
     (DATA_DIR/"validation.json").write_text(json.dumps(validation, indent=2)+"\n")
     plot_results(rows, summary)

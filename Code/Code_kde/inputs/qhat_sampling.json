@@ -1,0 +1,20 @@
+{
+  "reference_sample": {
+    "filename": "qhat_reference_sample.csv",
+    "seed": 20260823,
+    "sample_size": 200,
+    "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+  },
+  "paired_sample_bank": {
+    "seed": 20260830,
+    "sigma2": 1.0,
+    "sample_bank_shape": [
+      1000,
+      2000
+    ],
+    "sample_bank_generation": "fixed_1000_column_blocks_preserving_original_prefix_v1",
+    "sample_bank_block_size": 1000,
+    "prefix_sample_bank_sha256": "a63d3c99c6ef68a42ff54f2108bfc0d1470c0e48c7a1fff7bcaa3cf88a59a8bb",
+    "sample_bank_sha256": "44c1ddc5edafff8171a9136e9b1d2ca6a00f62a711785cda65783e6fe327061b"
+  }
+}

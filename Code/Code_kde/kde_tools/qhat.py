@@ -1,4 +1,4 @@
-"""Continuous minimization of the sample Gaussian KDE log-bandwidth energy.
+"""Gaussian KDE scale energies and the shared interval/local search entry point.
 
 Q_hat(h) = h**2 / 2 * ||partial_h f_hat_h||_2**2.
 The analytic Gaussian-product expression is also used in cell 4 of
@@ -12,7 +12,6 @@ from functools import lru_cache
 import math
 
 import numpy as np
-from scipy.optimize import brentq, minimize_scalar
 from scipy.spatial.distance import pdist
 
 try:
@@ -21,7 +20,11 @@ except ImportError:  # Optional acceleration; the NumPy calculation is identical
     njit = None
 
 
-QHAT_VERSION = "exact_gaussian_continuous_log_minimum_v1"
+from .energy_minimization import (
+    energy_search_id, minimize_bandwidth_energy, search_config,
+)
+
+QHAT_VERSION = "exact_gaussian_unified_minimum_v2_" + energy_search_id()
 
 
 def _pair_sums_numpy(d2, h):
@@ -90,82 +93,107 @@ def _scan_matrix(h_min, h_max, scan_points, half_width, spatial_points):
     return log_h, omega, weights, matrix
 
 
-def continuous_qhat_minimum(samples, h_min=0.01, h_max=2.0, *,
-                            scan_points=257, half_width=12.0, spatial_points=32768):
-    """Scan for minima, refine each analytically off-grid, and compare endpoints.
+class GaussianQhatObjective:
+    """Share pair distances, exact evaluations and sample FFT across r values."""
 
-    A finely binned Fourier surrogate supplies starting brackets only. Every
-    final candidate and both endpoints use the exact Gaussian pair formula.
-    This is a numerical search over the stated finite interval, not a proof
-    that every possible stationary point has been enumerated.
+    def __init__(self, samples):
+        self.samples = _samples(samples)
+        self.d2 = pdist(self.samples[:, None], metric="sqeuclidean")
+        self._exact = {}
+        self._coefficients = {}
+
+    def log_energy(self, z, r=0.0):
+        z = float(z)
+        if z not in self._exact:
+            self._exact[z] = _energy(self.d2, len(self.samples), z)
+        value, gradient, curvature = self._exact[z]
+        return np.exp(-2*r*z)*np.array([
+            value, gradient-2*r*value, curvature-4*r*gradient+4*r*r*value])
+
+    def fourier_coefficients(self, half_width, spatial_points):
+        key = (half_width, spatial_points)
+        if key not in self._coefficients:
+            position = (self.samples+half_width)/(2*half_width/spatial_points)
+            left = np.floor(position).astype(int)
+            fraction = position-left
+            mass = (np.bincount(left % spatial_points, weights=1-fraction, minlength=spatial_points)
+                    + np.bincount((left+1) % spatial_points, weights=fraction, minlength=spatial_points))
+            self._coefficients[key] = np.fft.rfft(mass/len(self.samples))
+        return self._coefficients[key]
+
+    def scan(self, z, r, config):
+        h_min, h_max = float(np.exp(z[0])), float(np.exp(z[-1]))
+        half_width = max(config.half_width,
+                         float(np.ceil(np.max(np.abs(self.samples))+6*h_max)))
+        _, omega, _, matrix = _scan_matrix(
+            h_min, h_max, len(z), half_width, config.spatial_points)
+        power = np.abs(self.fourier_coefficients(half_width, config.spatial_points)[:len(omega)])**2
+        moments = matrix @ np.column_stack((power, omega**2*power, omega**4*power))
+        h2 = np.exp(2*z)
+        value = moments[:, 0]
+        gradient = 4*value-2*h2*moments[:, 1]
+        curvature = 16*value-20*h2*moments[:, 1]+4*h2*h2*moments[:, 2]
+        factor = np.exp(-2*r*z)
+        return factor[:, None]*np.column_stack((
+            value, gradient-2*r*value, curvature-4*r*gradient+4*r*r*value))
+
+
+def minimize_qhat(samples, h_min=0.01, h_max=2.0, *, r=0.0, config=None,
+                  scan_points=None, half_width=None, spatial_points=None,
+                  scan_backend=None):
+    """Analyze all detected interior Q_r minima AND the closed-interval minimum.
+
+    Numerical controls live in energy_minimization.EnergySearchConfig. Pass a
+    config (or explicit overrides) to control every experiment consistently.
+    samples can also be a GaussianQhatObjective to reuse work across r values.
+    Return the complete minimize_bandwidth_energy report, never discard local
+    minima when an endpoint wins. See that function for the numerical limits.
     """
-    samples = _samples(samples)
-    if not 0 < h_min < h_max or not np.isfinite(h_max):
-        raise ValueError("Require finite 0 < h_min < h_max.")
-    if scan_points < 5 or spatial_points < 16 or spatial_points % 2:
-        raise ValueError("Use at least five scan points and an even spatial grid.")
-    if half_width <= np.max(np.abs(samples)) + 5 * h_max:
-        half_width = float(math.ceil(np.max(np.abs(samples)) + 6 * h_max))
-    log_h, omega, weights, matrix = _scan_matrix(
-        float(h_min), float(h_max), int(scan_points), float(half_width), int(spatial_points)
-    )
-    dx = 2 * half_width / spatial_points
-    position = (samples + half_width) / dx
-    left = np.floor(position).astype(int)
-    fraction = position - left
-    mass = (np.bincount(left % spatial_points, weights=1 - fraction, minlength=spatial_points)
-            + np.bincount((left + 1) % spatial_points, weights=fraction, minlength=spatial_points))
-    power = np.abs(np.fft.rfft(mass / len(samples))[:len(omega)])**2
-    coarse = matrix @ power
-    local = np.flatnonzero((coarse[1:-1] <= coarse[:-2])
-                          & (coarse[1:-1] <= coarse[2:])) + 1
-    d2 = pdist(samples[:, None], metric="sqeuclidean")
-    candidates = [(float(log_h[0]), _energy(d2, len(samples), log_h[0])),
-                  (float(log_h[-1]), _energy(d2, len(samples), log_h[-1]))]
-    for index in local:
-        lo, hi = float(log_h[index - 1]), float(log_h[index + 1])
+    if not np.isfinite(r):
+        raise ValueError("r must be finite.")
+    cfg = search_config(config, scan_points=scan_points, half_width=half_width,
+                        spatial_points=spatial_points, scan_backend=scan_backend)
+    objective = samples if isinstance(samples, GaussianQhatObjective) else GaussianQhatObjective(samples)
+    scan = ((lambda z: objective.scan(z, r, cfg)) if cfg.scan_backend == "fourier" else None)
+    report = minimize_bandwidth_energy(
+        lambda z: objective.log_energy(z, r), h_min, h_max, scan=scan, config=cfg)
+    report["r"] = float(r)
+    report["diagnostics"]["scan_backend"] = cfg.scan_backend
+    report["diagnostics"]["effective_half_width"] = (
+        max(cfg.half_width, float(np.ceil(np.max(np.abs(objective.samples))+6*h_max)))
+        if cfg.scan_backend == "fourier" else None)
+    return report
 
-        def surrogate(z):
-            h = np.exp(z)
-            return h**4 * np.sum(weights * omega**4 * power * np.exp(-(h * omega)**2)) / (4 * half_width)
 
-        initial = minimize_scalar(surrogate, bounds=(lo, hi), method="bounded",
-                                  options={"xatol": 1e-11})
-        z = float(initial.x)
-        refined = False
-        for _ in range(8):
-            value = _energy(d2, len(samples), z)
-            if value[2] <= 0:
-                break
-            step = value[1] / value[2]
-            if abs(step) < 2e-10:
-                refined = True
-                break
-            updated = z - step
-            if not lo <= updated <= hi:
-                break
-            z = float(updated)
-        if not refined:
-            left_gradient = _energy(d2, len(samples), lo)[1]
-            right_gradient = _energy(d2, len(samples), hi)[1]
-            if left_gradient < 0 < right_gradient:
-                z = float(brentq(lambda t: _energy(d2, len(samples), t)[1], lo, hi,
-                                 xtol=2e-12))
-            else:
-                result = minimize_scalar(lambda t: _energy(d2, len(samples), t)[0],
-                                         bounds=(lo, hi), method="bounded",
-                                         options={"xatol": 1e-11})
-                if not result.success:
-                    raise ArithmeticError("Continuous Q_hat refinement failed.")
-                z = float(result.x)
-        candidates.append((z, _energy(d2, len(samples), z)))
-    best_z, best = min(candidates, key=lambda candidate: (candidate[1][0], candidate[0]))
-    is_boundary = best_z in (log_h[0], log_h[-1])
-    h = float(np.exp(best_z))
-    if is_boundary:
-        h = float(h_min if best_z == log_h[0] else h_max)
-    elif best[2] <= 0 or abs(best[1]) > 1e-7 * max(best[0], 1e-12):
-        raise ArithmeticError("Q_hat minimum failed its derivative/curvature check.")
-    return {"h": h, "qhat": float(best[0]), "log_derivative": float(best[1]),
-            "log_curvature": float(best[2]), "boundary": bool(is_boundary),
-            "interior_candidates": int(len(local))}
+def expected_gaussian_qhat_log_energy(log_h, n, r=0.0, sigma2=1.0):
+    """Exact E[Q_r] and two log-h derivatives for iid N(mu,sigma2) samples.
+
+    Original Gaussian convolution calculation; no unknown-density estimate is
+    used. This objective uses the SAME minimization engine as sample energies.
+    """
+    if isinstance(n, (bool, np.bool_)) or int(n) != n or n < 1:
+        raise ValueError("n must be a positive integer.")
+    if not np.isfinite(sigma2) or sigma2 <= 0 or not np.isfinite(r):
+        raise ValueError("Require sigma2 > 0 and finite r.")
+    h = float(np.exp(log_h))
+    a, b = 1+2*r, 4-2*r
+    diagonal = 3/(16*np.sqrt(np.pi)*n)*h**(-a)
+    population = 3*(n-1)/(16*np.sqrt(np.pi)*n)*h**b/(sigma2+h*h)**2.5
+    t = h*h/(sigma2+h*h)
+    slope = b-5*t
+    return np.array([diagonal+population, -a*diagonal+slope*population,
+                     a*a*diagonal+(slope*slope-10*t*(1-t))*population])
+
+
+def continuous_qhat_minimum(samples, h_min=0.01, h_max=2.0, *,
+                            scan_points=None, half_width=None, spatial_points=None,
+                            config=None):
+    """Compatibility view of minimize_qhat(..., r=0), retaining full analysis."""
+    report = minimize_qhat(samples, h_min, h_max, r=0.0, config=config,
+                           scan_points=scan_points, half_width=half_width,
+                           spatial_points=spatial_points)
+    best = report["global_minimum"]
+    return dict(h=best["h"], qhat=best["energy"],
+                log_derivative=best["log_derivative"], log_curvature=best["log_curvature"],
+                boundary=bool(best["boundary"]), interior_candidates=len(report["local_minima"]),
+                analysis=report)

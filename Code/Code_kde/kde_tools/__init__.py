@@ -18,6 +18,12 @@ from .density import (
     exact_oracle_ise_values,
     gaussian_kde_values,
 )
+from .energy_minimization import (
+    EnergySearchConfig,
+    energy_search_settings,
+    minimize_bandwidth_energy,
+)
+from .qhat import minimize_qhat, expected_gaussian_qhat_log_energy
 from .gaussian_mixtures import (
     exact_mixture_ise_values,
     exact_mixture_mise_values,
@@ -67,6 +73,11 @@ from .similarities import (
 )
 
 __all__ = [
+    "EnergySearchConfig",
+    "energy_search_settings",
+    "minimize_bandwidth_energy",
+    "minimize_qhat",
+    "expected_gaussian_qhat_log_energy",
     "PERRON_SOLVER_VERSION",
     "PERRON_TOLERANCE",
     "PerronConvergenceError",

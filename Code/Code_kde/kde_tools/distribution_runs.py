@@ -17,6 +17,7 @@ from pathlib import Path
 import numpy as np
 
 from .density import exact_oracle_ise_values
+from .qhat import gaussian_qhat
 from .fourier import (
     DEFAULT_FOURIER_HALF_WIDTH,
     DEFAULT_FOURIER_SPATIAL_POINTS,
@@ -33,18 +34,7 @@ SELECTOR_NAMES = ("spectral selections", "ISE-optimal grid bandwidths", "Q-hat m
 
 def exact_beta2_qhat_values(samples: np.ndarray, h_grid: np.ndarray) -> np.ndarray:
     """Evaluate the original Figure 3.5 Q-hat objective on its candidate grid."""
-    squared_differences = (samples[:, None] - samples[None, :]) ** 2
-    values = np.empty(len(h_grid), dtype=float)
-    for index, bandwidth in enumerate(h_grid):
-        q = 2.0 * bandwidth**2
-        overlap = np.exp(-squared_differences / (2.0 * q)) / np.sqrt(2.0 * np.pi * q)
-        second_q_factor = (
-            3.0 / (4.0 * q**2)
-            - 3.0 * squared_differences / (2.0 * q**3)
-            + squared_differences**2 / (4.0 * q**4)
-        )
-        values[index] = 2.0 * bandwidth**4 * np.mean(overlap * second_q_factor)
-    return values
+    return gaussian_qhat(samples, h_grid)
 
 
 def _sample_bank(n: int, repetitions: int, seed: int) -> np.ndarray:

@@ -12,6 +12,7 @@ import numpy as np
 from kde_tools.continuous_minimizers import METHODS, continuous_ise_qr_minima
 from kde_tools.continuous_runs import FIELDS, _QHAT_SOURCE, run_continuous_point
 from kde_tools.qhat import QHAT_VERSION, continuous_qhat_minimum
+from kde_tools.energy_minimization import EnergySearchConfig
 
 
 class ContinuousRunTests(unittest.TestCase):
@@ -53,6 +54,27 @@ class ContinuousRunTests(unittest.TestCase):
         other = self.run_point(("Q0",))
         self.assertNotEqual(first["cache_directory"], other["cache_directory"])
         self.assertEqual(other["reused_selections"], 0)
+
+    def test_local_and_endpoint_reports_survive_resume_and_are_exported(self):
+        first = self.run_point()
+        self.assertEqual(len(first["analyses"]), 3*len(METHODS))
+        resumed = self.run_point()
+        self.assertEqual(first["analyses"], resumed["analyses"])
+        saved = json.loads((self.root/"continuous/n18_energy_analysis.json").read_text())
+        self.assertEqual(saved, first["analyses"])
+        for report in saved.values():
+            self.assertEqual(len(report["endpoints"]), 2)
+            self.assertIn("local_minima", report)
+            self.assertIn("global_minimum", report)
+            self.assertFalse(report["diagnostics"]["certified_global"])
+
+    def test_central_control_change_does_not_reuse_previous_cache(self):
+        first = self.run_point(("Q0",))
+        with patch("kde_tools.energy_minimization.DEFAULT_ENERGY_SEARCH",
+                   EnergySearchConfig(root_xtol=1e-10)):
+            changed = self.run_point(("Q0",))
+        self.assertNotEqual(first["cache_directory"], changed["cache_directory"])
+        self.assertEqual(changed["reused_selections"], 0)
 
     def legacy_qhat(self):
         path = self.root/"legacy"; path.mkdir()

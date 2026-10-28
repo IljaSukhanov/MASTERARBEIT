@@ -28,7 +28,9 @@ from scipy.stats import wasserstein_distance
 
 from kde_tools.pdf_export import enable_automatic_pdf_saving
 
-DATA_DIR = KDE_DIR/'outputs/data/local_qr_minimizers_vs_n'
+from kde_tools.energy_minimization import unified_energy_run_directory, energy_search_settings, energy_search_id
+
+DATA_DIR = unified_energy_run_directory(KDE_DIR/'outputs/data/local_qr_minimizers_vs_n')
 IMAGE_DIR = KDE_DIR/'outputs/images/local_qr_minimizers_vs_n'
 DELIVERY_DIR = ROOT/'output/pdf/local_qr_minimizers_vs_n'
 METHODS = ('Q0','Q13_14','Q1')

@@ -44,6 +44,6 @@ four selected Figure 3.9 panels. It compares detected interior minima with
 both endpoints; the finite numerical scan is not a rigorous global-optimality
 certificate.
 
-The simulation results are recorded separately in
-[summary.csv](../../Code/Code_kde/outputs/data/continuous_minimizers_hmax10/summary.csv)
-and [validation.json](../../Code/Code_kde/outputs/data/continuous_minimizers_hmax10/validation.json).
+Pre-unification simulation results have been removed. Rerun the experiment
+to generate results with the current shared minimizer. Its reproducible
+sampling inputs are stored in [inputs](../../Code/Code_kde/inputs/README.md).
