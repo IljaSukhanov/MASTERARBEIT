@@ -156,6 +156,20 @@ The Omega=450/K=1536 update changes configuration identities and adds a grid
 namespace where outputs previously depended only on the numerical method.
 Existing results and checkpoints from other frequency grids remain historical.
 
+## Running notebooks and exports
+
+Choose the Python environment described under [Environment and checks](#environment-and-checks),
+open a notebook in its theme folder, and run its cells in order. Setup locates
+`kde_tools/` from the project root, the KDE directory, or the notebook folder.
+Restart the kernel and rerun setup after changing shared helpers or controls.
+
+Every notebook enables the [shared automatic PDF exporter](kde_tools/pdf_export.py)
+in its setup cell. Displayed figures are saved under
+`outputs/pdfs/<notebook-name>/`; the combined grid notebook retains a separate
+experiment/PDF name for each r choice. Saved data, images, and checkpoints remain
+under `outputs/` in the locations documented for each experiment. Reproducible
+raw inputs are documented in [inputs/README.md](inputs/README.md).
+
 ## Notebook themes
 
 The notebooks are grouped into the following folders. The `xx_notebooks_*`
@@ -163,20 +177,23 @@ prefix follows the neighboring AR code's folder convention. Notebook filenames
 are preserved, so automatic PDFs remain under `outputs/pdfs/<notebook-name>/`
 and saved data remain under their existing output directories.
 
-Open a notebook in its theme folder and run its cells in order. Setup locates
-`kde_tools/` from the project, the KDE directory, or the notebook's own folder.
+The active collection contains 16 notebooks after the October 2026 cleanup.
+The historical five-size Gram-error notebook was deleted. The single-sample
+Gram-error, r=13/14 grid, and Q₁-only views are now included in their respective
+shared notebooks below; the redundant notebooks and duplicate Q₁ runner were
+deleted. Existing input data, numerical results, and exported figures remain
+in their original locations.
 
 ### [Overview](xx_notebooks_overview/README.md)
 
 Start here for the canonical spectral KDE experiments and comparisons.
 
+- [classical_bandwidth_kde_illustration.ipynb](xx_notebooks_overview/classical_bandwidth_kde_illustration.ipynb): Classical bandwidth choices on one Gaussian sample and the corresponding thesis illustration.
 - [spectral_scale_selection_kde.ipynb](xx_notebooks_overview/spectral_scale_selection_kde.ipynb): Main L² spectral KDE workflow, thesis figure experiments, and selector comparisons.
 - [g_rs_approximation_vs_omega.ipynb](xx_notebooks_overview/g_rs_approximation_vs_omega.ipynb): Exact G_rs and its Fourier approximation versus the cutoff Omega, for one fixed sample and bandwidth pair and a fixed number K of trapezoidal intervals.
 - [g_rs_k_validation.ipynb](xx_notebooks_overview/g_rs_k_validation.ipynb): Repeated-sample K validation at Omega = 450, with all Gram pairs on 50 bandwidths, calibration and independent verification, accuracy summaries, and timings.
 - [g_rs_runtime_comparison.ipynb](xx_notebooks_overview/g_rs_runtime_comparison.ipynb): Exact versus Fourier computation times over 100 standard-normal samples of size 200, with 50 bandwidths and the chosen Omega = 450, K = 1536; exports mean timings and maximum error as CSV, Markdown, and LaTeX tables.
-- [g_rs_error_vs_k_single_sample.ipynb](xx_notebooks_overview/g_rs_error_vs_k_single_sample.ipynb): E_K versus K at Omega = 450 for one fixed normal sample of size 200, comparing all Gram pairs on 50 bandwidths with the analytic reference.
-- [g_rs_error_vs_k_repeated_samples.ipynb](xx_notebooks_overview/g_rs_error_vs_k_repeated_samples.ipynb): Retained error experiment: maximum over 200 independent normal samples of size 200 and all pairs of 50 bandwidths, versus K at Omega = 450. Reuses verified saved calculations when available.
-- [g_rs_error_vs_k_sample_sizes.ipynb](xx_notebooks_overview/g_rs_error_vs_k_sample_sizes.ipynb): Historical comparison of five sample sizes; the retained experiment is the n = 200 maximum-error notebook above.
+- [g_rs_error_vs_k_repeated_samples.ipynb](xx_notebooks_overview/g_rs_error_vs_k_repeated_samples.ipynb): Maximum over 200 independent normal samples of size 200 and all pairs of 50 bandwidths, versus K at Omega = 450. Includes the single-sample view from realization zero, with its signed-error CSV and plot; reuses verified saved calculations when available.
 
 The main notebook's section 2 contains three histogram profiles:
 `beta2_profile = "figure_3_5"` uses lambda = 1,
@@ -224,6 +241,7 @@ shared runner version; earlier saved outputs remain historical.
 Study bandwidth-grid size, localization scaling, and similarity eigenvalues.
 
 - [experiment_1_joint_N_lambda_limit.ipynb](xx_notebooks_asymptotics/experiment_1_joint_N_lambda_limit.ipynb): Joint N and lambda limits, mesh diagnostics, and fixed-sample scaling experiments.
+- [linear_grid_joint_N_lambda_limit.ipynb](xx_notebooks_asymptotics/linear_grid_joint_N_lambda_limit.ipynb): Both Figure 3.6 grid variants; set `GRID_R = "1"` or `"13/14"` in setup. Data, images, and automatic PDFs retain their separate experiment names.
 - [similarity_max_eigenvalue_vs_n.ipynb](xx_notebooks_asymptotics/similarity_max_eigenvalue_vs_n.ipynb): Largest similarity eigenvalue versus bandwidth-grid size, with numerical reference checks.
 
 ### [Bandwidth distributions](xx_notebooks_bandwidth_distributions/README.md)
@@ -236,7 +254,10 @@ Compare the sampling distributions of spectral and benchmark bandwidth choices.
 
 Compare bandwidths obtained by continuously minimizing ISE and Q criteria.
 
+- [qhat_minimization_control.ipynb](xx_notebooks_continuous_minimizers/qhat_minimization_control.ipynb): Fixed-sample search controls, local/interval minima, and diagnostics.
 - [continuous_ise_qhat_distributions_vs_n.ipynb](xx_notebooks_continuous_minimizers/continuous_ise_qhat_distributions_vs_n.ipynb): Paired sampling distributions of continuous ISE, Q₀, Q₁, and Q₁₃/₁₄ minimizers across sample sizes.
+- [local_energy_minimizers_n200.ipynb](xx_notebooks_continuous_minimizers/local_energy_minimizers_n200.ipynb): Interior minima on sample-dependent intervals, distribution fits, and styling for the n=200 study.
+- [local_qr_minimizers_vs_n.ipynb](xx_notebooks_continuous_minimizers/local_qr_minimizers_vs_n.ipynb): Interior local minima and ISE comparisons across sample sizes, including the Q₁-only selected-size view, full reports, and interval-minimum diagnostics.
 
 ### [Lambda sensitivity](xx_notebooks_lambda_sensitivity/README.md)
 
@@ -296,10 +317,22 @@ Resumable experiment configurations include `PERRON_SOLVER_VERSION`, and the
 joint notebook writes new sampling results into a solver-version directory.
 Old checkpoints therefore cannot be silently mixed with new solver results.
 
-Run the lightweight checks from this directory with:
+## Environment and checks
+
+The tested environment uses Python 3.12.7 and the direct dependency versions
+recorded in [requirements.txt](requirements.txt). The local interpreter used
+for the cleanup checks is `/opt/anaconda3/bin/python3`; select the same
+environment for notebook kernels and command-line checks. NumPy, SciPy,
+Matplotlib, pandas, and threadpoolctl support the numerical workflows;
+Plotly and Kaleido support the existing figure exports. IPython/ipykernel
+support the notebooks, and Numba supports the optional accelerated helpers.
+The dependency list records this working environment; the cleanup did not
+install or upgrade packages.
+
+Run the lightweight checks from this directory with that interpreter:
 
 ```bash
-python3 -m unittest discover -s tests
+MPLBACKEND=Agg /opt/anaconda3/bin/python3 -m unittest discover -s tests
 ```
 
 For reduced numerical runs through four notebook workflows (all three main

@@ -52,8 +52,8 @@ GRID_DESCRIPTION = "Geometric bandwidth grid replaced by linear grid."
 PLOT_TITLE = r"Linear bandwidth grid ($r=1$): joint $(N,\lambda_N)$ experiment"
 
 
-def configure_grid(r: str = "1") -> None:
-    """Choose another thesis r in an isolated output directory."""
+def configure_grid(r: str = "1") -> str:
+    """Choose a thesis r and return its isolated experiment/PDF name."""
     global R, GRID_BETA, R_MATH, GRID_DESCRIPTION, PLOT_TITLE
     global NOTEBOOK_NAME, DATA_DIR, IMAGE_DIR
     fraction = Fraction(r)
@@ -74,6 +74,7 @@ def configure_grid(r: str = "1") -> None:
     directory_name = NOTEBOOK_NAME.lower()
     DATA_DIR = KDE_DIR / "outputs" / "data" / directory_name
     IMAGE_DIR = KDE_DIR / "outputs" / "images" / directory_name
+    return NOTEBOOK_NAME
 
 
 def bandwidth_grid(size: int) -> np.ndarray:

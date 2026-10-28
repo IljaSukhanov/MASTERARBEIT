@@ -1,0 +1,62 @@
+{
+  "single_sample_full_saved_export": {
+    "rows": 141,
+    "columns": 7,
+    "sample_size": 200,
+    "bandwidths": 50,
+    "maximum_csv_absolute_difference": 2.220446049250313e-16,
+    "indices_equal": true
+  },
+  "q1_original_runner_comparisons": [
+    {
+      "case": "canonical_n100_sample0",
+      "local_minima": 1,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    },
+    {
+      "case": "canonical_n100_sample1",
+      "local_minima": 1,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    },
+    {
+      "case": "canonical_n100_sample2",
+      "local_minima": 1,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    },
+    {
+      "case": "canonical_n200_sample0",
+      "local_minima": 1,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    },
+    {
+      "case": "canonical_n200_sample1",
+      "local_minima": 1,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    },
+    {
+      "case": "canonical_n200_sample2",
+      "local_minima": 1,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    },
+    {
+      "case": "no_local_minimum",
+      "local_minima": 0,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    },
+    {
+      "case": "multiscale",
+      "local_minima": 2,
+      "maximum_h_energy_difference": 0.0,
+      "interval_boundary": 1
+    }
+  ],
+  "all_checks_passed": true,
+  "original_source_revision": "cfd86d40511e83c85634ee75317d0e3b3121b373"
+}

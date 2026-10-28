@@ -30,7 +30,7 @@ def sample_minima(samples, methods, scanner, refined_scanner):
     return results, diagnostics
 
 
-def exact_dense_minima(samples, methods, old_workflow=None, points=1025):
+def exact_dense_minima(samples, methods, points=1025):
     """Exact-scan validation mode of the same engine; no copied algorithm."""
     objective = GaussianQhatObjective(samples)
     return {method: minimize_qhat(objective, H_MIN, H_MAX, r=r,

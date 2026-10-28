@@ -9,9 +9,7 @@ Start here for the canonical spectral KDE experiments and comparisons.
 | [g_rs_approximation_vs_omega.ipynb](g_rs_approximation_vs_omega.ipynb) | One fixed sample and bandwidth pair: exact G_rs versus its Fourier approximation, sweeping Omega at fixed K and sweeping K for several fixed cutoffs Omega. |
 | [g_rs_k_validation.ipynb](g_rs_k_validation.ipynb) | Choose K at Omega = 450 using 200 normal samples of size 100 and all pairs of 50 bandwidths; calibration, independent verification, accuracy, and timing. |
 | [g_rs_runtime_comparison.ipynb](g_rs_runtime_comparison.ipynb) | Mean exact/Fourier runtime and maximum absolute Gram error over 100 normal samples of size 200, on 50 bandwidths, at Omega = 450 and K = 1536; exports CSV, Markdown, and LaTeX tables. |
-| [g_rs_error_vs_k_single_sample.ipynb](g_rs_error_vs_k_single_sample.ipynb) | Plot E_K versus K at Omega = 450 for one fixed normal sample of size 200, taking the maximum absolute Gram error over all pairs of 50 bandwidths. |
-| [g_rs_error_vs_k_repeated_samples.ipynb](g_rs_error_vs_k_repeated_samples.ipynb) | Retained experiment: maximum error over 200 normal samples of size 200 and all pairs of 50 bandwidths, versus K at Omega = 450. Reuses verified saved calculations. |
-| [g_rs_error_vs_k_sample_sizes.ipynb](g_rs_error_vs_k_sample_sizes.ipynb) | Historical sample-size comparison; the retained experiment is the n = 200 maximum-error notebook above. |
+| [g_rs_error_vs_k_repeated_samples.ipynb](g_rs_error_vs_k_repeated_samples.ipynb) | Maximum error over 200 normal samples of size 200 and all pairs of 50 bandwidths, versus K at Omega = 450; includes the former single-sample view, signed-error CSV, report, and plot from realization zero. Reuses verified saved calculations. |
 
 Section 2 supports `beta2_profile = "figure_3_5"` (lambda = 1) and
 `beta2_profile = "localized"` (lambda = N^(3/2)), and
@@ -26,13 +24,13 @@ The main sample-size sweep, the joint-limit notebook, and the fast L² notebook 
 runner and `../outputs/data/shared_spectral_sweeps/` cache. Their additional
 comparison methods and plots retain their existing roles.
 
-Run cells in order. Setup locates the shared helpers in `../kde_tools/` and
-enables automatic PDF exports under `../outputs/pdfs/<notebook-name>/`.
-Saved data, images, and checkpoints keep their existing locations in
-`../outputs/`.
+[Setup, automatic exports, and output locations](../README.md#running-notebooks-and-exports).
 
 The repeated-sample error notebook shares verified numerical data across summary
 views. Each view keeps its settings, report, and CSV; `cache_reference.json`
 locates the numerical data relative to that view's folder, without copying it.
+The single-sample exports are under `single_sample/` in the repeated run's data
+directory. The historical five-sample-size notebook and the separate single-sample
+notebook have been deleted; their existing saved outputs remain unchanged.
 
 [All KDE notebooks and code guide](../README.md)

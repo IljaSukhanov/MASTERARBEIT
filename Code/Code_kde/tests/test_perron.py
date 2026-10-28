@@ -256,7 +256,11 @@ class NotebookRoutingTests(unittest.TestCase):
             for index, cell in enumerate(notebook["cells"]):
                 if cell["cell_type"] != "code":
                     continue
-                for node in ast.walk(ast.parse("".join(cell["source"]))):
+                source = "\n".join(
+                    line for line in "".join(cell["source"]).splitlines()
+                    if not line.lstrip().startswith(("%", "!"))
+                )
+                for node in ast.walk(ast.parse(source)):
                     if isinstance(node, ast.Call):
                         name = (
                             node.func.id
@@ -279,7 +283,10 @@ class NotebookRoutingTests(unittest.TestCase):
         self.assertTrue(notebooks, "No categorized KDE notebooks were found.")
         for path in notebooks:
             notebook = json.loads(path.read_text())
-            setup = "".join(notebook["cells"][1]["source"])
+            setup = next(
+                "".join(cell["source"]) for cell in notebook["cells"]
+                if cell["cell_type"] == "code"
+            )
             with self.subTest(notebook=path.name):
                 self.assertIn("enable_automatic_pdf_saving(", setup)
 

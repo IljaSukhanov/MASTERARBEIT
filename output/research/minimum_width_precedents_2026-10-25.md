@@ -40,7 +40,7 @@ The relevance assessments below are editorial judgments. The evidence notes desc
 
 - **Relevance:** direct gradient-based precedent for the same slab-width objective in straightness/flatness. It maximizes the squared normal length subject to linear enclosure constraints, then repeatedly solves a linearized LP. It is not the sphere-based projected subgradient iteration used in the thesis.
 - **Read:** Section 4, equations (4)-(6), pp. 63-64; Section 6 and Table 2, pp. 66-69; Section 7, p. 73.
-- **Evidence:** complete user-supplied PDF read, with visual inspection of the decisive equations and algorithm. [Local paper](/Users/iljasukhanov/Downloads/1-s2.0-S0360835202000037-main.pdf).
+- **Evidence:** complete user-supplied PDF read, with visual inspection of the decisive equations and algorithm. User-supplied source filename: `1-s2.0-S0360835202000037-main.pdf`.
 - **Qualification:** its zero-step termination criterion is not a global-optimality certificate; an independent counterexample is recorded below. Its reported comparison uses three straightness datasets. It supplies no AR-estimation or statistical-consistency result.
 
 ### 2. Gosavi, A., and Phatakwala, S. (2006)
@@ -169,7 +169,7 @@ The relevance assessments below are editorial judgments. The evidence notes desc
 **Approximating Extent Measures of Points.** *Journal of the ACM*, **51**(4), 606-635. DOI: [10.1145/1008731.1008736](https://doi.org/10.1145/1008731.1008736). [Author's project page and abstract](https://valis.cs.illinois.edu/research/papers/01/fitting/). BibTeX: `agarwal2004extent`.
 
 - **Relevance:** small subsets preserving directional extent measures, including width, in arbitrary fixed dimension. Useful for comparing descent to methods that first reduce the point set.
-- **Read:** Sections 2-3 and 6.1 of the author manuscript; precise theorem locators are documented in the earlier project review.
+- **Read:** Sections 2-3 and 6.1 of the [author manuscript](https://graphics.stanford.edu/courses/cs468-06-winter/Papers/har-peled-JACM2004%20fitting.pdf), especially Theorems 3.7 and 6.1. The earlier review records the existing thesis bibliography key as `10.1145/1008731.1008736`.
 - **Evidence:** author's abstract/project page rechecked; the complete proof was not re-audited for this compilation.
 - **Qualification:** kernel construction and globally optimizing width over the kernel are different computational tasks.
 
@@ -298,4 +298,35 @@ Starting at \((w,b)=((1/10,2/5),-3/2)\), the linearized LP uniquely selects \(((
 - Cite [24] and [25] when positioning AR estimation and the unspecified innovation distribution. They address different statistical constructions from the proposed geometric estimator.
 - Use [26]-[27] only to motivate future adaptive methods, and [28] only when discussing enclosure variants.
 
-The accompanying `.bib` contains 30 distinct entries, matching the 28 main references and the two leads. Several sources already occur in the protected thesis bibliography under different keys. **Do not import the supplement wholesale without checking duplicate DOIs.** The compilation does not change or validate the thesis's mathematical proofs.
+The accompanying [BibTeX collection](minimum_width_precedents_2026-10-25.bib) contains 30 distinct entries, matching the 28 main references and the two leads. Several sources already occur in the protected thesis bibliography under different keys. **Do not import the supplement wholesale without checking duplicate DOIs.** The compilation does not change or validate the thesis's mathematical proofs.
+
+## Positioning recommendation and draft paragraph
+
+Consolidated on 28 October 2026 from the research note checked on
+18 October 2026. The assessment and draft below are retained verbatim;
+no thesis text or bibliography was changed.
+
+These sources establish prior work for computing width and for minimax hyperplane fitting. I would position the thesis around the use of that established functional for AR sliding-window embeddings, the population order-identification result, and empirical consistency; see [the population proposition](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:288) and [the consistency subsection](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:315). This search does not establish novelty of those AR-specific results.
+
+For interpreting computation, keep the globally minimized empirical width separate from a value returned by the projected subgradient method. The thesis's stated convergence result requires a suitably close initialization ([discussion at line 452](/Users/iljasukhanov/MASTERARBEIT/Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex:452)); the cited geometry algorithms address global exact or approximation guarantees.
+
+Suggested paragraph for later insertion, subject to a separate explicit thesis-edit request:
+
+> Computing the minimum width of a finite point set is a classical problem in computational geometry, also formulated as finding a minimum-width enclosing slab. Exact algorithms in two and three dimensions were developed by Houle and Toussaint \cite{houle1988width}, while approximation methods in fixed dimension are discussed by Chan \cite[Section 3]{chan2002approximating} and Agarwal, Har-Peled and Varadarajan \cite{10.1145/1008731.1008736}. The connection with minimax hyperplane fitting is also established in this literature. Here, the minimum-width functional is used to study AR sliding-window point clouds, with emphasis on its population structure and the consistency of its empirical counterpart.
+
+The accompanying [BibTeX supplement](/Users/iljasukhanov/MASTERARBEIT/output/research/minimum_width_literature.bib) contains all five papers. Retain the existing Agarwal entry rather than adding a duplicate to the thesis bibliography.
+
+## Reading details retained from the earlier overview
+
+For detailed running-time comparisons, use the separate
+[algorithm survey](minimum_width_algorithms_2026-10-19.md), which retains the
+distinction between fixed and variable dimension and between local descent
+and global geometric optimization.
+
+- [Houle and Toussaint's author manuscript](https://www-cgrl.cs.mcgill.ca/~godfried/publications/width.pdf), Sections 2.B-2.C and 3.C, Theorems 2.2 and 3.3: the earlier overview records planar width in \(O(n\log n)\), spatial width in \(O(n\log n+I)\), and worst-case quadratic antipodal-edge count \(I\). The 1985 conference predecessor is entry [12].
+- [Chan's author manuscript](https://tmc.web.engr.illinois.edu/apx.pdf), Sections 1 and 3: the earlier overview records the normalized slab formulation, direction discretization with multiple LPs, and the fixed-\(k\ge4\) exact bound \(O(n^{\lceil k/2\rceil})\). The attribution to Duncan, Goodrich and Ramos is retained in entries [16]-[17].
+- [Varadarajan et al.'s published paper](https://webhome.cs.uvic.ca/~srinivas/papers/radii.pdf), introduction and Theorem 1: the earlier overview records hardness when dimension is part of the input and a polynomial-time \(O(\sqrt{\log n})\) outer-radius approximation. The radius/full-width normalization qualification is retained in entry [19].
+- [Chazelle et al.'s institutional publication record](https://collaborate.princeton.edu/en/publications/diameter-width-closest-line-pair-and-parametric-searching-2/): the earlier overview records the abstract's historical deterministic three-dimensional bound \(O(n^{8/5+\delta})\), for each fixed \(\delta>0\). This is not presented as a current fastest bound.
+
+These details preserve the earlier source assessment; the Markdown
+consolidation did not perform a new literature review.
