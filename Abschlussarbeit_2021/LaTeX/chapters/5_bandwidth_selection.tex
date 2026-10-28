@@ -847,11 +847,16 @@ because
 \end{align*}
 where we have used $\int u^ne^{-u^2/2}\,du=\sqrt{2\pi}n!/(2^{n/2}(n/2)!)$ for even $n$ and have set $d_{ij}:=X_i-X_j$.
 
-\todo[inline]{Properties of $\hat{Q}_r$ and precedence!}
+We can characterize the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely,
+\begin{align*}
+    \hat{Q}_r(h)&\sim\frac{\|L\|_2^2}{2n}\frac{1}{h^{1+2r}},\quad h\to0,\\
+    \hat{Q}_r(h)&\sim\frac{\|L\|_2^2}{2}\frac{1}{h^{1+2r}},\quad h\to\infty.
+\end{align*}
+This means that $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum.
 
-\todo[inline]{How exactly is $\hat{Q}_r$ minimized?}
+\todo[inline]{add short discussion about local minima}
 
-Using \textcolor{red}{standard optimization methods}, we can minimize $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. 
+Using standard root finding methods, we can look for stationary points and check if they are local minima. Afterwards, we can compare with the energy function values at the borders $h_{\min}$ and $h_{\max}$ to see if the found local minimum is in fact a global minimum on the interval $[h_{\min},h_{\max}]$.
 
 The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
 
@@ -936,6 +941,8 @@ Figure~\ref{fig:continuous_minimizers_comparison} visualizes our theoretical con
 
 
 \section{Literature Positioning}
+
+\todo[inline]{28.10: Write it!}
 
 \todo[inline]{Literature positioning: Lindeberg, Goldenshluger (2011), SiZer (?)}
 
