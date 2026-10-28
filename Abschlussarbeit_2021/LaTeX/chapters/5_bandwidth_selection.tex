@@ -942,8 +942,25 @@ Figure~\ref{fig:continuous_minimizers_comparison} visualizes our theoretical con
 
 \section{Literature Positioning}
 
-\todo[inline]{28.10: Write it!}
+\todo[inline]{29.10: Write it!}
 
-\todo[inline]{Literature positioning: Lindeberg, Goldenshluger (2011), SiZer (?)}
+\todo[inline]{Literature positioning: Lindeberg, SiZer (?)}
+
+The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
+
+They set $\mathcal{H}=[h_{\min},h_{\max}]$ and define $\hat{f}_{h,\eta}(x)=n^{-1}\sum_{j=1}^{n}(K_h\ast K_{\eta})(x-X_j)$ and
+\begin{align*}
+    \hat{\mathcal{R}}_h:=\sup_{\eta\in\mathcal{H}}\left(\|\hat{f}_{h,\eta}-\hat{f}_{\eta}\|_2-m_2(h,\eta)\right)_++\sup_{\eta\in\mathcal{H}}m_2(\eta,h),
+\end{align*}
+where $m_2(h,\eta):=g_2(K_{\eta})+g_2(K_h\ast K_{\eta})$ and $g_2(U):=(25/3\sqrt{n})\|U\|_2$. Their bandwidth selector is $\hat{h}=\arg\min\{\hat{R}_h:h\in\mathcal{H}\}$.
+
+
+They then proceed to show the oracle inequality
+\begin{align*}
+    \mathbb{E}[\|\hat{f}_{\hat{h}}-f\|_2]\le C\inf_{h\in\mathcal{H}}\mathbb{E}[\|\hat{f}_h-f\|_2]+\delta_n,
+\end{align*}
+where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. \textcolor{red}{This means that the risk of their selector performs within a constant factor of the best candidate bandwidth plus a remainder.}
+
+Lacour and Massart~\cite{lacour_minimal_2016} provide considerations on how to make this procedure practically usable. Namely they use $\mathcal{H}=\{e^{-k}:3\le k\le 10\}\cup\{0.002+k\cdot0.02,0\le k\le 24\}$. That is, they sidestep the continuous optimization that would be needed to obtain $\hat{h}$ by discretization of the interval $\mathcal{H}$.
 
 \todo[inline]{energy functional precedence: physics, kde bandwidth}
