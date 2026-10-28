@@ -695,7 +695,28 @@ It is interesting to ask what happens to this distribution for increased sample 
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
     \todo[inline]{Can the two peaks be described?}
     \todo[inline]{$n_{\text{critical}}$ (finite sample mode switching), gap between two local Perron maxima??}
-    \todo[inline]{28.10: Make this Figure in the same style as Figure 3.7}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/spectral_bandwidths_across_n_lambda1_N1000.pdf}
+        \caption{$\lambda=1$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/localized_spectral_bandwidths_across_n_N1000.pdf}
+        \caption{$\lambda_N=N^{3/2}$}
+    \end{subfigure}
+
+    \caption{Comparison of spectrally selected bandwidth distributions
+    for different sample sizes, with $N=1000$ and $M=1000$ repetitions.
+    Note the different vertical scales.}
+    \label{fig:spectral-lambda-comparison}
 \end{figure}
 
 \section{Explanation of the Results}\label{sec:res_2}
