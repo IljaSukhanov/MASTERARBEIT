@@ -812,7 +812,17 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
-For the Gaussian Kernel, the energy functional $\hat{Q}_r$ can be written down explicitly:
+For the Gaussian kernel, $L(u)=(1-u^2)e^{-u^2/2}$ and the energy functional $\hat{Q}_r$ can be written down explicitly:
+\begin{align*}
+    \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2=\frac{1}{2n^2}h^{-2(1+r)}\int\sum_{i,j=1}^{n}L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
+    =
+\end{align*}
+because
+\begin{align*}
+    &\int\left(1-\left(\frac{x-X_i}{h}\right)^2\right)\left(1-\left(\frac{x-X_j}{h}\right)^2\right)\exp{\left(-\frac{1}{2}\left(\frac{x-X_i}{h}\right)^2\right)}\exp{\left(-\frac{1}{2}\left(\frac{x-X_j}{h}\right)^2\right)}\,dx\\&
+    =
+\end{align*}
+
 \begin{align*}
     \hat{Q}_r(h)=\frac{h^{-5-2r}}{32\sqrt{\pi}n^2}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right),
 \end{align*}
