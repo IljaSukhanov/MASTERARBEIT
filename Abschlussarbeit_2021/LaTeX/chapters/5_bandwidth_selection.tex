@@ -859,30 +859,37 @@ The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_dif
 
 The expectation of the energy functional is
 \begin{align*}
-    \mathbb{E}[\hat{Q}_r(h)]=\frac{1}{2}h^{2(1-r)}\mathbb{E}[\|\partial_h\hat{f}_h\|_2^2]
+    \mathbb{E}[\hat{Q}_r(h)]&=\frac{1}{2}h^{2(1-r)}\mathbb{E}[\|\partial_h\hat{f}_h\|_2^2]\\
+    \mathbb{E}[\|\partial_h\hat{f}_h\|_2^2]&=\frac{1}{nh^4}\|L\|_2^2+\left(1-\frac{1}{n}\right)\|(\partial_hK_h\ast f)\|_2^2
 \end{align*}
 
-The expectation of the energy functional is
+\textcolor{red}{It holds $\|h^{-1}\partial_h(K_h\ast f)-\mu_2(K)f^{''}\|_2^2\to0$ as $h\downarrow0$ for all suitable kernels $K$.}
+
+This implies $\|(\partial_hK_h\ast f)\|_2^2=h^2\mu_2(K)^2\|f''\|_2^2+\mathbf{o}(h^2)$, since
 \begin{align*}
-    \mathbb{E}[\hat{Q}_r]=\frac{1}{2}h^{2(1-r)}\left(\frac{1}{n}\|\partial_hK_h\|_{L^2}^2+\left(1-\frac{1}{n}\right)\|\partial_h(K_h\ast f)\|_{L^2}^2\right).
+    &\frac{\|(\partial_hK_h\ast f)\|_2^2-h^2\mu_2(K)^2\|f''\|_2^2}{h^2}=\|h^{-1}(\partial_hK_h\ast f)\|_2^2-\mu_2(K)^2\|f''\|_2^2\\&
+    \underbrace{\le\|h^{-1}(\partial_hK_h\ast f)-\mu_2(K)f''\|_2^2}_{\to0\text{ as }h\downarrow0}+\underbrace{\mu_2(K)^2\|f''\|_2^2-\mu_2(K)^2\|f''\|_2^2}_{=0}.
 \end{align*}
 
-Similarly to the $\operatorname{AMISE}$ we do a leading term approximation:
+We point out that if $K$ is the Gaussian kernel, then this is the well known Gaussian heat equation: $\partial_hK_h\ast f=h(K_h\ast f'')$.
+
+A leading term approximation yields
 \begin{align*}
-    \mathbb{E}[\hat{Q}_r]=\underbrace{\frac{1}{2n}h^{-(1+2r)}\|L\|_{L^2}^2+\frac{n-1}{2n}h^{4-2r}\mu_2(K)^2\|f''\|_{L^2}^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r}).
+    \mathbb{E}[\hat{Q}_r(h)]=\underbrace{\frac{1}{2n}h^{-2(1+r)}\|L\|_2^2+\frac{n-1}{2n}h^{4-2r}\|f''\|_2^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r}).
 \end{align*}
 
-The minimizer of $\operatorname{AMQ}_r(h)$ is
+The unique minimizer of $\operatorname{AMQ}_r(h)$ over $(0,\infty)$ is
 \begin{align*}
     h_{\operatorname{AMQ},r}(n)=\left(\frac{1+2r}{4-2r}\frac{\|L\|_{L^2}^2}{(n-1)\mu_2(K)^2\|f''\|_{L^2}^2}\right)^{1/5}
 \end{align*}
+given that $n\ge2$ and $-1/2<r<2$.
 
-We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise} and we get
+We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise}. We therefore get
 \begin{align}\label{eq:h_amq_limit}
-    \frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}\to\frac{1+2r}{4-2r}\left(\frac{\|L\|_{L^2}^2}{\|K\|_{L^2}^2}\right)^{1/5},\quad n\to\infty.
+    \lim\limits_{n\to\infty}\frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}=\frac{1+2r}{4-2r}\left(\frac{\|L\|_2^2}{\|K\|_2^2}\right)^{1/5}=:C_r(K,L).
 \end{align}
 
-For $r=13/14$ we thus see that $h_{\operatorname{AMQ},r}(n)$ is asymptotically equivalent. This is because if $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$ and the right and the limit in Equation~\eqref{eq:h_amq_limit} becomes $1$.
+If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. In this case, $C_r(K,L)=\frac{1+2r}{4-2r}(3/4)^{1/5}$ and it becomes 1 if set $r=13/14$, that is, for $r=13/14$ (the bandwidths inside the grid are arranged slightly below being linear) the asymptotic minimizer of the mean integrated squared error and the asymptotic minimizer of the expected energy functional are asymptotically equivalent.
 
 Figure~\ref{fig:continuous_minimizers_comparison} visualizes our theoretical considerations. It compares the distribution of $M=1000$ selected bandwidths minimizing: 1) $\operatorname{ISE}$ (violet), 2) $\hat{Q}_0$ (blue), 3) $\hat{Q}_1$ (orange), 4) $\hat{Q}_{13/14}$ (green).
 
