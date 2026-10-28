@@ -1,0 +1,56 @@
+{
+  "N": 1000,
+  "M": 1000,
+  "lambda": 1.0,
+  "positions_per_bin": 5,
+  "sample_sizes": [
+    300,
+    400,
+    500,
+    1000
+  ],
+  "seed": 20260830,
+  "run_directory": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/data/spectral_scale_selection_kde/sample_size_sweep/7f1287e86962",
+  "panels": {
+    "300": {
+      "samples_sha256": "348830b73c4848180788fc2c0e731be1527cdb2bb8b1158c747d9473a0f9b1c1",
+      "max_eigenpair_relative_residual": 1.4812278918807122e-15,
+      "min_relative_spectral_gap": 0.986295900275666,
+      "selection_counts": {
+        "counts": 1000,
+        "ise_counts": 1000,
+        "qhat_counts": 1000
+      }
+    },
+    "400": {
+      "samples_sha256": "c8fc0605116f3bd13b2f1a7c4b41f7a9ec259a6a5ac9ddd4ab2a0a1052e1b968",
+      "max_eigenpair_relative_residual": 1.790433906932753e-15,
+      "min_relative_spectral_gap": 0.9891430974326739,
+      "selection_counts": {
+        "counts": 1000,
+        "ise_counts": 1000,
+        "qhat_counts": 1000
+      }
+    },
+    "500": {
+      "samples_sha256": "3a46a7f77e5dfe20996911e773019df2fea33b25503a5e0b4fb1bd329afd6a26",
+      "max_eigenpair_relative_residual": 1.7084508294395534e-15,
+      "min_relative_spectral_gap": 0.9903815653423181,
+      "selection_counts": {
+        "counts": 1000,
+        "ise_counts": 1000,
+        "qhat_counts": 1000
+      }
+    },
+    "1000": {
+      "samples_sha256": "a63d3c99c6ef68a42ff54f2108bfc0d1470c0e48c7a1fff7bcaa3cf88a59a8bb",
+      "max_eigenpair_relative_residual": 1.5999676980714548e-15,
+      "min_relative_spectral_gap": 0.9931489613909537,
+      "selection_counts": {
+        "counts": 1000,
+        "ise_counts": 1000,
+        "qhat_counts": 1000
+      }
+    }
+  }
+}
