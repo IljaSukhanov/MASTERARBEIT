@@ -59,6 +59,8 @@ summary = {
     "N": namespace["beta2_n_sweep_N"],
     "M": namespace["beta2_n_sweep_M"],
     "lambda": namespace["beta2_n_sweep_lambda"],
+    "lambda_values": namespace["beta2_n_sweep_lambda_values"],
+    "localized_lambda_rule": "N**(3/2)",
     "positions_per_bin": namespace["beta2_n_sweep_binning"],
     "sample_sizes": namespace["beta2_n_sweep_values"].tolist(),
     "seed": namespace["beta2_n_sweep_seed"],
@@ -73,7 +75,15 @@ for n, result in namespace["beta2_n_sweep_spectral_results"].items():
         "max_eigenpair_relative_residual": float(diagnostics[:, :, 0].max()),
         "min_relative_spectral_gap": float(diagnostics[:, :, 1].min()),
         "selection_counts": {key: int(counts[key].sum())
-                             for key in ("counts", "ise_counts", "qhat_counts")},
+                             for key in ("counts", "ise_counts", "qhat_counts", "localized_counts")},
+        "controls_reused_from": counts["controls_reused_from"],
+        "per_lambda_diagnostics": {
+            str(value): {
+                "maximum_relative_residual": float(diagnostics[:, column, 0].max()),
+                "minimum_relative_spectral_gap": float(diagnostics[:, column, 1].min()),
+            }
+            for column, value in enumerate(namespace["beta2_n_sweep_lambda_values"])
+        },
     }
 Path(__file__).with_name("validation.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary, indent=2), flush=True)

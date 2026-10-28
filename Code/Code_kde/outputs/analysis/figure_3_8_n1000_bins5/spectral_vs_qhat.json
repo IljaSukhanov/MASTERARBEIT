@@ -1,0 +1,50 @@
+{
+  "N": 1000,
+  "M": 1000,
+  "spectral_lambda": 31622.776601683792,
+  "comparison": "Paired spectral selections at lambda=N**(3/2) versus the grid Q_0 minimizer on the same samples.",
+  "relative_difference_definition": "abs(h_spectral-h_qhat)/h_qhat",
+  "source_run_directory": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/data/spectral_scale_selection_kde/sample_size_sweep/a67fc30165be",
+  "results": [
+    {
+      "n": 300,
+      "median_paired_relative_difference_percent": 2.0991039660042383,
+      "p90_paired_relative_difference_percent": 6.571235324574194,
+      "identical_grid_choice_percent": 7.5,
+      "mean_spectral_bandwidth": 0.2366272650068307,
+      "mean_qhat_bandwidth": 0.23921568780866978,
+      "median_spectral_bandwidth": 0.2397158022849393,
+      "median_qhat_bandwidth": 0.24291622554143538
+    },
+    {
+      "n": 400,
+      "median_paired_relative_difference_percent": 2.144111086864098,
+      "p90_paired_relative_difference_percent": 7.156108923841391,
+      "identical_grid_choice_percent": 6.6000000000000005,
+      "mean_spectral_bandwidth": 0.22426180596601653,
+      "mean_qhat_bandwidth": 0.2279544389103703,
+      "median_spectral_bandwidth": 0.22493480680303554,
+      "median_qhat_bandwidth": 0.22975765893391575
+    },
+    {
+      "n": 500,
+      "median_paired_relative_difference_percent": 2.6169587462999035,
+      "p90_paired_relative_difference_percent": 8.621645458918065,
+      "identical_grid_choice_percent": 5.4,
+      "mean_spectral_bandwidth": 0.2123129274446124,
+      "mean_qhat_bandwidth": 0.21590216444689259,
+      "median_spectral_bandwidth": 0.2155906875191642,
+      "median_qhat_bandwidth": 0.2190483557029307
+    },
+    {
+      "n": 1000,
+      "median_paired_relative_difference_percent": 3.6444650909151743,
+      "p90_paired_relative_difference_percent": 10.064048567435984,
+      "identical_grid_choice_percent": 3.9,
+      "mean_spectral_bandwidth": 0.18144206989351624,
+      "mean_qhat_bandwidth": 0.18699088695778493,
+      "median_spectral_bandwidth": 0.18290545759185647,
+      "median_qhat_bandwidth": 0.18881942217097122
+    }
+  ]
+}
