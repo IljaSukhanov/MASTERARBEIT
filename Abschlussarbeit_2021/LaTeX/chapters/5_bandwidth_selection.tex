@@ -815,22 +815,25 @@ In this section a connection between the expectation of the energy functional $\
 For the Gaussian kernel, $L(u)=(1-u^2)e^{-u^2/2}$ and the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align*}
     \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2=\frac{1}{2n^2}h^{-2(1+r)}\int\sum_{i,j=1}^{n}L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
-    =
+    =\frac{\sqrt{\pi}}{2n^2}h^{-2(1+r)+1}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
+    =\frac{\sqrt{\pi}}{32n^2}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right)
 \end{align*}
 because
 \begin{align*}
-    &\int\left(1-\left(\frac{x-X_i}{h}\right)^2\right)\left(1-\left(\frac{x-X_j}{h}\right)^2\right)\exp{\left(-\frac{1}{2}\left(\frac{x-X_i}{h}\right)^2\right)}\exp{\left(-\frac{1}{2}\left(\frac{x-X_j}{h}\right)^2\right)}\,dx\\&
-    =
+    &\int\underbrace{\left(1-\left(\frac{x-X_i}{h}\right)^2\right)\left(1-\left(\frac{x-X_j}{h}\right)^2\right)}_{=:P(x)}\exp{\left(-\frac{1}{2}\left(\frac{x-X_i}{h}\right)^2\right)}\exp{\left(-\frac{1}{2}\left(\frac{x-X_j}{h}\right)^2\right)}\,dx\\&
+    =\exp{\left(-\frac{(X_i-X_j)^2}{4h^2}\right)}\int P(x)\exp{\left(-\frac{\left(x-\frac{X_i+X_j}{2}\right)^2}{h^2}\right)}\,dx\\&
+    =e^{-d_{ij}^2/(4h^2)}\frac{h}{\sqrt{2}}\int P\left(\frac{h}{\sqrt{2}}u+\frac{X_i+X_j}{2}\right)\exp{(-u^2/2)}\,du\\&
+    =e^{-d_{ij}^2/(4h^2)}h\sqrt{\pi}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right),
 \end{align*}
+where we have used $\int u^ne^{-u^2/2}\,du=\sqrt{2\pi}n!/(2^{n/2}(n/2)!)$ for even $n$ and have set $d_{ij}:=X_i-X_j$.
 
-\begin{align*}
-    \hat{Q}_r(h)=\frac{h^{-5-2r}}{32\sqrt{\pi}n^2}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right),
-\end{align*}
-where $d_{ij}=X_i-X_j$. Using standard optimization methods, we can minimize $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. 
+\todo[inline]{Properties of $\hat{Q}_r$ and precedence!}
 
-The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. 
+\todo[inline]{How exactly is $\hat{Q}_r$ minimized?}
 
-The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
+Using \textcolor{red}{standard optimization methods}, we can minimize $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. 
+
+The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
 
 The expectation of the energy functional is
 \begin{align*}
