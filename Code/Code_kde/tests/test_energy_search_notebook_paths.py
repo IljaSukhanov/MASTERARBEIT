@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def notebook(name):
-    path, = ROOT.glob("xx_notebooks_*/"+name+".ipynb")
+    path, = ROOT.glob("notebooks/"+name+".ipynb")
     return json.loads(path.read_text())
 
 
@@ -48,24 +48,6 @@ class UnifiedNotebookSearchTests(unittest.TestCase):
     def tearDown(self):
         disable_automatic_pdf_saving()
 
-    def test_fast_overlay_cell_runs_and_exports_full_reports(self):
-        nb = notebook("fast_l2_bandwidth_distributions_vs_n_lambda")
-        with tempfile.TemporaryDirectory() as tmp:
-            ns = dict(np=np, pd=pd, Path=Path, hashlib=hashlib, json=json, csv=csv,
-                      code_directory=ROOT, data_output_directory=Path(tmp),
-                      overlay_settings=dict(seed=61, sigma2=1., maximum_sample_size=40),
-                      overlay_common_configuration={"settings": {"seed": 61, "sigma2": 1.,
-                                                                 "maximum_sample_size": 40}},
-                      overlay_repetitions=2, overlay_sample_sizes=[20, 40],
-                      overlay_h_grid=np.geomspace(.01, 2., 17), OVERLAY_PROFILE="preview")
-            execute("".join(nb["cells"][23]["source"]), ns, dict(
-                QHAT_SCAN_POINTS="65", QHAT_SPATIAL_POINTS="4096", QHAT_WORKERS="1",
-                continuous_cache_root="data_output_directory/'shared'",
-                continuous_import_directories="[]"))
-            reports = list(Path(tmp).rglob("n*_energy_analysis.json"))
-            self.assertEqual(len(reports), 2)
-            for path in reports:
-                self.assertEqual(len(json.loads(path.read_text())), 2)
 
     def test_continuous_comparison_cells_run_validate_and_export(self):
         nb = notebook("continuous_ise_qhat_distributions_vs_n")
@@ -110,11 +92,6 @@ class UnifiedNotebookSearchTests(unittest.TestCase):
         h = ns["exact_expected_q_minimizer"](200, 1/7, .5, 5.)
         self.assertTrue(.5*200**(-.2) <= h <= 5*200**(-.2))
 
-    def test_local_experiment_adapters_recover_fixed_sample_reference(self):
-        workflow = runpy.run_path(str(ROOT/"outputs/analysis/local_energy_minimizers_n200/run_experiment.py"))
-        report = workflow["validate_reference_cases"]()
-        self.assertTrue(report["monotone_single_gaussian_has_no_local_minimum"])
-        self.assertLess(report["maximum_previous_sample_h_error"], 5e-7)
 
 
 if __name__ == "__main__":

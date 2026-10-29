@@ -5,6 +5,7 @@ from __future__ import annotations
 import unittest
 
 import numpy as np
+from kde_tools.quadrature import trapezoidal_integral
 
 from kde_tools.bandwidths import (
     bandwidth_grid_linear_in_psi_beta,
@@ -19,18 +20,9 @@ from kde_tools.gaussian_mixtures import (
     exact_mixture_mise_values,
     mixture_density,
 )
-from kde_tools.kullback_leibler import (
-    directional_kl_divergence_matrix,
-    directional_kl_similarity,
-)
 from kde_tools.plotting_functions import (
     plot_bandwidth_distributions,
     plot_bandwidth_grid_stability,
-)
-from kde_tools.quadrature import (
-    quadrature_beta2_divergence_matrix,
-    quadrature_similarity_matrices,
-    trapezoidal_integral,
 )
 from kde_tools.similarities import (
     beta2_divergence_matrix,
@@ -40,10 +32,6 @@ from kde_tools.similarities import (
     population_gaussian_beta2_divergence_matrix,
     select_spectral_bandwidth,
     squared_l2_distance_from_gram,
-)
-from kde_tools.experiments import (
-    beta2_bandwidth_selection_counts,
-    run_one_spectral_vs_oracle_experiment,
 )
 
 
@@ -214,21 +202,6 @@ class SimilarityTests(unittest.TestCase):
             self.samples, self.bandwidths, self.x_grid
         )
 
-    def test_similarity_invariants(self) -> None:
-        for name in (
-            "tv_overlap",
-            "hellinger_affinity",
-            "exponential_l2_similarity",
-            "js_similarity",
-        ):
-            matrix = quadrature_similarity_matrices(
-                self.densities,
-                self.x_grid,
-                similarity_name=name,
-            )
-            np.testing.assert_allclose(matrix, matrix.T, atol=1e-13)
-            np.testing.assert_allclose(np.diag(matrix), 1.0, atol=1e-13)
-            self.assertTrue(np.all((matrix >= 0.0) & (matrix <= 1.0)))
 
     def test_exact_selector_uses_exact_l2_distances(self) -> None:
         result = select_spectral_bandwidth(self.samples, self.bandwidths)
@@ -256,94 +229,9 @@ class SimilarityTests(unittest.TestCase):
             np.exp(-lambda_value * divergence),
         )
 
-    def test_exact_beta2_bandwidth_selection_counts(self) -> None:
-        n = 20
-        repetitions = 6
-        lambda_value = 2.3
-        seed = 1234
-        counts = beta2_bandwidth_selection_counts(
-            n=n,
-            h_grid=self.bandwidths,
-            M=repetitions,
-            method="exact",
-            sigma2=1.0,
-            lambda_value=lambda_value,
-            seed=seed,
-        )
 
-        rng = np.random.default_rng(seed)
-        expected = np.zeros(len(self.bandwidths), dtype=int)
-        for _ in range(repetitions):
-            samples = rng.normal(0.0, 1.0, size=n)
-            selection = select_spectral_bandwidth(
-                samples=samples,
-                h_grid=self.bandwidths,
-                lambda_value=lambda_value,
-            )
-            expected[int(selection["selected_index"])] += 1
 
-        np.testing.assert_array_equal(counts, expected)
-        self.assertEqual(counts.shape, self.bandwidths.shape)
-        self.assertEqual(int(counts.sum()), repetitions)
 
-    def test_quadrature_beta2_bandwidth_selection_counts(self) -> None:
-        counts = beta2_bandwidth_selection_counts(
-            n=20,
-            h_grid=self.bandwidths,
-            M=4,
-            method="quadrature",
-            m_x=501,
-            sigma2=1.0,
-            lambda_value=2.3,
-            seed=1234,
-        )
-        repeated = beta2_bandwidth_selection_counts(
-            n=20,
-            h_grid=self.bandwidths,
-            M=4,
-            method="quadrature",
-            m_x=501,
-            sigma2=1.0,
-            lambda_value=2.3,
-            seed=1234,
-        )
-
-        np.testing.assert_array_equal(counts, repeated)
-        self.assertEqual(counts.shape, self.bandwidths.shape)
-        self.assertEqual(int(counts.sum()), 4)
-
-    def test_quadrature_similarity_uses_supplied_lambda(self) -> None:
-        divergence = quadrature_beta2_divergence_matrix(
-            self.densities,
-            self.x_grid,
-        )
-        lambda_value = 1.7
-        similarity = quadrature_similarity_matrices(
-            self.densities,
-            self.x_grid,
-            similarity_name="exponential_l2_similarity",
-            lambda_value=lambda_value,
-        )
-        np.testing.assert_allclose(
-            similarity,
-            np.exp(-lambda_value * divergence),
-        )
-
-    def test_spectral_vs_oracle_runner_reports_supplied_lambda(self) -> None:
-        lambda_value = 1.4
-        result = run_one_spectral_vs_oracle_experiment(
-            seed=123,
-            n=20,
-            sigma2=1.0,
-            h_grid=bandwidth_grid_linear_in_psi_beta(
-                h_min=0.1,
-                h_max=1.0,
-                beta=2.0,
-                grid_size=8,
-            ),
-            lambda_value=lambda_value,
-        )
-        self.assertAlmostEqual(result["lambda"], lambda_value)
 
     def test_exact_beta2_divergence_matches_fine_quadrature(self) -> None:
         numerical = 0.5 * trapezoidal_integral(
@@ -369,30 +257,7 @@ class SimilarityTests(unittest.TestCase):
         np.testing.assert_allclose(similarity, np.exp(-1.7 * divergence))
         np.testing.assert_allclose(np.diag(similarity), 1.0)
 
-    def test_directional_kl_quadrature_invariants(self) -> None:
-        divergence = directional_kl_divergence_matrix(
-            self.densities,
-            self.x_grid,
-        )
-        self.assertEqual(divergence.shape, (len(self.bandwidths),) * 2)
-        np.testing.assert_allclose(np.diag(divergence), 0.0)
-        self.assertTrue(np.all(divergence >= 0.0))
 
-    def test_directional_kl_similarity_uses_supplied_lambda(self) -> None:
-        lambda_value = 1.7
-        divergence = directional_kl_divergence_matrix(
-            self.densities,
-            self.x_grid,
-        )
-        similarity = directional_kl_similarity(
-            self.densities,
-            self.x_grid,
-            lambda_value=lambda_value,
-        )
-        np.testing.assert_allclose(
-            similarity,
-            np.exp(-lambda_value * divergence),
-        )
 
     def test_population_gaussian_beta2_matrix_matches_quadrature(self) -> None:
         population = population_gaussian_beta2_divergence_matrix(

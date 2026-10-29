@@ -137,10 +137,11 @@ are finitely many local minima, but their number need not be one.
 
 ## 3. Numerical experiments
 
-Pre-unification empirical counts have been removed together with their saved
-results. Rerun the [local-minimum experiment](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/analysis/local_energy_minimizers_n200/run_experiment.py)
-to compute current counts using the shared minimizer. The derivations and the
-explicit deterministic example below do not depend on those removed counts.
+The separate empirical local-minimum distribution study and its old counts are
+outside the retained thesis scope. The [energy notebook](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/notebooks/continuous_ise_qhat_distributions_vs_n.ipynb)
+includes a fixed-sample local-minimum control using the shared search. The
+derivations and the explicit deterministic example below do not depend on the
+removed empirical counts.
 
 ## 4. An explicit counterexample to uniqueness at r=13/14
 
@@ -256,6 +257,6 @@ four checked bandwidths 0.2, 0.4424131861, 0.8 and 1.5 for sigma=1.
 
 This proves uniqueness for the expected criterion under Gaussian
 sampling. It does not imply uniqueness for the random sample criterion;
-the recorded n=200 experiment and the counterexample above show the
+the deterministic counterexample above shows the
 distinction. No consistency theorem for a selected sample-minimum branch
 is claimed here.

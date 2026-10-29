@@ -7,7 +7,6 @@ import unittest
 import numpy as np
 
 from kde_tools.bandwidths import bandwidth_grid_linear_in_psi_beta
-from kde_tools.experiments import beta2_bandwidth_selection_counts
 from kde_tools.fourier import (
     gaussian_kde_l2_gram_fourier,
     beta2_divergence_matrix_fourier,
@@ -61,41 +60,6 @@ class OptionalFourierTests(unittest.TestCase):
         )
         np.testing.assert_allclose(similarity, np.exp(-1.7 * exact), atol=1e-12)
 
-    def test_fourier_bandwidth_selection_counts(self) -> None:
-        n = 20
-        repetitions = 4
-        lambda_value = 1.7
-        seed = 1234
-        spatial_points = 2_048
-        counts = beta2_bandwidth_selection_counts(
-            n=n,
-            h_grid=self.bandwidths,
-            M=repetitions,
-            method="fourier",
-            sigma2=1.0,
-            lambda_value=lambda_value,
-            half_width=12.0,
-            spatial_points=spatial_points,
-            seed=seed,
-        )
-
-        rng = np.random.default_rng(seed)
-        expected = np.zeros(len(self.bandwidths), dtype=int)
-        for _ in range(repetitions):
-            samples = rng.normal(0.0, 1.0, size=n)
-            similarity = beta2_similarity_matrix_fft(
-                samples=samples,
-                h_grid=self.bandwidths,
-                lambda_value=lambda_value,
-                half_width=12.0,
-                spatial_points=spatial_points,
-            )
-            choice = spectral_choice_from_similarity(similarity)
-            expected[int(choice["selected_index"])] += 1
-
-        np.testing.assert_array_equal(counts, expected)
-        self.assertEqual(counts.shape, self.bandwidths.shape)
-        self.assertEqual(int(counts.sum()), repetitions)
 
     def test_frequency_gram_matches_literal_trapezoidal_integrals(self) -> None:
         # A short interval deliberately leaves nonzero integrand values at

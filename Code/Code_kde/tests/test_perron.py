@@ -26,7 +26,6 @@ from kde_tools.similarities import (
     doob_stationary_mass,
     select_spectral_bandwidth,
 )
-from kde_tools.experiments import beta2_bandwidth_selection_counts
 
 
 class PerronTests(unittest.TestCase):
@@ -192,23 +191,6 @@ class PerronTests(unittest.TestCase):
             with self.subTest(vector=invalid), self.assertRaises(ValueError):
                 perron_peak_index(invalid)
 
-    def test_exact_fourier_and_quadrature_runners_agree_at_large_lambda(self) -> None:
-        grid = np.geomspace(0.05, 1.0, 11)
-        counts = [
-            beta2_bandwidth_selection_counts(
-                n=30,
-                h_grid=grid,
-                M=2,
-                method=method,
-                lambda_value=1e9,
-                seed=23,
-                m_x=2001,
-                spatial_points=8192,
-            )
-            for method in ("exact", "fourier", "quadrature")
-        ]
-        for actual in counts[1:]:
-            np.testing.assert_array_equal(actual, counts[0])
 
 
 class NotebookRoutingTests(unittest.TestCase):
@@ -218,8 +200,8 @@ class NotebookRoutingTests(unittest.TestCase):
         # Existing validation scripts compare the stabilized matrix with an
         # independent eigh solve of the original, unshifted similarity.
         dense_reference_scripts = {
-            root / "outputs/analysis/spectral_lambda_jump_study/numerical_artefact_checks.py",
-            root / "outputs/analysis/spectral_lambda_switch_distribution/switch_distribution_analysis.py",
+            root / "experiments/spectral_lambda_jump_study/numerical_artefact_checks.py",
+            root / "experiments/spectral_lambda_switch_distribution/switch_distribution_analysis.py",
         }
         for path in root.rglob("*.py"):
             if path == allowed or "tests" in path.relative_to(root).parts:
@@ -249,7 +231,7 @@ class NotebookRoutingTests(unittest.TestCase):
             "stable_power_perron_vector_from_divergence",
             "power_perron_vector",
         }
-        notebooks = list(root.glob("xx_notebooks_*/*.ipynb"))
+        notebooks = list(root.glob("notebooks/*.ipynb"))
         self.assertTrue(notebooks, "No categorized KDE notebooks were found.")
         for path in notebooks:
             notebook = json.loads(path.read_text())
@@ -279,7 +261,7 @@ class NotebookRoutingTests(unittest.TestCase):
 
     def test_every_notebook_retains_automatic_pdf_setup(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        notebooks = list(root.glob("xx_notebooks_*/*.ipynb"))
+        notebooks = list(root.glob("notebooks/*.ipynb"))
         self.assertTrue(notebooks, "No categorized KDE notebooks were found.")
         for path in notebooks:
             notebook = json.loads(path.read_text())

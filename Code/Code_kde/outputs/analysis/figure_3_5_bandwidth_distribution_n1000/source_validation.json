@@ -1,6 +1,0 @@
-{
-  "settings_source_identical_except_N": true,
-  "qhat_function_identical_to_original": true,
-  "samples_follow_original_sequential_rng_order": true,
-  "samples_sha256": "6a33f4c51d028c4145179ca536db8f5069055aba68f38820d56faf9355bf3299"
-}

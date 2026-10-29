@@ -97,8 +97,8 @@ class UnifiedEnergySearchTests(unittest.TestCase):
 
     def test_migrated_notebooks_use_shared_search_and_control_notebook_exports_pdf(self):
         root = Path(__file__).resolve().parents[1]
-        for name in ("experiment_1_joint_N_lambda_limit", "similarity_max_eigenvalue_vs_n"):
-            notebook = json.loads((root/"xx_notebooks_asymptotics"/(name+".ipynb")).read_text())
+        for name in ("experiment_1_joint_N_lambda_limit", "continuous_ise_qhat_distributions_vs_n"):
+            notebook = json.loads((root/"notebooks"/(name+".ipynb")).read_text())
             calls = []
             for cell in notebook["cells"]:
                 if cell["cell_type"] == "code":
@@ -108,11 +108,11 @@ class UnifiedEnergySearchTests(unittest.TestCase):
                                  if isinstance(node, ast.Call) and isinstance(node.func, ast.Name))
             self.assertNotIn("minimize_scalar", calls)
             self.assertIn("minimize_qhat", calls)
-        path = root/"xx_notebooks_continuous_minimizers/qhat_minimization_control.ipynb"
+        path = root/"notebooks/continuous_ise_qhat_distributions_vs_n.ipynb"
         notebook = json.loads(path.read_text())
         code = "\n".join("".join(cell["source"]) for cell in notebook["cells"] if cell["cell_type"] == "code")
         self.assertIn("enable_automatic_pdf_saving(NOTEBOOK_NAME)", code)
-        self.assertIn('NOTEBOOK_NAME = "qhat_minimization_control"', code)
+        self.assertIn('NOTEBOOK_NAME = "continuous_ise_qhat_distributions_vs_n"', code)
 
     def test_configuration_changes_search_identity_and_is_validated(self):
         self.assertNotEqual(energy_search_id(), energy_search_id(scan_points=513))

@@ -37,13 +37,12 @@ bandwidth. Interior local valleys remain possible.
 
 This explains why increasing the finite upper search limit cannot in general
 remove the preference for its endpoint. An endpoint selected at $h=2$ can be
-replaced by a still lower energy at a larger bandwidth. The separate
-[wider-interval experiment](../../Code/Code_kde/outputs/analysis/continuous_minimizers_hmax10/run_experiment.py)
-tests this on $[0.01,10]$ with the exact same 1,000 paired samples used in the
-four selected Figure 3.9 panels. It compares detected interior minima with
-both endpoints; the finite numerical scan is not a rigorous global-optimality
+replaced by a still lower energy at a larger bandwidth. The fixed-sample
+control in the [energy notebook](../../Code/Code_kde/notebooks/continuous_ise_qhat_distributions_vs_n.ipynb)
+compares detected interior minima with both endpoints; change its `H_MAX`
+to inspect a wider interval. A finite scan is not a rigorous global-optimality
 certificate.
 
-Pre-unification simulation results have been removed. Rerun the experiment
-to generate results with the current shared minimizer. Its reproducible
-sampling inputs are stored in [inputs](../../Code/Code_kde/inputs/README.md).
+The separate wider-domain Monte Carlo study was removed during the thesis-only
+cleanup. The derivation above is retained, together with the reproducible
+[sampling inputs](../../Code/Code_kde/inputs/README.md).
