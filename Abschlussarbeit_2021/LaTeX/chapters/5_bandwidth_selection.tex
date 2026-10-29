@@ -963,6 +963,10 @@ Lacour and Massart~\cite{lacour_minimal_2016} build upon the work of Goldenshlug
 
 Another important paper dealing with analyzing the KDE across a family of bandwidths is by Chaudhuri and Marron~\cite{chaudhuri_sizer_nodate}. Their \enquote{SiZer} (Significant Zero crossings) method simultaneously studies a wide range of bandwidths and avoids the classical need to choose a bandwidth. This is a visual data analysis tool that produces a colored map, where for each location-scale pair $(x,h)$ the derivative $\hat{f}_h'(x)$ is computed. The corresponding point $(x,h)$ on the color map is blue if the derivative is significantly positive, red if the derivative is significantly negative, and purple if the derivative is not significantly different from 0. It is a visual aid that lets the practitioner see at one glance how significant features like bumps depend on the chosen bandwidth.
 
-We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate}.
-
 \todo[inline]{energy functional precedence: physics, kde bandwidth}
+
+We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate} which is a direct precedence for our energy functional $\hat{Q}_r(h)=(1/2)h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2$. For a continuous signal $f$ its convolution with the Gaussian kernel $K$ is studied: $L(x,h^2)=(K_h\ast f)(x)$. A $\gamma$-normalized derivative operator is defined by $\partial_{\gamma}L(x,t):=t^{\gamma/2}\partial_xL(x,t)$. The main principle of the paper is that a scale at which this normalized derivative assumes a local maximum can reflect a characteristic property of the data.
+
+By the Gaussian heat equation, $\partial_h\hat{f}_h(x)=h\partial_x\partial_x\hat{f}_h(x)$. Setting $t=h^2$ now gives $\partial_{\gamma}\partial_{\gamma}L(x,h^2)=h^{2\gamma}\partial_x\partial_x(K_h\ast f)(x)=h^{2\gamma}\partial_x\partial_x(K_h\ast f)(x)$ and for $\gamma=1-r/2$ we get $\partial_{\gamma}\partial_{\gamma}L(x,h^2)=h^{2-r}\partial_x\partial_x(K_h\ast f)(x)$.
+
+Lindeberg also introduces the energy measure $E_2(t):=\int t^{2\gamma}|\partial_x\partial_xL(x,t)|^2\,dx$. In our setting, this directly evaluates to $E_2(h^2)=\int |h^{2\gamma}\partial_x\partial_x(K_h\ast f)(x)|^2\,dx=\int |h^{1-r}\partial_h\hat{f}_h(x)|^2\,dx=h^{2-2r}\|\partial_h\hat{f}_h\|_2^2=2\hat{Q}_r(h)$.
