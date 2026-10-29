@@ -123,6 +123,7 @@ For illustration, the next Figure~\ref{fig:classical_bandwidth_comparison} shows
     The black curve shows the true density, and the ticks indicate
     the observations.}
     \label{fig:classical_bandwidth_comparison}
+    \todo[inline]{code: notebook + Python file with all the classical selectors}
 \end{figure}
 
 \textbf{Exact MISE representation for Gaussian mixture model}
@@ -314,6 +315,8 @@ where
 The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
 
 \textbf{Numerical Approximation}
+
+\todo[inline]{Code: Notebook ($\Omega$ and $K$ experiments + runtime efficiency), Python files?}
 
 The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
@@ -575,6 +578,8 @@ In our experiments, we focus first on the case $f\sim N(0,1)$, that is, normally
 
 \subsection{Fixed sample experiments}
 
+\todo[inline]{Code: Have one notebook for these kinds of experiments (Fixed sample experiments)}
+
 For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$, $n=200$ and study the influence of the grid fineness $N$ and the concentration penalty $\lambda=\lambda_N$.
 
 Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$, $\lambda=1$. 
@@ -586,15 +591,14 @@ We see that the Perron vector has a flat plateau for $\lambda=1$ (yellow) and $\
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
     \caption{$X_i\sim N(0,1)$, $n=200$, $N=191$, $h_{\min}=0.01$, $h_{\max}=2$, $\lambda\in\{10^k:k=0,1,2,3\}$, geometric bandwidth grid; the blue line indicates $h_{\text{oracle}}=0.38304$}
     \label{fig:stationary_distribution_plot_001}
+    \todo[inline]{Code: Notebook, Python file: Grid builder (input: $h_{\min},h_{\max},r,N$; output: $\mathcal{H}$) Perron vector computation (input: data, grid $\mathcal{H}$; output: Perron vector, index with largest entry)}
 \end{figure}
 
 Of course, a single such image tells us not much and does not give us hints about a possible connection between the oracle bandwidth and the spectrally chosen bandwidth.
 
 Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the stability with respect to the grid fineness $N$. The sample $X=(X_1,\dots,X_n)$ was kept fixed. We observe a stabilization of the chosen bandwidth for increasing grid fineness. 
 
-It can be seen that the grid stability curves for $\lambda=1$ (yellow) and $\lambda=10$ (green) converge towards a smaller bandwidth scale than the curves for $\lambda=100$ (red) and $\lambda=1000$ (black). This indicates that some kind of switch is happening between $\lambda=10$ and $\lambda=100$. Interestingly, the grid stability plots exhibit a sawtooth pattern that smoothens out.
-
-% We fitted parametric curves of the form $c\exp{(d/(N-1))}$ to the peaks of the sawtooth. The fitted lines are $h_{\text{upper}}(N)=0.0876262\exp{(1.968246/(N-1))}$ and $h_{\text{lower}}(N)=0.0876262\exp{(3.074005/(N-1))}$.
+It can be seen that the grid stability curves for $\lambda=1$ (yellow) and $\lambda=10$ (green) converge towards a smaller bandwidth scale than the curves for $\lambda=100$ (red) and $\lambda=1000$ (black). This indicates that some kind of switch is happening between $\lambda=10$ and $\lambda=100$. Interestingly, the grid stability plots exhibit a sawtooth pattern that smooths out.
 
 \begin{figure}
     \centering
@@ -629,6 +633,10 @@ After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref
 
 \subsection{Repeated sampling experiments}
 
+\todo[inline]{Code: Have one notebook for these kinds of experiments (Repeated sample experiments)}
+
+\todo[inline]{Do the fixed sample experiments under repeated sampling?}
+
 Now we draw repeated samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ and study the distribution of chosen bandwidths. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$.
 
 We see a large discrepancy between the distributions of the spectrally chosen bandwidth and the distribution of the minimizer of the energy functional and the minimizer of the $\operatorname{ISE}$.
@@ -657,6 +665,8 @@ We see a large discrepancy between the distributions of the spectrally chosen ba
 \end{figure}
 
 \subsection{Increasing sample size experiments}
+
+\todo[inline]{Code: Have one notebook for these kinds of experiments (Increasing sample size experiments)}
 
 In this section, we want to see what happens when the sample size increases, that is, $n\to\infty$.
 
@@ -834,11 +844,11 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
-For the Gaussian kernel, $L(u)=(1-u^2)e^{-u^2/2}$ and the energy functional $\hat{Q}_r$ can be written down explicitly:
+For the Gaussian kernel, $L(u)=(1/\sqrt{2\pi})(1-u^2)e^{-u^2/2}$ and the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align*}
     \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2=\frac{1}{2n^2}h^{-2(1+r)}\int\sum_{i,j=1}^{n}L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
-    =\frac{\sqrt{\pi}}{2n^2}h^{-2(1+r)+1}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
-    =\frac{\sqrt{\pi}}{32n^2}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right)
+    =\frac{1}{4n^2\sqrt{\pi}}h^{-2(1+r)+1}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
+    =\frac{1}{64n^2\sqrt{\pi}}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right)
 \end{align*}
 because
 \begin{align*}
