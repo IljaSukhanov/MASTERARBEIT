@@ -804,7 +804,7 @@ Next, we state the main theorem of this thesis.
     See Appendix Section~\ref{sec:proof_main_thm}.
 \end{proof}
 
-\todo[inline]{mention Laplace method as precedence!!}
+\todo[inline]{30.10: mention Laplace method as precedence!!}
 
 Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \begin{align*}
@@ -828,7 +828,9 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
-\todo[inline]{29.10: finish this section}
+\todo[inline]{30.10: finish this section}
+
+\todo[inline]{30.10: add short comparison between numerical optimization of $\hat{Q}_r$ and Perron vector computation in terms of runtime efficiency}
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
@@ -854,7 +856,7 @@ We can characterize the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Na
 \end{align*}
 This means that $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum.
 
-\todo[inline]{add short discussion about local minima}
+\todo[inline]{30.10: add short discussion about local minima}
 
 Using standard root finding methods, we can look for stationary points and check if they are local minima. Afterwards, we can compare with the energy function values at the borders $h_{\min}$ and $h_{\max}$ to see if the found local minimum is in fact a global minimum on the interval $[h_{\min},h_{\max}]$.
 
@@ -942,7 +944,7 @@ Figure~\ref{fig:continuous_minimizers_comparison} visualizes our theoretical con
 
 \section{Literature Positioning}
 
-\todo[inline]{29.10: Write it!}
+\todo[inline]{30.10: Write it!}
 
 The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
 
@@ -963,24 +965,17 @@ Lacour and Massart~\cite{lacour_minimal_2016} build upon the work of Goldenshlug
 
 Another important paper dealing with analyzing the KDE across a family of bandwidths is by Chaudhuri and Marron~\cite{chaudhuri_sizer_nodate}. Their \enquote{SiZer} (Significant Zero crossings) method simultaneously studies a wide range of bandwidths and avoids the classical need to choose a bandwidth. This is a visual data analysis tool that produces a colored map, where for each location-scale pair $(x,h)$ the derivative $\hat{f}_h'(x)$ is computed. The corresponding point $(x,h)$ on the color map is blue if the derivative is significantly positive, red if the derivative is significantly negative, and purple if the derivative is not significantly different from 0. It is a visual aid that lets the practitioner see at one glance how significant features like bumps depend on the chosen bandwidth.
 
-\todo[inline]{energy functional precedence: physics, kde bandwidth}
-
 We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate} which is a direct precedent for the form of our energy functional $\hat{Q}_r(h)=(1/2)h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2$. For a continuous signal $f$ its convolution with the Gaussian kernel $K$ is studied: $L(x,t):=(K_{\sqrt{t}}\ast f)(x)$. A $\gamma$-normalized derivative operator is defined by $\partial_{\gamma}L(x,t):=t^{\gamma/2}\partial_xL(x,t)$. \textcolor{red}{The main principle of the paper is that a scale at which suitable combinations of these normalized derivatives assume a local maximum can reflect a characteristic length of structure in the data.} The developed methods are applied in computer vision, for example, to detect blobs, junctions, edges, or ridges. By the Gaussian heat equation, $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)$. Setting $t=h^2$ now gives
 \begin{align*}
     \partial_{\gamma}^2L(x,h^2)=h^{2\gamma}\partial_x^2(K_h\ast\mu_n)(x)=h^{2\gamma}\partial_x^2\hat{f}_h(x)=h^{2\gamma-1}\partial_h\hat{f}_h(x)
 \end{align*}
-and for $\gamma=1-r/2$ we get $\partial_{1-r/2}^2L(x,h^2)=h^{1-r}\partial_h\hat{f}_h(x)$. Lindeberg also introduces the energy measure $E_2(t):=\int|\partial_\gamma^2L(x,t)|^2\,dx$. In our setting, this directly evaluates to
+and for $\gamma=1-r/2$ we get $\partial_{1-r/2}^2L(x,h^2)=h^{1-r}\partial_h\hat{f}_h(x)$. Lindeberg~\cite[Equation~79]{lindeberg_feature_nodate} also introduces the energy measure $E_2(t):=\int|\partial_\gamma^2L(x,t)|^2\,dx$. In our setting, this directly evaluates to
 \begin{align*}
     E_2(h^2)=\int |\partial_{1-r/2}^2L(x,h^2)|^2\,dx=h^{2(1-r)}\int|\partial_h\hat{f}_h(x)|^2\,dx=2\hat{Q}_r(h).
 \end{align*}
 
-\todo[inline]{Computing an eigenvector is equivalent to minimizing an energy over vectors}
+Shi, Belkin and Yu~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}\exp{(-(\|x_i-x_j\|)^2/(2\omega^2))}$, where the data $x_1,\dots,x_n$ is assumed to come from a multivariate Gaussian distribution, and, among other things, compute its Perron vector $v_0$ and use its maximum index $k=\arg\max(v_0)_i$ to estimate the mean $\mu$ of the data by $x_k$. They then extend it to data coming from a multivariate Gaussian mixture model, construct the same kernel matrix, and estimate the number of components by the number of eigenvectors of $K_n$ which have no sign changes. They estimate the mean $\mu_g$ of each component $g$ by $x_{k(g)}$, where $k(g)=\arg\max(v_0^{(g)})_i$. They give a theoretical justification through the theory of eigenfunctions. This work serves as a precedent for using the maximum index of the Perron vector (and certain other nonleading eigenvectors) for statistical inference.
 
-The connection between Perron vectors and energy functionals is classical. The Dirichlet energy of a graph with a symmetric, irreducible and nonnegative (weighted) adjacency matrix $A$ is given by $\mathcal{E}_A(u)=(1/2)\sum_{ij}A_{ij}(u_i-u_j)^2$. \textcolor{red}{It measures the disagreement between connected scores.} The Perron vector $v$ of $A$ is the minimizer of
-\begin{align*}
-    \mathcal{E}_A(u)+\sum_i(\max_ka_k-a_i)u_i^2,\quad a_i=\sum_jA_{ij},
-\end{align*}
-where $\sum_i(\max_ka_k-a_i)u_i^2$ is a penalty for scores with small row sum.
+\todo[inline]{30.10: Finish paragraph below, in particular connect to my result}
 
-
-\todo[inline]{As a parameter changes, that eigenvector concentrates near minima of an effective potential.}
+Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} can be listed as related work regarding the phenomenon that the Perron vector localizes near the unique maximum of some (energy) functional.
