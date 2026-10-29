@@ -1,5 +1,687 @@
 {
   "date": "2026-10-29",
+  "image_reference_repair": {
+    "date": "2026-10-29",
+    "all_image_references_resolve": true,
+    "reference_count": 30,
+    "restored_kde_figures": [
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 622,
+        "target": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+        "sha256": "e55807efefede818aad4ce26a66166e4bf69764a36d99dd463ed8f93b6e0aaa0",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 906,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n100.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n100.pdf",
+        "sha256": "fd92156b7b8aa19b227ba372d3a38798278a44132a82a5a8fda2f28065a8362c",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 913,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1000.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1000.pdf",
+        "sha256": "b79ee98e746c853adf0352c653722eaad5afe878f182e9a87daa160b5205b49f",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 922,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1500.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1500.pdf",
+        "sha256": "e36fc3ccf7968273e1b38f504f18e8bb5ff5669bcd490f2bf7f0764104935d65",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 929,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n2000.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n2000.pdf",
+        "sha256": "1d2b2ab011f418f5c6be20c41d7496a96726d57c7700c09b976b2edf6bcfada1",
+        "pdf_pages": 1
+      }
+    ],
+    "modified_thesis_sources": [
+      "Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.tex",
+      "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex"
+    ],
+    "protected_files_changed_only_in_includegraphics_paths": true,
+    "existing_referenced_graphics_unchanged": true,
+    "references": [
+      {
+        "tex": "Abschlussarbeit_2021/Application_to_point_processes.tex",
+        "line": 54,
+        "target": "Abschlussarbeit_2021/LaTeX/images/matern_type_I_II.pdf",
+        "resolved": "Abschlussarbeit_2021/LaTeX/images/matern_type_I_II.pdf",
+        "sha256": "03cff2df6be363dfd62a57ae732b0531cd6665ae4b1865c8863b98a1dbf7f520",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.tex",
+        "line": 137,
+        "target": "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf",
+        "resolved": "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf",
+        "sha256": "733201a84a7566f5526cba6fdcd5efc74db28ed8977acbdf13e7a2f581bb0782",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 476,
+        "target": "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png",
+        "resolved": "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png",
+        "sha256": "c88b219c90a3b6711a295b46568f345e309a16b09f3e31f8f0a88901632718aa"
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 535,
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_52049d95ff4e3942/01_hierarchical_100_processes_100_realizations_mean_and_max_process_win_counts_2x2.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_52049d95ff4e3942/01_hierarchical_100_processes_100_realizations_mean_and_max_process_win_counts_2x2.pdf",
+        "sha256": "0ea965289fa269a60a12b44394d802aa6020d8eca046d71698b91dc94b3e8cda",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 565,
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf",
+        "sha256": "dc696c9bc951c911c52198d5ab919ca9ad6bbadc9e0c31f6236e3b109cb8cb5b",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 569,
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf",
+        "sha256": "71b2df933fcc31af24a4bbd236b0383750d83d5b02d8d13b9521d0508c082162",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 671,
+        "target": "01_beta_1_1_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/01_beta_1_1_mean_mae_vs_order.pdf",
+        "sha256": "0f951ec928804c4a684a7243b620709d9144d22de08b4ef54208c935eb49ca7e",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 673,
+        "target": "02_beta_0p5_0p5_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/02_beta_0p5_0p5_mean_mae_vs_order.pdf",
+        "sha256": "35b2031c909b9a2ba11de897ec458b6335b34de0347d9ead67a3cfb64d42d61d",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 675,
+        "target": "03_beta_2_2_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/03_beta_2_2_mean_mae_vs_order.pdf",
+        "sha256": "dddd11abb0c95edf5d1b98417b170eebec61006a1248b4836ab1762945a62f7e",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 677,
+        "target": "04_beta_1_2_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/04_beta_1_2_mean_mae_vs_order.pdf",
+        "sha256": "a2516682fd6ce975ae71181a5ede534848ea1defea090ce797345f343436d327",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 679,
+        "target": "05_beta_2_1_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/05_beta_2_1_mean_mae_vs_order.pdf",
+        "sha256": "414c507628d2713a46f82614ffa66d9c76a612f6f8af7e543eddba18e93dfebf",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "line": 796,
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf",
+        "sha256": "7d08bc0618157db9dcbd8927e6b24eab9310ddf57cb1dcb5c2ad270810f08b02",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 119,
+        "target": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
+        "sha256": "7437a121f36ce817700c23ce99bbda17705a50d6dce52a842d54f2779362b2c5",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 368,
+        "target": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
+        "sha256": "d1fd8de2ca2f92b52be49b39b24610e86abdbb080810d6a336b7e513d003c555",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 586,
+        "target": "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf",
+        "sha256": "4a602bb0296b93eab4986617a381c05b1393633be1df68899a0aff069644c3e3",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 601,
+        "target": "Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf",
+        "sha256": "90d24f501d89fff56d8d246bebc3ca9cc5b86a3b613652d6ec49ae39124c3e46",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 612,
+        "target": "Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf",
+        "sha256": "f3b3701620b7f1a86255a57cdb9b0b8e178c3c62cb83beb5e379a9890f07c0c3",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 622,
+        "target": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+        "sha256": "e55807efefede818aad4ce26a66166e4bf69764a36d99dd463ed8f93b6e0aaa0",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 641,
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf",
+        "sha256": "d757cecf075e6f89ef52c53b708fbf1515309e4813eea149ee837a93d6d7c7f1",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 648,
+        "target": "Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf",
+        "sha256": "cbf69a104b0aaa095ed3f56a27bd0d14736d909e34ebd117d3e31e7d34195c9a",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 670,
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf",
+        "sha256": "1ded09eb16ae31d7871e77cc242ddfb0af90a9934b47da07d589ab7492414b8b",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 676,
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf",
+        "sha256": "9a69d4a88db6e9280cda323e65c82629dd701f29d241785f29da9d9747ce2d95",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 684,
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf",
+        "sha256": "932d45b47469a27a536318e2098abd86b6a2499b96c66afa8ecc946b48f451fe",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 690,
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf",
+        "sha256": "9d3d735e195c2a03d993599b403c15ac9a65eaf188eeb07d3da422bc12471f43",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 704,
+        "target": "output/pdf/spectral_bandwidths_across_n_lambda1_N1000.pdf",
+        "resolved": "output/pdf/spectral_bandwidths_across_n_lambda1_N1000.pdf",
+        "sha256": "0f165f7107f808fc9a5fd113f7ceb0fdcc5d8d03332368164de0ef4db37131e9",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 711,
+        "target": "output/pdf/localized_spectral_bandwidths_across_n_N1000.pdf",
+        "resolved": "output/pdf/localized_spectral_bandwidths_across_n_N1000.pdf",
+        "sha256": "f6ac340b26464abc71b68a94b42f3275108b2926331d8b2bebca0dff148b83f4",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 906,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n100.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n100.pdf",
+        "sha256": "fd92156b7b8aa19b227ba372d3a38798278a44132a82a5a8fda2f28065a8362c",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 913,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1000.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1000.pdf",
+        "sha256": "b79ee98e746c853adf0352c653722eaad5afe878f182e9a87daa160b5205b49f",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 922,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1500.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1500.pdf",
+        "sha256": "e36fc3ccf7968273e1b38f504f18e8bb5ff5669bcd490f2bf7f0764104935d65",
+        "pdf_pages": 1
+      },
+      {
+        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "line": 929,
+        "target": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n2000.pdf",
+        "resolved": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n2000.pdf",
+        "sha256": "1d2b2ab011f418f5c6be20c41d7496a96726d57c7700c09b976b2edf6bcfada1",
+        "pdf_pages": 1
+      }
+    ],
+    "fixed_paths": {
+      "images/logo_uulm_sw.pdf": "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf",
+      "../../Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf",
+      "../../Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf",
+      "../../Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf"
+    },
+    "energy_validation": {
+      "completed_samples": 4000,
+      "continuous_minimizers": 16000,
+      "maximum_refinement_discrepancy": 1.3239409568654992e-13,
+      "checks": [
+        "interval bounds",
+        "probability totals",
+        "interior stationarity and curvature",
+        "one-sided boundary derivative signs",
+        "doubled search resolution",
+        "independent exact ISE scores"
+      ],
+      "refinement_rows": [
+        {
+          "n": 100,
+          "repetition": 0,
+          "method": "ISE",
+          "bandwidth_discrepancy": 3.8191672047105385e-14
+        },
+        {
+          "n": 100,
+          "repetition": 0,
+          "method": "Q0",
+          "bandwidth_discrepancy": 5.551115123125783e-17
+        },
+        {
+          "n": 100,
+          "repetition": 0,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 100,
+          "repetition": 0,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 100,
+          "repetition": 500,
+          "method": "ISE",
+          "bandwidth_discrepancy": 3.6637359812630166e-15
+        },
+        {
+          "n": 100,
+          "repetition": 500,
+          "method": "Q0",
+          "bandwidth_discrepancy": 5.551115123125783e-17
+        },
+        {
+          "n": 100,
+          "repetition": 500,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 100,
+          "repetition": 500,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 100,
+          "repetition": 999,
+          "method": "ISE",
+          "bandwidth_discrepancy": 7.66053886991358e-15
+        },
+        {
+          "n": 100,
+          "repetition": 999,
+          "method": "Q0",
+          "bandwidth_discrepancy": 4.773959005888173e-15
+        },
+        {
+          "n": 100,
+          "repetition": 999,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 100,
+          "repetition": 999,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 1000,
+          "repetition": 0,
+          "method": "ISE",
+          "bandwidth_discrepancy": 1.8290924330699454e-14
+        },
+        {
+          "n": 1000,
+          "repetition": 0,
+          "method": "Q0",
+          "bandwidth_discrepancy": 1.2212453270876722e-15
+        },
+        {
+          "n": 1000,
+          "repetition": 0,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 1000,
+          "repetition": 0,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 1.587618925213974e-14
+        },
+        {
+          "n": 1000,
+          "repetition": 500,
+          "method": "ISE",
+          "bandwidth_discrepancy": 8.576472865229334e-15
+        },
+        {
+          "n": 1000,
+          "repetition": 500,
+          "method": "Q0",
+          "bandwidth_discrepancy": 1.6930901125533637e-14
+        },
+        {
+          "n": 1000,
+          "repetition": 500,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 1000,
+          "repetition": 500,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 1000,
+          "repetition": 999,
+          "method": "ISE",
+          "bandwidth_discrepancy": 4.9682480351975755e-15
+        },
+        {
+          "n": 1000,
+          "repetition": 999,
+          "method": "Q0",
+          "bandwidth_discrepancy": 1.1102230246251565e-16
+        },
+        {
+          "n": 1000,
+          "repetition": 999,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 1000,
+          "repetition": 999,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 1500,
+          "repetition": 0,
+          "method": "ISE",
+          "bandwidth_discrepancy": 4.413136522884997e-15
+        },
+        {
+          "n": 1500,
+          "repetition": 0,
+          "method": "Q0",
+          "bandwidth_discrepancy": 4.879430193227563e-14
+        },
+        {
+          "n": 1500,
+          "repetition": 0,
+          "method": "Q1",
+          "bandwidth_discrepancy": 1.0047518372857667e-14
+        },
+        {
+          "n": 1500,
+          "repetition": 0,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 1.712519015484304e-14
+        },
+        {
+          "n": 1500,
+          "repetition": 500,
+          "method": "ISE",
+          "bandwidth_discrepancy": 7.466249840604178e-15
+        },
+        {
+          "n": 1500,
+          "repetition": 500,
+          "method": "Q0",
+          "bandwidth_discrepancy": 8.881784197001252e-16
+        },
+        {
+          "n": 1500,
+          "repetition": 500,
+          "method": "Q1",
+          "bandwidth_discrepancy": 1.7208456881689926e-15
+        },
+        {
+          "n": 1500,
+          "repetition": 500,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 2.9698465908722937e-15
+        },
+        {
+          "n": 1500,
+          "repetition": 999,
+          "method": "ISE",
+          "bandwidth_discrepancy": 4.418687638008123e-14
+        },
+        {
+          "n": 1500,
+          "repetition": 999,
+          "method": "Q0",
+          "bandwidth_discrepancy": 1.3600232051658168e-14
+        },
+        {
+          "n": 1500,
+          "repetition": 999,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 1500,
+          "repetition": 999,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 2000,
+          "repetition": 0,
+          "method": "ISE",
+          "bandwidth_discrepancy": 1.1657341758564144e-14
+        },
+        {
+          "n": 2000,
+          "repetition": 0,
+          "method": "Q0",
+          "bandwidth_discrepancy": 1.5709655798445965e-14
+        },
+        {
+          "n": 2000,
+          "repetition": 0,
+          "method": "Q1",
+          "bandwidth_discrepancy": 8.604228440844963e-16
+        },
+        {
+          "n": 2000,
+          "repetition": 0,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 6.661338147750939e-16
+        },
+        {
+          "n": 2000,
+          "repetition": 500,
+          "method": "ISE",
+          "bandwidth_discrepancy": 4.1772141301521515e-14
+        },
+        {
+          "n": 2000,
+          "repetition": 500,
+          "method": "Q0",
+          "bandwidth_discrepancy": 1.7763568394002505e-15
+        },
+        {
+          "n": 2000,
+          "repetition": 500,
+          "method": "Q1",
+          "bandwidth_discrepancy": 1.9317880628477724e-14
+        },
+        {
+          "n": 2000,
+          "repetition": 500,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 1.9595436384634013e-14
+        },
+        {
+          "n": 2000,
+          "repetition": 999,
+          "method": "ISE",
+          "bandwidth_discrepancy": 2.9004576518332215e-14
+        },
+        {
+          "n": 2000,
+          "repetition": 999,
+          "method": "Q0",
+          "bandwidth_discrepancy": 4.243827511629661e-14
+        },
+        {
+          "n": 2000,
+          "repetition": 999,
+          "method": "Q1",
+          "bandwidth_discrepancy": 0.0
+        },
+        {
+          "n": 2000,
+          "repetition": 999,
+          "method": "Q13_14",
+          "bandwidth_discrepancy": 1.3239409568654992e-13
+        }
+      ]
+    },
+    "joint_validation": {
+      "notebook": "notebooks/experiment_1_joint_N_lambda_limit.ipynb",
+      "sample_seed": 20260823,
+      "sample_size": 200,
+      "grid_sizes": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000,
+        1100,
+        1200,
+        1300,
+        1400,
+        1500,
+        1600,
+        1700,
+        1800,
+        1900,
+        2000,
+        2100,
+        2200,
+        2300,
+        2400,
+        2500,
+        2600,
+        2700,
+        2800,
+        2900,
+        3000
+      ],
+      "continuous_reference_h": 0.17642363203073474,
+      "maximum_absolute_divergence_validation_error": 1.0489831225868329e-11,
+      "relative_divergence_validation_error": 9.470833626956101e-11,
+      "selector_computations": 180,
+      "elapsed_seconds": 575.4965865409977
+    },
+    "figure_export_test": {
+      "tests_run": 1,
+      "successful": true,
+      "seconds": 10.396
+    },
+    "all_final_figures_rendered_and_visually_reviewed": true,
+    "notebook_code_cells_compiled": 87,
+    "full_thesis_compilation": {
+      "successful": true,
+      "missing_image_errors": 0,
+      "output": "output/pdf/abschlussarbeit_2021.pdf",
+      "pages": 114,
+      "sha256": "d8623e39689782170361580c86b29d752eafad6120862517f00e328619c74447",
+      "existing_cross_reference_warnings": [
+        {
+          "kind": "undefined reference",
+          "label": "fig:mean_and_median_l1_error_vs_order",
+          "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+          "line": 580
+        },
+        {
+          "kind": "duplicate label",
+          "label": "fig:distribution_of_chosen_bandwidths",
+          "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+          "lines": [
+            650,
+            656
+          ]
+        }
+      ],
+      "visually_reviewed_pdf_pages": [
+        63,
+        72
+      ]
+    },
+    "plot_adjustments": "Restore the existing caption's upper-endpoint-frequency insets; place the legend below the panels to prevent title overlap; size the plots for the existing thesis columns so labels remain legible. Numerical settings and raw inputs are unchanged."
+  },
+  "cleanup_snapshot_note": "The remaining keys record the earlier cleanup; their counts and validation precede the image-reference repair above.",
   "scope": {
     "chapter": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
     "selection": "Currently included KDE material and explicit chapter TODOs. No additional planned experiments were identified.",

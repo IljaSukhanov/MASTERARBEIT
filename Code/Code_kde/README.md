@@ -41,9 +41,10 @@ See [the shared search](kde_tools/energy_minimization.py) for its recorded contr
 Executable scripts no longer live inside generated outputs. Existing included
 figures retain their exact paths and contents. The numerical notebook writes
 copies at the classical/error figure paths; the energy notebook exports the
-four selected panels directly. Five referenced PDFs were already missing before
-cleanup: the joint-limit PDF and those four energy panels. Their producing code
-remains. This cleanup does not rerun full experiments or edit thesis sources.
+four selected panels directly, with the endpoint-frequency insets described by
+the thesis caption. The joint-limit PDF and four energy panels that were missing
+before cleanup were regenerated on 2026-10-29 using the retained settings. All
+thesis image references now resolve; see the manifest for the compilation checks.
 
 ## Check
 
