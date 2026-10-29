@@ -817,7 +817,7 @@ The Proposition~\ref{prop:main_thm} establishes that for a large $N$ (finer and 
 The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks at the minimizer of the energy functional (after proper scaling). The next result aims to give the answer.
 
 \begin{Prop}\label{prop:main_thm2}
-    Assume that $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$. And let $k_N\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. Then $h_{k_N}\to h^{\ast}$.
+    Assume that the energy functional $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$ and let $(k_N)$ be a sequence of indices defined by $k_N:=\min\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then the spectrally chosen bandwidth $h_{k_N}$ converges to the unique minimizer $h^{\ast}$ of $\hat{Q}_r$, that is, $h_{k_N}\to h^{\ast}$ as $N\to\infty$.
 \end{Prop}
 
 \begin{proof}
@@ -828,7 +828,7 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
-\todo[inline]{28.10: advance this section}
+\todo[inline]{29.10: finish this section}
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
@@ -944,8 +944,6 @@ Figure~\ref{fig:continuous_minimizers_comparison} visualizes our theoretical con
 
 \todo[inline]{29.10: Write it!}
 
-\todo[inline]{Literature positioning: Lindeberg, SiZer (?)}
-
 The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
 
 They set $\mathcal{H}=[h_{\min},h_{\max}]$ and define $\hat{f}_{h,\eta}(x)=n^{-1}\sum_{j=1}^{n}(K_h\ast K_{\eta})(x-X_j)$ and
@@ -961,6 +959,10 @@ They then proceed to show the oracle inequality
 \end{align*}
 where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. \textcolor{red}{This means that the risk of their selector performs within a constant factor of the best candidate bandwidth plus a remainder.}
 
-Lacour and Massart~\cite{lacour_minimal_2016} provide considerations on how to make this procedure practically usable. Namely they use $\mathcal{H}=\{e^{-k}:3\le k\le 10\}\cup\{0.002+k\cdot0.02,0\le k\le 24\}$. That is, they sidestep the continuous optimization that would be needed to obtain $\hat{h}$ by discretization of the interval $\mathcal{H}$.
+Lacour and Massart~\cite{lacour_minimal_2016} build upon the work of Goldenshluger and Lepski by providing considerations on how to make this procedure practically usable. Namely they use $\mathcal{H}=\{e^{-k}:3\le k\le 10\}\cup\{0.002+k\cdot0.02,0\le k\le 24\}$. That is, they sidestep the continuous optimization that would be needed to obtain $\hat{h}$ by discretization of the interval $\mathcal{H}$.
+
+Another important paper dealing with analyzing the KDE across a family of bandwidths is by Chaudhuri and Marron~\cite{chaudhuri_sizer_nodate}. Their \enquote{SiZer} (Significant Zero crossings) method simultaneously studies a wide range of bandwidths and avoids the classical need to choose a bandwidth. This is a visual data analysis tool that produces a colored map, where for each location-scale pair $(x,h)$ the derivative $\hat{f}_h'(x)$ is computed. The corresponding point $(x,h)$ on the color map is blue if the derivative is significantly positive, red if the derivative is significantly negative, and purple if the derivative is not significantly different from 0. It is a visual aid that lets the practitioner see at one glance how significant features like bumps depend on the chosen bandwidth.
+
+We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate}.
 
 \todo[inline]{energy functional precedence: physics, kde bandwidth}
