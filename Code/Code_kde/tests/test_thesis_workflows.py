@@ -86,13 +86,13 @@ class ThesisWorkflowTests(unittest.TestCase):
                 self.assertEqual(len(list((base/'pdfs').rglob('*.pdf'))), 2)
 
     def test_both_presented_spectral_histogram_profiles(self):
-        c = cells('spectral_scale_selection_kde')
+        c = cells('04_repeated_sampling_experiments')
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             ns = {}
             with patch('kde_tools.pdf_export.enable_automatic_pdf_saving',
                        side_effect=lambda name: enable_automatic_pdf_saving(name, output_root=base/'pdfs')):
-                execute(c['imports'], ns)
+                execute(c['setup'], ns)
             ns.update(code_directory=base, kde_thesis_figure_dir=base/'thesis')
             ns['kde_thesis_figure_dir'].mkdir()
             for profile in ('figure_3_5','localized'):
@@ -105,7 +105,8 @@ class ThesisWorkflowTests(unittest.TestCase):
             self.assertEqual(len(list((base/'pdfs').rglob('*.pdf'))), 2)
 
     def test_selected_energy_panels_and_local_minimum_control(self):
-        c = cells('continuous_ise_qhat_distributions_vs_n')
+        c = cells('05_increasing_sample_size_experiments')
+        control = cells('06_additional_experiments')
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             isolated = base/'Code/Code_kde'
@@ -122,11 +123,12 @@ class ThesisWorkflowTests(unittest.TestCase):
                 for key in ('simulation','saved-data','validation','figures'):
                     execute(c[key], ns)
                 self.assertEqual(len(list((base/'output/pdf/continuous_minimizers_selected_n').glob('*.pdf'))), 2)
-                execute(c['qhat-control-1'], ns)
+                execute(control['setup'], ns)
+                execute(control['qhat-control-1'], ns)
                 ns['KDE_DIR'] = isolated
-                execute(c['qhat-control-2'], ns, dict(SEARCH='EnergySearchConfig(scan_points=65, spatial_points=4096)'))
-                execute(c['qhat-control-3'], ns)
-                execute(c['qhat-control-4'], ns)
+                execute(control['qhat-control-2'], ns, dict(SEARCH='EnergySearchConfig(scan_points=65, spatial_points=4096)'))
+                execute(control['qhat-control-3'], ns)
+                execute(control['qhat-control-4'], ns)
                 self.assertTrue((ns['output_directory']/'analysis.json').is_file())
 
     def test_relocated_grid_and_planned_diagnostic_helpers_import(self):

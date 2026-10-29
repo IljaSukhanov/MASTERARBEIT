@@ -97,7 +97,7 @@ class UnifiedEnergySearchTests(unittest.TestCase):
 
     def test_migrated_notebooks_use_shared_search_and_control_notebook_exports_pdf(self):
         root = Path(__file__).resolve().parents[1]
-        for name in ("experiment_1_joint_N_lambda_limit", "continuous_ise_qhat_distributions_vs_n"):
+        for name in ("03_fixed_sample_experiments", "06_additional_experiments"):
             notebook = json.loads((root/"notebooks"/(name+".ipynb")).read_text())
             calls = []
             for cell in notebook["cells"]:
@@ -108,10 +108,10 @@ class UnifiedEnergySearchTests(unittest.TestCase):
                                  if isinstance(node, ast.Call) and isinstance(node.func, ast.Name))
             self.assertNotIn("minimize_scalar", calls)
             self.assertIn("minimize_qhat", calls)
-        path = root/"notebooks/continuous_ise_qhat_distributions_vs_n.ipynb"
+        path = root/"notebooks/06_additional_experiments.ipynb"
         notebook = json.loads(path.read_text())
         code = "\n".join("".join(cell["source"]) for cell in notebook["cells"] if cell["cell_type"] == "code")
-        self.assertIn('setup_notebook("continuous_ise_qhat_distributions_vs_n")', code)
+        self.assertIn('setup_notebook("06_additional_experiments")', code)
         self.assertIn('NOTEBOOK_NAME = "continuous_ise_qhat_distributions_vs_n"', code)
 
     def test_configuration_changes_search_identity_and_is_validated(self):

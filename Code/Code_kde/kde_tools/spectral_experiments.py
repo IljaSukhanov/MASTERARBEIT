@@ -1,4 +1,4 @@
-"""Reusable functions for spectral_scale_selection_kde. Experiment settings stay in the notebook."""
+"""Shared spectral bandwidth sampling and plotting functions."""
 
 from __future__ import annotations
 from kde_tools.bandwidth_histograms import grouped_grid_counts
@@ -303,3 +303,50 @@ def plot_spectral_sample_size_overlay(
             "counts": overlay_grouped,
             "pdf": sample_overlay_pdf,
         }
+
+
+def plot_discrete_bandwidth_distribution(
+    h_grid,
+    counts,
+    *,
+    title,
+    label="Spectral selections",
+    color="#005A9C",
+    reference_lines=(),
+    tick_count=7,
+    figsize=(9.5, 4.5),
+):
+    """Plot one count vector by grid position, normalized to relative frequency."""
+    from matplotlib.ticker import PercentFormatter
+
+    grid = np.asarray(h_grid, dtype=float)
+    values = np.asarray(counts, dtype=float)
+    if grid.ndim != 1 or len(grid) < 2 or np.any(grid <= 0) or not np.isfinite(grid).all():
+        raise ValueError("The bandwidth grid must contain finite positive values.")
+    if values.shape != grid.shape or not np.isfinite(values).all() or np.any(values < 0):
+        raise ValueError("Counts must be finite, nonnegative, and match the bandwidth grid.")
+    if values.sum() <= 0:
+        raise ValueError("At least one observation is required.")
+    figure, axis = plt.subplots(figsize=figsize)
+    axis.bar(
+        np.arange(len(grid)),
+        values / values.sum(),
+        width=0.9,
+        color=color,
+        edgecolor="none",
+        label=label,
+    )
+    for line_label, index, line_color in reference_lines:
+        axis.axvline(index, linestyle="--", linewidth=1.5, color=line_color, label=line_label)
+    ticks = np.unique(np.linspace(0, len(grid) - 1, tick_count, dtype=int))
+    axis.set_xticks(ticks, [f"{grid[index]:.3g}" for index in ticks])
+    axis.set(
+        xlim=(-0.5, len(grid) - 0.5),
+        xlabel="selected bandwidth h",
+        ylabel="relative frequency",
+        title=title,
+    )
+    axis.yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=1))
+    axis.legend(frameon=False)
+    figure.tight_layout()
+    return figure, axis

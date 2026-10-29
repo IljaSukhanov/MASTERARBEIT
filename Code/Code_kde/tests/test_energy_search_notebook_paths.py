@@ -57,23 +57,24 @@ class UnifiedNotebookSearchTests(unittest.TestCase):
 
 
     def test_continuous_comparison_cells_run_validate_and_export(self):
-        nb = notebook("continuous_ise_qhat_distributions_vs_n")
+        nb = notebook("05_increasing_sample_size_experiments")
+        by_id = {cell['id']: cell for cell in nb['cells']}
         with tempfile.TemporaryDirectory() as tmp:
             ns = {"display": lambda value: None}
-            execute("".join(nb["cells"][1]["source"]), ns)
+            execute("".join(by_id['setup']["source"]), ns)
             ns.update(data_output_directory=Path(tmp)/"data", image_output_directory=Path(tmp)/"images")
-            execute("".join(nb["cells"][3]["source"]), ns, dict(
+            execute("".join(by_id['settings']["source"]), ns, dict(
                 RUN_PROFILE='"preview"', PROFILES='{"preview": {"repetitions": 2}}',
                 SAMPLE_SIZES="[20, 40]", SAMPLE_BANK_REPETITIONS="2", SAMPLE_BANK_MAXIMUM_N="40",
                 SAMPLE_BANK_BLOCK_SIZE="20", SCAN_POINTS="65", SPATIAL_POINTS="4096", WORKERS="1",
                 continuous_cache_root="data_output_directory/'shared'", continuous_import_directories="[]"))
-            for index in (5, 7, 9):
-                execute("".join(nb["cells"][index]["source"]), ns)
+            for cell_id in ('simulation', 'saved-data', 'validation'):
+                execute("".join(by_id[cell_id]["source"]), ns)
             self.assertLess(ns["validation_report"]["maximum_refinement_discrepancy"], 1e-7)
             self.assertEqual(len(list(Path(tmp).rglob("n*_energy_analysis.json"))), 2)
 
     def test_joint_notebook_parameter_mapping_and_expected_objective(self):
-        nb = notebook("experiment_1_joint_N_lambda_limit")
+        nb = notebook("03_fixed_sample_experiments")
         samples = np.random.default_rng(21).normal(size=50)
         ns = dict(np=np, samples=samples, H_MIN=.01, H_MAX=2., CUSTOM_BETA=1/7,
                   ENERGY_SEARCH=EnergySearchConfig(scan_points=65), minimize_qhat=minimize_qhat,
@@ -81,14 +82,15 @@ class UnifiedNotebookSearchTests(unittest.TestCase):
                   expected_gaussian_qhat_log_energy=expected_gaussian_qhat_log_energy)
         ns["squared_differences"] = (samples[:, None]-samples[None, :])**2
         by_id = {cell['id']: cell for cell in nb['cells']}
-        for cell_id in ('continuous-reference', 'custom-beta-joint-limit-computation'):
+        for cell_id in ('continuous-reference',):
             tree = ast.parse("".join(by_id[cell_id]["source"]))
             allowed = {"continuous_minimum", "custom_beta_continuous_minimum"}
             tree.body = [node for node in tree.body if isinstance(node, ast.FunctionDef) or
                          isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id in allowed
                                                              for t in node.targets)]
             exec(compile(tree, "<joint search>", "exec"), ns)
-        point = ns["custom_beta_continuous_minimum"]["global_minimum"]
+        point = minimize_qhat(samples, .01, 2., r=13/14,
+                              config=ns['ENERGY_SEARCH'])["global_minimum"]
         self.assertAlmostEqual(point["energy"], local_custom_beta_metric(
             point["h"], ns["squared_differences"], beta=1/7), places=12)
         value = expected_q_standard_gaussian(.4, 200, 1/7)

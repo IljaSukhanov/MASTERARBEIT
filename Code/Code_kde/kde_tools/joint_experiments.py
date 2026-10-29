@@ -1,6 +1,15 @@
-"""Reusable functions for experiment_1_joint_N_lambda_limit. Experiment settings stay in the notebook."""
+"""Shared functions for the fixed-sample, sampling, and asymptotic KDE experiments."""
 
 from __future__ import annotations
+from kde_tools.qhat import minimize_qhat
+import time
+from kde_tools.perron import perron_vector_from_divergence
+from kde_tools.perron import perron_peak_index
+import pandas as pd
+from kde_tools.bandwidths import nearest_bandwidth_grid_index
+from IPython.display import display
+from kde_tools.fourier.similarities import beta2_divergence_matrix_fourier
+from kde_tools.bandwidths import bandwidth_grid_linear_in_psi_beta
 from kde_tools.energy_minimization import minimize_bandwidth_energy
 from kde_tools.qhat import expected_gaussian_qhat_log_energy
 import matplotlib.pyplot as plt
@@ -30,6 +39,7 @@ def plot_selected_bandwidth_paths(
     plot_ticks,
     results,
     squared_differences,
+    output_path=None,
 ) -> None:
     fig, ax = plt.subplots(figsize=(9.5, 5.8))
     for regime in regime_order:
@@ -93,6 +103,12 @@ def plot_selected_bandwidth_paths(
         criterion_inset.set_ylabel("$\\widehat{Q}_0(h)$", fontsize=9, labelpad=2)
         criterion_inset.tick_params(axis="both", labelsize=7.5, pad=2)
         criterion_inset.grid(color="#E5E7EB", linewidth=0.5)
+    if output_path is not None:
+        from pathlib import Path
+
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(output_path, format="pdf", bbox_inches="tight")
     plt.show()
 
 
@@ -174,3 +190,127 @@ def psi_beta(h: float, beta: float) -> float:
         return float(np.log(h))
     power = 1.0 - beta / 2.0
     return float(h**power / power)
+
+
+def run_joint_limit_paths(
+    *,
+    beta,
+    half_width,
+    spatial_points,
+    h_max,
+    h_min,
+    lambda_rules,
+    grid_sizes,
+    regime_order,
+    h_reference,
+    samples,
+):
+    rows = []
+    largest_grid_vectors = {}
+    start_time = time.perf_counter()
+    for N in grid_sizes:
+        N = int(N)
+        h_grid = bandwidth_grid_linear_in_psi_beta(h_min=h_min, h_max=h_max, beta=beta, grid_size=N)
+        divergence = beta2_divergence_matrix_fourier(
+            samples, h_grid, half_width=half_width, spatial_points=spatial_points
+        )
+        reference_index = nearest_bandwidth_grid_index(h_reference, h_grid)
+        neighbor_left = min(reference_index, N - 2)
+        neighbor_D = divergence[neighbor_left, neighbor_left + 1]
+        endpoint_D = divergence[0, -1]
+        for regime, lambda_rule in lambda_rules.items():
+            lambda_value = float(lambda_rule(N))
+            vector = perron_vector_from_divergence(divergence, lambda_value)
+            selected_index = int(perron_peak_index(vector))
+            selected_h = float(h_grid[selected_index])
+            rows.append(
+                {
+                    "N": N,
+                    "regime": regime,
+                    "lambda": lambda_value,
+                    "lambda_over_N2": lambda_value / N**2,
+                    "selected_index": selected_index,
+                    "selected_h": selected_h,
+                    "absolute_error": abs(selected_h - h_reference),
+                    "global_exponent": lambda_value * endpoint_D,
+                    "neighbor_exponent": lambda_value * neighbor_D,
+                    "neighbor_similarity": np.exp(-lambda_value * neighbor_D),
+                }
+            )
+            if N == int(grid_sizes[-1]):
+                largest_grid_vectors[regime] = (h_grid.copy(), vector.copy())
+    results = pd.DataFrame(rows)
+    results["regime"] = pd.Categorical(results["regime"], categories=regime_order, ordered=True)
+    results = results.sort_values(["regime", "N"]).reset_index(drop=True)
+    elapsed = time.perf_counter() - start_time
+    print(f"Completed {len(results)} selector computations in {elapsed:.2f} seconds.")
+    display(results.pivot(index="N", columns="regime", values="selected_h").round(6))
+    return (results, largest_grid_vectors, elapsed)
+
+
+def run_custom_beta_paths(
+    *,
+    beta,
+    lambda_rules,
+    grid_sizes,
+    regime_order,
+    search,
+    half_width,
+    spatial_points,
+    h_max,
+    h_min,
+    samples,
+    squared_differences,
+):
+    custom_beta_continuous_minimum = minimize_qhat(
+        samples, h_min, h_max, r=1 - beta / 2, config=search
+    )
+    if custom_beta_continuous_minimum["diagnostics"]["resolution_stable"] is False:
+        raise ArithmeticError("Energy search did not stabilize; increase ENERGY_SEARCH resolution.")
+    custom_beta_reference_candidates = np.array(
+        [h_min, custom_beta_continuous_minimum["global_minimum"]["h"], h_max]
+    )
+    custom_beta_reference_values = np.array(
+        [
+            local_custom_beta_metric(h, squared_differences, beta=beta)
+            for h in custom_beta_reference_candidates
+        ]
+    )
+    custom_beta_h_infinity = float(
+        custom_beta_reference_candidates[np.argmin(custom_beta_reference_values)]
+    )
+    custom_beta_rows = []
+    custom_beta_start_time = time.perf_counter()
+    for current_N in grid_sizes:
+        current_N = int(current_N)
+        current_h_grid = bandwidth_grid_linear_in_psi_beta(
+            h_min=h_min, h_max=h_max, beta=beta, grid_size=current_N
+        )
+        current_divergence = beta2_divergence_matrix_fourier(
+            samples, current_h_grid, half_width=half_width, spatial_points=spatial_points
+        )
+        for regime, lambda_rule in lambda_rules.items():
+            lambda_value = float(lambda_rule(current_N))
+            current_vector = perron_vector_from_divergence(current_divergence, lambda_value)
+            selected_index = int(perron_peak_index(current_vector))
+            custom_beta_rows.append(
+                {
+                    "beta": beta,
+                    "N": current_N,
+                    "regime": regime,
+                    "lambda": lambda_value,
+                    "selected_index": selected_index,
+                    "selected_h": float(current_h_grid[selected_index]),
+                    "continuous_reference": custom_beta_h_infinity,
+                }
+            )
+    custom_beta_results = pd.DataFrame(custom_beta_rows)
+    custom_beta_results["regime"] = pd.Categorical(
+        custom_beta_results["regime"], categories=regime_order, ordered=True
+    )
+    custom_beta_results = custom_beta_results.sort_values(["regime", "N"]).reset_index(drop=True)
+    custom_beta_elapsed = time.perf_counter() - custom_beta_start_time
+    print(f"Completed beta={beta:g} joint-limit sweep in {custom_beta_elapsed:.2f} seconds.")
+    print(f"Continuous reference for this beta: h_infinity = {custom_beta_h_infinity:.8f}")
+    display(custom_beta_results.pivot(index="N", columns="regime", values="selected_h").round(6))
+    return (custom_beta_results, custom_beta_h_infinity)

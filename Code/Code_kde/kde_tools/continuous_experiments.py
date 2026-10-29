@@ -1,4 +1,4 @@
-"""Reusable functions for continuous_ise_qhat_distributions_vs_n. Experiment settings stay in the notebook."""
+"""Shared runners and plots for continuous bandwidth-minimizer distributions."""
 
 from __future__ import annotations
 from kde_tools.continuous_minimizers import METHODS

@@ -1,7 +1,7 @@
 """Repeat current Figure 3.6 with a chosen bandwidth grid (default thesis r=1).
 
 The fixed sample, interval, N values, lambda rules, Fourier approximation,
-and Perron solver match notebooks/experiment_1_joint_N_lambda_limit.ipynb.
+and Perron solver match notebooks/03_fixed_sample_experiments.ipynb.
 Only the bandwidth grid changes. No thesis files are written.
 """
 
@@ -116,7 +116,7 @@ def run_experiment() -> tuple[pd.DataFrame, dict, np.ndarray, np.ndarray]:
         "frequency_intervals": DEFAULT_FREQUENCY_INTERVALS,
         "l2_method": FOURIER_L2_METHOD_VERSION, "perron_solver": PERRON_SOLVER_VERSION,
         "energy_search": energy_search_settings(),
-        "source_notebook": "notebooks/experiment_1_joint_N_lambda_limit.ipynb",
+        "source_notebook": "notebooks/03_fixed_sample_experiments.ipynb",
         "only_experiment_change": GRID_DESCRIPTION,
     }
     settings_path = DATA_DIR / "settings.json"
