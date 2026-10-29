@@ -1,0 +1,220 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper,left=22mm,right=22mm,top=24mm,bottom=18mm,headheight=19pt,headsep=6mm]{geometry}
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[table]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tabularx,booktabs,array}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newcommand{\fontdir}{/Users/iljasukhanov/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/libreoffice-headless/libreoffice/LibreOfficeDev.app/Contents/Resources/fonts/truetype/}
+\setmainfont[
+  Path=\fontdir,
+  UprightFont=DejaVuSerif.ttf,
+  ItalicFont=DejaVuSerif-Italic.ttf,
+  BoldFont=DejaVuSerif-Bold.ttf,
+  BoldItalicFont=DejaVuSerif-BoldItalic.ttf
+]{DejaVuSerif}
+\setsansfont[
+  Path=\fontdir,
+  UprightFont=DejaVuSans.ttf,
+  ItalicFont=DejaVuSans-Oblique.ttf,
+  BoldFont=DejaVuSans-Bold.ttf,
+  BoldItalicFont=DejaVuSans-BoldOblique.ttf
+]{DejaVuSans}
+\definecolor{navy}{HTML}{17324D}
+\definecolor{blue}{HTML}{2E6F95}
+\definecolor{paleblue}{HTML}{EAF3F8}
+\definecolor{palegold}{HTML}{FBF4E4}
+\definecolor{gold}{HTML}{B88B2A}
+\definecolor{ink}{HTML}{1F2933}
+\definecolor{muted}{HTML}{5B6770}
+\definecolor{rule}{HTML}{D6DEE3}
+
+\color{ink}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue,pdfborder={0 0 0},
+  pdftitle={Minimum-Width Estimation, L-Infinity Regression, and Beta Innovations},
+  pdfsubject={A methodological note on bounded-noise estimators}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4.2pt plus 1pt minus .5pt}
+\setlength{\abovedisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 2pt}
+\linespread{1.05}
+\raggedbottom
+
+\titleformat{\section}{\sffamily\bfseries\color{navy}\fontsize{15.5}{18}\selectfont}{}{0pt}{}
+\titlespacing*{\section}{0pt}{12pt plus 2pt minus 2pt}{4pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\fontsize{7.5}{9}\selectfont\color{muted}MINIMUM WIDTH AND L-INFINITY REGRESSION}
+\fancyfoot[R]{\sffamily\fontsize{8}{9}\selectfont\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{rule}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox{keybox}[1][]{
+  colback=paleblue,colframe=blue,boxrule=.7pt,arc=0pt,
+  left=5mm,right=5mm,top=3.5mm,bottom=3.5mm,
+  before skip=7pt,after skip=7pt,#1}
+\newtcolorbox{contrastbox}{
+  colback=palegold,colframe=gold,boxrule=.7pt,arc=0pt,
+  left=7mm,right=7mm,top=3.5mm,bottom=3.5mm,
+  before skip=7pt,after skip=7pt}
+\newcommand{\Linfty}{\ensuremath{L^\infty}}
+
+\begin{document}
+
+\vspace*{8mm}
+{\sffamily\bfseries\color{navy}\fontsize{24}{28}\selectfont
+Minimum-Width Estimation, $L^\infty$ Regression, and Beta Innovations\par}
+\vspace{4mm}
+{\itshape\color{muted}\fontsize{11.5}{15}\selectfont
+An important equivalence, its limits, and what a Beta experiment can reveal\par}
+\vspace{5mm}
+
+\begin{keybox}
+\centering\sffamily
+\textbf{Correction in one sentence.} The minimum-width estimator is not merely another bounded-noise estimator: it is exactly twice $L^\infty$ regression when the center (or intercept) is optimized.
+\end{keybox}
+
+\vspace{2mm}
+Yes - but there is an important correction to my previous suggestion: \textbf{your minimum-width estimator and $L^\infty$ regression are much more closely related than ``two competing bounded-noise estimators.''}
+
+For your AR residuals
+\[
+r_t(\phi)=X_t-\sum_{j=1}^{p}\phi_jX_{t-j},
+\]
+your minimum-width criterion is essentially
+\[
+W_n(\phi)=\max_t r_t(\phi)-\min_t r_t(\phi),
+\]
+whereas ordinary zero-centered $L^\infty$ regression uses
+\[
+Q_n(\phi)=\max_t\lvert r_t(\phi)\rvert.
+\]
+So they \textbf{can differ}. But observe the identity
+\[
+\min_{c\in\mathbb{R}}\max_t\lvert r_t(\phi)-c\rvert
+=\frac12\left(\max_t r_t(\phi)-\min_t r_t(\phi)\right).
+\]
+
+\begin{keybox}
+\centering\sffamily\bfseries\color{navy}
+minimum width $=2\times$ $L^\infty$ regression with an optimally chosen center/intercept.
+\end{keybox}
+
+That completely changes how I would think about the Beta experiment.
+
+\clearpage
+\section*{Where Beta innovations become interesting}
+
+Suppose first that
+\[
+\varepsilon_t\sim\operatorname{Unif}[-a,a].
+\]
+The distribution is symmetric around zero. Zero-centered $L^\infty$ is perfectly natural, and your width criterion has little extra information to exploit.
+
+Now suppose instead you take a transformed Beta distribution. On $[-a,a]$,
+\[
+Z=\frac{\varepsilon+a}{2a}\sim\operatorname{Beta}(\alpha,\beta).
+\]
+Its density is proportional to
+\[
+(\varepsilon+a)^{\alpha-1}(a-\varepsilon)^{\beta-1}.
+\]
+For $\alpha=\beta=1$, this is uniform, and we recover the situation above. For $\alpha=\beta=2$, the density is concentrated toward the middle and vanishes at the boundaries. For $\alpha=\beta<1$, it is U-shaped and puts much more mass near the two boundaries. And for $\alpha\ne\beta$, it is asymmetric.
+
+The \textbf{correct Beta likelihood knows all of this}. Neither your minimum-width criterion nor $L^\infty$ does. A correctly specified Beta likelihood contains terms involving all residuals, not merely their extremes. For fixed support, it looks schematically like
+\[
+\ell(\phi)\propto
+(\alpha-1)\sum_t\log(r_t(\phi)-L)
++(\beta-1)\sum_t\log(U-r_t(\phi)).
+\]
+So I would expect a correctly specified Beta MLE generally to be the benchmark that is hardest to beat when the Beta model is actually true. Estimation of unknown support endpoints makes such models nonregular and introduces additional subtleties; the literature explicitly notes unusual behavior for unknown-support Beta models. \href{https://www.sciencedirect.com/science/article/pii/S0167947321001791}{[1]}
+
+\section*{But can minimum width beat ordinary \texorpdfstring{$L^\infty$}{L-infinity}?}
+
+\textbf{Yes.} And there is a clear mechanism.
+
+Suppose that two candidate values of $\phi$ produce the following residual extremes:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\linewidth}{>{\centering\arraybackslash}X *{4}{>{\centering\arraybackslash}p{26mm}}}
+\rowcolor{navy}
+\color{white}\sffamily\bfseries Candidate &
+\color{white}\sffamily\bfseries $\min r_t$ &
+\color{white}\sffamily\bfseries $\max r_t$ &
+\color{white}\sffamily\bfseries $Q_n(\phi)$ &
+\color{white}\sffamily\bfseries $W_n(\phi)$\\
+\rowcolor{paleblue} First & $-1$ & $3$ & $3$ & $4$\\
+Second & $-2.2$ & $2.2$ & $2.2$ & $4.4$\\
+\end{tabularx}
+\end{center}
+
+Thus $L^\infty$ prefers the second candidate because its residuals are better centered around \textbf{zero}: $2.2<3$. Your criterion prefers the first because its residual cloud is genuinely \textbf{narrower}: $4<4.4$.
+
+Geometrically that is exactly your distinction:
+
+\begin{contrastbox}
+\itshape
+$L^\infty$: narrowest slab forced to be centered appropriately around zero
+
+Minimum width: narrowest affine slab, with its center free.
+\end{contrastbox}
+
+That difference can matter especially for \textbf{asymmetric bounded innovations}.
+
+\section*{But here's the catch}
+
+If you compare your method against $L^\infty$ regression \textbf{with an intercept/location parameter}, then the distinction disappears:
+\[
+\min_{\phi,c}\max_t\lvert r_t(\phi)-c\rvert
+=\frac12\min_\phi W_n(\phi).
+\]
+So you cannot reasonably claim
+
+\begin{quote}\itshape
+``Minimum width beats $L^\infty$ because Beta innovations are asymmetric''
+\end{quote}
+
+if the $L^\infty$ competitor is allowed to estimate the center as well. They are then mathematically the same estimator for $\phi$.
+
+This is actually a useful realization for your thesis rather than a disappointment. It tells you very precisely what is novel and what is not.
+
+\begin{keybox}
+\centering\sffamily\bfseries\color{navy}
+Your minimum-width formulation is a geometric generalization and reinterpretation of Chebyshev regression in which the affine slab is allowed to move.
+\end{keybox}
+
+Its larger potential advantage may lie elsewhere - especially in the\\
+\textbf{dimension/order-detection geometry} you have been developing,
+rather than in coefficient estimation alone.
+
+\section*{A revealing Beta simulation}
+
+Your Beta simulations could still be quite revealing. A particularly informative experiment would vary
+\[
+\operatorname{Beta}(\alpha,\beta)\quad\text{through}\quad
+(1,1),\ (2,2),\ (1/2,1/2),\ (2,5),
+\]
+and compare
+\[
+\mathrm{LS},\qquad
+L^\infty\ \text{(zero-centered)},\qquad
+\text{minimum width},\qquad
+\text{Beta MLE}.
+\]
+The results would tell you \textbf{why} an estimator works: Gaussian-type average information, fixed-center extremes, free-center width geometry, or full knowledge of the innovation distribution. That would be much more scientifically interesting than merely demonstrating that $L^\infty$ beats LS under uniform noise.
+
+\section*{Reference}
+
+{\small\color{muted}
+[1] \href{https://www.sciencedirect.com/science/article/pii/S0167947321001791}{\textit{Bayesian beta regression for bounded responses with unknown supports}}, ScienceDirect.
+}
+
+\end{document}

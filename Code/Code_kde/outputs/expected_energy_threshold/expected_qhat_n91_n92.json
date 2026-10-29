@@ -1,0 +1,26 @@
+{
+  "r": 0.9285714285714286,
+  "sampling_distribution": "iid N(0,1)",
+  "sigma2": 1.0,
+  "expectation": "3/(16 sqrt(pi) n) [h^(-1-2r) + (n-1) h^(4-2r)/(1+h^2)^(5/2)]",
+  "critical_sample_size": 91.00545534774447,
+  "stationary_points": {
+    "91": [],
+    "92": [
+      {
+        "kind": "minimum",
+        "h": 0.6397504306372794,
+        "expected_energy": 0.02116095082672026
+      },
+      {
+        "kind": "maximum",
+        "h": 0.687664748921878,
+        "expected_energy": 0.02116659052034073
+      }
+    ]
+  },
+  "png": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/expected_energy_threshold/expected_qhat_n91_n92.png",
+  "pdfs": [
+    "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/pdfs/expected_qhat_n91_n92/001_expected_gaussian_kde_scale_energy_r_13_14_x_i_sim_mathcal_n_0_1.pdf"
+  ]
+}

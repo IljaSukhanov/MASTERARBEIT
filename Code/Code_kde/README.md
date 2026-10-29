@@ -1,11 +1,12 @@
 # KDE thesis work
 
-Start in **[notebooks/](notebooks/)**. These five notebooks correspond to material
+Start in **[notebooks/](notebooks/)**. These six notebooks correspond to material
 included in the KDE chapter or explicitly requested by its TODOs.
 
 | Notebook | Thesis purpose |
 | --- | --- |
-| [kde_numerics.ipynb](notebooks/kde_numerics.ipynb) | Classical bandwidth illustration, Fourier-error figure, and exact/Fourier runtime table. |
+| [classical_bandwidth_kde_illustration.ipynb](notebooks/classical_bandwidth_kde_illustration.ipynb) | Classical bandwidth illustration. |
+| [kde_numerics.ipynb](notebooks/kde_numerics.ipynb) | Fourier-error figure and exact/Fourier runtime table. |
 | [spectral_scale_selection_kde.ipynb](notebooks/spectral_scale_selection_kde.ipynb) | Perron profiles, grid fineness, lambda path, repeated-sampling histograms, and sample-size comparisons already presented. |
 | [experiment_1_joint_N_lambda_limit.ipynb](notebooks/experiment_1_joint_N_lambda_limit.ipynb) | Joint-limit figure and planned changes of r, repeated sampling, mesh checks, and high-exponent regimes. |
 | [continuous_ise_qhat_distributions_vs_n.ipynb](notebooks/continuous_ise_qhat_distributions_vs_n.ipynb) | The four presented ISE/Q panels at n=100,1000,1500,2000, plus a fixed-sample control for the local-minimum discussion. |
@@ -31,7 +32,7 @@ See [the shared search](kde_tools/energy_minimization.py) for its recorded contr
 
 ## Folders
 
-- `notebooks/`: the five entry points above.
+- `notebooks/`: the six entry points above.
 - `kde_tools/`: shared calculations, checkpoint handling, plotting, and PDF export.
 - `experiments/`: seven helpers for the joint-limit and planned jump/peak sections.
 - `inputs/`: [raw inputs and sampling identities](inputs/README.md).
@@ -39,8 +40,8 @@ See [the shared search](kde_tools/energy_minimization.py) for its recorded contr
 - `tests/`: numerical checks and small isolated notebook runs.
 
 Executable scripts no longer live inside generated outputs. Existing included
-figures retain their exact paths and contents. The numerical notebook writes
-copies at the classical/error figure paths; the energy notebook exports the
+figures retain their exact paths and contents. The classical and numerical notebooks
+write to the classical/error figure paths; the energy notebook exports the
 four selected panels directly, with the endpoint-frequency insets described by
 the thesis caption. The joint-limit PDF and four energy panels that were missing
 before cleanup were regenerated on 2026-10-29 using the retained settings. All

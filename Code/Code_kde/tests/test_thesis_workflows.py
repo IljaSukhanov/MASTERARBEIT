@@ -44,24 +44,28 @@ class ThesisWorkflowTests(unittest.TestCase):
         plt.close('all')
         disable_automatic_pdf_saving()
 
-    def test_numerics_illustration_error_and_runtime_exports(self):
+    def test_separated_illustration_and_numerics_exports(self):
+        illustration = cells('classical_bandwidth_kde_illustration')
         c = cells('kde_numerics')
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             isolated = base/'Code/Code_kde'
             ns = {'display': lambda value: None}
-            exporter = lambda name, **kw: enable_automatic_pdf_saving('kde_numerics', output_root=base/'pdfs')
+            exporter = lambda name, **kw: enable_automatic_pdf_saving(name, output_root=base/'pdfs')
             with patch('kde_tools.pdf_export.enable_automatic_pdf_saving', side_effect=exporter), \
                     patch('kde_tools.thesis_exports.KDE_DIRECTORY', isolated):
                 ns['isolated'] = isolated
-                execute(c['setup'], ns, dict(
+                execute(illustration['setup'], ns, dict(
                     data_directory='isolated/"outputs/data/classical_bandwidth_kde_illustration"',
                     image_directory='isolated/"outputs/images/classical_bandwidth_kde_illustration"'))
                 ns['code_directory'] = isolated
-                execute(c['settings'], ns, dict(cv_grid_size='31', integration_points='1001', plot_points='201'))
+                execute(illustration['settings'], ns, dict(cv_grid_size='31', integration_points='1001', plot_points='201'))
                 for key in ('calculate-and-save', 'plot-and-export'):
-                    execute(c[key], ns)
+                    execute(illustration[key], ns)
                 self.assertEqual(len(list((isolated/'outputs/pdfs').rglob('*.pdf'))), 1)
+                self.assertEqual(len(list((base/'pdfs/classical_bandwidth_kde_illustration').glob('*.pdf'))), 1)
+                # The remaining notebook must run without the illustration's state.
+                ns = {'display': lambda value: None}
                 execute(c['grs-repeat-1'], ns)
                 ns['code_directory'] = isolated
                 execute(c['grs-repeat-2'], ns, dict(n='20', N='5', realizations='2', workers='1',
@@ -76,6 +80,7 @@ class ThesisWorkflowTests(unittest.TestCase):
                 execute(c['runtime-04'], ns)
                 self.assertTrue((ns['data_directory']/'summary.md').is_file())
                 self.assertTrue((ns['data_directory']/'report.json').is_file())
+                self.assertEqual(len(list((base/'pdfs/kde_numerics').glob('*.pdf'))), 1)
                 self.assertEqual(len(list((base/'pdfs').rglob('*.pdf'))), 2)
 
     def test_both_presented_spectral_histogram_profiles(self):
