@@ -8,8 +8,10 @@ import io
 import json
 from pathlib import Path
 import runpy
+import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -17,6 +19,10 @@ import pandas as pd
 from kde_tools.energy_minimization import EnergySearchConfig, minimize_bandwidth_energy
 from kde_tools.qhat import minimize_qhat, expected_gaussian_qhat_log_energy
 from kde_tools.pdf_export import disable_automatic_pdf_saving
+from kde_tools.joint_experiments import (
+    local_custom_beta_metric, expected_q_standard_gaussian,
+    exact_expected_q_minimizer,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,7 +46,8 @@ def execute(source, namespace, overrides=None):
                 return self.generic_visit(node)
         tree = Settings().visit(tree)
         ast.fix_missing_locations(tree)
-    with contextlib.redirect_stdout(io.StringIO()):
+    with contextlib.redirect_stdout(io.StringIO()), \
+            patch.object(sys, 'path', [str(ROOT/'notebooks'), *sys.path]):
         exec(compile(tree, "<unified notebook integration>", "exec"), namespace)
 
 
@@ -73,23 +80,20 @@ class UnifiedNotebookSearchTests(unittest.TestCase):
                   minimize_bandwidth_energy=minimize_bandwidth_energy,
                   expected_gaussian_qhat_log_energy=expected_gaussian_qhat_log_energy)
         ns["squared_differences"] = (samples[:, None]-samples[None, :])**2
-        for index in (4, 13):
-            tree = ast.parse("".join(nb["cells"][index]["source"]))
+        by_id = {cell['id']: cell for cell in nb['cells']}
+        for cell_id in ('continuous-reference', 'custom-beta-joint-limit-computation'):
+            tree = ast.parse("".join(by_id[cell_id]["source"]))
             allowed = {"continuous_minimum", "custom_beta_continuous_minimum"}
             tree.body = [node for node in tree.body if isinstance(node, ast.FunctionDef) or
                          isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id in allowed
                                                              for t in node.targets)]
             exec(compile(tree, "<joint search>", "exec"), ns)
         point = ns["custom_beta_continuous_minimum"]["global_minimum"]
-        self.assertAlmostEqual(point["energy"], ns["local_custom_beta_metric"](
-            point["h"], ns["squared_differences"]), places=12)
-        tree = ast.parse("".join(nb["cells"][37]["source"]))
-        tree.body = [node for node in tree.body if isinstance(node, ast.FunctionDef) and
-                     node.name in ("expected_q_standard_gaussian", "exact_expected_q_minimizer")]
-        exec(compile(tree, "<expected search>", "exec"), ns)
-        value = ns["expected_q_standard_gaussian"](.4, 200, 1/7)
+        self.assertAlmostEqual(point["energy"], local_custom_beta_metric(
+            point["h"], ns["squared_differences"], beta=1/7), places=12)
+        value = expected_q_standard_gaussian(.4, 200, 1/7)
         self.assertAlmostEqual(value, expected_gaussian_qhat_log_energy(np.log(.4), 200, 13/14)[0])
-        h = ns["exact_expected_q_minimizer"](200, 1/7, .5, 5.)
+        h = exact_expected_q_minimizer(200, 1/7, .5, 5., search=ns['ENERGY_SEARCH'])
         self.assertTrue(.5*200**(-.2) <= h <= 5*200**(-.2))
 
 

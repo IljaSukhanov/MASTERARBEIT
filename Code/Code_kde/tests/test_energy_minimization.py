@@ -111,7 +111,7 @@ class UnifiedEnergySearchTests(unittest.TestCase):
         path = root/"notebooks/continuous_ise_qhat_distributions_vs_n.ipynb"
         notebook = json.loads(path.read_text())
         code = "\n".join("".join(cell["source"]) for cell in notebook["cells"] if cell["cell_type"] == "code")
-        self.assertIn("enable_automatic_pdf_saving(NOTEBOOK_NAME)", code)
+        self.assertIn('setup_notebook("continuous_ise_qhat_distributions_vs_n")', code)
         self.assertIn('NOTEBOOK_NAME = "continuous_ise_qhat_distributions_vs_n"', code)
 
     def test_configuration_changes_search_identity_and_is_validated(self):

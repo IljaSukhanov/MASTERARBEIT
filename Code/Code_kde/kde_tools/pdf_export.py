@@ -24,6 +24,7 @@ _ORIGINAL_PLOTLY_SHOW = (
     PlotlyBaseFigure.show if PlotlyBaseFigure is not None else None
 )
 _ACTIVE_EXPORTER: _AutomaticPdfExporter | None = None
+_IPYTHON_EVENTS = None
 
 
 def _safe_name(value: str, fallback: str = "figure") -> str:
@@ -95,6 +96,12 @@ def _show_matplotlib_and_save(*args: Any, **kwargs: Any) -> Any:
     return _ORIGINAL_MATPLOTLIB_SHOW(*args, **kwargs)
 
 
+def _save_after_notebook_cell(*args: Any, **kwargs: Any) -> None:
+    """Include figures displayed implicitly by the notebook's inline backend."""
+    if _ACTIVE_EXPORTER is not None:
+        _ACTIVE_EXPORTER.save_new_matplotlib_figures()
+
+
 def _show_plotly_and_save(
     figure: Any,
     *args: Any,
@@ -113,7 +120,7 @@ def enable_automatic_pdf_saving(
     output_root: str | Path | None = None,
 ) -> Path:
     """Save every subsequently displayed Matplotlib or Plotly figure as PDF."""
-    global _ACTIVE_EXPORTER
+    global _ACTIVE_EXPORTER, _IPYTHON_EVENTS
 
     if output_root is None:
         output_root = Path(__file__).resolve().parents[1] / "outputs" / "pdfs"
@@ -124,6 +131,18 @@ def enable_automatic_pdf_saving(
     _ACTIVE_EXPORTER = _AutomaticPdfExporter(output_directory)
 
     plt.show = _show_matplotlib_and_save
+    try:
+        from IPython import get_ipython
+        shell = get_ipython()
+    except ImportError:
+        shell = None
+    if shell is not None and _IPYTHON_EVENTS is None:
+        _IPYTHON_EVENTS = shell.events
+        # Run before the inline backend flushes and closes its figures.
+        _IPYTHON_EVENTS.register("post_execute", _save_after_notebook_cell)
+        callbacks = _IPYTHON_EVENTS.callbacks["post_execute"]
+        callbacks.remove(_save_after_notebook_cell)
+        callbacks.insert(0, _save_after_notebook_cell)
     if PlotlyBaseFigure is not None:
         PlotlyBaseFigure.show = _show_plotly_and_save
 
@@ -132,9 +151,12 @@ def enable_automatic_pdf_saving(
 
 def disable_automatic_pdf_saving() -> None:
     """Restore the original display functions."""
-    global _ACTIVE_EXPORTER
+    global _ACTIVE_EXPORTER, _IPYTHON_EVENTS
 
     plt.show = _ORIGINAL_MATPLOTLIB_SHOW
     if PlotlyBaseFigure is not None and _ORIGINAL_PLOTLY_SHOW is not None:
         PlotlyBaseFigure.show = _ORIGINAL_PLOTLY_SHOW
     _ACTIVE_EXPORTER = None
+    if _IPYTHON_EVENTS is not None:
+        _IPYTHON_EVENTS.unregister("post_execute", _save_after_notebook_cell)
+        _IPYTHON_EVENTS = None

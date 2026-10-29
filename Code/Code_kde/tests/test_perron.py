@@ -270,7 +270,7 @@ class NotebookRoutingTests(unittest.TestCase):
                 if cell["cell_type"] == "code"
             )
             with self.subTest(notebook=path.name):
-                self.assertIn("enable_automatic_pdf_saving(", setup)
+                self.assertTrue("enable_automatic_pdf_saving(" in setup or "setup_notebook(" in setup)
 
 
 if __name__ == "__main__":

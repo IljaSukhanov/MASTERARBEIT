@@ -6,6 +6,7 @@ import io
 import json
 from pathlib import Path
 import runpy
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -35,7 +36,8 @@ def execute(cell, ns, overrides=None):
                         node.value = ast.parse(overrides[target.id], mode='eval').body
                 return self.generic_visit(node)
         tree = ast.fix_missing_locations(Settings().visit(tree))
-    with contextlib.redirect_stdout(io.StringIO()):
+    with contextlib.redirect_stdout(io.StringIO()), \
+            patch.object(sys, 'path', [str(ROOT/'notebooks'), *sys.path]):
         exec(compile(tree, '<thesis notebook>', 'exec'), ns)
 
 
@@ -45,8 +47,8 @@ class ThesisWorkflowTests(unittest.TestCase):
         disable_automatic_pdf_saving()
 
     def test_separated_illustration_and_numerics_exports(self):
-        illustration = cells('classical_bandwidth_kde_illustration')
-        c = cells('kde_numerics')
+        illustration = cells('01_classical_bandwidth_kde_illustration')
+        c = cells('02_kde_numerics')
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             isolated = base/'Code/Code_kde'
@@ -63,7 +65,7 @@ class ThesisWorkflowTests(unittest.TestCase):
                 for key in ('calculate-and-save', 'plot-and-export'):
                     execute(illustration[key], ns)
                 self.assertEqual(len(list((isolated/'outputs/pdfs').rglob('*.pdf'))), 1)
-                self.assertEqual(len(list((base/'pdfs/classical_bandwidth_kde_illustration').glob('*.pdf'))), 1)
+                self.assertEqual(len(list((base/'pdfs/01_classical_bandwidth_kde_illustration').glob('*.pdf'))), 1)
                 # The remaining notebook must run without the illustration's state.
                 ns = {'display': lambda value: None}
                 execute(c['grs-repeat-1'], ns)
@@ -80,7 +82,7 @@ class ThesisWorkflowTests(unittest.TestCase):
                 execute(c['runtime-04'], ns)
                 self.assertTrue((ns['data_directory']/'summary.md').is_file())
                 self.assertTrue((ns['data_directory']/'report.json').is_file())
-                self.assertEqual(len(list((base/'pdfs/kde_numerics').glob('*.pdf'))), 1)
+                self.assertEqual(len(list((base/'pdfs/02_kde_numerics').glob('*.pdf'))), 1)
                 self.assertEqual(len(list((base/'pdfs').rglob('*.pdf'))), 2)
 
     def test_both_presented_spectral_histogram_profiles(self):
@@ -134,7 +136,7 @@ class ThesisWorkflowTests(unittest.TestCase):
             self.assertEqual(grid['bandwidth_grid'](9).shape, (9,))
         for p in sorted((ROOT/'experiments').rglob('*.py')):
             namespace = runpy.run_path(str(p))
-            directory = namespace.get('CODE_DIRECTORY', namespace.get('KDE_DIR'))
+            directory = namespace.get('CODE_DIRECTORY', namespace.get('KDE_DIR', namespace.get('KDE_ROOT')))
             self.assertEqual(directory, ROOT)
 
 
