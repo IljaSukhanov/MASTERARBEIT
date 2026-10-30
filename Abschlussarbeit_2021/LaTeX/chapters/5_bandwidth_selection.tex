@@ -404,9 +404,9 @@ The reason why we do not want to work with the matrix $D$ and instead transform 
     \end{align*}
 \end{Lem}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_acute_chain_perron_vec}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_acute_chain_perron_vec}.
+% \end{proof}
 
 The \enquote{acute chain condition} has precedence in the theory of so called Monge matrices, for reference see, for example~\cite{hutter_estimation_2020}. Monge matrices have a special structural property that allows for certain problems to have faster algorithms when assuming this structure. A matrix $D$ is a Monge matrix if $D_{ij}+D_{kl}\le D_{il}+D_{kj}$ whenever $i\le k$ and $j\le l$. In fact, a matrix $D$ with entries $D_{ij}=\|x_i-x_j\|^2$ is Monge if and only if the acute chain condition holds for $x_1,\dots,x_N$. All symmetric Monge matrices with zero diagonal are Robinson matrices. The acute chain condition has a geometric interpretation: the angle between all the differences of two consecutive points is at most $90$ degrees.
 
@@ -794,9 +794,9 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     if $h,h+\tau\in J:=[a,b]\subseteq(0,\infty)$. Also, $\mu_J\ge0$ and $\mu_J(s)\to0$ as $s\downarrow0$.
 \end{Lem}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
+% \end{proof}
 
 Next, we state the main theorem of this thesis.
 
@@ -810,11 +810,17 @@ Next, we state the main theorem of this thesis.
     where $\hat{Q}_r(h)=2^{-1}h^{2(1-r)}\|\partial_s\hat{f}_s|_{s=h}\|_2^2$ is an energy functional.
 \end{Prop}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_main_thm}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_main_thm}.
+% \end{proof}
 
-\todo[inline]{30.10: mention Laplace method as precedence!!}
+\begin{Rem}
+    For large $N$, we thus have
+    \begin{align*}
+        \Delta_{r,N}\sum_{j=1}^{N}e^{-\lambda_ND_{i_N,j}}=\Delta_{r,N}R_{i_N}^{(N)}\approx\sqrt{\frac{\pi}{\lambda_N\hat{Q}_r(h_0)}},
+    \end{align*}
+    which is very reminiscent of Laplace's method (see for example~[]), by which the integral $\int_a^be^{Mf(x)}$ can be approximated for large $M$ by $\sqrt{2\pi/(Mf''(x_0)}e^{Mf(x_0)}$, where $f$ is a twice continuously differentiable function on an interval $[a,b]$ and $x_0\in(a,b)$ is a strict global maximum of $f$ on $[a,b]$.
+\end{Rem}
 
 Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \begin{align*}
@@ -830,17 +836,15 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
     Assume that the energy functional $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$ and let $(k_N)$ be a sequence of indices defined by $k_N:=\min\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then the spectrally chosen bandwidth $h_{k_N}$ converges to the unique minimizer $h^{\ast}$ of $\hat{Q}_r$, that is, $h_{k_N}\to h^{\ast}$ as $N\to\infty$.
 \end{Prop}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_main_thm2}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_main_thm2}.
+% \end{proof}
 
 \textcolor{red}{The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
-\todo[inline]{30.10: finish this section}
-
-\todo[inline]{30.10: add short comparison between numerical optimization of $\hat{Q}_r$ and Perron vector computation in terms of runtime efficiency}
+\todo[inline]{31.10: add short comparison between numerical optimization of $\hat{Q}_r$ and Perron vector computation in terms of runtime efficiency}
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
@@ -932,7 +936,7 @@ If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3
 
 \section{Literature Positioning}
 
-\todo[inline]{30.10: Write it!}
+\todo[inline]{31.10: Finish it!}
 
 The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
 
@@ -964,6 +968,10 @@ and for $\gamma=1-r/2$ we get $\partial_{1-r/2}^2L(x,h^2)=h^{1-r}\partial_h\hat{
 
 Shi, Belkin and Yu~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}\exp{(-(\|x_i-x_j\|)^2/(2\omega^2))}$, where the data $x_1,\dots,x_n$ is assumed to come from a multivariate Gaussian distribution, and, among other things, compute its Perron vector $v_0$ and use its maximum index $k=\arg\max(v_0)_i$ to estimate the mean $\mu$ of the data by $x_k$. They then extend it to data coming from a multivariate Gaussian mixture model, construct the same kernel matrix, and estimate the number of components by the number of eigenvectors of $K_n$ which have no sign changes. They estimate the mean $\mu_g$ of each component $g$ by $x_{k(g)}$, where $k(g)=\arg\max(v_0^{(g)})_i$. They give a theoretical justification through the theory of eigenfunctions. This work serves as a precedent for using the maximum index of the Perron vector (and certain other nonleading eigenvectors) for statistical inference.
 
-\todo[inline]{30.10: Finish paragraph below, in particular connect to my result}
+\textcolor{red}{Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} can be listed as related work regarding the phenomenon that the Perron vector localizes near the unique maximum of some (energy) functional.}
 
-Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} can be listed as related work regarding the phenomenon that the Perron vector localizes near the unique maximum of some (energy) functional.
+\textcolor{red}{They have an index set $S(N)\subseteq\mathbb{Z}^{d}$ with some scalar value $E_i$ for each index $i\in S(N)$. Let $F_N$ be a rate matrix and define $\Tilde{H}_N:=F_N+\operatorname{diag}(E_i)$. Let $w$ be the unique Perron vector of $\Tilde{H}_N$ with strictly positive entries $w_i>0$ and define the squared entries $a_i:=w_i^2$. Furthermore, they let $D\subseteq\mathbb{R}^d$ be a compact set such that $S(N)$ is asymptotically dense in $D$. They define a function $E$ on $D$ with $E_i=E(i/N)+\mathbf{O}(N^{-1})$. Let $x^{\ast}$ be the unique global maximizer of $E$.}
+
+\textcolor{red}{For any $1\ge\beta>0$ no matter how small, the sum over all $a_i$ with $|i/N-x^{\ast}|\ge\sqrt{\rho/(\beta N)}$ is less than $\beta$. For $\beta=0.01$ this would mean that the sum of all weights $a_i$ with $|i/N-x^{\ast}|<10\sqrt{\rho/N}$ is strictly larger than 0.99. For increasing $N$ the fraction of indices for in the region where $99\%$ of the mass is put shrinks to zero.}
+
+\todo[inline]{Akian–Bapat–Gaubert: \enquote{Asymptotics of the Perron eigenvalue and eigenvector using Max-algebra}}

@@ -250,9 +250,9 @@ In fact, we can derive the following convergence speed result. It tells us that 
     In particular, $d_H(\mathcal{Z}^{(k)}_n,\mathcal{Z}^{(k)}_0)=\mathcal{O}(\rho^{n})$. That is, $d_H(\mathcal{Z}^{(k)}_n,\mathcal{Z}^{(k)}_0)\to0$ is exponentially fast.
 \end{Prop}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_hausdorff_distance_convergence_speed}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_hausdorff_distance_convergence_speed}.
+% \end{proof}
 
 A convex body is a compact convex set with a nonempty interior. As a convex geometric functional on a convex body $K$ we use its minimum width. For a rigorous notion of width, we introduce the support function.
 
@@ -306,9 +306,9 @@ Next, we formulate a result that states that the relation $k\mapsto m_k$ has an 
     \end{align*}
 \end{Prop}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_minimum_width}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_minimum_width}.
+% \end{proof}
 
 \begin{Rem}[about Proposition~\ref{prop:minimum_width}]\label{rem:minimizer_estimates_coefficients}
     For $k=p+1$ the minimizing direction is $u=(u_0,u_1,\dots,u_p)=q_{\phi}/\|q_{\phi}\|$. We can recover the AR coefficients by $\phi_j=-(q_{\phi})_j=-\|q_{\phi}\|u_j=-u_j/u_0$, $j=1,\dots,p$. If $\hat{u}$ is a practically obtained minimizer (for example, via gradient descent, see below), we get coefficient estimates $\hat{\phi}_j=-\hat{u}_j/\hat{u}_0$.
@@ -337,9 +337,9 @@ The next results establish the consistency of the empirical minimum width, that 
     \end{align*}
 \end{Lem}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_hausdorff_convergence}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_hausdorff_convergence}.
+% \end{proof}
 
 There exists work on the convergence speed of the sequence $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})$ for $T\to+\infty$, but only under certain assumptions. Brunel~\cite{brunel_uniform_2019} proves $\mathbb{E}[d_H(\mathcal{P}_T,\mathcal{Z})]=\mathbf{O}((\frac{\log{n}}{n})^{1/\alpha})$ under the assumption that \enquote{enough probability mass is put at the caps of $\mathcal{Z}$}. He also assumes that $Y_1,\dots,Y_T$ are independent and identically distributed. Louhichi~\cite{louhichi_sharp_2025} instead considers stationary points $Y_1,\dots,Y_T$ but assumes a stronger \enquote{$a$-$b$-condition} in addition with other specific conditions. She then proceeds to show the same kind of convergence speed as Brunel.
 
@@ -357,9 +357,9 @@ The next Proposition shows that in our setting, Brunel's condition fails and the
     for all $q>0$. In particular, Brunel's condition is not fulfilled.
 \end{Prop}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_sliding_window_fails_brunel}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_sliding_window_fails_brunel}.
+% \end{proof}
 
 The next Lemma now shows that the support of a stationary and ergodic process is in fact dense in $\mathcal{Z}$ with probability 1. 
 
@@ -367,9 +367,9 @@ The next Lemma now shows that the support of a stationary and ergodic process is
     Let $\{Y_t\}$ be stationary and ergodic. Furthermore, let $\mathcal{Z}=\operatorname{supp}(Y_t)$ be compact and convex. Then $\{Y_t:t\ge 1\}$ is dense in $\mathcal{Z}$ almost surely.
 \end{Lem}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_ergodic_implies_dense}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_ergodic_implies_dense}.
+% \end{proof}
 
 \begin{Rem}\label{rem:ar_ergodic}
     A causal AR process has the representation $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Such processes are stationary and ergodic given that the innovations $\{Z_t\}$ are stationary and ergodic. Furthermore, the embedded process $t\mapsto Y_t^{(k)}$ inherits the stationarity and ergodicity.
@@ -447,9 +447,9 @@ Before discussing the minimization of $\hat{w}_k=\hat{w}_{k,T}$ we collect some 
     \end{enumerate}
 \end{Prop}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_properties_empirical_width}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_properties_empirical_width}.
+% \end{proof}
 
 A classical minimization approach is the projected sub-gradient descent; see Algorithm~\ref{alg:projected_gradient_descent} and Figure~\ref{fig:proj_subgradient_descent_visualization} which visualizes one step of the projected sub-gradient descent from Algorithm~\ref{alg:projected_gradient_descent}. \cite{li2021weaklyconvexoptimizationstiefel} provide convergence guaranties. We show that our setting fulfills the assumptions stated in~\cite[Theorem 4]{li2021weaklyconvexoptimizationstiefel} needed for the linear convergence of Algorithm~\ref{alg:projected_gradient_descent} if the initial point $u_0$ is close to $\mathcal{X}_k$. But first, we state this result in our notation.
 
@@ -492,9 +492,9 @@ We already established the convexity and Lipschitz-continuity of $f=\hat{w}_k$ i
     There exist $\alpha>0$ and $\rho>0$ such that $\hat{w}_k(u)-\hat{m}_k\ge\alpha\operatorname{dist}(u,\mathcal{X}_k)$ for all $u\in\mathbb{S}^{k-1}$ with $\operatorname{dist}(u,\mathcal{X}_k)<\rho$.
 \end{Lem}
 
-\begin{proof}
-    See Appendix Section~\ref{sec:proof_weak_sharp_minima_application}.
-\end{proof}
+% \begin{proof}
+%     See Appendix Section~\ref{sec:proof_weak_sharp_minima_application}.
+% \end{proof}
 
 In practice, the parameters $\gamma_0$ and $\beta$ need to be tuned as there is no chance of obtaining explicit values for $\alpha$, $\rho$ in general. Note that this geometrically diminishing step size schedule is equivalently known as exponentially decaying step size schedule: $\gamma_t=\gamma_0e^{-dt}$ with $d:=-\log{\beta}>0$ for $\beta\in(0,1)$.
 
