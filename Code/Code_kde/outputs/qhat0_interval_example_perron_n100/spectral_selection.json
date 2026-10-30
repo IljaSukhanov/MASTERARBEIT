@@ -1,0 +1,131 @@
+{
+  "sample": {
+    "filename": "qhat_reference_sample.csv",
+    "seed": 20260823,
+    "sample_size": 200,
+    "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+  },
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "N": 100,
+  "grid": "geometric (r=0), including both endpoints",
+  "lambda_N": 1000.0,
+  "lambda_rule": "N**(3/2)",
+  "similarity": "S_ij = exp(-lambda_N * D_ij), D_ij = 0.5 * ||f_hi-f_hj||_2**2",
+  "divergence_method": "shared direct Fourier trapezoidal quadrature",
+  "frequency_cutoff": 450.0,
+  "frequency_intervals": 1536,
+  "solver": "stabilized_eigh_v1",
+  "selected_index_zero_based": 55,
+  "selected_index_one_based": 56,
+  "selected_h": 0.18982350911593698,
+  "peak_weight_sum_normalized": 0.030754651750037394,
+  "energy_at_selected_h": 0.0025207367071653636,
+  "relative_residual": 3.7088094508466923e-16,
+  "relative_gap": 0.32085753338477957,
+  "validation": {
+    "analytic_overlap_selected_h": 0.18982350911593698,
+    "maximum_absolute_divergence_error": 1.0489942248170792e-11,
+    "maximum_absolute_vector_error": 5.0862092315639984e-15,
+    "analytic_overlap_relative_residual": 1.094748354024285e-15
+  },
+  "timing": {
+    "scope": "Geometric grid creation, fresh Fourier divergence matrix, exponential transformation, stabilized Perron eigensolve and peak selection. Excludes imports, sample loading, validation, energy evaluation, plotting and saving.",
+    "timer": "time.perf_counter",
+    "numerical_library_threads": 1,
+    "python_version": "3.12.7",
+    "machine": "arm64",
+    "first_call": {
+      "total_seconds": 0.016874207998625934,
+      "grid_seconds": 0.00016745800166972913,
+      "divergence_seconds": 0.013672749999386724,
+      "eigensolve_and_peak_seconds": 0.003033999997569481,
+      "selected_index_zero_based": 55,
+      "selected_h": 0.18982350911593698
+    },
+    "repetitions_after_initialization": 9,
+    "median_total_seconds": 0.012591083002917003,
+    "minimum_total_seconds": 0.012089374999050051,
+    "maximum_total_seconds": 0.014441458002693253,
+    "median_divergence_seconds": 0.011428917001467198,
+    "median_eigensolve_and_peak_seconds": 0.0010594580016913824,
+    "runs": [
+      {
+        "total_seconds": 0.012898541001050035,
+        "grid_seconds": 0.0001206660017487593,
+        "divergence_seconds": 0.011627749998297077,
+        "eigensolve_and_peak_seconds": 0.0011501250010041986,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.012404208999214461,
+        "grid_seconds": 0.00010116699922946282,
+        "divergence_seconds": 0.011278917001618538,
+        "eigensolve_and_peak_seconds": 0.0010241249983664602,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.014441458002693253,
+        "grid_seconds": 9.27500004763715e-05,
+        "divergence_seconds": 0.013238625000667525,
+        "eigensolve_and_peak_seconds": 0.0011100830015493557,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.012591083002917003,
+        "grid_seconds": 0.00010270799975842237,
+        "divergence_seconds": 0.011428917001467198,
+        "eigensolve_and_peak_seconds": 0.0010594580016913824,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.012089374999050051,
+        "grid_seconds": 0.0001114999977289699,
+        "divergence_seconds": 0.011059084001317387,
+        "eigensolve_and_peak_seconds": 0.0009187910000036936,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.01320287499765982,
+        "grid_seconds": 8.41249966470059e-05,
+        "divergence_seconds": 0.011834709002869204,
+        "eigensolve_and_peak_seconds": 0.0012840409981436096,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.012610207999387057,
+        "grid_seconds": 0.00011179099965374917,
+        "divergence_seconds": 0.011460292000265326,
+        "eigensolve_and_peak_seconds": 0.001038124999467982,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.012150915998063283,
+        "grid_seconds": 0.00010412499977974221,
+        "divergence_seconds": 0.01109987499876297,
+        "eigensolve_and_peak_seconds": 0.00094691599952057,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      {
+        "total_seconds": 0.012287292000110028,
+        "grid_seconds": 8.033300036913715e-05,
+        "divergence_seconds": 0.011060249998990912,
+        "eigensolve_and_peak_seconds": 0.0011467090007499792,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      }
+    ]
+  },
+  "continuous_local_minimum_h": 0.17642363203073474,
+  "absolute_bandwidth_difference": 0.013399877085202239
+}

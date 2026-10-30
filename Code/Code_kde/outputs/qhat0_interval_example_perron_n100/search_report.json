@@ -1,0 +1,366 @@
+{
+  "sample": {
+    "filename": "qhat_reference_sample.csv",
+    "seed": 20260823,
+    "sample_size": 200,
+    "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+  },
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "analysis": {
+    "global_minimum": {
+      "h": 0.17642363203073474,
+      "energy": 0.0024944971068578646,
+      "objective": 0.0024944971068578646,
+      "log_derivative": -3.862846317491145e-17,
+      "log_curvature": 0.010125560122220663,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 3.814945811258463e-15,
+      "is_global_minimum": true
+    },
+    "global_minimizers": [
+      {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "objective": 0.0024944971068578646,
+        "log_derivative": -3.862846317491145e-17,
+        "log_curvature": 0.010125560122220663,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 3.814945811258463e-15,
+        "is_global_minimum": true
+      }
+    ],
+    "local_minima": [
+      {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "objective": 0.0024944971068578646,
+        "log_derivative": -3.862846317491145e-17,
+        "log_curvature": 0.010125560122220663,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 3.814945811258463e-15,
+        "is_global_minimum": true
+      }
+    ],
+    "local_maxima": [
+      {
+        "h": 1.9537992608627723,
+        "energy": 0.030946619429029213,
+        "objective": 0.030946619429029213,
+        "log_derivative": -1.244417562465648e-16,
+        "log_curvature": -0.04910856729692772,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 2.534013169110515e-15,
+        "is_global_minimum": false
+      }
+    ],
+    "stationary_points": [
+      {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "objective": 0.0024944971068578646,
+        "log_derivative": -3.862846317491145e-17,
+        "log_curvature": 0.010125560122220663,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 3.814945811258463e-15,
+        "is_global_minimum": true
+      },
+      {
+        "h": 1.9537992608627723,
+        "energy": 0.030946619429029213,
+        "objective": 0.030946619429029213,
+        "log_derivative": -1.244417562465648e-16,
+        "log_curvature": -0.04910856729692772,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 2.534013169110515e-15,
+        "is_global_minimum": false
+      }
+    ],
+    "endpoints": [
+      {
+        "h": 0.01,
+        "energy": 0.061034335584533,
+        "objective": 0.061034335584533,
+        "log_derivative": -0.05375513564913439,
+        "log_curvature": -0.03292275177198895,
+        "boundary": -1,
+        "kind": "endpoint",
+        "newton_correction": 1.6327655726174706,
+        "is_global_minimum": false
+      },
+      {
+        "h": 2.0,
+        "energy": 0.030933331935512686,
+        "objective": 0.030933331935512686,
+        "log_derivative": -0.0011316268211817987,
+        "log_curvature": -0.04771020793417945,
+        "boundary": 1,
+        "kind": "endpoint",
+        "newton_correction": 0.023718756848492055,
+        "is_global_minimum": false
+      }
+    ],
+    "best_local_minimum": {
+      "h": 0.17642363203073474,
+      "energy": 0.0024944971068578646,
+      "objective": 0.0024944971068578646,
+      "log_derivative": -3.862846317491145e-17,
+      "log_curvature": 0.010125560122220663,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 3.814945811258463e-15,
+      "is_global_minimum": true
+    },
+    "local_minimum_count": 1,
+    "diagnostics": {
+      "settings": {
+        "version": "bandwidth_energy_stationary_search_v1",
+        "scan_points": 257,
+        "check_resolution": true,
+        "max_refinements": 2,
+        "root_xtol": 2e-12,
+        "root_rtol": 1e-14,
+        "root_match_tolerance": 1e-07,
+        "bracket_expansion": 8,
+        "comparison_rtol": 1e-10,
+        "comparison_atol": 0.0,
+        "scan_backend": "exact",
+        "half_width": 16.0,
+        "spatial_points": 32768
+      },
+      "scan_points": 513,
+      "refinements": 1,
+      "resolution_stable": true,
+      "maximum_log_h_discrepancy": 3.8480330033500524e-13,
+      "exact_evaluations": 579,
+      "approximate_scan": false,
+      "certified_global": false,
+      "scan_backend": "exact",
+      "effective_half_width": null
+    },
+    "r": 0.0
+  },
+  "timing": {
+    "scope": "Complete minimize_qhat call with a fresh objective: pair distances, stationary-point scan, root refinement, classification, resolution check and endpoint comparison. Excludes imports, sample loading, plotting and saving. Repeated runs follow one initialization call.",
+    "timer": "time.perf_counter",
+    "sample": {
+      "filename": "qhat_reference_sample.csv",
+      "seed": 20260823,
+      "sample_size": 200,
+      "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+    },
+    "h_interval": [
+      0.01,
+      2.0
+    ],
+    "r": 0.0,
+    "settings": {
+      "version": "bandwidth_energy_stationary_search_v1",
+      "scan_points": 257,
+      "check_resolution": true,
+      "max_refinements": 2,
+      "root_xtol": 2e-12,
+      "root_rtol": 1e-14,
+      "root_match_tolerance": 1e-07,
+      "bracket_expansion": 8,
+      "comparison_rtol": 1e-10,
+      "comparison_atol": 0.0,
+      "scan_backend": "exact",
+      "half_width": 16.0,
+      "spatial_points": 32768
+    },
+    "python_version": "3.12.7",
+    "machine": "arm64",
+    "first_call_seconds": 0.3954814999997325,
+    "repetitions_after_initialization": 9,
+    "median_seconds": 0.10256691700124065,
+    "minimum_seconds": 0.10074820800218731,
+    "maximum_seconds": 0.11855587500031106,
+    "runs": [
+      {
+        "seconds": 0.10884679099763162,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.11103862500021933,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10256691700124065,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10085116600021138,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.1035709579991817,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10113170799741056,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10219366700039245,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10074820800218731,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.11855587500031106,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      }
+    ]
+  },
+  "spectral": {
+    "sample": {
+      "filename": "qhat_reference_sample.csv",
+      "seed": 20260823,
+      "sample_size": 200,
+      "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+    },
+    "h_interval": [
+      0.01,
+      2.0
+    ],
+    "N": 100,
+    "grid": "geometric (r=0), including both endpoints",
+    "lambda_N": 1000.0,
+    "lambda_rule": "N**(3/2)",
+    "similarity": "S_ij = exp(-lambda_N * D_ij), D_ij = 0.5 * ||f_hi-f_hj||_2**2",
+    "divergence_method": "shared direct Fourier trapezoidal quadrature",
+    "frequency_cutoff": 450.0,
+    "frequency_intervals": 1536,
+    "solver": "stabilized_eigh_v1",
+    "selected_index_zero_based": 55,
+    "selected_index_one_based": 56,
+    "selected_h": 0.18982350911593698,
+    "peak_weight_sum_normalized": 0.030754651750037394,
+    "energy_at_selected_h": 0.0025207367071653636,
+    "relative_residual": 3.7088094508466923e-16,
+    "relative_gap": 0.32085753338477957,
+    "validation": {
+      "analytic_overlap_selected_h": 0.18982350911593698,
+      "maximum_absolute_divergence_error": 1.0489942248170792e-11,
+      "maximum_absolute_vector_error": 5.0862092315639984e-15,
+      "analytic_overlap_relative_residual": 1.094748354024285e-15
+    },
+    "timing": {
+      "scope": "Geometric grid creation, fresh Fourier divergence matrix, exponential transformation, stabilized Perron eigensolve and peak selection. Excludes imports, sample loading, validation, energy evaluation, plotting and saving.",
+      "timer": "time.perf_counter",
+      "numerical_library_threads": 1,
+      "python_version": "3.12.7",
+      "machine": "arm64",
+      "first_call": {
+        "total_seconds": 0.016874207998625934,
+        "grid_seconds": 0.00016745800166972913,
+        "divergence_seconds": 0.013672749999386724,
+        "eigensolve_and_peak_seconds": 0.003033999997569481,
+        "selected_index_zero_based": 55,
+        "selected_h": 0.18982350911593698
+      },
+      "repetitions_after_initialization": 9,
+      "median_total_seconds": 0.012591083002917003,
+      "minimum_total_seconds": 0.012089374999050051,
+      "maximum_total_seconds": 0.014441458002693253,
+      "median_divergence_seconds": 0.011428917001467198,
+      "median_eigensolve_and_peak_seconds": 0.0010594580016913824,
+      "runs": [
+        {
+          "total_seconds": 0.012898541001050035,
+          "grid_seconds": 0.0001206660017487593,
+          "divergence_seconds": 0.011627749998297077,
+          "eigensolve_and_peak_seconds": 0.0011501250010041986,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.012404208999214461,
+          "grid_seconds": 0.00010116699922946282,
+          "divergence_seconds": 0.011278917001618538,
+          "eigensolve_and_peak_seconds": 0.0010241249983664602,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.014441458002693253,
+          "grid_seconds": 9.27500004763715e-05,
+          "divergence_seconds": 0.013238625000667525,
+          "eigensolve_and_peak_seconds": 0.0011100830015493557,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.012591083002917003,
+          "grid_seconds": 0.00010270799975842237,
+          "divergence_seconds": 0.011428917001467198,
+          "eigensolve_and_peak_seconds": 0.0010594580016913824,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.012089374999050051,
+          "grid_seconds": 0.0001114999977289699,
+          "divergence_seconds": 0.011059084001317387,
+          "eigensolve_and_peak_seconds": 0.0009187910000036936,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.01320287499765982,
+          "grid_seconds": 8.41249966470059e-05,
+          "divergence_seconds": 0.011834709002869204,
+          "eigensolve_and_peak_seconds": 0.0012840409981436096,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.012610207999387057,
+          "grid_seconds": 0.00011179099965374917,
+          "divergence_seconds": 0.011460292000265326,
+          "eigensolve_and_peak_seconds": 0.001038124999467982,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.012150915998063283,
+          "grid_seconds": 0.00010412499977974221,
+          "divergence_seconds": 0.01109987499876297,
+          "eigensolve_and_peak_seconds": 0.00094691599952057,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        },
+        {
+          "total_seconds": 0.012287292000110028,
+          "grid_seconds": 8.033300036913715e-05,
+          "divergence_seconds": 0.011060249998990912,
+          "eigensolve_and_peak_seconds": 0.0011467090007499792,
+          "selected_index_zero_based": 55,
+          "selected_h": 0.18982350911593698
+        }
+      ]
+    },
+    "continuous_local_minimum_h": 0.17642363203073474,
+    "absolute_bandwidth_difference": 0.013399877085202239
+  }
+}

@@ -1,0 +1,732 @@
+{
+  "sample": {
+    "filename": "qhat_reference_sample.csv",
+    "seed": 20260823,
+    "sample_size": 200,
+    "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+  },
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "r": 0.0,
+  "repetitions_after_initialization": 9,
+  "numerical_library_threads": 1,
+  "python_version": "3.12.7",
+  "machine": "arm64",
+  "scope": "Fresh sample-specific computation in every call, including pair distances or spectral matrix construction. Excludes imports, sample loading, validation, plotting and saving. Methods interleaved in seeded random order.",
+  "limitation": "Coarse derivative scanning can miss narrow or degenerate minima. Matching this sample does not establish completeness on other samples.",
+  "summary": {
+    "coarse_17_then_brent": {
+      "median_ms": 3.9355840017378796,
+      "minimum_ms": 3.8849999982630834,
+      "maximum_ms": 5.044792000262532,
+      "result": {
+        "h": 0.1764236320307355,
+        "energy": 0.0024944971068578685,
+        "exact_evaluations": 23,
+        "minimum_brackets": [
+          [
+            0.14142135623730953,
+            0.19693793171894836
+          ]
+        ],
+        "log_curvature": 0.010125560122220604,
+        "local_minimum_count": 1
+      },
+      "absolute_h_difference": 7.494005416219807e-16
+    },
+    "coarse_33_then_brent": {
+      "median_ms": 6.621208998694783,
+      "minimum_ms": 6.520916998852044,
+      "maximum_ms": 6.716625000990462,
+      "result": {
+        "h": 0.1764236320307357,
+        "energy": 0.002494497106857869,
+        "exact_evaluations": 39,
+        "minimum_brackets": [
+          [
+            0.1668868760516067,
+            0.19693793171894836
+          ]
+        ],
+        "log_curvature": 0.010125560122220574,
+        "local_minimum_count": 1
+      },
+      "absolute_h_difference": 9.43689570931383e-16
+    },
+    "coarse_65_then_brent": {
+      "median_ms": 11.74104200254078,
+      "minimum_ms": 11.610707999352599,
+      "maximum_ms": 11.854749998747138,
+      "result": {
+        "h": 0.17642363203073563,
+        "energy": 0.002494497106857868,
+        "exact_evaluations": 70,
+        "minimum_brackets": [
+          [
+            0.1668868760516067,
+            0.18129080561528743
+          ]
+        ],
+        "log_curvature": 0.010125560122220552,
+        "local_minimum_count": 1
+      },
+      "absolute_h_difference": 8.881784197001252e-16
+    },
+    "shared_full_analytic_search": {
+      "median_ms": 102.0255420007743,
+      "minimum_ms": 100.28533399963635,
+      "maximum_ms": 104.96058300122968,
+      "result": {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "exact_evaluations": 579
+      },
+      "absolute_h_difference": 0.0
+    },
+    "spectral_fourier_N100": {
+      "median_ms": 12.739624999085208,
+      "minimum_ms": 12.430834001861513,
+      "maximum_ms": 25.49104100035038,
+      "result": {
+        "h": 0.18982350911593698
+      },
+      "absolute_h_difference": 0.013399877085202239
+    }
+  },
+  "first_calls": {
+    "coarse_17_then_brent": {
+      "seconds": 0.30341124999904423,
+      "result": {
+        "h": 0.1764236320307355,
+        "energy": 0.0024944971068578685,
+        "exact_evaluations": 23,
+        "minimum_brackets": [
+          [
+            0.14142135623730953,
+            0.19693793171894836
+          ]
+        ],
+        "log_curvature": 0.010125560122220604,
+        "local_minimum_count": 1
+      }
+    },
+    "coarse_33_then_brent": {
+      "seconds": 0.00664320799842244,
+      "result": {
+        "h": 0.1764236320307357,
+        "energy": 0.002494497106857869,
+        "exact_evaluations": 39,
+        "minimum_brackets": [
+          [
+            0.1668868760516067,
+            0.19693793171894836
+          ]
+        ],
+        "log_curvature": 0.010125560122220574,
+        "local_minimum_count": 1
+      }
+    },
+    "coarse_65_then_brent": {
+      "seconds": 0.012304790998314274,
+      "result": {
+        "h": 0.17642363203073563,
+        "energy": 0.002494497106857868,
+        "exact_evaluations": 70,
+        "minimum_brackets": [
+          [
+            0.1668868760516067,
+            0.18129080561528743
+          ]
+        ],
+        "log_curvature": 0.010125560122220552,
+        "local_minimum_count": 1
+      }
+    },
+    "shared_full_analytic_search": {
+      "seconds": 0.1046541249997972,
+      "result": {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "exact_evaluations": 579
+      }
+    },
+    "spectral_fourier_N100": {
+      "seconds": 0.01864358400052879,
+      "result": {
+        "h": 0.18982350911593698
+      }
+    }
+  },
+  "runs": {
+    "coarse_17_then_brent": [
+      {
+        "seconds": 0.003912708998541348,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.0039815419986553025,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.003953875002480345,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.00393558400173788,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.003948124998714775,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.005044792000262532,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.003913332999218255,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.0038849999982630834,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.003913042000931455,
+        "result": {
+          "h": 0.1764236320307355,
+          "energy": 0.0024944971068578685,
+          "exact_evaluations": 23,
+          "minimum_brackets": [
+            [
+              0.14142135623730953,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220604,
+          "local_minimum_count": 1
+        }
+      }
+    ],
+    "coarse_33_then_brent": [
+      {
+        "seconds": 0.006585667000763351,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.006520916998852044,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.006671833001746563,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.006621208998694783,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.006616250000661239,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.0067166250009904616,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.006566208001459017,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.00671058400257607,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.006632333999732509,
+        "result": {
+          "h": 0.1764236320307357,
+          "energy": 0.002494497106857869,
+          "exact_evaluations": 39,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.19693793171894836
+            ]
+          ],
+          "log_curvature": 0.010125560122220574,
+          "local_minimum_count": 1
+        }
+      }
+    ],
+    "coarse_65_then_brent": [
+      {
+        "seconds": 0.011814708999736467,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.011774915998103097,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.011854749998747138,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.011710459002642892,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.011671124997519655,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.01174104200254078,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.011837375001050532,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.011610707999352599,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      },
+      {
+        "seconds": 0.011706375000358094,
+        "result": {
+          "h": 0.17642363203073563,
+          "energy": 0.002494497106857868,
+          "exact_evaluations": 70,
+          "minimum_brackets": [
+            [
+              0.1668868760516067,
+              0.18129080561528743
+            ]
+          ],
+          "log_curvature": 0.010125560122220552,
+          "local_minimum_count": 1
+        }
+      }
+    ],
+    "shared_full_analytic_search": [
+      {
+        "seconds": 0.10353058300097473,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.10161670800152933,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.10496058300122968,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.10289216599994688,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.10028533399963635,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.1020255420007743,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.10081974999775412,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.10118949999741744,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      },
+      {
+        "seconds": 0.10291491599855362,
+        "result": {
+          "h": 0.17642363203073474,
+          "energy": 0.0024944971068578646,
+          "exact_evaluations": 579
+        }
+      }
+    ],
+    "spectral_fourier_N100": [
+      {
+        "seconds": 0.01279404199885903,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.013029417001234833,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.012430834001861513,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.012739624999085208,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.012736749999021413,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.02549104100035038,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.012457000000722473,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.012525250000180677,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      },
+      {
+        "seconds": 0.012919290998979704,
+        "result": {
+          "h": 0.18982350911593698
+        }
+      }
+    ]
+  }
+}

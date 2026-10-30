@@ -1,0 +1,34 @@
+{
+  "version": "alpha_repeated_samples_v1",
+  "repetitions": 200,
+  "sample_size": 200,
+  "distribution": "N(0,1)",
+  "sample_bank_seed": 20260830,
+  "sample_bank_sha256": "92089c0a581e9a083a66cd79377c74a1dc3f28afa5ef29dd1254ee8de3aed7c3",
+  "alphas": [
+    0.5,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    1.9
+  ],
+  "grid_sizes": [
+    100,
+    200,
+    400
+  ],
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "grid": "geometric (r=0)",
+  "lambda_rule": "N**alpha; c=1",
+  "frequency_cutoff": 450.0,
+  "frequency_intervals": 1536,
+  "fourier_method": "frequency_trapezoid_v1",
+  "perron_solver": "stabilized_eigh_v1",
+  "numerical_library_threads": 1,
+  "reference": "Shared analytic Q_0 interval search, with resolution checks and endpoints",
+  "timing": "One measured matrix construction per sample and N, reused across exponents; per-row timing is matrix-construction plus eigensolve duration, excluding validation."
+}

@@ -1,0 +1,235 @@
+{
+  "sample": {
+    "filename": "qhat_reference_sample.csv",
+    "seed": 20260823,
+    "sample_size": 200,
+    "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+  },
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "analysis": {
+    "global_minimum": {
+      "h": 0.17642363203073474,
+      "energy": 0.0024944971068578646,
+      "objective": 0.0024944971068578646,
+      "log_derivative": -3.862846317491145e-17,
+      "log_curvature": 0.010125560122220663,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 3.814945811258463e-15,
+      "is_global_minimum": true
+    },
+    "global_minimizers": [
+      {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "objective": 0.0024944971068578646,
+        "log_derivative": -3.862846317491145e-17,
+        "log_curvature": 0.010125560122220663,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 3.814945811258463e-15,
+        "is_global_minimum": true
+      }
+    ],
+    "local_minima": [
+      {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "objective": 0.0024944971068578646,
+        "log_derivative": -3.862846317491145e-17,
+        "log_curvature": 0.010125560122220663,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 3.814945811258463e-15,
+        "is_global_minimum": true
+      }
+    ],
+    "local_maxima": [
+      {
+        "h": 1.9537992608627723,
+        "energy": 0.030946619429029213,
+        "objective": 0.030946619429029213,
+        "log_derivative": -1.244417562465648e-16,
+        "log_curvature": -0.04910856729692772,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 2.534013169110515e-15,
+        "is_global_minimum": false
+      }
+    ],
+    "stationary_points": [
+      {
+        "h": 0.17642363203073474,
+        "energy": 0.0024944971068578646,
+        "objective": 0.0024944971068578646,
+        "log_derivative": -3.862846317491145e-17,
+        "log_curvature": 0.010125560122220663,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 3.814945811258463e-15,
+        "is_global_minimum": true
+      },
+      {
+        "h": 1.9537992608627723,
+        "energy": 0.030946619429029213,
+        "objective": 0.030946619429029213,
+        "log_derivative": -1.244417562465648e-16,
+        "log_curvature": -0.04910856729692772,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 2.534013169110515e-15,
+        "is_global_minimum": false
+      }
+    ],
+    "endpoints": [
+      {
+        "h": 0.01,
+        "energy": 0.061034335584533,
+        "objective": 0.061034335584533,
+        "log_derivative": -0.05375513564913439,
+        "log_curvature": -0.03292275177198895,
+        "boundary": -1,
+        "kind": "endpoint",
+        "newton_correction": 1.6327655726174706,
+        "is_global_minimum": false
+      },
+      {
+        "h": 2.0,
+        "energy": 0.030933331935512686,
+        "objective": 0.030933331935512686,
+        "log_derivative": -0.0011316268211817987,
+        "log_curvature": -0.04771020793417945,
+        "boundary": 1,
+        "kind": "endpoint",
+        "newton_correction": 0.023718756848492055,
+        "is_global_minimum": false
+      }
+    ],
+    "best_local_minimum": {
+      "h": 0.17642363203073474,
+      "energy": 0.0024944971068578646,
+      "objective": 0.0024944971068578646,
+      "log_derivative": -3.862846317491145e-17,
+      "log_curvature": 0.010125560122220663,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 3.814945811258463e-15,
+      "is_global_minimum": true
+    },
+    "local_minimum_count": 1,
+    "diagnostics": {
+      "settings": {
+        "version": "bandwidth_energy_stationary_search_v1",
+        "scan_points": 257,
+        "check_resolution": true,
+        "max_refinements": 2,
+        "root_xtol": 2e-12,
+        "root_rtol": 1e-14,
+        "root_match_tolerance": 1e-07,
+        "bracket_expansion": 8,
+        "comparison_rtol": 1e-10,
+        "comparison_atol": 0.0,
+        "scan_backend": "exact",
+        "half_width": 16.0,
+        "spatial_points": 32768
+      },
+      "scan_points": 513,
+      "refinements": 1,
+      "resolution_stable": true,
+      "maximum_log_h_discrepancy": 3.8480330033500524e-13,
+      "exact_evaluations": 579,
+      "approximate_scan": false,
+      "certified_global": false,
+      "scan_backend": "exact",
+      "effective_half_width": null
+    },
+    "r": 0.0
+  },
+  "timing": {
+    "scope": "Complete minimize_qhat call with a fresh objective: pair distances, stationary-point scan, root refinement, classification, resolution check and endpoint comparison. Excludes imports, sample loading, plotting and saving. Repeated runs follow one initialization call.",
+    "timer": "time.perf_counter",
+    "sample": {
+      "filename": "qhat_reference_sample.csv",
+      "seed": 20260823,
+      "sample_size": 200,
+      "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+    },
+    "h_interval": [
+      0.01,
+      2.0
+    ],
+    "r": 0.0,
+    "settings": {
+      "version": "bandwidth_energy_stationary_search_v1",
+      "scan_points": 257,
+      "check_resolution": true,
+      "max_refinements": 2,
+      "root_xtol": 2e-12,
+      "root_rtol": 1e-14,
+      "root_match_tolerance": 1e-07,
+      "bracket_expansion": 8,
+      "comparison_rtol": 1e-10,
+      "comparison_atol": 0.0,
+      "scan_backend": "exact",
+      "half_width": 16.0,
+      "spatial_points": 32768
+    },
+    "python_version": "3.12.7",
+    "machine": "arm64",
+    "first_call_seconds": 0.414133624999522,
+    "repetitions_after_initialization": 9,
+    "median_seconds": 0.1014878329988278,
+    "minimum_seconds": 0.10036737499831361,
+    "maximum_seconds": 0.11724083300214261,
+    "runs": [
+      {
+        "seconds": 0.10750658300094074,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10093895899990457,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.1014878329988278,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10160641699985717,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10040020899759838,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10127891699812608,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10036737499831361,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.11724083300214261,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      },
+      {
+        "seconds": 0.10173112499978743,
+        "local_minimum_h": 0.17642363203073474,
+        "exact_evaluations": 579
+      }
+    ]
+  }
+}
