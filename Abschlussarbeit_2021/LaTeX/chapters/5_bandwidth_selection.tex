@@ -866,9 +866,30 @@ We can characterize the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Na
 \end{align*}
 This means that $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum.
 
-\todo[inline]{30.10: add short discussion about local minima}
+The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. The energy functional can consequently be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$.
 
-Using standard root finding methods, we can look for stationary points and check if they are local minima. Afterwards, we can compare with the energy function values at the borders $h_{\min}$ and $h_{\max}$ to see if the found local minimum is in fact a global minimum on the interval $[h_{\min},h_{\max}]$.
+The energy functional has both a local minimum and a local maximum iff $B(h)<2-r$ for some $h>0$. This can be seen as follows: \textcolor{red}{First notice that $R_j'(h)=-2hR_{j+1}(h)$.} From this follows $\hat{Q}_r'(h)=h^{3-2r}R_2(h)(2-r-B(h))$. 
+
+\textcolor{red}{We also have $B(h)\to5/2$ for $h\to0$ and $h\to\infty$.}
+
+Now $\hat{Q}_r'(h)>0$ iff $B(h)<2-r$. This means that if $B(h_0)<2-r$ for some $h_0>0$, then $\hat{Q}_r'(h_0)>0$. We can choose $0<a<h_0$ with $\hat{Q}_r'(a)<0$. Continuity of $\hat{Q}_r$ forces the existence of a local minimum inside $[a,h_0]$. Conversely, if $\hat{Q}_r$ has a local minimum at say $s>0$, then $\hat{Q}_r'(h_0)>0$ for some $h_0>s$ which is equivalent to $B(h_0)<2-r$. The same argument can be used for the characterization of the existence of a local maximum.
+
+The existence of local extrema thus depends on the realized sample. If the samples are drawn independently from a distribution with density $f$ such that $0<\|f''\|<+\infty$ then it can be shown that $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ when the sample size $n$ goes to infinity.
+
+\begin{proof}
+    First, define $g_h:=K_h\ast f$ and $B_f(h):=h^2\|g_h'''\|_2^2/\|g_h''\|_2^2$. We have $\|g_h''\|_2^2\to\|f''\|_2^2$ and $\|hg_h'''\|_2=\|hK_h'\ast f''\|_2\to0$ as $h\downarrow0$. Thus
+    \begin{align*}
+        B_f(h)=\frac{\|hg_h'''\|_2^2}{\|g_h''\|_2^2}\to0,\quad h\downarrow0.
+    \end{align*}
+    Choose $h_0>0$ such that $B_f(h_0)<2-r$. Next
+    \begin{align*}
+        \mathbb{E}[\|\partial_x^j\hat{f}_{n,h_0}-g_{h_0}^{(j)}\|_2^2]=\frac{\|\partial_x^jK_{h_0}\|_2^2-\|g_{h_0}^{(j)}\|_2^2}{n}\to0,\quad n\to\infty.
+    \end{align*}
+    By the reverse triangle inequality and the Markov inequality, $\|\partial_x^j\hat{f}_{n,h_0}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability. Therefore, $B_n(h_0)=h_0^2R_3(h_0)/R_2(h_0)$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem. Set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B_n(h_0)\ge2-r)\le \mathbb{P}(|B_n(h_0)|-B_f(h_0)|>\delta)\to0$ for $n\to\infty$. Which is why $\mathbb{P}(B_n(h_0)<2-r)\to1$ for $n\to\infty$.
+\end{proof}
+
+
+Using standard root finding methods (like Brent's method), we can look for stationary points and check if they are local minima. Afterwards, we can compare its value with the values of the energy functional at the borders $h_{\min}$ and $h_{\max}$ to see if the detected local minimum is, in fact, a global minimum on the interval $[h_{\min},h_{\max}]$.
 
 The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
 
@@ -907,49 +928,6 @@ We recall that the asymptotic minimizer of the mean integrated squared error is 
 \end{align}
 
 If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. In this case, $C_r(K,L)=\frac{1+2r}{4-2r}(3/4)^{1/5}$ and it becomes 1 if set $r=13/14$, that is, for $r=13/14$ (the bandwidths inside the grid are arranged slightly below being linear) the asymptotic minimizer of the mean integrated squared error and the asymptotic minimizer of the expected energy functional are asymptotically equivalent.
-
-Figure~\ref{fig:continuous_minimizers_comparison} visualizes our theoretical considerations. It compares the distribution of $M=1000$ selected bandwidths minimizing: 1) $\operatorname{ISE}$ (violet), 2) $\hat{Q}_0$ (blue), 3) $\hat{Q}_1$ (orange), 4) $\hat{Q}_{13/14}$ (green).
-
-% \begin{figure}[htbp]
-%     \centering
-
-%     \begin{subfigure}[t]{0.49\textwidth}
-%         \centering
-%         \includegraphics[width=\linewidth]
-%         {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n100.pdf}
-%         \caption{$n=100$}
-%     \end{subfigure}
-%     \hfill
-%     \begin{subfigure}[t]{0.49\textwidth}
-%         \centering
-%         \includegraphics[width=\linewidth]
-%         {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1000.pdf}
-%         \caption{$n=1000$}
-%     \end{subfigure}
-
-%     \par\medskip
-
-%     \begin{subfigure}[t]{0.49\textwidth}
-%         \centering
-%         \includegraphics[width=\linewidth]
-%         {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1500.pdf}
-%         \caption{$n=1500$}
-%     \end{subfigure}
-%     \hfill
-%     \begin{subfigure}[t]{0.49\textwidth}
-%         \centering
-%         \includegraphics[width=\linewidth]
-%         {output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n2000.pdf}
-%         \caption{$n=2000$}
-%     \end{subfigure}
-
-%     \caption{Sampling distributions of the continuous minimizers of
-%     $\operatorname{ISE}$, $\widehat{Q}_0$, $\widehat{Q}_1$, and
-%     $\widehat{Q}_{13/14}$, based on $M=1000$ repetitions for each
-%     sample size. Insets show the relative frequency of minimizers
-%     at the upper endpoint $h=2$.}
-%     \label{fig:continuous_minimizers_comparison}
-% \end{figure}
 
 
 \section{Literature Positioning}
