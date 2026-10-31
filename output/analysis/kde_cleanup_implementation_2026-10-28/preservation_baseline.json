@@ -287,26 +287,6 @@
     "sha256": "f91e83323c00df2712f6717da34132ebe98564102213891174c1a838ebcab770",
     "bytes": 12843
   },
-  "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/bandwidths.csv": {
-    "sha256": "50b13bbabc1a610c8bb464ea9311e6aea4551e81419c556ae7b709cff4021ca5",
-    "bytes": 166
-  },
-  "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/cv_scores.csv": {
-    "sha256": "9402e978e1f298677822de7dd88555af5c00ef5dbf2b7e51cedc5a8afe2c33d8",
-    "bytes": 203304
-  },
-  "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/density_curves.csv": {
-    "sha256": "010a8b74726212ac2bf8a5fa3951d20cfb0575b0acdeef6e1d5f272ea376981a",
-    "bytes": 281042
-  },
-  "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/sample.csv": {
-    "sha256": "8980a92a7010af5e91eac5d345ba50c04725de0e8c5412889e8c74edbd201b7a",
-    "bytes": 1278
-  },
-  "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/settings.json": {
-    "sha256": "ab56fbb610a9537d2899b10c6b86dd6a264cad3a6adead2e2887bcf041001aec",
-    "bytes": 1052
-  },
   "Code/Code_kde/outputs/data/fast_l2_bandwidth_distributions_vs_n_lambda/thesis/028fa8664f9c/settings.json": {
     "sha256": "b76db3ad129f8cbfcc50a1016018908a405ceea73c1008e60a1f12ee6faa3ace",
     "bytes": 475
@@ -1579,10 +1559,6 @@
     "sha256": "7130b25b4bdc02ae7c7fd073f843a166ef97f720aa1dc74fa2e653873add536a",
     "bytes": 3346
   },
-  "Code/Code_kde/outputs/images/classical_bandwidth_kde_illustration/classical_bandwidth_kde_illustration.png": {
-    "sha256": "b150522f418845eb9c34ac448ddf55c76e77c5e6459ca42c23480ac04d15208c",
-    "bytes": 163916
-  },
   "Code/Code_kde/outputs/images/fast_l2_bandwidth_distributions_vs_n_lambda/thesis/028fa8664f9c/spectral_l2_lambda1_M1000_N201.png": {
     "sha256": "f99d8456336ddf9d9011e36b78c9a044bdb0c72afdb44cff2ba4318321743a80",
     "bytes": 220896
@@ -1754,10 +1730,6 @@
   "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.png": {
     "sha256": "d6acff0f9a66c61babd605fa32fc8df8d20b4c855a93d29dd38d40c71cee6186",
     "bytes": 75259
-  },
-  "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf": {
-    "sha256": "7437a121f36ce817700c23ce99bbda17705a50d6dce52a842d54f2779362b2c5",
-    "bytes": 26779
   },
   "Code/Code_kde/outputs/pdfs/fast_l2_bandwidth_distributions_vs_n_lambda/001_fast_l2_spectral_selection_comparison_across_lambda.pdf": {
     "sha256": "af81eafcb3053d459d68b9be3502b32b1889846925b8de52f69b19e1f6639646",

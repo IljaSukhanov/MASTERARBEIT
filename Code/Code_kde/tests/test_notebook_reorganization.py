@@ -26,7 +26,7 @@ class NotebookReorganizationTests(unittest.TestCase):
         disable_automatic_pdf_saving()
 
     def test_thesis_groups_have_distinct_entry_points(self):
-        expected = {'01_classical_bandwidth_kde_illustration', '02_kde_numerics', *GROUPS}
+        expected = {'02_kde_numerics', *GROUPS}
         self.assertEqual({p.stem for p in (ROOT/'notebooks').glob('*.ipynb')}, expected)
         required = {
             GROUPS[0]: ('beta2-stationary-grid-comparison', 'joint-limit-computation'),

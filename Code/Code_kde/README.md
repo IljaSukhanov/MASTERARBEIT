@@ -1,12 +1,11 @@
 # KDE thesis work
 
-Start in **[notebooks/](notebooks/)**. These six notebooks correspond to material
+Start in **[notebooks/](notebooks/)**. These five notebooks correspond to material
 included in the KDE chapter or explicitly requested by its TODOs.
 Lambda-jump studies are deferred to a possible outlook discussion.
 
 | Notebook | Thesis purpose |
 | --- | --- |
-| [01_classical_bandwidth_kde_illustration.ipynb](notebooks/01_classical_bandwidth_kde_illustration.ipynb) | Classical bandwidth illustration. |
 | [02_kde_numerics.ipynb](notebooks/02_kde_numerics.ipynb) | Fourier-error figure and exact/Fourier runtime table. |
 | [03_fixed_sample_experiments.ipynb](notebooks/03_fixed_sample_experiments.ipynb) | Fixed-sample Perron profiles, grid-fineness and lambda paths, joint grid/scale limits, and alternative grid parameters. |
 | [04_repeated_sampling_experiments.ipynb](notebooks/04_repeated_sampling_experiments.ipynb) | Fixed-sample-size distributions: the two thesis histogram profiles, calibrated-selector sampling, and custom-beta Monte Carlo. |
@@ -35,7 +34,6 @@ Reusable function definitions live in Python files:
 
 | Experiment | Imported functions |
 | --- | --- |
-| Classical bandwidth comparison | [classical_experiments.py](kde_tools/classical_experiments.py) |
 | Fourier error and runtime comparison | [numerical_experiments.py](kde_tools/numerical_experiments.py) |
 | Spectral bandwidth experiments | [spectral_experiments.py](kde_tools/spectral_experiments.py) |
 | Joint grid/scale limits | [joint_experiments.py](kde_tools/joint_experiments.py) |
@@ -57,20 +55,19 @@ See [the shared search](kde_tools/energy_minimization.py) for its recorded contr
 
 ## Folders
 
-- `notebooks/`: the six entry points above.
+- `notebooks/`: the five entry points above.
 - `kde_tools/`: shared calculations, checkpoint handling, plotting, and PDF export.
 - `experiments/`: joint-limit helpers and optional diagnostic scripts.
 - `inputs/`: [raw inputs and sampling identities](inputs/README.md).
 - `outputs/`: data, included thesis assets, and PDFs for presented/planned results.
 - `tests/`: numerical checks and small isolated notebook runs.
 
-Executable scripts no longer live inside generated outputs. Existing included
-figures retain their exact paths and contents. The classical and numerical notebooks
-write to the classical/error figure paths; notebook 05 exports the
+Executable scripts no longer live inside generated outputs. The numerical notebook
+writes to the Fourier-error figure path; notebook 05 exports the
 four selected panels directly, with the endpoint-frequency insets described by
 the thesis caption. The joint-limit PDF and four energy panels that were missing
-before cleanup were regenerated on 2026-10-29 using the retained settings. All
-thesis image references now resolve; see the manifest for the compilation checks.
+before cleanup were regenerated on 2026-10-29 using the retained settings. The
+manifest records the compilation checks performed during that cleanup.
 
 ## Check
 

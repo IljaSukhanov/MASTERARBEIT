@@ -2,11 +2,6 @@ from __future__ import annotations
 
 import numpy as np
 
-from .quadrature import trapezoidal_integral
-
-################################################
-### classical selectors (work through later) ###
-################################################
 
 def bandwidth_grid_linear_in_psi_beta(
     h_min: float = 0.01,
@@ -42,74 +37,6 @@ def bandwidth_grid_linear_in_psi_beta(
         grid_size,
     )
     return transformed_grid ** (1.0 / exponent)
-
-
-def robust_scale_for_bandwidth(samples: np.ndarray) -> float:
-    """Return ``min(sample standard deviation, IQR / 1.349)``."""
-    samples = np.asarray(samples, dtype=float)
-    sample_std = float(np.std(samples, ddof=1)) if len(samples) > 1 else 1.0
-    q25, q75 = np.quantile(samples, [0.25, 0.75])
-    iqr_scale = float((q75 - q25) / 1.349) if q75 > q25 else sample_std
-    scale = min(sample_std, iqr_scale)
-    if not np.isfinite(scale) or scale <= 0:
-        scale = sample_std if sample_std > 0 else 1.0
-    return float(scale)
-
-def silverman_rule_of_thumb_bandwidth(samples: np.ndarray) -> float:
-    """Silverman's robust rule of thumb, ``0.9 A n^(-1/5)``."""
-    samples = np.asarray(samples, dtype=float)
-    return 0.9 * robust_scale_for_bandwidth(samples) * len(samples) ** (-1.0 / 5.0)
-
-def least_squares_cv_bandwidth_index(
-    samples: np.ndarray,
-    h_grid: np.ndarray,
-) -> tuple[int, np.ndarray]:
-    """Select a Gaussian-KDE bandwidth by exact least-squares cross-validation."""
-    samples = np.asarray(samples, dtype=float)
-    h_grid = np.asarray(h_grid, dtype=float)
-    n = len(samples)
-    squared_differences = (samples[:, None] - samples[None, :]) ** 2
-    off_diagonal = ~np.eye(n, dtype=bool)
-    scores = []
-
-    for h in h_grid:
-        variance = 2.0 * h**2
-        integral_squared = np.exp(-squared_differences / (2.0 * variance)).sum()
-        integral_squared /= n**2 * np.sqrt(2.0 * np.pi * variance)
-
-        off_diagonal_sum = np.exp(
-            -squared_differences[off_diagonal] / (2.0 * h**2)
-        ).sum()
-        leave_one_out = 2.0 * off_diagonal_sum
-        leave_one_out /= n * (n - 1) * h * np.sqrt(2.0 * np.pi)
-        scores.append(integral_squared - leave_one_out)
-
-    scores = np.asarray(scores)
-    return int(np.argmin(scores)), scores
-
-def direct_plugin_bandwidth(
-    samples: np.ndarray,
-    x_grid: np.ndarray,
-    pilot_h: float | None = None,
-) -> float:
-    """Estimate an AMISE plug-in bandwidth using a pilot estimate of ``R(f'')``."""
-    samples = np.asarray(samples, dtype=float)
-    x_grid = np.asarray(x_grid, dtype=float)
-    n = len(samples)
-    if pilot_h is None:
-        pilot_h = 1.06 * robust_scale_for_bandwidth(samples) * n ** (-1.0 / 5.0)
-    if not np.isfinite(pilot_h) or pilot_h <= 0:
-        return silverman_rule_of_thumb_bandwidth(samples)
-
-    z = (x_grid[None, :] - samples[:, None]) / pilot_h
-    kernel = np.exp(-0.5 * z**2) / np.sqrt(2.0 * np.pi)
-    second_derivative = ((z**2 - 1.0) * kernel).mean(axis=0) / pilot_h**3
-    roughness = float(trapezoidal_integral(second_derivative**2, x_grid, axis=0))
-    if not np.isfinite(roughness) or roughness <= 0:
-        return silverman_rule_of_thumb_bandwidth(samples)
-
-    kernel_roughness = 1.0 / (2.0 * np.sqrt(np.pi))
-    return float((kernel_roughness / (n * roughness)) ** (1.0 / 5.0))
 
 
 #############################################

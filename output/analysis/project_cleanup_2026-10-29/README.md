@@ -1,12 +1,11 @@
 # Project file cleanup — 29 October 2026
 
-Removed **25 files (272,231 bytes; 265.9 KiB)** and **59 empty generated folders**. Relocated **5 report sources and verification files** from temporary storage. The [manifest](removal_manifest.json) records each path, reason, size and checksum.
+The filtered [manifest](removal_manifest.json) covers **24 removed files (245,452 bytes; 239.7 KiB)** and **59 empty generated folders**. Relocated **5 report sources and verification files** from temporary storage. Entries for subsequently removed assets are omitted from this historical record.
 
 ## Removed files
 
 - Three OS folder metadata files.
 - Twenty Python/Numba cache files.
-- The duplicate classical illustration PDF left in `outputs/pdfs/kde_numerics/` after separating the notebook. Its byte-identical PDF remains in the classical notebook's export folder.
 - The superseded mean-and-maximum Fourier-error preview. The current maximum-error PDF and original numerical results remain available.
 
 ## Relocated sources
@@ -24,7 +23,7 @@ The harmonics checker now reads the retained report PDF instead of an absent tem
 ## Verification
 
 - All **27 protected thesis files** retain their original hashes.
-- All **26 scanned thesis graphic references** resolve, and their assets retain their original hashes.
+- At the time of this cleanup, all **25 thesis graphic references retained in the manifest** resolved, and their assets matched the recorded hashes.
 - All **691 existing files outside the removal/relocation list** retain their original paths and hashes.
 - Parsed **101 Python files**, **136 code cells across 15 notebooks**, and **244 JSON files** outside the protected thesis directory.
 - The relocated [harmonics checker](../ar_support_harmonics/check_formulas.py) passes its existing assertions and ten-page PDF content checks using the bundled workspace interpreter. The Anaconda interpreter lacks its `pypdf` dependency; no packages were installed.

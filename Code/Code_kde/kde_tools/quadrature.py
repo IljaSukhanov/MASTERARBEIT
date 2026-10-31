@@ -1,4 +1,4 @@
-"""Spatial trapezoidal integration used by classical bandwidth controls."""
+"""Shared trapezoidal integration for KDE numerical checks."""
 
 from __future__ import annotations
 

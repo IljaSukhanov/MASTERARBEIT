@@ -3,7 +3,7 @@
   "image_reference_repair": {
     "date": "2026-10-29",
     "all_image_references_resolve": true,
-    "reference_count": 30,
+    "reference_count": 29,
     "restored_kde_figures": [
       {
         "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
@@ -146,14 +146,6 @@
         "target": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf",
         "resolved": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf",
         "sha256": "7d08bc0618157db9dcbd8927e6b24eab9310ddf57cb1dcb5c2ad270810f08b02",
-        "pdf_pages": 1
-      },
-      {
-        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
-        "line": 119,
-        "target": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
-        "resolved": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
-        "sha256": "7437a121f36ce817700c23ce99bbda17705a50d6dce52a842d54f2779362b2c5",
         "pdf_pages": 1
       },
       {
@@ -681,7 +673,7 @@
     },
     "plot_adjustments": "Restore the existing caption's upper-endpoint-frequency insets; place the legend below the panels to prevent title overlap; size the plots for the existing thesis columns so labels remain legible. Numerical settings and raw inputs are unchanged."
   },
-  "cleanup_snapshot_note": "The remaining keys record the earlier cleanup; their counts and validation precede the image-reference repair above.",
+  "cleanup_snapshot_note": "The remaining keys record the earlier cleanup; counts and validation are historical, and entries for subsequently removed files are omitted.",
   "scope": {
     "chapter": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
     "selection": "Currently included KDE material and explicit chapter TODOs. No additional planned experiments were identified.",
@@ -689,7 +681,7 @@
     "archive_created": false
   },
   "notebooks": {
-    "notebooks/kde_numerics.ipynb": "Classical bandwidth illustration, repeated-sample Fourier error figure, and runtime table.",
+    "notebooks/kde_numerics.ipynb": "Repeated-sample Fourier error figure and runtime table.",
     "notebooks/spectral_scale_selection_kde.ipynb": "Presented Perron profiles, grid fineness, lambda path, bandwidth histograms, and sample-size comparisons.",
     "notebooks/experiment_1_joint_N_lambda_limit.ipynb": "Joint-limit figure and explicit TODOs for r, repeated sampling, mesh checks, and high-exponent regimes.",
     "notebooks/continuous_ise_qhat_distributions_vs_n.ipynb": "Presented n=100,1000,1500,2000 ISE/Q panels and the local-minimum discussion control.",
@@ -727,7 +719,6 @@
       "Code/Code_kde/xx_notebooks_lambda_sensitivity/spectral_lambda_switch_distribution.ipynb",
       "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_repeated_samples.ipynb",
       "Code/Code_kde/xx_notebooks_overview/g_rs_runtime_comparison.ipynb",
-      "Code/Code_kde/xx_notebooks_overview/classical_bandwidth_kde_illustration.ipynb",
       "Code/Code_kde/xx_notebooks_overview/spectral_scale_selection_kde.ipynb",
       "Code/Code_kde/xx_notebooks_overview/README.md",
       "Code/Code_kde/xx_notebooks_overview/g_rs_k_validation.ipynb",
@@ -1184,13 +1175,6 @@
       },
       {
         "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
-        "line": 119,
-        "target": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
-        "resolved": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
-        "sha256": "7437a121f36ce817700c23ce99bbda17705a50d6dce52a842d54f2779362b2c5"
-      },
-      {
-        "tex": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
         "line": 368,
         "target": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
         "resolved": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
@@ -1331,11 +1315,6 @@
       "Code/Code_kde/inputs/qhat_reference_sample.csv"
     ],
     "unchanged_saved_numerical_data_files": [
-      "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/settings.json",
-      "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/density_curves.csv",
-      "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/sample.csv",
-      "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/bandwidths.csv",
-      "Code/Code_kde/outputs/data/classical_bandwidth_kde_illustration/cv_scores.csv",
       "Code/Code_kde/outputs/data/figure_3_5_bandwidth_distribution_n1000/settings.json",
       "Code/Code_kde/outputs/data/figure_3_5_bandwidth_distribution_n1000/binning_5_validation.json",
       "Code/Code_kde/outputs/data/figure_3_5_bandwidth_distribution_n1000/validation.json",

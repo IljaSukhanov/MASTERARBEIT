@@ -142,13 +142,6 @@
       "sha256": "95fac2ae12db6f7830a57d4aeef14ce2847d75cef8ddf57daafde47aba809224"
     },
     {
-      "path": "Code/Code_kde/outputs/pdfs/kde_numerics/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
-      "reason": "Duplicate left by separating the classical illustration from kde_numerics",
-      "identical_retained_copy": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
-      "bytes": 26779,
-      "sha256": "c2810996d2d934de7cd00cb434508227dc825e61da69d95d7b1a84d9db17fabe"
-    },
-    {
       "path": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_mean_and_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geom.pdf",
       "reason": "Superseded mean-and-maximum preview; current notebook exports maximum error. Original per-sample numerical results remain available.",
       "replacement": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
@@ -156,8 +149,8 @@
       "sha256": "9d07cdd594b928595d55795c7181c3ea43327747ce7662e61e28462b5461ff90"
     }
   ],
-  "removed_file_count": 25,
-  "removed_bytes": 272231,
+  "removed_file_count": 24,
+  "removed_bytes": 245452,
   "relocated_files": [
     {
       "from": "tmp/pdfs/build_minimum_width_note.py",
@@ -363,11 +356,6 @@
       },
       {
         "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
-        "target": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf",
-        "resolved": "Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf"
-      },
-      {
-        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
         "target": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
         "resolved": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf"
       },
@@ -451,5 +439,6 @@
     "Automatic PDFs and delivery PDFs that remain in use were kept even where byte-identical.",
     "Research reports, recovery evidence, raw inputs, active notebooks, and shared mathematical implementations were retained.",
     "Historical documentation links to previously removed assets were inventoried but not rewritten as current scientific evidence."
-  ]
+  ],
+  "snapshot_note": "Historical cleanup record; entries for subsequently removed files are omitted."
 }

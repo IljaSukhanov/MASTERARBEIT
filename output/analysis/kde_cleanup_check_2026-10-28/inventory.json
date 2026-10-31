@@ -6,7 +6,7 @@
     "package": 22,
     "analysis_script": 30,
     "test_or_validation": 13,
-    "notebook": 20
+    "notebook": 19
   },
   "files": [
     {
@@ -18,7 +18,7 @@
       "decision": "Keep",
       "reason": "Public API and package wiring.",
       "imports": [
-        "from .bandwidths import bandwidth_grid_linear_in_psi_beta, direct_plugin_bandwidth, gaussian_mise_oracle_bandwidth, least_squares_cv_bandwidth_index, nearest_bandwidth_grid_index, robust_scale_for_bandwidth, silverman_rule_of_thumb_bandwidth",
+        "from .bandwidths import bandwidth_grid_linear_in_psi_beta, gaussian_mise_oracle_bandwidth, nearest_bandwidth_grid_index",
         "from .density import exact_gaussian_kde_l2_gram, exact_oracle_ise_values, gaussian_kde_values",
         "from .energy_minimization import EnergySearchConfig, energy_search_settings, minimize_bandwidth_energy",
         "from .gaussian_mixtures import exact_mixture_ise_values, exact_mixture_mise_values, gaussian_density_with_variance, gaussian_mixture_mean_and_variance, mixture_density, sample_gaussian_mixture",
@@ -1946,38 +1946,6 @@
       ]
     },
     {
-      "path": "Code/Code_kde/xx_notebooks_overview/classical_bandwidth_kde_illustration.ipynb",
-      "bytes": 231621,
-      "sha256": "b1c4b1523fd09d73e91a48aa4b0134e539d653688cefda237859de3afa6ce232",
-      "kind": "notebook",
-      "code_lines": 172,
-      "code_cells": 4,
-      "saved_output_blocks": 4,
-      "title": "# Classical bandwidth choices on one Gaussian sample",
-      "decision": "Keep; optional output clearing",
-      "reason": "Thesis illustration; retain source and exported figure.",
-      "first_code_cell": 1,
-      "automatic_pdf_export_in_first_code_cell": true,
-      "notebook_commands": [],
-      "repeated_top_level_functions": [],
-      "imports": [
-        "from kde_tools.bandwidths import direct_plugin_bandwidth, gaussian_mise_oracle_bandwidth, least_squares_cv_bandwidth_index, silverman_rule_of_thumb_bandwidth",
-        "from kde_tools.density import gaussian_kde_values",
-        "from kde_tools.gaussian_mixtures import gaussian_density_with_variance",
-        "from kde_tools.pdf_export import enable_automatic_pdf_saving",
-        "from pathlib import Path",
-        "import csv",
-        "import json",
-        "import matplotlib.pyplot as plt",
-        "import numpy as np",
-        "import sys"
-      ],
-      "python_path_literals": [
-        "(4 / (3*n))**(1/5); spectral_scale_selection_kde.ipynb",
-        "pdf_export.py"
-      ]
-    },
-    {
       "path": "Code/Code_kde/xx_notebooks_overview/g_rs_approximation_vs_omega.ipynb",
       "bytes": 20415,
       "sha256": "261319541cf1374cc037b17bdba4da95788a4146aecc85aafcc5565ecbaad222",
@@ -2236,5 +2204,6 @@
     }
   ],
   "identical_complete_notebook_code": [],
-  "identical_python_files": []
+  "identical_python_files": [],
+  "snapshot_note": "Historical inspection record; subsequently removed artifacts and exports are omitted."
 }
