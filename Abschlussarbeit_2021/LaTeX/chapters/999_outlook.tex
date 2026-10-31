@@ -2,7 +2,7 @@
 
 During the research many interesting questions arose that could not be explored further due to limited resources. We use this Outlook chapter to present those ideas that can be approached in future research.
 
-\textbf{Geometric Estimation of Autoregressive processes}
+\section{Geometric Estimation of Autoregressive processes}
 
 \todo[inline]{31.10: Write outlook for AR part!}
 
@@ -20,50 +20,38 @@ In practice one would estimate the integral by Monte Carlo simulation. The estim
 \end{align*}
 where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
 
-\todo[inline]{empirical version of intrinsic volumes? And also convergence to theoretical object}
-
-\todo[inline]{spherical harmonics: $Q_0$ (mean width), $Q_2$, $Q_4$, ...}
-
-\todo[inline]{numerical analogues $\hat{Q}_0$, $\hat{Q}_2$, $\hat{Q}_4$}
+\textcolor{red}{Going one step further, we might investigate intrinsic volumes of the support zonoid (the mean width is proportional to the first intrinsic volume), their estimation by some empirical analogs, and convergence to the theoretical object.}
 
 \textbf{General innovation distributions}
 
-A vital question is how to generalize the minimum width approach to a broader class of innovation distributions. The main difficulty to overcome is that $\operatorname{supp}(Y_t^{(k)})$ is generally not compact but usually unbounded. Thus, the minimum width is infinite.
+Another open question is how to generalize the minimum width approach to a broader class of innovation distributions. The main difficulty to overcome is that $\operatorname{supp}(Y_t^{(k)})$ is generally not compact but usually unbounded. Thus, the minimum width is infinite.
 
-\todo[inline]{Probability integral transform (PIT)}
-
-\todo[inline]{linear filter, Wold representation}
-
-The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
+One idea can be to estimate a highest density region or, more generally, a minimum volume set from the sliding-window point cloud. The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
 \begin{align*}
-    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}.
+    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge1-\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}.
 \end{align*}
+It is a measurable set that contains $(1-\alpha)\%$ of the probability mass but has smallest volume among all those sets.
+
+
 The \textit{highest density region} $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
-\begin{align*}
-    C_{\alpha}&=C_{h_{\alpha}}\\
-    C_h&=\{x\in\mathbb{R}^{d}:f(x)\ge h\}\\
-    h_{\alpha}&=\sup\{h\in\mathbb{R}:\mathbb{P}(Y\in C_h)\ge 1-\alpha\}
-\end{align*}
+\begin{align}\label{eq:def_hdr}
+    C_{\alpha}:=\{x\in\mathbb{R}^d:f(x)\ge h_{\alpha}\},
+\end{align}
+where $h_{\alpha}:=\sup\{h\in\mathbb{R}:\mathbb{P}(f(Y)\ge h)\ge 1-\alpha\}$.
 
-\todo[inline]{connect these concepts with each other. For many distributions they are the same. Using minimum volume sets would remove dependence on having a smooth density}
+Under the condition that $\{x\in\mathbb{R}^d:f(x)=c\}$ for all $c\in\mathbb{R}$ (fulfilled by a large class of densities, for example strictly log concave distributions), the highest density region $E_{\alpha}$ and the minimum volume set $C_{\alpha}$ coincide up to a null set. 
 
-\todo[inline]{estimate HDR directly from the points $Y_t^{(k)}$; non parametric estimation, empirical HDR}
+A non-parametric estimation of the highest density region would involve kernel density estimation of the density $f$ and plugging the estimate $\hat{f}$ into Equation~\eqref{eq:def_hdr} to obtain $\hat{C}_{\alpha}:=\{x\in\mathbb{R}^d:\hat{f}(x)\ge h_{\alpha}\}$. This is done, for example, in~[].
 
-\todo[inline]{Maybe find a class of distributions where the highest density region (or minimum volume set) has a nice geometric shape and compute the intrinsic volumes of that shape}
-
-\todo[inline]{log concave distributed innovations give convex highest density regions; VERY INTERESTING}
-
-A probability density is log concave if
+The idea is now to assume that the distribution of a sliding-window point $Y_t^{(k)}$ comes from a class of distributions whose highest density region has a \enquote{nice} geometric shape. For example, if the innovations of the AR process have a log-concave distribution, then the HDR of the sliding window point $Y_t^{(k)}$ is convex. A probability density is log-concave if
 \begin{align*}
     f(x)=\frac{e^{-V(x)}}{\int e^{-V(u)}\,du}
 \end{align*}
-for some convex function $V$.
+for some convex function $V$. Most prominently, the Gaussian density is log-concave.
 
-\textbf{Normally distributed innovations}
-
-Next, we turn our attention to Gaussian innovations, which is often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation, we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
+In fact, Gaussian innovations are often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation, we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
 \begin{align*}
-    \Gamma_k=\sigma^2\sum_{j=0}^{\infty}g_j^{(k)}(g_j^{(k)})^{T}
+    \Gamma_k=\sigma^2\sum_{j=0}^{\infty}g_j^{(k)}(g_j^{(k)})^{T}.
 \end{align*}
 The covariance matrix plays an important role in describing the geometry of the point cloud $\mathcal{P}_k$. Let $E_c=\{y\in\mathbb{R}^k:y^{T}\Gamma_k^{-1}y\le c\}$ be the ellipsoid of size $c>0$. Then for all $\alpha\in(0,1)$ we have
 \begin{align*}
@@ -75,15 +63,9 @@ That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, su
 
 \textbf{Real-world Data}
 
-\todo[inline]{Talk about applications, argue where AR models with bounded innovations might be used}
+There are some applications in the real world where it is reasonable to assume that the innovations have a bounded distribution. For example, in wind or solar power generation~[], traffic occupancy~[] and industrial control~[].
 
-\begin{itemize}
-    \item Wind or solar power generation
-    \item traffic occupancy
-    \item industrial control, system identification
-\end{itemize}
-
-\textbf{Spectral Scale Selection for Kernel Density Estimation}
+\section{Spectral Scale Selection for Kernel Density Estimation}
 
 Regarding the spectral scale methodology that we invented in Chapter~\ref{chap:kde}, the natural next step is to first test the other symmetric divergences: Hellinger, Jensen-Shannon, and Total Variation.
 
@@ -177,6 +159,15 @@ where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is,
 
 This construction gives rise to the study of our methodology for generally asymmetric divergences, most prominently the Kullback-Leibler divergence: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$).
 
+\textbf{Data coming from the Gaussian mixture model}
+
+In cases where the data comes from a Gaussian mixture model, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
+
+\textbf{Bandwidth grid that scales with sample size}
+
+\todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
+
+
 \textbf{Perron vector stability analysis}
 
 \todo[inline]{Mention Davis Kahan theorem and spectral gap}
@@ -185,11 +176,3 @@ This construction gives rise to the study of our methodology for generally asymm
 \todo[inline]{Davis-Kahan: Stability $\leftrightarrow$ informativeness}
 
 \todo[inline]{Power method (compute Perron vector through Power iteration)}
-
-\textbf{Data coming from the Gaussian mixture model}
-
-In cases where the data comes from a Gaussian mixture model, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
-
-\textbf{Bandwidth grid that scales with sample size}
-
-\todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
