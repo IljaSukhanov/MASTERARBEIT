@@ -3,6 +3,7 @@
 Bounded Brent is applied to Q_0 in h and log h. Spectral selection uses
 geometric grids with N=100,200,400 and lambda=N**1.9. Each measured call
 starts from the raw sample and rebuilds its sample-specific quantities.
+Use --log-brent-only to omit Brent in h and save a separate comparison.
 """
 
 from __future__ import annotations
@@ -47,7 +48,8 @@ NAME = "brent_spectral_m100_comparison"
 M, SAMPLE_SIZE, ALPHA = 100, 200, 1.9
 GRID_SIZES = (100, 200, 400)
 METHODS = ("brent_h", "brent_log_h", "spectral_N100", "spectral_N200", "spectral_N400")
-LABELS = ("Brent in h", "Brent in log h", "Spectral N=100", "Spectral N=200", "Spectral N=400")
+LABELS = dict(zip(METHODS, ("Brent in h", "Brent in log h", "Spectral N=100",
+                           "Spectral N=200", "Spectral N=400")))
 
 
 def spectral_selection(sample, n_grid):
@@ -83,11 +85,11 @@ def reference_for_sample(index, sample):
     return reference
 
 
-def process_sample(index, sample):
+def process_sample(index, sample, methods=METHODS):
     reference = reference_for_sample(index, sample)
     target = reference["global_minimum"]
     measured = {}
-    order = np.random.default_rng(np.random.SeedSequence([20261030, 100, index])).permutation(METHODS)
+    order = np.random.default_rng(np.random.SeedSequence([20261030, 100, index])).permutation(methods)
     for method in order:
         started = perf_counter()
         result = execute_method(method, sample)
@@ -97,7 +99,7 @@ def process_sample(index, sample):
     objective = GaussianQhatObjective(sample)
     rows, checks = [], []
     brent_log_h = measured["brent_log_h"][0]["h"]
-    for method in METHODS:
+    for method in methods:
         result, seconds = measured[method]
         h = result["h"]
         energy = float(objective.log_energy(np.log(h))[0])
@@ -151,15 +153,15 @@ def write_csv(path, rows):
         writer.writerows(rows)
 
 
-def aggregate(records):
+def aggregate(records, methods=METHODS):
     rows = [row for record in records for row in record["rows"]]
     summaries = []
-    for method, label in zip(METHODS, LABELS):
+    for method in methods:
         subset = [r for r in rows if r["method"] == method]
         times = np.array([r["time_ms"] for r in subset])
         bandwidths = np.array([r["selected_h"] for r in subset])
         summaries.append(dict(
-            method=method, label=label, samples=len(subset),
+            method=method, label=LABELS[method], samples=len(subset),
             mean_time_ms=float(times.mean()),
             standard_deviation_time_ms=float(times.std(ddof=1)),
             standard_error_mean_time_ms=float(times.std(ddof=1)/np.sqrt(len(times))),
@@ -181,9 +183,10 @@ def aggregate(records):
 
 
 def plot_results(summary, output):
-    enable_automatic_pdf_saving(NAME)
+    enable_automatic_pdf_saving(output.name)
     rows, aggregates = summary["results"], summary["aggregates"]
-    colors = ("#c79225", "#8b5ca8", "#245b90", "#2a9d8f", "#c34c5e")
+    methods = summary["configuration"]["methods"]
+    colors = dict(zip(METHODS, ("#c79225", "#8b5ca8", "#245b90", "#2a9d8f", "#c34c5e")))
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10,
                          "axes.titlesize": 12, "axes.labelsize": 11,
                          "axes.spines.top": False, "axes.spines.right": False,
@@ -192,31 +195,37 @@ def plot_results(summary, output):
                          "ytick.color": "#253347", "pdf.fonttype": 42})
     fig, (timing, selections) = plt.subplots(1, 2, figsize=(13, 6.2))
     fig.subplots_adjust(left=0.075, right=0.98, bottom=0.22, top=0.76, wspace=0.27)
-    fig.suptitle("Bounded Brent versus spectral selection", x=0.075, y=0.96,
+    title = ("Brent in log h versus spectral selection" if "brent_h" not in methods
+             else "Bounded Brent versus spectral selection")
+    fig.suptitle(title, x=0.075, y=0.96,
                  ha="left", fontsize=20)
     fig.text(0.075, 0.86,
              r"100 paired Gaussian samples, $n=200$  |  $h\in[0.01,2]$  |  geometric spectral grids, $\lambda_N=N^{1.9}$",
              fontsize=10.5, color="#59677a")
     means = [r["mean_time_ms"] for r in aggregates]
     errors = [r["standard_error_mean_time_ms"] for r in aggregates]
-    bars = timing.bar(np.arange(5), means, color=colors, width=0.65,
+    positions = np.arange(len(aggregates))
+    bars = timing.bar(positions, means, color=[colors[r["method"]] for r in aggregates], width=0.65,
                       yerr=errors, capsize=3, error_kw={"elinewidth": 1, "ecolor": "#253347"})
-    timing.set_xticks(np.arange(5), ("Brent\nh", "Brent\nlog h", "Spectral\nN=100",
-                                      "Spectral\nN=200", "Spectral\nN=400"))
+    tick_labels = {"brent_h": "Brent\nh", "brent_log_h": "Brent\nlog h"}
+    timing.set_xticks(positions, [tick_labels.get(r["method"], r["label"].replace(" N=", "\nN="))
+                                 for r in aggregates])
     timing.set(title="Mean computation time", ylabel="Mean wall time per sample (ms)",
                ylim=(0, 1.22*max(means)))
     timing.bar_label(bars, labels=[f"{v:.2f}" for v in means], padding=5, fontsize=10)
     by_method = {method: sorted([r for r in rows if r["method"] == method],
-                                key=lambda r: r["sample_id"]) for method in METHODS}
+                                key=lambda r: r["sample_id"]) for method in methods}
     x = np.array([r["selected_h"] for r in by_method["brent_log_h"]])
     all_h = np.array([r["selected_h"] for r in rows])
     lo, hi = max(0., float(all_h.min())-.025), float(all_h.max())+.025
     selections.plot([lo, hi], [lo, hi], ls="--", lw=1.1, color="#59677a", label="Same bandwidth")
-    selections.scatter(x, [r["selected_h"] for r in by_method["brent_h"]],
-                       marker="x", color=colors[0], s=24, alpha=.6, label="Brent in h")
-    for method, color, marker in zip(METHODS[2:], colors[2:], ("o", "s", "^")):
+    if "brent_h" in methods:
+        selections.scatter(x, [r["selected_h"] for r in by_method["brent_h"]],
+                           marker="x", color=colors["brent_h"], s=24, alpha=.6, label="Brent in h")
+    spectral_methods = [method for method in methods if method.startswith("spectral_N")]
+    for method, marker in zip(spectral_methods, ("o", "s", "^")):
         selections.scatter(x, [r["selected_h"] for r in by_method[method]],
-                           color=color, marker=marker, s=23, alpha=.65,
+                           color=colors[method], marker=marker, s=23, alpha=.65,
                            label=method.replace("spectral_N", "Spectral N="))
     selections.set(title="Bandwidths selected on the same samples",
                    xlabel="Bandwidth selected by Brent in log h",
@@ -234,7 +243,7 @@ def plot_results(summary, output):
     fig.text(0.075, 0.026,
              "Imports, sample generation, reference searches, validation, plotting and saving are outside the timed calls.",
              color="#59677a", fontsize=9)
-    fig.savefig(output / f"{NAME}.png", dpi=180, facecolor="white")
+    fig.savefig(output / f"{output.name}.png", dpi=180, facecolor="white")
     plt.show()
     plt.close(fig)
 
@@ -242,20 +251,25 @@ def plot_results(summary, output):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plot-only", action="store_true")
+    parser.add_argument("--log-brent-only", action="store_true",
+                        help="Compare only Brent in log h with the spectral methods in a separate output directory.")
     args = parser.parse_args()
-    output = KDE_ROOT / "outputs" / NAME
+    methods = tuple(method for method in METHODS if method != "brent_h") if args.log_brent_only else METHODS
+    output_name = "brent_log_spectral_m100_comparison" if args.log_brent_only else NAME
+    output = KDE_ROOT / "outputs" / output_name
     output.mkdir(parents=True, exist_ok=True)
     if args.plot_only:
         plot_results(json.loads((output / "summary.json").read_text()), output)
         return
     samples = paired_gaussian_sample_bank(repetitions=M, maximum_n=SAMPLE_SIZE)
     configuration = dict(
-        version="brent_spectral_mean_m100_v1", samples=M, sample_size=SAMPLE_SIZE,
+        version="brent_log_spectral_mean_m100_v1" if args.log_brent_only else "brent_spectral_mean_m100_v1",
+        samples=M, sample_size=SAMPLE_SIZE,
         distribution="N(0,1)", seed=sampling_inputs()["paired_sample_bank"]["seed"],
         sample_source="First 100 rows of the existing paired Gaussian sample bank, first 200 observations per row",
         sample_sha256=hashlib.sha256(samples.tobytes()).hexdigest(), h_interval=[.01, 2.],
         N_values=list(GRID_SIZES), alpha=ALPHA, lambda_rule="N**1.9", geometric_grid_r=0.,
-        methods=list(METHODS), brent_xatol=2e-12, brent_maxiter=1000,
+        methods=list(methods), brent_xatol=2e-12, brent_maxiter=1000,
         brent_objective="Shared analytic Gaussian Q_0 objective; pair distances prepared inside each call; endpoints compared",
         frequency_cutoff=DEFAULT_FREQUENCY_CUTOFF, frequency_intervals=DEFAULT_FREQUENCY_INTERVALS,
         spectral_solver=PERRON_SOLVER_VERSION, numerical_library_threads=1,
@@ -286,7 +300,7 @@ def main():
         configuration["active_threadpools"] = [
             {key:info.get(key) for key in ("internal_api", "prefix", "num_threads", "version", "architecture")}
             for info in threadpool_info()]
-        for method in METHODS:
+        for method in methods:
             _ = execute_method(method, samples[0])
         for index, sample in enumerate(samples):
             path = checkpoints / f"sample_{index:03d}.json"
@@ -295,15 +309,16 @@ def main():
                 if record["sample_sha256"] != hashlib.sha256(sample.tobytes()).hexdigest():
                     raise ValueError("Checkpoint sample mismatch.")
             else:
-                record = process_sample(index, sample)
+                record = process_sample(index, sample, methods)
                 temporary = path.with_suffix(".tmp")
                 temporary.write_text(json.dumps(record, indent=2)+"\n")
                 temporary.replace(path)
             records.append(record)
             if (index+1) % 10 == 0:
                 print(f"Completed {index+1}/{M} paired samples ({perf_counter()-started:.1f} s)", flush=True)
-    rows, aggregates = aggregate(records)
-    if len(rows) != M*len(METHODS) or len({(r["sample_id"], r["method"]) for r in rows}) != M*len(METHODS):
+    rows, aggregates = aggregate(records, methods)
+    expected_keys = {(index, method) for index in range(M) for method in methods}
+    if len(rows) != len(expected_keys) or {(r["sample_id"], r["method"]) for r in rows} != expected_keys:
         raise ArithmeticError("Incomplete or duplicate results.")
     validation = dict(
         paired_samples=M, timed_calls_per_method=M,
