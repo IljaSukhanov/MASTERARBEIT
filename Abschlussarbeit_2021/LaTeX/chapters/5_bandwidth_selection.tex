@@ -507,8 +507,6 @@ Taking the limit $\tau\to+\infty$ yields $S=11^{T}$, which corresponds to maxima
 
 Yet another advantage of the exponential transformation is the obvious fact that the entries of the resulting similarity matrix $S$ are all positive and therefore by the Perron-Frobenius theorem, $S$ has a real valued eigenvalue $\lambda_{\max}$ which is strictly larger than the absolute value of all other eigenvalues. The corresponding eigenvector $v_{\max}$ (called the Perron vector) has all positive entries and is unique up to scaling.
 
-\todo[inline]{31.10: covariance interpretation ($e^{-x/\tau}$) corresponds to Ornstein-Uhlenbeck}
-
 \subsection{Bandwidth grid}
 
 The choice of the correct bandwidth grid is essential. Set
@@ -666,71 +664,6 @@ We see a large discrepancy between the distributions of the spectrally chosen ba
     \label{fig:distribution_of_chosen_bandwidths}
 \end{figure}
 
-\subsection{Increasing sample size experiments}
-
-\todo[inline]{Code: Have one notebook for these kinds of experiments (Increasing sample size experiments)}
-
-In this section, we want to see what happens when the sample size increases, that is, $n\to\infty$.
-
-It is interesting to ask what happens to this distribution for increased sample size $n$. The answer is shown in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. 
-
-\begin{figure}[htbp]
-    \centering
-
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf}
-        \caption{$n=300$}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf}
-        \caption{$n=400$}
-    \end{subfigure}
-
-    \vspace{0.5em}
-
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf}
-        \caption{$n=500$}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf}
-        \caption{$n=1000$}
-    \end{subfigure}
-
-    \caption{Distribution of chosen bandwidths changes for increasing sample size $n$. A clear transition between two regimes is visible.}
-    \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
-    \todo[inline]{Can the two peaks be described?}
-    \todo[inline]{$n_{\text{critical}}$ (finite sample mode switching), gap between two local Perron maxima??}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}[t]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]
-        {output/pdf/spectral_bandwidths_across_n_lambda1_N1000.pdf}
-        \caption{$\lambda=1$}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]
-        {output/pdf/localized_spectral_bandwidths_across_n_N1000.pdf}
-        \caption{$\lambda_N=N^{3/2}$}
-    \end{subfigure}
-
-    \caption{Comparison of spectrally selected bandwidth distributions
-    for different sample sizes, with $N=1000$ and $M=1000$ repetitions.
-    Note the different vertical scales.}
-    \label{fig:spectral-lambda-comparison}
-\end{figure}
-
 \section{Explanation of the Results}\label{sec:res_2}
 
 \subsection{Convergence to closest adjacent pair}
@@ -838,8 +771,6 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
     Assume that the energy functional $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$ and let $(k_N)$ be a sequence of indices defined by $k_N:=\min\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then the spectrally chosen bandwidth $h_{k_N}$ converges to the unique minimizer $h^{\ast}$ of $\hat{Q}_r$, that is, $h_{k_N}\to h^{\ast}$ as $N\to\infty$.
 \end{Prop}
 
-\textcolor{red}{The spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.}
-
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
@@ -892,8 +823,6 @@ Using standard root finding methods (like Brent's method), we can look for stati
 
 The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
 
-\todo[inline]{31.10: add short comparison between numerical optimization of $\hat{Q}_r$ and Perron vector computation in terms of runtime efficiency}
-
 Having established the connection between Energy functional minimization and Spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
 
 A papular minimization algorithm for univariate functions on a closed interval is Brent's method. We compare this minimization approach with our spectral selector in terms of time and which bandwidth is chosen. Our spectral method uses different values for $N$ and $\lambda_N=N^{1.9}$. We use samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots ,100$ and $n=200$ from $N(0,1)$.
@@ -921,18 +850,11 @@ A papular minimization algorithm for univariate functions on a closed interval i
     \label{tab:brent_spectral_timing}
 \end{table}
 
-% Comparison of bounded Brent minimization in $\log h$
-%         and spectral bandwidth selection using 100 independent
-%         samples of size $n=200$ from $\mathcal{N}(0,1)$.
-%         Both methods use $h\in[0.01,2]$; the spectral selector
-%         uses geometric candidate grids and $\lambda_N=N^{1.9}$.
-%         Times are arithmetic means of 100 fresh computations
-%         per method, using one numerical thread, with one
-%         standard error (SE).
-%         Spectral times include matrix construction and the
-%         Perron eigensolve.
-%         Bandwidth errors are measured relative to each sample's
-%         numerical reference minimizer of $\widehat{Q}_0$.
+As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
+
+These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
+
+In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible. 
 
 \textbf{Expected energy functional}
 

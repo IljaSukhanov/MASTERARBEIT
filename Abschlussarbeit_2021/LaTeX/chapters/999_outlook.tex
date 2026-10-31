@@ -163,6 +163,69 @@ This construction gives rise to the study of our methodology for generally asymm
 
 In cases where the data comes from a Gaussian mixture model, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
 
+\textbf{Increasing sample size experiments}
+
+\todo[inline]{Code: Have one notebook for these kinds of experiments (Increasing sample size experiments)}
+
+It is interesting to ask what happens to this distribution of the spectrally chosen bandwidths for increasing sample size $n$. The answer is shown in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. 
+
+For $\lambda=1$ (orange) we observe that the distribution of the spectrally selected bandwidths shifts from a peak around $h\approx$ to a second peak around $h\approx$ when the sample size $n$ increases. For intermediate values of $n$ the distribution of spectrally chosen bandwidths is bimodal. This raises two questions: Can these two peaks be analytically described? At what $n$ does this \enquote{mode switch} happen and how does this $n$ depend on $\lambda$? Figure~\ref{fig:spectral-lambda-comparison} shows a comparison between the distributions of spectrally chosen bandwidths for increasing sample size $n$ where $\lambda=1$ in the left image and $\lambda=1000^{3/2}$ in the right image. We see that for small $\lambda$ a mode switch occurs while for larger $\lambda$ the distribution only shifts slightly.
+
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf}
+        \caption{$n=300$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf}
+        \caption{$n=400$}
+    \end{subfigure}
+
+    \vspace{0.5em}
+
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf}
+        \caption{$n=500$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf}
+        \caption{$n=1000$}
+    \end{subfigure}
+
+    \caption{Distribution of chosen bandwidths changes for increasing sample size $n$. A clear transition between two regimes is visible.}
+    \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/spectral_bandwidths_across_n_lambda1_N1000.pdf}
+        \caption{$\lambda=1$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {output/pdf/localized_spectral_bandwidths_across_n_N1000.pdf}
+        \caption{$\lambda_N=N^{3/2}$}
+    \end{subfigure}
+
+    \caption{Comparison of spectrally selected bandwidth distributions
+    for different sample sizes, with $N=1000$ and $M=1000$ repetitions.
+    Note the different vertical scales.}
+    \label{fig:spectral-lambda-comparison}
+\end{figure}
+
 \textbf{Bandwidth grid that scales with sample size}
 
 \todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
