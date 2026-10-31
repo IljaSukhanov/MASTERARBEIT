@@ -69,24 +69,25 @@ There are some applications in the real world where it is reasonable to assume t
 
 Regarding the spectral scale methodology that we invented in Chapter~\ref{chap:kde}, the natural next step is to first test the other symmetric divergences: Hellinger, Jensen-Shannon, and Total Variation.
 
-\textbf{Bounded Divergences}
+These three divergences also have the special property that they are bounded. From~\cite[Equation~(137)]{sason_f-divergence_2016} we have the uniform bound $D_f(p,q)\le C_f:=f(0)+f^{\ast}(0)$ for all $p,q\in\mathcal{P}$. Here, $f^{\ast}(0)=\lim_{t\downarrow0}tf(t^{-1})$. It follows that a $f$-divergence is bounded if and only if $f(0)+f^{\ast}(0)<\infty$. In case $D_f$ is symmetric, this is equivalent to $2f(0)<\infty$ by applying Proposition~\ref{prop:f_divergence_symmetric}. For bounded divergences, we can use a more straightforward similarity transformation by defining $S^{(N)}_{ij}:=C_f-D_f(\hat{f}_{h_i},\hat{f}_{h_j})$ and optionally normalizing $\Tilde{S}^{(N)}_{ij}:=C_f^{-1}S^{(N)}_{ij}=1-D_f(\hat{f}_{h_i},\hat{f}_{h_j})/C_f$.
 
-These three divergence also have the special property that they are bounded. From~[\todo{cite!}] we have the uniform bound $D_f(p,q)\le C_f:=f(0)+f^{\ast}(0)$ over all $p,q\in\mathcal{P}$. Here, $f^{\ast}(0)=\lim_{t\downarrow0}tf(t^{-1})$. It follows that a $f$-divergence is bounded if and only if $f(0)+f^{\ast}(0)<\infty$. In case $f$ is symmetric, this is equivalent to $2f(0)<\infty$. For bounded divergences, we can use a more straightforward transformation approach by setting $\Sigma^{(N)}_{ij}=C_f-D_f(\hat{f}_{h_i},\hat{f}_{h_j})$ and normalizing $\Tilde{\Sigma}^{(N)}_{ij}=C_f^{-1}\Sigma^{(N)}_{ij}=1-D_f(\hat{f}_{h_i},\hat{f}_{h_j})/C_f$. For example, the total variation divergence can be written as
+For example, the total variation divergence can be written as
 \begin{align*}
-    d_{\text{TV}}(p,q)&=\frac{1}{2}\int|p-q|=1-1+\frac{1}{2}\int|p-q|\\&
-    =1-\frac{1}{2}\int p-\frac{1}{2}\int q+\frac{1}{2}\int|p-q|\\&
-    =1-\int\frac{p+q-|p-q|}{2}\\&
-    =1-\int\min\{p,q\}.
+    d_{\text{TV}}(p,q)=\frac{1}{2}\int|p(x)-q(x)|\,dx=1-\int\min\{p(x),q(x)\}\,dx.
 \end{align*}
-Thus, $d_{\text{TV}}(p,q)\le1$ and $1-d_{\text{TV}}(p,q)=\int\min\{p,q\}$ is a similarity measure between $p$ and $q$. Similarly for the squared Hellinger distance we can write
+Thus, $d_{\text{TV}}(p,q)\le1$ and $1-d_{\text{TV}}(p,q)=\int\min\{p(x),q(x)\}\,dx$ is a similarity measure between $p$ and $q$. Similarly for the squared Hellinger distance we can write
 \begin{align*}
-    H^2(p,q)=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2=1-\int\sqrt{pq}.
+    H^2(p,q)=\frac{1}{2}\int\left(\sqrt{p(x)}-\sqrt{q(x)}\right)^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx.
 \end{align*}
-So again $H^2(p,q)\le 1$ and $1-H^2(p,q)=\int\sqrt{pq}$ is a similarity measure between $p$ and $q$. \textcolor{red}{For total variation, we use the $\min$ kernel and for squared Hellinger Bhattacharyya kernel (see~\cite{jebara_probability_nodate}).} The JS divergence can also be bounded:
+So again $H^2(p,q)\le1$ and $1-H^2(p,q)=\int\sqrt{p(x)q(x)}\,dx$ is a similarity measure between $p$ and $q$, which is also known as the Bhattacharyya kernel in the literature; see~\cite{jebara_probability_nodate}. The JS divergence can also be bounded:
 \begin{align*}
-    f(t)&=\frac{1}{2}t\log{\underbrace{\frac{2t}{1+t}}_{\le 2}}+\frac{1}{2}\log{\underbrace{\frac{2}{1+t}}_{\le 2}}\le\frac{1}{2}\log{2}(t+1),\quad t\ge0,\\
-    \operatorname{JS}(p,q)&=\int qf(p/q)\le\int q\frac{1}{2}\log{2}\left(\frac{p}{q}+1\right)=\log{2}.
+    \operatorname{JS}(p,q)=\int q(x)f_{\operatorname{JS}}\left(\frac{p(x)}{q(x)}\right)\,dx\le\frac{\log{2}}{2}\int q(x)\left(\frac{p(x)}{q(x)}+1\right)\,dx=\log{2},
 \end{align*}
+because
+\begin{align*}
+    f_{\operatorname{JS}}(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right)=\frac{t}{2}\log{\underbrace{\frac{2t}{t+1}}_{\le2}}+\frac{1}{2}\log{\underbrace{\frac{2}{t+1}}_{\le2}}\le\frac{\log{2}}{2}(t+1)
+\end{align*}
+for all $t\ge0$.
 
 
 \textbf{Rényi divergence}

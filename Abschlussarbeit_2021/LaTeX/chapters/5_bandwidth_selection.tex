@@ -4,6 +4,8 @@ In this chapter, we apply the scale selection methodology introduced in~\cite{Ba
 
 \section{Preliminaries on Kernel Density Estimation}
 
+\todo[inline]{01.11: Polish!}
+
 We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
@@ -162,98 +164,68 @@ The connection between the minimum of $\operatorname{ISE}$ and the minimum of $\
 
 \section{Divergences between distributions}\label{sec:divergences}
 
-For information on information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}.
-
-Let $L^1(\mathbb{R})$ be the set of all absolutely integrable functions $f:\mathbb{R}\to\mathbb{R}$ and $\mathcal{P}\subseteq L^1$ be the set of all absolutely continuous probability distributions. That is,
+For information on information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}. Let $L^1(\mathbb{R})$ be the set of all absolutely integrable functions $f:\mathbb{R}\to\mathbb{R}$ and $\mathcal{P}\subseteq L^1$ be the set of all probability density functions. That is,
 \begin{align*}
-    \mathcal{P}=\left\{f\in L^1:f\ge0,\int f(x)\,dx=1\right\}
+    \mathcal{P}:=\left\{f\in L^1(\mathbb{R}):f\ge0,\int f(x)\,dx=1\right\}.
 \end{align*}
-Note that $\mathcal{P}\subseteq L^1$ is convex. A divergence is a map $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ such that $D(p,q)=0$ if and only if $p=q$.
-
-The two most important classes of divergences are $f$-divergences and Bregman divergences.
-
-Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}.
+Note that $\mathcal{P}\subseteq L^1$ is convex. A divergence is a map $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ such that $D(p,q)=0$ if and only if $p=q$. The two most important classes of divergences are $f$-divergences and Bregman divergences. Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}.
 
 \subsection{\texorpdfstring{$f$}{f}-divergences}
 
-We take material on $f$-divergences mainly from \cite[Chapter 7]{polyanskiy_information_2025}. There, divergences are defined between two probability distributions $P$ and $Q$. For our purposes, it is enough to define them directly between probability density functions (Lebesgue integral).
+\todo[inline]{Finished polishing}
 
-\begin{Def}
+We take material on $f$-divergences mainly from \cite[Chapter 7]{polyanskiy_information_2025}. There, divergences are defined between two probability distributions $P$ and $Q$. For our purposes, it is enough to define them directly between probability density functions.
+
+\begin{Def}[$f$-divergence]
     Let $f:\mathbb{R}_{>0}\to\mathbb{R}$ be a convex function with $f(1)=0$. The $f$-divergence is defined as
     \begin{align*}
         D_f(p\|q)\coloneqq\int q(x)f\left(\frac{p(x)}{q(x)}\right)\,dx.
     \end{align*}
 \end{Def}
 
-The $f$-divergence has the following invariance property: it holds $D_f(p\| q)=D_g(p\|q)$ whenever $f(x)-g(x)=c(x-1)$ for some constant $c\in\mathbb{R}$. We will write $f\sim g$ in short.
+The $f$-divergence has the following invariance property: it holds $D_f(p\| q)=D_g(p\|q)$ whenever $f(x)-g(x)=c(x-1)$ for some constant $c\in\mathbb{R}$. We will abbreviate this by $f\sim g$.
 
 Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Proposition~\ref{prop:f_divergence_symmetric} yields the answer.
 
 \begin{Prop}\label{prop:f_divergence_symmetric}
-    The $f$-divergence is symmetric iff $f\sim\Tilde{f}$, where $\Tilde{f}$ is defined by $\Tilde{f}(x)=xf(1/x)$.
+    The $f$-divergence is symmetric iff $f\sim f^{\ast}$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(x)=xf(1/x)$.
 \end{Prop}
 
 \begin{proof}
-    We make use of \cite[Proposition 7.2]{polyanskiy_information_2025}. First, assume that $f(x)=xf(x^{-1})+c(x-1)$. Then $D_f(p\|q)=\int qf(p/q)=\int q((p/q)f(q/p)+c((p/q)-1))=\int pf(q/p)+c\int(p-q)=D_f(q\|p)$. Now assume that the $f$-divergence is symmetric on $\mathcal{P}$. We have $D_f(p\|q)=D_f(q\|p)=\int pf(q/p)=\int q (p/q)f(1/(p/q))=\int q\Tilde{f}(p/q)=D_{\Tilde{f}}(p\|q)$. Now, let $x,y\in\mathbb{R}$ with $x<1<y$. Define $q_1=(y-1)/(y-x)$ and $q_2=(1-x)/(y-x)$ and let $g(z)=\delta_{q_1}(z)+\delta_{q_2}(z)$ and $h(z)=\delta_{xq_1}(z)+\delta_{yq_2}$. We get
+    First, assume that $f(x)=xf(x^{-1})+c(x-1)$. Then $D_f(p\|q)=\int qf(p/q)=\int q((p/q)f(q/p)+c((p/q)-1))=\int pf(q/p)+c\int(p-q)=D_f(q\|p)$. Now assume that the $f$-divergence is symmetric on $\mathcal{P}$. We have $D_f(p\|q)=D_f(q\|p)=\int pf(q/p)=\int q (p/q)f(1/(p/q))=\int qf^{\ast}(p/q)=D_{f^{\ast}}(p\|q)$. Now, let $x,y\in\mathbb{R}$ be arbitrary with $x<1<y$. Set $q_1:=(y-1)/(y-x)$ and $q_2:=(1-x)/(y-x)$ and define the two densities $g(z):=q_1\mathbf{1}\{0\le z<1\}+q_2\mathbf{1}\{1\le z<2\}$ and $h(z):=xq_1\mathbf{1}\{0\le z<1\}+yq_2\mathbf{1}\{1\le z<2\}$. We get
     \begin{align*}
-        D_f(h\|g)&=\int gf(h/g)=q_1f(x)+q_2f(y)\\
-        D_{\Tilde{f}}(h\|g)&=\int g\Tilde{f}(h/g)=q_1\Tilde{f}(x)+q_2\Tilde{f}(y)
+        D_f(h\|g)&=\int g(z)f\left(\frac{h(z)}{g(z)}\right)\,dz=q_1f(x)+q_2f(y),\quad\text{ and }\\
+        D_{f^{\ast}}(h\|g)&=\int g(z)f^{\ast}\left(\frac{h(z)}{g(z)}\right)\,dz=q_1f^{\ast}(x)+q_2f^{\ast}(y)
     \end{align*}
-    and therefore $(y-1)(f(x)-\Tilde{f}(x))=(1-x)(\Tilde{f}(y)-f(y))$ which is equivalent to $(f(x)-\Tilde{f}(x))/(x-1)=(f(y)-\Tilde{f}(y))/(y-1)$. It follows that $(f(x)-\Tilde{f}(x))/(x-1)$ is constant on $\mathbb{R}\setminus\{1\}$ and thus $f(x)-\Tilde{f}(x)=c(x-1)$ for all $x\in\mathbb{R}$ (it trivially holds for $x=1$ too).
+    and therefore $(f(x)-f^{\ast}(x))/(x-1)=(f(y)-f^{\ast}(y))/(y-1)$. It follows that $(f(x)-\Tilde{f}(x))/(x-1)$ is constant on $\mathbb{R}\setminus\{1\}$ and thus $f(x)-\Tilde{f}(x)=c(x-1)$ for all $x\in\mathbb{R}$.
 \end{proof}
 
-\textcolor{red}{In the following we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just the symmetric divergences since such divergences lead to symmetric scale similarity matrices of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the Outlook~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is to that the ideas in the Outlook can be better appreciated.}
+In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just the symmetric divergences, since such divergences lead to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.
 
-\textbf{$\alpha$-divergence}
-
-A prominent parametrized family of $f$-divergences is the so called $\alpha$-divergence (see \cite{cichocki_families_2010}) where the function $f=f_{\alpha}$ is given by
+A prominent parametrized family of $f$-divergences is the so called \textit{$\alpha$-divergence} (see \cite[Equation~(7)]{cichocki_families_2010}) where the function $f=f_{\alpha}$, $\alpha\in(0,1)$ is given by
 \begin{align*}
-    f_{\alpha}(t)=\frac{1}{\alpha(\alpha-1)}\left(t^{\alpha}-\alpha t-(1-\alpha)\right).
+    f_{\alpha}(t):=\frac{1}{\alpha(\alpha-1)}\left(t^{\alpha}-\alpha t-(1-\alpha)\right),\quad t>0.
 \end{align*}
 The actual divergence is then given by
 \begin{align}\label{eq:alpha_divergence1}
-    D_{\alpha}(p\|q)=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right).
+    D_{\alpha}(p\|q):=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right).
 \end{align}
 
-Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q)=(1/2)\int(\sqrt{f}-\sqrt{g})^2=1-\int\sqrt{pq}$ is the squared Hellinger distance. In particular, by Proposition~\ref{prop:f_divergence_symmetric}, the $\alpha$-divergence is symmetric iff $\alpha=1/2$ (Hellinger distance). By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
+Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q):=(1/2)\int(\sqrt{p(x)}-\sqrt{q(x)})^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx$ is the squared Hellinger distance. In particular, by Proposition~\ref{prop:f_divergence_symmetric}, the $\alpha$-divergence is symmetric iff $\alpha=1/2$. By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q):=\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
-For completeness, we mention that in the literature there exists a second parameterization, where $\alpha=(1-\alpha_{A})/2$ is plugged into the formula in Equation~\eqref{eq:alpha_divergence1} to obtain
+Another class of divergences are the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. Setting $s=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the following chain of inequalities: $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
+
+Another important divergence that belongs to the class of $f$-divergences is the \textit{Jensen Shannon divergence}. The function $f=f_{\operatorname{JS}}$ is set to be
 \begin{align*}
-    D_{\alpha_A}(p\|q)=\frac{4}{1-\alpha_A^2}\left(1-\int p(x)^{\frac{1-\alpha_A}{2}}q(x)^{\frac{1+\alpha_A}{2}}\right).
-\end{align*}
-
-\textbf{$\chi^{\alpha}$-divergences (total variation)}
-
-Another class of divergences are the $\chi^{\alpha}$-divergences (see~[]). They are determined by $f_{\alpha}(t)=(1/2)|t-1|^{\alpha}$, where $\alpha\ge1$. Setting $\alpha=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q)=(1/2)\int|p-q|$, which is the only symmetric $\chi^{\alpha}$-divergence.
-
-Total variation and squared Hellinger are related by the following chain of inequalities:
-\begin{align*}
-    D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}.
-\end{align*}
-
-% \begin{align*}
-%     D_H(p,q)&=\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2\le\frac{1}{2}\int|p-q|=d_{\text{TV}}(p,q)\\&
-%     =\frac{1}{2}\int|p-q|=\frac{1}{2}\int(\sqrt{p}+\sqrt{q})|\sqrt{p}-\sqrt{q}|\\&
-%     \le\sqrt{\int(\sqrt{p}+\sqrt{q})^2}\sqrt{\int(\sqrt{p}-\sqrt{q})^2}\\&
-%     =\sqrt{\left(2+2\int\sqrt{pq}\right)\left(2-2\int\sqrt{pq}\right)}\\&
-%     =\sqrt{4-4\left(\int\sqrt{pq}\right)}=2\sqrt{1-\int\sqrt{pq}}=2\sqrt{D_H(p,q)}
-% \end{align*}
-
-\textbf{Jensen Shannon divergence}
-
-Another important divergence that belongs to the class of $f$-divergences is the Jensen Shannon divergence. The function $f$ is set to be
-\begin{align*}
-    f(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right).
+    f_{\operatorname{JS}}(t):=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right),\quad t>0.
 \end{align*}
 The divergence is then given by
 \begin{align*}
-    \operatorname{JS}(f,g)=H\left(\frac{f+g}{2}\right)-\frac{1}{2}H(f)-\frac{1}{2}H(g),
+    \operatorname{JS}(p,q):=\int q(x)f_{\operatorname{JS}}\left(\frac{p(x)}{q(x)}\right)\,dx=H\left(\frac{p+q}{2}\right)-\frac{1}{2}H(p)-\frac{1}{2}H(q),
 \end{align*}
-where $H(f):=-\int f\log{f}$ is the Shannon entropy.
-
-The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
+where $H(f):=-\int f(x)\log{f(x)}\,dx$ is the Shannon entropy. The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
 \begin{align}\label{eq:JS_KL_formula}
-    \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}(p\|\frac{p+q}{2})+\operatorname{KL}(q\|\frac{p+q}{2})\right),
+    \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}\left(p\big\|\frac{p+q}{2}\right)+\operatorname{KL}\left(q\big\|\frac{p+q}{2}\right)\right),
 \end{align}
 that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their equally weighted mixture.
 
@@ -287,6 +259,8 @@ Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\
 We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is an affine function. To see the one direction, we know that this is equivalent to $F_{\phi}(p)-F_{\Tilde{\phi}}(p)=\langle a,p\rangle_2+b$ for all $p\in L^2$. In particular for $p_t(x)=t\mathbf{1}\{x\in[0,1]\}$. Plugging this particular choice of $p_t$ into the equation yields $\phi(x)-\Tilde{\phi}(x)=t\int_0^1a(x)\,dx+b$, that is, $\phi-\Tilde{\phi}$ is affine. The other direction follows from a simple calculation.
 
 We also have that $D_{\phi}$ is symmetric if and only if $\phi$ is a quadratic function given that we additionally assume $\phi\in C^2(\mathbb{R})$. If $D_{\phi}$ is symmetric, then $F_{\phi}(p)$ has the representation in Equation~\eqref{eq:general_symmetry_characterization} for all $p\in L^2$. Plugging in the particular choice $p(x)=x\mathbf{1}\{x\in[0,1]\}$ into Equation~\eqref{eq:general_symmetry_characterization} and recalling the condition $\phi(0)=\phi'(0)=0$, we arrive at $\phi$ having the form $\phi(x)=(\kappa/2)x^2$ with $\kappa=\langle\mathbf{1}\{\cdot\in[0,1]\}T\mathbf{1}\{\cdot\in[0,1]\}\rangle$. The converse direction is again a simple calculation.
+
+\todo[inline]{01.11: Polish!}
 
 
 An example of such a function $\phi$ is the class of $\beta$-divergences (see~\cite[Equation~(46)]{cichocki_families_2010}) determined by
@@ -379,6 +353,8 @@ Error control is of importance because we must ensure that we control the error 
 
 \subsection{Properties of Divergence matrices and its Perron vector}
 
+\todo[inline]{01.11: Polish!}
+
 In this subsection, we give structural results on the divergence matrix $D$ built from the $L^2$-divergence. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the above similarity transformation, because else our scale selection procedure will choose either the first or last scale.
 
 \begin{Def}[Robinson matrix]
@@ -441,6 +417,8 @@ We now show that when choosing the Gaussian kernel, the family of kernel density
 \end{proof}
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
+
+\todo[inline]{01.11: Polish!}
 
 A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ is called conditionally negative definite if
 \begin{align*}
