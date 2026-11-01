@@ -4,6 +4,8 @@ In this chapter, we apply the scale selection methodology introduced in~\cite{Ba
 
 \section{Preliminaries on Kernel Density Estimation}
 
+\todo[inline]{01.11: Polish!}
+
 We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
@@ -544,6 +546,8 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 \section{Numerical Experiments}
 
+\todo[inline]{02.11: Polish!}
+
 In our numerical experiments, we restrict ourselves to the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
 We use the similarity transformation $S=\exp{(-\lambda D)}$ and vary the penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the Perron vector. 
@@ -642,6 +646,8 @@ We see a large discrepancy between the distributions of the spectrally chosen ba
 
 \subsection{Convergence to closest adjacent pair}
 
+\todo[inline]{02.11: Polish!}
+
 Here we explain the results of the fixed $N$ and $\lambda\to\infty$ experiment.
 
 Let $S^{(\lambda)}$ be the scale similarity matrix with entries $S^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $S^{(\lambda)}=I_N+A^{(\lambda)}$. The matrices $S^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}=\min_{i\ne j}D_{ij}$ is the smallest distance between two distinct scales $h_i$ and $h_j$. The off diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$, which all lie between $0$ and $1$. One particular advantage of this construction is that large $\lambda$ become numerically manageable while the Perron vector does not change, that is, numerical underflow is avoided. A second advantage is due to Davis-Kahan: Let $\Tilde{S}=S+E$ for some error matrix where $E$ is a symmetric error matrix with $\|E\|\le(1/2)\text{gap}(S)$. Let $v$ and $\Tilde{v}$ be the Perron vectors of $S$ and $\Tilde{S}$ respectively. Then $\sin\angle(v,\Tilde{v})\le2\sqrt{2}\|E\|/\text{gap}(S)$. That is, the angular error between $v$ and $\Tilde{v}$ is governed by small error matrix norm and large spectral gap of $S$. We have $\text{gap}(S^{(\lambda)})=e^{-\lambda d_{\ast}}\text{gap}(\Tilde{A}^{(\lambda)})$. That is, for large $\lambda$ the spectral gap of $S^{(\lambda)}$ becomes tiny and the upper bound for the angular error becomes large.
@@ -673,6 +679,8 @@ Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show 
 This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}. In Figure~\ref{fig:chosen_bandwidths_vs_lambda} the chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}\label{sec:perron_vector_concentrates}
+
+\todo[inline]{02.11: Polish up to Prop 7!}
 
 To explain the results, we need the concept of a Fréchet-derivative. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.2 therein.
 
