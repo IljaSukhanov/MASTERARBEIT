@@ -10,7 +10,7 @@ FOURIER_L2_METHOD_VERSION = "frequency_trapezoid_v1"
 
 # Shared production grid: K intervals require K+1 trapezoidal nodes.
 DEFAULT_FREQUENCY_CUTOFF = 450.0
-DEFAULT_FREQUENCY_INTERVALS = 1536
+DEFAULT_FREQUENCY_INTERVALS = 1376
 DEFAULT_FREQUENCY_POINTS = DEFAULT_FREQUENCY_INTERVALS + 1
 DEFAULT_FOURIER_GRID_TAG = (
     f"omega{DEFAULT_FREQUENCY_CUTOFF:g}_k{DEFAULT_FREQUENCY_INTERVALS}"
@@ -80,7 +80,7 @@ def beta2_divergence_matrix_fourier(
 
     The grid controls are retained for existing experiments: half_width=H
     and spatial_points=m define delta_omega=pi/H, cutoff=pi*m/(2H), and
-    m/2+1 frequency nodes. Defaults give Omega=450 and K=1536 intervals.
+    m/2+1 frequency nodes. Defaults give Omega=450 and K=1376 intervals.
     No spatial KDE grid is reconstructed. For an
     independently chosen cutoff and node count use gaussian_kde_l2_gram_fourier.
     """
