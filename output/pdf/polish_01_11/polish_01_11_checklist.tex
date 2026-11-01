@@ -1,0 +1,58 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=23mm,headheight=15pt,footskip=12mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,enumitem,fancyhdr,microtype,parskip}
+\definecolor{ink}{HTML}{19334C}
+\definecolor{accent}{HTML}{176B80}
+\definecolor{muted}{HTML}{52616E}
+\hypersetup{colorlinks=true,urlcolor=accent,pdftitle={Checklist for sections marked 01.11}}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\color{muted}THESIS \textbar\ 01.11 POLISHING}\fancyhead[R]{\small\color{muted}REMAINING TASKS}\fancyfoot[R]{\small\color{muted}\thepage}\renewcommand{\headrulewidth}{0.3pt}
+\setlist[itemize]{leftmargin=*,itemsep=0.75em,topsep=0.4em}
+\newcommand{\todoitem}[1]{\item[$\square$] \textbf{#1}}
+\newcommand{\where}[1]{{\small\color{muted}[source lines #1]}}
+\newcommand{\heading}[1]{\section*{\color{ink}#1}}
+\begin{document}
+{\Large\color{accent} THESIS REVISION GUIDE}\\[0.3em]
+{\LARGE\bfseries\color{ink} Sections marked 01.11}\\[0.5em]
+{\large Concrete remaining tasks}
+
+This checklist covers the three sections marked \texttt{01.11: Polish!} in Chapter 3. Line numbers refer to \texttt{5\_bandwidth\_selection.tex}. Sections marked 02.11 and citation cleanup are deferred. Items focus on mathematical accuracy and useful shortening.
+
+\heading{3.1 \quad KDE preliminaries}
+\begin{itemize}
+\todoitem{Make the setup and empirical convolution precise.} State that the observations are i.i.d. from $f$ and that $h>0$. Write the empirical convolution as $\int K_h(x-y)\,dP_n(y)$, rather than treating the discrete measure $P_n$ as a density. \where{9--13}
+
+\todoitem{Clarify the cross-validation target.} Explain that, for fixed $h$, the leave-one-out criterion is unbiased for $\operatorname{MISE}(h)-\int f^2$; distinguish this from the sample-dependent ISE. State the independence assumption used. \where{33--48} See \href{https://jmlr.csail.mit.edu/papers/volume19/16-349/16-349.pdf}{Hang et al., Section 5.1}.
+
+\todoitem{Fix or remove the two convergence-rate claims.} The $O(n^{-1})$ ISE-gap claim and the $n^{-5/14}$ plug-in claim need precise assumptions, error quantities and stochastic convergence notation. The latter is stated as a \emph{relative} bandwidth rate in \href{https://academic.oup.com/jrsssb/article/53/3/683/7028194}{Sheather--Jones, Eq.~(10)}. If these details are not used later, omit the claims. \where{50, 115}
+
+\todoitem{State the assumptions for MISE and AMISE.} Give the density/kernel regularity and bandwidth conditions needed for the $L^2$ calculations, bias expansion and oracle comparison; phrase $h_n\to0$ and $nh_n\to\infty$ as sufficient under those assumptions. \where{54--100} See \href{https://cswr.nrhstat.org/density}{Hansen, Section 2.2, Theorem 2.1} and \href{https://www3.stat.sinica.edu.tw/statistica/j17n1/j17n114/j17n114.html}{Chac\'on et al.}.
+
+\todoitem{Align the selector discussion with the experiments.} The opening says plug-in and cross-validation methods are used for comparison. Ensure that matches the reported experiments. If they are background only, say so and shorten the detailed Sheather--Jones pilot derivation to the idea and resulting selector; otherwise verify its formulas. \where{23, 102--115; 551 onward}
+\end{itemize}
+
+\newpage
+\heading{3.3.1 \quad Divergence matrices and the Perron vector}
+\begin{itemize}
+\todoitem{Repair the acute-chain lemma proof.} The diagonal entries of $D$ are zero, so use positivity off the diagonal and irreducibility. The acute-chain assumption gives $\langle P_i,Q_i\rangle\ge0$, not necessarily $>0$. The last displayed maximum also needs squared norms. Supply the additional argument needed for the stated \emph{strict} exclusion of interior maximizers, or weaken the conclusion to what the proof establishes. \where{319--380}
+
+\todoitem{Shorten the same proof.} Replace the long expansion of $\mu$ by the one-line identity $\mu=x_1+\sum_k a_k(x_{k+1}-x_k)$, then retain the essential comparison. Once the proof is complete, remove or fill the empty appendix subsection for the same lemma. \where{341--353; appendix lines 225--229}
+
+\todoitem{Fix the Gaussian acute-chain calculation.} Explicitly use continuity of $P_n$ and $P_n(0)=1$. The Fourier-domain integrand in the positivity sentence must contain $b_kb_l$, as in the displayed equation, rather than $\delta_k\delta_l$. State the positive, strictly ordered bandwidth assumptions in the proposition. \where{387--405}
+\end{itemize}
+
+\heading{3.3.2 \quad Similarity transformations}
+\begin{itemize}
+\todoitem{Repair the theorem's boundary assumption.} For completely monotone $\phi$, require a finite continuous extension to $0$ when applying it to $D(x,x)=0$. In the Laplace representation include a possible atom at $t=0$; this also covers constant functions. Nonconstant $\phi$ and distinct embedded points give the stated strict result. \where{419--449} See \href{https://arxiv.org/html/2007.14697}{Guella, Theorem 3.1 and discussion following it}.
+
+\todoitem{Shorten the Schoenberg discussion.} Once the assumptions are correct, cite the existing theorem for the general equivalence and keep only the derivation or examples needed for the thesis. The Gaussian-kernel case is the one used in the experiments. \where{425--466}
+
+\todoitem{Tidy the transformation's scope.} State $\tau>0$ in the entropy minimization and that $S\to I$ as $\tau\downarrow0$ requires $D_{ij}>0$ for $i\ne j$. Keep the distinction between positive definiteness and entrywise positivity when explaining Perron--Frobenius. \where{468--483}
+\end{itemize}
+
+\vfill
+\noindent\rule{\textwidth}{0.3pt}\\[-0.3em]
+{\footnotesize\color{muted}After the substantive revisions, compile the thesis and check these sections and cross-references. The linked sources support the review; bibliography cleanup remains deferred.}
+\end{document}
