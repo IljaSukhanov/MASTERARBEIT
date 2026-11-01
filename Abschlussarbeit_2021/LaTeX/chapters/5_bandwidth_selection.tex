@@ -10,15 +10,17 @@ We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribut
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R},
 \end{align*}
-where $h>0$ is the bandwidth. Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ can be seen as a Monte Carlo estimate of $\mathbb{E}_{X\sim f}[K_h(x-X)]=(f\ast K_h)(x)$. It can also be seen as a plug-in estimator for $(f\ast K_h)(x)$ where in place of the density $f$ the empirical measure $P_n:=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ is used: $(P_n\ast K_h)(x)=\int K_h(x-y)\,P_n(dy)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
+where $h>0$ is the bandwidth and $K$ is a symmetric density function. Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ can be seen as a Monte Carlo estimate of $\mathbb{E}_{X\sim f}[K_h(x-X)]=(f\ast K_h)(x)$. It can also be seen as a plug-in estimator for $(f\ast K_h)(x)$ where in place of the density $f$ the empirical measure $P_n:=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ is used: $(P_n\ast K_h)(x)=\int K_h(x-y)\,P_n(dy)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
 
-Two common choices for the kernel $K$ are:
+Throughout, we will assume that $K\in L^2(\mathbb{R})$ and $\mu_2(K):=\int x^2K(x)\,dx<\infty$. We will state additional assumptions on $K$ when needed. Two common choices for the kernel $K$ are:
 \begin{itemize}
     \item the Epanechnikov kernel $K(u)=\mathbf{1}\{-1\le u\le1\}3(1-u^2)/4$, $u\in\mathbb{R}$
     \item the Gaussian kernel $K(u)=(2\pi)^{-1/2}\exp{(-u^2/2)}$, $u\in\mathbb{R}$
 \end{itemize}
 
-From now on, we always work with the Gaussian kernel, unless indicated otherwise.
+The Epanechnikov kernel has compact support, which is beneficial for some convergence guaranties, while its derivative is not continuous. The Gaussian kernel, on the other hand, is infinitely often differentiable and also allows for explicit formulas and efficient computation in practice.
+
+% From now on, we always work with the Gaussian kernel, unless indicated otherwise.
 
 The question of how to choose the bandwidth $h$ is widely known in the literature. See, for example, the more recent review~\cite{heidenreich_bandwidth_2013}. We present some of the most popular methods below in order to give background on classical bandwidth selection. Following the review~\cite{heidenreich_bandwidth_2013}, bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. The methods of both classes minimize some approximation of the (mean) integrated squared error.
 
@@ -44,7 +46,7 @@ The Ordinary Least Squares Cross-Validation bandwidth is
 \begin{align*}
     \hat{h}_{\operatorname{CV}}\in\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h):=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
 \end{align*}
-In terms of convergence guaranty, it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Equation~(4)]{heidenreich_bandwidth_2013}. In particular, this implies that the integrated squared error evaluated at $\hat{h}_{\text{CV}}$ converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ in probability.
+In terms of convergence guaranty, if $K$ has additionally compact support and Hölder-continuous derivative, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Equation~(4)]{heidenreich_bandwidth_2013}. In particular, this implies that the integrated squared error evaluated at $\hat{h}_{\text{CV}}$ converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ in probability.
 
 \textbf{Plug-in methods}
 
