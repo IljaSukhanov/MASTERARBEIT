@@ -244,33 +244,30 @@ The derivation of the formula uses mainly the Gaussian convolution identity, tha
 
 \textbf{Numerical Approximation}
 
-The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
+The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathbf{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
-In the following, we will briefly describe the approach following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$. Using the linearity and translation property of the Fourier transform, we obtain the Fourier transform of a kernel density function with a Gaussian kernel:
+In the following, we will briefly describe the approach following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$, $\omega\in\mathbb{R}$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$, see~\cite[Example~2.6]{plonka_numerical_2018}. Using the linearity and translation property of the Fourier transform (see~\cite[Theorem~2.5]{plonka_numerical_2018}), we obtain the Fourier transform of a kernel density function with a Gaussian kernel:
 \begin{align*}
-    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=P_n(\omega)}\exp{(-h^2\omega^2)/2}.
+    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=:P_n(\omega)}\exp{(-h^2\omega^2)/2}.
 \end{align*}
-Next, we use Parseval's identity to get
+Next, we use Parseval's identity (see~\cite[Lemma~2.21]{plonka_numerical_2018}) to get
 \begin{align*}
-    G_{r,s}=\int\hat{f}_{h_r}(x)\hat{f}_{h_s}(x)\,dx&=\frac{1}{2\pi}\int\mathcal{F}[\hat{f}_h](\omega)\overline{\mathcal{F}[\hat{f}_s](\omega)}\,d\omega\\&
-    =\frac{1}{2\pi}\int|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega\\&
-    =\frac{1}{\pi}\int_0^{\infty}|P_n(\omega)|^2\exp{(-(h^2+s^2)\omega^2/2)}\,d\omega.
-\end{align*}
-Finally, we approximate $G_{rs}$ by truncating the integral and applying the composite trapezoidal rule:
-\begin{align*}
-    G_{rs}\approx G_{rs}^{(\Omega,K)}:=\frac{1}{2\pi}\frac{\Omega}{K}\sum_{k=0}^{K}c_k|P_n(\omega_k)|^2\exp{(-(h_r^2+h_s^2)\omega_k^2/2)}.
+    G_{ij}&=\int\hat{f}_{h_i}(x)\hat{f}_{h_j}(x)\,dx=\frac{1}{2\pi}\int\mathcal{F}[\hat{f}_{h_i}](\omega)\overline{\mathcal{F}[\hat{f}_{h_j}](\omega)}\,d\omega\\&
+    =\frac{1}{\pi}\int_0^{\infty}\underbrace{|P_n(\omega)|^2\exp{(-(h_i^2+h_j^2)\omega^2/2)}}_{=:g_{ij}(\omega)}\,d\omega.
 \end{align*}
 
-We can give an upper bound for the truncation error:
+For the truncated integral, we set $G_{ij}^{(\Omega)}:=\pi^{-1}\int_0^{\Omega}g_{ij}(\omega)\,d\omega$. We can give an upper bound for the truncation error:
 \begin{align*}
-    |G_{rs}-G_{rs}^{(\Omega)}|&\le\frac{1}{\pi}\int_{\Omega}^{\infty}\exp{(-\frac{(h^2+s^2)\omega^2}{2})}\,d\omega\le\frac{1}{\pi}\int_{\Omega}^{\infty}\exp{(-h_{\min}^2\omega^2)}\,d\omega\\&
+    |G_{ij}-G_{ij}^{(\Omega)}|&\le\frac{1}{\pi}\int_{\Omega}^{\infty}\exp{(-(h_i^2+h_j^2)\omega^2/2)}\,d\omega\le\frac{1}{\pi}\int_{\Omega}^{\infty}\exp{(-h_{\min}^2\omega^2)}\,d\omega\\&
     =\frac{1}{2\sqrt{\pi}h_{\min}}\operatorname{erfc}(\Omega h_{\min}),
 \end{align*}
-where $\operatorname{erfc}(z):=2\pi^{-1/2}\int_z^{\infty}e^{-t^2}\,dt$ is the complementary error function. Fixing $h_{\min}=0.01$ and $\epsilon=10^{-8}$ and choosing $\Omega=450$ yields a truncation error of less than $\epsilon$.
+where $\operatorname{erfc}(z):=2\pi^{-1/2}\int_z^{\infty}e^{-t^2}\,dt$ is the complementary error function. Fixing $h_{\min}=0.01$ and choosing $\Omega_0=450$ yields a truncation error of less than $\epsilon=10^{-8}$. Finally, we approximate $G_{ij}^{(\Omega)}$ by applying the composite trapezoidal rule:
+\begin{align*}
+    G_{ij}\approx G_{ij}^{(\Omega,K)}:=\frac{\Omega}{\pi}\sum_{k=0}^{K}c_kg_{ij}(\omega_k),
+\end{align*}
+where $c_k:=1/(2K)$ for $k=0,K$ and $c_k:=1/M$ else are the quadrature weights and $\omega_k=k\Omega/K$ are equidistant nodes. We determine a suitable number of nodes $K$ experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, setting $E_K:=\max_l\max_{ij}|G_{ij}-G_{ij}^{(\Omega_0,K)}|$ and choosing $K$ so that $E_k\le\delta$ for some prescribed error tolerance $\delta>0$. See Figure~\ref{fig:fourier_approx_experiment} for a visualization of this experiment. It suggests the choice of $K_0=1536$ when prescribing $\delta=10^{-8}$.
 
-After having determined a well motivated truncation parameter $\Omega$, we determine a suitable number of nodes $K$ experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, set $E_K:=\max_l\max_{r,s}|G_{r,s}-G^{\Omega,K}_{r,s}|$ and choose $K$ so that $E_K\le\delta$ for some apriori error $\delta$. See Figure~\ref{fig:fourier_approx_experiment} for visualization. We choose $K=1536$.
-
-Having chosen $\Omega$ and $K$ we carry out a small experiment comparing the runtime efficiency between exact formula and Fourier approximation. We sample $(X^{(l)}_1,\dots,X_{200}^{(l)}$, $l=1,\dots,100$ and measure the time it took to compute the exact $G_{hs}$ and the approximate $G_{hs}^{(\Omega,K)}$ for all bandwidth pairs $h,s$. The mean computation times and the maximum error that was made are presented in Table~\ref{tab:exact_fourier_gram_runtime}.
+Having chosen $\Omega$ and $K$ we carry out a small experiment comparing the runtime efficiency between exact formula and Fourier approximation. We again sample $(X^{(l)}_1,\dots,X_n^{(l)})$, $l=1,\dots,L$ and measure the time it took to compute the exact $G_{ij}$ and the approximate $G_{ij}^{(\Omega_0,K_0)}$ for all bandwidth pairs $h_i,h_j$. The mean computation times and the maximum error that was made are reported in Table~\ref{tab:exact_fourier_gram_runtime}.
 
 \begin{table}[htbp]
     \centering
