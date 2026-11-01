@@ -112,20 +112,6 @@ Of course, the ratio $R(f'')/R(f''')$ has to be estimated separately, which is d
 \end{align*}
 is solved numerically for $h$. \textcolor{red}{There exist consistency results for this plug in selector. It converges to the oracle bandwidth $h_{\text{oracle}}$ at a rate $n^{-5/14}$.}
 
-For illustration, the next Figure~\ref{fig:classical_bandwidth_comparison} shows 50 points sampled from $N(0,1)$ together with the true density $f$ and the kernel density estimates $\hat{f}_{h}$ with $h\in\{\hat{h}_{CV},h_{\text{oracle}},h_{\text{AMISE}},h_{\text{Sil}},h_{\text{SJ}}\}$.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/classical_bandwidth_kde_illustration/001_gaussian_kdes_for_50_observations_from_n_0_1.pdf}
-    \caption{Gaussian kernel density estimates based on 50 observations
-    sampled from $N(0,1)$, using cross-validation, the MISE oracle,
-    AMISE, Silverman's robust rule, and the direct plug-in rule.
-    The black curve shows the true density, and the ticks indicate
-    the observations.}
-    \label{fig:classical_bandwidth_comparison}
-    \todo[inline]{code: notebook + Python file with all the classical selectors}
-\end{figure}
-
 \textbf{Exact MISE representation for Gaussian mixture model}
 
 Exact computations are generally not possible since the true density $f$ of the sampled data $X_1,\dots,X_n$ is not known. In simulation experiments, of course, we simulate the data ourselves and thus know the density $f$. For certain choices of the true density $f$, explicit formulas for the MISE exist.
@@ -169,8 +155,6 @@ For information on information theory and divergences, see the book~\cite{polyan
 Note that $\mathcal{P}\subseteq L^1$ is convex. A divergence is a map $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ such that $D(p,q)=0$ if and only if $p=q$. The two most important classes of divergences are $f$-divergences and Bregman divergences. Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}.
 
 \subsection{\texorpdfstring{$f$}{f}-divergences}
-
-\todo[inline]{Finished polishing}
 
 We take material on $f$-divergences mainly from \cite[Chapter 7]{polyanskiy_information_2025}. There, divergences are defined between two probability distributions $P$ and $Q$. For our purposes, it is enough to define them directly between probability density functions.
 
@@ -229,8 +213,6 @@ that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ a
 
 \subsection{Bregman divergences}
 
-\todo[inline]{01.11: Polish!}
-
 The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. The Bregman divergence is a generalization of the Euclidean distance and is applied in a variety of instances where the Euclidean distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
 
 \begin{Def}
@@ -260,8 +242,6 @@ We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is an aff
 
 We also have that $D_{\phi}$ is symmetric if and only if $\phi$ is a quadratic function given that we additionally assume $\phi\in C^2(\mathbb{R})$. If $D_{\phi}$ is symmetric, then $F_{\phi}(p)$ has the representation in Equation~\eqref{eq:general_symmetry_characterization} for all $p\in L^2$. Plugging in the particular choice $p(x)=x\mathbf{1}\{x\in[0,1]\}$ into Equation~\eqref{eq:general_symmetry_characterization} and recalling the condition $\phi(0)=\phi'(0)=0$, we arrive at $\phi$ having the form $\phi(x)=(\kappa/2)x^2$ with $\kappa=\langle\mathbf{1}\{\cdot\in[0,1]\}T\mathbf{1}\{\cdot\in[0,1]\}\rangle$. The converse direction is again a simple calculation.
 
-\todo[inline]{01.11: Polish!}
-
 The $\beta$-divergence $D_{\beta}$, $\beta>0$ is defined by $D_{\beta}(p\|q):=D_{\phi_{\beta}}(p\|q)$, where $\phi_{\beta}(t):=\beta^{-1}(1+\beta)^{-1}t^{1+\beta}$, $t\in\mathbb{R}$. It is thus given by
 \begin{align*}
     D_{\beta}(p\|q)=\frac{1}{\beta(1+\beta)}\left(\int\left(p(x)^{1+\beta}-(1+\beta)p(x)q(x)^{\beta}+\beta q(x)^{1+\beta}\right)\,dx\right),
@@ -283,8 +263,6 @@ The derivation of the formula uses mainly the Gaussian convolution identity, tha
 \textbf{Numerical Approximation}
 
 \todo[inline]{Code: Notebook ($\Omega$ and $K$ experiments + runtime efficiency), Python files?}
-
-\todo[inline]{01.11: Continue polishing!}
 
 The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
@@ -347,8 +325,6 @@ Error control is of importance because we must ensure that we control the error 
 
 \subsection{Properties of Divergence matrices and its Perron vector}
 
-\todo[inline]{01.11: Polish!}
-
 In this subsection, we give structural results on the divergence matrix $D=(D_{ij})_{i,j=1}^{N}$ with $D_{ij}:=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the above similarity transformation, because else our scale selection procedure will choose either the first or last scale.
 
 \begin{Def}[Robinson matrix]
@@ -407,8 +383,6 @@ We now show that when choosing the Gaussian kernel, the family of kernel density
 \end{proof}
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
-
-\todo[inline]{01.11: Polish!}
 
 A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ is called conditionally negative definite if
 \begin{align*}
