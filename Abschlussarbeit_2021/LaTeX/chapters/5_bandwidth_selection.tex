@@ -148,18 +148,18 @@ The connection between the minimum of $\operatorname{ISE}$ and the minimum of $\
 
 \section{Divergences between distributions}\label{sec:divergences}
 
-In the most general sense, a divergence is a map $D:\mathcal{X}\times\mathcal{X}\to\mathbb{R}_{\ge0}\cup\{\infty\}$ such that $D(x,y)=0$ if and only if $x=y$. It is a dissimilarity measure that is not necessarily symmetric and does not fulfill the triangle inequality and is therefore a weaker notion of a metric. We present two important classes of divergences: $f$-divergences and Bregman divergences.
+Let $(X,\mathcal{A})$ be a measurable space and $\mu$ a $\sigma$-finite measure on it. Let $\mathcal{P}_{\mu}$ be the set of all probability measures $\nu$ on $(X,\mathcal{A})$ that are absolutely continuous with respect to $\mu$. We call a map $D:\mathcal{P}_{\mu}\times\mathcal{P}_{\mu}\to\mathbb{R}_{\ge0}\cup\{\infty\}$ with $D(P,Q)=0$ if and only if $P=Q$ a divergence, cf.~\cite[Section~2.1]{birrell_f_nodate}. It is a dissimilarity measure that is not necessarily symmetric and need not satisfy the triangle inequality, and is therefore a weaker notion of a metric. We present two important classes of divergences: $f$-divergences and Bregman divergences.
 
 \subsection{\texorpdfstring{$f$}{f}-divergences}
 
-We take material on $f$-divergences mainly from~\cite[Chapter~7]{polyanskiy_information_2025} and the papers~\cite{sason_f-divergence_2016,sason_f-divergences_2018,cerone_bounds_nodate}. Let $(X,\mathcal{A})$ be a measurable space and $\mu$ a $\sigma$-finite measure on it. Let $\mathcal{P}_{\mu}$ be the set of all probability measures $\nu$ on $(X,\mathcal{A})$ that are absolutely continuous with respect to $\mu$. In general, $f$-divergences are defined between two probability measures $P,Q\in\mathcal{P}_{\mu}$. By the Radon-Nikodym theorem we can identify $\mathcal{P}_{\mu}=\{p\in L^1(\mu):p\ge0,\int_{X}p\,d\mu=1\}$, where $L^1(\mu)$ is the set of all absolutely integrable functions with respect to $\mu$ and define the $f$-divergence directly on probability density functions. We will also exclusively work with the setting $X=\mathbb{R}$, $\mathcal{A}=\mathcal{B}(\mathbb{R})$, and $\mu=\lambda$ (the Lebesgue measure). In what follows, we will just write
+We take material on $f$-divergences mainly from~\cite[Chapter~7]{polyanskiy_information_2025} and the papers~\cite{sason_f-divergence_2016,sason_f-divergences_2018,cerone_bounds_nodate}. In general, $f$-divergences are defined between two probability measures $P,Q\in\mathcal{P}_{\mu}$. By the Radon-Nikodym theorem we can identify $\mathcal{P}_{\mu}=\{p\in L^1(\mu):p\ge0,\int_{X}p\,d\mu=1\}$, where $L^1(\mu)$ is the set of all absolutely integrable functions with respect to $\mu$ and define the $f$-divergence directly on probability density functions. We will also exclusively work with the setting $X=\mathbb{R}$, $\mathcal{A}=\mathcal{B}(\mathbb{R})$, and $\mu=\lambda$ (the Lebesgue measure). In what follows, we will just write
 \begin{align*}
     \mathcal{P}:=\left\{p\in L^1(\mathbb{R}):p\ge0,\int p(x)\,dx=1\right\}
 \end{align*}
 for the set of all probability densities. Note that $\mathcal{P}\subseteq L^1(\mathbb{R})$ is convex.
 
 \begin{Def}[$f$-divergence]
-    Let $f:\mathbb{R}_{>0}\to\mathbb{R}$ be a convex function with $f(1)=0$. The $f$-divergence is defined as
+    Let $f:\mathbb{R}_{>0}\to\mathbb{R}$ be a convex function with $f(1)=0$ and strictly convex at 1. The $f$-divergence is defined as
     \begin{align*}
         D_f(p\|q)\coloneqq\int q(x)f\left(\frac{p(x)}{q(x)}\right)\,dx,
     \end{align*}
@@ -168,7 +168,7 @@ for the set of all probability densities. Note that $\mathcal{P}\subseteq L^1(\m
 
 Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Fortunately, the $f$-divergence has a well known symmetry characterization: $D_f$ is symmetric, that is, $D_f(p\|q)=D_f(q\|p)$ for all $p,q\in\mathcal{P}$ if and only if there exists a constant $c\in\mathbb{R}$ such that $f(t)-f^{\ast}(t)=c(t-1)$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(t):=tf(t^{-1})$, for a reference see~\cite[Propositions 1 and 2]{sason_f-divergences_2018} or~\cite[Theorem 1]{cerone_bounds_nodate}.
 
-In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just the symmetric divergences, since such divergences lead to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.
+In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one of the symmetric divergences, namely the $\beta$-divergence with $\beta=1$ (which is half of the squared $L^2$ distance) since such divergences lead to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.
 
 A prominent parametrized family of $f$-divergences is the so called \textit{$\alpha$-divergence} (see \cite[Equation~(7)]{cichocki_families_2010}) where the function $f=f_{\alpha}$, $\alpha\in(0,1)$ is given by
 \begin{align*}
@@ -179,7 +179,7 @@ The actual divergence is then given by
     D_{\alpha}(p\|q):=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right).
 \end{align}
 
-Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q):=(1/2)\int(\sqrt{p(x)}-\sqrt{q(x)})^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx$ is the squared Hellinger distance. In particular, by Proposition~\ref{prop:f_divergence_symmetric}, the $\alpha$-divergence is symmetric iff $\alpha=1/2$. By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q):=\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
+Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q):=(1/2)\int(\sqrt{p(x)}-\sqrt{q(x)})^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx$ is the squared Hellinger distance. In particular, by the symmetry characterization of $f$-divergences, the $\alpha$-divergence is symmetric iff $\alpha=1/2$. By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q):=\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
 Another class of divergences are the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. Setting $s=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the following chain of inequalities: $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
 
@@ -213,7 +213,7 @@ The first order Taylor approximation of $F$ around $y$ evaluated at $x$ is $F(y)
 
 \textcolor{red}{Similarly to the $f$-divergence, we have invariance $D_F=D_{G}$ if and only if $F-G$ is an affine functional, that is, $F(x)-G(x)=\langle a,x\rangle_{\mathcal{H}}+b$ for some $a\in\mathcal{H}$ and $b\in\mathbb{R}$ and all $x\in C$.}
 
-If $F$ is twice continuously Fréchet differentiable, there is a symmetry characterization for Bregman divergences similar to the one for $f$-divergences stated in Proposition~\ref{prop:f_divergence_symmetric}. Theorem 12 in~\cite{tsuchida_generalising_2026} states that in this case $D_F$ is symmetric if and only if
+If $F$ is twice continuously Fréchet differentiable, there is a symmetry characterization for Bregman divergences similar to the one for $f$-divergences. Theorem 12 in~\cite{tsuchida_generalising_2026} states that in this case $D_F$ is symmetric if and only if
 \begin{align}\label{eq:general_symmetry_characterization}
     F(p)=\frac{1}{2}\langle p,Tp\rangle_{\mathcal{H}}+\langle b,p\rangle_{\mathcal{H}} +c,\quad p\in\operatorname{int}(\operatorname{dom}(F)),
 \end{align}
@@ -247,8 +247,6 @@ where
 The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
 
 \textbf{Numerical Approximation}
-
-\todo[inline]{Code: Notebook ($\Omega$ and $K$ experiments + runtime efficiency), Python files?}
 
 The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathcal{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
