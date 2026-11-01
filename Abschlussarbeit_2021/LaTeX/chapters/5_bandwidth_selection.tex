@@ -6,11 +6,11 @@ In this chapter, we apply the scale selection methodology introduced in~\cite{Ba
 
 \todo[inline]{01.11: Polish!}
 
-We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled from an (unknown) distribution with density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
+We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
-    \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
+    \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R},
 \end{align*}
-Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ is a Monte Carlo estimate of $(f\ast K_h)(x)=\mathbb{E}_{X\sim f}[K_h(x-X)]$. Writing $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ for the empirical measure, we see that $(P_n\ast K_h)(x)=\int P_n(y)K_h(x-y)\,dy=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
+where $h>0$ is the bandwidth. Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ can be seen as a Monte Carlo estimate of $\mathbb{E}_{X\sim f}[K_h(x-X)]=(f\ast K_h)(x)$. It can also be seen as a plug-in estimator for $(f\ast K_h)(x)$ where in place of the density $f$ the empirical measure $P_n:=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ is used: $(P_n\ast K_h)(x)=\int K_h(x-y)\,P_n(dy)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
 
 Two common choices for the kernel $K$ are:
 \begin{itemize}
@@ -20,38 +20,35 @@ Two common choices for the kernel $K$ are:
 
 From now on, we always work with the Gaussian kernel, unless indicated otherwise.
 
-The question of how to choose the bandwidth $h$ is widely known in the literature. See reviews~[]. We present some of the most popular methods below, which we also use to compare with our newly developed spectral selector. Following the review~\cite{heidenreich_bandwidth_2013}, bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. The methods of both classes minimize some approximation of the (mean) integrated squared error.
+The question of how to choose the bandwidth $h$ is widely known in the literature. See, for example, the more recent review~\cite{heidenreich_bandwidth_2013}. We present some of the most popular methods below in order to give background on classical bandwidth selection. Following the review~\cite{heidenreich_bandwidth_2013}, bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. The methods of both classes minimize some approximation of the (mean) integrated squared error.
 
 \begin{Def}
-    Let $f$ be a density and $\hat{f}_h$ its kernel density estimate. The integrated squared error (ISE) between $f$ and $\hat{f}_h$ is given by
+    Let $f$ be a density, and $\hat{f}_h$ its kernel density estimate. The integrated squared error (ISE) between $f$ and $\hat{f}_h$ is given by
     \begin{align*}
         \operatorname{ISE}(h)\coloneqq \int\left(f(x)-\hat{f}_h(x)\right)^2\,dx.
     \end{align*}
     The mean integrated squared error (MISE) is $\operatorname{MISE}(h)\coloneqq\mathbb{E}[\operatorname{ISE}(h)]$.
 \end{Def}
 
-\subsection*{Cross-validation methods}
+\textbf{Cross-validation methods}
 
 The ISE can be written as
 \begin{align*}
     \operatorname{ISE}(h)=\int\hat{f}_h(x)^2\,dx-2\mathbb{E}_{X\sim f}\left[\hat{f}_h(X)\right]+\int f(x)^2\,dx.
 \end{align*}
-
-The first term $\int\hat{f}_h^2$ can be computed from the data. The third term $\int f^2$ does not depend on the bandwidth and can be ignored when minimizing. We are left to find an (unbiased) estimator for $\mathbb{E}_{X\sim f}[\hat{f}_h(X)]$. Such an estimator is given by $n^{-1}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i)$, where $\hat{f}_{h,-i}$ is the leave-one-out kernel density estimate given by
+The first term $\int\hat{f}_h^2$ can be computed from the data. The third term $\int f^2$ does not depend on the bandwidth and can be ignored when minimizing. An unbiased estimator for $\mathbb{E}_{X\sim f}[\hat{f}_h(X)]$ is given by $n^{-1}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i)$, where $\hat{f}_{h,-i}$ is the leave-one-out kernel density estimate given by
 \begin{align*}
-    \hat{f}_{h,-i}(x)=\frac{1}{(n-1)h}\sum_{j\ne i}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
+    \hat{f}_{h,-i}(x):=\frac{1}{(n-1)h}\sum_{j\ne i}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
 \end{align*}
-
 The Ordinary Least Squares Cross-Validation bandwidth is
 \begin{align*}
-    \hat{h}_{\operatorname{CV}}=\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h)=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
+    \hat{h}_{\operatorname{CV}}\in\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h):=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
 \end{align*}
+In terms of convergence guaranty, it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Equation~(4)]{heidenreich_bandwidth_2013}. In particular, this implies that the integrated squared error evaluated at $\hat{h}_{\text{CV}}$ converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ in probability.
 
-It is known that \textcolor{red}{(add source!!)} $\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0)=\mathbf{O}(n^{-1})$, that is, the integrated squared error evaluated at the cross-validation selected bandwidth converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ to zero at rate $n^{-1}$.
+\textbf{Plug-in methods}
 
-\subsection*{Plug-in methods}
-
-The bias-variance decomposition of the MISE is
+The bias-variance decomposition of the mean integrated squared error is
 \begin{align*}
     \operatorname{MISE}(h)=\int\operatorname{Var}[\hat{f}_h(x)]\,dx+\int\operatorname{Bias}(\hat{f}_h(x))^2\,dx
 \end{align*}
@@ -61,24 +58,9 @@ with
     \operatorname{ISB}(h)&:=\int\operatorname{Bias}(\hat{f}_h(x))^2\,dx=\|K_h\ast f-f\|_2^2.
 \end{align*}
 
-This decomposition gives conditions on $h=h_n$ so that the kernel density estimate $\hat{f}_{h}$ is consistent. In order for the bias to vanish, it must hold $h_n\to0$, because then $K_h\ast f\to f$. For the variance to vanish, we must require $nh_n\to\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
+This decomposition gives conditions on the bandwidth $h=h_n$ so that the kernel density estimate $\hat{f}_{h}$ is consistent. In order for the bias to vanish, it must hold $h_n\to0$, because then $\|K_{h_n}\ast f-f\|_2$ for $n\to\infty$. For the variance to vanish, we must require $nh_n\to\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
 
 It is important to be convinced that $\operatorname{MISE}$ actually has a global minimum. To this end, we refer to Chacón et al.~\cite[Theorem~1]{chacon_existence_nodate} which tells us that a global minimum always exists if $K$ is a nonnegative kernel that peaks at $0$.
-
-\textbf{Asymptotic expansion of the integrated variance}
-
-Note that $\|K_h\|_1=\int K_h(x)\,dx=\int K(x)\,dx=1$ for every $h>0$. By Young's convolution inequality $\|K_{h_n}\ast f\|\le\|K_{h_n}\|_1\|f\|_2=\|f\|_2$. Therefore,
-\begin{align*}
-    \frac{\frac{\|K_{h_n}\ast f\|_2^2}{n}}{\frac{\|K\|_2^2}{nh_n}}=\frac{h_n\|K_{h_n}\ast f\|_2^2}{\|K\|_2^2}\le h_n\frac{\|f\|_2^2}{\|K\|_2^2}\to 0
-\end{align*}
-and thus $-n^{-1}\|K_{h_n}\ast f\|_2^2=\mathbf{o}((nh_n)^{-1}\|K\|_2^2)$. We therefore may omit the term $-n^{-1}\|K_{h_n}\ast f\|_2^2$ as it is asymptotically negligible.
-
-\textbf{Asymptotic expansion of the integrated squared bias}
-
-For the $\operatorname{ISB}(h)$ term we get
-\begin{align*}
-    \operatorname{ISB}(h)=\frac{h_n^4}{4}\mu_2(K)^2R(f^{''})+\mathbf{o}(h_n^4)
-\end{align*}
 
 \textbf{Asymptotic expansion of $\operatorname{MISE}(h)$}
 
