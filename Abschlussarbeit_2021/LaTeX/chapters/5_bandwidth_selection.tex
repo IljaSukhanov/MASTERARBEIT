@@ -148,39 +148,25 @@ The connection between the minimum of $\operatorname{ISE}$ and the minimum of $\
 
 \section{Divergences between distributions}\label{sec:divergences}
 
-For information on information theory and divergences, see the book~\cite{polyanskiy_information_2025} or the survey~\cite{nielsen_elementary_2020}. Let $L^1(\mathbb{R})$ be the set of all absolutely integrable functions $f:\mathbb{R}\to\mathbb{R}$ and $\mathcal{P}\subseteq L^1$ be the set of all probability density functions. That is,
-\begin{align*}
-    \mathcal{P}:=\left\{f\in L^1(\mathbb{R}):f\ge0,\int f(x)\,dx=1\right\}.
-\end{align*}
-Note that $\mathcal{P}\subseteq L^1$ is convex. A divergence is a map $D:\mathcal{P}\times\mathcal{P}\to\mathbb{R}_{\ge0}$ such that $D(p,q)=0$ if and only if $p=q$. The two most important classes of divergences are $f$-divergences and Bregman divergences. Computing divergences between densities amounts to evaluating integrals over $\mathbb{R}$. In general, these integrals cannot be computed explicitly, and numerical procedures have to be applied. For a practical guide on numerical integration, see~\cite[Chapter 9]{DeuflhardHohmann+2019}.
+In the most general sense, a divergence is a map $D:\mathcal{X}\times\mathcal{X}\to\mathbb{R}_{\ge0}\cup\{\infty\}$ such that $D(x,y)=0$ if and only if $x=y$. It is a dissimilarity measure that is not necessarily symmetric and does not fulfill the triangle inequality and is therefore a weaker notion of a metric. We present two important classes of divergences: $f$-divergences and Bregman divergences.
 
 \subsection{\texorpdfstring{$f$}{f}-divergences}
 
-We take material on $f$-divergences mainly from \cite[Chapter 7]{polyanskiy_information_2025}. There, divergences are defined between two probability distributions $P$ and $Q$. For our purposes, it is enough to define them directly between probability density functions.
+We take material on $f$-divergences mainly from~\cite[Chapter~7]{polyanskiy_information_2025} and the papers~\cite{sason_f-divergence_2016,sason_f-divergences_2018,cerone_bounds_nodate}. Let $(X,\mathcal{A})$ be a measurable space and $\mu$ a $\sigma$-finite measure on it. Let $\mathcal{P}_{\mu}$ be the set of all probability measures $\nu$ on $(X,\mathcal{A})$ that are absolutely continuous with respect to $\mu$. In general, $f$-divergences are defined between two probability measures $P,Q\in\mathcal{P}_{\mu}$. By the Radon-Nikodym theorem we can identify $\mathcal{P}_{\mu}=\{p\in L^1(\mu):p\ge0,\int_{X}p\,d\mu=1\}$, where $L^1(\mu)$ is the set of all absolutely integrable functions with respect to $\mu$ and define the $f$-divergence directly on probability density functions. We will also exclusively work with the setting $X=\mathbb{R}$, $\mathcal{A}=\mathcal{B}(\mathbb{R})$, and $\mu=\lambda$ (the Lebesgue measure). In what follows, we will just write
+\begin{align*}
+    \mathcal{P}:=\left\{p\in L^1(\mathbb{R}):p\ge0,\int p(x)\,dx=1\right\}
+\end{align*}
+for the set of all probability densities. Note that $\mathcal{P}\subseteq L^1(\mathbb{R})$ is convex.
 
 \begin{Def}[$f$-divergence]
     Let $f:\mathbb{R}_{>0}\to\mathbb{R}$ be a convex function with $f(1)=0$. The $f$-divergence is defined as
     \begin{align*}
-        D_f(p\|q)\coloneqq\int q(x)f\left(\frac{p(x)}{q(x)}\right)\,dx.
+        D_f(p\|q)\coloneqq\int q(x)f\left(\frac{p(x)}{q(x)}\right)\,dx,
     \end{align*}
+    with the usual conventions $f(0):=\lim_{t\downarrow0}f(t)$, $0f(0/0):=0$ and $0f(a/0):=\lim_{t\downarrow0}tf(a/t)$, $a>0$.
 \end{Def}
 
-The $f$-divergence has the following invariance property: it holds $D_f(p\| q)=D_g(p\|q)$ whenever $f(x)-g(x)=c(x-1)$ for some constant $c\in\mathbb{R}$. We will abbreviate this by $f\sim g$.
-
-Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Proposition~\ref{prop:f_divergence_symmetric} yields the answer.
-
-\begin{Prop}\label{prop:f_divergence_symmetric}
-    The $f$-divergence is symmetric iff $f\sim f^{\ast}$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(x)=xf(1/x)$.
-\end{Prop}
-
-\begin{proof}
-    First, assume that $f(x)=xf(x^{-1})+c(x-1)$. Then $D_f(p\|q)=\int qf(p/q)=\int q((p/q)f(q/p)+c((p/q)-1))=\int pf(q/p)+c\int(p-q)=D_f(q\|p)$. Now assume that the $f$-divergence is symmetric on $\mathcal{P}$. We have $D_f(p\|q)=D_f(q\|p)=\int pf(q/p)=\int q (p/q)f(1/(p/q))=\int qf^{\ast}(p/q)=D_{f^{\ast}}(p\|q)$. Now, let $x,y\in\mathbb{R}$ be arbitrary with $x<1<y$. Set $q_1:=(y-1)/(y-x)$ and $q_2:=(1-x)/(y-x)$ and define the two densities $g(z):=q_1\mathbf{1}\{0\le z<1\}+q_2\mathbf{1}\{1\le z<2\}$ and $h(z):=xq_1\mathbf{1}\{0\le z<1\}+yq_2\mathbf{1}\{1\le z<2\}$. We get
-    \begin{align*}
-        D_f(h\|g)&=\int g(z)f\left(\frac{h(z)}{g(z)}\right)\,dz=q_1f(x)+q_2f(y),\quad\text{ and }\\
-        D_{f^{\ast}}(h\|g)&=\int g(z)f^{\ast}\left(\frac{h(z)}{g(z)}\right)\,dz=q_1f^{\ast}(x)+q_2f^{\ast}(y)
-    \end{align*}
-    and therefore $(f(x)-f^{\ast}(x))/(x-1)=(f(y)-f^{\ast}(y))/(y-1)$. It follows that $(f(x)-\Tilde{f}(x))/(x-1)$ is constant on $\mathbb{R}\setminus\{1\}$ and thus $f(x)-\Tilde{f}(x)=c(x-1)$ for all $x\in\mathbb{R}$.
-\end{proof}
+Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Fortunately, the $f$-divergence has a well known symmetry characterization: $D_f$ is symmetric, that is, $D_f(p\|q)=D_f(q\|p)$ for all $p,q\in\mathcal{P}$ if and only if there exists a constant $c\in\mathbb{R}$ such that $f(t)-f^{\ast}(t)=c(t-1)$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(t):=tf(t^{-1})$, for a reference see~\cite[Propositions 1 and 2]{sason_f-divergences_2018} or~\cite[Theorem 1]{cerone_bounds_nodate}.
 
 In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just the symmetric divergences, since such divergences lead to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.
 
