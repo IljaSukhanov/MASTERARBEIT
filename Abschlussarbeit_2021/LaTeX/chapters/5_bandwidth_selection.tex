@@ -168,7 +168,7 @@ for the set of all probability densities. Note that $\mathcal{P}\subseteq L^1(\m
 
 Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Fortunately, the $f$-divergence has a well known symmetry characterization: $D_f$ is symmetric, that is, $D_f(p\|q)=D_f(q\|p)$ for all $p,q\in\mathcal{P}$ if and only if there exists a constant $c\in\mathbb{R}$ such that $f(t)-f^{\ast}(t)=c(t-1)$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(t):=tf(t^{-1})$, for a reference see~\cite[Propositions 1 and 2]{sason_f-divergences_2018}.
 
-In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one of the symmetric divergences, namely the $\beta$-divergence with $\beta=1$ (which is half of the squared $L^2$ distance) since such divergences lead to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.
+In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one of the symmetric divergences, namely the $\beta$-divergence with $\beta=1$ introduced below in Section~\ref{sec:bregman_divergences} (which is half of the squared $L^2$ distance) since such divergences lead to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.
 
 A prominent parametrized family of $f$-divergences is the so called \textit{$\alpha$-divergence} (see \cite[Equation~(7)]{cichocki_families_2010}) where the function $f=f_{\alpha}$, $\alpha\in(0,1)$ is given by
 \begin{align*}
@@ -181,7 +181,7 @@ The actual divergence is then given by
 
 Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q):=(1/2)\int(\sqrt{p(x)}-\sqrt{q(x)})^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx$ is the squared Hellinger distance. In particular, by the symmetry characterization of $f$-divergences, the $\alpha$-divergence is symmetric iff $\alpha=1/2$. By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q):=\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
-Another class of divergences are the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. Setting $s=1$ recovers the well known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the following chain of inequalities: $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
+Another class of divergences are the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. We have used a normalizing factor $1/2$ so that when setting $s=1$ we recover the well known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the following chain of inequalities: $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
 
 Another important divergence that belongs to the class of $f$-divergences is the \textit{Jensen Shannon divergence}. The function $f=f_{\operatorname{JS}}$ is set to be
 \begin{align*}
@@ -193,7 +193,7 @@ The divergence is then given by $\operatorname{JS}(p,q):=\int q(x)f_{\operatorna
 \end{align}
 that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ and $q$ to their equally weighted mixture.
 
-\subsection{Bregman divergences}
+\subsection{Bregman divergences}\label{sec:bregman_divergences}
 
 The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. The Bregman divergence is a generalization of the Euclidean distance and is applied in a variety of instances where the Euclidean distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
 
