@@ -48,7 +48,7 @@ Here, unbiasedness means that the expectations of $\mathbb{E}_{X\sim f}[\hat{f}_
 \begin{align*}
     \hat{h}_{\operatorname{CV}}\in\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h):=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
 \end{align*}
-In terms of convergence guaranty, if $K$ has additionally compact support and Hölder-continuous second derivative and $f$ has integrable and bounded first and second derivative, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Theorem~2.2]{hall_extent_nodate}. In particular, this implies that the integrated squared error evaluated at $\hat{h}_{\text{CV}}$ converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ in probability.
+In terms of convergence guaranty, if $K$ has additionally compact support and Hölder-continuous second derivative and $f$ has integrable and bounded first and second derivatives and the second derivative is uniformly continuous, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Theorem~2.2]{hall_extent_nodate}. In particular, this implies that the integrated squared error evaluated at $\hat{h}_{\text{CV}}$ converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ in probability.
 
 \textbf{Plug-in methods}
 
@@ -85,15 +85,12 @@ Minimizing the AMISE leads to
 
 We have $h_{\text{oracle}}=h_{\operatorname{AMISE}}+\mathbf{o}(n^{-1/5})$ (see again~\cite{chacon_existence_nodate}), which implies that $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent.\textcolor{red}{The optimal bandwidth thus behaves like $n^{-1/5}$.}
 
-Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point and try to find estimators $\hat{R}(f'')$ for $R(f'')=\|f''\|_2^2$. Silverman's rule of thumb works with the Gaussian kernel and assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
+Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point and try to find estimators for $\|f''\|_2^2$. Silverman's rule of thumb works with the Gaussian kernel and assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
 \begin{align*}
-    \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}
+    \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad\text{and } h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}.
 \end{align*}
 
-There are many other more sophisticated plug-in methods, one of them being the Sheather and Jones' plug in selector. It is used fairly commonly in practice; see, for example, the documentation of the kde packages of the statistics software R and SAS.
-
-
-\textcolor{red}{There exist consistency results for this plug in selector. It converges to the oracle bandwidth $h_{\text{oracle}}$ at a rate $n^{-5/14}$.}
+There are many other more sophisticated plug-in methods, one of them being the Sheather and Jones' plug in selector, denoted by $\hat{h}_{\text{SJ}}$ It is used fairly commonly in practice; see, for example, the documentation of the kde packages of the statistics software R and SAS. There exist consistency results for this plug-in selector. The result in~\cite[Equation~(10)]{sheather_reliable_1991} implies that the relative error $(\hat{h}_{\text{SJ}}-h_{\text{oracle}})/h_{\text{oracle}}$ converges to zero in probability.
 
 \textbf{Exact MISE representation for Gaussian mixture model}
 
