@@ -165,6 +165,8 @@ that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ a
 
 \todo[inline]{02.11: Polish!}
 
+\todo[inline]{---clean begin---}
+
 The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. The Bregman divergence is a generalization of the Euclidean distance and is applied in a variety of instances where the Euclidean distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
 
 \begin{Def}
@@ -193,6 +195,8 @@ Subsequently, we will consider the inner product space $(L^2,\langle\cdot,\cdot\
 We have $D_{\phi}=D_{\Tilde{\phi}}$ if and only if $\phi-\Tilde{\phi}$ is an affine function. To see the one direction, we know that this is equivalent to $F_{\phi}(p)-F_{\Tilde{\phi}}(p)=\langle a,p\rangle_2+b$ for all $p\in L^2$. In particular for $p_t(x)=t\mathbf{1}\{x\in[0,1]\}$. Plugging this particular choice of $p_t$ into the equation yields $\phi(x)-\Tilde{\phi}(x)=t\int_0^1a(x)\,dx+b$, that is, $\phi-\Tilde{\phi}$ is affine. The other direction follows from a simple calculation.
 
 We also have that $D_{\phi}$ is symmetric if and only if $\phi$ is a quadratic function given that we additionally assume $\phi\in C^2(\mathbb{R})$. If $D_{\phi}$ is symmetric, then $F_{\phi}(p)$ has the representation in Equation~\eqref{eq:general_symmetry_characterization} for all $p\in L^2$. Plugging in the particular choice $p(x)=x\mathbf{1}\{x\in[0,1]\}$ into Equation~\eqref{eq:general_symmetry_characterization} and recalling the condition $\phi(0)=\phi'(0)=0$, we arrive at $\phi$ having the form $\phi(x)=(\kappa/2)x^2$ with $\kappa=\langle\mathbf{1}\{\cdot\in[0,1]\}T\mathbf{1}\{\cdot\in[0,1]\}\rangle$. The converse direction is again a simple calculation.
+
+\todo[inline]{---clean end---}
 
 The $\beta$-divergence $D_{\beta}$, $\beta>0$ is defined by $D_{\beta}(p\|q):=D_{\phi_{\beta}}(p\|q)$, where $\phi_{\beta}(t):=\beta^{-1}(1+\beta)^{-1}t^{1+\beta}$, $t\in\mathbb{R}$. It is thus given by
 \begin{align*}
