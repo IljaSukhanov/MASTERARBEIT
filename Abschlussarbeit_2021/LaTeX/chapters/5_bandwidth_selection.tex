@@ -32,7 +32,7 @@ The question of how to choose the bandwidth $h$ is widely known in the literatur
     The mean integrated squared error (MISE) is $\operatorname{MISE}(h)\coloneqq\mathbb{E}[\operatorname{ISE}(h)]$.
 \end{Def}
 
-Let $\hat{h}_0$ be the sample dependent minimizer of the integrated squared error.
+Let $\hat{h}_0$ be the sample dependent minimizer of the integrated squared error and let $h_{\text{oracle}}$ be the minimizer of the mean integrated squared error. It is important to be convinced that $\operatorname{MISE}$ actually has a global minimum. To this end, we refer to Chacón et al.~\cite[Theorem~1]{chacon_existence_nodate} which tells us that a global minimum always exists if $K$ is bounded, continuous at zero and attains its maximum at zero, which, for example, is true for both the Epanechnikov and Gaussian kernel.
 
 \textbf{Cross-validation methods}
 
@@ -64,8 +64,6 @@ with
 
 This decomposition gives conditions on the bandwidth $h=h_n$ so that the kernel density estimate $\hat{f}_{h}$ is consistent. In order for the bias to vanish, it must hold $h_n\to0$, because then $\|K_{h_n}\ast f-f\|_2$ for $n\to\infty$. For the variance to vanish, we must require $nh_n\to\infty$. An example of such a sequence is $h_n=cn^{-\alpha}$ for some $c>0$ and $\alpha\in(0,1)$.
 
-It is important to be convinced that $\operatorname{MISE}$ actually has a global minimum. To this end, we refer to Chacón et al.~\cite[Theorem~1]{chacon_existence_nodate} which tells us that a global minimum always exists if $K$ is a nonnegative kernel that peaks at $0$.
-
 \textbf{Asymptotic expansion of $\operatorname{MISE}(h)$}
 
 The first non-vanishing asymptotic approximation of the MISE is
@@ -90,7 +88,7 @@ Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point and try to f
     \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad\text{and } h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}.
 \end{align*}
 
-There are many other more sophisticated plug-in methods, one of them being the Sheather and Jones' plug in selector, denoted by $\hat{h}_{\text{SJ}}$ It is used fairly commonly in practice; see, for example, the documentation of the kde packages of the statistics software R and SAS. There exist consistency results for this plug-in selector. The result in~\cite[Equation~(10)]{sheather_reliable_1991} implies that the relative error $(\hat{h}_{\text{SJ}}-h_{\text{oracle}})/h_{\text{oracle}}$ converges to zero in probability.
+There are many other more sophisticated plug-in methods, one of them being the Sheather and Jones' plug in selector, denoted by $\hat{h}_{\text{SJ}}$ It is used fairly commonly in practice; see, for example, the documentation of the kde packages of the statistics software R and SAS. There exist consistency results for this plug-in selector under suitable assumptions on $f$ and $K$: the result in~\cite[Equation~(10)]{sheather_reliable_1991} implies that the relative error $(\hat{h}_{\text{SJ}}-h_{\text{oracle}})/h_{\text{oracle}}$ converges to zero in probability.
 
 \textbf{Exact MISE representation for Gaussian mixture model}
 
