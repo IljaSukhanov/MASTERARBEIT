@@ -195,6 +195,8 @@ that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ a
 
 \subsection{Bregman divergences}\label{sec:bregman_divergences}
 
+\todo[inline]{02.11: Polish!}
+
 The second major class are Bregman divergences. We give a general definition below to show that this concept of distance applies not just to probability densities. The Bregman divergence is a generalization of the Euclidean distance and is applied in a variety of instances where the Euclidean distance is also used, for example, clustering~\cite{banerjee_clustering_2004}.
 
 \begin{Def}
@@ -295,6 +297,8 @@ Error control is important because approximation errors in the similarity matrix
 \section{Assembly of Scale Similarity Matrices}
 
 \subsection{Properties of Divergence matrices and its Perron vector}
+
+\todo[inline]{01.11: Polish!}
 
 In this subsection, we give structural results on the divergence matrix $D=(D_{ij})_{i,j=1}^{N}$ with $D_{ij}:=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the above similarity transformation, because else our scale selection procedure will choose either the first or last scale.
 
@@ -408,6 +412,8 @@ We now show that when choosing the Gaussian kernel, the family of kernel density
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
 
+\todo[inline]{01.11: Polish!}
+
 A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ is called conditionally negative definite if
 \begin{align*}
     \sum_{i,j=1}^{n}a_ia_jD(x_i,x_j)\le0
@@ -474,6 +480,8 @@ Taking the limit $\tau\to+\infty$ yields $S=11^{T}$, which corresponds to maxima
 Yet another advantage of the exponential transformation is the obvious fact that the entries of the resulting similarity matrix $S$ are all positive and therefore by the Perron-Frobenius theorem, $S$ has a real valued eigenvalue $\lambda_{\max}$ which is strictly larger than the absolute value of all other eigenvalues. The corresponding eigenvector $v_{\max}$ (called the Perron vector) has all positive entries and is unique up to scaling.
 
 \subsection{Bandwidth grid}
+
+\todo[inline]{02.11: Polish!}
 
 The choice of the correct bandwidth grid is essential. Set
 \begin{align*}
