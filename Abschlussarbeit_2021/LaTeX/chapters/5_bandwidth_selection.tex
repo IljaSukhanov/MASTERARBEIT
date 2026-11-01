@@ -265,7 +265,7 @@ where $\operatorname{erfc}(z):=2\pi^{-1/2}\int_z^{\infty}e^{-t^2}\,dt$ is the co
 \begin{align*}
     G_{ij}\approx G_{ij}^{(\Omega,K)}:=\frac{\Omega}{\pi}\sum_{k=0}^{K}c_kg_{ij}(\omega_k),
 \end{align*}
-where $c_k:=1/(2K)$ for $k=0,K$ and $c_k:=1/K$ else are the quadrature weights and $\omega_k=k\Omega/K$, $k=0,1,\dots,K$ are equidistant nodes. We determine a suitable number of nodes experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, setting $E_K:=\max_l\max_{ij}|G_{ij}-G_{ij}^{(\Omega_0,K)}|$ and choosing $K$ so that $E_k\le\delta$ for some prescribed error tolerance $\delta>0$. See Figure~\ref{fig:fourier_approx_experiment} for a visualization of this experiment. It suggests the choice of $K_0=1536$ when prescribing $\delta=10^{-8}$.
+where $c_k:=1/(2K)$ for $k=0,K$ and $c_k:=1/K$ else are the quadrature weights and $\omega_k=k\Omega/K$, $k=0,1,\dots,K$ are equidistant nodes. We determine a suitable number of nodes experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, setting $E_K:=\max_l\max_{ij}|G_{ij}-G_{ij}^{(\Omega_0,K)}|$ (the maximum absolute error) and choosing $K$ so that $E_k\le\delta$ for some prescribed error tolerance $\delta>0$. See Figure~\ref{fig:fourier_approx_experiment} for a visualization of this experiment. It suggests the choice of $K_0=1536$ when prescribing $\delta=10^{-8}$.
 
 Having chosen $\Omega$ and $K$ we carry out a small experiment comparing the runtime efficiency between exact formula and Fourier approximation. We again sample $(X^{(l)}_1,\dots,X_n^{(l)})$, $l=1,\dots,L$ and measure the time it took to compute the exact $G_{ij}$ and the approximate $G_{ij}^{(\Omega_0,K_0)}$ for all bandwidth pairs $h_i,h_j$. The mean computation times and the maximum error that was made are reported in Table~\ref{tab:exact_fourier_gram_runtime}.
 
@@ -273,30 +273,24 @@ Having chosen $\Omega$ and $K$ we carry out a small experiment comparing the run
     \centering
     \begin{tabular}{lrr}
         \hline
-        Method & Mean time (s) & Maximum absolute error \\
+        Method & Mean time (s) & Maximum absolute error\\
         \hline
-        Exact formula         & 0.297500 & --- \\
-        Fourier approximation & 0.010111 & $9.182 \times 10^{-11}$ \\
+        Exact formula & 0.297500 & ---\\
+        Fourier approximation & 0.010111 & $9.182\times 10^{-11}$\\
         \hline
     \end{tabular}
-    \caption{Runtime comparison over 100 independent standard-normal
-        samples of size $n=200$, using 50 geometrically spaced
-        bandwidths in $[0.01,2]$, $\Omega=450$, and $K=1536$.
-        Times are arithmetic means for computing the complete Gram
-        matrix. The maximum absolute error is taken over all samples
-        and bandwidth pairs, including diagonal entries, using the
-        exact formula as reference.}
+    \caption{Runtime comparison over $L=100$ independent standard normal samples of size $n=200$ with $N=50$ geometrically spaces bandwidths on $[0.01,2]$, $\Omega_0=450$ and $K_0=1536$.}
     \label{tab:exact_fourier_gram_runtime}
 \end{table}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf}
+    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf}
     \caption{}
     \label{fig:fourier_approx_experiment}
 \end{figure}
 
-Error control is of importance because we must ensure that we control the error on sine of the angle between the Perron vector $v$ of the true similarity matrix $S$ and the Perron vector $\Tilde{v}$ of the approximate similarity matrix which is actually computed in practice. In case of the $L^2$ divergence, the approximation gives a substantial efficiency advantage. Other divergences might not even have closed form expressions (see~\cite{hershey_approximating_2007}), and approximation becomes the only choice.
+Error control is important because approximation errors in the similarity matrix can affect its Perron vector. In case of the $L^2$ divergence, the Fourier approximation provides a substantial computational advantage. Other divergences might not even have closed form expressions between kernel density estimates, and approximation may be necessary; see, for example,~\cite{hershey_approximating_2007} where the approximation of the KL divergence between Gaussian mixture models is discussed. This is particularly relevant  in our setting because a Gaussian kernel density estimate $\hat{f}_h$ can also be seen as the density of a GMM with weights $1/n$, means $X_j$, and variances $h^2$.
 
 \section{Assembly of Scale Similarity Matrices}
 
