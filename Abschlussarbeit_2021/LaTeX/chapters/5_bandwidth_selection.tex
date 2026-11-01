@@ -6,7 +6,7 @@ In this chapter, we apply the scale selection methodology introduced in~\cite{Ba
 
 \todo[inline]{01.11: Polish!}
 
-We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
+We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. We assume throughout that $f$ is square integrable, twice continuously differentiable, and that its second derivative is square integrable. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R},
 \end{align*}
@@ -32,6 +32,8 @@ The question of how to choose the bandwidth $h$ is widely known in the literatur
     The mean integrated squared error (MISE) is $\operatorname{MISE}(h)\coloneqq\mathbb{E}[\operatorname{ISE}(h)]$.
 \end{Def}
 
+Let $\hat{h}_0$ be the sample dependent minimizer of the integrated squared error.
+
 \textbf{Cross-validation methods}
 
 The ISE can be written as
@@ -46,9 +48,7 @@ Here, unbiasedness means that the expectations of $\mathbb{E}_{X\sim f}[\hat{f}_
 \begin{align*}
     \hat{h}_{\operatorname{CV}}\in\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h):=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
 \end{align*}
-In terms of convergence guaranty, if $K$ has additionally compact support and Hölder-continuous derivative, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Equation~(4)]{heidenreich_bandwidth_2013}. In particular, this implies that the integrated squared error evaluated at $\hat{h}_{\text{CV}}$ converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ in probability.
-
-An estimator for \(\mathbb{E}_{X\sim f}[\hat f_h(X)]\) is given by \(n^{-1}\sum_{i=1}^{n}\hat f_{h,-i}(X_i)\). For fixed \(h\), this estimator has the same expectation as \(\mathbb{E}_{X\sim f}[\hat f_h(X)]\) when averaged over the sample.
+In terms of convergence guaranty, if $K$ has additionally compact support and Hölder-continuous second derivative and $f$ has integrable and bounded first and second derivative, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Theorem~2.2]{hall_extent_nodate}. In particular, this implies that the integrated squared error evaluated at $\hat{h}_{\text{CV}}$ converges to the integrated squared error evaluated at its true minimizer $\hat{h}_0$ in probability.
 
 \textbf{Plug-in methods}
 
@@ -90,15 +90,10 @@ Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point and try to f
     \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}
 \end{align*}
 
-Among the many other more sophisticated plug in methods, we present the (improved) Sheather and Jones' plug in selector, since it is used fairly commonly in practice; see for example the documentation of the kde packages of the statistics sowftware R and SAS.
+There are many other more sophisticated plug-in methods, one of them being the Sheather and Jones' plug in selector. It is used fairly commonly in practice; see, for example, the documentation of the kde packages of the statistics software R and SAS.
 
-They approximate $R(f'')=\|f''\|_2^2$ by $R(\hat{f}_g'')=\|\hat{f}_g''\|_2^2$, where $\hat{f}_g''$ is the second derivative of the kernel density estimate with pilot bandwidth $g$, whose choice is a major problem. They choose it so that the leading bias term of the mean squared error $\mathbb{E}[(R(f'')-R(\hat{f}_g''))^2]$ cancels. This choice leads to $g^7=R(K'')\mu_2(K)^{-1}R(f''')^{-1}n^{-1}$. They then make this depend on $h_{\operatorname{AMISE}}$ by solving Equation~\eqref{eq:h_amise} for $n$ and plugging it into the formula for $g^7$, which results in $g(h)=C_K(R(f'')/R(f'''))^{1/7}h^{5/7}$.
 
-Of course, the ratio $R(f'')/R(f''')$ has to be estimated separately, which is done by $R(\hat{f}_a'')/R(\hat{f}_b''')$ with $a$ and $b$ chosen following Silverman's rule of thumb. The resulting equation $\hat{g}(h)=C_K(R(\hat{f}_a'')/R(\hat{f}_b'''))^{1/7}h^{5/7}$ is plugged into $R(f_g'')$, which in turn is plugged into Equation~\eqref{eq:h_amise}. The Equation
-\begin{align*}
-    h=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|\hat{f}_{\hat{g}(h)}''\|_2^2}\right)^{1/5}
-\end{align*}
-is solved numerically for $h$. \textcolor{red}{There exist consistency results for this plug in selector. It converges to the oracle bandwidth $h_{\text{oracle}}$ at a rate $n^{-5/14}$.}
+\textcolor{red}{There exist consistency results for this plug in selector. It converges to the oracle bandwidth $h_{\text{oracle}}$ at a rate $n^{-5/14}$.}
 
 \textbf{Exact MISE representation for Gaussian mixture model}
 
