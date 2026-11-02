@@ -1,10 +1,8 @@
 \chapter{Spectral Scale Selection for Kernel Density Estimation}\label{chap:kde}
 
-In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$. The goal is to develop a methodological connection between the spectral scale selection principle introduced in~\cite{Baralic2026} and the classical problem in nonparametric statistics of bandwidth selection for kernel density estimation. We will explain why the spectral construction selects what it selects and how this selection relates to classical bandwidth selection procedures. More concretely, let $h_{\text{oracle}}$ be the bandwidth that minimizes $\mathbb{E}[\|f-\hat{f}_h\|_2^2]$ and define $S_{ij}^{(\lambda)}=e^{-\lambda D_{ij}}$ with $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ for some candidate bandwidths $0<h_1<\dots<h_N$. Does the peak of the Perron vector of $S$ relate to $h_{\text{oracle}}$?
+\textcolor{red}{In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$. The goal is to develop a methodological connection between the spectral scale selection principle introduced in~\cite{Baralic2026} and the classical problem in nonparametric statistics of bandwidth selection for kernel density estimation. We will explain why the spectral construction selects what it selects and how this selection relates to classical bandwidth selection procedures. More concretely, let $h_{\text{oracle}}$ be the bandwidth that minimizes $\mathbb{E}[\|f-\hat{f}_h\|_2^2]$ and define $S_{ij}^{(\lambda)}=e^{-\lambda D_{ij}}$ with $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ for some candidate bandwidths $0<h_1<\dots<h_N$. Does the peak of the Perron vector of $S$ relate to $h_{\text{oracle}}$?}
 
 \section{Preliminaries on Kernel Density Estimation}
-
-\todo[inline]{01.11: Polish!}
 
 We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. We assume throughout that $f$ is square integrable, twice continuously differentiable, and that its second derivative is square integrable. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
@@ -48,23 +46,19 @@ Here, unbiasedness means that the expectations of $\mathbb{E}_{X\sim f}[\hat{f}_
 \end{align*}
 In terms of convergence guaranty, if $K$ has additionally compact support and Hölder-continuous second derivative and $f$ has integrable and bounded first and second derivatives and the second derivative is uniformly continuous, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Theorem~2.2]{hall_extent_nodate}. In particular, this implies that the ISE evaluated at $\hat{h}_{\text{CV}}$ converges to the ISE evaluated at its true minimizer $\hat{h}_0$ in probability.
 
-\todo[inline]{---clean begin---}
-
 \textbf{Plug-in methods}
 
 The following considerations can be compared with the book by Tsybakov~\cite[Section~1.2]{tsybakov2009introduction}. The bias-variance decomposition of the mean integrated squared error is
 \begin{align*}
     \operatorname{MISE}(h)&=\underbrace{\int\operatorname{Var}[\hat{f}_h(x)]\,dx}_{=:\operatorname{IV}(h)}+\underbrace{\int\operatorname{Bias}(\hat{f}_h(x))^2\,dx}_{=:\operatorname{ISB}(h)},
 \end{align*}
-where we denoted by $\operatorname{IV}(h)$ the integrated variance of $\hat{f}_h$ and by $\operatorname{ISB}$ the integrated squared bias of $\hat{f}_h$. The integrated variance can be bounded above by $\|K\|_2^2/(nh)$, cf.~\cite[Proposition~1.4]{tsybakov2009introduction} whereas the integrated squared bias can be bounded above by $4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$, cf.~\cite[Equations~(A.2) and~(A4)]{tsybakov2009introduction}. The sum $\operatorname{AMISE}(h):=\|K\|_2^2/(nh)+4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$ is called the asymptotic mean integrated squared error (AMISE), and by~\cite[Proposition~1.6]{tsybakov2009introduction} the relative error $(\operatorname{MISE}(h)-\operatorname{AMISE}(h))/(\operatorname{AMISE}(h))$ tends to zero for $h\downarrow0$. Minimizing the AMISE leads to
+where we denoted by $\operatorname{IV}(h)$ the integrated variance of $\hat{f}_h$ and by $\operatorname{ISB}$ the integrated squared bias of $\hat{f}_h$. The integrated variance can be bounded above by $\|K\|_2^2/(nh)$, cf.~\cite[Proposition~1.4]{tsybakov2009introduction} whereas the integrated squared bias can be bounded above by $4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$, cf.~\cite[Equations~(A.2) and~(A.4)]{tsybakov2009introduction}. The sum $\operatorname{AMISE}(h):=\|K\|_2^2/(nh)+4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$ is called the asymptotic mean integrated squared error (AMISE), and by~\cite[Proposition~1.6]{tsybakov2009introduction} the relative error $(\operatorname{MISE}(h)-\operatorname{AMISE}(h))/(\operatorname{AMISE}(h))$ tends to zero for $h\downarrow0$. Minimizing the AMISE leads to
 \begin{align}\label{eq:h_amise}
-    h_{\operatorname{AMISE}}(n):=\underbrace{\left(\frac{\|K\|_2^2}{\mu_2(K)^2\|f''\|_2^2}\right)^{1/5}}_{=:C(f,K)}n^{-1/5.}
+    h_{\operatorname{AMISE}}(n):=\underbrace{\left(\frac{\|K\|_2^2}{\mu_2(K)^2\|f''\|_2^2}\right)^{1/5}}_{=:C(f,K)}n^{-1/5}.
 \end{align}
 Intuitively, the chosen bandwidth should depend on the sample size $n$ because the more data we have, the narrower we can choose the kernels around each observation without making the kernel density estimate too sensitive to the particular sample. These upper bounds above suggest sufficient conditions on the bandwidth sequence $h_n$ so that the kernel density estimate $\hat{f}_h$ is consistent, i.e., $\operatorname{MISE}(h_n)\to0$ as $n\to\infty$. If $h_n\to0$, the bias term vanishes and if $nh_n\to\infty$, the variance vanishes.
 
 For kernels that are bounded and continuous at zero and attain their maximum at zero, we have $h_{\text{oracle}}(n)=h_{\operatorname{AMISE}}(n)+\mathbf{o}(n^{-1/5})$ (see~\cite[Equation~(8)]{chacon_existence_nodate}), which implies that $h_{\text{oracle}}(n)/h_{\operatorname{AMISE}}(n)=1+C(f,K)^{-1}\mathbf{o}(n^{-1/5})n^{1/5}\to1$ for $n\to\infty$, that is, $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent. The optimal bandwidth $h_{\text{oracle}}$ therefore behaves like $n^{-1/5}$, that is, $h_{\text{oracle}}\asymp n^{-1/5}$.
-
-\todo[inline]{---clean end---}
 
 Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point and try to find estimators for $\|f''\|_2^2$. Silverman's rule of thumb works with the Gaussian kernel and assumes that $f$ is the density of a normal distribution $N(0,\sigma^2)$. In this case, $\|f^{''}\|_2^2$ can simply be computed and plugged into Equation~\eqref{eq:h_amise}:
 \begin{align*}
@@ -363,20 +357,21 @@ is minimized by the probability vector $\hat{p}_i\in\mathbb{R}^{N}$ with entries
 
 \todo[inline]{02.11: Polish!}
 
-The choice of the correct bandwidth grid is essential. Set
-\begin{align*}
-    \mathcal{H}_N=\{h_1,\dots,h_N\},\quad0<h_{\min}:=h_1<\dots<h_N=:h_{\max}.
-\end{align*}
+The choice of the correct bandwidth grid is essential. Let $N\in\mathbb{N}$, $N\ge2$. We fix the two endpoints $0<h_{\min}<h_{\max}$ and set
+\begin{align}\label{eq:bandwidth_grid}
+    \mathcal{H}_N:=\{h_1,\dots,h_N\},\quad0<h_{\min}=h_1<\dots<h_N=h_{\max}.
+\end{align}
 The next definition gives a general construction principle for such a bandwidth grid.
 
 \begin{Def}\label{def:r_linear}
-    Let $0<r\le 1$. A grid $\mathcal{H}_N$ is said to be $r$-linear if
+    Let $0\le r\le 1$. A grid $\mathcal{H}_N$ as given in Equation~\eqref{eq:bandwidth_grid} is said to be $r$-linear if
     \begin{align}\label{eq:def_r_linear}
         \frac{1}{r}h_j^r=\frac{1}{r}h_1^r+\underbrace{\frac{h_N^r-h_1^r}{r(N-1)}}_{=:\Delta_{r,N}}(j-1),\quad j=1,\dots,N.
     \end{align}
+    The case $r=0$ is understood as the limit $r\downarrow0$ as discussed in Remark~\ref{rem:r_linear_grid} below.
 \end{Def}
 
-\begin{Rem}
+\begin{Rem}\label{rem:r_linear_grid}
     The construction in Equation~\eqref{eq:def_r_linear} is just the Box-Cox transformation of a linear grid $\mathcal{H}_N$, compare with \cite[Equation (1)]{box_analysis_1964}. Setting $\psi_r(h)=r^{-1}(h^r-1)$ we see that a grid $\mathcal{H}_N$ is $r$-linear if $\{\psi_r(h_j)\}_{j=1}^{N}$ is a linear grid. Taking the limit $r\to0$ we obtain $\psi_0(h):=\lim\limits_{r\to0}\psi_{r}(h)=\log{h}$. A $0$-linear grid can therefore be seen as a geometric grid. Another interpretation is the following: $h_j$ is the weighted power mean between the two endpoints $h_1$ and $h_N$ with exponent $r$ and weights $w_1=1-(j-1)/(N-1)$ and $w_2=(j-1)/(N-1)$. For reference, see~\cite[Chapter~3.1]{bullen2013handbook}.
 \end{Rem}
 
@@ -394,10 +389,10 @@ The geometric grid can equivalently be written as
 \end{align*}
 Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
-Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}\delta_{ij}^{r,N}$. In other words, we express the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ using the difference between two transformed bandwidths $\psi_r(h_{j_N})-\psi_r(h_{i_N})$ approximately when $N$ is large and $j_N-i_N=\mathbf{o}(N)$.
+Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}(j_N-i_N)\Delta_{r,N}$. In other words, for large $N$ and $|j_N-i_N|=\mathbf{o}(N)$, we approximate the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ in terms of the difference between two transformed bandwidths $\psi_r(h_{j_N})-\psi_r(h_{i_N})=\Delta_{r,N}(j_N-i_N)$.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N=\{0<h_1<\dots<h_N\}$ be a $r$-linear grid with fixed endpoints $h_1=h_{\min}$ and $h_N=h_{\max}$, and let $i=(i_N)_{N\in\mathbb{N}}$ and $j=(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ (the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$). Assume $|j_N-i_N|=\mathbf{o}(N)$. Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid and let $(i_N)_{N\in\mathbb{N}}$ and $(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$ for which $|j_N-i_N|=\mathbf{o}(N)$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ to be the length of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$. Then
     \begin{align*}
         h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2).
     \end{align*}
@@ -416,9 +411,9 @@ Next we formulate a Lemma that gives the first order asymptotic approximation fo
     by properties of the $\mathbf{O}$-notation.
 \end{proof}
 
-The stronger condition $j_N-i_N=\mathbf{O}(1)$ (the difference between the index sequences stays asymptotically bounded) would lead to the remainder $\mathbf{O}(N^{-2})$.
+The stronger condition $j_N-i_N=\mathbf{O}(1)$, meaning that the difference between the index sequences stays asymptotically bounded, would lead to the remainder $\mathbf{O}(N^{-2})$.
 
-\textbf{Motivation for why a geometric grid is the natural choice}
+\textbf{Motivation for a geometric grid}
 
 The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the area under the curve the same. We can measure the width of a kernel $K$, for example, by $s(K)\coloneqq\sqrt{\mu_2(K)}=(\int x^2K(x)\,dx)^{1/2}$. The width of the stretched kernel is $s(K_h)=hs(K)$. Increasing $h$ by the factor $a$ increases $s(K_h)$ by the factor $a$. Choosing a geometric grid means that going from $h_j$ to $h_{j+1}$ increases $s(K_{h_j})$ by the same factor $q_N$. Thus, each step stretches the kernel by the same factor.
 
