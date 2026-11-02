@@ -332,22 +332,20 @@ for all $x_1,\dots,x_n\in X$ and $a_1,\dots,a_n\in\mathbb{R}$ with $\sum_{i}a_i=
 The following Theorem connects the concepts presented above and is due to Schoenberg; see~\cite{berg_harmonic_1984}.
 
 \begin{Thm}[Schoenberg]\label{thm:schoenberg}
-    Let $D:X\times X\to\mathbb{R}$ be a symmetric map with $D(x,x)=0$ for all $x\in X$. Let $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$ be any completely monotone function that is continuous at zero.
-    
-    The following statements are equivalent:
+    Let $D:X\times X\to\mathbb{R}$ be a symmetric and nonnegative map with $D(x,x)=0$ for all $x\in X$. The following statements are equivalent:
     \begin{enumerate}
-        \item[(a)] $D:X\times X\to\mathbb{R}$ is conditionally negative definite and nonnegative.
-        \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive semi-definite.
+        \item[(a)] $D:X\times X\to\mathbb{R}$ is conditionally negative definite.
+        \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive semi-definite for any completely monotone function $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$ that is continuous at zero.
         \item[(c)] There exists some Hilbert space embedding $\Phi:X\to\mathcal{H}$ such that $D(x,y)=\|\Phi(x)-\Phi(y)\|_{\mathcal{H}}^{2}$.
     \end{enumerate}
     The equivalence $(a)\iff(b)$ can be strengthened to strict positive definiteness by additionally assuming that $D(x,y)>0$ for all $x\ne y$ (which is the case for divergences) and requiring $\phi$ to be non-constant and the points $x_1,\dots,x_n$ to be pairwise distinct.
 \end{Thm}
 
 \begin{proof}
-    Let $D$ be conditionally negative definite. By~\cite[Theorem~2.2]{berg_harmonic_1984} this is equivalent to $\Tilde{S}_t=(\exp{(-tD(x_i,x_j))})_{i,j=1}^{n}$ being positive semi-definite for all finite choices of points $x_1,\dots,x_n\in X$. Let $\phi$ be a completely monotone function. Then by~\cite[Corollary~6.14]{berg_harmonic_1984}, there exists a measure $\mu$ on $\mathcal{B}([0,\infty))$ such that $\phi(z)=\int_{[0,\infty)}e^{-tz}\,d\mu(t)$. By the continuity of $\phi$ at zero and the monotone convergence theorem we have $\mu([0,\infty))=\phi(0)<\infty$. This makes $\phi(D(x_i,x_i))=\phi(0)$ well defined. Consequently, we write
+    Let $D$ be conditionally negative definite. By~\cite[Theorem~2.2]{berg_harmonic_1984} this is equivalent to $\Tilde{S}_t=(\exp{(-tD(x_i,x_j))})_{i,j=1}^{n}$ being positive semi-definite for all finite choices of points $x_1,\dots,x_n\in X$. Let $\phi$ be a completely monotone function. Then by~\cite[Corollary~6.14]{berg_harmonic_1984}, there exists a nonnegative measure $\mu$ on $\mathcal{B}([0,\infty))$ such that $\phi(z)=\int_{[0,\infty)}e^{-tz}\,d\mu(t)$. By the continuity of $\phi$ at zero and the monotone convergence theorem we have $\mu([0,\infty))=\phi(0)<\infty$. This makes $\phi(D(x_i,x_i))=\phi(0)$ well defined. Consequently, we write
     \begin{align*}
         \sum_{i,j=1}^{n}a_ia_j\phi(D(x_i,x_j))&=\sum_{i,j=1}^{n}a_ia_j\int\limits_{[0,\infty)}\exp{(-tD(x_i,x_j))}\,d\mu(t)\\&
-        =\int_{0}^{\infty}\underbrace{\sum_{i,j=1}^{n}a_ia_j\exp{(-tD(x_i,x_j))}}_{=a^{T}\Tilde{S}_ta\ge0}\,d\mu(t)\ge0
+        =\int\limits_{[0,\infty)}\underbrace{\sum_{i,j=1}^{n}a_ia_j\exp{(-tD(x_i,x_j))}}_{=a^{T}\Tilde{S}_ta\ge0}\,d\mu(t)\ge0
     \end{align*}
     for all $a_1,\dots,a_n\in\mathbb{R}$. This shows that the matrix $S=(\phi(D(x_i,x_j)))_{i,j=1}^{n}$ is positive semi-definite. If $(b)$ holds, then $(a)$ follows directly by the equivalence stated in~\cite[Theorem~2.2]{berg_harmonic_1984} since $\exp{(-t\cdot)}$ is a completely monotone function for all $t>0$. \cite[Proposition~3.2]{berg_harmonic_1984} gives the implication $(a)\implies (c)$, while the reverse direction can easily be checked by us: it holds
     \begin{align*}
