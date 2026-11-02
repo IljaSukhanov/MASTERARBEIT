@@ -392,7 +392,7 @@ Taking the limit $N\to+\infty$ increases the fineness of the grid.
 Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}(j_N-i_N)\Delta_{r,N}$. In other words, for large $N$ and $|j_N-i_N|=\mathbf{o}(N)$, we approximate the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ in terms of the difference between two transformed bandwidths $\psi_r(h_{j_N})-\psi_r(h_{i_N})=\Delta_{r,N}(j_N-i_N)$.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid and let $(i_N)_{N\in\mathbb{N}}$ and $(j_N)_{N\in\mathbb{N}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}$ for which $|j_N-i_N|=\mathbf{o}(N)$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ to be the signed difference of the gap between $\psi_r(h_{i_N})$ and $\psi_r(h_{j_N})$. Then
+    Let $\mathcal{H}_N$ be a $r$-linear grid and let $(i_N)_{N\in\mathbb{N}_{\ge2}}$ and $(j_N)_{N\in\mathbb{N}_{\ge2}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}_{\ge2}$ for which $|j_N-i_N|=\mathbf{o}(N)$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ to be the signed difference between $\psi_r(h_{j_N})$ and $\psi_r(h_{i_N})$. Then
     \begin{align*}
         h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2).
     \end{align*}
