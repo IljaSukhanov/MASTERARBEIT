@@ -58,12 +58,11 @@ The following considerations can be compared with the book by Tsybakov~\cite[Sec
 \end{align*}
 where we denoted by $\operatorname{IV}(h)$ the integrated variance of $\hat{f}_h$ and by $\operatorname{ISB}$ the integrated squared bias of $\hat{f}_h$. The integrated variance can be bounded above by $\|K\|_2^2/(nh)$, cf.~\cite[Proposition~1.4]{tsybakov2009introduction} whereas the integrated squared bias can be bounded above by $4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$, cf.~\cite[Equations~(A.2) and~(A4)]{tsybakov2009introduction}. The sum $\operatorname{AMISE}(h):=\|K\|_2^2/(nh)+4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$ is called the asymptotic mean integrated squared error (AMISE), and by~\cite[Proposition~1.6]{tsybakov2009introduction} the relative error $(\operatorname{MISE}(h)-\operatorname{AMISE}(h))/(\operatorname{AMISE}(h))$ tends to zero for $h\downarrow0$. Minimizing the AMISE leads to
 \begin{align}\label{eq:h_amise}
-    h_{\operatorname{AMISE}}(n)=\left(\frac{\|K\|_2^2}{n\mu_2(K)^2\|f^{''}\|_2^2}\right)^{1/5}=C(f,K)n^{-1/5},\quad C(f,K):=\frac{\|K\|_2^2}{\mu_2(K)^2\|f''\|_2^2}.
+    h_{\operatorname{AMISE}}(n):=\underbrace{\left(\frac{\|K\|_2^2}{\mu_2(K)^2\|f''\|_2^2}\right)^{1/5}}_{=:C(f,K)}n^{-1/5.}
 \end{align}
 Intuitively, the chosen bandwidth should depend on the sample size $n$ because the more data we have, the narrower we can choose the kernels around each observation without making the kernel density estimate too sensitive to the particular sample. These upper bounds above suggest sufficient conditions on the bandwidth sequence $h_n$ so that the kernel density estimate $\hat{f}_h$ is consistent, i.e., $\operatorname{MISE}(h_n)\to0$ as $n\to\infty$. If $h_n\to0$, the bias term vanishes and if $nh_n\to\infty$, the variance vanishes.
 
-
-We have $h_{\text{oracle}}(n)=h_{\operatorname{AMISE}}(n)+\mathbf{o}(n^{-1/5})$ (see~\cite[Equation~(8)]{chacon_existence_nodate}), which implies that $h_{\text{oracle}}(n)/h_{\operatorname{AMISE}}(n)=1+C(f,K)^{-1}\mathbf{o}(n^{-1/5})n^{1/5}\to0$ for $n\to\infty$, that is, $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent. The optimal bandwidth $h_{\text{oracle}}$ therefore behaves like $n^{-1/5}$, that is, $h_{\text{oracle}}\asymp n^{-1/5}$.
+For kernels that are bounded and continuous at zero and attain their maximum at zero, we have $h_{\text{oracle}}(n)=h_{\operatorname{AMISE}}(n)+\mathbf{o}(n^{-1/5})$ (see~\cite[Equation~(8)]{chacon_existence_nodate}), which implies that $h_{\text{oracle}}(n)/h_{\operatorname{AMISE}}(n)=1+C(f,K)^{-1}\mathbf{o}(n^{-1/5})n^{1/5}\to1$ for $n\to\infty$, that is, $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent. The optimal bandwidth $h_{\text{oracle}}$ therefore behaves like $n^{-1/5}$, that is, $h_{\text{oracle}}\asymp n^{-1/5}$.
 
 \todo[inline]{---clean end---}
 
