@@ -255,11 +255,11 @@
     In particular, this is the step where we use the acute chain condition~\eqref{eq:acute_chain_condition}. Now we see that
     \begin{align}\label{eq:acute_chain_proof_002}
         \|P_i+Q_i\|<\begin{cases}
-            \|\sum_{k=1}^{N-1}a_k\delta_k\|=\|\mu-x_1\| & ,a_{i-1}\ge\frac{1}{2}\\
-            \|\sum_{k=1}^{N-1}(1-a_k)\delta_k\|=\|x_N-\mu\| & ,a_{i-1}<\frac{1}{2}.
+            \|\sum_{k=1}^{N-1}a_k\delta_k\|=\|\mu-x_1\| & ,a_{i-1}>\frac{1}{2}\\
+            \|\sum_{k=1}^{N-1}(1-a_k)\delta_k\|=\|x_N-\mu\| & ,a_{i-1}\le\frac{1}{2}.
         \end{cases}
     \end{align}
-    Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry},\eqref{eq:interior-bound} and~\eqref{eq:acute_chain_proof_002} we arrive at
+    The strict inequality is due to the following side result: if $0<b_k\le c_k$ for all $k$ and $b_m<c_m$ for at least one $m$ then $\|\sum_kb_k\delta_k\|<\|\sum_kc_k\delta_k\|$. This is because $\|\sum_kc_k\delta_k\|^2=\sum_{k,l}(c_k-b_k)b_k\langle\delta_k,\delta_l\rangle\ge0$ due to the acute chain condition. The summand $(c_m-b_m)b_m\|\delta_m\|^2$ is strictly positive, and hence the side result follows. Now if $a_{i-1}>1/2$ then $1-a_k<a_k$ for all $k=1,\dots,i-1$ and thus $\|P_i+Q_i\|<\|\sum_ka_k\delta_k\|$ by our side result. The case $a_{i-1}\le1/2$ works analogously. Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry},\eqref{eq:interior-bound} and~\eqref{eq:acute_chain_proof_002} we arrive at
     \begin{align*}
         \rho v_i-\sigma^2&=\|\mu-x_i\|^2\le\|P_i+Q_i\|^2<\max\{\|\mu-x_1\|^2,\|x_N-\mu\|^2\}\\&
         =\max\{\rho v_1-\sigma^2,\rho v_N-\sigma^2\}
@@ -267,7 +267,7 @@
     and therefore $v_i<\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
 \end{proof}
 
-\subsection{Proof of Proposition~\ref{prop:L2_divergence_matrix}}
+\subsection{Proof of Proposition~\ref{prop:L2_divergence_matrix}}\label{sec:L2_divergence_matrix}
 
 \begin{proof}
     The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with a Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$ as stated in Equation~\eqref{eq:fourier_transform_of_kde}. We set $\delta_k:=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k](\omega)=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega):=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
