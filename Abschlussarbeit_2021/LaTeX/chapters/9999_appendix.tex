@@ -305,6 +305,23 @@
     Now we assume additionally that $D(x,y)>0$ for all $x\ne y$, that $\phi$ is non-constant and that $x_1,\dots,x_n$ are pairwise distinct. Assume again the statement $(a)$. Then, by equivalence to $(c)$ we have $0<D(x_i,x_j)=\|\Phi(x_i)-\Phi(x_j)\|_{\mathcal{H}}^{2}$ for $i\ne j$. Thus, the points $z_i=\Phi(x_i)$ are pairwise distinct. Invoking~\cite[Theorem~3.1]{guella_gaussian_2022}, we see that the matrix $\Tilde{S}_t$ is strictly positive definite for any $t>0$, that is, $a^T\Tilde{S}_ta>0$ for all $a\in\mathbb{R}^{n}$, $a\ne0$. Since $\phi$ is assumed to be non-constant, this forces $\mu((0,\infty))>0$. Thus, $a^{T}Sa=\int_{[0,\infty)}a^{T}\Tilde{S}_ta\,d\mu(t)>0$, i.e., $S$ is strictly positive definite.
 \end{proof}
 
+\subsection{Proof of Lemma~\ref{lem:asymptotic_approx_r_linear_spacing}}\label{sec:proof_asymptotic_approx_r_linear_spacing}
+
+\begin{proof}
+    First, suppose $0<r\le1$. We have $h_{j_N}^r-h_{i_N}^r=r(j_N-i_N)\Delta_{r,N}$ from which follows
+    \begin{align*}
+        h_{j_N}=\left(h_{i_N}^r+r\delta_{ij}^{r,N}\right)^{1/r}=h_{i_N}\left(1+r\underbrace{\frac{\delta_{ij}^{r,N}}{h_{i_N}^r}}_{=:c_N}\right)^{1/r}.
+    \end{align*}
+    Note that $c_N=\mathbf{O}(\delta_{ij}^{r,N})$ because $h_{i_N}^{-r}$ is bounded above by $h_{\min}^{-r}$. In particular, since $|j_N-i_N|=\mathbf{o}(N)$ by assumption, $c_N$ is a null sequence. The first order Taylor approximation of $(1+x)^{1/r}$ around $0$ is $(1+x)^{1/r}=1+x/r+\mathbf{O}(x^2)$. We get
+    \begin{align*}
+        h_{j_N}-h_{i_N}&=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+\mathbf{O}((\delta_{ij}^{r,N})^2)\right)\\&
+        =h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2)
+    \end{align*}
+    by properties of the $\mathbf{O}$-notation.
+
+    For $r=0$ we have $h_{j_N}=h_{i_N}\exp{(\delta_{ij}^{0,N})}$. Since $\delta_{ij}^{0,N}\to0$ and $h_{i_N}\le h_{\max}$, a Taylor expansion of $e^x$ around $0$ yields $h_{j_N}-h_{i_N}=h_{i_N}\delta_{ij}^{0,N}+\mathbf{O}((\delta_{ij}^{0,N})^2)$.
+\end{proof}
+
 \subsection{Proof of Lemma~\ref{lem:frechet_derivative_of_kde}}\label{sec:proof_frechet_derivative_of_kde}
 
 \begin{proof}
