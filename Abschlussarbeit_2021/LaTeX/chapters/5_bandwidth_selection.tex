@@ -221,9 +221,9 @@ The derivation of the formula uses mainly the Gaussian convolution identity, tha
 The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equations~\eqref{eq:beta2_exact_formula01} and~\eqref{eq:beta2_exact_formula02} the computational efficiency is of the order $\mathbf{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
 In the following, we will briefly describe the approach following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$, $\omega\in\mathbb{R}$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$, see~\cite[Example~2.6]{plonka_numerical_2018}. Using the linearity and translation property of the Fourier transform (see~\cite[Theorem~2.5]{plonka_numerical_2018}), we obtain the Fourier transform of a kernel density function with a Gaussian kernel:
-\begin{align*}
+\begin{align}\label{eq:fourier_transform_of_kde}
     \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=:P_n(\omega)}\exp{(-h^2\omega^2)/2}.
-\end{align*}
+\end{align}
 Next, we use Parseval's identity (see~\cite[Lemma~2.21]{plonka_numerical_2018}) to get
 \begin{align*}
     G_{ij}&=\int\hat{f}_{h_i}(x)\hat{f}_{h_j}(x)\,dx=\frac{1}{2\pi}\int\mathcal{F}[\hat{f}_{h_i}](\omega)\overline{\mathcal{F}[\hat{f}_{h_j}](\omega)}\,d\omega\\&
@@ -268,11 +268,13 @@ Error control is important because approximation errors in the similarity matrix
 
 \section{Assembly of Scale Similarity Matrices}
 
+Having introduced divergences between densities in the previous chapter, we know use them to construct scale similarity matrices $S=(S_{ij})$ between kernel densities estimates at different bandwidths. From now on, we consider only the Bregman $\beta$-divergence with $\beta=1$ because it is symmetric, it has computational advantages, and we will be able to prove results about it in Section~\ref{sec:res_2} below. We will refer to it as the $L^2$-divergence.
+
 \subsection{Properties of Divergence matrices and its Perron vector}
 
 \todo[inline]{01.11: Polish!}
 
-In this subsection, we give structural results on the divergence matrix $D=(D_{ij})_{i,j=1}^{N}$ with $D_{ij}:=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the above similarity transformation, because else our scale selection procedure will choose either the first or last scale.
+In this subsection, we give structural results on the divergence matrix $D=(D_{ij})_{i,j=1}^{N}$ with $D_{ij}:=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the similarity transformation that we will introduce in Section~[] below, because otherwise our scale selection procedure will choose either the first or last scale.
 
 \begin{Def}[Robinson matrix]
     A matrix $D$ with entries $D_{ij}$ is called a two-way Robinson dissimilarity matrix (cf.~\cite{carmona_two_2024}) if it holds
@@ -284,10 +286,10 @@ In this subsection, we give structural results on the divergence matrix $D=(D_{i
 
 Note that for a Robinson similarity, the inequalities in Equation~\eqref{eq:def_robinson} are reversed. It is always beneficial to know the kind of matrix one works with to potentially be able to draw from established results about these kinds of matrices. Certain choices of divergences from Section~\ref{sec:divergences} lead to Robinson matrices, see Proposition~\ref{prop:L2_divergence_matrix} below.
 
-The following Lemma motivates replacing the divergence matrix $D$ with a similarity matrix $S$. Let $\rho(D)$ be the largest eigenvalue of $D$ and $v$ its Perron vector. The eigenvector equation gives $\rho(D)v_i=\sum_{j=1}^{N}D_{ij}v_j$. Thus, each component $v_i$ is proportional to a weighted sum of the distances from $x_i$ to other objects. Intuitively, $v_i$ tends to be large when the object $x_i$ associated with scale $i$ is far from the objects associated with many other scales. For squared Hilbert space distances, the following Lemma shows that if the objects, ordered by scale, form an acute chain, then the largest components of $v$ occur only at the smallest or largest scale. Using the Perron vector of $D$ directly for scale selection would therefore select one of these boundary scales.
+The following Lemma motivates replacing the divergence matrix $D$ with a similarity matrix $S$. Let $\rho(D)$ be the largest eigenvalue of $D$ and $v$ its Perron vector. The eigenvector equation gives $\rho(D)v_i=\sum_{j=1}^{N}D_{ij}v_j$. Thus, each component $v_i$ is proportional to a weighted sum of the dissimilarities $D_{i1},\dots,D_{iN}$. Intuitively, $v_i$ tends to be large when an object $x_i$ associated with scale $i$ is far from objects associated with many other scales. For squared Hilbert space distances, the following Lemma shows that if the objects, ordered by scale, form an acute chain, then the largest components of $v$ occur only at the smallest or largest scale. Using the Perron vector of $D$ directly for scale selection would therefore select one of these boundary scales.
 
 \begin{Lem}\label{lem:acute_chain_perron_vec}
-    Let $H$ be a Hilbert space, and let $x_1,\dots,x_N$ be distinct points in $\mathcal{H}$ that form an acute chain, that is,
+    Let $(H,\langle\cdot,\cdot\rangle)$ be a Hilbert space, and let $x_1,\dots,x_N$ be distinct points in $\mathcal{H}$ that form an acute chain, that is,
     \begin{align}\label{eq:acute_chain_condition}
         \langle x_{k+1}-x_k,x_{l+1}-x_l\rangle\ge0\quad\text{for all }k,l=1,\dots,N-1.
     \end{align}
@@ -298,51 +300,39 @@ The following Lemma motivates replacing the divergence matrix $D$ with a similar
 \end{Lem}
 
 \begin{proof}
-    Since the points $x_j$ are distinct, all entries of the matrix $D$ are positive and by Perron-Frobenius, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$. We interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. Write the expected value $\mathbb{E}[X]=\mu=\sum_{j=1}^{N}v_jx_j$ and the variance $\operatorname{Var}[X]=\sigma^2=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$. Now we have
+    Since the points $x_j$ are distinct, all off-diagonal entries in the matrix $D$ are positive, making $D$ irreducible, and by Perron-Frobenius, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$ and interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. Write the expected value $\mu:=\mathbb{E}[X]=\sum_{j=1}^{N}v_jx_j$ and the variance $\sigma^2:=\operatorname{Var}[X]=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$. Now we have
     \begin{align}\label{eq:bias_variance_decomp_perron_entry}
         (Dv)_i=\sum_{j=1}^{N}D_{ij}v_j=\sum_{j=1}^{N}\|x_i-x_j\|^2v_j=\mathbb{E}[\|X-x_i\|^2]\stackrel{(\ast)}{=}\|\mu-x_i\|^2+\sigma^2,
     \end{align}
-    where at $(\ast)$ we have used the bias-variance decomposition. Since $v$ is the Perron vector of $D$, the left hand side of Equation~\eqref{eq:bias_variance_decomp_perron_entry} is equal to $\rho v_i$ with $\rho>0$ being the unique maximum eigenvalue of $D$.
-
-    Next, we write
+    where at $(\ast)$ we have used the bias-variance decomposition. Since $v$ is the Perron vector of $D$, the left hand side of Equation~\eqref{eq:bias_variance_decomp_perron_entry} is equal to $\rho v_i$ with $\rho:=\rho(D)>0$ being the unique maximum eigenvalue of $D$. Next, we write
     \begin{align*}
-        \mu&=\sum_{j=1}^{N}v_jx_j=v_1x_1+v_2x_2+\dots+v_Nx_N\\&
-        =x_1-(v_2+\dots+v_N)x_1\\&
-        +v_2x_2+v_3x_2+\dots+v_Nx_2-(v_3x_2+\dots+v_Nx_2)\\&
-        \vdots\\&
-        +v_{N-2}x_{N-2}+v_{N-1}x_{N-2}+v_Nx_{N-2}-(v_{N-1}x_{N-2}+v_Nx_{N-2})\\&
-        +v_{N-1}x_{N-1}+v_Nx_{N-1}-v_Nx_{N-1}\\&
-        +v_Nx_N\\&
-        =x_1+(v_2+\dots+v_N)(x_2-x_1)+\dots+(v_{N-1}+v_N)(x_{N-1}-x_{N-2})+v_N(x_N-x_{N-1})\\&
-        =x_1+\sum_{k=1}^{N-1}\sum_{j=k+1}^{N}v_j(x_{k+1}-x_k)=x_1+\sum_{k=1}^{N-1}a_k\delta_k,
+        \mu&=\sum_{j=1}^{N}v_jx_j=x_1+\sum_{j=2}^{N}v_j\sum_{k=1}^{j-1}(x_{k+1}-x_k)=x_1+\sum_{k=1}^{N-1}\sum_{j=k+1}^{N}v_j(x_{k+1}-x_k)\\&
+        =x_1+\sum_{k=1}^{N-1}a_k\delta_k,
     \end{align*}
-    where $a_k=\sum_{j=k+1}^{N}v_j$ and $\delta_k=x_{k+1}-x_k$. Note that because of the positivity of the Perron vector, it holds $1>a_1>a_2>\dots>a_{N-1}=v_N>0$.
-
-    As a next step, write
+    where $a_k:=\sum_{j=k+1}^{N}v_j$ and $\delta_k:=x_{k+1}-x_k$. Note that because of the positivity of the Perron vector, it holds $1>a_1>a_2>\dots>a_{N-1}=v_N>0$. As a next step, write
     \begin{align*}
         x_i-\mu&=x_i-x_1-(\mu-x_1)=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{N-1}a_k\delta_k=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{i-1}a_k\delta_k-\sum_{k=i}^{N-1}a_k\delta_k\\&
-        =\underbrace{\sum_{k=1}^{i-1}(1-a_k)\delta_k}_{=P_i}-\underbrace{\sum_{k=i}^{N-1}a_k\delta_k}_{=Q_i}
+        =\underbrace{\sum_{k=1}^{i-1}(1-a_k)\delta_k}_{=:P_i}-\underbrace{\sum_{k=i}^{N-1}a_k\delta_k}_{=:Q_i},\quad i=2,\dots,N-1.
     \end{align*}
     Consequently,
-    \begin{align*}
-        \|x_i-\mu\|^2&=\|P_i-Q_i\|^2=\|P_i\|^2+\|Q_i\|^2-2\langle P_i,Q_i\rangle\\&
-        \le\|P_i\|^2+\|Q_i\|^2+2\langle P_i,Q_i\rangle=\|P_i+Q_i\|^2
-    \end{align*}
+    \begin{equation}\label{eq:interior-bound}
+        \begin{aligned}
+            \|x_i-\mu\|^2&=\|P_i-Q_i\|^2=\|P_i\|^2+\|Q_i\|^2-2\langle P_i,Q_i\rangle\\&
+            \le\|P_i\|^2+\|Q_i\|^2+2\langle P_i,Q_i\rangle=\|P_i+Q_i\|^2
+        \end{aligned}
+    \end{equation}
     for all $i=2,\dots,N-1$, where we have used
     \begin{align*}
-        \langle P_i,Q_i\rangle=\sum_{1\le k\le i-1}\sum_{i\le l\le N-1}\underbrace{(1-a_k)}_{>0}\underbrace{a_l}_{>0}\underbrace{\langle\delta_k,\delta_l\rangle}_{\ge0}>0.
+        \langle P_i,Q_i\rangle=\sum_{k=1}^{i-1}\sum_{l=i}^{N-1}\underbrace{(1-a_k)}_{>0}\underbrace{a_l}_{>0}\underbrace{\langle\delta_k,\delta_l\rangle}_{\ge0}>0.
     \end{align*}
-    In particular, this is the step where we use the acute chain condition~\eqref{eq:acute_chain_condition}.
-
-    Now we see that
+    In particular, this is the step where we use the acute chain condition~\eqref{eq:acute_chain_condition}. Now we see that
     \begin{align}\label{eq:acute_chain_proof_002}
         \|P_i+Q_i\|\le\begin{cases}
             \|\sum_{k=1}^{N-1}a_k\delta_k\|=\|\mu-x_1\| & ,a_{i-1}\ge\frac{1}{2}\\
             \|\sum_{k=1}^{N-1}(1-a_k)\delta_k\|=\|x_N-\mu\| & ,a_{i-1}<\frac{1}{2}.
         \end{cases}
     \end{align}
-
-    Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry} and~\eqref{eq:acute_chain_proof_002} we arrive at
+    Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry},\eqref{eq:interior-bound} and~\eqref{eq:acute_chain_proof_002} we arrive at
     \begin{align*}
         \rho v_i-\sigma^2&=\|\mu-x_i\|^2\le\|P_i+Q_i\|^2\le\max\{\|\mu-x_1\|,\|x_N-\mu\|\}\\&
         =\max\{\rho v_1-\sigma^2,\rho v_N-\sigma^2\}
@@ -350,24 +340,24 @@ The following Lemma motivates replacing the divergence matrix $D$ with a similar
     and therefore $v_i\le\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
 \end{proof}
 
-The \enquote{acute chain condition} has precedence in the theory of so called Monge matrices, for reference see, for example~\cite{hutter_estimation_2020}. Monge matrices have a special structural property that allows for certain problems to have faster algorithms when assuming this structure. A matrix $D$ is a Monge matrix if $D_{ij}+D_{kl}\le D_{il}+D_{kj}$ whenever $i\le k$ and $j\le l$. In fact, a matrix $D$ with entries $D_{ij}=\|x_i-x_j\|^2$ is Monge if and only if the acute chain condition holds for $x_1,\dots,x_N$. All symmetric Monge matrices with zero diagonal are Robinson matrices. The acute chain condition has a geometric interpretation: the angle between all the differences of two consecutive points is at most $90$ degrees.
+The \enquote{acute chain condition} has a precedent in the theory of the so-called Monge matrices, for reference, see, for example,~\cite{hutter_estimation_2020}. Monge matrices have a special structural property that allows for certain problems to have faster algorithms when assuming this structure. A matrix $D$ is a Monge matrix if $D_{ij}+D_{kl}\le D_{il}+D_{kj}$ whenever $i\le k$ and $j\le l$. In fact, a matrix $D$ with entries $D_{ij}=\|x_i-x_j\|^2$ is Monge if and only if the acute chain condition holds for $x_1,\dots,x_N$. All symmetric Monge matrices with constant diagonal are Robinson matrices. The acute chain condition has a geometric interpretation: the angle $\theta_{kl}$ between any two differences $\delta_k:=x_{k+1}-x_k$ and $\delta_l:=x_{l+1}-x_l$ is between $0$ and $90$ degrees since $\cos{\theta_{kl}}=\langle\delta_k,\delta_l\rangle/(\|\delta_k\|\|\delta_l\|)\ge0$.
 
 We now show that when choosing the Gaussian kernel, the family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ satisfies the acute chain condition and, as a consequence, the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
 
 \begin{Prop}\label{prop:L2_divergence_matrix}
-    The following two properties hold.
+    The following two properties hold:
     \begin{enumerate}
-        \item[(a)] The family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ satisfies the acute chain condition stated in Equation~\eqref{eq:acute_chain_condition}.
+        \item[(a)] The family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$, $0<h_1<\dots<h_N$ satisfies the acute chain condition stated in Equation~\eqref{eq:acute_chain_condition}.
         \item[(b)] The divergence matrix $D=(D_{ij})$ with entries given by $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
     \end{enumerate}
 \end{Prop}
 
 \begin{proof}
-    The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with a Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$. We set $\delta_k=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k]=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega)=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
+    The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with a Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$ as stated in Equation~\eqref{eq:fourier_transform_of_kde}. We set $\delta_k:=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k](\omega)=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega):=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
     \begin{align*}
-        \langle\delta_k,\delta_l\rangle&=\int\delta_k\delta_l=\frac{1}{2\pi}\int\limits_{\mathbb{R}}|P_n(\omega)|^2b_k(\omega)b_l(\omega)\,d\omega.
+        \langle\delta_k,\delta_l\rangle_2&=\int\delta_k(x)\delta_l(x)\,dx=\frac{1}{2\pi}\int\limits_{\mathbb{R}}|P_n(\omega)|^2b_k(\omega)b_l(\omega)\,d\omega.
     \end{align*}
-    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2\delta_k(\omega)\delta_l(\omega)$ is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. We have found a set with positive Lebesgue measure on which the integrand is positive, which implies that the integral $\langle\delta_k,\delta_l\rangle$ itself is positive, that is, $\langle\delta_k,\delta_l\rangle>0$.
+    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ is continuous and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2\delta_k(\omega)\delta_l(\omega)$ is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. We have found a set with positive Lebesgue measure on which the integrand is positive, which implies that the integral $\langle\delta_k,\delta_l\rangle_2$ itself is positive, that is, $\langle\delta_k,\delta_l\rangle_2>0$.
 
     Now, let $i<j<k$. We have
     \begin{align*}
