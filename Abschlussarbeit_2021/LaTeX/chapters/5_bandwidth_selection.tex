@@ -58,7 +58,8 @@ The following considerations can be compared with the book by Tsybakov~\cite[Sec
 \end{align*}
 where we denoted by $\operatorname{IV}(h)$ the integrated variance of $\hat{f}_h$ and by $\operatorname{ISB}$ the integrated squared bias of $\hat{f}_h$.
 
-The integrated variance can be bounded above by $\|K\|_2^2/(nh)$, cf.~\cite[Proposition~1.4]{tsybakov2009introduction} whereas the integrated squared bias can be bounded above by $4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$, cf.~\cite[Proposition~1.5]{tsybakov2009introduction}. These upper bounds suggest sufficient conditions on the bandwidth sequence $h_n$ so that the kernel density estimate $\hat{f}_h$ is consistent. In order for the bias to vanish, it must hold $h_n\to0$, and for the variance to vanish, we must require $nh_n\to\infty$.
+The integrated variance can be bounded above by $\|K\|_2^2/(nh)$, cf.~\cite[Proposition~1.4]{tsybakov2009introduction} whereas the integrated squared bias can be bounded above by $4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$, cf.~\cite[Proposition~1.5]{tsybakov2009introduction}. These upper bounds suggest sufficient conditions on the bandwidth sequence $h_n$ so that the kernel density estimate $\hat{f}_h$ is consistent, i.e., $\operatorname{MISE}(h_n)\to0$ as $n\to\infty$. If $h_n\to0$, the bias term vanishes and if $nh_n\to\infty$, the variance vanishes.
+
 
 Intuitively, the chosen bandwidth should depend on the sample size $n$ because the more data we have, the narrower we can choose the kernels around each observation without making the kernel density estimate too sensitive to the particular sample.
 
@@ -70,8 +71,6 @@ The sum $\operatorname{AMISE}(h):=\|K\|_2^2/(nh)+4^{-1}\|f''\|_2^2\mu_2(K)^2h^4$
 We have $h_{\text{oracle}}=h_{\operatorname{AMISE}}+\mathbf{o}(n^{-1/5})$ (see~\cite[Equation~(8)]{chacon_existence_nodate}), which implies that $h_{\text{oracle}}$ and $h_{\operatorname{AMISE}}$ are asymptotically equivalent.
 
 The optimal bandwidth $h_{\text{oracle}}$ thus behaves like $n^{-1/5}$, that is, $h_{\text{oracle}}\asymp n^{-1/5}$.
-
-\textcolor{red}{The optimal bandwidth thus behaves like $n^{-1/5}$.}
 
 \todo[inline]{---clean end---}
 
@@ -153,7 +152,7 @@ that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ a
 
 \subsection{Bregman divergences}\label{sec:bregman_divergences}
 
-\todo[inline]{02.11: Polish!}
+\todo[inline]{03.11: Polish!}
 
 \todo[inline]{---clean begin---}
 
@@ -433,7 +432,7 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 \section{Numerical Experiments}
 
-\todo[inline]{02.11: Polish!}
+\todo[inline]{03.11: Polish!}
 
 In our numerical experiments, we restrict ourselves to the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
@@ -533,7 +532,7 @@ We see a large discrepancy between the distributions of the spectrally chosen ba
 
 \subsection{Convergence to closest adjacent pair}
 
-\todo[inline]{02.11: Polish!}
+\todo[inline]{03.11: Polish!}
 
 Here we explain the results of the fixed $N$ and $\lambda\to\infty$ experiment.
 
@@ -567,7 +566,7 @@ This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda},
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}\label{sec:perron_vector_concentrates}
 
-\todo[inline]{02.11: Polish up to Prop 7!}
+\todo[inline]{03.11: Polish up to Prop 8!}
 
 To explain the results, we need the concept of a Fréchet-derivative. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.2 therein.
 
