@@ -299,6 +299,10 @@ The following Lemma motivates replacing the divergence matrix $D$ with a similar
     \end{align*}
 \end{Lem}
 
+\begin{proof}
+    See Appendix Section~\ref{sec:proof_acute_chain_perron_vec}.
+\end{proof}
+
 The \enquote{acute chain condition} has a precedent in the theory of the so-called Monge matrices, for reference, see, for example,~\cite{hutter_estimation_2020}. Monge matrices have a special structural property that allows for certain problems to have faster algorithms when assuming this structure. A matrix $D$ is a Monge matrix if $D_{ij}+D_{kl}\le D_{il}+D_{kj}$ whenever $i\le k$ and $j\le l$. In fact, a matrix $D$ with entries $D_{ij}=\|x_i-x_j\|^2$ is Monge if and only if the acute chain condition holds for $x_1,\dots,x_N$. All symmetric Monge matrices with constant diagonal are Robinson matrices. The acute chain condition has a geometric interpretation: the angle $\theta_{kl}$ between any two differences $\delta_k:=x_{k+1}-x_k$ and $\delta_l:=x_{l+1}-x_l$ is between $0$ and $90$ degrees since $\cos{\theta_{kl}}=\langle\delta_k,\delta_l\rangle/(\|\delta_k\|\|\delta_l\|)\ge0$.
 
 We now show that when choosing the Gaussian kernel, the family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ satisfies the acute chain condition and, as a consequence, the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
@@ -310,6 +314,10 @@ We now show that when choosing the Gaussian kernel, the family of kernel density
         \item[(b)] The divergence matrix $D=(D_{ij})$ with entries given by $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
     \end{enumerate}
 \end{Prop}
+
+\begin{proof}
+    See Appendix Section~\ref{sec:proof_L2_divergence_matrix}.
+\end{proof}
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
 
