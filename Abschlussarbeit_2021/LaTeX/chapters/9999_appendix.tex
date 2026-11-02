@@ -226,6 +226,69 @@
 
 \subsection{Proof of Lemma~\ref{lem:acute_chain_perron_vec}}\label{sec:proof_acute_chain_perron_vec}
 
+\begin{proof}
+    Since the points $x_j$ are distinct, all off-diagonal entries in the matrix $D$ are positive, making $D$ irreducible, and by Perron-Frobenius, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$ and interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. Write the expected value $\mu:=\mathbb{E}[X]=\sum_{j=1}^{N}v_jx_j$ and the variance $\sigma^2:=\operatorname{Var}[X]=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$. Now we have
+    \begin{align}\label{eq:bias_variance_decomp_perron_entry}
+        (Dv)_i=\sum_{j=1}^{N}D_{ij}v_j=\sum_{j=1}^{N}\|x_i-x_j\|^2v_j=\mathbb{E}[\|X-x_i\|^2]\stackrel{(\ast)}{=}\|\mu-x_i\|^2+\sigma^2,
+    \end{align}
+    where at $(\ast)$ we have used the bias-variance decomposition. Since $v$ is the Perron vector of $D$, the left hand side of Equation~\eqref{eq:bias_variance_decomp_perron_entry} is equal to $\rho v_i$ with $\rho:=\rho(D)>0$ being the unique maximum eigenvalue of $D$. Next, we write
+    \begin{align*}
+        \mu&=\sum_{j=1}^{N}v_jx_j=x_1+\sum_{j=2}^{N}v_j\sum_{k=1}^{j-1}(x_{k+1}-x_k)=x_1+\sum_{k=1}^{N-1}\sum_{j=k+1}^{N}v_j(x_{k+1}-x_k)\\&
+        =x_1+\sum_{k=1}^{N-1}a_k\delta_k,
+    \end{align*}
+    where $a_k:=\sum_{j=k+1}^{N}v_j$ and $\delta_k:=x_{k+1}-x_k$. Note that because of the positivity of the Perron vector, it holds $1>a_1>a_2>\dots>a_{N-1}=v_N>0$. As a next step, write
+    \begin{align*}
+        x_i-\mu&=x_i-x_1-(\mu-x_1)=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{N-1}a_k\delta_k=\sum_{k=1}^{i-1}\delta_k-\sum_{k=1}^{i-1}a_k\delta_k-\sum_{k=i}^{N-1}a_k\delta_k\\&
+        =\underbrace{\sum_{k=1}^{i-1}(1-a_k)\delta_k}_{=:P_i}-\underbrace{\sum_{k=i}^{N-1}a_k\delta_k}_{=:Q_i},\quad i=2,\dots,N-1.
+    \end{align*}
+    Consequently,
+    \begin{equation}\label{eq:interior-bound}
+        \begin{aligned}
+            \|x_i-\mu\|^2&=\|P_i-Q_i\|^2=\|P_i\|^2+\|Q_i\|^2-2\langle P_i,Q_i\rangle\\&
+            \le\|P_i\|^2+\|Q_i\|^2+2\langle P_i,Q_i\rangle=\|P_i+Q_i\|^2
+        \end{aligned}
+    \end{equation}
+    for all $i=2,\dots,N-1$, where we have used
+    \begin{align*}
+        \langle P_i,Q_i\rangle=\sum_{k=1}^{i-1}\sum_{l=i}^{N-1}\underbrace{(1-a_k)}_{>0}\underbrace{a_l}_{>0}\underbrace{\langle\delta_k,\delta_l\rangle}_{\ge0}\ge0.
+    \end{align*}
+    In particular, this is the step where we use the acute chain condition~\eqref{eq:acute_chain_condition}. Now we see that
+    \begin{align}\label{eq:acute_chain_proof_002}
+        \|P_i+Q_i\|<\begin{cases}
+            \|\sum_{k=1}^{N-1}a_k\delta_k\|=\|\mu-x_1\| & ,a_{i-1}\ge\frac{1}{2}\\
+            \|\sum_{k=1}^{N-1}(1-a_k)\delta_k\|=\|x_N-\mu\| & ,a_{i-1}<\frac{1}{2}.
+        \end{cases}
+    \end{align}
+    Finally, by combining Equations~\eqref{eq:bias_variance_decomp_perron_entry},\eqref{eq:interior-bound} and~\eqref{eq:acute_chain_proof_002} we arrive at
+    \begin{align*}
+        \rho v_i-\sigma^2&=\|\mu-x_i\|^2\le\|P_i+Q_i\|^2<\max\{\|\mu-x_1\|^2,\|x_N-\mu\|^2\}\\&
+        =\max\{\rho v_1-\sigma^2,\rho v_N-\sigma^2\}
+    \end{align*}
+    and therefore $v_i<\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:L2_divergence_matrix}}
+
+\begin{proof}
+    The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with a Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$ as stated in Equation~\eqref{eq:fourier_transform_of_kde}. We set $\delta_k:=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k](\omega)=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega):=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
+    \begin{align*}
+        \langle\delta_k,\delta_l\rangle_2&=\int\delta_k(x)\delta_l(x)\,dx=\frac{1}{2\pi}\int\limits_{\mathbb{R}}|P_n(\omega)|^2b_k(\omega)b_l(\omega)\,d\omega.
+    \end{align*}
+    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ is continuous and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2b_k(\omega)b_l(\omega)$ is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. We have found a set with positive Lebesgue measure on which the integrand is positive, which implies that the integral $\langle\delta_k,\delta_l\rangle_2$ itself is positive, that is, $\langle\delta_k,\delta_l\rangle_2>0$.
+
+    Now, let $i<j<k$. We have
+    \begin{align*}
+        \|\hat{f}_{h_k}-\hat{f}_{h_i}\|_2^2&=\|\hat{f}_{h_k}-\hat{f}_{h_j}+\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2=\|\hat{f}_{h_k}-\hat{f}_{h_j}\|_2^2+\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2\\&
+        +2\langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle>\|\hat{f}_{h_k}-\hat{f}_{h_j}\|_2^2+\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2\\&
+        \ge\max\{\|\hat{f}_{h_k}-\hat{f}_{h_j}\|_2^2,\|\hat{f}_{h_j}-\hat{f}_{h_i}\|_2^2\},
+    \end{align*}
+    because
+    \begin{align*}
+        \langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle&=\bigg\langle\sum_{r=j}^{k-1}\underbrace{(\hat{f}_{h_{r+1}}-\hat{f}_{h_r})}_{=\delta_r},\sum_{s=i}^{j-1}\underbrace{(\hat{f}_{h_{s+1}}-\hat{f}_{h_s})}_{=\delta_s}\bigg\rangle\\&=\sum_{r=j}^{k-1}\sum_{s=i}^{j-1}\langle\delta_r,\delta_s\rangle>0,
+    \end{align*}
+     by the first part of the proof.
+\end{proof}
+
 \subsection{Proof of Lemma~\ref{lem:frechet_derivative_of_kde}}\label{sec:proof_frechet_derivative_of_kde}
 
 \begin{proof}
