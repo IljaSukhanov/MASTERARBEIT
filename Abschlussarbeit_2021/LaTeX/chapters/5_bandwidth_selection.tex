@@ -272,8 +272,6 @@ Having introduced divergences between densities in the previous chapter, we know
 
 \subsection{Properties of Divergence matrices and its Perron vector}
 
-\todo[inline]{01.11: Polish!}
-
 In this subsection, we give structural results on the divergence matrix $D=(D_{ij})_{i,j=1}^{N}$ with $D_{ij}:=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the similarity transformation that we will introduce in Section~\ref{sec:similarity_transformations} below, because otherwise our scale selection procedure will choose either the first or last scale.
 
 \begin{Def}[Robinson matrix]
@@ -321,8 +319,6 @@ We now show that when choosing the Gaussian kernel, the family of kernel density
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
 
-\todo[inline]{01.11: Polish!}
-
 A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ is called conditionally negative definite if
 \begin{align*}
     \sum_{i,j=1}^{n}a_ia_jD(x_i,x_j)\le0
@@ -342,7 +338,7 @@ The following Theorem connects the concepts presented above and is due to Schoen
 \end{Thm}
 
 \begin{proof}
-    See Outlook Section~\ref{sec:proof_schoenberg}.
+    See Appendix Section~\ref{sec:proof_schoenberg}.
 \end{proof}
 
 Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite. In fact, using Schoenberg's theorem above, we can also include $L^2$-divergence, squared Hellinger, and Total Variation in the class of conditionally negative definite divergences. We can use the equivalence $(a)\iff(c)$ from Theorem~\ref{thm:schoenberg} to show that $L^2$-divergence, squared Hellinger and Total Variation are conditionally negative definite by giving the isometric Hilbert space embeddings. See Table~\ref{tab:hilbert_divergence_embeddings} for an overview. Specifically, the fact that $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}^2=\operatorname{JS}(p,q)$ for the choice of $\Phi$ given in Table~\ref{tab:hilbert_divergence_embeddings} can be easily seen:
@@ -371,24 +367,22 @@ where in step $(\ast)$ we have use a well known integral identity, see, for exam
     \label{tab:hilbert_divergence_embeddings}
 \end{table}
 
+In the context of our scale selection methodology, Theorem~\ref{thm:schoenberg} gives a general construction principle for a scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})$ that is guaranteed to be positive (semi-) definite. Namely, we set $S^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
 
-In the context of our scale selection methodology, Theorem~\ref{thm:schoenberg} gives a general construction principle for a scale similarity matrix $\Sigma^{(N)}=(\Sigma^{(N)}_{ij})$ that is guaranteed to be positive (semi-) definite. Namely, we set $\Sigma^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function.
+\todo[inline]{---clean begin---}
 
-Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p)=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$. It can be interpreted as an uncertainty or concentration measure. $H(p)$ is large if $p$ is close to the discrete uniform distribution and maximal for $p=(N^{-1},\dots,N^{-1})$ (maximal uncertainty and minimal concentration). It is small if $p$ is concentrated on some entry and minimal for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$ (minimal uncertainty and maximal concentration).
+Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p):=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$, which can be interpreted as an uncertainty measure. $H(p)$ is maximal for $p=(N^{-1},\dots,N^{-1})$ and minimal for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$. In contrast, $-H(p)$ can be seen as a concentration measure, that is, high values of $-H(p)$ correspond to $p$ being concentrated on few scales and small values of $-H(p)$ correspond to $p$ being nearly uniform.
 
-The quantity
+
+Following~\cite[Equation~(2), Appendix Section~{A}]{anantharam_variational_2017} we can show that the quantity
 \begin{align*}
-    \sum_{j=1}^{N}p_jD_{ij}-\tau H(p)=\sum_{j=1}^{N}p_jD_{ij}+\tau\sum_{j=1}^{N}p_j\log{p_j}
+    \sum_{j=1}^{N}p_jD_{ij}+\tau\sum_{j=1}^{N}p_j\log{p_j}=\sum_{j=1}^{N}p_jD_{ij}+\tau(-H(p)),\quad\tau>0
 \end{align*}
-is minimized by $\hat{p}_i=(\hat{p}_{i1},\dots,\hat{p}_{iN})$, where $\hat{p}_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. See~\cite{anantharam_variational_2017} for reference. We can interpret $\hat{p}_i$ as a probability vector that describes how strongly the scale $h_i$ is connected to any other scales.
+is minimized by the probability vector $\hat{p}_i\in\mathbb{R}^{N}$ with entries $\hat{p}_{ij}=S_{ij}/\sum_{k=1}^{N}S_{ik}$. We can interpret the entries $\hat{p}_{ij}$ as weights for how strongly the scales $h_i$ and $h_j$ are connected. The Perron vector $v$ of $S$ gives a reweighting of these scales through the Eigenvector equation $\rho(S)v=Sv$. The minimization of the first term $\sum_jp_jD_{ij}$ alone would lead to $p_i=e_i$ because the sum is nonnegative and $\sum_je_iD_{ij}=D_{ii}=0$. The penalty term $\tau(-H(p))$ counteracts this concentration by penalizing it, where $\tau$ controls the amount of penalization. In that sense, $\tau$ can be interpreted as a penalty weight. 
 
-The minimization of the first term $D_ip=\sum_jp_jD_{ij}$ ($D_i\in\mathbb{R}^{1\times N}$ is the $i$-th row of $D$) leads to probability vectors that concentrate on the $i$-th component since $\min_jD_{ij}=D_{ii}=0$ (the largest probability weights is put on a bandwidth that is closest to bandwidth $h_i$ with respect to the divergence $D$). The penalty term $\sum_jp_j\log{p_j}$ counteracts this concentration by penalizing it, where $\tau$ controls the amount of penalization. In that sense, $\tau$ can be interpreted as a penalty weight. 
+Yet another advantage of the exponential transformation is the obvious fact that the entries of the resulting similarity matrix $S$ are all positive and therefore by the Perron-Frobenius theorem, $S$ has a positive eigenvalue $\rho(S)$ that is strictly larger than the absolute value of all other eigenvalues. The corresponding eigenvector $v$ (called the Perron vector) has all positive entries and is unique up to scaling.
 
-This is another instance of the Donsker–Varadhan variational principle.
-
-Taking the limit $\tau\to+\infty$ yields $S=11^{T}$, which corresponds to maximal penalization on concentration. Taking the limit $\tau\to0$ gives $S=I_N$, which corresponds to no penalization on concentration.
-
-Yet another advantage of the exponential transformation is the obvious fact that the entries of the resulting similarity matrix $S$ are all positive and therefore by the Perron-Frobenius theorem, $S$ has a real valued eigenvalue $\lambda_{\max}$ which is strictly larger than the absolute value of all other eigenvalues. The corresponding eigenvector $v_{\max}$ (called the Perron vector) has all positive entries and is unique up to scaling.
+\todo[inline]{---clean end---}
 
 \subsection{Bandwidth grid}
 
