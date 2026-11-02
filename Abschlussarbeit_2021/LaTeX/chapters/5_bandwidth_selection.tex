@@ -342,16 +342,7 @@ The following Theorem connects the concepts presented above and is due to Schoen
 \end{Thm}
 
 \begin{proof}
-    Let $D$ be conditionally negative definite. By~\cite[Theorem~2.2]{berg_harmonic_1984} this is equivalent to $\Tilde{S}_t=(\exp{(-tD(x_i,x_j))})_{i,j=1}^{n}$ being positive semi-definite for all finite choices of points $x_1,\dots,x_n\in X$. Let $\phi$ be a completely monotone function. Then by~\cite[Corollary~6.14]{berg_harmonic_1984}, there exists a nonnegative measure $\mu$ on $\mathcal{B}([0,\infty))$ such that $\phi(z)=\int_{[0,\infty)}e^{-tz}\,d\mu(t)$. By the continuity of $\phi$ at zero and the monotone convergence theorem we have $\mu([0,\infty))=\phi(0)<\infty$. This makes $\phi(D(x_i,x_i))=\phi(0)$ well defined. Consequently, we write
-    \begin{align*}
-        \sum_{i,j=1}^{n}a_ia_j\phi(D(x_i,x_j))&=\sum_{i,j=1}^{n}a_ia_j\int\limits_{[0,\infty)}\exp{(-tD(x_i,x_j))}\,d\mu(t)\\&
-        =\int\limits_{[0,\infty)}\underbrace{\sum_{i,j=1}^{n}a_ia_j\exp{(-tD(x_i,x_j))}}_{=a^{T}\Tilde{S}_ta\ge0}\,d\mu(t)\ge0
-    \end{align*}
-    for all $a_1,\dots,a_n\in\mathbb{R}$. This shows that the matrix $S=(\phi(D(x_i,x_j)))_{i,j=1}^{n}$ is positive semi-definite. If $(b)$ holds, then $(a)$ follows directly by the equivalence stated in~\cite[Theorem~2.2]{berg_harmonic_1984} since $\exp{(-t\cdot)}$ is a completely monotone function for all $t>0$. \cite[Proposition~3.2]{berg_harmonic_1984} gives the implication $(a)\implies (c)$, while the reverse direction can easily be checked by us: it holds
-    \begin{align*}
-        \sum_{i,j=1}^{n}c_ic_j\|\Phi(x_i)-\Phi(x_j)\|_{\mathcal{H}}^2=-2\sum_{i,j=1}^{n}c_ic_j\langle\Phi(x_i),\Phi(x_j)\rangle=-2\left\|\sum_{j=1}^{n}c_j\Phi(x_j)\right\|_{\mathcal{H}}^{2}\le0.
-    \end{align*}
-    Now we assume additionally that $D(x,y)>0$ for all $x\ne y$, that $\phi$ is non-constant and that $x_1,\dots,x_n$ are pairwise distinct. Assume again the statement $(a)$. Then, by equivalence to $(c)$ we have $0<D(x_i,x_j)=\|\Phi(x_i)-\Phi(x_j)\|_{\mathcal{H}}^{2}$ for $i\ne j$. Thus, the points $z_i=\Phi(x_i)$ are pairwise distinct. Invoking~\cite[Theorem~3.1]{guella_gaussian_2022}, we see that the matrix $\Tilde{S}_t$ is strictly positive definite, that is, $a^T\Tilde{S}_ta>0$ for all $a\in\mathbb{R}^{n}$, $a\ne0$. Since $\phi$ is assumed to be non-constant, this forces $\mu((0,\infty))>0$. Thus, $a^{T}Sa=\int_{[0,\infty)}a^{T}\Tilde{S}_ta\,d\mu(t)>0$, i.e., $S$ is strictly positive definite.
+    See Outlook Section~\ref{sec:proof_schoenberg}.
 \end{proof}
 
 Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite. In fact, using Schoenberg's theorem above, we can also include $L^2$-divergence, squared Hellinger, and Total Variation in the class of conditionally negative definite divergences. We can use the equivalence $(a)\iff(c)$ from Theorem~\ref{thm:schoenberg} to show that $L^2$-divergence, squared Hellinger and Total Variation are conditionally negative definite by giving the isometric Hilbert space embeddings. See Table~\ref{tab:hilbert_divergence_embeddings} for an overview. Specifically, the fact that $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}^2=\operatorname{JS}(p,q)$ for the choice of $\Phi$ given in Table~\ref{tab:hilbert_divergence_embeddings} can be easily seen:
