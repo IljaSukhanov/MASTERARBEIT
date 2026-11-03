@@ -420,8 +420,6 @@ In our experiments, we focus on the case where $f$ is the standard normal densit
 
 \subsection{Fixed sample experiments}
 
-\todo[inline]{Code: Have one notebook for these kinds of experiments (Fixed sample experiments)}
-
 For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$, $n=200$ and study the influence of the grid fineness $N$ and the inverse concentration penalty $\lambda=\lambda_N$. Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $h_i$ vs  $v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$ for $\lambda\in\{1,10,100,1000\}$. We see that the Perron vector has a flat plateau for $\lambda=1$ and $\lambda=10$, which means that many bandwidths are considered central. In this experiment, increasing $\lambda$ leads to the Perron vector having a more pronounced peak, which is consistent with the interpretation of $\tau=\lambda^{-1}$ as a concentration penalty for the row-normalized similarities.
 
 \begin{figure}
@@ -429,19 +427,16 @@ For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\si
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
     \caption{Perron vector entries $v_i^{(\lambda)}$ against bandwidth candidates $h_i$ on a geometric grid with $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$. Darker curves correspond to larger $\lambda$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$.}
     \label{fig:stationary_distribution_plot_001}
-    \todo[inline]{Code: Notebook, Python file: Grid builder (input: $h_{\min},h_{\max},r,N$; output: $\mathcal{H}$) Perron vector computation (input: data, grid $\mathcal{H}$; output: Perron vector, index with largest entry)}
 \end{figure}
 
 Of course, a single such image tells us not much and does not give us hints about a possible connection between the oracle bandwidth and the spectrally chosen bandwidth.
 
-Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the stability with respect to the grid fineness $N$. The sample $X=(X_1,\dots,X_n)$ was kept fixed. We observe a stabilization of the chosen bandwidth for increasing grid fineness. 
-
-It can be seen that the grid stability curves for $\lambda=1$ (yellow) and $\lambda=10$ (green) converge towards a smaller bandwidth scale than the curves for $\lambda=100$ (red) and $\lambda=1000$ (black). This indicates that some kind of switch is happening between $\lambda=10$ and $\lambda=100$. Interestingly, the grid stability plots exhibit a sawtooth pattern that smooths out.
+Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the spectrally selected bandwidth as a function of the grid fineness $N$ with the sample $X=(X_1,\dots,X_n)$ held fixed. Interestingly, the grid stability plots exhibit a sawtooth pattern that smooths out as $N$ increases while the selected bandwidth stabilizes. The curves for $\lambda=1$ and $\lambda=10$ approach smaller bandwidths than those for $\lambda=100$ and $\lambda=1000$, suggesting some kind of switch happening between $\lambda=10$ and $\lambda=100$.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
-    \caption{For a fixed sample $X=(X_1,\dots,X_{200})$ the spectral bandwidth selection pipeline was repeated for $N=11,16,21,\dots,1001$; $\lambda=1$}
+    \caption{Spectrally chosen bandwidth $h_{k_N}^{(\lambda)}$ against the number of bandwidth candidates $N$ on a geometric bandwidth grid. Here, $k_N\in\arg\max\{v_i^{(\lambda)}:1\le i\le N\}$ and $v^{(\lambda)}$ the Perron vector of $S^{(\lambda)}$. Darker curves correspond to larger $\lambda$. The black dashed line indicates $N=201$.}
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
 
