@@ -513,20 +513,24 @@ One particular advantage of this construction is that it preserves the Perron ve
 
 \todo[inline]{03.11: Polish!}
 
-Here we explain the results of the experiment with fixed $N$ and increasing $\lambda$ presented in Figure~\ref{fig:chosen_bandwidths_vs_lambda}.
-
-
-Taking the limit $\lambda\to\infty$ we get
+Here we explain the results of the experiment with fixed $N$ and increasing $\lambda$ presented in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. Taking the limit $\lambda\to\infty$ we get
 \begin{align*}
     \lim\limits_{\lambda\to\infty}\Tilde{A}_{ij}^{(\lambda)}=\begin{cases}
-        1 & ,D_{ij}=d_{\ast}\\
-        0 & ,D_{ij}>d_{\ast}.
+        1 & ,(i,j)\in\arg\min_{i\ne j}D_{ij}\\
+        0 & ,\text{else}.
     \end{cases}
 \end{align*}
+In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with edges between $h_i$ and $h_j$ if and only if $(i,j)\in\arg\min_{i\ne j}D_{ij}$.
 
-In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with edges between $h_i$ and $h_j$ if and only if $D_{ij}$ is minimal. In fact if $D$ is a Robinson matrix (for example if we take the $L^2$-divergence) this forces $d_{\ast}=d_{j,j+1}$ for some $j=1,\dots,N-1$.
+In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ divergence as established in Proposition~\ref{prop:L2_divergence_matrix} there must exist some $j^{\ast}=1,\dots,N-1$ such that the adjacent index pair $(j^{\ast},j^{\ast}+1)$ minimizes $D_{ij}$ over $i\ne j$. Assume for contradiction that all index pairs $(i_0,j_0)$ that minimize $D_{ij}$ over $i\ne j$ have at least one other index strictly in between them. Set $a=\min\{i_0,j_0\}$ and $b=\max\{i_0,j_0\}$. Then $a<a+1<b$ and by symmetry and the Robinson property $d_{\ast}=D_{i_0j_0}=D_{ab}\ge D_{a,a+1}\ge d_{\ast}$ and thus $(a,a+1)$ would be an adjacent pair that minimizes $D_{ij}$ over $i\ne j$, a contradiction.
 
-Assuming that $d_{\ast}=d_{j,j+1}$ for some unique $j=1,\dots,N-1$, we can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_j+(1/2)e_{j+1}$, that is, it concentrates at $\arg\min_{(j,j+1)}D_{j,j+1}$. We write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$ (where the limit is understood entry-wise). The matrix $B$ can be written as $B=e_j^{T}e_{j+1}+e_{j+1}e_j^{T}$. Direct calculations show that $e_{j}+e_{j+1}$ is an eigenvector with eigenvalue $1$, $e_j-e_{j+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j,j+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_j+(1/2)e_{j+1}$ is the sum normalized Perron vector of $B$.
+
+
+Now assume that $d_{\ast}=D_{j^{\ast},j^{\ast}+1}$ for some unique $j^{\ast}=1,\dots,N-1$. As a side note, this would automatically establish uniqueness among all $i<j$ because otherwise, if there were a non-adjacent pair $(i_0,j_0)$ with $i_0<j_0$ attaining $d_{\ast}$ we would have by the Robinson property that both adjacent pairs $(i_0,i_0+1)$ and $(j_0-1,j_0)$ also attain $d_{\ast}$, contradicting the uniqueness of $j^{\ast}$.
+
+We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ for $\lambda\to\infty$. First write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$, where the limit is understood entry-wise. The matrix $B$ can be written as $B=e_{j^{\ast}}e_{j^{\ast}+1}^{T}+e_{j^{\ast}+1}e_{j^{\ast}}^{T}$. Direct calculations show that $e_{j^{\ast}}+e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $1$, $e_{j^{\ast}}-e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j,j+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ is the sum normalized Perron vector of $B$.
+
+\textcolor{red}{An application of the Davis-Kahan theorem (see~\cite[Theorem~2]{yu_useful_2015}) yields $\sin\angle(v^{(\lambda)},v)\le2\|\Tilde{A}^{(\lambda)}-B\|_{\operatorname{op}}$. Thus $\sin\angle(v^{(\lambda)},v)\to0$ for $\lambda\to\infty$ because $\Tilde{A}^{(\lambda)}\to B$ entry-wise and because $v^{(\lambda)}$ and $v$ are both nonnegative and sum-normalized we get $v^{(\lambda)}\to v$ for $\lambda\to\infty$.}
 
 This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, as well as the yellow line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha}. In Figure~\ref{fig:chosen_bandwidths_vs_lambda} the chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
