@@ -232,3 +232,18 @@ For $\lambda=1$ (orange) we observe that the distribution of the spectrally sele
 \todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
 
 \todo[inline]{explain the sharp jump? (Outlook)}
+
+
+\textbf{Davis-Kahan Perron vector analysis}
+
+A second advantage is due to Davis-Kahan: Let $\Tilde{S}=S+E$ for some error matrix where $E$ is a symmetric error matrix with $\|E\|\le(1/2)\text{gap}(S)$. Let $v$ and $\Tilde{v}$ be the Perron vectors of $S$ and $\Tilde{S}$ respectively. Then $\sin\angle(v,\Tilde{v})\le2\sqrt{2}\|E\|/\text{gap}(S)$. That is, the angular error between $v$ and $\Tilde{v}$ is governed by small error matrix norm and large spectral gap of $S$. We have $\text{gap}(S^{(\lambda)})=e^{-\lambda d_{\ast}}\text{gap}(\Tilde{A}^{(\lambda)})$. That is, for large $\lambda$ the spectral gap of $S^{(\lambda)}$ becomes tiny and the upper bound for the angular error becomes large.
+
+Assuming that $\|E\|\le\eta \|S\|$ we get $\sin\angle(v,\Tilde{v})\le2\sqrt{2}\eta\|S\|/\text{gap}(S)$ and consequently
+\begin{align*}
+    \frac{\|S^{(\lambda)}\|}{\text{gap}(S^{(\lambda)})}=\frac{1+e^{-\lambda d_{\ast}}\mu_1}{e^{-\lambda d_{\ast}}(\mu_1-\mu_2)},\quad\frac{\|\Tilde{A}^{(\lambda)}\|}{\text{gap}(\Tilde{A}^{(\lambda)})}=\frac{\mu_1}{\mu_1-\mu_2},
+\end{align*}
+where $\mu_1$ and $\mu_2$ are the largest and second largest eigenvalue of $\Tilde{A}^{(\lambda)}$, respectively.
+
+We can interpret $m(S):=\|S\|/\text{gap}(S)$ as a measure (norm-to-gap ratio) for how stable the Perron vector of $S$ can be computed. For large $\lambda$, $m(S^{(\lambda)})$ is large, whereas increasing $\lambda$ influences $m(\Tilde{A}^{(\lambda)})$ only through the eigenvalues $\mu_1$ and $\mu_2$ and not through the factor $e^{-\lambda d_{\ast}}$ anymore.
+
+\textcolor{red}{In fact, $m(S^{(\lambda)})\to\infty$ but $m(\Tilde{A}^{(\lambda)})\to1$ for $\lambda\to\infty$.}

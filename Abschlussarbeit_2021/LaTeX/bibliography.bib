@@ -985,3 +985,18 @@ eprint = {
   year={2009},
   publisher={Springer}
 }
+
+@misc{blanchard_accurate_2019,
+  title = {Accurate {Computation} of the {Log}-{Sum}-{Exp} and {Softmax} {Functions}},
+  url = {http://arxiv.org/abs/1909.03469},
+  doi = {10.48550/arXiv.1909.03469},
+  abstract = {Evaluating the log-sum-exp function or the softmax function is a key step in many modern data science algorithms, notably in inference and classiﬁcation. Because of the exponentials that these functions contain, the evaluation is prone to overﬂow and underﬂow, especially in low precision arithmetic. Software implementations commonly use alternative formulas that avoid overﬂow and reduce the chance of harmful underﬂow, employing a shift or another rewriting. Although mathematically equivalent, these variants behave diﬀerently in ﬂoating-point arithmetic. We give rounding error analyses of diﬀerent evaluation algorithms and interpret the error bounds using condition numbers for the functions. We conclude, based on the analysis and numerical experiments, that the shifted formulas are of similar accuracy to the unshifted ones and that the shifted softmax formula is typically more accurate than a division-free variant.},
+  language = {en},
+  urldate = {2026-11-03},
+  publisher = {arXiv},
+  author = {Blanchard, Pierre and Higham, Desmond J. and Higham, Nicholas J.},
+  month = sep,
+  year = {2019},
+  note = {arXiv:1909.03469 [math.NA]},
+  keywords = {Mathematics - Numerical Analysis},
+}

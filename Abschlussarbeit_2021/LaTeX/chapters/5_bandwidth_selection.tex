@@ -471,8 +471,6 @@ After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref
 
 \subsection{Repeated sampling experiments}
 
-\todo[inline]{Code: Have one notebook for these kinds of experiments (Repeated sample experiments)}
-
 \todo[inline]{Do the fixed sample experiments under repeated sampling?}
 
 Now we draw repeated samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ and study the distribution of chosen bandwidths. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$.
@@ -504,25 +502,19 @@ We see a large discrepancy between the distributions of the spectrally chosen ba
 
 \section{Explanation of the Results}\label{sec:res_2}
 
+Before explaining our results, we briefly discuss the numerical aspect of preventing underflow in exponential evaluations, which means that $e^{-x}$ may be rounded to $0$ when $x$ is sufficiently large. This is relevant in our setting because we consider expressions of the form $e^{-\lambda D_{ij}}$ with $D_{ij}>0$ for $i\ne j$ and $\lambda\to\infty$. The problem of numerical over- and underflow in such settings is well known and it is advised to apply techniques like shifting the exponent, cf.~\cite{blanchard_accurate_2019}.
+
+Let $S^{(\lambda)}$ be the scale similarity matrix with entries $S^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $S^{(\lambda)}=I_N+A^{(\lambda)}$ with $A^{(\lambda)}$ having zero diagonal and $A^{(\lambda)}_{ij}=S^{(\lambda)}_{ij}$ for all $i\ne j$. The matrices $S^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}:=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}:=\min_{i\ne j}D_{ij}$ is the smallest divergence between two kernel density estimates at distinct bandwidths $h_i$ and $h_j$. The off diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$.
+
+One particular advantage of this construction is that it preserves the Perron vector while making large values of $\lambda$ numerically more manageable: adding $\lambda d_{\ast}$ to the exponent makes the largest off-diagonal entry equal to $1$. Thus, the off-diagonal entries of $\Tilde{A}^{(\lambda)}$ cannot all underflow to zero. In the code, we use \texttt{scipy.linalg.eigh} to efficiently compute the Perron vector of the symmetric matrix $\Tilde{A}^{(\lambda)}$.
+
+
 \subsection{Convergence to closest adjacent pair}
 
 \todo[inline]{03.11: Polish!}
 
-Here we explain the results of the fixed $N$ and $\lambda\to\infty$ experiment.
+Here we explain the results of the experiment with fixed $N$ and increasing $\lambda$ presented in Figure~\ref{fig:chosen_bandwidths_vs_lambda}.
 
-Let $S^{(\lambda)}$ be the scale similarity matrix with entries $S^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $S^{(\lambda)}=I_N+A^{(\lambda)}$. The matrices $S^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}=\min_{i\ne j}D_{ij}$ is the smallest distance between two distinct scales $h_i$ and $h_j$. The off diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$, which all lie between $0$ and $1$. One particular advantage of this construction is that large $\lambda$ become numerically manageable while the Perron vector does not change, that is, numerical underflow is avoided. A second advantage is due to Davis-Kahan: Let $\Tilde{S}=S+E$ for some error matrix where $E$ is a symmetric error matrix with $\|E\|\le(1/2)\text{gap}(S)$. Let $v$ and $\Tilde{v}$ be the Perron vectors of $S$ and $\Tilde{S}$ respectively. Then $\sin\angle(v,\Tilde{v})\le2\sqrt{2}\|E\|/\text{gap}(S)$. That is, the angular error between $v$ and $\Tilde{v}$ is governed by small error matrix norm and large spectral gap of $S$. We have $\text{gap}(S^{(\lambda)})=e^{-\lambda d_{\ast}}\text{gap}(\Tilde{A}^{(\lambda)})$. That is, for large $\lambda$ the spectral gap of $S^{(\lambda)}$ becomes tiny and the upper bound for the angular error becomes large.
-
-Assuming that $\|E\|\le\eta \|S\|$ we get $\sin\angle(v,\Tilde{v})\le2\sqrt{2}\eta\|S\|/\text{gap}(S)$ and consequently
-\begin{align*}
-    \frac{\|S^{(\lambda)}\|}{\text{gap}(S^{(\lambda)})}=\frac{1+e^{-\lambda d_{\ast}}\mu_1}{e^{-\lambda d_{\ast}}(\mu_1-\mu_2)},\quad\frac{\|\Tilde{A}^{(\lambda)}\|}{\text{gap}(\Tilde{A}^{(\lambda)})}=\frac{\mu_1}{\mu_1-\mu_2},
-\end{align*}
-where $\mu_1$ and $\mu_2$ are the largest and second largest eigenvalue of $\Tilde{A}^{(\lambda)}$, respectively.
-
-We can interpret $m(S):=\|S\|/\text{gap}(S)$ as a measure (norm-to-gap ratio) for how stable the Perron vector of $S$ can be computed. For large $\lambda$, $m(S^{(\lambda)})$ is large, whereas increasing $\lambda$ influences $m(\Tilde{A}^{(\lambda)})$ only through the eigenvalues $\mu_1$ and $\mu_2$ and not through the factor $e^{-\lambda d_{\ast}}$ anymore.
-
-\textcolor{red}{In fact, $m(S^{(\lambda)})\to\infty$ but $m(\Tilde{A}^{(\lambda)})\to1$ for $\lambda\to\infty$.}
-
-In the code, we use numpy linalg eigh, which efficiently computes the eigenvectors and eigenvalues of symmetric matrices.
 
 Taking the limit $\lambda\to\infty$ we get
 \begin{align*}
@@ -571,6 +563,53 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     if $h,h+\tau\in J:=[a,b]\subseteq(0,\infty)$. Also, $\mu_J\ge0$ and $\mu_J(s)\to0$ as $s\downarrow0$.
 \end{Lem}
 
+\begin{proof}
+    Let $h>0$. For every $x\in\mathbb{R}$ we have
+    \begin{align*}
+        \lim\limits_{\tau\to0}\frac{1}{\tau}(\hat{f}_{h+\tau}(x)-\hat{f}_h(x))&=\frac{1}{n}\sum_{j=1}^{n}\lim\limits_{\tau\to0}\frac{K_{h+\tau}(x-X_j)-K_{h}(x-X_j)}{\tau}\\&
+        =\frac{1}{n}\sum_{j=1}^{n}\partial_hK_h(x-X_j)\\&
+        =-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K^{'}\left(\frac{x-X_j}{h}\right)\right)\\&
+        =:\partial_h\hat{f}_h(x).
+    \end{align*}
+    Let $0<|\tau|<h/2$. Using the mean value inequality, we bound
+    \begin{align*}
+        \left|\frac{K_{h+\tau}(u)-K_h(u)}{\tau}\right|&\le\sup_{s\in(\min\{h,h+\tau\},\max\{h,h+\tau\})}|\partial_sK_s(u)|\\&
+        \le\sup_{s\in(h/2,3h/2)}\left|\frac{1}{s^2}L\left(\frac{u}{s}\right)\right|\\&
+        \le\frac{4}{h^2}\underbrace{\sup_{a\in(2/3,2)}|L(au/h)|}_{=:G(u/h)}
+    \end{align*}
+    and
+    \begin{align*}
+        \left|\frac{\hat{f}_{h+\tau}(x)-\hat{f}_h(x)}{\tau}\right|&\le\frac{1}{n}\sum_{j=1}^{n}\left|\frac{K_{h+\tau}(x-X_j)-K_h(x-X_j)}{\tau}\right|\\&
+        \le\frac{4}{nh^2}\sum_{j=1}^{n}G\left(\frac{x-X_j}{h}\right)=:M(x),
+    \end{align*}
+    where $M\in L^2(\mathbb{R})$ because by the Cauchy-Schwarz inequality $\|M\|_2^2\le 16h^{-3}\|G\|_2^2$ and by the decay assumption on $L$ we get $\|G\|_2^2\le3C^2/(2\alpha-1)<+\infty$. By the dominated convergence theorem
+    \begin{align}\label{eq:dom_conv_consequence}
+        \left\|\frac{\hat{f}_{h+\tau}-\hat{f}_h}{\tau}-\partial_h\hat{f}_h\right\|_2\to0,\quad\tau\to0.
+    \end{align}
+    Set $d\Psi(h)[\tau]:=\tau\partial_h\hat{f}_h$. Now it holds
+    \begin{align*}
+        \hat{f}_{h+\tau}-\hat{f}_h=\tau\partial_h\hat{f}_h+\underbrace{\left(\hat{f}_{h+\tau}-\hat{f}_h-\tau\partial_h\hat{f}_h\right)}_{=:r_h(\tau)},
+    \end{align*}
+    where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.
+
+    The continuity of the operator $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ can be established by defining the dilation operator $T_h$ and the shift operator $g_a$ and computing
+    \begin{align*}
+        \|\partial_h\hat{f}_{h_1}-\partial\hat{f}_{h_2}\|_2&=\|\frac{1}{nh_2}\sum_j\tau_{X_j}T_{h_2}L-\frac{1}{nh_1}\sum_j\tau_{X_j}T_{h_1}L\|_2\\&
+        \le\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_1}T_{h_1}L\|_2\le\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_2}T_{h_1}L\|_2+\|\frac{1}{h_2}T_{h_1}L-\frac{1}{h_1}T_{h_1}L\|_2\\&
+        =\frac{1}{h_2}\|T_{h_2}L-T_{h_1}L\|_2+|\frac{1}{h_2}-\frac{1}{h_1}|\|T_{h_1}L\|_2
+    \end{align*}
+    Both terms on the right hand side vanish for $h_1\to h_2$. (A well known fact (see~\cite{de2009intermediate}) is that $(U(s))_{s\in\mathbb{R}}$, $U(s):L^2\to L^2$, $U(s)f(x):=e^{s/2}f(e^sx)$ is a strongly continuous unitary group. In particular, $\|U(s)f-U(s_0)f\|_2\to0$ as $s\to s_0$ for all $f\in L^2$. We now note that we can write $T_hf=h^{-1/2}U(-\log{h})f$ and thus $\|T_hf-T_{h_0}f\|_2\to0$ as $h\to h_0$.)
+
+    Since $\|d\Psi(h)-d\Psi(s)\|=\sup_{|\tau|\le 1}\|\tau\partial_h\hat{f}_h-\tau\partial_h\hat{f}_s\|_2=\|\partial_h\hat{f}_h-\partial_h\hat{f}_s\|_2$, the continuity of $d\Psi$ is established.
+
+    Fix a closed nonempty interval $J:=[a,b]\subseteq(0,\infty)$. Applying the bound from above:
+    \begin{align*}
+        \|r_h(\tau)\|_2&\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\text{op}}\\&
+        \le|\tau|\underbrace{\sup_{h,s\in J,|h-s|\le|\tau|}\|d\Psi(s)-d\Psi(h)\|_\text{op}}_{=:\mu_{J}(|\tau|)}
+    \end{align*}
+    for all $h\in[a,b]$ and $\tau\in\mathbb{R}$ with $h+\tau\in[a,b]$. $\mu_{J}(s)=\sup_{x,y\in J,|x-y|\le s}\|d\Psi(x)-d\Psi(y)\|_{\text{op}}$ is known in the literature as the modulus of continuity. Because $d\Psi$ is continuous, $d\Psi:J\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ is uniformly continuous, and in this case it is well known that $\mu_{J}(s)\to0$ for $s\downarrow0$. Also note that $\|d\Psi(s)-d\Psi(h)\|_{\text{op}}=\|\partial_h\hat{f}_h|_{h=s}-\partial_h\hat{f}_h|_{h=h}\|_2$. Since we have established the continuity of $d\Psi$ before, the proof is finished.
+\end{proof}
+
 % \begin{proof}
 %     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 % \end{proof}
@@ -586,6 +625,132 @@ Next, we state the main theorem of this thesis.
     \end{align*}
     where $\hat{Q}_r(h)=2^{-1}h^{2(1-r)}\|\partial_s\hat{f}_s|_{s=h}\|_2^2$ is an energy functional.
 \end{Prop}
+
+\begin{proof}
+    Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$. 
+
+    We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\#\{j\in\mathbb{Z}:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N\}=\lfloor A\epsilon_N^{-1}\rfloor-\lceil-A\epsilon_N^{-1}\rceil+1=2\lfloor A\epsilon_N^{-1}\rfloor+1\le 2A\epsilon_N^{-1}+1$.
+
+    We also set $\delta_{N,j}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$.
+
+    Split the row sum:
+    \begin{align*}
+        R_{i_N}^{(N)}=\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}.
+    \end{align*}
+
+    We have $D_{i_Nj}\ge c(\delta_{N,j})^2$ for some constant $c>0$. To see this, first write
+    \begin{align*}
+        \left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge|h_{i_N}-h_j|h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
+    \end{align*}
+    and, furthermore
+    \begin{align*}
+        D_{i_Nj}&=\frac{1}{4\pi}\int|P_n(\omega)|^2\left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|^2\,d\omega\\&
+        \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int\underbrace{|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2}}_{=:g(\omega)}\,d\omega.
+    \end{align*}
+    Now, $|\delta_{N,j}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with positive constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$.
+
+    Continuing
+    \begin{align*}
+        \epsilon_NT_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\epsilon_N\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
+        \le\epsilon_N\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
+        \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt
+    \end{align*}
+    We see that $\epsilon_NT_N(A)$ is asymptotically bounded and therefore
+    \begin{align*}
+        \limsup_{N\to\infty}\epsilon_NT_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{cA}\to0,\quad A\to\infty.
+    \end{align*}
+    
+    Now, let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus, by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
+    \begin{align*}
+        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_h|_{h=h_{i_N}}+u_{N,j}\\&
+        =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
+    \end{align*}
+    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ according to Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$, where $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large.
+
+    We have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite.
+
+    We have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$, because
+    \begin{align*}
+        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2\\&
+        \le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
+        \le|\delta_{N,j}|\left(h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|\right)\\&
+        \le|\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}A\lambda_N^{-1/2})+CM_0A\lambda_N^{-1/2}}_{=:a_N(A)}\right)
+    \end{align*}
+    and $a_N(A)\to0$ since $\lambda_N^{-1/2}\to0$ by assumption and $\mu_{[h_{\min},h_{\max}]}(s)\to0$ for $s\downarrow0$ by Lemma~\ref{lem:frechet_derivative_of_kde}.
+
+    Consequently,
+    \begin{align*}
+        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2^2+\rho_{N,j}=(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
+    \end{align*}
+    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{N,j}\langle\partial_h\hat{f}_h|_{h=h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
+    \begin{align*}
+        |\rho_{N,j}|&\le|\delta_{N,j}|h_{i_N}^{1-r}|\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle|+(1/2)\|r_{N,j}\|_2^2\\&
+        \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N,j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
+        \le(\delta_{N,j})^2\underbrace{\left(h_{\max}^{1-r}M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)}.
+    \end{align*}
+    Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}(\delta_{N,j}^2)$. Thus,
+    \begin{align*}
+        S_{i_Nj}=e^{-\lambda_ND_{i_Nj}}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}e^{-\lambda_N\rho_{N,j}}.
+    \end{align*}
+    Define $\eta_{N,j}=e^{-\lambda_N\rho_{N,j}}-1$. It follows $S_{i_Nj}=e^{-\lambda_N(\delta_{N,j})^2\hat{Q}_r(h_{i_N})}(1+\eta_{N,j})$. Now write
+    \begin{align*}
+        \epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}=\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}+\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}\eta_{N,j}.
+    \end{align*}
+    The local error can be bounded:
+    \begin{align*}
+        \left|\epsilon_N\sum_{j\in I_N(A)}\underbrace{e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}}_{\le 1}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
+    \end{align*}
+
+    We must show that $\sup_{j\in I_N(A)}|\eta_{N,j}|\to0$ for $N\to\infty$. We have $\lambda_N|\rho_{N,j}|\le\lambda_N(\delta_{N,j})^2b_N(A)\le A^2b_N(A)$ for all $j\in I_N(A)$. Consequently, $|\eta_{N,j}|=|e^{-\lambda_N\rho_{N,j}}-1|\le\max\{e^{A^2b_N(A)}-1,1-e^{-A^2b_N(A)}\}\to0$ as $N\to\infty$.
+
+    
+    Since $\hat{Q}_r$ is continuous in $h_0$, we have $\hat{Q}_r(h_{i_N})\to\hat{Q}_r(h_0)$ for $N\to\infty$. Therefore
+    \begin{align*}
+        \left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|\le(2A+\epsilon_N)A^2|\hat{Q}_r(h_{i_N})-\hat{Q}_r(h_0)|\to0.
+    \end{align*}
+    We continue working with the remaining non-vanishing term:
+    \begin{align*}
+        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_{i_N})}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}\right|}_{\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2\hat{Q}_r(h_0)}-\int_{-A}^{A}e^{-t^2\hat{Q}_r(h_0)}\,dt\right|.
+    \end{align*}
+
+    In order to show that the second summand above also converges to $0$ for $N\to\infty$ we first rewrite the sum over $I_N(A)$. Before that, set $q=\hat{Q}_r(h_0)$, $g(t):=e^{-qt^2}$, $m_N:=\lfloor A\epsilon_N^{-1}\rfloor$ and $x_k:=\epsilon_N(-m_N+k-1)$. For sufficiently large $N$ we can now write
+    \begin{align*}
+        \epsilon_N\sum_{j\in I_N(A)}g(t_{N,j})&=\epsilon_N\sum_{j=1,\dots,N:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N}g(t_{N,j})\\&
+        =\epsilon_N\sum_{k=-\lfloor A\epsilon_N^{-1}\rfloor}^{\lfloor A\epsilon_N^{-1}\rfloor}g(k\epsilon_N)\\&
+        =\sum_{k=-m_N}^{m_N}(k\epsilon_N-(k-1)\epsilon_N)g(k\epsilon_N)\\&
+        =\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)
+    \end{align*}
+
+    We have used $t_{N,1}=\sqrt{\lambda_N}\delta_{N,1}=\sqrt{\lambda_N}r^{-1}(h_{\min}^r-h_{i_N}^r)\to-\infty$ and $t_{N,N}\to+\infty$ for $N\to\infty$ because we assumed that $h_{i_N}\to h_0$ for some interior scale $h_0$ and because $\lambda_N\to\infty$.
+
+    Now $\{x_0,\dots,x_{2m_N+1}\}$ is a partition of the interval $[-\epsilon_Nm_N-\epsilon_N,\epsilon_Nm_N]$.
+
+    Thus,
+    \begin{align*}
+        \left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|&\le\sum_{k=1}^{2m_N+1}\int_{x_{k-1}}^{x_k}|g(x_k)-g(x)|\,dx\\&
+        \le2A\hat{Q}_r(h_0)(2A\epsilon_N+\epsilon_N^2)\to0,\quad N\to\infty,
+    \end{align*}
+    because $\epsilon_N\to0$ since we have assumed $\lambda_N/N^2\to0$ and
+    \begin{align*}
+        \left|\int_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(t)\,dt-\int_{-A}^{A}g(t)\,dt\right|\to0,\quad N\to\infty,
+    \end{align*}
+    because $-\epsilon_N(m_N+1)\to-A$ and $\epsilon_Nm_N\to A$.
+
+    We have now shown that the aforementioned second summand also converges to zero.
+
+    Finally,
+    \begin{align*}
+        L_A&=\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\liminf_{N\to\infty}\epsilon_NT_N(A)\\&
+        \le\liminf_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\limsup_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\limsup_{N\to\infty}\epsilon_NT_N(A)\\&
+        \le L_A+\frac{e^{-cA^2}}{cA}
+    \end{align*}
+    
+    Letting $A\to\infty$, we see that the limit of $\epsilon_NR_{i_N}^{(N)}$ as $N\to\infty$ exists and is given by
+    \begin{align*}
+        \lim_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\lim_{A\to\infty}L_A=\int_{-\infty}^{\infty}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
+    \end{align*}
+    We must make sure that $\hat{Q}_r(h_0)>0$. This follows from previously established results inside this proof. For all sufficiently large $N$ we have $0<c\le\delta_{N,i_N+1}^{-2}D_{i_N,i_N+1}=\hat{Q}_r(h_{i_N})+\delta_{N,i_N+1}^{-2}\rho_{N,i_N+1}$ and taking the limit gives $\hat{Q}_r(h_0)\ge c>0$.
+\end{proof}
 
 % \begin{proof}
 %     See Appendix Section~\ref{sec:proof_main_thm}.
