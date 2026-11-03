@@ -511,8 +511,6 @@ One particular advantage of this construction is that it preserves the Perron ve
 
 \subsection{Convergence to closest adjacent pair}
 
-\todo[inline]{03.11: Polish!}
-
 Here we explain the results of the experiment with fixed $N$ and increasing $\lambda$ presented in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. Taking the limit $\lambda\to\infty$ we get
 \begin{align*}
     \lim\limits_{\lambda\to\infty}\Tilde{A}_{ij}^{(\lambda)}=\begin{cases}
@@ -528,10 +526,10 @@ Now assume that $d_{\ast}=D_{j^{\ast},j^{\ast}+1}$ for some unique $j^{\ast}=1,\
 
 We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ for $\lambda\to\infty$. First write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$, where the limit is understood entry-wise. The matrix $B$ can be written as $B=e_{j^{\ast}}e_{j^{\ast}+1}^{T}+e_{j^{\ast}+1}e_{j^{\ast}}^{T}$. Direct calculations show that $e_{j^{\ast}}+e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $1$, $e_{j^{\ast}}-e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j^{\ast},j^{\ast}+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ is the sum normalized Perron vector of $B$. An application of the Davis-Kahan theorem (see~\cite[Corollary~1]{yu_useful_2015}) now yields
 \begin{align*}
-    \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|A^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
+    \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
 \end{align*}
 
-This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth eventually is either $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
+This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth eventually is either $h_{j_{\ast}}$ or $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}\label{sec:perron_vector_concentrates}
 
