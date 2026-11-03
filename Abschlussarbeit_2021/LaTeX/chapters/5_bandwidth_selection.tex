@@ -420,7 +420,7 @@ In our experiments, we focus on the case where $f$ is the standard normal densit
 
 Henceforth, we use the fixed bandwidth grid endpoints $h_{\min}=0.01$ and $h_{\max}=2$. We also fix the choice of the Gaussian kernel for our experiments and subsequent explanations in Section~\ref{sec:res_2}. The spectrally selected bandwidth is defined as $h_{k_N}$, where $k_N\in\arg\max\{v_i^{(\lambda)}:1\le i\le N\}$ and $v^{(\lambda)}$ is the Perron vector of $S$. Note that $h_{k_N}$ also depends on $\lambda$ through $k_N$ but we will omit this indication for notational convenience.
 
-The choice of a Gaussian kernel and Gaussian data allows us to obtain explicit formulas for the ISE and MISE as functions of $h$. We can therefore minimize them numerically over suitable closed intervals using standard optimization routines for univariate functions.
+The choice of a Gaussian kernel and Gaussian data allows us to obtain explicit formulas for the ISE and MISE as functions of $h$. We can therefore minimize them numerically over suitable closed intervals using standard optimization routines for univariate functions. We denote by $h_{\text{oracle}}$ and $\hat{h}_0$ the numerically obtained minimizers of the MISE and ISE, respectively.
 
 \subsection{Fixed sample experiments}
 
