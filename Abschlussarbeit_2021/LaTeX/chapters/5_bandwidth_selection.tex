@@ -524,16 +524,14 @@ In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with
 
 In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ divergence as established in Proposition~\ref{prop:L2_divergence_matrix} there must exist some $j^{\ast}=1,\dots,N-1$ such that the adjacent index pair $(j^{\ast},j^{\ast}+1)$ minimizes $D_{ij}$ over $i\ne j$. Assume for contradiction that all index pairs $(i_0,j_0)$ that minimize $D_{ij}$ over $i\ne j$ have at least one other index strictly in between them. Set $a=\min\{i_0,j_0\}$ and $b=\max\{i_0,j_0\}$. Then $a<a+1<b$ and by symmetry and the Robinson property $d_{\ast}=D_{i_0j_0}=D_{ab}\ge D_{a,a+1}\ge d_{\ast}$ and thus $(a,a+1)$ would be an adjacent pair that minimizes $D_{ij}$ over $i\ne j$, a contradiction.
 
-
-
 Now assume that $d_{\ast}=D_{j^{\ast},j^{\ast}+1}$ for some unique $j^{\ast}=1,\dots,N-1$. As a side note, this would automatically establish uniqueness among all $i<j$ because otherwise, if there were a non-adjacent pair $(i_0,j_0)$ with $i_0<j_0$ attaining $d_{\ast}$ we would have by the Robinson property that both adjacent pairs $(i_0,i_0+1)$ and $(j_0-1,j_0)$ also attain $d_{\ast}$, contradicting the uniqueness of $j^{\ast}$.
 
-We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ for $\lambda\to\infty$. First write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$, where the limit is understood entry-wise. The matrix $B$ can be written as $B=e_{j^{\ast}}e_{j^{\ast}+1}^{T}+e_{j^{\ast}+1}e_{j^{\ast}}^{T}$. Direct calculations show that $e_{j^{\ast}}+e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $1$, $e_{j^{\ast}}-e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j,j+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ is the sum normalized Perron vector of $B$. An application of the Davis-Kahan theorem (see~\cite[Corollary~1]{yu_useful_2015}) now yields
+We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ for $\lambda\to\infty$. First write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$, where the limit is understood entry-wise. The matrix $B$ can be written as $B=e_{j^{\ast}}e_{j^{\ast}+1}^{T}+e_{j^{\ast}+1}e_{j^{\ast}}^{T}$. Direct calculations show that $e_{j^{\ast}}+e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $1$, $e_{j^{\ast}}-e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j^{\ast},j^{\ast}+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ is the sum normalized Perron vector of $B$. An application of the Davis-Kahan theorem (see~\cite[Corollary~1]{yu_useful_2015}) now yields
 \begin{align*}
-    \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|A^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|A^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
+    \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|A^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
 \end{align*}
 
-This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, where the spectrally chosen bandwidth approaches the scales $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
+This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth eventually is either $h_{j_{\ast}}$ and $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}\label{sec:perron_vector_concentrates}
 
