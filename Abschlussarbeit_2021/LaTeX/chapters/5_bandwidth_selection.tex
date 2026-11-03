@@ -414,24 +414,20 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 In our numerical experiments, we restrict ourselves to the $L_2$ divergence $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ as it is closely related to the MISE criterion for optimal bandwidth selection and can be efficiently computed using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
-We use the similarity transformation $S_{ij}=\exp{(-\lambda D_{ij})}$ and vary the penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the Perron vector, as we discussed in Section~\ref{sec:similarity_transformations} above.
+We use the similarity transformation $S_{ij}=\exp{(-\lambda D_{ij})}$ and vary the inverse penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the row-normalized similarities, as we discussed in Section~\ref{sec:similarity_transformations}. Through the eigenvector equations $\rho(S)v_i=\sum_{j=1}^{N}S_{ij}v_j$, changing $\lambda$ can also affect the Perron vector $v$ of $S$.
 
-In our experiments, we focus on the case $f\sim N(0,1)$, that is, normally distributed data. This is the simplest case in which there is only one optimal bandwidth, namely the one that minimizes the MISE. We discussed its uniqueness in Section~\ref{sec:preliminaries_kde}. We start with this simple case to see if there is even a connection between our spectral pipeline and the notion of optimal bandwidth selection. Experimentation with other data distributions is future work; see the Outlook chapter~\ref{chap:outlook}. Especially Gaussian mixture models are interesting because in such cases there might not exist a unique optimal bandwidth and the Perron vector could serve as a ranking procedure for multiple candidate bandwidths.
+In our experiments, we focus on the case where $f$ is the standard normal density, that is, the data are drawn from $N(0,1)$. This is the simplest case in which there is only one optimal bandwidth, namely the one that minimizes the MISE. Its uniqueness was discussed in Section~\ref{sec:preliminaries_kde}. We start with this simple case to see if there is even a connection between our spectral pipeline and the notion of optimal bandwidth selection. Experimentation with other data distributions is future work; see the Outlook chapter~\ref{chap:outlook}. Especially Gaussian mixture models are interesting because in such cases there might not exist a unique optimal bandwidth and the Perron vector could serve as a ranking procedure for multiple candidate bandwidths.
 
 \subsection{Fixed sample experiments}
 
 \todo[inline]{Code: Have one notebook for these kinds of experiments (Fixed sample experiments)}
 
-For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$, $n=200$ and study the influence of the grid fineness $N$ and the concentration penalty $\lambda=\lambda_N$.
-
-Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $i\mapsto v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$, $\lambda=1$. 
-
-We see that the Perron vector has a flat plateau for $\lambda=1$ (yellow) and $\lambda=10$ (green) which means that many bandwidths are considered central. Increasing $\lambda$ leads to the Perron vector having a more pronounced peak, which is consistent with the interpretation of $\tau=\lambda^{-1}$ being a penalty for how much the Perron vector concentrates.
+For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\sim f$, $n=200$ and study the influence of the grid fineness $N$ and the inverse concentration penalty $\lambda=\lambda_N$. Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $h_i$ vs  $v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$ for $\lambda\in\{1,10,100,1000\}$. We see that the Perron vector has a flat plateau for $\lambda=1$ and $\lambda=10$, which means that many bandwidths are considered central. In this experiment, increasing $\lambda$ leads to the Perron vector having a more pronounced peak, which is consistent with the interpretation of $\tau=\lambda^{-1}$ as a concentration penalty for the row-normalized similarities.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
-    \caption{$X_i\sim N(0,1)$, $n=200$, $N=191$, $h_{\min}=0.01$, $h_{\max}=2$, $\lambda\in\{10^k:k=0,1,2,3\}$, geometric bandwidth grid; the blue line indicates $h_{\text{oracle}}=0.38304$}
+    \caption{Perron vector entries $v_i^{(\lambda)}$ against bandwidth candidates $h_i$ on a geometric grid with $N=191$, $h_{\min}=0.01$, and $h_{\max}=2$. Darker curves correspond to larger $\lambda$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$.}
     \label{fig:stationary_distribution_plot_001}
     \todo[inline]{Code: Notebook, Python file: Grid builder (input: $h_{\min},h_{\max},r,N$; output: $\mathcal{H}$) Perron vector computation (input: data, grid $\mathcal{H}$; output: Perron vector, index with largest entry)}
 \end{figure}
