@@ -2,7 +2,7 @@
 
 \textcolor{red}{In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$. The goal is to develop a methodological connection between the spectral scale selection principle introduced in~\cite{Baralic2026} and the classical problem in nonparametric statistics of bandwidth selection for kernel density estimation. We will explain why the spectral construction selects what it selects and how this selection relates to classical bandwidth selection procedures. More concretely, let $h_{\text{oracle}}$ be the bandwidth that minimizes $\mathbb{E}[\|f-\hat{f}_h\|_2^2]$ and define $S_{ij}^{(\lambda)}=e^{-\lambda D_{ij}}$ with $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ for some candidate bandwidths $0<h_1<\dots<h_N$. Does the peak of the Perron vector of $S$ relate to $h_{\text{oracle}}$?}
 
-\section{Preliminaries on Kernel Density Estimation}
+\section{Preliminaries on Kernel Density Estimation}\label{sec:preliminaries_kde}
 
 We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. We assume throughout that $f$ is square integrable, twice continuously differentiable, and that its second derivative is square integrable. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
@@ -355,8 +355,6 @@ is minimized by the probability vector $\hat{p}_i\in\mathbb{R}^{N}$ with entries
 
 \subsection{Bandwidth grid}
 
-\todo[inline]{02.11: Polish!}
-
 The choice of the correct bandwidth grid is essential. Let $N\in\mathbb{N}$, $N\ge2$. We fix the two endpoints $0<h_{\min}<h_{\max}$ and set
 \begin{align}\label{eq:bandwidth_grid}
     \mathcal{H}_N:=\{h_1,\dots,h_N\},\quad0<h_{\min}=h_1<\dots<h_N=h_{\max}.
@@ -414,11 +412,11 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 \todo[inline]{03.11: Polish!}
 
-In our numerical experiments, we restrict ourselves to the $L_2$ divergence as it is closely related to the MISE criterion for optimal bandwidth selection and it can be computed efficiently using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
+In our numerical experiments, we restrict ourselves to the $L_2$ divergence $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ as it is closely related to the MISE criterion for optimal bandwidth selection and can be efficiently computed using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
-We use the similarity transformation $S=\exp{(-\lambda D)}$ and vary the penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the Perron vector. 
+We use the similarity transformation $S_{ij}=\exp{(-\lambda D_{ij})}$ and vary the penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the Perron vector, as we discussed in Section~\ref{sec:similarity_transformations} above.
 
-In our experiments, we focus first on the case $f\sim N(0,1)$, that is, normally distributed data. This is the simplest case in which there is only one \enquote{optimal} bandwidth (the one minimizing a certain error criterion). We start with this simple case to see if there is even a connection between our spectral pipeline and the notion of \enquote{optimal} bandwidth selection. Experimentation with other data distributions is future work; see the Outlook chapter~\ref{chap:outlook}. Especially Gaussian mixture models are interesting because in such cases there might not exist a unique optimal bandwidth and the Perron vector could serve as a ranking procedure for multiple candidate bandwidths.
+In our experiments, we focus on the case $f\sim N(0,1)$, that is, normally distributed data. This is the simplest case in which there is only one optimal bandwidth, namely the one that minimizes the MISE. We discussed its uniqueness in Section~\ref{sec:preliminaries_kde}. We start with this simple case to see if there is even a connection between our spectral pipeline and the notion of optimal bandwidth selection. Experimentation with other data distributions is future work; see the Outlook chapter~\ref{chap:outlook}. Especially Gaussian mixture models are interesting because in such cases there might not exist a unique optimal bandwidth and the Perron vector could serve as a ranking procedure for multiple candidate bandwidths.
 
 \subsection{Fixed sample experiments}
 
