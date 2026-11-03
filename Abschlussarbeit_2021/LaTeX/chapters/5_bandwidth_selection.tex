@@ -440,18 +440,18 @@ Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the spectrally selected b
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
 
-In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. Henceforth, we set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization of the row-normalized similarities. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the spectrally chosen bandwidth for a fixed sample as $\lambda$ increases. The path does not approach the oracle bandwidth over the displayed range. We will explain this behavior in Section~\ref{sec:res_2} below. Also note that the curve sharply jumps around $\lambda\approx17.87375$.
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. We set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization of the row-normalized similarities. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the spectrally chosen bandwidth for a fixed sample as $\lambda$ increases. The blue dashed line indicates the mean of the two bandwidths $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$ where $(j^{\ast},j^{\ast}+1)$ is the index pair that minimizes $D_{ij}$ over $i\ne j$. The spectrally chosen bandwidth appears to approach this blue vertical line. We will explain this behavior in Section~\ref{sec:res_2} below. 
 
-\todo[inline]{explain the sharp jump? (Outlook)}
-
-\textcolor{red}{The observation regarding the sharp jumps motivates to ask more questions: does it happen under repeated sampling? At which $\lambda$ does the switch happen each time? Is it an interesting property about this method or just a numerical artifact?}
+Also note that the curve sharply jumps around $\lambda\approx17.87375$. This observation motivates us to ask more questions: Does it happen under repeated sampling? If so, at what $\lambda$ does the switch happen each time? Is it an interesting property about this method or just a numerical artifact? We leave these questions for future work; see the Outlook chapter~\ref{chap:outlook}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
-    \caption{Spectrally chosen bandwidths $h_{k_N}^{(\lambda)}$ against $\lambda$ on a geometric grid with $N=201$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$.}
+    \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
+    \caption{Spectrally chosen bandwidths $h_{k_N}^{(\lambda)}$ against $\lambda$ on a geometric grid with $N=201$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$. The blue dashed line indicates the mean of the two bandwidths $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$ where $(j^{\ast},j^{\ast}+1)$ is the index pair that minimizes $D_{ij}$ over $i\ne j$.}
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
+
+\todo[inline]{continue here}
 
 After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. For $\alpha>1/2$ the chosen bandwidth seems to converge towards some bandwidth $h_{\infty}=0.1764$. In Section~\ref{sec:res_2} we explain that this is the minimizer of $\hat{Q}_{200,2}(h)=(h^2/2)\|\partial_h\hat{f}_h\|_2^2$.
 
