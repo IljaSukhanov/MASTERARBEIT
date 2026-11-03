@@ -16,32 +16,14 @@
 \begin{document}
 {\Large\color{accent} THESIS REVISION GUIDE}\\[0.3em]
 {\LARGE\bfseries\color{ink} Sections marked 01.11}\\[0.5em]
-{\large Concrete remaining tasks}
+{\large Reassessed 2 November 2026}
 
-This checklist covers the three sections marked \texttt{01.11: Polish!} in Chapter 3. Line numbers refer to \texttt{5\_bandwidth\_selection.tex}. Sections marked 02.11 and citation cleanup are deferred. Items focus on mathematical accuracy and useful shortening.
+The listed sections were checked against the current thesis source. Line numbers refer to the bandwidth-selection chapter unless marked as appendix lines. Sections marked 02.11 and citation cleanup are deferred.
 
 \heading{3.1 \quad KDE preliminaries}
 \begin{itemize}
 \todoitem{Complete the consistency sentence inside the marked block.} Add the missing $\to0$ in $\|K_{h_n}*f-f\|_2\to0$ and describe $h_n\to0$ and $nh_n\to\infty$ as sufficient conditions for the bias and variance to vanish. \where{65} See \href{https://cswr.nrhstat.org/density}{Hansen, Section 2.2, Theorem 2.1}.
 
-\end{itemize}
-
-\heading{3.3.1 \quad Divergence matrices and the Perron vector}
-\begin{itemize}
-\todoitem{Repair the acute-chain lemma proof.} The diagonal entries of $D$ are zero, so use positivity off the diagonal and irreducibility. The acute-chain assumption gives $\langle P_i,Q_i\rangle\ge0$, not necessarily $>0$. The last displayed maximum also needs squared norms. Supply the additional argument needed for the stated \emph{strict} exclusion of interior maximizers, or weaken the conclusion to what the proof establishes. \where{283--344}
-
-\todoitem{Shorten the same proof.} Replace the long expansion of $\mu$ by the one-line identity $\mu=x_1+\sum_k a_k(x_{k+1}-x_k)$, then retain the essential comparison. Once the proof is complete, remove or fill the empty appendix subsection for the same lemma. \where{305--317; appendix lines 225--229}
-
-\todoitem{Fix the Gaussian acute-chain calculation.} Explicitly use continuity of $P_n$ and $P_n(0)=1$. The Fourier-domain integrand in the positivity sentence must contain $b_kb_l$, as in the displayed equation, rather than $\delta_k\delta_l$. State the positive, strictly ordered bandwidth assumptions in the proposition. \where{351--369}
-\end{itemize}
-
-\heading{3.3.2 \quad Similarity transformations}
-\begin{itemize}
-\todoitem{Repair the theorem's boundary assumption.} For completely monotone $\phi$, require a finite continuous extension to $0$ when applying it to $D(x,x)=0$. In the Laplace representation include a possible atom at $t=0$; this also covers constant functions. Nonconstant $\phi$ and distinct embedded points give the stated strict result. \where{383--413} See \href{https://arxiv.org/html/2007.14697}{Guella, Theorem 3.1 and discussion following it}.
-
-\todoitem{Shorten the Schoenberg discussion.} Once the assumptions are correct, cite the existing theorem for the general equivalence and keep only the derivation or examples needed for the thesis. The Gaussian-kernel case is the one used in the experiments. \where{389--430}
-
-\todoitem{Tidy the transformation's scope.} State $\tau>0$ in the entropy minimization and that $S\to I$ as $\tau\downarrow0$ requires $D_{ij}>0$ for $i\ne j$. Keep the distinction between positive definiteness and entrywise positivity when explaining Perron--Frobenius. \where{432--446}
 \end{itemize}
 
 \vfill
