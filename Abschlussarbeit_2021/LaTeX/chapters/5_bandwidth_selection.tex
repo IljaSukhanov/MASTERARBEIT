@@ -564,7 +564,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 \end{proof}
 
-We note that the decay assumption used on $L$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is implied by by the square integrability of the kernel $K$. In particular, since the Gaussian kernel is square integrable, it fulfills the decay assumption and thus Lemma~\ref{lem:frechet_derivative_of_kde} applies making the Fréchet derivative of the Gaussian kernel density estimate continuous with respect to the operator norm.
+\textcolor{red}{We note that the decay assumption on $L$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is a stronger conditions than square integrability of the kernel $K$. It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. The Gaussian kernel fulfills this assumption, because ...}
 
 Next, we state the first of the two main results of this thesis.
 
@@ -619,18 +619,20 @@ Next, we state the first of the two main results of this thesis.
 
     \textit{Step 2: Approximate the local similarities}
 
-    Now let $j\in I_N(A)$ which by the considerations in the prelude implies $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
+    Now let $j\in I_N(A)$ which by the considerations in the prelude implies $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
     \begin{align*}
         \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
         =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
     \end{align*}
-    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $a_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large. Also by the first inequality of Equation~\ref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
+    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $\alpha_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large. Also by the first inequality of Equation~\ref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
     \begin{align*}
         \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_{h_{i_N}}\|_2
         \le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
-        \le|\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|}_{=:a_N(A)}\right)
+        \le|\delta_{N,j}|\left(h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|\right)\\&
+        \le
+        |\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}A\lambda_N^{-1/2})+CM_0A\lambda_N^{-1/2}}_{=:a_N(A)}\right)
     \end{align*}
-    and $a_N(A)\to0$ since $|\delta_{N,j}|\le A\lambda_N^{-1/2}\to0$ and $\mu_{[h_{\min},h_{\max}]}(|s|)\to0$ for $s\to0$ by Lemma~\ref{lem:frechet_derivative_of_kde}. Consequently,
+    and $a_N(A)\to0$ since $\lambda_N\to\infty$ and $\mu_{[h_{\min},h_{\max}]}(|s|)\to0$ for $s\to0$ by Lemma~\ref{lem:frechet_derivative_of_kde}. Consequently,
     \begin{align*}
         D_{i_Nj}&=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_{h_{i_N}}\|_2^2+\rho_{N,j}\\&
         =(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
@@ -735,7 +737,7 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
-\todo[inline]{04.11: Polish!}
+\todo[inline]{05.11: Polish!}
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
