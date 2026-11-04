@@ -476,46 +476,47 @@ The spectrally chosen bandwidth is an integer valued random variable whose distr
 
 Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$ for different choices of $\lambda$. For reference, the distributions of the ISE minimizer in gray and the energy functional minimizer in green are also shown.
 
+
+The distribution of $h_Q$ and $\hat{h}_0$ are close together with the latter being slightly more to the right and less spread out. The distribution of $h_{k_N}$ migrates towards the one of $h_Q$ until it fully overlaps for the largest choice of $\lambda$.
+
+
+
 We see a large discrepancy between the distributions of the spectrally chosen bandwidth and the distribution of the minimizer of the energy functional and the minimizer of the $\operatorname{ISE}$.
 
 \begin{figure}[htbp]
     \centering
 
-    \begin{subfigure}[t]{0.24\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_0.pdf}
         \caption{$\lambda_N=1$}
         \label{fig:bandwidth_lambda_one}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.24\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_1_2.pdf}
-        \caption{$\lambda_N=N^{1/2}$}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_1.pdf}
-        \caption{$\lambda_N=N$}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_3_2.pdf}
-        \caption{$\lambda_N=N^{3/2}$}
+        \caption{$\lambda_N=N^{1/2}=20$}
     \end{subfigure}
 
-    \caption{}
+    \medskip
+
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_1.pdf}
+        \caption{$\lambda_N=N=400$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_3_2.pdf}
+        \caption{$\lambda_N=N^{3/2}=8000$}
+    \end{subfigure}
+
+    \caption{Distributions of the spectrally chosen bandwidth $h_{k_N}$ for $N=400$ bandwidth candidates and four different values of $\lambda$ shown by the orange bars and based on $L=1000$ repeated samples of size $n=200$. The gray and green bars show the distributions of the minimizers of the ISE and the energy functional over the same bandwidth grid, respectively. The red dashed line indicates $h_{\text{oracle}}$. Each bin combines five consecutive grid points.}
     \label{fig:distribution_of_chosen_bandwidths}
 \end{figure}
 
-Distributions of chosen bandwidths for $N=1000$,
-    $n=200$, and $M=1000$ repetitions. Orange bars show the
-    spectrally chosen bandwidths, gray bars the ISE-minimizing
-    grid bandwidths, and teal bars the grid minimizers of
-    $\hat{Q}_0$. The red dashed line marks the MISE-optimal
-    bandwidth. Each bin combines five consecutive grid positions.
 
 \section{Explanation of the Results}\label{sec:res_2}
 
