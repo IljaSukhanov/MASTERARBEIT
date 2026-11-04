@@ -52,15 +52,15 @@ def plot_selected_bandwidth_paths(
             linewidth=2.2 if admissible else 1.6,
             linestyle="-" if admissible else "--",
             color=regime_colors[regime],
-            label=regime,
+            label=regime.split(" (", 1)[0] if show_continuous_reference else regime,
         )
     if show_continuous_reference:
         ax.axhline(
             h_infinity,
             color="#c23b22",
             linestyle=":",
-            linewidth=2.2,
-            label=f"continuous $h_\\infty={h_infinity:.4f}$",
+            linewidth=1.8,
+            label=rf"$h_Q\approx {h_infinity:.4f}$",
         )
     ax.set(
         xlabel="$N$" if show_continuous_reference else "number of bandwidths $N$",
@@ -77,40 +77,48 @@ def plot_selected_bandwidth_paths(
     )
     ax.set_xticks(plot_ticks, labels=plot_ticks)
     if show_continuous_reference:
-        handles, labels = ax.get_legend_handles_labels()
-        order = list(range(0, len(handles), 2)) + list(range(1, len(handles), 2))
-        ax.legend([handles[i] for i in order], [labels[i] for i in order], ncol=2, frameon=True)
+        ax.legend(
+            loc="lower left",
+            bbox_to_anchor=(0.15, 1.02, 0.7, 0),
+            mode="expand",
+            borderaxespad=0,
+            ncol=len(regime_order) + 1,
+            fontsize=8.5,
+            columnspacing=0.8,
+            handlelength=1.4,
+            handletextpad=0.4,
+            frameon=True,
+        )
     else:
         ax.legend(ncol=2, frameon=True)
     fig.tight_layout()
     if show_continuous_reference:
-        criterion_inset = ax.inset_axes([0.19, 0.15, 0.34, 0.4], zorder=5)
+        criterion_inset = ax.inset_axes([0.61, 0.15, 0.34, 0.4], zorder=5)
         criterion_inset.set_facecolor("white")
         criterion_inset.plot(metric_grid, metric_values, color="#244c66", linewidth=1.4)
         minimum_energy = local_beta2_log_metric(h_infinity, squared_differences)
+        criterion_inset.axvline(h_infinity, color="#c23b22", linestyle=":", linewidth=1.0)
         criterion_inset.plot(
             h_infinity, minimum_energy, "o", color="#c23b22", markersize=4.5, zorder=6
         )
-        criterion_inset.annotate(
-            f"minimum at $h={h_infinity:.4f}$",
-            xy=(h_infinity, minimum_energy),
-            xycoords="data",
-            xytext=(0.44, 0.57),
-            textcoords="axes fraction",
-            ha="center",
+        criterion_inset.text(
+            0.12,
+            0.57,
+            rf"$h_Q\approx {h_infinity:.4f}$",
+            transform=criterion_inset.transAxes,
+            ha="left",
             fontsize=8,
             color="#c23b22",
-            arrowprops=dict(arrowstyle="->", color="#c23b22", linewidth=0.9),
             bbox=dict(facecolor="white", edgecolor="none", alpha=0.9, pad=1.5),
         )
-        criterion_inset.set_xscale("log")
         criterion_inset.set_xlim(h_min, h_max)
         criterion_inset.set_ylim(0, 1.08 * float(np.max(metric_values)))
-        criterion_inset.set_xticks([h_min, 0.1, 1.0, h_max], labels=["0.01", "0.1", "1", "2"])
+        criterion_inset.set_xticks([h_min, 0.5, 1.0, 1.5, h_max], labels=["0.01", "0.5", "1", "1.5", "2"])
         criterion_inset.set_yticks([0, 0.02, 0.04, 0.06])
-        criterion_inset.set_xlabel("bandwidth $h$ (log scale)", fontsize=8, labelpad=2)
+        criterion_inset.set_xlabel("bandwidth $h$", fontsize=8, labelpad=2)
         criterion_inset.set_ylabel("$\\widehat{Q}_0(h)$", fontsize=9, labelpad=2)
-        criterion_inset.tick_params(axis="both", labelsize=7.5, pad=2)
+        criterion_inset.tick_params(axis="x", labelsize=7.5, pad=5)
+        criterion_inset.tick_params(axis="y", labelsize=7.5, pad=4)
         criterion_inset.grid(color="#E5E7EB", linewidth=0.5)
     if output_path is not None:
         from pathlib import Path
