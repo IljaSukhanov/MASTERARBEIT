@@ -91,23 +91,6 @@ for all $t\ge0$.
 
 Many other divergences, for example, the Rényi divergence can be considered as well. Based on the property of the divergence, like boundedness or conditionally negative definiteness, the properties of the resulting scale similarity matrix differ and by proxy the behavior of the Perron vector. This can lead to a rich theory connecting information theory and kernel density estimation with bandwidth scale selection via the eigenvectors of an appropriately constructed scale similarity matrix.
 
-
-\textbf{Rényi divergence}
-
-Another popular class of parameterized divergences is the class of so called Rényi divergences. The class of Rényi divergences is defined as
-    \begin{align*}
-        R_{\alpha}(p\|q)=\frac{1}{\alpha-1}\log{\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx\right)},
-    \end{align*}
-where $\alpha\in\mathbb{R}_{>0}\setminus\{1\}$ is the order. In case of $\alpha>1$, we read $f^{\alpha}g^{1-\alpha}=f^{\alpha}/g^{\alpha-1}$. The limiting case $\alpha\to1$ recovers the Kullback-Leibler divergence. The Rényi divergence is not a $f$-divergence, but the Rényi and Amari divergences are both strictly decreasing transformations of the same integral $C_{\alpha}(p,q)=\int p^{\alpha}q^{1-\alpha}$. We have
-    \begin{align*}
-        R_{\alpha}(p\|q)&=g(C_{\alpha}(p,q)),\quad g(t)=\frac{1}{\alpha-1}\log{t},\quad\text{ and }\\
-        D_{\alpha}(p\|q)&=h(C_{\alpha}(p,q)),\quad h(t)=\frac{1}{\alpha(\alpha-1)}(t-1).
-    \end{align*}
-Thus, the Rényi and Amari divergences can be transformed into each other using a strictly increasing function.
-
-\todo[inline]{Rényi is not conditionally negative definite?}
-\todo[inline]{Rényi is unbounded?}
-
 \textbf{Numerical Approximation of the $\alpha$-divergence and total variation}
 
 Following the need for rigorous error bounds when approximating the divergences, we give truncation bounds for the $\alpha$-divergence and the total variation divergence. 
@@ -167,8 +150,6 @@ This construction gives rise to the study of our methodology for generally asymm
 In cases where the data comes from a Gaussian mixture model, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
 
 \textbf{Increasing sample size experiments}
-
-\todo[inline]{Code: Have one notebook for these kinds of experiments (Increasing sample size experiments)}
 
 It is interesting to ask what happens to this distribution of the spectrally chosen bandwidths for increasing sample size $n$. The answer is shown in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. 
 
