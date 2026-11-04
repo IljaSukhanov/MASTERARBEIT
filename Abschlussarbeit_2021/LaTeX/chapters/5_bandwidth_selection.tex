@@ -466,17 +466,54 @@ After having examined the behavior for fixed $\lambda$ and increasing $N$ in Fig
     \todo[inline]{repeat the experiments for different $r$ and under repeated sampling}
 \end{figure}
 
+\todo[inline]{Do the fixed sample experiments under repeated sampling?}
+
 \subsection{Repeated sampling experiments}
 
 \todo[inline]{continue here}
 
-\todo[inline]{Do the fixed sample experiments under repeated sampling?}
+The spectrally chosen bandwidth is an integer valued random variable whose distribution depends on the sample $(X_1,\dots,X_n)$. A natural question to ask is how the spectrally chosen bandwidth, seen as a statistic, is distributed under repeated sampling and how this distribution depends on how large $\lambda$ is in relation to the number of bandwidths $N$.
 
-The spectrally chosen bandwidth is an integer valued random variable whose distribution depends on the sample $(X_1,\dots,X_n)$. A natural question to ask is how the spectrally chosen bandwidth, seen as a statistic, is distributed under repeated sampling and how this distribution depends on the number of bandwidths $N$.
-
-Now we draw repeated samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$ and study the distribution of chosen bandwidths. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots,M$.
+Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$ for different choices of $\lambda$. For reference, the distributions of the ISE minimizer in gray and the energy functional minimizer in green are also shown.
 
 We see a large discrepancy between the distributions of the spectrally chosen bandwidth and the distribution of the minimizer of the energy functional and the minimizer of the $\operatorname{ISE}$.
+
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_0.pdf}
+        \caption{$\lambda_N=1$}
+        \label{fig:bandwidth_lambda_one}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_1_2.pdf}
+        \caption{$\lambda_N=N^{1/2}$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_1.pdf}
+        \caption{$\lambda_N=N$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_3_2.pdf}
+        \caption{$\lambda_N=N^{3/2}$}
+    \end{subfigure}
+
+    \caption{Distributions of chosen bandwidths for $N=1000$,
+    $n=200$, and $M=1000$ repetitions. Orange bars show the
+    spectrally chosen bandwidths, gray bars the ISE-minimizing
+    grid bandwidths, and teal bars the grid minimizers of
+    $\hat{Q}_0$. The red dashed line marks the MISE-optimal
+    bandwidth. Each bin combines five consecutive grid positions.}
+    \label{fig:distribution_of_chosen_bandwidths}
+\end{figure}
 
 \begin{figure}[htbp]
     \centering
@@ -495,11 +532,13 @@ We see a large discrepancy between the distributions of the spectrally chosen ba
         \label{fig:distribution_of_chosen_bandwidths}
     \end{subfigure}
 
-    \caption{Distributions of chosen bandwidths for
-        $N=1000$, $n=200$, and $M=1000$ repetitions,
-        combining five consecutive grid positions per bin.}
+    \caption{}
     \label{fig:distribution_of_chosen_bandwidths}
 \end{figure}
+
+Distributions of chosen bandwidths for
+        $N=1000$, $n=200$, and $M=1000$ repetitions,
+        combining five consecutive grid positions per bin.
 
 \section{Explanation of the Results}\label{sec:res_2}
 
