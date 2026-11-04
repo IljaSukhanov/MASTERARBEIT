@@ -15,9 +15,10 @@ from kde_tools.bandwidths import gaussian_mise_oracle_bandwidth
 CODE = Path(__file__).resolve().parents[2]
 DATA = CODE / 'outputs/data/repeated_alpha_evolution'
 OUT = CODE / 'outputs/pdfs/repeated_alpha_evolution'
-grid_size_requested = int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '1000'))
+grid_size_requested = int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '400'))
 if grid_size_requested != 1000:
     DATA = DATA / f'n{grid_size_requested}'
+if grid_size_requested != 400:
     OUT = OUT / f'n{grid_size_requested}'
 OUT.mkdir(parents=True, exist_ok=True)
 with np.load(DATA / 'paired_selections.npz') as saved:

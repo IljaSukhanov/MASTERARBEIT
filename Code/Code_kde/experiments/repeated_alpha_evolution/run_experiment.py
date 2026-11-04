@@ -5,7 +5,8 @@ Run with BLAS limited to one thread, for example:
     PYTHONPATH=Code/Code_kde python Code/Code_kde/experiments/repeated_alpha_evolution/run_experiment.py
 
 Selections and solver diagnostics are checkpointed. Figures are produced by
-the companion plotting script and are always saved as PDFs.
+the companion plotting script and are always saved as PDFs. The thesis
+comparison uses N=400 by default; REPEATED_ALPHA_GRID_SIZE selects another N.
 """
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -22,7 +23,7 @@ from kde_tools.perron import perron_peak_index
 
 
 CODE = Path(__file__).resolve().parents[2]
-M, N, SAMPLE_SIZE, SEED = 1000, int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '1000')), 200, 20260828
+M, N, SAMPLE_SIZE, SEED = 1000, int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '400')), 200, 20260828
 if N < 3:
     raise ValueError('REPEATED_ALPHA_GRID_SIZE must be at least 3.')
 DATA = CODE / 'outputs/data/repeated_alpha_evolution'
