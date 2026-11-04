@@ -63,10 +63,14 @@ def plot_selected_bandwidth_paths(
             label=f"continuous $h_\\infty={h_infinity:.4f}$",
         )
     ax.set(
-        xlabel="number of bandwidths $N$",
-        ylabel="selected bandwidth $h_{\\mathrm{spec},N}$",
+        xlabel="$N$" if show_continuous_reference else "number of bandwidths $N$",
+        ylabel=(
+            "chosen bandwidth $h_{k_N}$"
+            if show_continuous_reference
+            else "selected bandwidth $h_{\\mathrm{spec},N}$"
+        ),
         title=(
-            "Finite selector versus continuous reference"
+            ""
             if show_continuous_reference
             else "Selected bandwidth across grid resolutions"
         ),
