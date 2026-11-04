@@ -564,7 +564,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 \end{proof}
 
-\todo[inline]{continue here}
+We note that the decay assumption used on $L$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is implied by by the square integrability of the kernel $K$. In particular, since the Gaussian kernel is square integrable, it fulfills the decay assumption and thus Lemma~\ref{lem:frechet_derivative_of_kde} applies making the Fréchet derivative of the Gaussian kernel density estimate continuous with respect to the operator norm.
 
 Next, we state the first of the two main results of this thesis.
 
@@ -577,82 +577,83 @@ Next, we state the first of the two main results of this thesis.
 \end{Prop}
 
 \begin{proof}
-    Set $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$. Note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. Fix $A>0$ and set $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$. 
+    Recall that $\Delta_{r,N}=\psi_r(h_{j+1})-\psi_r(h_j)=(\psi_r(h_{\max})-\psi_r(h_{\min}))/(N-1)=\mathbf{O}(N^{-1})$ is the spacing between the transformed bandwidths $\psi_r(h_j)$ and $\psi_r(h_{j+1})$. Set $\epsilon_N:=\lambda_N^{1/2}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$ and note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. We also set $\delta_{N,j}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$ to be the signed difference between the transformed bandwidths $h_j$ and $h_{i_N}$. Note that $t_{N,j}=\sqrt{\lambda_N}(\psi_r(h_j)-\psi_r(h_{i_N}))=\lambda_N^{1/2}\delta_{N,j}$ is the rescaled spacing between the two transformed bandwidths. We have
+    \begin{align}\label{eq:delta_N_j_lower_and_upper_bound}
+        h_{\max}^{r-1}|h_j-h_{i_N}|\le\underbrace{\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds}_{=r^{-1}|h_j^r-h_{i_N}^r|=|\delta_{N,j}|}\le h_{\min}^{r-1}|h_j-h_{i_N}|.
+    \end{align}
+    Fix $A>0$ and set $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$. We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\#\{j\in\mathbb{Z}:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N\}=\lfloor A\epsilon_N^{-1}\rfloor-\lceil-A\epsilon_N^{-1}\rceil+1=2\lfloor A\epsilon_N^{-1}\rfloor+1\le 2A\epsilon_N^{-1}+1$.
 
-    We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\#\{j\in\mathbb{Z}:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N\}=\lfloor A\epsilon_N^{-1}\rfloor-\lceil-A\epsilon_N^{-1}\rceil+1=2\lfloor A\epsilon_N^{-1}\rfloor+1\le 2A\epsilon_N^{-1}+1$.
+    We have $\epsilon_N=\sqrt{\lambda_N}\Delta_{r,N}=\mathbf{O}(\sqrt{\lambda_N/N^2})\to0$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. We also have $N^{-1}|j-i_N|\le A(N\epsilon_N)^{-1}=\mathbf{O}(\lambda_N^{-1/2})\to0$ and thus $|j-i_N|=\mathbf{o}(N)$ for every $j\in I_N(A)$, which allows us to apply Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} to get $h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$.
 
-    We also set $\delta_{N,j}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$.
-
-    Split the row sum:
+    We split the row sum into a local part and a tail:
     \begin{align*}
         R_{i_N}^{(N)}=\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}.
     \end{align*}
+
+    After this prelude, we proceed in four steps.
+
+    \textit{Step 1: Bound the tail $T_N(A)$}
 
     We have $D_{i_Nj}\ge c(\delta_{N,j})^2$ for some constant $c>0$. To see this, first write
     \begin{align*}
         \left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge|h_{i_N}-h_j|h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
     \end{align*}
-    and, furthermore
+    and, using Parseval's identity, cf.~\eqref{eq:fourier_transform_of_kde} we obtain
     \begin{align*}
         D_{i_Nj}&=\frac{1}{4\pi}\int|P_n(\omega)|^2\left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|^2\,d\omega\\&
         \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int\underbrace{|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2}}_{=:g(\omega)}\,d\omega.
     \end{align*}
-    Now, $|\delta_{N,j}|=|h_j^r-h_{i_N}^r|/r=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds\le h_{\min}^{r-1}|h_j-h_{i_N}|$. Thus, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with positive constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$.
+    
+    Thus, using the second inequality in Equation~\eqref{eq:delta_N_j_lower_and_upper_bound}, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. 
 
     Continuing
     \begin{align*}
         \epsilon_NT_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\epsilon_N\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
         \le\epsilon_N\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
-        \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt
+        \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt.
     \end{align*}
     We see that $\epsilon_NT_N(A)$ is asymptotically bounded and therefore
     \begin{align*}
         \limsup_{N\to\infty}\epsilon_NT_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{cA}\to0,\quad A\to\infty.
     \end{align*}
-    
-    Now, let $j\in I_N(A)$, that is, $j-i_N\le|j-i_N|\le\epsilon_N^{-1}A=\mathbf{O}(N/\sqrt{\lambda_N})=\mathbf{o}(N)$. Thus, by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
+
+    \textit{Step 2: Approximate the local similarities}
+
+    Now let $j\in I_N(A)$ which by the considerations in the prelude implies $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} we have $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
     \begin{align*}
-        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_h|_{h=h_{i_N}}+u_{N,j}\\&
-        =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_h|_{h=h_{i_N}}+r_{N,j},
+        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
+        =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
     \end{align*}
-    where $u_{N,j}\in L^2$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ according to Lemma~\ref{lem:frechet_derivative_of_kde} and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$, where $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large.
-
-    We have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, it follows that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite.
-
-    We have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some sequence $a_N(A)\to0$ for $N\to\infty$, because
+    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $a_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large. Also by the first inequality of Equation~\ref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$ and $|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
     \begin{align*}
-        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2\\&
+        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_{h_{i_N}}\|_2
         \le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
-        \le|\delta_{N,j}|\left(h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|\right)\\&
-        \le|\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}A\lambda_N^{-1/2})+CM_0A\lambda_N^{-1/2}}_{=:a_N(A)}\right)
+        \le|\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|}_{=:a_N(A)}\right)
     \end{align*}
-    and $a_N(A)\to0$ since $\lambda_N^{-1/2}\to0$ by assumption and $\mu_{[h_{\min},h_{\max}]}(s)\to0$ for $s\downarrow0$ by Lemma~\ref{lem:frechet_derivative_of_kde}.
-
-    Consequently,
+    and $a_N(A)\to0$ since $|\delta_{N,j}|\le A\lambda_N^{-1/2}\to0$ and $\mu_{[h_{\min},h_{\max}]}(|s|)\to0$ for $s\to0$ by Lemma~\ref{lem:frechet_derivative_of_kde}. Consequently,
     \begin{align*}
-        D_{i_Nj}=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2^2+\rho_{N,j}=(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
+        D_{i_Nj}&=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_{h_{i_N}}\|_2^2+\rho_{N,j}\\&
+        =(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
     \end{align*}
-    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{N,j}\langle\partial_h\hat{f}_h|_{h=h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
+    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{N,j}\langle\partial_h\hat{f}_{h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
     \begin{align*}
-        |\rho_{N,j}|&\le|\delta_{N,j}|h_{i_N}^{1-r}|\langle\partial_h\hat{f}_{h}|_{h=h_{i_N}},r_{N,j}\rangle|+(1/2)\|r_{N,j}\|_2^2\\&
-        \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_h|_{h=h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N,j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
-        \le(\delta_{N,j})^2\underbrace{\left(h_{\max}^{1-r}M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)}.
-    \end{align*}
-    Since $a_N(A)\to0$, we have shown that $\rho_{N,j}=\mathbf{o}(\delta_{N,j}^2)$. Thus,
-    \begin{align*}
-        S_{i_Nj}=e^{-\lambda_ND_{i_Nj}}=e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}e^{-\lambda_N\rho_{N,j}}.
+        |\rho_{N,j}|&\le|\delta_{N,j}|h_{i_N}^{1-r}|\langle\partial_h\hat{f}_{h_{i_N}},r_{N,j}\rangle|+(1/2)\|r_{N,j}\|_2^2\\&
+        \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_{h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N,j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
+        \le(\delta_{N,j})^2\underbrace{\left(h_{\max}^{1-r}M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)\to0}.
     \end{align*}
     Define $\eta_{N,j}=e^{-\lambda_N\rho_{N,j}}-1$. It follows $S_{i_Nj}=e^{-\lambda_N(\delta_{N,j})^2\hat{Q}_r(h_{i_N})}(1+\eta_{N,j})$. Now write
     \begin{align*}
         \epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}=\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}+\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}\eta_{N,j}.
     \end{align*}
-    The local error can be bounded:
+    The absolute value of the second term tends to zero as the following bound shows:
     \begin{align*}
         \left|\epsilon_N\sum_{j\in I_N(A)}\underbrace{e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}}_{\le 1}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
     \end{align*}
+    It remains to show that $\sup_{j\in I_N(A)}|\eta_{N,j}|\to0$ for $N\to\infty$. We have $\lambda_N|\rho_{N,j}|\le\lambda_N(\delta_{N,j})^2b_N(A)\le A^2b_N(A)$ for all $j\in I_N(A)$. Consequently, $|\eta_{N,j}|=|e^{-\lambda_N\rho_{N,j}}-1|\le\max\{e^{A^2b_N(A)}-1,1-e^{-A^2b_N(A)}\}\to0$ as $N\to\infty$.
 
-    We must show that $\sup_{j\in I_N(A)}|\eta_{N,j}|\to0$ for $N\to\infty$. We have $\lambda_N|\rho_{N,j}|\le\lambda_N(\delta_{N,j})^2b_N(A)\le A^2b_N(A)$ for all $j\in I_N(A)$. Consequently, $|\eta_{N,j}|=|e^{-\lambda_N\rho_{N,j}}-1|\le\max\{e^{A^2b_N(A)}-1,1-e^{-A^2b_N(A)}\}\to0$ as $N\to\infty$.
+    \todo[inline]{continue here}
 
+    \textit{Step 3: }
     
     Since $\hat{Q}_r$ is continuous in $h_0$, we have $\hat{Q}_r(h_{i_N})\to\hat{Q}_r(h_0)$ for $N\to\infty$. Therefore
     \begin{align*}
@@ -687,6 +688,8 @@ Next, we state the first of the two main results of this thesis.
     because $-\epsilon_N(m_N+1)\to-A$ and $\epsilon_Nm_N\to A$.
 
     We have now shown that the aforementioned second summand also converges to zero.
+
+    \textit{Step 4}
 
     Finally,
     \begin{align*}
