@@ -553,11 +553,11 @@ Assume that the line segment $\{u+t\tau:t\in[0,1]\}$ is inside $U$ and that $\Ps
 In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The next lemma gives the Fréchet derivative of $\Psi:\mathbb{R}_{>0}\to L^2(\mathbb{R})$, $\Psi(h)=\hat{f}_h$ and a bound on the norm of the remainder term.
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
-    Let $K$ be a differentiable and square integrable kernel and define $L$ by $L(x):=K(x)+xK'(x)$. Assume that $L$ satisfies $|L(x)|\le C(1+|x|^{-\alpha})$ for all $x\in\mathbb{R}$ and some $C>0$, $\alpha>1/2$. Define the map $\Psi:(0,\infty)\to L^2(\mathbb{R})$ by $\Psi(h):=\hat{f}_h$. The Fréchet derivative of $\Psi$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
+    Let $K$ be a differentiable and square integrable kernel and define $L$ by $L(x):=K(x)+xK'(x)$. Assume that $L$ satisfies $|L(x)|\le C(1+|x|)^{-\alpha}$ for all $x\in\mathbb{R}$ and some $C>0$, $\alpha>1/2$. Define the map $\Psi:(0,\infty)\to L^2(\mathbb{R})$ by $\Psi(h):=\hat{f}_h$. The Fréchet derivative of $\Psi$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
     \begin{align*}
         \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^nL\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
     \end{align*}
-    Additionally, for any nonempty interval $J:=[a,b]\subseteq(0,\infty)$ with $h,h+\tau\in J$ we can bound $\|r_h(\tau)\|_2$ above by $|\tau|\mu_J(|\tau|)$ where $\mu_J(\delta):=\sup\{\|d\Psi(h)-d\Psi(s)\|_{\operatorname{op}}:h,s\in J,|h-s|\le\delta\}$, $\delta\ge0$ is the modulus of continuity of $d\Psi$ and satisfies $\mu_J(|\tau|)$ as $\tau\to0$. 
+    Additionally, for any nonempty interval $J:=[a,b]\subseteq(0,\infty)$ with $h,h+\tau\in J$ we can bound $\|r_h(\tau)\|_2$ above by $|\tau|\mu_J(|\tau|)$ where $\mu_J(\delta):=\sup\{\|d\Psi(h)-d\Psi(s)\|_{\operatorname{op}}:h,s\in J,|h-s|\le\delta\}$, $\delta\ge0$ is the modulus of continuity of $d\Psi$ and satisfies $\mu_J(|\tau|)\to0$ as $\tau\to0$. 
 \end{Lem}
 
 \begin{proof}
@@ -588,9 +588,9 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     \end{align*}
     where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.
 
-    The continuity of the operator $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ can be established by defining the dilation operator $T_hf:=h^{-1}f(\cdot/h)$ and the shift operator $g_af:=f(\cdot-a)$ and computing
+    The continuity of the operator $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ can be established by defining the dilation operator $T_hL:=h^{-1}L(\cdot/h)$ and the shift operator $g_aL:=L(\cdot-a)$ and computing
     \begin{align*}
-        \|\partial_h\hat{f}_{h_1}-\partial\hat{f}_{h_2}\|_2&=\left\|\frac{1}{nh_2}\sum_{j=1}^{n}\tau_{X_j}T_{h_2}L-\frac{1}{nh_1}\sum_{j=1}^{n}\tau_{X_j}T_{h_1}L\right\|_2\\&
+        \|\partial_h\hat{f}_{h_1}-\partial_h\hat{f}_{h_2}\|_2&=\left\|\frac{1}{nh_2}\sum_{j=1}^{n}g_{X_j}T_{h_2}L-\frac{1}{nh_1}\sum_{j=1}^{n}g_{X_j}T_{h_1}L\right\|_2\\&
         \le\left\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_1}T_{h_1}L\right\|_2\\&
         \le\left\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_2}T_{h_1}L\right\|_2+\left\|\frac{1}{h_2}T_{h_1}L-\frac{1}{h_1}T_{h_1}L\right\|_2\\&
         =\frac{1}{h_2}\|T_{h_2}L-T_{h_1}L\|_2+\left|\frac{1}{h_2}-\frac{1}{h_1}\right|\|T_{h_1}L\|_2.
@@ -599,7 +599,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
 
     Fix a closed nonempty interval $J:=[a,b]\subseteq(0,\infty)$. Applying the bound from Equation~\eqref{eq:frechet_remainder_bound} above yields
     \begin{align*}
-        \|r_h(\tau)\|_2\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\operatorname{op}}\le|\tau|\underbrace{\sup_{r,s\in J}\|d\Psi(s)-d\Psi(h)\|_{\operatorname{op}}}_{=\mu_J(|\tau|)}
+        \|r_h(\tau)\|_2\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\operatorname{op}}\le|\tau|\underbrace{\sup_{r,s\in J,|r-s|\le|\tau|}\|d\Psi(s)-d\Psi(h)\|_{\operatorname{op}}}_{=\mu_J(|\tau|)}
     \end{align*}
     for all $h\in J$ and $\tau\in\mathbb{R}$ with $h+\tau\in J$. Because $d\Psi$ is continuous, $d\Psi:J\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ is uniformly continuous, and in this case it is well known that $\mu_{J}(|\tau|)\to0$ for $\tau\to0$.
 \end{proof}
