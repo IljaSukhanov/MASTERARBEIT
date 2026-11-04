@@ -428,7 +428,7 @@ For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\si
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
+    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
     \caption{Perron vector entries $v_i^{(\lambda)}$ against bandwidth candidates $h_i$ on a geometric grid with $N=201$. Darker curves correspond to larger $\lambda$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$.}
     \label{fig:stationary_distribution_plot_001}
 \end{figure}
@@ -439,7 +439,7 @@ Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the spectrally selected b
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
+    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
     \caption{Spectrally chosen bandwidth $h_{k_N}^{(\lambda)}$ against the number of bandwidth candidates $N$ on a geometric bandwidth grid. Darker curves correspond to larger $\lambda$. The black dashed line indicates $N=201$.}
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
@@ -450,7 +450,7 @@ Also note that the curve sharply jumps around $\lambda\approx17.87375$. This obs
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
+    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
     \caption{Spectrally chosen bandwidths $h_{k_N}^{(\lambda)}$ against $\lambda$ on a geometric grid with $N=201$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$. The blue dashed line indicates the mean of the two bandwidths $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$ where $(j^{\ast},j^{\ast}+1)$ is the index pair that minimizes $D_{ij}$ over $i\ne j$.}
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
@@ -459,25 +459,14 @@ After having examined the behavior for fixed $\lambda$ and increasing $N$ in Fig
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf}
+    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf}
     \caption{Spectrally chosen bandwidth $h_{k_N}$ against the number of bandwidth candidates $N$ on a geometric bandwidth grid. Different curves correspond to different exponents $\alpha$ in $\lambda_N=N^{\alpha}$. Darker curves correspond to larger $\alpha$. The red dotted line indicates the minimizer $h_Q\approx0.1764$ of the energy functional $\hat{Q}_0$. The inset plot shows the energy functional $\hat{Q}_0$ on the interval $[0.01,2]$ with its minimizer $h_{Q}\approx0.1764$.}
     \label{fig:N_lambda_joint_limit_for_different_alpha}
-    \todo[inline]{add experiments that show failure for exponents $\alpha>2$}
-    \todo[inline]{repeat the experiments for different $r$ and under repeated sampling}
 \end{figure}
-
-\todo[inline]{Do the fixed sample experiments under repeated sampling?}
 
 \subsection{Repeated sampling experiments}
 
-\todo[inline]{continue here}
-
-The spectrally chosen bandwidth is an integer valued random variable whose distribution depends on the sample $(X_1,\dots,X_n)$. A natural question to ask is how the spectrally chosen bandwidth, seen as a statistic, is distributed under repeated sampling and how this distribution depends on how large $\lambda$ is in relation to the number of bandwidths $N$.
-
-Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$ for different choices of $\lambda$. For reference, the distributions of the ISE minimizer in gray and the energy functional minimizer in green are also shown.
-
-
-The distribution of $h_Q$ and $\hat{h}_0$ are close together with the latter being slightly more to the right and less spread out. The distribution of $h_{k_N}$ migrates towards the one of $h_Q$ until it fully overlaps for the largest choice of $\lambda$.
+The spectrally chosen bandwidth is a discrete random variable whose value depends on the sample $(X_1,\dots,X_n)$. A natural question to ask is how the spectrally chosen bandwidth, seen as a statistic, is distributed under repeated sampling and how this distribution depends on how large $\lambda$ is in relation to the number of bandwidths $N$. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$ for different choices of $\lambda$. For reference, the distributions of the ISE minimizer and the energy functional minimizer are also shown in gray and green, respectively. The distributions of the grid minimizers of $\hat{Q}_0$ and the ISE overlap, with the latter shifted towards larger bandwidths relative to the former. Here, by a grid minimizer, we mean the minimizer over the bandwidth grid. As $\lambda$ increases, the distribution of the spectrally chosen bandwidth $h_{k_N}$ moves towards that of the energy functional minimizer. For our largest choice of $\lambda$, the two distributions show substantial overlap.
 
 
 \begin{figure}[htbp]
@@ -510,7 +499,7 @@ The distribution of $h_Q$ and $\hat{h}_0$ are close together with the latter bei
         \caption{$\lambda_N=N^{3/2}=8000$}
     \end{subfigure}
 
-    \caption{Distributions of the spectrally chosen bandwidth $h_{k_N}$ for $N=400$ bandwidth candidates and four different values of $\lambda$ shown by the orange bars and based on $L=1000$ repeated samples of size $n=200$. The gray and green bars show the distributions of the minimizers of the ISE and the energy functional over the same bandwidth grid, respectively. The red dashed line indicates $h_{\text{oracle}}$.}
+    \caption{The orange bars show the distributions of the spectrally chosen bandwidth $h_{k_N}$ for four values of $\lambda$, based on $L=1000$ samples of size $n=200$ and $N=400$ bandwidth candidates. The gray and green bars show the distributions of the ISE and energy functional minimizers over the same bandwidth grid, respectively. The red dashed line marks $h_{\text{oracle}}$.}
     \label{fig:distribution_of_chosen_bandwidths}
 \end{figure}
 
