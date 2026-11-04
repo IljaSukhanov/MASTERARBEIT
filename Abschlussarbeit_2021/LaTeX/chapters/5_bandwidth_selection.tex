@@ -459,7 +459,8 @@ Also note that the curve sharply jumps around $\lambda\approx17.87375$. This obs
 
 After having examined the behavior for fixed $\lambda$ and increasing $N$ in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the behavior for fixed $N$ and increasing $\lambda$ in Figure~\ref{fig:chosen_bandwidths_vs_lambda} we would like to study the behavior of the spectrally chosen bandwidth under the joint limit $(N,\lambda_N)\to(\infty,\infty)$.
 
-After having examined the fixed $\lambda$ increasing $N$ behavior in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the fixed $N$ increasing $\lambda$ behavior in Figure~\ref{fig:chosen_bandwidths_vs_lambda}, we would like next to study the joint limit $(N,\lambda_N)\to(\infty,\infty)$. 
+We take $\lambda_N=N^{\alpha}$ and test $\alpha\in\{0,0.5,1,1.5,2\}$
+
 
 We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. 
 
@@ -541,22 +542,22 @@ This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}.
 
 \todo[inline]{04.11: Polish up to Prop 8!}
 
-To explain the results, we need the concept of a Fréchet-derivative. A good book is Zeidler~\cite{zeidler_applied_1995} and Section 4.2 therein.
-
-We introduce the general definition of a Fréchet-derivative. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ an open nonempty subset. Let $\Psi:U\to Y$ be a map. A linear and bounded operator $d\Psi(u):X\to Y$ is called Fréchet-derivative of $\Psi$ at the point $u\in U$ if
+To explain the results, we need the concept of a Fréchet derivative, which is introduced, for example, in Zeidler~\cite[Section~4.2]{zeidler_applied_1995}. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ a nonempty open subset. Let $\Psi:U\to Y$ be a map. A bounded linear operator $d\Psi(u):X\to Y$ is called the Fréchet derivative of $\Psi$ at the point $u\in U$ if
 \begin{align*}
     \Psi(u+h)=\Psi(u)+d\Psi(u)[h]+r_u(h),\quad\forall h\in X:u+h\in U,
 \end{align*}
-where $r_u(h):\{h\in X:u+h\in U\}\to Y$ is a remainder that fulfills $\|r_u(h)\|_Y/\|h\|_X\to0$ for $h\to0$. $\Psi$ is called continuously differentiable on $U$ if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\mapsto\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$. We write $\Psi\in C^1(U)$.
+where $r_u:\{h\in X:u+h\in U\}\to Y$ is a remainder that fulfills $\|r_u(h)\|_Y/\|h\|_X\to0$ for $h\to0$. We call $\Psi$ continuously differentiable on $U$, and write $\Psi\in C^1(U)$, if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\to\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$ equipped with the operator norm $\|M\|_{\operatorname{op}}:=\sup\{\|Mx\|_{Y}:x\in X,\|x\|_X\le1\}$.
 
-Assume that the line $\{u+th:t\in[0,1]\}$ is inside $U$ and define $\gamma:[0,1]\to Y$, $\gamma(t)=\Psi(u+th)$. We have $\gamma'(t)=d\Psi(u+th)[h]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus $\Psi(u+h)-\Psi(u)=\int_0^1d\Psi(u+th)[h]\,dt$. We can use this to bound the norm of the remainder:
+Assume that the line segment $\{u+th:t\in[0,1]\}$ is inside $U$ and that $\Psi$ is Fréchet differentiable at every point of that segment. Define $\gamma:[0,1]\to Y$ by $\gamma(t)=\Psi(u+th)$. Using the chain rule, we have $\gamma'(t)=d\Psi(u+th)[h]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus $\Psi(u+h)-\Psi(u)=\gamma(1)-\gamma(0)=\int_0^1\gamma'(t)\,dt=\int_0^1d\Psi(u+th)[h]\,dt$. We can use this to bound the norm of the remainder:
 \begin{align*}
     \|r_u(h)\|_Y&\le\int_0^1\|(d\Psi(u+th)-d\Psi(u))[h]\|_Y\,dt\\&
-    \le\|h\|_X\int_0^1\|d\Psi(u+th)-d\Psi(u)\|_{\text{op}}\,dt\\&
-    \le\|h\|_X\sup_{t\in[0,1]}\|d\Psi(u+th)-d\Psi(u)\|_{\text{op}}
+    \le\|h\|_X\int_0^1\|d\Psi(u+th)-d\Psi(u)\|_{\operatorname{op}}\,dt\\&
+    \le\|h\|_X\sup_{t\in[0,1]}\|d\Psi(u+th)-d\Psi(u)\|_{\operatorname{op}}.
 \end{align*}
 
-In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next Lemma gives the Fréchet-derivative of $h\mapsto\hat{f}_h$.
+In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next lemma gives the Fréchet derivative of $\Psi$ and a bound on the norm of the remainder term.
+
+\todo[inline]{continue here}
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
     Let $K$ be differentiable on $\mathbb{R}$ and square integrable. Let $L$ be defined as $L(u)=K(u)+uK'(u)$. We must assume a certain decay assumption on $L$, namely $|L(v)|\le C(1+|v|)^{-\alpha}$ for some $C>0$, $\alpha>1/2$ and all $v\in\mathbb{R}$. The Fréchet-derivative of $h\mapsto\hat{f}_h$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
