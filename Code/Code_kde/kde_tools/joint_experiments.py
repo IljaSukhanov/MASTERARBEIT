@@ -57,7 +57,7 @@ def plot_selected_bandwidth_paths(
     if show_continuous_reference:
         ax.axhline(
             h_infinity,
-            color="black",
+            color="#c23b22",
             linestyle=":",
             linewidth=2.2,
             label=f"continuous $h_\\infty={h_infinity:.4f}$",
@@ -76,7 +76,12 @@ def plot_selected_bandwidth_paths(
         ),
     )
     ax.set_xticks(plot_ticks, labels=plot_ticks)
-    ax.legend(ncol=2, frameon=True)
+    if show_continuous_reference:
+        handles, labels = ax.get_legend_handles_labels()
+        order = list(range(0, len(handles), 2)) + list(range(1, len(handles), 2))
+        ax.legend([handles[i] for i in order], [labels[i] for i in order], ncol=2, frameon=True)
+    else:
+        ax.legend(ncol=2, frameon=True)
     fig.tight_layout()
     if show_continuous_reference:
         criterion_inset = ax.inset_axes([0.19, 0.15, 0.34, 0.4], zorder=5)
