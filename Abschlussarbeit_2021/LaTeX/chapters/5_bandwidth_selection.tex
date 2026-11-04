@@ -457,21 +457,13 @@ Also note that the curve sharply jumps around $\lambda\approx17.87375$. This obs
 
 \todo[inline]{continue here}
 
-After having examined the behavior for fixed $\lambda$ and increasing $N$ in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the behavior for fixed $N$ and increasing $\lambda$ in Figure~\ref{fig:chosen_bandwidths_vs_lambda} we would like to study the behavior of the spectrally chosen bandwidth under the joint limit $(N,\lambda_N)\to(\infty,\infty)$.
-
-We take $\lambda_N=N^{\alpha}$ and test $\alpha\in\{0,0.5,1,1.5,2\}$
-
-
-We study the following regimes: $\lambda_N=N^{\alpha}$, where $\alpha\in\{0,0.5,1,1.5,2,3\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. 
-
-For $\alpha>1/2$ the chosen bandwidth seems to converge towards some bandwidth $h_{\infty}=0.1764$. In Section~\ref{sec:res_2} we explain that this is the minimizer of $\hat{Q}_{0}(h)=(h^2/2)\|\partial_h\hat{f}_h\|_2^2$.
+After having examined the behavior for fixed $\lambda$ and increasing $N$ in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the behavior for fixed $N$ and increasing $\lambda$ in Figure~\ref{fig:chosen_bandwidths_vs_lambda} we would like to study the behavior of the spectrally chosen bandwidth under the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We take $\lambda_N=N^{\alpha}$ and test $\alpha\in\{0,0.5,1,1.5,2\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. The curve at the bottom of Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} corresponds to the curve at the bottom of Figure~\ref{fig:grid_fineness_chosen_bandwidths}. For $\alpha>1/2$ the curves appear to approach an entirely different bandwidth. As we will describe in Section~\ref{sec:perron_vector_concentrates} below, the spectral selector is related to the minimizer $h_Q$ of an energy functional $\hat{Q}_0$ on the interval $[h_{\min},h_{\max}]$. For this particular sample, numerical minimization of this energy functional gives $h_{Q}\approx0.1764$.
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf}
-    \caption{For $N\to\infty$ the chosen bandwidth approaches a limit $h_{\infty}=0.1764$, for all $\alpha>1/2$. The convergence is slow for $\alpha=1$ and faster for $\alpha=3/2$}
+    \caption{Spectrally chosen bandwidth $h_{k_N}$ against the number of bandwidth candidates $N$ on a geometric bandwidth grid. Different curves correspond to different exponents $\alpha$ in $\lambda_N=N^{\alpha}$. Darker curves correspond to larger $\alpha$. The red dotted line indicates the minimizer $h_Q\approx0.1764$ of the energy functional $\hat{Q}_0$.}
     \label{fig:N_lambda_joint_limit_for_different_alpha}
-    \todo[inline]{explain $N^2$ and $N^3$ behavior}
     \todo[inline]{add experiments that show failure for exponents $\alpha>2$}
     \todo[inline]{repeat the experiments for different $r$ and under repeated sampling}
 \end{figure}
