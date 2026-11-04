@@ -561,52 +561,8 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
 \end{Lem}
 
 \begin{proof}
-    Let $h>0$. For every $x\in\mathbb{R}$ we have
-    \begin{align*}
-        \lim\limits_{\tau\to0}\frac{1}{\tau}(\hat{f}_{h+\tau}(x)-\hat{f}_h(x))&=\frac{1}{n}\sum_{j=1}^{n}\lim\limits_{\tau\to0}\frac{K_{h+\tau}(x-X_j)-K_{h}(x-X_j)}{\tau}\\&
-        =\frac{1}{n}\sum_{j=1}^{n}\partial_hK_h(x-X_j)\\&
-        =-\frac{1}{nh^2}\sum_{j=1}^{n}\left(K\left(\frac{x-X_j}{h}\right)+\frac{x-X_j}{h}K^{'}\left(\frac{x-X_j}{h}\right)\right)\\&
-        =:\partial_h\hat{f}_h(x).
-    \end{align*}
-    Let $0<|\tau|<h/2$. Using the mean value inequality, we bound
-    \begin{align*}
-        \left|\frac{K_{h+\tau}(u)-K_h(u)}{\tau}\right|&\le\sup_{s\in(\min\{h,h+\tau\},\max\{h,h+\tau\})}|\partial_sK_s(u)|\le\sup_{s\in(h/2,3h/2)}\left|\frac{1}{s^2}L\left(\frac{u}{s}\right)\right|\\&
-        \le\frac{4}{h^2}\underbrace{\sup_{a\in(2/3,2)}|L(au/h)|}_{=:G(u/h)}
-    \end{align*}
-    and further
-    \begin{align*}
-        \left|\frac{\hat{f}_{h+\tau}(x)-\hat{f}_h(x)}{\tau}\right|&\le\frac{1}{n}\sum_{j=1}^{n}\left|\frac{K_{h+\tau}(x-X_j)-K_h(x-X_j)}{\tau}\right|\\&
-        \le\frac{4}{nh^2}\sum_{j=1}^{n}G\left(\frac{x-X_j}{h}\right)=:M(x),
-    \end{align*}
-    where $M\in L^2(\mathbb{R})$ because by the Cauchy-Schwarz inequality $\|M\|_2^2\le 16h^{-3}\|G\|_2^2$ and by the decay assumption on $L$ we get $\|G\|_2^2\le3C^2/(2\alpha-1)<+\infty$. By the dominated convergence theorem
-    \begin{align}\label{eq:dom_conv_consequence}
-        \left\|\frac{\hat{f}_{h+\tau}-\hat{f}_h}{\tau}-\partial_h\hat{f}_h\right\|_2\to0,\quad\tau\to0.
-    \end{align}
-    Set $d\Psi(h)[\tau]:=\tau\partial_h\hat{f}_h$. Now it holds
-    \begin{align*}
-        \hat{f}_{h+\tau}-\hat{f}_h=\tau\partial_h\hat{f}_h+\underbrace{\left(\hat{f}_{h+\tau}-\hat{f}_h-\tau\partial_h\hat{f}_h\right)}_{=:r_h(\tau)},
-    \end{align*}
-    where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.
-
-    The continuity of the operator $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ can be established by defining the dilation operator $T_hL:=h^{-1}L(\cdot/h)$ and the shift operator $g_aL:=L(\cdot-a)$ and computing
-    \begin{align*}
-        \|\partial_h\hat{f}_{h_1}-\partial_h\hat{f}_{h_2}\|_2&=\left\|\frac{1}{nh_2}\sum_{j=1}^{n}g_{X_j}T_{h_2}L-\frac{1}{nh_1}\sum_{j=1}^{n}g_{X_j}T_{h_1}L\right\|_2\\&
-        \le\left\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_1}T_{h_1}L\right\|_2\\&
-        \le\left\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_2}T_{h_1}L\right\|_2+\left\|\frac{1}{h_2}T_{h_1}L-\frac{1}{h_1}T_{h_1}L\right\|_2\\&
-        =\frac{1}{h_2}\|T_{h_2}L-T_{h_1}L\|_2+\left|\frac{1}{h_2}-\frac{1}{h_1}\right|\|T_{h_1}L\|_2.
-    \end{align*}
-    Both terms on the right hand side vanish for $h_1\to h_2$. The reason why the first term vanishes is as follows. A well known fact (see~\cite[Example~5.4.8]{de2009intermediate}) is that $(U(s))_{s\in\mathbb{R}}$, $U(s):L^2\to L^2$, $U(s)f:=e^{s/2}f(e^s\cdot)$ is a strongly continuous unitary group, which means in particular that $\|U(s)f-U(s_0)f\|_2\to0$ as $s\to s_0$ for all $f\in L^2$. We now note that we can write $T_hf=h^{-1/2}U(-\log{h})f$ and thus $\|T_hf-T_{h_0}f\|_2\to0$ as $h\to h_0$. Since $\|d\Psi(h)-d\Psi(s)\|_{\operatorname{op}}=\sup_{|\tau|\le 1}\|\tau\partial_h\hat{f}_h-\tau\partial_h\hat{f}_s\|_2=\|\partial_h\hat{f}_h-\partial_h\hat{f}_s\|_2$, the continuity of $d\Psi$ is established.
-
-    Fix a closed nonempty interval $J:=[a,b]\subseteq(0,\infty)$. Applying the bound from Equation~\eqref{eq:frechet_remainder_bound} above yields
-    \begin{align*}
-        \|r_h(\tau)\|_2\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\operatorname{op}}\le|\tau|\underbrace{\sup_{r,s\in J,|r-s|\le|\tau|}\|d\Psi(s)-d\Psi(h)\|_{\operatorname{op}}}_{=\mu_J(|\tau|)}
-    \end{align*}
-    for all $h\in J$ and $\tau\in\mathbb{R}$ with $h+\tau\in J$. Because $d\Psi$ is continuous, $d\Psi:J\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ is uniformly continuous, and in this case it is well known that $\mu_{J}(|\tau|)\to0$ for $\tau\to0$.
+    See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 \end{proof}
-
-% \begin{proof}
-%     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
-% \end{proof}
 
 \todo[inline]{continue here}
 
