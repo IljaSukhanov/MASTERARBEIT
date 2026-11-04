@@ -428,7 +428,7 @@ For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)\si
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
+    \includegraphics[width=0.9\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
     \caption{Perron vector entries $v_i^{(\lambda)}$ against bandwidth candidates $h_i$ on a geometric grid with $N=201$. Darker curves correspond to larger $\lambda$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$.}
     \label{fig:stationary_distribution_plot_001}
 \end{figure}
@@ -439,7 +439,7 @@ Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the spectrally selected b
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
+    \includegraphics[width=0.9\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
     \caption{Spectrally chosen bandwidth $h_{k_N}^{(\lambda)}$ against the number of bandwidth candidates $N$ on a geometric bandwidth grid. Darker curves correspond to larger $\lambda$. The black dashed line indicates $N=201$.}
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
@@ -450,12 +450,10 @@ Also note that the curve sharply jumps around $\lambda\approx17.87375$. This obs
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
+    \includegraphics[width=0.9\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
     \caption{Spectrally chosen bandwidths $h_{k_N}^{(\lambda)}$ against $\lambda$ on a geometric grid with $N=201$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$. The blue dashed line indicates the mean of the two bandwidths $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$ where $(j^{\ast},j^{\ast}+1)$ is the index pair that minimizes $D_{ij}$ over $i\ne j$.}
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
-
-\todo[inline]{continue here}
 
 After having examined the behavior for fixed $\lambda$ and increasing $N$ in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the behavior for fixed $N$ and increasing $\lambda$ in Figure~\ref{fig:chosen_bandwidths_vs_lambda} we would like to study the behavior of the spectrally chosen bandwidth under the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We take $\lambda_N=N^{\alpha}$ and test $\alpha\in\{0,0.5,1,1.5,2\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. The curve at the bottom of Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} corresponds to the curve at the bottom of Figure~\ref{fig:grid_fineness_chosen_bandwidths}. For $\alpha>1/2$ the curves appear to approach an entirely different bandwidth. As we will describe in Section~\ref{sec:perron_vector_concentrates} below, the spectral selector is related to the minimizer $h_Q$ of an energy functional $\hat{Q}_0$ on the interval $[h_{\min},h_{\max}]$. For this particular sample, numerical minimization of this energy functional gives $h_{Q}\approx0.1764$.
 
@@ -469,6 +467,8 @@ After having examined the behavior for fixed $\lambda$ and increasing $N$ in Fig
 \end{figure}
 
 \subsection{Repeated sampling experiments}
+
+\todo[inline]{continue here}
 
 \todo[inline]{Do the fixed sample experiments under repeated sampling?}
 
@@ -774,7 +774,7 @@ The Proposition~\ref{prop:main_thm} establishes that for a large $N$ (finer and 
 
 The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks at the minimizer of the energy functional (after proper scaling). The next result aims to give the answer.
 
-\todo[inline]{04.11: Polish Proposition 8!!}
+\todo[inline]{05.11: Polish Proposition 8!!}
 
 \begin{Prop}\label{prop:main_thm2}
     Assume that the energy functional $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$ and let $(k_N)$ be a sequence of indices defined by $k_N:=\min\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then the spectrally chosen bandwidth $h_{k_N}$ converges to the unique minimizer $h^{\ast}$ of $\hat{Q}_r$, that is, $h_{k_N}\to h^{\ast}$ as $N\to\infty$.
@@ -906,7 +906,7 @@ If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3
 
 \section{Literature Positioning}
 
-\todo[inline]{04.11: Polish!}
+\todo[inline]{05.11: Polish!}
 
 The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
 
