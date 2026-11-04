@@ -566,16 +566,14 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
 
 \todo[inline]{continue here}
 
-Next, we state the main theorem of this thesis.
+Next, we state the first of the two main results of this thesis.
 
 \begin{Prop}\label{prop:main_thm}
-    Let $D:\mathcal{P}_2\times\mathcal{P}_2\to\mathbb{R}_{\ge0}$ be the $L^2$-divergence on $\mathcal{P}_2:=\mathcal{P}\cap L^2(\mathbb{R})$. Let $\mathcal{H}_N=\{0<h_1<\dots<h_N\}$ be a $r$-linear grid for some $0<r\le1$ with fixed endpoints $h_1=h_{\min}$ and $h_N=h_{\max}$. Let $\lambda_N$ be a sequence such that $\lambda_N\to+\infty$ and $\lambda_N/N^2\to0$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ with entries $S_{ij}^{(N)}=\exp{(-\lambda_ND(\hat{f}_{h_i},\hat{f}_{h_j}))}$. Here $\hat{f}_h$ is the kernel density estimate with Gaussian kernel $K$ and fixed data $X_1,\dots,X_n\sim f$.
-
-    Let $i_N$ be an index sequence such that $h_{i_N}\to h_0\in(h_{\min},h_{\max})$. Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ be the $i_N$-th row sum of $S^{(N)}$. Then
+    For each $N\ge2$, let $0<h_1<\dots<h_N$ be an $r$-linear grid for a fixed $r\in[0,1]$ with fixed endpoints $h_1=h_{\min}$ and $h_N=h_{\max}$ and let $(\lambda_N)\subseteq(0,\infty)$ be a sequence with $\lambda_N\to\infty$ and $\lambda_N/N^2\to0$. Define the scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})_{i,j=1}^{N}$ by $S_{ij}^{(N)}=\exp{(-\lambda_ND_{ij})}$ where $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ and $\hat{f}_h$ is the Gaussian kernel density estimate constructed from fixed data $X_1,\dots,X_n$. Let $(i_N)$ be an index sequence such that $h_{i_N}\to h_0\in(h_{\min},h_{\max})$. Let $R_{i_N}^{(N)}=\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ be the $i_N$-th row sum of $S^{(N)}$. Then
     \begin{align*}
-        \sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}\to\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}},\quad N\to+\infty,
+        \sqrt{\lambda_N}\Delta_{r,N}R_{i_N}^{(N)}\to\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}},\quad N\to\infty,
     \end{align*}
-    where $\hat{Q}_r(h)=2^{-1}h^{2(1-r)}\|\partial_s\hat{f}_s|_{s=h}\|_2^2$ is an energy functional.
+    where $\hat{Q}_r(h):=2^{-1}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2$ is an energy functional.
 \end{Prop}
 
 \begin{proof}
