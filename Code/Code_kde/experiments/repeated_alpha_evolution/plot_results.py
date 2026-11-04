@@ -32,7 +32,7 @@ assert indices.shape == (1000, 6) and np.array_equal(exponents, [0, .5, 1, 1.5])
 repetitions, grid_size = indices.shape[0], len(grid)
 assert grid_size == grid_size_requested
 counts = np.stack([np.bincount(indices[:, i], minlength=grid_size) for i in range(6)])
-positions_per_bin = 1
+positions_per_bin = 2 if grid_size == 400 else 5
 starts = np.arange(0, grid_size, positions_per_bin)
 stops = np.minimum(starts + positions_per_bin, grid_size)
 grouped = np.add.reduceat(counts, starts, axis=1)
