@@ -1,6 +1,8 @@
 """Export the paired repeated-sample histograms and the four-panel comparison."""
 from pathlib import Path
 import csv
+import json
+import os
 
 import matplotlib
 matplotlib.use('Agg')
@@ -13,6 +15,10 @@ from kde_tools.bandwidths import gaussian_mise_oracle_bandwidth
 CODE = Path(__file__).resolve().parents[2]
 DATA = CODE / 'outputs/data/repeated_alpha_evolution'
 OUT = CODE / 'outputs/pdfs/repeated_alpha_evolution'
+grid_size_requested = int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '1000'))
+if grid_size_requested != 1000:
+    DATA = DATA / f'n{grid_size_requested}'
+    OUT = OUT / f'n{grid_size_requested}'
 OUT.mkdir(parents=True, exist_ok=True)
 with np.load(DATA / 'paired_selections.npz') as saved:
     indices = saved['selected_indices'].copy()
@@ -23,9 +29,11 @@ with np.load(DATA / 'paired_selections.npz') as saved:
 assert completed.shape == (1000,) and np.all(completed)
 assert indices.shape == (1000, 6) and np.array_equal(exponents, [0, .5, 1, 1.5])
 repetitions, grid_size = indices.shape[0], len(grid)
+assert grid_size == grid_size_requested
 counts = np.stack([np.bincount(indices[:, i], minlength=grid_size) for i in range(6)])
-starts = np.arange(0, grid_size, 5)
-stops = np.minimum(starts + 5, grid_size)
+positions_per_bin = 2 if grid_size == 400 else 5
+starts = np.arange(0, grid_size, positions_per_bin)
+stops = np.minimum(starts + positions_per_bin, grid_size)
 grouped = np.add.reduceat(counts, starts, axis=1)
 assert np.all(grouped.sum(axis=1) == repetitions)
 centers = (starts + stops - 1) / 2
@@ -48,7 +56,7 @@ def draw(ax, column):
     ax.set_xlim(-.5, grid_size-.5)
     ax.set_ylim(0, y_max)
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-    ax.yaxis.set_major_locator(MultipleLocator(.01))
+    ax.yaxis.set_major_locator(MultipleLocator(.02 if y_max > .10 else .01))
     ax.tick_params(axis='both', labelsize=9, colors='#304967', length=0)
     ax.grid(axis='y', color='#E5ECF6', linewidth=.6)
     ax.set_axisbelow(True)
@@ -93,4 +101,10 @@ with (DATA / 'grouped_counts.csv').open('w', newline='') as f:
                      'alpha_0', 'alpha_1_2', 'alpha_1', 'alpha_3_2', 'ise', 'qhat'])
     for i, (start, stop) in enumerate(zip(starts, stops)):
         writer.writerow([start, stop-1, grid[start], grid[stop-1], *grouped[:, i]])
-print(f'Saved 4 panels and comparison in {OUT}; common upper y limit {y_max:.2f}')
+(DATA / 'plot_settings.json').write_text(json.dumps({
+    'grid_size': grid_size,
+    'positions_per_bin': positions_per_bin,
+    'number_of_bins': len(starts),
+    'common_upper_y_limit': y_max,
+}, indent=2) + '\n')
+print(f'Saved 4 panels and comparison in {OUT}; {positions_per_bin} positions per bin; common upper y limit {y_max:.2f}')

@@ -22,8 +22,12 @@ from kde_tools.perron import perron_peak_index
 
 
 CODE = Path(__file__).resolve().parents[2]
+M, N, SAMPLE_SIZE, SEED = 1000, int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '1000')), 200, 20260828
+if N < 3:
+    raise ValueError('REPEATED_ALPHA_GRID_SIZE must be at least 3.')
 DATA = CODE / 'outputs/data/repeated_alpha_evolution'
-M, N, SAMPLE_SIZE, SEED = 1000, 1000, 200, 20260828
+if N != 1000:
+    DATA = DATA / f'n{N}'
 GRID = np.geomspace(0.01, 2.0, N)
 EXPONENTS = np.array([0.0, 0.5, 1.0, 1.5])
 LAMBDAS = N ** EXPONENTS
