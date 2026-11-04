@@ -2,7 +2,7 @@
 
 \section{Proofs Chapter~\ref{chap:ar}}
 
-\subsection{Proof of Proposition~\ref{prop:hausdorff_distance_convergence_speed}}\label{sec:proof_hausdorff_distance_convergence_speed}
+\subsection*{Proof of Proposition~\ref{prop:hausdorff_distance_convergence_speed}}\label{sec:proof_hausdorff_distance_convergence_speed}
 
 \begin{Lem}\label{lem:upper_bound_psi_j}
     There exist $C>0$ and $\rho\in(0,1)$ such that $|\psi_j|\le C\rho^{j}$. In particular, $\lim\limits_{j\to\infty}\psi_j=0$.
@@ -37,7 +37,7 @@
     \end{align*}
 \end{proof}
 
-\subsection{Proof of Proposition~\ref{prop:minimum_width}}\label{sec:proof_minimum_width}
+\subsection*{Proof of Proposition~\ref{prop:minimum_width}}\label{sec:proof_minimum_width}
 
 \begin{Lem}\label{lem:young_convolution_equality}
     Let $a=(a_n)_{n\in\mathbb{Z}}\in l^2(\mathbb{Z})\setminus\{0\}$ and $b=(b_n)_{n\in\mathbb{Z}}\in l^1(\mathbb{Z})$ be sequences. Then it holds $\|a\ast b\|_2=\|a\|_2\|b\|_1$ if and only if $b=0$ or $b=c\delta_r$ for some $c\ne0$ and $r\in\mathbb{Z}$.
@@ -97,7 +97,7 @@
     Let $v$ be a minimizing direction. Then $m_{k-1}=w_{k-1}(v)=w_k(u)\ge\min_{u\in\mathbb{S}^{k-1}}w_k(u)=m_k$.
 \end{proof}
 
-\subsection{Proof of Lemma~\ref{lem:hausdorff_convergence}}\label{sec:proof_hausdorff_convergence}
+\subsection*{Proof of Lemma~\ref{lem:hausdorff_convergence}}\label{sec:proof_hausdorff_convergence}
 
 \begin{Lem}\label{lem:property_hausdorff_distance}
     Let $A,B,C$ be subsets of a metric space with $A\subseteq B\subseteq C$. Then $d_H(B,C)\le d_H(A,C)$.
@@ -114,7 +114,7 @@
     Let $\epsilon>0$ be arbitrary. Let $\Omega_0=\{\omega\in\Omega:\overline{\{Y_t(\omega):t\ge1\}}=\mathcal{Z}\}$. By assumption, $\mathbb{P}(\Omega_0)=1$. Fix $\omega\in\Omega_0$. In what follows, we abbreviate $Y_t=Y_t(\omega)$ and $\mathcal{P}_T=\{Y_1(\omega),\dots,Y_T(\omega)\}$. Because $\{Y_t:t\ge1\}$ is dense in $\mathcal{Z}$, it holds $\mathcal{Z}\subseteq\bigcup_{t\ge1}B(Y_t,\epsilon)$ and since $\mathcal{Z}$ is compact, there exists a finite sub-cover $\mathcal{Z}\subseteq\bigcup_{j=1}^{m(\epsilon)}B(Y_{t_j(\epsilon)},\epsilon)$. Set $T_{\epsilon}=\max\{t_1(\epsilon),\dots,t_{m(\epsilon)}(\epsilon)\}$. Now, let $z\in\mathcal{Z}$ be arbitrary. It follows that $d(z,\mathcal{P}_T)=\inf\{\|z-Y_t\|:t=1,\dots,T\}\le\epsilon$ for all $T\ge T_{\epsilon}$. Thus, $\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$, since $z$ was arbitrary. Since $\mathcal{P}_T\subseteq\mathcal{Z}$, we also have $\sup_{t=1,\dots,T}d(Y_t,\mathcal{Z})=0$. By definition of the Hausdorff distance, we obtain $d_H(\mathcal{P}_T,\mathcal{Z})=\sup_{z\in\mathcal{Z}}d(z,\mathcal{P}_T)\le\epsilon$ and therefore $d_H(\mathcal{P}_T,\mathcal{Z})\to0$ for $T\to\infty$, since $\epsilon>0$ was arbitrary. By Lemma~\ref{lem:property_hausdorff_distance} we also get $d_H(\operatorname{conv}(\mathcal{P}_T),\mathcal{Z})\to0$ for $T\to\infty$. Since we worked on $\Omega_0$, this proves almost sure convergence.
 \end{proof}
 
-\subsection{Proof of Lemma~\ref{lem:ergodic_implies_dense}}\label{sec:proof_ergodic_implies_dense}
+\subsection*{Proof of Lemma~\ref{lem:ergodic_implies_dense}}\label{sec:proof_ergodic_implies_dense}
 
 \begin{proof}
     It is well known that the family $\mathcal{B}$ of open balls with rational centers $q\in\mathbb{Q}^{k}$ and radii $r\in\mathbb{Q}_{>0}$ forms a countable base for $\mathbb{R}^{k}$. That is, $\mathcal{B}$ is countable and for any open set $U\subseteq\mathbb{R}^k$ and every $x\in U$ there exists $B\in\mathcal{B}$ such that $x\in B\subseteq U$. Define $\mathcal{B}_{\mathcal{Z}}=\{B\in\mathcal{B}:B\cap\mathcal{Z}\ne\emptyset\}$. Let $B\in\mathcal{B}_{\mathcal{Z}}$ and choose some $z\in B$. Because $B$ is open, there exists $\delta>0$ with $B(z,\delta)\subseteq B$. Since $z\in\mathcal{Z}=\operatorname{supp}(Y_t)$, by the definition of the support, we have $\mathbb{P}(Y_t\in B)\ge\mathbb{P}(Y_t\in B(z,\delta))>0$. By Birkhoff's ergodic theorem
@@ -124,7 +124,7 @@
     This implies that $Y_t\in B$ for infinitely many $t\ge 1$ almost surely. In particular, there exists $t\ge1$ such that $Y_t\in B$. Let $z\in\mathcal{Z}$ and $\epsilon>0$ be arbitrary. There exists $B\in\mathcal{B}$ such that $z\in B\subseteq B(z,\epsilon)$. From above we also know that there exists $t\ge1$ such that $Y_t\in B$. Thus $\|Y_t-z\|\le\epsilon$
 \end{proof}
 
-\subsection{Proof of Proposition~\ref{prop:sliding_window_fails_brunel}}\label{sec:proof_sliding_window_fails_brunel}
+\subsection*{Proof of Proposition~\ref{prop:sliding_window_fails_brunel}}\label{sec:proof_sliding_window_fails_brunel}
 
 \begin{proof}
     Let $\{U_t\}\stackrel{\text{iid}}{\sim}\text{Beta}(\alpha,\beta)$, $Z_t=a+(b-a)U_t$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Set $c=(b+a)/2$ and $d=(b-a)/2$. Also set $\kappa:=\min\{\alpha,\beta\}$. Then, $X_t=\sum_{\psi_j\ge0}\psi_jZ_{t-j}+\sum_{\psi_j<0}\psi_jZ_{t-j}\le b\sum_{\psi_j\ge0}\psi_j+a\sum_{\psi_j<0}\psi_j=c\sum_{j=0}^{\infty}\psi_j+d\sum_{j=0}^{\infty}|\psi_j|$ and similarly $X_t\ge c\sum_{j=0}^{\infty}\psi_j-d\sum_{j=0}^{\infty}|\psi_j|$. Thus, $\operatorname{supp}(X_t)=[G-H,G+H]$, where $G:=c\sum_{j=0}^{\infty}\psi_j$ and $H:=d\sum_{j=0}^{\infty}|\psi_j|$. Consequently,
@@ -150,7 +150,7 @@
     \end{align*}
 \end{proof}
 
-\subsection{Proof of Proposition~\ref{prop:properties_empirical_width}}\label{sec:proof_properties_empirical_width}
+\subsection*{Proof of Proposition~\ref{prop:properties_empirical_width}}\label{sec:proof_properties_empirical_width}
 
 \begin{proof}
     Let $u,v\in S^{k-1}$. Write $\hat{w}_k(u)=\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},u\rangle$ and we obtain
@@ -175,7 +175,7 @@
     Take $Y_K^{(k)},\dots,Y_{K+k}^{(k)}$ and let the matrix $M$ be defined by having columns $Y_{K+1}^{(k)}-Y_K^{(k)},\dots,Y_{K+k}^{(k)}-Y_{K}^{(k)}$. The determinant $D=\det{M}$ is a nonzero polynomial in the observations $W=(X_{K-k+1},\dots,X_K,X_{K+1},\dots,X_{K+k})$, implying that $\{x:D(x)=0\}$ has Lebesgue measure zero; see~\cite{caron_zero_nodate}. Note that we need at least $T\ge K+k$ to form this vector $W$. The random vector $W$ has a joint density if the innovations have a density. Therefore, it follows $\mathbb{P}(D(W)\ne0)=1$, that is, the determinant of $M$ is almost surely nonzero. This immediately implies that the differences $Y_{K+1}^{(k)}-Y_K^{(k)},\dots,Y_{K+k}^{(k)}-Y_{K}^{(k)}$ span the whole space $\mathbb{R}^{k}$ and thus $\operatorname{aff}(\mathcal{P}_{k,T})=\mathbb{R}^{k}$. Combining the arguments, we find that $\hat{m}_{k,T}>0$ is almost surely the case given that $T\ge K+k$.
 \end{proof}
 
-\subsection{Proof of Lemma~\ref{lem:weak_sharp_minima_application}}\label{sec:proof_weak_sharp_minima_application}
+\subsection*{Proof of Lemma~\ref{lem:weak_sharp_minima_application}}\label{sec:proof_weak_sharp_minima_application}
 
 \begin{proof}
     The function $\hat{w}_k$ is a pointwise maximum over finitely many linear functions. In the following, we write $A=\{Y_s^{(k)}-Y_t^{(k)}:s,t\}$ and $f(u)=\max\{\langle a,u\rangle:a\in A\}$. Also, let $m=\min\{f(u):u\in\mathbb{S}^{k-1}\}$ and $\mathcal{X}=\{u\in\mathbb{S}^{k-1}:f(u)=m\}$. Let $u^{\ast}\in\mathcal{X}$ and $T_{u^{\ast}}\mathbb{S}^{k-1}$ be the tangent space at $u^{\ast}$. Furthermore, let $A_{\ast}=\{a\in A:\langle a,u^{\ast}\rangle=m\}$ be the set of active vectors. Define $g(d)=\max\{\langle a,d\rangle:a\in A_{\ast}\}$ for all unit tangent directions $d\in T_{u^{\ast}}\mathbb{S}^{k-1}\cap\mathbb{S}^{k-1}=:S_{u^{\ast}}\mathbb{S}^{k-1}$.
@@ -224,7 +224,7 @@
 
 \section{Proofs Chapter~\ref{chap:kde}}
 
-\subsection{Proof of Lemma~\ref{lem:acute_chain_perron_vec}}\label{sec:proof_acute_chain_perron_vec}
+\subsection*{Proof of Lemma~\ref{lem:acute_chain_perron_vec}}\label{sec:proof_acute_chain_perron_vec}
 
 \begin{proof}
     Since the points $x_j$ are distinct, all off-diagonal entries in the matrix $D$ are positive, making $D$ irreducible, and by Perron-Frobenius, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$ and interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. Write the expected value $\mu:=\mathbb{E}[X]=\sum_{j=1}^{N}v_jx_j$ and the variance $\sigma^2:=\operatorname{Var}[X]=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$. Now we have
@@ -267,7 +267,7 @@
     and therefore $v_i<\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
 \end{proof}
 
-\subsection{Proof of Proposition~\ref{prop:L2_divergence_matrix}}\label{sec:proof_L2_divergence_matrix}
+\subsection*{Proof of Proposition~\ref{prop:L2_divergence_matrix}}\label{sec:proof_L2_divergence_matrix}
 
 \begin{proof}
     The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with a Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$ as stated in Equation~\eqref{eq:fourier_transform_of_kde}. We set $\delta_k:=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k](\omega)=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega):=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
@@ -289,7 +289,7 @@
      by the first part of the proof.
 \end{proof}
 
-\subsection{Proof of Theorem~\ref{thm:schoenberg}}\label{sec:proof_schoenberg}
+\subsection*{Proof of Theorem~\ref{thm:schoenberg}}\label{sec:proof_schoenberg}
 
 
 \begin{proof}
@@ -305,7 +305,7 @@
     Now we assume additionally that $D(x,y)>0$ for all $x\ne y$, that $\phi$ is non-constant and that $x_1,\dots,x_n$ are pairwise distinct. Assume again the statement $(a)$. Then, by equivalence to $(c)$ we have $0<D(x_i,x_j)=\|\Phi(x_i)-\Phi(x_j)\|_{\mathcal{H}}^{2}$ for $i\ne j$. Thus, the points $z_i=\Phi(x_i)$ are pairwise distinct. Invoking~\cite[Theorem~3.1]{guella_gaussian_2022}, we see that the matrix $\Tilde{S}_t$ is strictly positive definite for any $t>0$, that is, $a^T\Tilde{S}_ta>0$ for all $a\in\mathbb{R}^{n}$, $a\ne0$. Since $\phi$ is assumed to be non-constant, this forces $\mu((0,\infty))>0$. Thus, $a^{T}Sa=\int_{[0,\infty)}a^{T}\Tilde{S}_ta\,d\mu(t)>0$, i.e., $S$ is strictly positive definite.
 \end{proof}
 
-\subsection{Proof of Lemma~\ref{lem:asymptotic_approx_r_linear_spacing}}\label{sec:proof_asymptotic_approx_r_linear_spacing}
+\subsection*{Proof of Lemma~\ref{lem:asymptotic_approx_r_linear_spacing}}\label{sec:proof_asymptotic_approx_r_linear_spacing}
 
 \begin{proof}
     First, suppose $0<r\le1$. We have $h_{j_N}^r-h_{i_N}^r=r(j_N-i_N)\Delta_{r,N}$ from which follows
@@ -322,11 +322,11 @@
     For $r=0$ we have $h_{j_N}=h_{i_N}\exp{(\delta_{ij}^{0,N})}$. Since $\delta_{ij}^{0,N}\to0$ and $h_{i_N}\le h_{\max}$, a Taylor expansion of $e^x$ around $0$ yields $h_{j_N}-h_{i_N}=h_{i_N}\delta_{ij}^{0,N}+\mathbf{O}((\delta_{ij}^{0,N})^2)$.
 \end{proof}
 
-\subsection{Proof of Lemma~\ref{lem:frechet_derivative_of_kde}}\label{sec:proof_frechet_derivative_of_kde}
+\subsection*{Proof of Lemma~\ref{lem:frechet_derivative_of_kde}}\label{sec:proof_frechet_derivative_of_kde}
 
-\subsection{Proof of Proposition~\ref{prop:main_thm}}\label{sec:proof_main_thm}
+\subsection*{Proof of Proposition~\ref{prop:main_thm}}\label{sec:proof_main_thm}
 
-\subsection{Proof of Proposition~\ref{prop:main_thm2}}\label{sec:proof_main_thm2}
+\subsection*{Proof of Proposition~\ref{prop:main_thm2}}\label{sec:proof_main_thm2}
 
 \begin{proof}
     Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$ and by $v^{(N)}=(v^{(N)}_1,\dots,v^{(N)}_N)$ the corresponding principal eigenvector. That is, we have $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$. Let $i_{\text{crit}}^{(N)}\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. We have

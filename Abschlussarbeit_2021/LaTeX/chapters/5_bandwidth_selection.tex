@@ -537,31 +537,27 @@ This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}.
 
 To explain the results, we need the concept of a Fréchet derivative, which is introduced, for example, in Zeidler~\cite[Section~4.2]{zeidler_applied_1995}. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ a nonempty open subset. Let $\Psi:U\to Y$ be a map. A bounded linear operator $d\Psi(u):X\to Y$ is called the Fréchet derivative of $\Psi$ at the point $u\in U$ if
 \begin{align*}
-    \Psi(u+h)=\Psi(u)+d\Psi(u)[h]+r_u(h),\quad\forall h\in X:u+h\in U,
+    \Psi(u+\tau)=\Psi(u)+d\Psi(u)[\tau]+r_u(\tau),\quad\forall\tau\in X:u+\tau\in U,
 \end{align*}
-where $r_u:\{h\in X:u+h\in U\}\to Y$ is a remainder that fulfills $\|r_u(h)\|_Y/\|h\|_X\to0$ for $h\to0$. We call $\Psi$ continuously differentiable on $U$, and write $\Psi\in C^1(U)$, if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\to\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$ equipped with the operator norm $\|M\|_{\operatorname{op}}:=\sup\{\|Mx\|_{Y}:x\in X,\|x\|_X\le1\}$.
+where $r_u:\{\tau\in X:u+\tau\in U\}\to Y$ is a remainder that fulfills $\|r_u(\tau)\|_Y/\|\tau\|_X\to0$ for $\tau\to0$. We call $\Psi$ continuously differentiable on $U$, and write $\Psi\in C^1(U)$, if $d\Psi(u)$ exists for all $u\in U$ and if $d\Psi:U\to\mathcal{L}(X,Y)$ is continuous. Here, $\mathcal{L}(X,Y)$ is the set of all linear and bounded operators from $X$ to $Y$ equipped with the operator norm $\|M\|_{\operatorname{op}}:=\sup\{\|Mx\|_{Y}:x\in X,\|x\|_X\le1\}$.
 
-Assume that the line segment $\{u+th:t\in[0,1]\}$ is inside $U$ and that $\Psi$ is Fréchet differentiable at every point of that segment. Define $\gamma:[0,1]\to Y$ by $\gamma(t)=\Psi(u+th)$. Using the chain rule, we have $\gamma'(t)=d\Psi(u+th)[h]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus $\Psi(u+h)-\Psi(u)=\gamma(1)-\gamma(0)=\int_0^1\gamma'(t)\,dt=\int_0^1d\Psi(u+th)[h]\,dt$. We can use this to bound the norm of the remainder:
-\begin{align*}
-    \|r_u(h)\|_Y&\le\int_0^1\|(d\Psi(u+th)-d\Psi(u))[h]\|_Y\,dt\\&
-    \le\|h\|_X\int_0^1\|d\Psi(u+th)-d\Psi(u)\|_{\operatorname{op}}\,dt\\&
-    \le\|h\|_X\sup_{t\in[0,1]}\|d\Psi(u+th)-d\Psi(u)\|_{\operatorname{op}}.
-\end{align*}
+Assume that the line segment $\{u+t\tau:t\in[0,1]\}$ is inside $U$ and that $\Psi$ is Fréchet differentiable at every point of that segment. Define $\gamma:[0,1]\to Y$ by $\gamma(t)=\Psi(u+t\tau)$. Using the chain rule, we have $\gamma'(t)=d\Psi(u+t\tau)[\tau]$. Now, if $\Psi\in C^{1}(U)$ then $\gamma$ is continuously differentiable and by the fundamental theorem of calculus $\Psi(u+\tau)-\Psi(u)=\gamma(1)-\gamma(0)=\int_0^1\gamma'(t)\,dt=\int_0^1d\Psi(u+t\tau)[\tau]\,dt$. We can use this to bound the norm of the remainder:
+\begin{equation}\label{eq:frechet_remainder_bound}
+    \begin{aligned}
+        \|r_u(\tau)\|_Y&\le\int_0^1\|(d\Psi(u+t\tau)-d\Psi(u))[\tau]\|_Y\,dt\\&
+        \le\|\tau\|_X\int_0^1\|d\Psi(u+t\tau)-d\Psi(u)\|_{\operatorname{op}}\,dt\\&
+        \le\|\tau\|_X\sup_{t\in[0,1]}\|d\Psi(u+t\tau)-d\Psi(u)\|_{\operatorname{op}}.
+    \end{aligned}
+\end{equation}
 
-In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The map is $\Psi(h)=\hat{f}_h$. The next lemma gives the Fréchet derivative of $\Psi$ and a bound on the norm of the remainder term.
-
-\todo[inline]{continue here}
+In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. The next lemma gives the Fréchet derivative of $\Psi:\mathbb{R}_{>0}\to L^2(\mathbb{R})$, $\Psi(h)=\hat{f}_h$ and a bound on the norm of the remainder term.
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
-    Let $K$ be differentiable on $\mathbb{R}$ and square integrable. Let $L$ be defined as $L(u)=K(u)+uK'(u)$. We must assume a certain decay assumption on $L$, namely $|L(v)|\le C(1+|v|)^{-\alpha}$ for some $C>0$, $\alpha>1/2$ and all $v\in\mathbb{R}$. The Fréchet-derivative of $h\mapsto\hat{f}_h$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
+    Let $K$ be a differentiable and square integrable kernel and define $L$ by $L(x):=K(x)+xK'(x)$. Assume that $L$ satisfies $|L(x)|\le C(1+|x|^{-\alpha})$ for all $x\in\mathbb{R}$ and some $C>0$, $\alpha>1/2$. Define the map $\Psi:(0,\infty)\to L^2(\mathbb{R})$ by $\Psi(h):=\hat{f}_h$. The Fréchet derivative of $\Psi$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
     \begin{align*}
-        \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
+        \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^nL\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
     \end{align*}
-    Additionally, the norm of the remainder term $r_h(\tau)$ can be bounded above by:
-    \begin{align*}
-        \|r_h(\tau)\|_2\le|\tau|\mu_J(|\tau|)
-    \end{align*}
-    if $h,h+\tau\in J:=[a,b]\subseteq(0,\infty)$. Also, $\mu_J\ge0$ and $\mu_J(s)\to0$ as $s\downarrow0$.
+    Additionally, for any nonempty interval $J:=[a,b]\subseteq(0,\infty)$ with $h,h+\tau\in J$ we can bound $\|r_h(\tau)\|_2$ above by $|\tau|\mu_J(|\tau|)$ where $\mu_J(\delta):=\sup\{\|d\Psi(h)-d\Psi(s)\|_{\operatorname{op}}:h,s\in J,|h-s|\le\delta\}$, $\delta\ge0$ is the modulus of continuity of $d\Psi$ and satisfies $\mu_J(|\tau|)$ as $\tau\to0$. 
 \end{Lem}
 
 \begin{proof}
@@ -574,11 +570,10 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     \end{align*}
     Let $0<|\tau|<h/2$. Using the mean value inequality, we bound
     \begin{align*}
-        \left|\frac{K_{h+\tau}(u)-K_h(u)}{\tau}\right|&\le\sup_{s\in(\min\{h,h+\tau\},\max\{h,h+\tau\})}|\partial_sK_s(u)|\\&
-        \le\sup_{s\in(h/2,3h/2)}\left|\frac{1}{s^2}L\left(\frac{u}{s}\right)\right|\\&
+        \left|\frac{K_{h+\tau}(u)-K_h(u)}{\tau}\right|&\le\sup_{s\in(\min\{h,h+\tau\},\max\{h,h+\tau\})}|\partial_sK_s(u)|\le\sup_{s\in(h/2,3h/2)}\left|\frac{1}{s^2}L\left(\frac{u}{s}\right)\right|\\&
         \le\frac{4}{h^2}\underbrace{\sup_{a\in(2/3,2)}|L(au/h)|}_{=:G(u/h)}
     \end{align*}
-    and
+    and further
     \begin{align*}
         \left|\frac{\hat{f}_{h+\tau}(x)-\hat{f}_h(x)}{\tau}\right|&\le\frac{1}{n}\sum_{j=1}^{n}\left|\frac{K_{h+\tau}(x-X_j)-K_h(x-X_j)}{\tau}\right|\\&
         \le\frac{4}{nh^2}\sum_{j=1}^{n}G\left(\frac{x-X_j}{h}\right)=:M(x),
@@ -593,27 +588,27 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     \end{align*}
     where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.
 
-    The continuity of the operator $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ can be established by defining the dilation operator $T_h$ and the shift operator $g_a$ and computing
+    The continuity of the operator $d\Psi:(0,\infty)\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ can be established by defining the dilation operator $T_hf:=h^{-1}f(\cdot/h)$ and the shift operator $g_af:=f(\cdot-a)$ and computing
     \begin{align*}
-        \|\partial_h\hat{f}_{h_1}-\partial\hat{f}_{h_2}\|_2&=\|\frac{1}{nh_2}\sum_j\tau_{X_j}T_{h_2}L-\frac{1}{nh_1}\sum_j\tau_{X_j}T_{h_1}L\|_2\\&
-        \le\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_1}T_{h_1}L\|_2\le\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_2}T_{h_1}L\|_2+\|\frac{1}{h_2}T_{h_1}L-\frac{1}{h_1}T_{h_1}L\|_2\\&
-        =\frac{1}{h_2}\|T_{h_2}L-T_{h_1}L\|_2+|\frac{1}{h_2}-\frac{1}{h_1}|\|T_{h_1}L\|_2
+        \|\partial_h\hat{f}_{h_1}-\partial\hat{f}_{h_2}\|_2&=\left\|\frac{1}{nh_2}\sum_{j=1}^{n}\tau_{X_j}T_{h_2}L-\frac{1}{nh_1}\sum_{j=1}^{n}\tau_{X_j}T_{h_1}L\right\|_2\\&
+        \le\left\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_1}T_{h_1}L\right\|_2\\&
+        \le\left\|\frac{1}{h_2}T_{h_2}L-\frac{1}{h_2}T_{h_1}L\right\|_2+\left\|\frac{1}{h_2}T_{h_1}L-\frac{1}{h_1}T_{h_1}L\right\|_2\\&
+        =\frac{1}{h_2}\|T_{h_2}L-T_{h_1}L\|_2+\left|\frac{1}{h_2}-\frac{1}{h_1}\right|\|T_{h_1}L\|_2.
     \end{align*}
-    Both terms on the right hand side vanish for $h_1\to h_2$. (A well known fact (see~\cite{de2009intermediate}) is that $(U(s))_{s\in\mathbb{R}}$, $U(s):L^2\to L^2$, $U(s)f(x):=e^{s/2}f(e^sx)$ is a strongly continuous unitary group. In particular, $\|U(s)f-U(s_0)f\|_2\to0$ as $s\to s_0$ for all $f\in L^2$. We now note that we can write $T_hf=h^{-1/2}U(-\log{h})f$ and thus $\|T_hf-T_{h_0}f\|_2\to0$ as $h\to h_0$.)
+    Both terms on the right hand side vanish for $h_1\to h_2$. The reason why the first term vanishes is as follows. A well known fact (see~\cite[Example~5.4.8]{de2009intermediate}) is that $(U(s))_{s\in\mathbb{R}}$, $U(s):L^2\to L^2$, $U(s)f:=e^{s/2}f(e^s\cdot)$ is a strongly continuous unitary group, which means in particular that $\|U(s)f-U(s_0)f\|_2\to0$ as $s\to s_0$ for all $f\in L^2$. We now note that we can write $T_hf=h^{-1/2}U(-\log{h})f$ and thus $\|T_hf-T_{h_0}f\|_2\to0$ as $h\to h_0$. Since $\|d\Psi(h)-d\Psi(s)\|_{\operatorname{op}}=\sup_{|\tau|\le 1}\|\tau\partial_h\hat{f}_h-\tau\partial_h\hat{f}_s\|_2=\|\partial_h\hat{f}_h-\partial_h\hat{f}_s\|_2$, the continuity of $d\Psi$ is established.
 
-    Since $\|d\Psi(h)-d\Psi(s)\|=\sup_{|\tau|\le 1}\|\tau\partial_h\hat{f}_h-\tau\partial_h\hat{f}_s\|_2=\|\partial_h\hat{f}_h-\partial_h\hat{f}_s\|_2$, the continuity of $d\Psi$ is established.
-
-    Fix a closed nonempty interval $J:=[a,b]\subseteq(0,\infty)$. Applying the bound from above:
+    Fix a closed nonempty interval $J:=[a,b]\subseteq(0,\infty)$. Applying the bound from Equation~\eqref{eq:frechet_remainder_bound} above yields
     \begin{align*}
-        \|r_h(\tau)\|_2&\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\text{op}}\\&
-        \le|\tau|\underbrace{\sup_{h,s\in J,|h-s|\le|\tau|}\|d\Psi(s)-d\Psi(h)\|_\text{op}}_{=:\mu_{J}(|\tau|)}
+        \|r_h(\tau)\|_2\le|\tau|\sup_{t\in[0,1]}\|d\Psi(h+\tau t)-d\Psi(h)\|_{\operatorname{op}}\le|\tau|\underbrace{\sup_{r,s\in J}\|d\Psi(s)-d\Psi(h)\|_{\operatorname{op}}}_{=\mu_J(|\tau|)}
     \end{align*}
-    for all $h\in[a,b]$ and $\tau\in\mathbb{R}$ with $h+\tau\in[a,b]$. $\mu_{J}(s)=\sup_{x,y\in J,|x-y|\le s}\|d\Psi(x)-d\Psi(y)\|_{\text{op}}$ is known in the literature as the modulus of continuity. Because $d\Psi$ is continuous, $d\Psi:J\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ is uniformly continuous, and in this case it is well known that $\mu_{J}(s)\to0$ for $s\downarrow0$. Also note that $\|d\Psi(s)-d\Psi(h)\|_{\text{op}}=\|\partial_h\hat{f}_h|_{h=s}-\partial_h\hat{f}_h|_{h=h}\|_2$. Since we have established the continuity of $d\Psi$ before, the proof is finished.
+    for all $h\in J$ and $\tau\in\mathbb{R}$ with $h+\tau\in J$. Because $d\Psi$ is continuous, $d\Psi:J\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ is uniformly continuous, and in this case it is well known that $\mu_{J}(|\tau|)\to0$ for $\tau\to0$.
 \end{proof}
 
 % \begin{proof}
 %     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 % \end{proof}
+
+\todo[inline]{continue here}
 
 Next, we state the main theorem of this thesis.
 
