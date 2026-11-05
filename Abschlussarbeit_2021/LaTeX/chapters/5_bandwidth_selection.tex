@@ -568,7 +568,7 @@ We note that the decay assumption on $L(x)=K(x)+xK'(x)$ in Lemma~\ref{lem:freche
 \begin{align*}
     \int_{-\infty}^{\infty}K(x)^2\,dx=2\int_0^{\infty}\left(x^{-1}\int_0^xL(t)\,dt\right)^2\,dx\le 8\int_0^{\infty}L(x)^2\,dx<\infty
 \end{align*}
-by symmetry of $K$ and Hardy's inequality. It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. For the Gaussian kernel the decay assumption on $L$ is fulfilled since $|L(x)|=(2\pi)^{-1/2}|1-x^2|e^{-x^2/2}\le8(2\pi)^{-1/2}(1+x^2)^{-1}\le16(2\pi)^{-1/2}(1+|x|)^{-2}$ and thus Lemma~\ref{lem:frechet_derivative_of_kde} holds for instance for Gaussian kernel density estimate.
+by symmetry of $K$ and Hardy's inequality (see e.g.~\cite[Theorem~1]{beesack_hardys_1961}). It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. For the Gaussian kernel the decay assumption on $L$ is fulfilled since $|L(x)|=(2\pi)^{-1/2}|1-x^2|e^{-x^2/2}\le8(2\pi)^{-1/2}(1+x^2)^{-1}\le16(2\pi)^{-1/2}(1+|x|)^{-2}$ and thus Lemma~\ref{lem:frechet_derivative_of_kde} holds for instance for Gaussian kernel density estimate.
 
 Next, we state the first of the two main results of this thesis.
 
@@ -581,140 +581,22 @@ Next, we state the first of the two main results of this thesis.
 \end{Prop}
 
 \begin{proof}
-    Recall that $\Delta_{r,N}=\psi_r(h_{j+1})-\psi_r(h_j)=(\psi_r(h_{\max})-\psi_r(h_{\min}))/(N-1)=\mathbf{O}(N^{-1})$ is the spacing between the transformed bandwidths $\psi_r(h_j)$ and $\psi_r(h_{j+1})$. Set $\epsilon_N:=\lambda_N^{1/2}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$ and note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. We also set $\delta_{N,j}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$ to be the signed difference between the transformed bandwidths $h_j$ and $h_{i_N}$. Note that $t_{N,j}=\sqrt{\lambda_N}(\psi_r(h_j)-\psi_r(h_{i_N}))=\lambda_N^{1/2}\delta_{N,j}$ is the rescaled spacing between the two transformed bandwidths. We have $h_{\min}^r-h_{i_N}^r\to h_{\min}^r-h_0^r<0$ and $h_{\max}^r-h_{i_N}^r\to h_{\max}^r-h_0^r>0$ because $h_0$ is assumed to be an interior bandwidth and thus $t_{N,1}=\sqrt{\lambda_N}(r^{-1})(h_{\min}^r-h_{i_N}^r)\to-\infty$ and $t_{N,N}=\sqrt{\lambda_N}r^{-1}(h_{\max}^r-h_{i_N}^r)\to\infty$ because $\lambda_N\to\infty$. We also have
-    \begin{align}\label{eq:delta_N_j_lower_and_upper_bound}
-        h_{\max}^{r-1}|h_j-h_{i_N}|\le\underbrace{\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds}_{=r^{-1}|h_j^r-h_{i_N}^r|=|\delta_{N,j}|}\le h_{\min}^{r-1}|h_j-h_{i_N}|.
-    \end{align}
-    Fix $A>0$ and set $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$. We have $\#I_N(A)\le2A\epsilon_N^{-1}+1$ because $\#I_N(A)\le\#\{j\in\mathbb{Z}:-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N\}=\lfloor A\epsilon_N^{-1}\rfloor-\lceil-A\epsilon_N^{-1}\rceil+1=2\lfloor A\epsilon_N^{-1}\rfloor+1\le 2A\epsilon_N^{-1}+1$.
-
-    We have $\epsilon_N=\sqrt{\lambda_N}\Delta_{r,N}=\mathbf{O}(\sqrt{\lambda_N/N^2})\to0$ and $|\delta_{N,j}|\le A\lambda_N^{-1/2}$ for all $j\in I_N(A)$. We also have $N^{-1}|j-i_N|\le A(N\epsilon_N)^{-1}=\mathbf{O}(\lambda_N^{-1/2})\to0$ and thus $|j-i_N|=\mathbf{o}(N)$ for every $j\in I_N(A)$, which allows us to apply Lemma~\ref{lem:asymptotic_approx_r_linear_spacing} to get $h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$.
-
-    We split the row sum into a local part and a tail:
-    \begin{align*}
-        R_{i_N}^{(N)}=\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\underbrace{\sum_{j\notin I_N(A)}S_{i_Nj}^{(N)}}_{=:T_N(A)}.
-    \end{align*}
-
-    After this prelude, we proceed in four steps.
-
-    \textit{Step 1: Bound the tail $T_N(A)$}
-
-    We have $D_{i_Nj}\ge c(\delta_{N,j})^2$ for some constant $c>0$. To see this, first write
-    \begin{align*}
-        \left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|=\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}t\omega^2e^{-\frac{t^2\omega^2}{2}}\,dt\ge|h_{i_N}-h_j|h_{\min}\omega^2e^{-h_{\max}^2\omega^2/2}
-    \end{align*}
-    and, using Parseval's identity, cf.~\eqref{eq:fourier_transform_of_kde} we obtain
-    \begin{align*}
-        D_{i_Nj}&=\frac{1}{4\pi}\int|P_n(\omega)|^2\left|e^{-\frac{h_j^2\omega^2}{2}}-e^{-\frac{h_{i_N}^2\omega^2}{2}}\right|^2\,d\omega\\&
-        \ge|h_{i_N}-h_j|^2\frac{h_{\min}^2}{4\pi}\int\underbrace{|P_n(\omega)|^2\omega^4e^{-h_{\max}^2\omega^2}}_{=:g(\omega)}\,d\omega.
-    \end{align*}
-    
-    Thus, using the second inequality in Equation~\eqref{eq:delta_N_j_lower_and_upper_bound}, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. 
-
-    Continuing
-    \begin{align*}
-        \epsilon_NT_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\epsilon_N\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
-        \le\epsilon_N\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
-        \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt.
-    \end{align*}
-    We see that $\epsilon_NT_N(A)$ is asymptotically bounded and therefore
-    \begin{align*}
-        \limsup_{N\to\infty}\epsilon_NT_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{cA}.
-    \end{align*}
-
-    \textit{Step 2: Approximate the local similarities}
-
-    Now let $j\in I_N(A)$ which by the considerations in the prelude implies $\tau_{N,j}:=h_j-h_{i_N}=h_{i_N}^{1-r}\delta_{N,j}+\mathbf{O}(\delta_{N,j}^2)$ and by Lemma~\ref{lem:frechet_derivative_of_kde} follows
-    \begin{align*}
-        \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
-        =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
-    \end{align*}
-    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $\alpha_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large. Also by the first inequality of Equation~\ref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
-    \begin{align*}
-        \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_{h_{i_N}}\|_2
-        \le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
-        \le|\delta_{N,j}|\left(h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}|\delta_{N,j}|)+CM_0|\delta_{N,j}|\right)\\&
-        \le
-        |\delta_{N,j}|\left(\underbrace{h_{\max}^{1-r}\mu_{[h_{\min},h_{\max}]}(h_{\max}^{1-r}A\lambda_N^{-1/2})+CM_0A\lambda_N^{-1/2}}_{=:a_N(A)}\right)
-    \end{align*}
-    and $a_N(A)\to0$ since $\lambda_N\to\infty$ and $\mu_{[h_{\min},h_{\max}]}(|s|)\to0$ for $s\to0$ by Lemma~\ref{lem:frechet_derivative_of_kde}. Consequently,
-    \begin{equation}
-        \begin{aligned}\label{eq:help_equation_000202}
-            D_{i_Nj}&=\frac{1}{2}\|\hat{f}_{h_j}-\hat{f}_{h_{i_N}}\|_2^2=\frac{1}{2}h_{i_N}^{2(1-r)}(\delta_{N,j})^2\|\partial_h\hat{f}_{h_{i_N}}\|_2^2+\rho_{N,j}\\&
-            =(\delta_{N,j})^2\hat{Q}_r(h_{i_N})+\rho_{N,j},
-        \end{aligned}
-    \end{equation}
-    where $\rho_{N,j}=h_{i_N}^{1-r}\delta_{N,j}\langle\partial_h\hat{f}_{h_{i_N}},r_{N,j}\rangle+(1/2)\|r_{N,j}\|_2^2$ is yet another remainder term for which we have
-    \begin{equation}
-        \begin{aligned}\label{eq:help_equation_000203}
-            |\rho_{N,j}|&\le|\delta_{N,j}|h_{i_N}^{1-r}|\langle\partial_h\hat{f}_{h_{i_N}},r_{N,j}\rangle|+(1/2)\|r_{N,j}\|_2^2\\&
-            \le|\delta_{N,j}|h_{\max}^{1-r}\underbrace{\|\partial_h\hat{f}_{h_{i_N}}\|_2}_{\le M_0}\underbrace{\|r_{N,j}\|_2}_{\le|\delta_{N,j}|a_N(A)}+(1/2)\underbrace{\|r_{N,j}\|_2^2}_{\le(\delta_{N,j})^2a_N(A)^2}\\&
-            \le(\delta_{N,j})^2\underbrace{\left(h_{\max}^{1-r}M_0a_N(A)+(1/2)a_N(A)^2\right)}_{=:b_N(A)\to0}.
-        \end{aligned}
-    \end{equation}
-    Define $\eta_{N,j}=e^{-\lambda_N\rho_{N,j}}-1$. It follows $S_{i_Nj}=e^{-\lambda_N(\delta_{N,j})^2\hat{Q}_r(h_{i_N})}(1+\eta_{N,j})$. Now write
-    \begin{align}\label{eq:local_sum_approx}
-        \epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}=\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}+\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}\eta_{N,j}.
-    \end{align}
-    The absolute value of the second term tends to zero as the following bound shows:
-    \begin{align*}
-        \left|\epsilon_N\sum_{j\in I_N(A)}\underbrace{e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}}_{\le 1}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
-    \end{align*}
-    It remains to show that $\sup_{j\in I_N(A)}|\eta_{N,j}|\to0$ for $N\to\infty$. We have $\lambda_N|\rho_{N,j}|\le\lambda_N(\delta_{N,j})^2b_N(A)\le A^2b_N(A)$ for all $j\in I_N(A)$. Consequently, $|\eta_{N,j}|=|e^{-\lambda_N\rho_{N,j}}-1|\le\max\{e^{A^2b_N(A)}-1,1-e^{-A^2b_N(A)}\}\to0$ as $N\to\infty$.
-
-    \textit{Step 3: Show convergence to a Gaussian integral via a Riemann sum argument}
-
-    We now show the convergence of the first non-vanishing term on the right side of Equation~\ref{eq:local_sum_approx} to a Gaussian integral. From now on to shorten the notation we set $q_N:=\hat{Q}_r(h_{i_N})$ and $q_0:=\hat{Q}_r(h_0)$. Since $\hat{Q}_r$ is continuous in $h_0$, we have $q_N\to q_0$ for $N\to\infty$. Therefore
-    \begin{align*}
-        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}\right|}_{\le\epsilon_N\#I_N(A)A^2|q_N-q_0|\le(2A+\epsilon_N)A^2|q_N-q_0|\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|.
-    \end{align*}
-    In order to show that the second summand above also converges to $0$ for $N\to\infty$ we first rewrite the sum over $I_N(A)$. Before that, set $g(t):=e^{-q_0t^2}$, $m_N:=\lfloor A\epsilon_N^{-1}\rfloor$ and $x_k:=\epsilon_N(-m_N+k-1)$. Now $\{x_0,\dots,x_{2m_N+1}\}$ is a partition of the interval $[-\epsilon_Nm_N-\epsilon_N,\epsilon_Nm_N]$. For sufficiently large $N$ we have $t_{N,1}=\epsilon_N(1-i_N)\le-A$ and $t_{N,N}=\epsilon_N(N-i_N)\ge A$ and therefore $1-i_N\le-\epsilon_N^{-1}A\le-m_N$ and $N-i_N\ge\epsilon_N^{-1}A\ge m_N$. Thus we can write
-    \begin{align*}
-        &\epsilon_N\sum_{j\in I_N(A)}g(t_{N,j})=\epsilon_N\sum_{\substack{j=1,\dots,N\\-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N}}g(t_{N,j})=\epsilon_N\sum_{\substack{k=1-i_N,\dots,N-i_N\\
-        -m_N\le k\le m_N}}g(k\epsilon_N)
-        \\&
-        =\epsilon_N\sum_{k=-m_N}^{m_N}g(k\epsilon_N)
-        =\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)
-    \end{align*}
-    Consequently,
-    \begin{align*}
-        &\left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|\le\sum_{k=1}^{2m_N+1}\int_{x_{k-1}}^{x_k}\underbrace{|g(x_k)-g(x)|}_{\le2\epsilon_Nq_0(A+\epsilon_N)}\,dx\\&
-        \le2\epsilon_Nq_0(A+\epsilon_N)(\epsilon_N+2A)\to0,\quad N\to\infty,
-    \end{align*}
-    and therefore
-    \begin{align*}
-        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}-\int\limits_{-A}^{A}e^{-t^2q_0}\,dt\right|\\&
-        \le\underbrace{\left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int\limits_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|}_{\to0}+\underbrace{\left|\int\limits_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx-\int\limits_{-A}^{A}g(t)\,dt\right|}_{\to0},
-    \end{align*}
-    because $\epsilon_Nm_N\to A$ and $-\epsilon_N(m_N+1)\to-A$.
-
-    \textit{Step 4: Combine steps 1-3}
-
-    We first must make sure that $q_0>0$. For all sufficiently large $N$ we have $i_N+1\in I_N(A)$, because $|t_{N,i_N+1}|=\epsilon_N\to0$. Thus $0<c\le D_{i_N,i_N+1}\delta_{N,i_N+1}^{-2}=q_N+\delta_{N,i_N+1}^{-2}\rho_{N,j}$ by the first sentence of $\textit{Step 1}$ and Equation~\eqref{eq:help_equation_000202}. Taking the limit yields $0<c\le q_0$ due to Equation~\eqref{eq:help_equation_000203} and the continuity of $\hat{Q}_r$. Finally,
-    \begin{align*}
-        &\int\limits_{-A}^{A}e^{-q_0t^2}\,dt\stackrel{\text{steps 2, 3}}{=}\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\liminf_{N\to\infty}\epsilon_NT_N(A)\\&
-        \le\liminf_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\limsup_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\limsup_{N\to\infty}\epsilon_NT_N(A)\\&
-        \stackrel{\text{step 1}}{=}\int\limits_{-A}^Ae^{-q_0t^2}\,dt+\frac{e^{-cA^2}}{cA}
-    \end{align*}
-    
-    Letting $A\to\infty$, we see that the limit of $\epsilon_NR_{i_N}^{(N)}$ as $N\to\infty$ exists and is given by
-    \begin{align*}
-        \lim_{N\to\infty}\epsilon_NR_{i_N}^{(N)}=\int_{-\infty}^{\infty}e^{-t^2\hat{Q}_r(h_0)}\,dt=\sqrt{\frac{\pi}{\hat{Q}_r(h_0)}}.
-    \end{align*}
+    See Appendix Section~\ref{sec:proof_main_thm}.
 \end{proof}
-
-% \begin{proof}
-%     See Appendix Section~\ref{sec:proof_main_thm}.
-% \end{proof}
-
-\todo[inline]{continue here}
 
 \begin{Rem}
     For large $N$, we thus have
     \begin{align*}
         \Delta_{r,N}\sum_{j=1}^{N}e^{-\lambda_ND_{i_N,j}}=\Delta_{r,N}R_{i_N}^{(N)}\approx\sqrt{\frac{\pi}{\lambda_N\hat{Q}_r(h_0)}},
     \end{align*}
-    which is very reminiscent of Laplace's method (see for example~[]), by which the integral $\int_a^be^{Mf(x)}$ can be approximated for large $M$ by $\sqrt{2\pi/(Mf''(x_0)}e^{Mf(x_0)}$, where $f$ is a twice continuously differentiable function on an interval $[a,b]$ and $x_0\in(a,b)$ is a strict global maximum of $f$ on $[a,b]$.
+    which is very reminiscent of Laplace's method (see for example~\cite[Theorem~2.1.2]{ivrii_partial_nodate}), by which the integral $\int_a^be^{-\lambda f(x)}\,dx$ can be approximated for large $\lambda$ by
+    \begin{align*}
+        \sqrt{\frac{2\pi}{\lambda f''(x_0)}}e^{-\lambda f(x_0)},
+    \end{align*}
+    where $f$ is a twice differentiable function defined on the interval $[a,b]$ with unique minimum point $x_0\in(a,b)$ such that $f''(x_0)>0$.
 \end{Rem}
+
+\todo[inline]{continue here}
 
 Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \begin{align*}
@@ -731,6 +613,70 @@ The question now is if the result of Proposition~\ref{prop:main_thm} can be exte
 \begin{Prop}\label{prop:main_thm2}
     Assume that the energy functional $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$ and let $(k_N)$ be a sequence of indices defined by $k_N:=\min\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then the spectrally chosen bandwidth $h_{k_N}$ converges to the unique minimizer $h^{\ast}$ of $\hat{Q}_r$, that is, $h_{k_N}\to h^{\ast}$ as $N\to\infty$.
 \end{Prop}
+
+\begin{proof}
+    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$ and by $v^{(N)}=(v^{(N)}_1,\dots,v^{(N)}_N)$ the corresponding principal eigenvector. That is, we have $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$. Let $i_{\text{crit}}^{(N)}\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. We have
+    \begin{align*}
+        \rho_Nv^{(N)}_{i_{\text{crit}}^{(N)}}=\sqrt{\lambda_N}\Delta_{r,N}\sum_{j=1}^{N}S^{(N)}_{i_{\text{crit}}^{(N)}j}v_j\le\sqrt{\lambda_N}\Delta_{r,N}v_{i_{\text{crit}}^{(N)}} R_{i_{\text{crit}}^{(N)}}^{(N)}
+    \end{align*}
+    and because every entry of the Perron vector is positive, $\rho_N\le a_{i_{\text{crit}}^{(N)},N}$.
+
+    There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$. Assume for a contradiction that for all null sequences $(\epsilon_N)$ and for all $N_0\in\mathbb{N}$ there exist $N\ge N_0$ and $1\le i\le N$ such that $a_{i,N}>m(t_i)+\epsilon_N$. This implies the existence of $d>0$ and $N_1<N_2<\dots$ and indices $i_1,i_2,\dots$ such that $a_{i_l,N_l}>m(t_{i_l})+d$. By compactness and continuity arguments $\lim\inf_{l\to\infty}a_{i_l,N_l}\ge m(t_0)+d$ for some $t_0\in[\alpha,\beta]$.
+
+    But on the other hand $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$, because
+    \begin{align*}
+        a_{i_l,N_l}=\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|\le A}S_{i_l,j}^{(N_l)}}_{=:P_{N_l}(A)}+\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|>A}S_{i_l,j}^{(N_l)}}_{=:T_{N_l}(A)}.
+    \end{align*}
+    In the proof of Proposition~\ref{prop:main_thm} we have already shown $\lim\sup_{l\to\infty}\sigma_{N_l}T_{N_l}(A)\le e^{-cA^2}/(cA)$.
+
+    In the proof of Proposition~\ref{prop:main_thm} we have also seen that
+    \begin{align*}
+        \sigma_{N_l}P_{N_l}(A)=\sigma_{N_l}\sum_{j:|t_{N_l,j}|\le A}e^{-t_{N_l,j}^2\hat{Q}_r(h_0)}+\mathbf{o}(1).
+    \end{align*}
+
+    Now we have
+    \begin{align*}
+        \sum_{j:|t_{N_l,j}|\le A}e^{-q_0t_{N_l,j}^2}\le\sum_{k\in\mathbb{Z},|\sigma_{N_l}k|\le A}e^{-q_0(\sigma_{N_l}k)^2}=:G_{N_l}(A).
+    \end{align*}
+
+    In the proof of Proposition~\ref{prop:main_thm} we have seen that $\sigma_{N_l}G_{N_l}(A)\to\int_{-A}^{A}e^{-q_0z^2}\,dz$ and thus we get $\limsup_{l\to\infty}\sigma_{N_l}P_{N_l}(A)\le\int_{-A}^{A}e^{-q_0z^2}\,dz$. In total we have $\limsup_{l\to\infty}a_{i_l,N_l}\le\int_{-A}^{A}e^{-q_0z^2}\,dz+e^{-cA^2}/(cA)$, and taking $A\to\infty$ yields $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$.
+
+    Combining this would yield the contradiction $m(t_0)+d\le m(t_0)$.
+
+    The main difficulty lies in showing that $\rho_N\to M:=\sqrt{\pi/\hat{Q}_r(h^{\ast})}$. It can be divided into showing $\limsup\rho_N\le M$ and $\liminf\rho_N\ge M$.
+
+    \textit{$\limsup\rho_N\le M$.} It holds $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N\le M+\epsilon_N$ and therefore $\limsup\rho_N\le M$.
+
+    \textit{$\liminf\rho_N\ge M$} We use the Rayleigh variational representation
+    \begin{align*}
+        \rho_N&=\max_{x\ne 0}(x^{T}A^{(N)}x)/(x^{T}x)=(v^{(N)})^{T}A^{(N)}v^{(N)}/(v^{(N)})^{T}(v^{(N)})\\&
+        \ge(y^{(N)})^{(T)}A^{(N)}y^{(N)}/((y^{(N)})^{T}(y^{(N)}))
+    \end{align*}
+    for all $y^{(N)}\in\mathbb{R}^{N}$, $y^{(N)}\ne0$. Let $0<\eta<M$. By the continuity of $m$ we can find a non-empty closed interval $J\subseteq(\alpha,\beta)$ such that $m(t)\ge M-\eta$ for all $t\in J$. Denote the interval by $J=[u,v]$, $u<v$. Define $y^{(N)}$ by $y^{(N)}_i=\mathbf{1}\{t_i\in J\}$. Let $I_N=\{i:t_i\in J\}$. 
+
+    For all sufficiently large $N$, $I_N$ is nonempty (this follows from $\Delta_{r,N}$ being eventually smaller than $v-u$, which is why for $i_N=1+\lceil(u-\alpha)/\Delta_{r,N}\rceil$ we have $t_{i_N}\in J$). Because of that, $y^{(N)}\ne0$ for sufficiently large $N$. It follows
+    \begin{align*}
+        \rho_N&\ge(y^{(N)})^{(T)}A^{(N)}y^{(N)}/((y^{(N)})^{T}(y^{(N)}))=\frac{1}{\#I_N}\sum_{i,j\in I_N}A_{ij}^{(N)}\\&
+        =\frac{1}{\#I_N}\sum_{i\in I_N}a_{i,N}-\underbrace{\frac{1}{\#I_N}\sum_{i\in I_N}\sum_{j\notin I_N}A_{ij}^{(N)}}_{=:E_N}.
+    \end{align*}
+
+    Set $b_N:=\min\{a_{i,N}:i\in I_N\}$. Then $(1/\# I_N)\sum_{i\in I_N}a_{i,N}\ge b_{i,N}$. For a contradiction, assume that there exists a subsequence $(b_{N_l})$ such that $b_{N_l}$ converges towards a limit $b<M-\eta$. Choose $i_l\in I_{N_l}$ so that $b_{N_l}=\min_{i\in N_l}a_{i,N_l}=a_{i_l,N_l}$. Since $t_{i_l}\in J$ and $J$ is compact, there exists a further subsequence $t_{i_{l_k}}$ such that $t_{i_{l_k}}\to t_0\in J$ for $k\to\infty$. Now we are in a position to apply Proposition~\ref{prop:main_thm} and obtain $b_{i_{l_k}}\to m(t_0)$, but $m(t_0)\ge M-\eta$ by the definition of the set $J$, which is a contradiction. We have thus shown that $\lim\inf b_N\ge M-\eta$.
+
+    Next, we show that $E_N\to0$ for $N\to\infty$. From the proof of Proposition~\ref{prop:main_thm} we know that $A_{ij}^{(N)}\le\sigma_Ne^{-c\sigma_N^2(i-j)^2}$, where we have set $\sigma_N:=\sqrt{\lambda_N}\Delta_{r,N}$. Now we see
+    \begin{align*}
+        (\#I_N)E_N&=\sum_{i\in I_N,j\notin I_N}A_{ij}^{(N)}\le\sigma_N\sum_{k=1}^{\infty}\sum_{i\in I_N,j\notin I_N,|i-j|=k}e^{-c\sigma_N^2k^2}\\&
+        =\sigma_N\sum_{k=1}^{\infty}\underbrace{\#\{(i,j):i\in I_N,j\notin I_N,|i-j|=k\}}_{\le2k}e^{-c\sigma_N^2k^2}\\&
+        \le2\sigma_N\sum_{k=1}^{\infty}ke^{-c\sigma_N^2k^2}\le2\sigma_N\int_0^{\infty}(x+1)e^{-c\sigma_N^2x^2}\,dx\\&
+        =\frac{1}{c\sigma_N}+\frac{\sqrt{\pi}}{\sqrt{c}}.
+    \end{align*}
+    During the above calculations, we have bounded the number of index pairs $(i,j)$ with $i\in I_N$, $j\in I_N$ and $|i-j|=k$ above by $2k$. This can be done because $I_N$ is a set of consecutive indices which we can denote by $t_{j_1},\dots,t_{j_K}$ where only one of the first $k$ indices $i\in\{j_1,\dots,j_k\}$ can have an index $j$ such that $t_j$ is outside of $I_N$ and $|i-j|=k$. Similarly, only the last $k$ indices $i\in\{j_{K-k+1},\dots,j_{K}\}$ can have an index $j$ such that $t_j$ is outside of $I_N$ and $|i-j|=k$. In the last inequality, we have also used $\int_{k-1}^k(x+1)e^{-c\sigma_N^2x^2}\,dx\ge ke^{-c\sigma_N^2k^2}$ for all $k\in\mathbb{N}$.
+    
+    The number of nodes inside $I_N$ can be bounded below by $\#I_N\ge (v-u)/\Delta_{r,N}-1\to\infty$. Hence, $1/(\#I_N)\to0$ and $\sigma_N(\#I_N)\ge(u-v)\frac{\sigma_N}{\Delta_{r,N}}-\sigma_N=(u-v)\sqrt{\lambda_N}-\sqrt{\lambda_N}\Delta_{r,N}\to\infty$ and hence $1/\sigma_N(\#I_N)\to0$ too. Thus $E_N\to0$.
+
+    Bringing the previous arguments together, we arrive at $\lim\inf\rho_N\ge\liminf b_n\ge M-\eta$ and since $\eta$ was arbitrary, $\liminf\rho_N\ge M$. Thus, we have $\rho_N\to M$ for $N\to\infty$.
+    
+    We now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
+\end{proof}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
 
