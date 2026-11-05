@@ -138,7 +138,7 @@ that is, the JS-divergence is the arithmetic mean of the KL-divergences of $p$ a
 
 \subsection{Bregman divergences}\label{sec:bregman_divergences}
 
-\todo[inline]{03.11: Polish!}
+\todo[inline]{06.11: Polish!}
 
 \todo[inline]{---clean begin---}
 
@@ -533,8 +533,6 @@ This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}.
 
 \subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}\label{sec:perron_vector_concentrates}
 
-\todo[inline]{04.11: Polish up to Prop 8!}
-
 To explain the results, we need the concept of a Fréchet derivative, which is introduced, for example, in Zeidler~\cite[Section~4.2]{zeidler_applied_1995}. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ a nonempty open subset. Let $\Psi:U\to Y$ be a map. A bounded linear operator $d\Psi(u):X\to Y$ is called the Fréchet derivative of $\Psi$ at the point $u\in U$ if
 \begin{align*}
     \Psi(u+\tau)=\Psi(u)+d\Psi(u)[\tau]+r_u(\tau),\quad\forall\tau\in X:u+\tau\in U,
@@ -596,33 +594,40 @@ Next, we state the first of the two main results of this thesis.
     where $f$ is a twice differentiable function defined on the interval $[a,b]$ with unique minimum point $x_0\in(a,b)$ such that $f''(x_0)>0$.
 \end{Rem}
 
-\todo[inline]{continue here}
-
 Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
-\begin{align*}
+\begin{align}\label{eq:eigenvector_equations_111}
     \sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}=\underbrace{\rho(S^{(N)})}_{>0}v_i^{(N)},\quad\text{for all }i=1,\dots,N.
-\end{align*}
-The Perron vector $v^{(N)}$ has a large entry $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|=1$ we can interpret the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar to $\hat{f}_{h_j}$, in terms of $L^2$-distance, whose bandwidths $h_j$ also have a large weight.
+\end{align}
+The Perron vector $v^{(N)}$ has a large entry $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|=1$ we can interpret the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar, in terms of $L^2$-distance, to other kernel density estimates whose bandwidths $h_j$ also have been given a large weight.
 
+Proposition~\ref{prop:main_thm} establishes that for a finer and finer bandwidth grid the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately proportional to $\hat{Q}_r^{-1/2}(h_{i_N})$, which means that large row sums correspond to a low value of the energy functional $\hat{Q}_r$. Through the eigenvector equations~\eqref{eq:eigenvector_equations_111} this provides an informal explanation for why, asymptotically, the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
 
-The Proposition~\ref{prop:main_thm} establishes that for a finer and finer bandwidth grid the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately proportional to $\hat{Q}_r^{-1/2}(h_{i_N})$. This means that large row sums correspond to a low value of the energy functional $\hat{Q}_r$ and since the energy functional $\hat{Q}_r$ is half the squared $L^2$ operator norm of the Fréchet derivative of the curve $t\mapsto\hat{f}_{\psi_r^{-1}(t)}$ evaluated at $t=\psi_r(h)$, its minimizer can be interpreted as the point at which the $L^2$-curve $t\mapsto\hat{f}_{\psi_r^{-1}(t)}$ changes most slowly. This provides an informal explanation for why, asymptotically, the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
+Moreover, since the energy functional $\hat{Q}_r$ evaluated at $h=\psi_r^{-1}(t)$ is half the squared operator norm of the Fréchet derivative of the curve $\Phi:t\mapsto\hat{f}_{\psi_r^{-1}(t)}$, that is, $\|d\Phi(t)\|_{\operatorname{op}}^2=2\hat{Q}_r(h)$ by the chain rule, its minimizer corresponds to the point at which the $L^2$-curve $\Phi:t\mapsto\hat{f}_{\psi_r^{-1}(t)}$ changes most slowly.
 
-The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks asymptotically at the minimizer of the energy functional. 
-
-The next result, the second of the two main results of this thesis, gives the answer.
-
-
+The question now is whether the result of Proposition~\ref{prop:main_thm} can be extended to say that the Perron vector peaks asymptotically at the minimizer of the energy functional. The next result, the second of the two main results of this thesis, gives the answer.
 
 \begin{Prop}\label{prop:main_thm2}
-    Assume that the energy functional $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$ and let $(k_N)$ be a sequence of indices defined by $k_N:=\min\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then the spectrally chosen bandwidth $h_{k_N}$ converges to the unique minimizer $h^{\ast}$ of $\hat{Q}_r$, that is, $h_{k_N}\to h^{\ast}$ as $N\to\infty$.
+    Assume that we are in the setting of Proposition~\ref{prop:main_thm} and let $\mathcal{H}_Q$ be the set of all minimizers of the energy functional $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. Denote by $v^{(N)}$ the sum-normalized Perron vector of the scale similarity matrix $S^{(N)}$ and let $(k_N)$ be any sequence of indices satisfying $k_N\in\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then for the sequence of spectrally chosen bandwidths $h_{k_N}$ it holds that
+    \begin{align*}
+        \operatorname{dist}(h_{k_N},\mathcal{H}_Q):=\min_{h_Q\in\mathcal{H}_Q}|h_{k_{N}}-h_Q|\to 0,\quad N\to\infty.
+    \end{align*}
+    In particular, if $\hat{Q}_r$ has a unique minimizer $h_Q$, then $h_{k_N}\to h_Q$ for $N\to\infty$.
 \end{Prop}
 
+\todo[inline]{continue here!}
+
 \begin{proof}
-    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$. Denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Denote by $\rho_N$ the principal eigenvalue of $A^{(N)}$ and by $v^{(N)}=(v^{(N)}_1,\dots,v^{(N)}_N)$ the corresponding principal eigenvector. That is, we have $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$. Let $i_{\text{crit}}^{(N)}\in\arg\max\{v^{(N)}_i:1\le i\le N\}$. We have
+    As a very first step we point out that $\mathcal{H}_Q$ is nonempty and finite, which is shown independently of this proof in Section~\ref{sec:expected_energy_functional} below.
+    
+    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$ and denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by the definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Since $\sqrt{\lambda_N}\Delta_{r,N}$ is a positive scalar, the sum-normalized Perron vectors of $A^{(N)}$ and $S^{(N)}$ coincide and thus $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$, where $\rho_N$ denotes the principal eigenvalue of $A^{(N)}$. By the defining property of the index sequence $(k_N)$ and the eigenvector equation, we have
     \begin{align*}
-        \rho_Nv^{(N)}_{i_{\text{crit}}^{(N)}}=\sqrt{\lambda_N}\Delta_{r,N}\sum_{j=1}^{N}S^{(N)}_{i_{\text{crit}}^{(N)}j}v_j\le\sqrt{\lambda_N}\Delta_{r,N}v_{i_{\text{crit}}^{(N)}} R_{i_{\text{crit}}^{(N)}}^{(N)}
+        \rho_Nv_{k_N}^{(N)}=\sum_{j=1}^{N}A^{(N)}_{k_Nj}v_j^{(N)}\le v_{k_N}^{(N)}a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}v_{k_N}^{(N)}R_{k_N}^{(N)}
     \end{align*}
-    and because every entry of the Perron vector is positive, $\rho_N\le a_{i_{\text{crit}}^{(N)},N}$.
+    and, because every entry of the Perron vector is positive, $\rho_N\le a_{i,N}$.
+
+    We introduce the notation $g(h):=\sqrt{\pi/\hat{Q}_r(h)}$ and $M:=\max_{h\in[h_{\min},h_{\max}]}g(h)$ and structure this proof in several steps.
+
+    \textit{Step 1: Show that $a_{i,N}\le g(h_i)+\xi_N$ for all $1\le i\le N$}
 
     There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$. Assume for a contradiction that for all null sequences $(\epsilon_N)$ and for all $N_0\in\mathbb{N}$ there exist $N\ge N_0$ and $1\le i\le N$ such that $a_{i,N}>m(t_i)+\epsilon_N$. This implies the existence of $d>0$ and $N_1<N_2<\dots$ and indices $i_1,i_2,\dots$ such that $a_{i_l,N_l}>m(t_{i_l})+d$. By compactness and continuity arguments $\lim\inf_{l\to\infty}a_{i_l,N_l}\ge m(t_0)+d$ for some $t_0\in[\alpha,\beta]$.
 
@@ -646,9 +651,9 @@ The next result, the second of the two main results of this thesis, gives the an
 
     Combining this would yield the contradiction $m(t_0)+d\le m(t_0)$.
 
-    The main difficulty lies in showing that $\rho_N\to M:=\sqrt{\pi/\hat{Q}_r(h^{\ast})}$. It can be divided into showing $\limsup\rho_N\le M$ and $\liminf\rho_N\ge M$.
+    \textit{Step 2: Prove $\rho_N\to M$ by showing $\limsup_{N\to\infty}\rho_N\le M$ and $\liminf_{N\to\infty}\rho_N\ge M$}
 
-    \textit{$\limsup\rho_N\le M$.} It holds $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N\le M+\epsilon_N$ and therefore $\limsup\rho_N\le M$.
+    We have $\rho_N\le a_{i,N}\le g(h_i)+\xi_N\le M+\xi_N$ and therefore $\limsup_{N\to\infty}\rho_N\le M$.
 
     \textit{$\liminf\rho_N\ge M$} We use the Rayleigh variational representation
     \begin{align*}
@@ -677,13 +682,15 @@ The next result, the second of the two main results of this thesis, gives the an
     The number of nodes inside $I_N$ can be bounded below by $\#I_N\ge (v-u)/\Delta_{r,N}-1\to\infty$. Hence, $1/(\#I_N)\to0$ and $\sigma_N(\#I_N)\ge(u-v)\frac{\sigma_N}{\Delta_{r,N}}-\sigma_N=(u-v)\sqrt{\lambda_N}-\sqrt{\lambda_N}\Delta_{r,N}\to\infty$ and hence $1/\sigma_N(\#I_N)\to0$ too. Thus $E_N\to0$.
 
     Bringing the previous arguments together, we arrive at $\lim\inf\rho_N\ge\liminf b_n\ge M-\eta$ and since $\eta$ was arbitrary, $\liminf\rho_N\ge M$. Thus, we have $\rho_N\to M$ for $N\to\infty$.
+
+    \textit{Step 3: Combine steps 1 and 2}
     
     We now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
 \end{proof}
 
-\subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}
+\subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}\label{sec:expected_energy_functional}
 
-\todo[inline]{05.11: Polish!}
+\todo[inline]{06.11: Polish!}
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
@@ -708,6 +715,8 @@ We can characterize the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Na
     \hat{Q}_r(h)&\sim\frac{\|L\|_2^2}{2}\frac{1}{h^{1+2r}},\quad h\to\infty.
 \end{align*}
 This means that $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum.
+
+As a very first step we point out that $\mathcal{H}_Q$ is nonempty because of Weierstrass' extreme value theorem. Furthermore, because we use the Gaussian kernel, $\hat{Q}_r$ is analytic on $(0,\infty)$, cf. with the explicit formula in Equation~[] below. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$ there would exist an accumulation point in that interval by the Bolzano-Weierstraß theorem for sets (see~[]). By the identity theorem for analytic functions (see~[]) we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$ which is a contradiction to the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$.
 
 The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. The energy functional can consequently be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$.
 
@@ -734,6 +743,9 @@ The existence of local extrema thus depends on the realized sample. If the sampl
 Using standard root finding methods (like Brent's method), we can look for stationary points and check if they are local minima. Afterwards, we can compare its value with the values of the energy functional at the borders $h_{\min}$ and $h_{\max}$ to see if the detected local minimum is, in fact, a global minimum on the interval $[h_{\min},h_{\max}]$.
 
 The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
+
+
+\todo[inline]{06.11: Polish!}
 
 Having established the connection between Energy functional minimization and Spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
 
@@ -807,7 +819,7 @@ If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3
 
 \section{Literature Positioning}
 
-\todo[inline]{Polish!}
+\todo[inline]{06.11: Polish!}
 
 The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
 
