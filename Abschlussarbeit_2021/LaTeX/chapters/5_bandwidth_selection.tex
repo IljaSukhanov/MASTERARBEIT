@@ -600,15 +600,18 @@ Next, we state the first of the two main results of this thesis.
 
 Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \begin{align*}
-    \sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}=\underbrace{\theta_{\max}}_{>0}^{(N)}v_i^{(N)},\quad\text{for all }i=1,\dots,N.
+    \sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}=\underbrace{\rho(S^{(N)})}_{>0}v_i^{(N)},\quad\text{for all }i=1,\dots,N.
 \end{align*}
-The Perron vector $v^{(N)}$ has large entries $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|=1$ we can see the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar to $\hat{f}_{h_j}$ (in terms of $L^2$-distance) where the bandwidths $h_j$ also have a large weight.
+The Perron vector $v^{(N)}$ has a large entry $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|=1$ we can interpret the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar to $\hat{f}_{h_j}$, in terms of $L^2$-distance, whose bandwidths $h_j$ also have a large weight.
 
-The Proposition~\ref{prop:main_thm} establishes that for a large $N$ (finer and finer bandwidth grid) the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately equal to $\lambda_N^{-1/2}\Delta_{r,N}^{-1}\pi^{1/2}\hat{Q}_r^{-1/2}(h_{i_N})$ (a properly scaled energy functional). This means that large row sums correspond to a low value of the energy functional $\hat{Q}_r$ and since the energy functional $\hat{Q}_r$ is the squared $L^2$ norm of the Fréchet derivative of the kernel density estimate, its minimizer can be interpreted as the point at which the $L^2$-curve $h\mapsto\hat{f}_h$ changes most slowly. This provides an informal explanation for why the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
 
-The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks at the minimizer of the energy functional (after proper scaling). The next result aims to give the answer.
+The Proposition~\ref{prop:main_thm} establishes that for a finer and finer bandwidth grid the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately proportional to $\hat{Q}_r^{-1/2}(h_{i_N})$. This means that large row sums correspond to a low value of the energy functional $\hat{Q}_r$ and since the energy functional $\hat{Q}_r$ is half the squared $L^2$ operator norm of the Fréchet derivative of the curve $t\mapsto\hat{f}_{\psi_r^{-1}(t)}$ evaluated at $t=\psi_r(h)$, its minimizer can be interpreted as the point at which the $L^2$-curve $t\mapsto\hat{f}_{\psi_r^{-1}(t)}$ changes most slowly. This provides an informal explanation for why, asymptotically, the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
 
-\todo[inline]{05.11: Polish Proposition 8!!}
+The question now is if the result of Proposition~\ref{prop:main_thm} can be extended to say that the actual Perron vector peaks asymptotically at the minimizer of the energy functional. 
+
+The next result, the second of the two main results of this thesis, gives the answer.
+
+
 
 \begin{Prop}\label{prop:main_thm2}
     Assume that the energy functional $\hat{Q}_r$ has a unique minimum on $[h_{\min},h_{\max}]$ and let $h^{\ast}$ be this unique minimizer. Let $v^{(N)}$ be the Perron vector of $S^{(N)}$ and let $(k_N)$ be a sequence of indices defined by $k_N:=\min\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then the spectrally chosen bandwidth $h_{k_N}$ converges to the unique minimizer $h^{\ast}$ of $\hat{Q}_r$, that is, $h_{k_N}\to h^{\ast}$ as $N\to\infty$.
