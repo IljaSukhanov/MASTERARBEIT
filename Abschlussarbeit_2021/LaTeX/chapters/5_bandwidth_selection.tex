@@ -564,7 +564,11 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 \end{proof}
 
-We note that the decay assumption on $L(x)=K(x)+xK'(x)$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is a weaker condition than the square integrability of the kernel $K$. It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. The Gaussian kernel is square integrable and this fulfills the conditions imposed in Lemma~\ref{lem:frechet_derivative_of_kde}.
+We note that the decay assumption on $L(x)=K(x)+xK'(x)$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is a stronger condition than the square integrability of the kernel $K$. This is because for once $L\in L^2(\mathbb{R})$ by the decay assumption and
+\begin{align*}
+    \int_{-\infty}^{\infty}K(x)^2\,dx=2\int_0^{\infty}\left(x^{-1}\int_0^xL(t)\,dt\right)^2\,dx\le 8\int_0^{\infty}L(x)^2\,dx<\infty
+\end{align*}
+by symmetry of $K$ and Hardy's inequality. It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. For the Gaussian kernel the decay assumption on $L$ is fulfilled since $|L(x)|=(2\pi)^{-1/2}|1-x^2|e^{-x^2/2}\le8(2\pi)^{-1/2}(1+x^2)^{-1}\le16(2\pi)^{-1/2}(1+|x|)^{-2}$ and thus Lemma~\ref{lem:frechet_derivative_of_kde} holds for instance for Gaussian kernel density estimate.
 
 Next, we state the first of the two main results of this thesis.
 
