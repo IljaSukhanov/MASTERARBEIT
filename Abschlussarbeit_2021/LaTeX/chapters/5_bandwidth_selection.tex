@@ -670,8 +670,8 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
     \end{equation}
 
     \textit{Step 2.1: Show $\liminf_{N\to\infty}b_N\ge M-\eta$}
-    
-    For a contradiction, assume that there exists a subsequence $(b_{N_l})$ that converges towards a limit $b<M-\eta$. Choose an index sequence $(i_l)$ with $i_l\in I_{N_l}$ so that $a_{i_l,N_l}=\min_{i\in I_{N_l}}a_{i,N_l}=b_{N_l}$. Since $h_{i_l}\in J$ and $J$ is compact, there exists a further subsequence $h_{i_{l_j}}$ such that $h_{i_{l_j}}\to h_0$ as $j\to\infty$ for some $h_0\in J$. In particular, $h_0$ is an interior bandwidth, that is, $h_0\in(h_{\min},h_{\max})$. Now we are in a position to apply Proposition~\ref{prop:main_thm} to obtain $b_{N_{l_j}}\to g(h_0)$ as $j\to\infty$, where $g(h_0)\ge M-\eta$ by definition of the set $J$. But also $b_{N_{l_j}}\to b<M-\eta$ which gives the contradiction $M-\eta\le g(h_0)=b<M-\eta$. We have thus shown that $\liminf_{N\to\infty}b_N\ge M-\eta$.
+
+    First, note that $0<b_N\le M+1$ for all sufficiently large $N$ and therefore $(b_N)$ must have at least one convergent subsequence. We must show that any such convergent subsequence has a limit of at least $M-\eta$. For a contradiction, assume that there exists a subsequence $(b_{N_l})$ that converges towards a limit $b<M-\eta$. Choose an index sequence $(i_l)$ with $i_l\in I_{N_l}$ so that $a_{i_l,N_l}=\min_{i\in I_{N_l}}a_{i,N_l}=b_{N_l}$. Since $h_{i_l}\in J$ and $J$ is compact, there exists a further subsequence $h_{i_{l_j}}$ such that $h_{i_{l_j}}\to h_0$ as $j\to\infty$ for some $h_0\in J$. In particular, $h_0$ is an interior bandwidth, that is, $h_0\in(h_{\min},h_{\max})$. Now we are in a position to apply Proposition~\ref{prop:main_thm} to obtain $b_{N_{l_j}}\to g(h_0)$ as $j\to\infty$, where $g(h_0)\ge M-\eta$ by definition of the set $J$. But also $b_{N_{l_j}}\to b<M-\eta$ which gives the contradiction $M-\eta\le g(h_0)=b<M-\eta$. Thus, $(b_N)$ cannot have any convergent subsequences with a limit strictly below $M-\eta$. We have thus shown that $\liminf_{N\to\infty}b_N\ge M-\eta$.
 
     \textit{Step 2.2: Show $E_N\to0$ for $N\to\infty$}
 
@@ -708,6 +708,8 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}\label{sec:expected_energy_functional}
 
 \todo[inline]{06.11: Polish!}
+
+In this section we give properties of the energy functional $\hat{Q}_r$ especially about its global and local minimizers, which is motivated by the connection to the asymptotic peak of the Perron vector of the scale similarity matrix $S^{(N)}$ established in the precious Section.
 
 In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
