@@ -646,13 +646,22 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
     \end{equation}
     Recalling the notation $m_N:=\lfloor\epsilon_N^{-1}A\rfloor$, we have
     \begin{align}\label{eq:proof_main_thm2_003}
-        \sum_{k\in I_{N_{l_j}}(A)}e^{-q_0t_{N_{l_j},k}^2}\le\sum_{p=-m_{N_{l_j}}}^{m_{N_{l_j}}}e^{-q_0(p\epsilon_{N_{l_j}})^2}=:G_{N_{l_j}}(A).
+        \sum_{k\in I_{N_{l_j}}(A)}e^{-q_0t_{N_{l_j},k}^2}=\sum_{\substack{p=1-i_{l_j},\dots,N_{l_j}-i_{l_j}\\-\epsilon_{N_{l_j}}^{-1}A\le p\le\epsilon_{N_{l_j}}^{-1}A}}e^{-q_0(p\epsilon_{N_{l_j}})^2}\le\sum_{p=-m_{N_{l_j}}}^{m_{N_{l_j}}}e^{-q_0(p\epsilon_{N_{l_j}})^2}=:G_{N_{l_j}}(A).
     \end{align}
     In step 3 of the proof of Proposition~\ref{prop:main_thm} we have seen that $\epsilon_{N_{l_j}}G_{N_{l_j}}(A)$ converges to $\int_{-A}^{A}e^{-q_0t^2}\,dt$ as $j\to\infty$, compare in particular with Equation~\eqref{eq:help_help_007}. Combining Equations~\eqref{eq:proof_main_thm2_001},\eqref{eq:proof_main_thm2_002} and~\eqref{eq:proof_main_thm2_003} we arrive at
     \begin{align*}
         \limsup_{j\to\infty}a_{i_{l_j},N_{l_j}}\le\int_{-A}^{A}e^{-q_0t^2}\,dt+(cA)^{-1}e^{-cA^2}\to g(h_0),\quad A\to\infty.
     \end{align*}
     In total, we have $g(h_0)+d\le\liminf_{j\to\infty}a_{i_{l_j},N_{l_j}}\le\limsup_{j\to\infty}a_{i_{l_j},N_{l_j}}\le g(h_0)$, a contradiction since $d>0$. This shows the claim of step 1.
+
+    Thus, we can write
+    \begin{align*}
+        &\epsilon_N\sum_{j\in I_N(A)}g(t_{N,j})=\epsilon_N\sum_{\substack{j=1,\dots,N\\-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N}}g(t_{N,j})=\epsilon_N\sum_{\substack{k=1-i_N,\dots,N-i_N\\
+        -m_N\le k\le m_N}}g(k\epsilon_N)
+        \\&
+        =\epsilon_N\sum_{k=-m_N}^{m_N}g(k\epsilon_N)
+        =\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)
+    \end{align*}
 
     \textit{Step 2: Prove $\rho_N\to M$ by showing $\limsup_{N\to\infty}\rho_N\le M$ and $\liminf_{N\to\infty}\rho_N\ge M$}
 
