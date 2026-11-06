@@ -621,9 +621,9 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
     
     Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$ and denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by the definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Since $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ is a positive scalar, the sum-normalized Perron vectors of $A^{(N)}$ and $S^{(N)}$ coincide and thus $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$, where $\rho_N$ denotes the principal eigenvalue of $A^{(N)}$. By the defining property of the index sequence $(k_N)$ and the eigenvector equation, we have
     \begin{align*}
-        \rho_Nv_{k_N}^{(N)}=\sum_{j=1}^{N}A^{(N)}_{k_Nj}v_j^{(N)}\le v_{k_N}^{(N)}a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}v_{k_N}^{(N)}R_{k_N}^{(N)}
+        \rho_Nv_{k_N}^{(N)}=\sum_{j=1}^{N}A^{(N)}_{k_Nj}v_j^{(N)}\le v_{k_N}^{(N)}a_{k_N,N}=\sqrt{\lambda_N}\Delta_{r,N}v_{k_N}^{(N)}R_{k_N}^{(N)}
     \end{align*}
-    and, because every entry of the Perron vector is positive, $\rho_N\le a_{i,N}$.
+    and, because every entry of the Perron vector is positive, $\rho_N\le a_{k_N,N}$.
 
     We introduce the notation $g(h):=\pi^{1/2}\hat{Q}_r(h)^{-1/2}$ and $M:=\max_{h\in[h_{\min},h_{\max}]}g(h)$ and structure this proof in several steps.
 
@@ -633,24 +633,24 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 
     By compactness, there exists a further index sequence $l_1<l_2<\dots$ such that $h_{i_{l_j}}\to h_0$ as $j\to\infty$ for some $h_0\in[h_{\min},h_{\max}]$. Consequently, by continuity of $g$ we obtain $\liminf_{j\to\infty}a_{i_{l_j},N_{l_j}}\ge g(h_0)+d$.
 
-    But on the other hand $\limsup_{l\to\infty}a_{i_l,N_l}\le g(h_0)$. This is because for once
+    But on the other hand $\limsup_{l\to\infty}a_{i_{l_j},N_{l_j}}\le g(h_0)$. This is because for once
     \begin{align}\label{eq:proof_main_thm2_001}
-        a_{i_l,N_l}=\epsilon_{N_l}\underbrace{\sum_{j\in I_{N_l}(A)}S_{i_l,j}^{(N)}}_{=:P_{N_l}(A)}+\epsilon_{N_l}\underbrace{\sum_{j\in I_{N_l}(A)}S_{i_l,j}^{(N)}}_{=:T_{N_l}(A)},
+        a_{i_{l_j},N_{l_j}}=\epsilon_{N_{l_j}}\underbrace{\sum_{k\in I_{N_{l_j}}(A)}S_{i_{l_j},k}^{(N_{l_j})}}_{=:P_{N_{l_j}}(A)}+\epsilon_{N_{l_j}}\underbrace{\sum_{k\notin I_{N_{l_j}}(A)}S_{i_{l_j},k}^{(N_{l_j})}}_{=:T_{N_{l_j}}(A)},
     \end{align}
-    where again $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$ and $t_{N,j}:=\epsilon_N(j-i_N)=\lambda_N^{1/2}(\psi_r(h_j)-\psi_r(h_{i_N}))$ as in the proof of Proposition~\ref{prop:main_thm}. There, it was established that $\limsup_{l\to\infty}\epsilon_{N_l}T_{N_l}(A)\le(cA)^{-1}e^{-cA^2}$ for some positive constant $c>0$, cf. step 1 of the proof of Proposition~\ref{prop:main_thm}. Set $q_0:=\hat{Q}_r(h_0)$ and $q_l:=\hat{Q}_r(h_{i_l})$. We also have
+    where again $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$ and $t_{N,j}:=\epsilon_N(j-i_N)=\lambda_N^{1/2}(\psi_r(h_j)-\psi_r(h_{i_N}))$ as in the proof of Proposition~\ref{prop:main_thm}. There, it was established that $\limsup_{j\to\infty}\epsilon_{N_{l_j}}T_{N_{l_j}}(A)\le(cA)^{-1}e^{-cA^2}$ for some positive constant $c>0$, cf. step 1 of the proof of Proposition~\ref{prop:main_thm}. Set $q_0:=\hat{Q}_r(h_0)$ and $q_j:=\hat{Q}_r(h_{i_{l_j}})$. We also have
     \begin{equation}\label{eq:proof_main_thm2_002}
         \begin{aligned}
-            \epsilon_{N_l}P_{N_l}&\stackrel{\eqref{eq:local_sum_approx}}{=}\epsilon_{N_l}\sum_{j\in I_{N_l}(A)}e^{-t_{N_l,j}^2q_l}+\mathbf{o}(1)\\&
-            =\epsilon_{N_l}\sum_{j\in I_{N_l}(A)}e^{-t_{N_l,j}^2q_0}+\underbrace{\epsilon_{N_l}\sum_{j\in I_{N_l}(A)}\left(e^{-t_{N_l,j}^2q_l}-e^{-t_{N_l,j}^2q_0}\right)}_{\to0\text{ (compare with Equation~\eqref{eq:help_help005})}}+\mathbf{o}(1).
+            \epsilon_{N_{l_j}}P_{N_{l_j}}&\stackrel{\eqref{eq:local_sum_approx}}{=}\epsilon_{N_{l_j}}\sum_{k\in I_{N_{l_j}}(A)}e^{-t_{N_{l_j},k}^2q_j}+\mathbf{o}(1)\\&
+            =\epsilon_{N_{l_j}}\sum_{k\in I_{N_{l_j}}(A)}e^{-t_{N_{l_j},k}^2q_0}+\underbrace{\epsilon_{N_{l_j}}\sum_{k\in I_{N_{l_j}}(A)}\left(e^{-t_{N_{l_j},k}^2q_j}-e^{-t_{N_{l_j},k}^2q_0}\right)}_{\to0\text{ (compare with Equation~\eqref{eq:help_help005})}}+\mathbf{o}(1).
         \end{aligned}
     \end{equation}
     Recalling the notation $m_N:=\lfloor\epsilon_N^{-1}A\rfloor$, we have
     \begin{align}\label{eq:proof_main_thm2_003}
-        \sum_{j\in I_{N_l}(A)}e^{-q_0t_{N_l,j}^2}\le\sum_{k=-m_{N_l}}^{m_{N_l}}e^{-q_0(k\epsilon_{N_l})^2}=:G_{N_l}(A).
+        \sum_{k\in I_{N_{l_j}}(A)}e^{-q_0t_{N_{l_j},k}^2}\le\sum_{p=-m_{N_{l_j}}}^{m_{N_{l_j}}}e^{-q_0(p\epsilon_{N_{l_j}})^2}=:G_{N_{l_j}}(A).
     \end{align}
-    In step 3 of the proof of Proposition~\ref{prop:main_thm} we have seen that $\epsilon_{N_l}G_{N_l}(A)$ converges to $\int_{-A}^{A}e^{-q_0t^2}\,dt$ as $l\to\infty$, compare in particular with Equation~\eqref{eq:help_help_007}. Combining Equations~\eqref{eq:proof_main_thm2_001},\eqref{eq:proof_main_thm2_002} and~\eqref{eq:proof_main_thm2_003} we arrive at
+    In step 3 of the proof of Proposition~\ref{prop:main_thm} we have seen that $\epsilon_{N_{l_j}}G_{N_{l_j}}(A)$ converges to $\int_{-A}^{A}e^{-q_0t^2}\,dt$ as $j\to\infty$, compare in particular with Equation~\eqref{eq:help_help_007}. Combining Equations~\eqref{eq:proof_main_thm2_001},\eqref{eq:proof_main_thm2_002} and~\eqref{eq:proof_main_thm2_003} we arrive at
     \begin{align*}
-        \limsup_{l\to\infty}a_{i_l,N_l}\le\int_{-A}^{A}e^{-q_0t^2}\,dt+(cA)^{-1}e^{-cA^2}\to g(h_0),\quad A\to\infty.
+        \limsup_{j\to\infty}a_{i_{l_j},N_{l_j}}\le\int_{-A}^{A}e^{-q_0t^2}\,dt+(cA)^{-1}e^{-cA^2}\to g(h_0),\quad A\to\infty.
     \end{align*}
     In total, we have $g(h_0)+d\le\liminf_{j\to\infty}a_{i_{l_j},N_{l_j}}\le\limsup_{j\to\infty}a_{i_{l_j},N_{l_j}}\le g(h_0)$, a contradiction since $d>0$. This shows the claim of step 1.
 
@@ -681,17 +681,12 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
             &\#I_NE_N=\sum_{i\in I_N,j\notin I_N}A_{ij}^{(N)}\le\epsilon_N\sum_{k=1}^{\infty}\sum_{\substack{i\in I_N,j\notin I_N\\|i-j|=k}}e^{-c\epsilon_N^2k^2}\\&
             =\epsilon_N\sum_{k=1}^{\infty}\underbrace{\#\{(i,j):i\in I_N,j\notin I_N,|i-j|=k\}}_{\le2k}e^{-c\epsilon_N^2k^2}\\&
             \le2\epsilon_N\sum_{k=1}^{\infty}ke^{-c\epsilon_N^2k^2}\le2\epsilon_N\int_0^{\infty}(x+1)e^{-c\epsilon_N^2x^2}\,dx
-            =c\epsilon_N^{-1}+\pi^{1/2}c^{-1/2}.
+            =c^{-1}\epsilon_N^{-1}+\pi^{1/2}c^{-1/2}.
         \end{aligned}
     \end{equation}
     During the above calculations, we have bounded the number of index pairs $(i,j)$ with $i\in I_N$, $j\notin I_N$ and $|i-j|=k$ above by $2k$. This can be done because $I_N$ is a set of consecutive indices which we can denote by $i_1,\dots,i_K$ and where only the first $\min\{k,K\}$ indices can have an index $j$ to the left of $I_N$ with $|i-j|=k$. Similarly, only the last $\min\{k,K\}$ indices can have an index $j$ to the right of $I_N$ with $|i-j|=k$. In the last inequality, we have also used $\int_{k-1}^k(x+1)e^{-c\epsilon_N^2x^2}\,dx\ge ke^{-c\epsilon_N^2k^2}$ for all $k\in\mathbb{N}$.
 
-    The interval $J$ contains $\#I_N$ bandwidths, and two consecutive bandwidths have a gap of at most $h_{\max}^{1-r}\Delta_{r,N}$. Therefore, the length $v-u$ of the interval $J$ is bounded above by $(\#I_N+1)h_{\max}^{1-r}\Delta_{r,N}$. Using this, we get $\epsilon_N\#I_N\ge(v-u)h_{\max}^{r-1}\lambda_N^{1/2}$. Together with Equation~\eqref{eq:main_thm2_009} this finally shows
-    \begin{align*}
-        E_N&\le c(\#I_N\epsilon_N)^{-1}+\pi^{1/2}c^{-1/2}\epsilon_N(\epsilon_N\#I_N)^{-1}\\&
-        \le(v-u)^{-1}h_{\max}^{1-r}\lambda_N^{-1/2}\left(c+\pi^{1/2}c^{-1/2}\epsilon_N\right)\to 0,\quad N\to\infty,
-    \end{align*}
-    because $\lambda_N\to\infty$ and $\epsilon_N\to0$.
+    The interval $J$ contains $\#I_N$ bandwidths, and two consecutive bandwidths have a gap of at most $h_{\max}^{1-r}\Delta_{r,N}$. Therefore, the length $v-u$ of the interval $J$ is bounded above by $(\#I_N+1)h_{\max}^{1-r}\Delta_{r,N}$. Using this, we get $\epsilon_N\#I_N\ge(v-u)h_{\max}^{r-1}\lambda_N^{1/2}-\epsilon_N\to\infty$, because $\lambda_N\to\infty$ and $\epsilon_N\to0$. Together with Equation~\eqref{eq:main_thm2_009} this finally shows $E_N\le c^{-1}(\#I_N\epsilon_N)^{-1}+\pi^{1/2}c^{-1/2}\epsilon_N(\epsilon_N\#I_N)^{-1}\to0$ as $N\to\infty$.
 
     \textit{Step 2.3: Combine steps 2.1 and 2.2}
 
@@ -706,6 +701,8 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
     \todo[inline]{continue here}
 
     \textit{Step 3: Combine steps 1 and 2}
+
+    Let $h_Q\in\mathcal{H}_Q$.
     
     We now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
 \end{proof}
