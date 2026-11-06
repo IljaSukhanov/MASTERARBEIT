@@ -614,12 +614,10 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
     In particular, if $\hat{Q}_r$ has a unique minimizer $h_Q$, then $h_{k_N}\to h_Q$ for $N\to\infty$.
 \end{Prop}
 
-\todo[inline]{continue here!}
-
 \begin{proof}
     As a very first step we point out that $\mathcal{H}_Q$ is nonempty and finite, which is shown independently of this proof in Section~\ref{sec:expected_energy_functional} below.
     
-    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$ and denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by the definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Since $\sqrt{\lambda_N}\Delta_{r,N}$ is a positive scalar, the sum-normalized Perron vectors of $A^{(N)}$ and $S^{(N)}$ coincide and thus $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$, where $\rho_N$ denotes the principal eigenvalue of $A^{(N)}$. By the defining property of the index sequence $(k_N)$ and the eigenvector equation, we have
+    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$ and denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by the definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Since $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ is a positive scalar, the sum-normalized Perron vectors of $A^{(N)}$ and $S^{(N)}$ coincide and thus $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$, where $\rho_N$ denotes the principal eigenvalue of $A^{(N)}$. By the defining property of the index sequence $(k_N)$ and the eigenvector equation, we have
     \begin{align*}
         \rho_Nv_{k_N}^{(N)}=\sum_{j=1}^{N}A^{(N)}_{k_Nj}v_j^{(N)}\le v_{k_N}^{(N)}a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}v_{k_N}^{(N)}R_{k_N}^{(N)}
     \end{align*}
@@ -627,33 +625,38 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 
     We introduce the notation $g(h):=\sqrt{\pi/\hat{Q}_r(h)}$ and $M:=\max_{h\in[h_{\min},h_{\max}]}g(h)$ and structure this proof in several steps.
 
-    \textit{Step 1: Show that $a_{i,N}\le g(h_i)+\xi_N$ for all $1\le i\le N$}
+    \textit{Step 1: Show the existence of a null sequence $(\xi_N)$ such that $a_{i,N}\le g(h_i)+\xi_N$ for all sufficiently large $N$ and all $1\le i\le N$}
 
-    There exists a sequence $\epsilon_N\to0$ such that $a_{i,N}\le m(t_i)+\epsilon_N$ for all $1\le i\le N$. Assume for a contradiction that for all null sequences $(\epsilon_N)$ and for all $N_0\in\mathbb{N}$ there exist $N\ge N_0$ and $1\le i\le N$ such that $a_{i,N}>m(t_i)+\epsilon_N$. This implies the existence of $d>0$ and $N_1<N_2<\dots$ and indices $i_1,i_2,\dots$ such that $a_{i_l,N_l}>m(t_{i_l})+d$. By compactness and continuity arguments $\lim\inf_{l\to\infty}a_{i_l,N_l}\ge m(t_0)+d$ for some $t_0\in[\alpha,\beta]$.
+    Assume for a contradiction that for all null sequences $(\xi_N)$ and for all $N\in\mathbb{N}$ there exist $N_0\ge N$ and $1\le i_0\le N_0$ such that $a_{i_0,N_0}>g(h_{i_0})+\xi_{N_0}$. The sequence $(e_N)$ defined by $e_N:=\max_{1\le i\le N}(a_{i,N}-g(h_i))_{+}$ cannot be a null sequence because otherwise, since $e_N\ge a_{i,N}-g(h_i)$ for all $N\in\mathbb{N}$ and all $1\le i\le N$, it would contradict the assumption above. This implies the existence of $d>0$ and $N_1<N_2<\dots$ and indices $i_1,i_2,\dots$ with $1\le i_l\le N_l$ such that $a_{i_l,N_l}>g(h_{i_l})+d$. 
 
-    But on the other hand $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$, because
+    By compactness, there exists a further index sequence $l_1<l_2<\dots$ such that $h_{i_{l_j}}\to h_0$ as $j\to\infty$ for some $h_0\in[h_{\min},h_{\max}]$. Consequently, by continuity of $g$ we obtain $\liminf_{j\to\infty}a_{i_{l_j},N_{l_j}}\ge g(h_0)+d$.
+
+    But on the other hand $\limsup_{l\to\infty}a_{i_l,N_l}\le g(h_0)$. This is because for once
+    \begin{align}\label{eq:proof_main_thm2_001}
+        a_{i_l,N_l}=\epsilon_{N_l}\underbrace{\sum_{j\in I_{N_l}(A)}S_{i_l,j}^{(N)}}_{=:P_{N_l}(A)}+\epsilon_{N_l}\underbrace{\sum_{j\in I_{N_l}(A)}S_{i_l,j}^{(N)}}_{=:T_{N_l}(A)},
+    \end{align}
+    where again $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$ and $t_{N,j}:=\epsilon_N(j-i_N)=\lambda_N^{1/2}(\psi_r(h_j)-\psi_r(h_{i_N}))$ as in the proof of Proposition~\ref{prop:main_thm}. There, it was established that $\limsup_{l\to\infty}\epsilon_{N_l}T_{N_l}(A)\le(cA)^{-1}e^{-cA^2}$ for some positive constant $c>0$, cf. step 1 of the proof of Proposition~\ref{prop:main_thm}. Set $q_0:=\hat{Q}_r(h_0)$ and $q_l:=\hat{Q}_r(h_{i_l})$. We also have
+    \begin{equation}\label{eq:proof_main_thm2_002}
+        \begin{aligned}
+            \epsilon_{N_l}P_{N_l}&\stackrel{\eqref{eq:local_sum_approx}}{=}\epsilon_{N_l}\sum_{j\in I_{N_l}(A)}e^{-t_{N_l,j}^2q_l}+\mathbf{o}(1)\\&
+            =\epsilon_{N_l}\sum_{j\in I_{N_l}(A)}e^{-t_{N_l,j}^2q_0}+\underbrace{\epsilon_{N_l}\sum_{j\in I_{N_l}(A)}\left(e^{-t_{N_l,j}^2q_l}-e^{-t_{N_l,j}^2q_0}\right)}_{\to0\text{ (compare with Equation~\eqref{eq:help_help005})}}+\mathbf{o}(1).
+        \end{aligned}
+    \end{equation}
+    Recalling the notation $m_N:=\lfloor\epsilon_N^{-1}A\rfloor$, we have
+    \begin{align}\label{eq:proof_main_thm2_003}
+        \sum_{j\in I_{N_l}(A)}e^{-q_0t_{N_l,j}^2}\le\sum_{k=-m_{N_l}}^{m_{N_l}}e^{-q_0(k\epsilon_{N_l})^2}=:G_{N_l}(A).
+    \end{align}
+    In step 3 of the proof of Proposition~\ref{prop:main_thm} we have seen that $\epsilon_{N_l}G_{N_l}(A)$ converges to $\int_{-A}^{A}e^{-q_0t^2}\,dt$ as $l\to\infty$, compare in particular with Equation~\eqref{eq:help_help_007}. Combining Equations~\eqref{eq:proof_main_thm2_001},\eqref{eq:proof_main_thm2_002} and~\eqref{eq:proof_main_thm2_003} we arrive at
     \begin{align*}
-        a_{i_l,N_l}=\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|\le A}S_{i_l,j}^{(N_l)}}_{=:P_{N_l}(A)}+\sigma_{N_l}\underbrace{\sum_{j:|t_{N_l,j}|>A}S_{i_l,j}^{(N_l)}}_{=:T_{N_l}(A)}.
+        \limsup_{l\to\infty}a_{i_l,N_l}\le\int_{-A}^{A}e^{-q_0t^2}\,dt+(cA)^{-1}e^{-cA^2}\to g(h_0),\quad A\to\infty.
     \end{align*}
-    In the proof of Proposition~\ref{prop:main_thm} we have already shown $\lim\sup_{l\to\infty}\sigma_{N_l}T_{N_l}(A)\le e^{-cA^2}/(cA)$.
-
-    In the proof of Proposition~\ref{prop:main_thm} we have also seen that
-    \begin{align*}
-        \sigma_{N_l}P_{N_l}(A)=\sigma_{N_l}\sum_{j:|t_{N_l,j}|\le A}e^{-t_{N_l,j}^2\hat{Q}_r(h_0)}+\mathbf{o}(1).
-    \end{align*}
-
-    Now we have
-    \begin{align*}
-        \sum_{j:|t_{N_l,j}|\le A}e^{-q_0t_{N_l,j}^2}\le\sum_{k\in\mathbb{Z},|\sigma_{N_l}k|\le A}e^{-q_0(\sigma_{N_l}k)^2}=:G_{N_l}(A).
-    \end{align*}
-
-    In the proof of Proposition~\ref{prop:main_thm} we have seen that $\sigma_{N_l}G_{N_l}(A)\to\int_{-A}^{A}e^{-q_0z^2}\,dz$ and thus we get $\limsup_{l\to\infty}\sigma_{N_l}P_{N_l}(A)\le\int_{-A}^{A}e^{-q_0z^2}\,dz$. In total we have $\limsup_{l\to\infty}a_{i_l,N_l}\le\int_{-A}^{A}e^{-q_0z^2}\,dz+e^{-cA^2}/(cA)$, and taking $A\to\infty$ yields $\limsup_{l\to\infty}a_{i_l,N_l}\le m(t_0)$.
-
-    Combining this would yield the contradiction $m(t_0)+d\le m(t_0)$.
+    In total, we have $g(h_0)+d\le\liminf_{j\to\infty}a_{i_{l_j},N_{l_j}}\le\limsup_{j\to\infty}a_{i_{l_j},N_{l_j}}\le g(h_0)$, a contradiction since $d>0$. This shows the claim of step 1.
 
     \textit{Step 2: Prove $\rho_N\to M$ by showing $\limsup_{N\to\infty}\rho_N\le M$ and $\liminf_{N\to\infty}\rho_N\ge M$}
 
     We have $\rho_N\le a_{i,N}\le g(h_i)+\xi_N\le M+\xi_N$ and therefore $\limsup_{N\to\infty}\rho_N\le M$.
+
+    \todo[inline]{continue here!}
 
     \textit{$\liminf\rho_N\ge M$} We use the Rayleigh variational representation
     \begin{align*}
