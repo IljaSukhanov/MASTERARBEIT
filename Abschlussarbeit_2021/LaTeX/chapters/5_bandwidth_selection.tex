@@ -608,9 +608,9 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 
 \begin{Prop}\label{prop:main_thm2}
     Assume that we are in the setting of Proposition~\ref{prop:main_thm} and let $\mathcal{H}_Q$ be the set of all minimizers of the energy functional $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. Denote by $v^{(N)}$ the sum-normalized Perron vector of the scale similarity matrix $S^{(N)}$ and let $(k_N)$ be any sequence of indices satisfying $k_N\in\arg\max\{v_i^{(N)}:1\le i\le N\}$. Then for the sequence of spectrally chosen bandwidths $h_{k_N}$ it holds that
-    \begin{align*}
+    \begin{align}\label{eq:main_result}
         \operatorname{dist}(h_{k_N},\mathcal{H}_Q):=\min_{h_Q\in\mathcal{H}_Q}|h_{k_{N}}-h_Q|\to 0,\quad N\to\infty.
-    \end{align*}
+    \end{align}
     In particular, if $\hat{Q}_r$ has a unique minimizer $h_Q$, then $h_{k_N}\to h_Q$ for $N\to\infty$.
 \end{Prop}
 
@@ -633,7 +633,7 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 
     By compactness, there exists a further index sequence $l_1<l_2<\dots$ such that $h_{i_{l_j}}\to h_0$ as $j\to\infty$ for some $h_0\in[h_{\min},h_{\max}]$. Consequently, by continuity of $g$ we obtain $\liminf_{j\to\infty}a_{i_{l_j},N_{l_j}}\ge g(h_0)+d$.
 
-    But on the other hand $\limsup_{l\to\infty}a_{i_{l_j},N_{l_j}}\le g(h_0)$. This is because for once
+    But on the other hand $\limsup_{j\to\infty}a_{i_{l_j},N_{l_j}}\le g(h_0)$. This is because for once
     \begin{align}\label{eq:proof_main_thm2_001}
         a_{i_{l_j},N_{l_j}}=\epsilon_{N_{l_j}}\underbrace{\sum_{k\in I_{N_{l_j}}(A)}S_{i_{l_j},k}^{(N_{l_j})}}_{=:P_{N_{l_j}}(A)}+\epsilon_{N_{l_j}}\underbrace{\sum_{k\notin I_{N_{l_j}}(A)}S_{i_{l_j},k}^{(N_{l_j})}}_{=:T_{N_{l_j}}(A)},
     \end{align}
@@ -656,7 +656,7 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 
     \textit{Step 2: Prove $\rho_N\to M$ by showing $\limsup_{N\to\infty}\rho_N\le M$ and $\liminf_{N\to\infty}\rho_N\ge M$}
 
-    We have $\rho_N\le a_{i,N}\le g(h_i)+\xi_N\le M+\xi_N$ and therefore $\limsup_{N\to\infty}\rho_N\le M$. To obtain a lower bound for the limes inferior we start by using the Rayleigh variational representation to write
+    We have $\rho_N\le a_{k_N,N}\le g(h_{k_N})+\xi_N\le M+\xi_N$ and therefore $\limsup_{N\to\infty}\rho_N\le M$. To obtain a lower bound for the limes inferior we start by using the Rayleigh variational representation to write
     \begin{align*}
         \rho_N&=\max_{x\ne 0}(x^{T}A^{(N)}x)/(x^{T}x)=(v^{(N)})^{T}A^{(N)}v^{(N)}/(v^{(N)})^{T}(v^{(N)})
         \ge y^{T}A^{(N)}y/(y^{T}y)
@@ -698,14 +698,12 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 
     This finishes step 2 as we now arrive at $\rho_N\to M$, that is, the principal eigenvalue of $A^{(N)}$ converges to the maximum value of the functional $g(h)=\pi^{1/2}\hat{Q}_r(h)^{-1/2}$.
 
-    \todo[inline]{continue here}
-
     \textit{Step 3: Combine steps 1 and 2}
 
-    Let $h_Q\in\mathcal{H}_Q$.
-    
-    We now have $\rho_N\le a_{i_N,N}\le m(t_{i_N})+\epsilon_N$. It follows $M\leftarrow \rho_N-\epsilon_N\le m(t_{i_N})\le M$ and thus $m(t_{i_N})\to M$. Since $m$ is continuous, defined on a compact interval and by assumption has a unique maximizer, it follows that $t_{i_N}\to t^{\ast}$. By continuity of $\psi_r^{-1}$ follows $h_{i_N}\to h^{\ast}$, which is the claim of this Proposition.
+    We now have $\rho_N\le a_{k_N,N}\le g(h_{k_N})+\xi_N\le M+\xi_N$ by step 1 and consequently $g(h_{k_N})\to M$ by step 2. Assume for contradiction that the claim in Equation~\eqref{eq:main_result} does not hold, that is, $\operatorname{dist}(h_{k_N},\mathcal{H}_Q)$ does not converge to zero. This would imply the existence of a subsequence $(N_l)$ such that $\operatorname{dist}(h_{k_{N_l}},\mathcal{H}_Q)>\delta$ for all $l\in\mathbb{N}$ and some $\delta>0$. By compactness, a further subsequence $(h_{k_{N_{l_j}}})$ converges to some $h_0\in[h_{\min},h_{\max}]$. It follows $g(h_{k_{N_{l_j}}})\to g(h_0)$ as $j\to\infty$ by continuity of $g$ and thus $g(h_0)=M$ since every subsequence of a convergent sequence has the same limit. Hence $h_0\in\mathcal{H}_Q$, which contradicts the fact that the subsequence $(h_{k_{N_l}})$ stays at least $\delta$ away from $\mathcal{H}_Q$. We have therefore shown $\operatorname{dist}(h_{k_N},\mathcal{H}_Q)\to0$ for $N\to\infty$.
 \end{proof}
+
+\todo[inline]{continue here!}
 
 \subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}\label{sec:expected_energy_functional}
 
