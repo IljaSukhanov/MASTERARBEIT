@@ -2,6 +2,8 @@
 
 \textcolor{red}{In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$. The goal is to develop a methodological connection between the spectral scale selection principle introduced in~\cite{Baralic2026} and the classical problem in nonparametric statistics of bandwidth selection for kernel density estimation. We will explain why the spectral construction selects what it selects and how this selection relates to classical bandwidth selection procedures. More concretely, let $h_{\text{oracle}}$ be the bandwidth that minimizes $\mathbb{E}[\|f-\hat{f}_h\|_2^2]$ and define $S_{ij}^{(\lambda)}=e^{-\lambda D_{ij}}$ with $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ for some candidate bandwidths $0<h_1<\dots<h_N$. Does the peak of the Perron vector of $S$ relate to $h_{\text{oracle}}$?}
 
+Throughout this chapter, all integrals are over the real line unless stated otherwise.
+
 \section{Preliminaries on Kernel Density Estimation}\label{sec:preliminaries_kde}
 
 We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. We assume throughout that $f$ is square integrable, twice continuously differentiable, and that its second derivative is square integrable. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
@@ -552,9 +554,9 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
 
 \begin{Lem}\label{lem:frechet_derivative_of_kde}
     Let $K$ be a differentiable and square integrable kernel and define $L$ by $L(x):=K(x)+xK'(x)$. Assume that $L$ satisfies $|L(x)|\le C(1+|x|)^{-\alpha}$ for all $x\in\mathbb{R}$ and some $C>0$, $\alpha>1/2$. Define the map $\Psi:(0,\infty)\to L^2(\mathbb{R})$ by $\Psi(h):=\hat{f}_h$. The Fréchet derivative of $\Psi$ at $h$ is an operator $d\Psi(h):\mathbb{R}\to L^2(\mathbb{R})$ given by $d\Psi(h)[\tau]=\tau\partial_h\hat{f}_h$, where
-    \begin{align*}
+    \begin{align}\label{eq:frechet_derivative_kde_formula}
         \partial_h\hat{f}_h(x)=-\frac{1}{nh^2}\sum_{j=1}^nL\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
-    \end{align*}
+    \end{align}
     Additionally, for any nonempty interval $J:=[a,b]\subseteq(0,\infty)$ with $h,h+\tau\in J$ we can bound $\|r_h(\tau)\|_2$ above by $|\tau|\mu_J(|\tau|)$ where $\mu_J(\delta):=\sup\{\|d\Psi(h)-d\Psi(s)\|_{\operatorname{op}}:h,s\in J,|h-s|\le\delta\}$, $\delta\ge0$ is the modulus of continuity of $d\Psi$ and satisfies $\mu_J(|\tau|)\to0$ as $\tau\to0$. 
 \end{Lem}
 
@@ -562,7 +564,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 \end{proof}
 
-\begin{Rem}
+\begin{Rem}\label{rem:gaussian_kernel_satisfies_decay_assumption}
     We note that the decay assumption on $L(x)=K(x)+xK'(x)$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is a stronger condition than the square integrability of the kernel $K$. This is because for once $L\in L^2(\mathbb{R})$ by the decay assumption and
     \begin{align*}
         \int_{-\infty}^{\infty}K(x)^2\,dx=2\int_0^{\infty}\left(x^{-1}\int_0^xL(t)\,dt\right)^2\,dx\le 8\int_0^{\infty}L(x)^2\,dx<\infty
@@ -720,25 +722,20 @@ Motivated by the connection between the minimizers of the energy functional $\ha
 
 Afterwards, we present a connection between the expected energy functional $\mathbb{E}[\hat{Q}_r]$ and the MISE. Together with the results of the previous Section~\ref{sec:perron_vector_concentrates}, this establishes a theoretical bridge between the spectral scale selection methodology and optimal bandwidth selection in the classical sense.
 
-\todo[inline]{---1---}
-
-
-For the Gaussian kernel the energy functional $\hat{Q}_r$ can be written down explicitly:
+Set $d_{ij}:=X_i-X_j$. For the Gaussian kernel the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align*}
-    \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2=\frac{1}{2n^2}h^{-2(1+r)}\int\sum_{i,j=1}^{n}L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
-    =\frac{1}{4n^2\sqrt{\pi}}h^{-2(1+r)+1}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
-    =\frac{1}{64n^2\sqrt{\pi}}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right)
+    \hat{Q}_r(h)=\frac{1}{64n^2\sqrt{\pi}}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right)
 \end{align*}
-because
-\begin{align*}
-    &\int\underbrace{\left(1-\left(\frac{x-X_i}{h}\right)^2\right)\left(1-\left(\frac{x-X_j}{h}\right)^2\right)}_{=:P(x)}\exp{\left(-\frac{1}{2}\left(\frac{x-X_i}{h}\right)^2\right)}\exp{\left(-\frac{1}{2}\left(\frac{x-X_j}{h}\right)^2\right)}\,dx\\&
-    =\exp{\left(-\frac{(X_i-X_j)^2}{4h^2}\right)}\int P(x)\exp{\left(-\frac{\left(x-\frac{X_i+X_j}{2}\right)^2}{h^2}\right)}\,dx\\&
-    =e^{-d_{ij}^2/(4h^2)}\frac{h}{\sqrt{2}}\int P\left(\frac{h}{\sqrt{2}}u+\frac{X_i+X_j}{2}\right)\exp{(-u^2/2)}\,du\\&
-    =e^{-d_{ij}^2/(4h^2)}h\sqrt{\pi}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right),
-\end{align*}
-where we have used $\int u^ne^{-u^2/2}\,du=\sqrt{2\pi}n!/(2^{n/2}(n/2)!)$ for even $n$ and have set $d_{ij}:=X_i-X_j$.
 
-\todo[inline]{---1---}
+To see this, use Equation~\eqref{eq:frechet_derivative_kde_formula} from Lemma~\ref{lem:frechet_derivative_of_kde} and the expression for $L$ from Remark~\ref{rem:gaussian_kernel_satisfies_decay_assumption} to write
+\begin{align*}
+    \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2=\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
+    \stackrel{(\ast)}{=}\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
+    =\frac{1}{64n^2\sqrt{\pi}}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right),
+\end{align*}
+where in step $(\ast)$ we have evaluated the integral by completing the square in the exponent, substitution, and the formula $\int u^{2k}e^{-u^2/2}\,du=(2\pi)^{1/2}(2k)!2^{-k}(k!)^{-1}$, $k\in\mathbb{N}_0$.
+
+\todo[inline]{continue here!}
 
 We can characterize the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely,
 \begin{align*}
