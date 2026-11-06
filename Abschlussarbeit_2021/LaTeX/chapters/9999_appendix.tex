@@ -371,7 +371,7 @@
 \subsection*{Proof of Proposition~\ref{prop:main_thm}}\label{sec:proof_main_thm}
 
 \begin{proof}
-    Recall that $\Delta_{r,N}=\psi_r(h_{j+1})-\psi_r(h_j)=(\psi_r(h_{\max})-\psi_r(h_{\min}))/(N-1)=\mathbf{O}(N^{-1})$ is the spacing between the transformed bandwidths $\psi_r(h_j)$ and $\psi_r(h_{j+1})$. Set $\epsilon_N:=\lambda_N^{1/2}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$ and note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. We also set $\delta_{N,j}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$ to be the signed difference between the transformed bandwidths $h_j$ and $h_{i_N}$. Note that $t_{N,j}=\sqrt{\lambda_N}(\psi_r(h_j)-\psi_r(h_{i_N}))=\lambda_N^{1/2}\delta_{N,j}$ is the rescaled spacing between the two transformed bandwidths. We have $\psi_r(h_{\min})-\psi_r(h_{i_N})\to\psi_r(h_{\min})-\psi_r(h_0)<0$ and $\psi_r(h_{\max})-\psi_r(h_{i_N})\to \psi_r(h_{\max})-\psi_r(h_0)>0$ because $\psi_r$ is strictly increasing and continuous (cf.~\ref{rem:r_linear_grid}) and $h_0$ is assumed to be an interior bandwidth and thus $t_{N,1}=\sqrt{\lambda_N}(\psi_r(h_{\min})-\psi_r(h_{i_N}))\to-\infty$ and $t_{N,N}=\sqrt{\lambda_N}(\psi_r(h_{\max})-\psi_r(h_{i_N}))\to\infty$ because $\lambda_N\to\infty$. We also have
+    Recall that $\Delta_{r,N}=\psi_r(h_{j+1})-\psi_r(h_j)=(\psi_r(h_{\max})-\psi_r(h_{\min}))/(N-1)=\mathbf{O}(N^{-1})$ is the spacing between the transformed bandwidths $\psi_r(h_j)$ and $\psi_r(h_{j+1})$. Set $\epsilon_N:=\lambda_N^{1/2}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$ and note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. We also set $\delta_{N,j}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$ to be the signed difference between the transformed bandwidths $h_j$ and $h_{i_N}$. Note that $t_{N,j}=\lambda_N^{1/2}(\psi_r(h_j)-\psi_r(h_{i_N}))=\lambda_N^{1/2}\delta_{N,j}$ is the rescaled spacing between the two transformed bandwidths. We have $\psi_r(h_{\min})-\psi_r(h_{i_N})\to\psi_r(h_{\min})-\psi_r(h_0)<0$ and $\psi_r(h_{\max})-\psi_r(h_{i_N})\to \psi_r(h_{\max})-\psi_r(h_0)>0$ because $\psi_r$ is strictly increasing and continuous (cf.~\ref{rem:r_linear_grid}) and $h_0$ is assumed to be an interior bandwidth and thus $t_{N,1}=\sqrt{\lambda_N}(\psi_r(h_{\min})-\psi_r(h_{i_N}))\to-\infty$ and $t_{N,N}=\sqrt{\lambda_N}(\psi_r(h_{\max})-\psi_r(h_{i_N}))\to\infty$ because $\lambda_N\to\infty$. We also have
     \begin{align}\label{eq:delta_N_j_lower_and_upper_bound}
         h_{\max}^{r-1}|h_j-h_{i_N}|\le\underbrace{\int_{\min\{h_j,h_{i_N}\}}^{\max\{h_j,h_{i_N}\}}s^{r-1}\,ds}_{=|\psi_r(h_j)-\psi_r(h_{i_N})|=|\delta_{N,j}|}\le h_{\min}^{r-1}|h_j-h_{i_N}|.
     \end{align}
@@ -454,9 +454,11 @@
     \textit{Step 3: Show convergence to a Gaussian integral via a Riemann sum argument}
 
     We now show the convergence of the first non-vanishing term on the right side of Equation~\ref{eq:local_sum_approx} to a Gaussian integral. From now on to shorten the notation we set $q_N:=\hat{Q}_r(h_{i_N})$ and $q_0:=\hat{Q}_r(h_0)$. Since $\hat{Q}_r$ is continuous in $h_0$, we have $q_N\to q_0$ for $N\to\infty$. Therefore
-    \begin{align*}
-        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}\right|}_{\le\epsilon_N\#I_N(A)A^2|q_N-q_0|\le(2A+\epsilon_N)A^2|q_N-q_0|\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|.
-    \end{align*}
+    \begin{equation}\label{eq:help_help005}
+        \begin{aligned}
+            &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}\right|}_{\le\epsilon_N\#I_N(A)A^2|q_N-q_0|\le(2A+\epsilon_N)A^2|q_N-q_0|\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|.
+        \end{aligned}
+    \end{equation}
     In order to show that the second summand above also converges to $0$ for $N\to\infty$ we first rewrite the sum over $I_N(A)$. Before that, set $g(t):=e^{-q_0t^2}$, $m_N:=\lfloor A\epsilon_N^{-1}\rfloor$ and $x_k:=\epsilon_N(-m_N+k-1)$. Now $\{x_0,\dots,x_{2m_N+1}\}$ is a partition of the interval $[-\epsilon_Nm_N-\epsilon_N,\epsilon_Nm_N]$. For sufficiently large $N$ we have $t_{N,1}=\epsilon_N(1-i_N)\le-A$ and $t_{N,N}=\epsilon_N(N-i_N)\ge A$ and therefore $1-i_N\le-\epsilon_N^{-1}A\le-m_N$ and $N-i_N\ge\epsilon_N^{-1}A\ge m_N$. Thus we can write
     \begin{align*}
         &\epsilon_N\sum_{j\in I_N(A)}g(t_{N,j})=\epsilon_N\sum_{\substack{j=1,\dots,N\\-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N}}g(t_{N,j})=\epsilon_N\sum_{\substack{k=1-i_N,\dots,N-i_N\\
@@ -466,15 +468,19 @@
         =\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)
     \end{align*}
     Consequently,
-    \begin{align*}
-        &\left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|\le\sum_{k=1}^{2m_N+1}\int_{x_{k-1}}^{x_k}\underbrace{|g(x_k)-g(x)|}_{\le2\epsilon_Nq_0(A+\epsilon_N)}\,dx\\&
+    \begin{equation}\label{eq:help_help_006}
+        \begin{aligned}
+            &\left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|\le\sum_{k=1}^{2m_N+1}\int_{x_{k-1}}^{x_k}\underbrace{|g(x_k)-g(x)|}_{\le2\epsilon_Nq_0(A+\epsilon_N)}\,dx\\&
         \le2\epsilon_Nq_0(A+\epsilon_N)(\epsilon_N+2A)\to0,\quad N\to\infty,
-    \end{align*}
+        \end{aligned}
+    \end{equation}
     and therefore
-    \begin{align*}
-        &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}-\int\limits_{-A}^{A}e^{-t^2q_0}\,dt\right|\\&
-        \le\underbrace{\left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int\limits_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|}_{\to0}+\underbrace{\left|\int\limits_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx-\int\limits_{-A}^{A}g(t)\,dt\right|}_{\to0},
-    \end{align*}
+    \begin{equation}\label{eq:help_help_007}
+        \begin{aligned}
+            &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}-\int\limits_{-A}^{A}e^{-t^2q_0}\,dt\right|\\&
+            \le\underbrace{\left|\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)-\int\limits_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx\right|}_{\to0\text{ by Equation~\eqref{eq:help_help_006}}}+\underbrace{\left|\int\limits_{-\epsilon_Nm_N-\epsilon_N}^{\epsilon_Nm_N}g(x)\,dx-\int\limits_{-A}^{A}g(t)\,dt\right|}_{\to0},
+        \end{aligned}
+    \end{equation}
     because $\epsilon_Nm_N\to A$ and $-\epsilon_N(m_N+1)\to-A$.
 
     \textit{Step 4: Combine steps 1-3}
