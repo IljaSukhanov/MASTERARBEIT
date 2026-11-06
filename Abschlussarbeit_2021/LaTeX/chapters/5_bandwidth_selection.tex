@@ -562,11 +562,13 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     See Appendix Section~\ref{sec:proof_frechet_derivative_of_kde}.
 \end{proof}
 
-We note that the decay assumption on $L(x)=K(x)+xK'(x)$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is a stronger condition than the square integrability of the kernel $K$. This is because for once $L\in L^2(\mathbb{R})$ by the decay assumption and
-\begin{align*}
-    \int_{-\infty}^{\infty}K(x)^2\,dx=2\int_0^{\infty}\left(x^{-1}\int_0^xL(t)\,dt\right)^2\,dx\le 8\int_0^{\infty}L(x)^2\,dx<\infty
-\end{align*}
-by symmetry of $K$ and Hardy's inequality (see e.g.~\cite[Theorem~1]{beesack_hardys_1961}). It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. For the Gaussian kernel the decay assumption on $L$ is fulfilled since $|L(x)|=(2\pi)^{-1/2}|1-x^2|e^{-x^2/2}\le8(2\pi)^{-1/2}(1+x^2)^{-1}\le16(2\pi)^{-1/2}(1+|x|)^{-2}$ and thus Lemma~\ref{lem:frechet_derivative_of_kde} holds for instance for Gaussian kernel density estimate.
+\begin{Rem}
+    We note that the decay assumption on $L(x)=K(x)+xK'(x)$ in Lemma~\ref{lem:frechet_derivative_of_kde} above is a stronger condition than the square integrability of the kernel $K$. This is because for once $L\in L^2(\mathbb{R})$ by the decay assumption and
+    \begin{align*}
+        \int_{-\infty}^{\infty}K(x)^2\,dx=2\int_0^{\infty}\left(x^{-1}\int_0^xL(t)\,dt\right)^2\,dx\le 8\int_0^{\infty}L(x)^2\,dx<\infty
+    \end{align*}
+    by symmetry of $K$ and Hardy's inequality (see, e.g.,~\cite[Theorem~1]{beesack_hardys_1961}). It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. For the Gaussian kernel $K(x)=(2\pi)^{-1/2}e^{-x^2/2}$ we have $L(x)=(2\pi)^{-1/2}(1-x^2)e^{-x^2/2}$. The decay assumption on $L$ is fulfilled since $|L(x)|=(2\pi)^{-1/2}|1-x^2|e^{-x^2/2}\le8(2\pi)^{-1/2}(1+x^2)^{-1}\le16(2\pi)^{-1/2}(1+|x|)^{-2}$ and thus Lemma~\ref{lem:frechet_derivative_of_kde} holds, for instance, for the Gaussian kernel density estimate.
+\end{Rem}
 
 Next, we state the first of the two main results of this thesis.
 
@@ -712,17 +714,16 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
     We now have $\rho_N\le a_{k_N,N}\le g(h_{k_N})+\xi_N\le M+\xi_N$ by step 1 and consequently $g(h_{k_N})\to M$ by step 2. Assume for contradiction that the claim in Equation~\eqref{eq:main_result} does not hold, that is, $\operatorname{dist}(h_{k_N},\mathcal{H}_Q)$ does not converge to zero. This would imply the existence of a subsequence $(N_l)$ such that $\operatorname{dist}(h_{k_{N_l}},\mathcal{H}_Q)>\delta$ for all $l\in\mathbb{N}$ and some $\delta>0$. By compactness, a further subsequence $(h_{k_{N_{l_j}}})$ converges to some $h_0\in[h_{\min},h_{\max}]$. It follows $g(h_{k_{N_{l_j}}})\to g(h_0)$ as $j\to\infty$ by continuity of $g$ and thus $g(h_0)=M$ since every subsequence of a convergent sequence has the same limit. Hence $h_0\in\mathcal{H}_Q$, which contradicts the fact that the subsequence $(h_{k_{N_l}})$ stays at least $\delta$ away from $\mathcal{H}_Q$. We have therefore shown $\operatorname{dist}(h_{k_N},\mathcal{H}_Q)\to0$ for $N\to\infty$.
 \end{proof}
 
-\todo[inline]{continue here!}
+\subsection{Properties of the energy functional and its connection to the MISE}\label{sec:expected_energy_functional}
 
-\subsection{Asymptotic minimizer of expected energy functional is asymptotically equivalent to mean integrated squared error minimizer}\label{sec:expected_energy_functional}
+Motivated by the connection between the minimizers of the energy functional $\hat{Q}_r$ and the asymptotic behavior of the spectrally selected bandwidth established in Section~\ref{sec:perron_vector_concentrates}, we first study some properties of $\hat{Q}_r$. In particular, we are interested in the existence and uniqueness of its global and local minimizers.
 
-\todo[inline]{06.11: Polish!}
+Afterwards, we present a connection between the expected energy functional $\mathbb{E}[\hat{Q}_r]$ and the MISE. Together with the results of the previous Section~\ref{sec:perron_vector_concentrates}, this establishes a theoretical bridge between the spectral scale selection methodology and optimal bandwidth selection in the classical sense.
 
-In this section we give properties of the energy functional $\hat{Q}_r$ especially about its global and local minimizers, which is motivated by the connection to the asymptotic peak of the Perron vector of the scale similarity matrix $S^{(N)}$ established in the precious Section.
+\todo[inline]{---1---}
 
-In this section a connection between the expectation of the energy functional $\hat{Q}_r$ and the $\operatorname{MISE}$ is presented. By our results from the previous Section~\ref{sec:perron_vector_concentrates} this connects the spectral scale selection directly with optimal bandwidth selection in the classical sense.
 
-For the Gaussian kernel, $L(u)=(1/\sqrt{2\pi})(1-u^2)e^{-u^2/2}$ and the energy functional $\hat{Q}_r$ can be written down explicitly:
+For the Gaussian kernel the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align*}
     \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2=\frac{1}{2n^2}h^{-2(1+r)}\int\sum_{i,j=1}^{n}L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
     =\frac{1}{4n^2\sqrt{\pi}}h^{-2(1+r)+1}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
@@ -736,6 +737,8 @@ because
     =e^{-d_{ij}^2/(4h^2)}h\sqrt{\pi}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right),
 \end{align*}
 where we have used $\int u^ne^{-u^2/2}\,du=\sqrt{2\pi}n!/(2^{n/2}(n/2)!)$ for even $n$ and have set $d_{ij}:=X_i-X_j$.
+
+\todo[inline]{---1---}
 
 We can characterize the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely,
 \begin{align*}
