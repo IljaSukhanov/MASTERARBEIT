@@ -652,15 +652,6 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
     \end{align*}
     In total, we have $g(h_0)+d\le\liminf_{j\to\infty}a_{i_{l_j},N_{l_j}}\le\limsup_{j\to\infty}a_{i_{l_j},N_{l_j}}\le g(h_0)$, a contradiction since $d>0$. This shows the claim of step 1.
 
-    Thus, we can write
-    \begin{align*}
-        &\epsilon_N\sum_{j\in I_N(A)}g(t_{N,j})=\epsilon_N\sum_{\substack{j=1,\dots,N\\-A\epsilon_N^{-1}+i_N\le j\le A\epsilon_N^{-1}+i_N}}g(t_{N,j})=\epsilon_N\sum_{\substack{k=1-i_N,\dots,N-i_N\\
-        -m_N\le k\le m_N}}g(k\epsilon_N)
-        \\&
-        =\epsilon_N\sum_{k=-m_N}^{m_N}g(k\epsilon_N)
-        =\sum_{k=1}^{2m_N+1}(x_k-x_{k-1})g(x_k)
-    \end{align*}
-
     \textit{Step 2: Prove $\rho_N\to M$ by showing $\limsup_{N\to\infty}\rho_N\le M$ and $\liminf_{N\to\infty}\rho_N\ge M$}
 
     We have $\rho_N\le a_{k_N,N}\le g(h_{k_N})+\xi_N\le M+\xi_N$ and therefore $\limsup_{N\to\infty}\rho_N\le M$. To obtain a lower bound for the limes inferior we start by using the Rayleigh variational representation to write
@@ -771,44 +762,6 @@ Using standard root finding methods (like Brent's method), we can look for stati
 
 The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
 
-
-\todo[inline]{--- optional? (outlook) ---}
-
-Having established the connection between Energy functional minimization and Spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
-
-A papular minimization algorithm for univariate functions on a closed interval is Brent's method. We compare this minimization approach with our spectral selector in terms of time and which bandwidth is chosen. Our spectral method uses different values for $N$ and $\lambda_N=N^{1.9}$. We use samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots ,100$ and $n=200$ from $N(0,1)$.
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{lccc}
-        \toprule
-        Method
-        & \shortstack{Mean time $\pm$ SE\\(ms)}
-        & \shortstack{Mean selected\\bandwidth}
-        & \shortstack{Mean absolute relative\\bandwidth error (\%)} \\
-        \midrule
-        Brent in $\log h$
-        & $3.85 \pm 0.30$  & $0.27215$ & $<10^{-5}$ \\
-        Spectral, $N=100$
-        & $16.76 \pm 1.46$ & $0.26197$ & $5.79$ \\
-        Spectral, $N=200$
-        & $21.68 \pm 0.92$ & $0.26697$ & $2.97$ \\
-        Spectral, $N=400$
-        & $49.09 \pm 2.39$ & $0.26969$ & $1.55$ \\
-        \bottomrule
-    \end{tabular}
-    \caption{}
-    \label{tab:brent_spectral_timing}
-\end{table}
-
-As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
-
-These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
-
-In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible. 
-
-\todo[inline]{--- optional? (outlook) ---}
-
 \textbf{Expected energy functional}
 
 The expectation of the energy functional is
@@ -848,7 +801,7 @@ If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3
 
 \section{Literature Positioning}
 
-\todo[inline]{10.11: Polish!}
+\todo[inline]{07.11: Polish!}
 
 The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
 

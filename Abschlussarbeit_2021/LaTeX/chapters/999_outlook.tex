@@ -230,3 +230,42 @@ where $\mu_1$ and $\mu_2$ are the largest and second largest eigenvalue of $\Til
 We can interpret $m(S):=\|S\|/\text{gap}(S)$ as a measure (norm-to-gap ratio) for how stable the Perron vector of $S$ can be computed. For large $\lambda$, $m(S^{(\lambda)})$ is large, whereas increasing $\lambda$ influences $m(\Tilde{A}^{(\lambda)})$ only through the eigenvalues $\mu_1$ and $\mu_2$ and not through the factor $e^{-\lambda d_{\ast}}$ anymore.
 
 \textcolor{red}{In fact, $m(S^{(\lambda)})\to\infty$ but $m(\Tilde{A}^{(\lambda)})\to1$ for $\lambda\to\infty$.}
+
+\textbf{Replace optimization with eigenvector computation}
+
+Having established the connection between Energy functional minimization and Spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
+
+A papular minimization algorithm for univariate functions on a closed interval is Brent's method. We compare this minimization approach with our spectral selector in terms of time and which bandwidth is chosen. Our spectral method uses different values for $N$ and $\lambda_N=N^{1.9}$. We use samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots ,100$ and $n=200$ from $N(0,1)$.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        Method
+        & \shortstack{Mean time $\pm$ SE\\(ms)}
+        & \shortstack{Mean selected\\bandwidth}
+        & \shortstack{Mean absolute relative\\bandwidth error (\%)} \\
+        \midrule
+        Brent in $\log h$
+        & $3.85 \pm 0.30$  & $0.27215$ & $<10^{-5}$ \\
+        Spectral, $N=100$
+        & $16.76 \pm 1.46$ & $0.26197$ & $5.79$ \\
+        Spectral, $N=200$
+        & $21.68 \pm 0.92$ & $0.26697$ & $2.97$ \\
+        Spectral, $N=400$
+        & $49.09 \pm 2.39$ & $0.26969$ & $1.55$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{}
+    \label{tab:brent_spectral_timing}
+\end{table}
+
+As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
+
+These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
+
+In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible.
+
+
+
+
