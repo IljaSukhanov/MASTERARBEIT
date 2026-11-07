@@ -12,6 +12,8 @@ We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribut
 \end{align*}
 where $h>0$ is the bandwidth and $K$ is a symmetric density function. Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ can be seen as a Monte Carlo estimate of $\mathbb{E}_{X\sim f}[K_h(x-X)]=(f\ast K_h)(x)$. It can also be seen as a plug-in estimator for $(f\ast K_h)(x)$ where in place of the density $f$ the empirical measure $P_n:=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ is used: $(P_n\ast K_h)(x)=\int K_h(x-y)\,P_n(dy)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
 
+As a technical detail, we note that $\|f''\|_2^2>0$. If this were not the case, then $f''$ would be the constant zero function by continuity of $f''$, making $f$ an affine function, which is impossible since $f$ is a density on $\mathbb{R}$.
+
 Throughout, we will assume that $K\in L^2(\mathbb{R})$ and $\mu_2(K):=\int x^2K(x)\,dx<\infty$. We will state additional assumptions on $K$ when needed. Two common choices for the kernel $K$ are:
 \begin{itemize}
     \item the Epanechnikov kernel $K(u)=\mathbf{1}\{-1\le u\le1\}3(1-u^2)/4$, $u\in\mathbb{R}$
@@ -643,7 +645,7 @@ To see this, use Equation~\eqref{eq:frechet_derivative_kde_formula} from Lemma~\
 \end{align*}
 where in step $(\ast)$ we have evaluated the integral by completing the square in the exponent, substitution, and the formula $\int u^{2k}e^{-u^2/2}\,du=(2\pi)^{1/2}(2k)!2^{-k}(k!)^{-1}$, $k\in\mathbb{N}_0$.
 
-Since $L(h^{-1}(x-X_j))<0$ for all $x>h+\max_jX_j$, the function $x\mapsto \sum_{j=1}^{n}L(h^{-1}(x-X_j))$ is strictly negative on the interval $(h+\max_jX_j,\infty)$, and thus $\hat{Q}_r$ is strictly positive on $(0,\infty)$.
+Since $L(u)<0$ for all $u>1$ (and hence $\|L\|_2^2>0$), we have $L(h^{-1}(x-X_j))<0$ for all $x>h+\max_jX_j$. Thus, the function $x\mapsto \sum_{j=1}^{n}L(h^{-1}(x-X_j))$ is strictly negative on the interval $(h+\max_jX_j,\infty)$, and $\hat{Q}_r$ is strictly positive on $(0,\infty)$.
 
 We can describe the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely,
 \begin{align*}
@@ -709,15 +711,25 @@ where the limit is due to~\cite[Theorem~8.14]{folland_real_1999}. This implies $
 \begin{align*}
     \mathbb{E}[\hat{Q}_r(h)]=\underbrace{\frac{1}{2n}h^{-(1+2r)}\|L\|_2^2+\frac{n-1}{2n}h^{4-2r}\|f''\|_2^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r}),\quad h\downarrow0.
 \end{align*}
-The unique minimizer of $\operatorname{AMQ}_r(h)$ over $(0,\infty)$ is
+
+Differentiating $\operatorname{AMQ}_r(h)$ gives
 \begin{align*}
-    h_{\operatorname{AMQ},r}(n):=\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{(n-1)\|f''\|_2^2}\right)^{1/5}
+    \operatorname{AMQ}_r'(h)=\frac{1}{2n}\frac{1}{h^{2+2r}}\left((n-1)(4-2r)\|f''\|_2^2h^5-(1+2r)\|L\|_2^2\right)
 \end{align*}
-given that $n\ge 2$ and $r\in(-1/2,2)$. We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise}. We therefore get
+For $n\ge2$ and $r<2$ the expression inside the parentheses is strictly increasing and for $r>-1/2$, it is negative for sufficiently small $h$ and positive for sufficiently large $h$. Since the factor outside the parentheses is positive, the sign of $\operatorname{AMQ}_r'(h)$ changes only once. Thus, the unique minimizer of $\operatorname{AMQ}_r(h)$ over $(0,\infty)$ is
+\begin{align*}
+    h_{\operatorname{AMQ},r}(n):=\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{(n-1)\|f''\|_2^2}\right)^{1/5},
+\end{align*}
+given that $n\ge2$ and $r\in(-1/2,2)$.
+
+We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise}. We therefore get
 \begin{align}\label{eq:h_amq_limit}
     \frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}=\underbrace{\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{\|K\|_2^2}\right)^{1/5}}_{=:C_r(K)}\left(\frac{n}{n-1}\right)^{1/5}\to C_r(K),\quad n\to\infty,
 \end{align}
-that is $h_{\operatorname{AMQ},r}$ and $h_{\operatorname{AMISE}}$ are asymptotically proportional with constant $C_r(K)$, which means that $h_{\operatorname{AMQ}_r}$ and $h_{\text{oracle}}$ are also asymptotically proportional with constant $C_r(K)$. If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. In this case, $C_r(K)=((3+6r)/(16-8r))^{1/5}$, which equals $1$ for $r=13/14$. Thus, for $r=13/14$, which corresponds to a nearly linear bandwidth grid, the minimizers of the MISE and the leading-term approximation of the expected energy functional are asymptotically equivalent as the sample size grows.
+that is $h_{\operatorname{AMQ},r}$ and $h_{\operatorname{AMISE}}$ are asymptotically proportional with constant $C_r(K)$, and by the asymptotic equivalence of $h_{\operatorname{AMISE}}$ and $h_{\text{oracle}}$ established earlier, $h_{\operatorname{AMQ},r}$ and $h_{\text{oracle}}$ are also asymptotically proportional with constant $C_r(K)$. If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. In this case, $C_r(K)=((3+6r)/(16-8r))^{1/5}$, which equals $1$ for $r=13/14$. Thus, for $r=13/14$, which corresponds to a nearly linear bandwidth grid, the minimizers of the MISE and the leading-term approximation of the expected energy functional are asymptotically equivalent as the sample size grows.
+
+
+We have thus established a foundation for a theoretical bridge between classical bandwidth selection and our spectral scale selection approach. First, for a fixed sample, the spectral selector $h_{k_N}$, where $k_N\in\arg\max\{v_i^{(N)}:1\le i\le N\}$ and $v^{(N)}$ is the Perron vector of the scale similarity matrix $S^{(N)}$, approaches the set of minimizers of the energy functional $\hat{Q}_r$ on the compact interval $[h_{\min},h_{\max}]$ as $N\to\infty$. Second, for $r=13/14$, the unique minimizer over $(0,\infty)$ of the leading-term approximation of the expected energy functional $\mathbb{E}[\hat{Q}_r(h)]$ is asymptotically equivalent to the oracle bandwidth $h_{\text{oracle}}$ as $n\to\infty$.
 
 
 \section{Literature Positioning}
