@@ -569,7 +569,7 @@ In our setting, $X=\mathbb{R}$, $U=\mathbb{R}_{>0}$, and $Y=L^2(\mathbb{R})$. Th
     \begin{align*}
         \int_{-\infty}^{\infty}K(x)^2\,dx=2\int_0^{\infty}\left(x^{-1}\int_0^xL(t)\,dt\right)^2\,dx\le 8\int_0^{\infty}L(x)^2\,dx<\infty
     \end{align*}
-    by symmetry of $K$ and Hardy's inequality (see, e.g.,~\cite[Theorem~1]{beesack_hardys_1961}). It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. For the Gaussian kernel $K(x)=(2\pi)^{-1/2}e^{-x^2/2}$ we have $L(x)=(2\pi)^{-1/2}(1-x^2)e^{-x^2/2}$. The decay assumption on $L$ is fulfilled since $|L(x)|=(2\pi)^{-1/2}|1-x^2|e^{-x^2/2}\le8(2\pi)^{-1/2}(1+x^2)^{-1}\le16(2\pi)^{-1/2}(1+|x|)^{-2}$ and thus Lemma~\ref{lem:frechet_derivative_of_kde} holds, for instance, for the Gaussian kernel density estimate.
+    by symmetry of $K$ and Hardy's inequality (see, e.g.,~\cite[Theorem~1]{beesack_hardys_1961}). It allows us to establish the continuity of the Fréchet derivative of the kernel density estimate, which in turn is needed for the modulus of continuity to vanish as its argument tends to zero. For the Gaussian kernel $K(x)=(2\pi)^{-1/2}e^{-x^2/2}$ we have $L(x)=(1-x^2)K(x)$. The decay assumption on $L$ is fulfilled since $|L(x)|=(2\pi)^{-1/2}|1-x^2|e^{-x^2/2}\le8(2\pi)^{-1/2}(1+x^2)^{-1}\le16(2\pi)^{-1/2}(1+|x|)^{-2}$ and thus Lemma~\ref{lem:frechet_derivative_of_kde} holds, for instance, for the Gaussian kernel density estimate.
 \end{Rem}
 
 Next, we state the first of the two main results of this thesis.
@@ -619,17 +619,11 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 \end{Prop}
 
 \begin{proof}
-    As a very first step we point out that $\mathcal{H}_Q$ is nonempty and finite, which is shown independently of this proof in Section~\ref{sec:expected_energy_functional} below.
-
-    \todo[inline]{Establish continuity and positivity of $\hat{Q}_r$ on $(0,\infty)$}
-    
-    Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$ and denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by the definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Since $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ is a positive scalar, the sum-normalized Perron vectors of $A^{(N)}$ and $S^{(N)}$ coincide and thus $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$, where $\rho_N$ denotes the principal eigenvalue of $A^{(N)}$. By the defining property of the index sequence $(k_N)$ and the eigenvector equation, we have
+    As a very first step, we point out that $\mathcal{H}_Q$ is nonempty because $\hat{Q}_r$ is continuous. In addition to that $\mathcal{H}_Q$ is finite, which is justified independently of this proof in Section~\ref{sec:expected_energy_functional} below. Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$ and denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. Consequently, by the definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Since $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ is a positive scalar, the sum-normalized Perron vectors of $A^{(N)}$ and $S^{(N)}$ coincide and thus $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$, where $\rho_N$ denotes the principal eigenvalue of $A^{(N)}$. By the defining property of the index sequence $(k_N)$ and the eigenvector equation, we have
     \begin{align*}
         \rho_Nv_{k_N}^{(N)}=\sum_{j=1}^{N}A^{(N)}_{k_Nj}v_j^{(N)}\le v_{k_N}^{(N)}a_{k_N,N}=\sqrt{\lambda_N}\Delta_{r,N}v_{k_N}^{(N)}R_{k_N}^{(N)}
     \end{align*}
-    and, because every entry of the Perron vector is positive, $\rho_N\le a_{k_N,N}$.
-
-    We introduce the notation $g(h):=\pi^{1/2}\hat{Q}_r(h)^{-1/2}$ and $M:=\max_{h\in[h_{\min},h_{\max}]}g(h)$ and structure this proof in several steps.
+    and, because every entry of the Perron vector is positive, $\rho_N\le a_{k_N,N}$. Because $\hat{Q}_r(h)>0$ for all $h>0$ we can safely define $g(h):=\pi^{1/2}\hat{Q}_r(h)^{-1/2}$ and $M:=\max_{h\in[h_{\min},h_{\max}]}g(h)$. A justification for the strict positivity of the energy functional is given in Section~\ref{sec:expected_energy_functional} below. This proof now proceeds in several steps.
 
     \textit{Step 1: Show the existence of a null sequence $(\xi_N)$ such that $a_{i,N}\le g(h_i)+\xi_N$ for all sufficiently large $N$ and all $1\le i\le N$}
 
@@ -723,28 +717,33 @@ Motivated by the connection between the minimizers of the energy functional $\ha
 Afterwards, we present a connection between the expected energy functional $\mathbb{E}[\hat{Q}_r]$ and the MISE. Together with the results of the previous Section~\ref{sec:perron_vector_concentrates}, this establishes a theoretical bridge between the spectral scale selection methodology and optimal bandwidth selection in the classical sense.
 
 Set $d_{ij}:=X_i-X_j$. For the Gaussian kernel the energy functional $\hat{Q}_r$ can be written down explicitly:
-\begin{align*}
+\begin{align}\label{eq:gaussian_energy_functional_formula}
     \hat{Q}_r(h)=\frac{1}{64n^2\sqrt{\pi}}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right)
-\end{align*}
+\end{align}
 
 To see this, use Equation~\eqref{eq:frechet_derivative_kde_formula} from Lemma~\ref{lem:frechet_derivative_of_kde} and the expression for $L$ from Remark~\ref{rem:gaussian_kernel_satisfies_decay_assumption} to write
 \begin{align*}
-    \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2=\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
+    \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2\stackrel{\eqref{eq:frechet_derivative_kde_formula}}{=}\frac{1}{2n^2}h^{-2(1+r)}\left\|\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right)\right\|_2^2\\&
+    =\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
     \stackrel{(\ast)}{=}\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
-    =\frac{1}{64n^2\sqrt{\pi}}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right),
+    =\frac{12}{64n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(1-\frac{d_{ij}^2}{h^2}+\frac{d_{ij}^4}{12h^4}\right),
 \end{align*}
 where in step $(\ast)$ we have evaluated the integral by completing the square in the exponent, substitution, and the formula $\int u^{2k}e^{-u^2/2}\,du=(2\pi)^{1/2}(2k)!2^{-k}(k!)^{-1}$, $k\in\mathbb{N}_0$.
 
+Since $L(h^{-1}(x-X_j))<0$ for all $x>h+\max_jX_j$, the function $x\mapsto \sum_{j=1}^{n}L(h^{-1}(x-X_j))$ is strictly negative on the interval $(h+\max_jX_j,\infty)$, and thus $\hat{Q}_r$ is strictly positive on $(0,\infty)$.
+
+We can describe the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely,
+\begin{align*}
+    \hat{Q}_r(h)&\sim\frac{3M}{16n^2\sqrt{\pi}}h^{-(1+2r)},&&\quad h\downarrow0\\
+    \hat{Q}_r(h)&\sim\frac{3}{16\sqrt{\pi}}h^{-(1+2r)},&&\quad h\to\infty,
+\end{align*}
+where $M:=\#\{(i,j):X_i=X_j\}\ge n>0$. In particular, $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum.
+
+From the explicit formula of the energy functional we see that it is analytic on $(0,\infty)$, which allows us to conclude that the set of its minimizers on a fixed nonempty interval is finite. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$ then $\mathcal{H}_Q$ would have a limit point in that interval (see~\cite[Theorem~2.37]{rudin_real_1987}). By the identity theorem for analytic functions (see~\cite[Corollary~1.2.7]{Krantz2012-yf}) we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$, which is a contradiction to the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$.
+
+
 \todo[inline]{continue here!}
 
-We can characterize the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely,
-\begin{align*}
-    \hat{Q}_r(h)&\sim\frac{\|L\|_2^2}{2n}\frac{1}{h^{1+2r}},\quad h\to0,\\
-    \hat{Q}_r(h)&\sim\frac{\|L\|_2^2}{2}\frac{1}{h^{1+2r}},\quad h\to\infty.
-\end{align*}
-This means that $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum.
-
-As a very first step we point out that $\mathcal{H}_Q$ is nonempty because of Weierstrass' extreme value theorem. Furthermore, because we use the Gaussian kernel, $\hat{Q}_r$ is analytic on $(0,\infty)$, cf. with the explicit formula in Equation~[] below. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$ there would exist an accumulation point in that interval by the Bolzano-Weierstraß theorem for sets (see~[]). By the identity theorem for analytic functions (see~[]) we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$ which is a contradiction to the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$.
 
 The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. The energy functional can consequently be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$.
 
@@ -773,7 +772,7 @@ Using standard root finding methods (like Brent's method), we can look for stati
 The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
 
 
-\todo[inline]{06.11: Polish!}
+\todo[inline]{--- optional? (outlook) ---}
 
 Having established the connection between Energy functional minimization and Spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
 
@@ -807,6 +806,8 @@ As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimizati
 These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
 
 In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible. 
+
+\todo[inline]{--- optional? (outlook) ---}
 
 \textbf{Expected energy functional}
 
