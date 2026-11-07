@@ -694,9 +694,9 @@ The expectation of the energy functional is
     \mathbb{E}[\hat{Q}_r(h)]&=\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\mathbb{E}\left[\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\right]\\&
     =\frac{1}{2n}h^{-(1+2r)}\|L\|_2^2+\frac{n-1}{2n}h^{2(1-r)}\|\partial_hK_h\ast f\|_2^2,
 \end{align*}
-where we used Tonelli's theorem to exchange the expectation and the integral in the cross term, substitution, and the fact that $\partial_hK_h(x)=-h^{-2}L(h^{-1}x)$.
+where we used Fubini's theorem, justified by $L\in L^2(\mathbb{R})$ and the Cauchy-Schwarz inequality, to exchange the expectation and the integral in the cross term as well as substitutions, and the identity $\partial_hK_h(x)=-h^{-2}L(h^{-1}x)$.
 
-If $K$ is the Gaussian kernel, then $\partial_hK_h\ast f=h(K_h\ast f'')$ by the well known Gaussian heat equation (see~[]). Consequently,
+If $K$ is the Gaussian kernel, then $\partial_hK_h(x)=h\partial_x^2K_h(x)$ by the well known Gaussian heat equation (compare with~\cite[Section~2.3.1]{evans2022partial}) and therefore $\partial_hK_h\ast f=h((\partial_x^2K_h)\ast f)=h(K_h\ast f'')$, compare with~\cite[Theorem~7.19]{rudin_functional_1991}. Consequently,
 \begin{align*}
     &\frac{|\|\partial_hK_h\ast f\|_2^2-h^2\|f''\|_2^2|}{h^2}=|\|K_h\ast f''\|_2^2-\|f''\|_2^2|\\&
     =|\|K_h\ast f''\|_2-\|f''\|_2|(\|K_h\ast f''\|_2+\|f''\|_2)
