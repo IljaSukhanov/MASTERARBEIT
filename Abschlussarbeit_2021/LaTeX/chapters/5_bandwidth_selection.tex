@@ -698,29 +698,26 @@ where we used Tonelli's theorem to exchange the expectation and the integral in 
 
 If $K$ is the Gaussian kernel, then $\partial_hK_h\ast f=h(K_h\ast f'')$ by the well known Gaussian heat equation (see~[]). Consequently,
 \begin{align*}
-    &\frac{\|\partial_hK_h\ast f\|_2-h^2\|f''\|_2}{h^2}=\|h^{-1}\partial_hK_h\ast f\|_2-\|f''\|_2\\&
-    \le\|h^{-1}\partial_hK_h\ast f-f''\|_2=\|K_h\ast f''-f''\|_2\to0,\quad h\to0,
+    &\frac{|\|\partial_hK_h\ast f\|_2^2-h^2\|f''\|_2^2|}{h^2}=|\|h^{-1}\partial_hK_h\ast f\|_2^2-\|f''\|_2^2|\\&
+    =|\|h^{-1}\partial_hK_h\ast f\|_2-\|f''\|_2|(\|h^{-1}\partial_hK_h\ast f\|_2+\|f''\|_2)
+    \\&
+    \le\|h^{-1}\partial_hK_h\ast f-f''\|_2(\|h^{-1}\partial_hK_h\ast f-f''\|_2+2\|f''\|_2^2)
+    \\&
+    =\underbrace{\|K_h\ast f''-f''\|_2}_{\to0,\ h\downarrow0}(\underbrace{\|K_h\ast f''-f''\|_2}_{\to0,\ h\downarrow0}+2\|\|_2^2)\to0,\quad h\downarrow0
 \end{align*}
-where the limit is due to~\cite[Theorem~8.14]{folland_real_1999}. This implies $\|\partial_hK_h\ast f\|_2^2=h^2\|f''\|_2^2+\mathbf{o}(h^2)$. A leading term approximation yields
+where the limit is due to~\cite[Theorem~8.14]{folland_real_1999}. This implies $\|\partial_hK_h\ast f\|_2^2=h^2\|f''\|_2^2+\mathbf{o}(h^2)$. A leading-term approximation yields
 \begin{align*}
     \mathbb{E}[\hat{Q}_r(h)]=\underbrace{\frac{1}{2n}h^{-(1+2r)}\|L\|_2^2+\frac{n-1}{2n}h^{4-2r}\|f''\|_2^2}_{=:\operatorname{AMQ}_r(h)}+\mathbf{o}(h^{4-2r}),\quad h\downarrow0.
 \end{align*}
 The unique minimizer of $\operatorname{AMQ}_r(h)$ over $(0,\infty)$ is
 \begin{align*}
-    h_{\operatorname{AMQ},r}(n):=\left(\frac{1+2r}{2-r}\frac{\|L\|_2^2}{(n-1)\|f''\|_2^2}\right)^{1/5}
+    h_{\operatorname{AMQ},r}(n):=\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{(n-1)\|f''\|_2^2}\right)^{1/5}
 \end{align*}
-given that $n\ge 2$ and $r\in(-1/2,2)$.
-
-
-\todo[inline]{---}
-
-
-We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise}. We therefore get
+given that $n\ge 2$ and $r\in(-1/2,2)$. We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise}. We therefore get
 \begin{align}\label{eq:h_amq_limit}
-    \lim\limits_{n\to\infty}\frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}=\frac{1+2r}{4-2r}\left(\frac{\|L\|_2^2}{\|K\|_2^2}\right)^{1/5}=:C_r(K,L).
+    \frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}=\underbrace{\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{\|K\|_2^2}\right)^{1/5}}_{=:C_r(K)}\left(\frac{n}{n-1}\right)^{1/5}\to C_r(K),\quad n\to\infty,
 \end{align}
-
-If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. In this case, $C_r(K,L)=\frac{1+2r}{4-2r}(3/4)^{1/5}$ and it becomes 1 if set $r=13/14$, that is, for $r=13/14$ (the bandwidths inside the grid are arranged slightly below being linear) the asymptotic minimizer of the mean integrated squared error and the asymptotic minimizer of the expected energy functional are asymptotically equivalent.
+that is $h_{\operatorname{AMQ},r}$ and $h_{\operatorname{AMISE}}$ are asymptotically proportional with constant $C_r(K)$, which means that $h_{\operatorname{AMQ}_r}$ and $h_{\text{oracle}}$ are also asymptotically proportional with constant $C_r(K)$. If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. In this case, $C_r(K)=((3+6r)/(16-8r))^{1/5}$, which equals $1$ for $r=13/14$. Thus, for $r=y13/14$, which corresponds to a nearly linear bandwidth grid, the minimizers of the MISE and the leading-term approximation of the expected energy functional are asymptotically equivalent as the sample size grows.
 
 
 \section{Literature Positioning}
