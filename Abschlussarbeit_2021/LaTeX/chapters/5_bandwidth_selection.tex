@@ -604,15 +604,15 @@ Afterwards, we present a connection between the expected energy functional $\mat
 
 Set $d_{ij}:=X_i-X_j$. For the Gaussian kernel the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align}\label{eq:gaussian_energy_functional_formula}
-    \hat{Q}_r(h)=\frac{1}{64n^2\sqrt{\pi}}h^{-5-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(d_{ij}^4-12h^2d_{ij}^2+12h^4\right)
+    \hat{Q}_r(h)=\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\underbrace{\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}-\frac{d_{ij}^4}{16h^4}\right)}_{=S(h)},
 \end{align}
+where we have set $z_{ij}(h):=d_{ij}^2/(4h^2)$, $S(h):=\sum_{i,j=1}^{n}e^{-z_{ij}(h)}p(z_{ij}(h))$ and $p(z):=z^2-3z+3/4$ for later use.
 
 To see this, use Equation~\eqref{eq:frechet_derivative_kde_formula} from Lemma~\ref{lem:frechet_derivative_of_kde} and the expression for $L$ from Remark~\ref{rem:gaussian_kernel_satisfies_decay_assumption} to write
 \begin{align*}
     \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2\stackrel{\eqref{eq:frechet_derivative_kde_formula}}{=}\frac{1}{2n^2}h^{-2(1+r)}\left\|\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right)\right\|_2^2\\&
     =\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
-    \stackrel{(\ast)}{=}\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-\left(1+\frac{d_{ij}^2}{4h^2}\right)+\left(1-\frac{d_{ij}^2}{4h^2}\right)^2\right)\\&
-    =\frac{12}{64n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(1-\frac{d_{ij}^2}{h^2}+\frac{d_{ij}^4}{12h^4}\right),
+    \stackrel{(\ast)}{=}\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}-\frac{d_{ij}^4}{16h^4}\right),
 \end{align*}
 where in step $(\ast)$ we have evaluated the integral by completing the square in the exponent, substitution, and the formula $\int u^{2k}e^{-u^2/2}\,du=(2\pi)^{1/2}(2k)!2^{-k}(k!)^{-1}$, $k\in\mathbb{N}_0$.
 
@@ -620,46 +620,55 @@ Since $L(u)<0$ for all $u>1$ (and hence $\|L\|_2^2>0$), we have $L(h^{-1}(x-X_j)
 
 We can describe the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely,
 \begin{align*}
-    \hat{Q}_r(h)&\sim\frac{3M}{16n^2\sqrt{\pi}}h^{-(1+2r)},&&\quad h\downarrow0\\
-    \hat{Q}_r(h)&\sim\frac{3}{16\sqrt{\pi}}h^{-(1+2r)},&&\quad h\to\infty,
+    h^{1+2r}\hat{Q}_r(h)&\sim\frac{3M}{16n^2\sqrt{\pi}},&&\quad h\downarrow0\\
+    h^{1+2r}\hat{Q}_r(h)&\sim\frac{3}{16\sqrt{\pi}},&&\quad h\to\infty,
 \end{align*}
-where $M:=\#\{(i,j):X_i=X_j\}\ge n>0$. In particular, $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum.
+where $M:=\#\{(i,j):X_i=X_j\}\ge n>0$. In particular, $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum. For later use, we set $G_r(h):=h^{1+2r}\hat{Q}_r(h)$. It holds $G_r(h)=CS(h)$ with constant $C:=4^{-1}n^{-2}\pi^{-1/2}$.
 
 From the explicit formula of the energy functional we see that it is analytic on $(0,\infty)$, which allows us to conclude that the set of its minimizers on a fixed nonempty interval is finite. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$ then $\mathcal{H}_Q$ would have a limit point in that interval (see~\cite[Theorem~2.37]{rudin_real_1987}). By the identity theorem for analytic functions (see~\cite[Corollary~1.2.7]{Krantz2012-yf}) we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$, which is a contradiction to the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$.
 
 
 \todo[inline]{---begin: polish---}
 
-The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. 
+The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. Since $\hat{Q}_r(h)=(1/2)h^{4-2r}\|\hat{f}_h^{(2)}\|_2^2$ due to the heat equation, we have $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and having established the positivity of $\hat{Q}_r$ earlier it follows that $R_2$ is also positive on $(0,\infty)$ and hence the roughness ratio is well defined.
 
 This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. 
 
 
+The existence of local extrema thus depends on the realized sample. If the samples are drawn independently from a distribution with density $f$ such that $0<\|f''\|<+\infty$ then it can be shown that $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ when the sample size $n$ goes to infinity.
+
+
 \begin{Prop}
-    Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_h^{(j)}\|_2^2$. Then
+    Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_h^{(j)}\|_2^2$. Let $r>-1/2$. Then
     \begin{enumerate}
-        \item[(a)] $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h)<2-r$ for some $h>0$
+        \item[(a)] $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h_0)<2-r$ for some $h_0>0$
         \item[(b)] If $0<\|f''\|_2^2<\infty$ then $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ as the sample size $n$ goes to infinity
     \end{enumerate}
 \end{Prop}
 
 \begin{proof}
-    Due to the heat equation, we have $\partial_hK_h(x)=h\partial_x^2K_h(x)$ and therefore also $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)=h\hat{f}_h^{(2)}(x)$. Set $u(x,t):=\hat{f}^{(2)}_{\sqrt{2t}}(x)$ and $F(t):=\|u(\cdot,t)\|_2^2$. By the heat-equation energy identity, $(1/2)F'(t)=-\|\partial_xu(\cdot,t)\|_2^2$. This gives
+    Due to the heat equation, we have $\partial_hK_h(x)=h\partial_x^2K_h(x)$ and therefore also $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)=h\hat{f}_h^{(2)}(x)$. Set $u(x,t):=\hat{f}^{(2)}_{\sqrt{2t}}(x)$ and $F(t):=\|u(\cdot,t)\|_2^2$. By the energy identity for functions satisfying the heat equation, compare, for example, with~\cite[Equation~1.23]{wang_decay_2012} $(1/2)F'(t)=-\|\partial_xu(\cdot,t)\|_2^2$. This gives
     \begin{align*}
         \frac{1}{2}\partial_h\|\hat{f}_h^{(2)}\|_2^2=\frac{1}{2}\partial_h F(h^2/2)=\frac{h}{2}F'(h^2/2)=-h\|\partial_xu(\cdot,h^2/2)\|_2^2=-h\|\hat{f}^{(3)}_h\|_2^2.
     \end{align*}
-    This shows $R_2'(h)=-2hR_3(h)$.
+    This shows $R_2'(h)=-2hR_3(h)$. The energy functional can be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and consequently $\hat{Q}_r'(h)=h^{3-2r}R_2(h)(2-r-B(h))$. Continuing, we have $R_2(h)=2h^{2r-4}\hat{Q}_r(h)=h^{-5}G_r(h)$. Differentiating gives $R_2'(h)=2h^{-5}(G_r'(h)-5h^{-1}G_r(h))$ and thus
+    \begin{align}\label{eq:bh_formula}
+        B(h)=\frac{h^2R_3(h)}{R_2(h)}=\frac{5}{2}-\frac{hG_r'(h)}{2G_r(h)}
+    \end{align}
+    From earlier we know that $G_r(h)\to C_1>0$ as $h\downarrow0$ and $G_r(h)\to C_2>0$ as $h\to\infty$. Differentiating $G_r$ gives
+    \begin{align*}
+        hG_r'(h)&=2C\sum_{i,j=1}^{n}z_{ij}(h)e^{-z_{ij}(h)}q(z_{ij}(h))\\&
+        =2C\sum_{\substack{i,j=1\\X_i\ne X_j}}^{n}z_{ij}(h)e^{-z_{ij}(h)}q(z_{ij}(h)),\quad z_{ij}(h)=(X_i-X_j)^2/(4h^2)
+    \end{align*}
+    where $q(z):=z^2-5z+15/4$. For $Xi\ne X_j$, we have $z_{ij}(h)\to\infty$ as $h\downarrow0$ and $z_{ij}(h)\to0$ as $h\to\infty$. Since $zq(z)e^{-z}\to0$ as $z\to0$ by continuity at zero and as $z\to\infty$ by~\cite[Theorem~8.6(f)]{rudin_real_1987} we have $hG_r'(h)\to0$ for both $h\downarrow0$ and $h\to\infty$. Hence, by Equation~\eqref{eq:bh_formula} can conclude that $B(h)\to5/2$ for both $h\downarrow0$ and $h\to\infty$ and since $5/2>2-r$ whenever $r>-1/2$ we have $B(h)>2-r$, and therefore $\hat{Q}_r'(h)<0$ for all sufficiently small $h$ and all sufficiently large $h$. 
 
-    The energy functional can be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and consequently $\hat{Q}_r'(h)=h^{3-2r}R_2(h)(2-r-B(h))$
-\end{proof}
+    Assume that $B(h_0)<2-r$ for some $h_0>0$. Then $\hat{Q}_r'(h_0)>0$ and by our previous considerations, we can choose $0<a<h_0<b$ so that $\hat{Q}_r'(a),\hat{Q}_r'(b)<0$. This lets us conclude the existence of a local minimum at some $h_1\in(a,h_0)$ and a local maximum at some $h_2\in(h_0,b)$.
 
-\textcolor{red}{We also have $B(h)\to5/2$ for $h\to0$ and $h\to\infty$.}
+    Conversely, if $\hat{Q}_r$ has a local minimum at say $s>0$, then it is also a strict local minimum by the analyticity and nonconstancy of $\hat{Q}_r$, that is, $\hat{Q}_r(t)>\hat{Q}_r(s)$ for all $t>s$ sufficiently close to $s$. By the mean value theorem there must exist some $h_0\in(s,t)$ with $\hat{Q}_r'(h_0)=(\hat{Q}_r(t)-\hat{Q}_r(s))/(t-s)>0$. Therefore, $B(h_0)<2-r$.
 
-Now $\hat{Q}_r'(h)>0$ iff $B(h)<2-r$. This means that if $B(h_0)<2-r$ for some $h_0>0$, then $\hat{Q}_r'(h_0)>0$. We can choose $0<a<h_0$ with $\hat{Q}_r'(a)<0$. Continuity of $\hat{Q}_r$ forces the existence of a local minimum inside $[a,h_0]$. Conversely, if $\hat{Q}_r$ has a local minimum at say $s>0$, then $\hat{Q}_r'(h_0)>0$ for some $h_0>s$ which is equivalent to $B(h_0)<2-r$. The same argument can be used for the characterization of the existence of a local maximum.
+    \todo[inline]{---}
 
-The existence of local extrema thus depends on the realized sample. If the samples are drawn independently from a distribution with density $f$ such that $0<\|f''\|<+\infty$ then it can be shown that $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ when the sample size $n$ goes to infinity.
 
-\begin{proof}
     First, define $g_h:=K_h\ast f$ and $B_f(h):=h^2\|g_h'''\|_2^2/\|g_h''\|_2^2$. We have $\|g_h''\|_2^2\to\|f''\|_2^2$ and $\|hg_h'''\|_2=\|hK_h'\ast f''\|_2\to0$ as $h\downarrow0$. Thus
     \begin{align*}
         B_f(h)=\frac{\|hg_h'''\|_2^2}{\|g_h''\|_2^2}\to0,\quad h\downarrow0.
@@ -670,6 +679,8 @@ The existence of local extrema thus depends on the realized sample. If the sampl
     \end{align*}
     By the reverse triangle inequality and the Markov inequality, $\|\partial_x^j\hat{f}_{n,h_0}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability. Therefore, $B_n(h_0)=h_0^2R_3(h_0)/R_2(h_0)$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem. Set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B_n(h_0)\ge2-r)\le \mathbb{P}(|B_n(h_0)|-B_f(h_0)|>\delta)\to0$ for $n\to\infty$. Which is why $\mathbb{P}(B_n(h_0)<2-r)\to1$ for $n\to\infty$.
 \end{proof}
+
+\todo[inline]{---}
 
 Using standard root finding methods (like Brent's method), we can look for stationary points and check if they are local minima. Afterwards, we can compare its value with the values of the energy functional at the borders $h_{\min}$ and $h_{\max}$ to see if the detected local minimum is, in fact, a global minimum on the interval $[h_{\min},h_{\max}]$.
 
