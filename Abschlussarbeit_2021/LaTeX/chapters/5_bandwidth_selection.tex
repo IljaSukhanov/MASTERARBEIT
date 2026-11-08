@@ -598,9 +598,7 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 
 \subsection{Properties of the energy functional and its connection to the MISE}\label{sec:expected_energy_functional}
 
-Motivated by the connection between the minimizers of the energy functional $\hat{Q}_r$ and the asymptotic behavior of the spectrally selected bandwidth established in Section~\ref{sec:perron_vector_concentrates}, we first study some properties of $\hat{Q}_r$. In particular, we are interested in the existence and uniqueness of its global and local minimizers.
-
-Afterwards, we present a connection between the expected energy functional $\mathbb{E}[\hat{Q}_r]$ and the MISE. Together with the results of the previous Section~\ref{sec:perron_vector_concentrates}, this establishes a theoretical bridge between the spectral scale selection methodology and optimal bandwidth selection in the classical sense.
+Motivated by the connection between the minimizers of the energy functional $\hat{Q}_r$ and the asymptotic behavior of the spectrally selected bandwidth established in Section~\ref{sec:perron_vector_concentrates}, we first study some properties of $\hat{Q}_r$. In particular, we are interested in the existence and uniqueness of its global and local minimizers. Afterwards, we present a connection between the expected energy functional $\mathbb{E}[\hat{Q}_r]$ and the MISE. Together with the results of the previous Section~\ref{sec:perron_vector_concentrates}, this establishes a theoretical bridge between the spectral scale selection methodology and optimal bandwidth selection in the classical sense.
 
 Set $d_{ij}:=X_i-X_j$. For the Gaussian kernel the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align}\label{eq:gaussian_energy_functional_formula}
@@ -627,21 +625,15 @@ where $M:=\#\{(i,j):X_i=X_j\}\ge n>0$. In particular, $\hat{Q}_r(h)\to\infty$ fo
 
 From the explicit formula of the energy functional we see that it is analytic on $(0,\infty)$, which allows us to conclude that the set of its minimizers on a fixed nonempty interval is finite. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$ then $\mathcal{H}_Q$ would have a limit point in that interval (see~\cite[Theorem~2.37]{rudin_real_1987}). By the identity theorem for analytic functions (see~\cite[Corollary~1.2.7]{Krantz2012-yf}) we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$, which is a contradiction to the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$.
 
+\textbf{Local extrema of the energy functional}
 
-\todo[inline]{---begin: polish---}
+The existence of local extrema can be characterized by the roughness ratio $B_n(h)$ defined by $B_n(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\hat{f}_h^{(j)}(x)\|_2^2$. Since $\hat{Q}_r(h)=(1/2)h^{4-2r}\|\hat{f}_h^{(2)}\|_2^2$ due to the heat equation, we have $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and having established the positivity of $\hat{Q}_r$ earlier it follows that $R_2$ is also positive on $(0,\infty)$ and hence the roughness ratio is well defined. Quantities closely related to the roughness ratio are known from mathematical physics or the theory of partial differential equations, see for example~\cite[Equation~8]{coleman-smith_classification_2013} and~\cite[Equation~2.14]{ignatova_strong_2013}.
 
-The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. Since $\hat{Q}_r(h)=(1/2)h^{4-2r}\|\hat{f}_h^{(2)}\|_2^2$ due to the heat equation, we have $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and having established the positivity of $\hat{Q}_r$ earlier it follows that $R_2$ is also positive on $(0,\infty)$ and hence the roughness ratio is well defined.
-
-\textcolor{red}{This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. }
-
-
-The existence of local extrema thus depends on the realized sample $(X_1,\dots,X_n)$ through the roughness ratio. If the samples are drawn independently from a distribution with density $f$ such that $0<\|f''\|<+\infty$ then it can be shown that the probability that $\hat{Q}_r$ has at least one local minimum and local maximum tends to $1$ as the sample size $n$ goes to infinity.
-
-$\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ when the sample size $n$ goes to infinity.
+The existence of local extrema thus depends on the realized sample $(X_1,\dots,X_n)$ through the roughness ratio. If the samples are drawn independently from a distribution with density $f$ whose second derivative is square integrable then it can be shown that the probability that $\hat{Q}_r$ has at least one local minimum and local maximum tends to $1$ as the sample size $n$ goes to infinity.
 
 
 \begin{Prop}
-    Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_h^{(j)}\|_2^2$. Then
+    Let $\hat{f}_{h,n}$ be the kernel density estimator with a Gaussian kernel $K$ constructed from independent and identically distributed data $X_1,\dots,X_n\sim f$. Define the roughness ratio $B_n(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_{h}^{(j)}\|_2^2$. Then
     \begin{enumerate}
         \item[(a)] For $r>-1/2$ the energy functional $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h_0)<2-r$ for some $h_0>0$.
         \item[(b)] For $-1/2<r<2$ we have $\mathbb{P}(\hat{Q}_{r,n}(h)\text{ has at least one local min and max})\to1$ as $n\to\infty$.
@@ -664,25 +656,22 @@ $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ when the sampl
     \end{align*}
     where $q(z):=z^2-5z+15/4$. For $Xi\ne X_j$, we have $z_{ij}(h)\to\infty$ as $h\downarrow0$ and $z_{ij}(h)\to0$ as $h\to\infty$. Since $zq(z)e^{-z}\to0$ as $z\to0$ by continuity at zero and as $z\to\infty$ by~\cite[Theorem~8.6(f)]{rudin_real_1987} we have $hG_r'(h)\to0$ for both $h\downarrow0$ and $h\to\infty$. Hence, by Equation~\eqref{eq:bh_formula} can conclude that $B(h)\to5/2$ for both $h\downarrow0$ and $h\to\infty$ and since $5/2>2-r$ whenever $r>-1/2$ we have $B(h)>2-r$, and therefore $\hat{Q}_r'(h)<0$ for all sufficiently small $h$ and all sufficiently large $h$. 
 
-    Assume that $B(h_0)<2-r$ for some $h_0>0$. Then $\hat{Q}_r'(h_0)>0$ and by our previous considerations, we can choose $0<a<h_0<b$ so that $\hat{Q}_r'(a),\hat{Q}_r'(b)<0$. This lets us conclude the existence of a local minimum at some $h_1\in(a,h_0)$ and a local maximum at some $h_2\in(h_0,b)$.
+    Assume that $B(h_0)<2-r$ for some $h_0>0$. Then $\hat{Q}_r'(h_0)>0$ and by our previous considerations, we can choose $0<a<h_0<b$ so that $\hat{Q}_r'(a),\hat{Q}_r'(b)<0$. By continuity of $\hat{Q}_r$ a minimum on $[a,h_0]$ and a maximum on $[h_0,b]$ are attained. The signs $\hat{Q}_r'(a)<0$, $\hat{Q}_r'(h_0)>0$, $\hat{Q}_r'(b)<0$ exclude the respective endpoints as minimizers and maximizers. This lets us conclude the existence of a local minimum at some $h_1\in(a,h_0)$ and a local maximum at some $h_2\in(h_0,b)$.
+    
+    Conversely, if $\hat{Q}_r$ has a local minimum at say $s>0$, then it is also a strict local minimum due to the analyticity and nonconstancy of $\hat{Q}_r$, that is, $\hat{Q}_r(t)>\hat{Q}_r(s)$ for all $t>s$ sufficiently close to $s$. By the mean value theorem there must exist some $h_0\in(s,t)$ with $\hat{Q}_r'(h_0)=(\hat{Q}_r(t)-\hat{Q}_r(s))/(t-s)>0$. Therefore, $B(h_0)<2-r$.
 
-    Conversely, if $\hat{Q}_r$ has a local minimum at say $s>0$, then it is also a strict local minimum by the analyticity and nonconstancy of $\hat{Q}_r$, that is, $\hat{Q}_r(t)>\hat{Q}_r(s)$ for all $t>s$ sufficiently close to $s$. By the mean value theorem there must exist some $h_0\in(s,t)$ with $\hat{Q}_r'(h_0)=(\hat{Q}_r(t)-\hat{Q}_r(s))/(t-s)>0$. Therefore, $B(h_0)<2-r$.
+    We now prove the second statement. For the remainder of this proof, we will understand all limits involving $h$ to be for $h\downarrow0$. First, define $g_h:=K_h\ast f$ and note that $K_h'(x)=h^{-1}(K')_h(x)$. We have $g_h''(x)=(K_h\ast f)''(x)=(K_h\ast f'')(x)$ and $g_h'''(x)=(K_h\ast f)'''(x)=(K_h'\ast f'')(x)=h^{-1}((K')_h\ast f'')(x)$, compare~\cite[Theorem~7.19]{rudin_functional_1991}. Consequently, by~\cite[Theorem~8.14]{folland_real_1999}, $|\|g_h''\|_2-\|f''\|_2|\le\|g_h''-f''\|_2=\|(K_h\ast f'')-f''\|_2\to0$, because $\int K(x)\,dx=1$. Similarly, $\|hg_h'''\|_2=\|(K')_h\ast f''\|_2\to0$, because $K'\in L^1(\mathbb{R})$ and $\int K'(x)\,dx=0$.
 
-    \todo[inline]{---}
+    We now define $B_f(h):=\|hg_h'''\|_2^2\|g_h''\|_2^{-2}$. Note that $B_f(h)$ is well defined for all sufficiently small $h$ because $\|g_h''\|_2^2\to\|f''\|_2^2>0$ and thus $B_f(h)\to0$. Since $2-r>0$ because of $r<2$ we can now choose an $h_0>0$ with $B_f(h_0)<2-r$. Next, for $j\in\{2,3\}$ we employ the reverse triangle inequality and the Markov inequality to see that
+    \begin{align}\label{eq:markov_inequality}
+        \mathbb{P}\left(\big|\|\hat{f}_{h_0,n}^{(j)}\|_2-\|g_{h_0}^{(j)}\|_2\big|>\epsilon\right)\le\mathbb{P}\left(\|\hat{f}_{h_0,n}^{(j)}-g_{h_0}^{(j)}\|_2>\epsilon\right)\le\frac{\mathbb{E}[\|\hat{f}_{h_0,n}^{(j)}-g_{h_0}^{(j)}\|_2^2]}{\epsilon^2}
+    \end{align}
+    for all $\epsilon>0$. The expectation on the right hand side of Equation~\eqref{eq:markov_inequality} is the integrated variance of $\hat{f}_{h_0,n}^{(j)}(x)$, which has the same form as the kernel density estimate in~\cite[Equation~1.2]{tsybakov2009introduction} with bandwidth $1$ and kernel $u\mapsto K_{h_0}^{(j)}(-u)$. Since $K$ is Gaussian, $K_{h_0}^{(j)}$ is square integrable and by~\cite[Proposition~1.4]{tsybakov2009introduction} it can be bounded above by $n^{-1}\|K_{h_0}^{(j)}\|_2^2$. Thus $\|\hat{f}_{h_0,n}^{(j)}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability.
 
-
-    First, define $g_h:=K_h\ast f$ and $B_f(h):=h^2\|g_h'''\|_2^2/\|g_h''\|_2^2$. We have $\|g_h''\|_2^2\to\|f''\|_2^2$ and $\|hg_h'''\|_2=\|hK_h'\ast f''\|_2\to0$ as $h\downarrow0$. Thus
-    \begin{align*}
-        B_f(h)=\frac{\|hg_h'''\|_2^2}{\|g_h''\|_2^2}\to0,\quad h\downarrow0.
-    \end{align*}
-    Choose $h_0>0$ such that $B_f(h_0)<2-r$. Next
-    \begin{align*}
-        \mathbb{E}[\|\partial_x^j\hat{f}_{n,h_0}-g_{h_0}^{(j)}\|_2^2]=\frac{\|\partial_x^jK_{h_0}\|_2^2-\|g_{h_0}^{(j)}\|_2^2}{n}\to0,\quad n\to\infty.
-    \end{align*}
-    By the reverse triangle inequality and the Markov inequality, $\|\partial_x^j\hat{f}_{n,h_0}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability. Therefore, $B_n(h_0)=h_0^2R_3(h_0)/R_2(h_0)$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem. Set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B_n(h_0)\ge2-r)\le \mathbb{P}(|B_n(h_0)|-B_f(h_0)|>\delta)\to0$ for $n\to\infty$. Which is why $\mathbb{P}(B_n(h_0)<2-r)\to1$ for $n\to\infty$.
+    Therefore, the roughness ratio $B_n(h_0)=h_0^2R_3(h_0)R_2(h_0)^{-1}$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem, see~\cite[Theorem~2.3]{Vaart_1998}. To conclude this proof we set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B_n(h_0)\ge2-r)\le\mathbb{P}(|B_n(h_0)-B_f(h_0)|>\delta)\to 0$ as $n\to\infty$. Thus $\mathbb{P}(B_n(h_0)<2-r)\to1$ as $n\to\infty$. By part $(a)$ this finishes the proof of $(b)$.
 \end{proof}
 
-\todo[inline]{---}
+\todo[inline]{---end: polish---}
 
 Using standard root finding methods (like Brent's method), we can look for stationary points and check if they are local minima. Afterwards, we can compare its value with the values of the energy functional at the borders $h_{\min}$ and $h_{\max}$ to see if the detected local minimum is, in fact, a global minimum on the interval $[h_{\min},h_{\max}]$.
 
