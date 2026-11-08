@@ -1,1 +1,32 @@
 \chapter{Introduction}\label{chap:intro_meth}
+
+\todo[inline]{09.11: Write Introduction}
+
+\begin{itemize}
+    \item spectral scale selection initially developed for Topological Data Analysis (TDA)
+    \item in TDA methods like Persistent Homology analyze topological features of a point cloud for wide range of scales, not committing to one
+    \item in downstream task one still needs to choose one scale and work with it
+    \item theoretically grounded way of choosing the \enquote{correct} scale is not well developed
+    \item spectral scale selection suggest to use a functional $f$ of topological kind on simplicial complexes (like Betti numbers), form the min matrix and compute its Perron vector
+    \item The idea is that trough the eigenvector equation, the Perron vector gives each scale a weight based on how central it is among the whole filtration, then the argmax is chosen
+    \item this thesis is concerned with kernel density estimators instead of simplicial complexes as it can also be seen as a sequence of objects indexed by a scale
+    \item instead of a geometric scale $\epsilon$ indicating a distance we have a bandwidth parameter $h$ indicating the smoothness of the kernel
+    \item Kernel density estimation also requires one to choose the bandwidth appropriately
+    \item Bandwidth selection is a classical topic in non parametric statistics and most methods are related to the minimization of an approximation of error criterion, most often (mean) integrated squared error or the estimation of a minimizer of an approximated error criterion
+    \item kernel density estimation is used in ...
+    \item the goal of this thesis is to find a connection between spectral scale selection and (classical) bandwidth
+    selection, which can motivate further research
+    \item the core idea is to construct scale similarity matrices $S$ by $S_{ij}=\phi(D_{ij})$, where $\phi$ is some decreasing function and $D_{ij}$ is some divergence between two kernel density estimates at different scales $h_i$ and $h_j$
+    \item this lets us use a wide range of different divergences for us to plug into the construction and test out, this thesis provides the first step by choosing the $L^2$-divergence, but other divergences like KL, Jensen-Shannon, squared Hellinger are thinkable in future work
+    \item Section 1: Preliminaries on Kernel density estimation and bandwidth selection
+    \item Section 2: Presentation of divergences, in particular $f$-divergences and Beta Bregman divergences, with a special treatment on the $L^2$-divergence which arises from the Beta Bregman divergence when setting $\beta=2$, its efficient approximative computation via Fourier
+    \item symmetry characterizations are given as we want our scale similarity matrices to by symmetric
+    \item Section 3: some structural properties of the scale similarity matrices are given, in particular the endpoint bias of the Perron vector; also a general bandwidth grid construction is presented with parameter $r\in[0,1]$ which smoothly connects linearly arranged bandwidths ($r=1$) with geometrically arranged bandwidths ($r=0$) and everything in between
+    \item Section 4: Numerical experiments which mainly have exploratory character
+    \item Section 5: Explains the numerical results and establishes the main result of the paper: the spectrally chosen bandwidth approaches a set of global minimizers of an energy functional on a closed interval
+    \item The energy functional is described (for the Gaussian kernel, which is the default in this thesis), conditions on the existence of its local extrema are given
+    \item The expectation of the energy functional is computed and the minimizer of its leading term approximation is asymptotically equivalent to the oracle bandwidth (the one minimizing the mean integrated squared error) for the choice $r=13/14$ which corresponds to a nearly linear bandwidth grid
+    \item Section 6: a short literature discussion is given, individual ideas are known, but the main result in its form and the proposed construction in general a novel
+    \item Outlook discusses further ideas and extensions in particular to non-symmetric divergences
+    \item Proofs are transfered to the Appendix
+\end{itemize}
