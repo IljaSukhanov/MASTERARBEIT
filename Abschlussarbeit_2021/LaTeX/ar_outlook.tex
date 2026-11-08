@@ -1,0 +1,62 @@
+\section{Geometric Estimation of Autoregressive processes}
+
+\todo[inline]{Write outlook for AR part!}
+
+\textbf{Other convex--geometric functionals}
+
+Seeing the support of the sliding window point cloud of an auto-regressive time series as a convex--geometric object, which is a zonoid in case of bounded innovations and using the minimum width as convex--geometric functional to infer information about the AR order and AR coefficients leads to the question if there could be other convex--geometric functionals that could recover something from the time series.
+
+A natural candidate would be the mean width, given by integrating $w_k(u)$ over $\mathbb{S}^{k-1}$:
+\begin{align*}
+    \overline{w}_k=\int_{\mathbb{S}^{k-1}}w_k(u)\,d\sigma(u).
+\end{align*}
+In practice one would estimate the integral by Monte Carlo simulation. The estimator would take the form
+\begin{align*}
+    \hat{\overline{w}}_k=\int_{\mathbb{S}^{k-1}}\hat{w}_{k,T}(u)\,d\sigma(u)\approx\frac{1}{M}\sum_{m=1}^{M}\max_{s,t}\langle Y_s^{(k)}-Y_t^{(k)},U_k\rangle,
+\end{align*}
+where $U_k\sim\mathcal{U}(\mathbb{S}^{k-1})$.
+
+\textcolor{red}{Going one step further, we might investigate intrinsic volumes of the support zonoid (the mean width is proportional to the first intrinsic volume), their estimation by some empirical analogs, and convergence to the theoretical object.}
+
+\textbf{General innovation distributions}
+
+Another open question is how to generalize the minimum width approach to a broader class of innovation distributions. The main difficulty to overcome is that $\operatorname{supp}(Y_t^{(k)})$ is generally not compact but usually unbounded. Thus, the minimum width is infinite.
+
+One idea can be to estimate a highest density region or, more generally, a minimum volume set from the sliding-window point cloud. The \textit{minimum volume set} (compare~\cite{JMLR:v7:scott06a}) is defined by
+\begin{align*}
+    E_{\alpha}\in\arg\min\{\lambda_d(A):\mathbb{P}(Y\in A)\ge1-\alpha,A\in\mathcal{B}(\mathbb{R}^d)\}.
+\end{align*}
+It is a measurable set that contains $(1-\alpha)\%$ of the probability mass but has smallest volume among all those sets.
+
+
+The \textit{highest density region} $C_{\alpha}$, $\alpha\in(0,1)$ (see~\cite{Hyndman01051996}) is defined by
+\begin{align}\label{eq:def_hdr}
+    C_{\alpha}:=\{x\in\mathbb{R}^d:f(x)\ge h_{\alpha}\},
+\end{align}
+where $h_{\alpha}:=\sup\{h\in\mathbb{R}:\mathbb{P}(f(Y)\ge h)\ge 1-\alpha\}$.
+
+Under the condition that $\{x\in\mathbb{R}^d:f(x)=c\}$ for all $c\in\mathbb{R}$ (fulfilled by a large class of densities, for example strictly log concave distributions), the highest density region $E_{\alpha}$ and the minimum volume set $C_{\alpha}$ coincide up to a null set. 
+
+A non-parametric estimation of the highest density region would involve kernel density estimation of the density $f$ and plugging the estimate $\hat{f}$ into Equation~\eqref{eq:def_hdr} to obtain $\hat{C}_{\alpha}:=\{x\in\mathbb{R}^d:\hat{f}(x)\ge h_{\alpha}\}$. This is done, for example, in~[].
+
+The idea is now to assume that the distribution of a sliding-window point $Y_t^{(k)}$ comes from a class of distributions whose highest density region has a \enquote{nice} geometric shape. For example, if the innovations of the AR process have a log-concave distribution, then the HDR of the sliding window point $Y_t^{(k)}$ is convex. A probability density is log-concave if
+\begin{align*}
+    f(x)=\frac{e^{-V(x)}}{\int e^{-V(u)}\,du}
+\end{align*}
+for some convex function $V$. Most prominently, the Gaussian density is log-concave.
+
+In fact, Gaussian innovations are often seen as the default case, that is, $Z_t\sim N(0,\sigma^2)$ for some $\sigma>0$. Using the MA($\infty$) representation, we see that $Y_t^{(k)}\sim\mathcal{N}(0,\Gamma_k)$ with covariance matrix
+\begin{align*}
+    \Gamma_k=\sigma^2\sum_{j=0}^{\infty}g_j^{(k)}(g_j^{(k)})^{T}.
+\end{align*}
+The covariance matrix plays an important role in describing the geometry of the point cloud $\mathcal{P}_k$. Let $E_c=\{y\in\mathbb{R}^k:y^{T}\Gamma_k^{-1}y\le c\}$ be the ellipsoid of size $c>0$. Then for all $\alpha\in(0,1)$ we have
+\begin{align*}
+    E_{c_{\alpha}}\in\arg\min\left\{\operatorname{Vol}(A):\mathbb{P}(Y\in A)\ge\alpha:A\subseteq\mathbb{R}^{k}\right\}
+\end{align*}
+That is, the ellipsoid with size $c_{\alpha}$ is the set with minimum volume, such that the probability that $Y$ is inside $E_{c_{\alpha}}$ is at least $\alpha$.
+
+\todo[inline]{find reference or prove}
+
+\textbf{Real-world Data}
+
+There are some applications in the real world where it is reasonable to assume that the innovations have a bounded distribution. For example, in wind or solar power generation~[], traffic occupancy~[] and industrial control~[].

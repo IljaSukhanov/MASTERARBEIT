@@ -604,7 +604,7 @@ Afterwards, we present a connection between the expected energy functional $\mat
 
 Set $d_{ij}:=X_i-X_j$. For the Gaussian kernel the energy functional $\hat{Q}_r$ can be written down explicitly:
 \begin{align}\label{eq:gaussian_energy_functional_formula}
-    \hat{Q}_r(h)=\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\underbrace{\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}-\frac{d_{ij}^4}{16h^4}\right)}_{=S(h)},
+    \hat{Q}_r(h)=\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\underbrace{\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}+\frac{d_{ij}^4}{16h^4}\right)}_{=S(h)},
 \end{align}
 where we have set $z_{ij}(h):=d_{ij}^2/(4h^2)$, $S(h):=\sum_{i,j=1}^{n}e^{-z_{ij}(h)}p(z_{ij}(h))$ and $p(z):=z^2-3z+3/4$ for later use.
 
@@ -612,7 +612,7 @@ To see this, use Equation~\eqref{eq:frechet_derivative_kde_formula} from Lemma~\
 \begin{align*}
     \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2\stackrel{\eqref{eq:frechet_derivative_kde_formula}}{=}\frac{1}{2n^2}h^{-2(1+r)}\left\|\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right)\right\|_2^2\\&
     =\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
-    \stackrel{(\ast)}{=}\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}-\frac{d_{ij}^4}{16h^4}\right),
+    \stackrel{(\ast)}{=}\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}+\frac{d_{ij}^4}{16h^4}\right),
 \end{align*}
 where in step $(\ast)$ we have evaluated the integral by completing the square in the exponent, substitution, and the formula $\int u^{2k}e^{-u^2/2}\,du=(2\pi)^{1/2}(2k)!2^{-k}(k!)^{-1}$, $k\in\mathbb{N}_0$.
 
@@ -632,17 +632,19 @@ From the explicit formula of the energy functional we see that it is analytic on
 
 The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. Since $\hat{Q}_r(h)=(1/2)h^{4-2r}\|\hat{f}_h^{(2)}\|_2^2$ due to the heat equation, we have $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and having established the positivity of $\hat{Q}_r$ earlier it follows that $R_2$ is also positive on $(0,\infty)$ and hence the roughness ratio is well defined.
 
-This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. 
+\textcolor{red}{This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. }
 
 
-The existence of local extrema thus depends on the realized sample. If the samples are drawn independently from a distribution with density $f$ such that $0<\|f''\|<+\infty$ then it can be shown that $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ when the sample size $n$ goes to infinity.
+The existence of local extrema thus depends on the realized sample $(X_1,\dots,X_n)$ through the roughness ratio. If the samples are drawn independently from a distribution with density $f$ such that $0<\|f''\|<+\infty$ then it can be shown that the probability that $\hat{Q}_r$ has at least one local minimum and local maximum tends to $1$ as the sample size $n$ goes to infinity.
+
+$\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ when the sample size $n$ goes to infinity.
 
 
 \begin{Prop}
-    Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_h^{(j)}\|_2^2$. Let $r>-1/2$. Then
+    Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_h^{(j)}\|_2^2$. Then
     \begin{enumerate}
-        \item[(a)] $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h_0)<2-r$ for some $h_0>0$
-        \item[(b)] If $0<\|f''\|_2^2<\infty$ then $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ as the sample size $n$ goes to infinity
+        \item[(a)] For $r>-1/2$ the energy functional $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h_0)<2-r$ for some $h_0>0$.
+        \item[(b)] For $-1/2<r<2$ we have $\mathbb{P}(\hat{Q}_{r,n}(h)\text{ has at least one local min and max})\to1$ as $n\to\infty$.
     \end{enumerate}
 \end{Prop}
 
@@ -651,7 +653,7 @@ The existence of local extrema thus depends on the realized sample. If the sampl
     \begin{align*}
         \frac{1}{2}\partial_h\|\hat{f}_h^{(2)}\|_2^2=\frac{1}{2}\partial_h F(h^2/2)=\frac{h}{2}F'(h^2/2)=-h\|\partial_xu(\cdot,h^2/2)\|_2^2=-h\|\hat{f}^{(3)}_h\|_2^2.
     \end{align*}
-    This shows $R_2'(h)=-2hR_3(h)$. The energy functional can be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and consequently $\hat{Q}_r'(h)=h^{3-2r}R_2(h)(2-r-B(h))$. Continuing, we have $R_2(h)=2h^{2r-4}\hat{Q}_r(h)=h^{-5}G_r(h)$. Differentiating gives $R_2'(h)=2h^{-5}(G_r'(h)-5h^{-1}G_r(h))$ and thus
+    This shows $R_2'(h)=-2hR_3(h)$. The energy functional can be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and consequently $\hat{Q}_r'(h)=h^{3-2r}R_2(h)(2-r-B(h))$. Continuing, we have $R_2(h)=2h^{2r-4}\hat{Q}_r(h)=2h^{-5}G_r(h)$. Differentiating gives $R_2'(h)=2h^{-5}(G_r'(h)-5h^{-1}G_r(h))$ and thus
     \begin{align}\label{eq:bh_formula}
         B(h)=\frac{h^2R_3(h)}{R_2(h)}=\frac{5}{2}-\frac{hG_r'(h)}{2G_r(h)}
     \end{align}
