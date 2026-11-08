@@ -654,28 +654,63 @@ The existence of local extrema thus depends on the realized sample $(X_1,\dots,X
         hG_r'(h)&=2C\sum_{i,j=1}^{n}z_{ij}(h)e^{-z_{ij}(h)}q(z_{ij}(h))\\&
         =2C\sum_{\substack{i,j=1\\X_i\ne X_j}}^{n}z_{ij}(h)e^{-z_{ij}(h)}q(z_{ij}(h)),\quad z_{ij}(h)=(X_i-X_j)^2/(4h^2)
     \end{align*}
-    where $q(z):=z^2-5z+15/4$. For $X_i\ne X_j$, we have $z_{ij}(h)\to\infty$ as $h\downarrow0$ and $z_{ij}(h)\to0$ as $h\to\infty$. Since $zq(z)e^{-z}\to0$ as $z\to0$ by continuity at zero and as $z\to\infty$ by~\cite[Theorem~8.6(f)]{rudin_real_1987} we have $hG_r'(h)\to0$ for both $h\downarrow0$ and $h\to\infty$. Hence, by Equation~\eqref{eq:bh_formula} we can conclude that $B(h)\to5/2$ for both $h\downarrow0$ and $h\to\infty$ and since $5/2>2-r$ whenever $r>-1/2$ we have $B(h)>2-r$, and therefore $\hat{Q}_r'(h)<0$ for all sufficiently small $h$ and all sufficiently large $h$. 
+    where $q(z):=z^2-5z+15/4$. For $X_i\ne X_j$, we have $z_{ij}(h)\to\infty$ as $h\downarrow0$ and $z_{ij}(h)\to0$ as $h\to\infty$. Since $zq(z)e^{-z}\to0$ as $z\to0$ by continuity at zero and as $z\to\infty$ by~\cite[Theorem~8.6(f)]{rudin_real_1987} we have $hG_r'(h)\to0$ for both $h\downarrow0$ and $h\to\infty$. Hence, by Equation~\eqref{eq:bh_formula} we can conclude that $B(h)\to5/2$ for both $h\downarrow0$ and $h\to\infty$ and since $5/2>2-r$ whenever $r>-1/2$ we have $B(h)>2-r$ and therefore $\hat{Q}_r'(h)<0$ for all sufficiently small $h$ and all sufficiently large $h$. 
 
-    Assume that $B(h_0)<2-r$ for some $h_0>0$. Then $\hat{Q}_r'(h_0)>0$ and by our previous considerations, we can choose $0<a<h_0<b$ so that $\hat{Q}_r'(a),\hat{Q}_r'(b)<0$. By continuity of $\hat{Q}_r$ a minimum on $[a,h_0]$ and a maximum on $[h_0,b]$ are attained. The signs $\hat{Q}_r'(a)<0$, $\hat{Q}_r'(h_0)>0$, $\hat{Q}_r'(b)<0$ exclude the respective endpoints as minimizers and maximizers. This lets us conclude the existence of a local minimum at some $h_1\in(a,h_0)$ and a local maximum at some $h_2\in(h_0,b)$.
-    
-    Conversely, if $\hat{Q}_r$ has a local minimum at say $s>0$, then it is also a strict local minimum due to the analyticity and nonconstancy of $\hat{Q}_r$, that is, $\hat{Q}_r(t)>\hat{Q}_r(s)$ for all $t>s$ sufficiently close to $s$. By the mean value theorem there must exist some $h_0\in(s,t)$ with $\hat{Q}_r'(h_0)=(\hat{Q}_r(t)-\hat{Q}_r(s))/(t-s)>0$. Therefore, $B(h_0)<2-r$.
+    Assume that $B(h_0)<2-r$ for some $h_0>0$. Then $\hat{Q}_r'(h_0)>0$ and by our previous considerations, we can choose $0<a<h_0<b$ so that $\hat{Q}_r'(a),\hat{Q}_r'(b)<0$. By continuity of $\hat{Q}_r$ a minimum on $[a,h_0]$ and a maximum on $[h_0,b]$ are attained. The signs $\hat{Q}_r'(a)<0$, $\hat{Q}_r'(h_0)>0$, $\hat{Q}_r'(b)<0$ exclude the respective endpoints as minimizers and maximizers. This lets us conclude the existence of a local minimum at some $h_1\in(a,h_0)$ and a local maximum at some $h_2\in(h_0,b)$. Conversely, if $\hat{Q}_r$ has a local minimum at say $s>0$, then it is also a strict local minimum due to the analyticity and nonconstancy of $\hat{Q}_r$, that is, $\hat{Q}_r(t)>\hat{Q}_r(s)$ for all $t>s$ sufficiently close to $s$. By the mean value theorem there must exist some $h_0\in(s,t)$ with $\hat{Q}_r'(h_0)=(\hat{Q}_r(t)-\hat{Q}_r(s))/(t-s)>0$. Therefore, $B(h_0)<2-r$.
 
     We now prove the second statement. For the remainder of this proof, we will understand all limits involving $h$ to be for $h\downarrow0$. First, define $g_h:=K_h\ast f$ and note that $K_h'(x)=h^{-1}(K')_h(x)$. We have $g_h''(x)=(K_h\ast f)''(x)=(K_h\ast f'')(x)$ and $g_h'''(x)=(K_h\ast f)'''(x)=(K_h'\ast f'')(x)=h^{-1}((K')_h\ast f'')(x)$, compare~\cite[Theorem~7.19]{rudin_functional_1991}. Consequently, by~\cite[Theorem~8.14]{folland_real_1999}, $|\|g_h''\|_2-\|f''\|_2|\le\|g_h''-f''\|_2=\|(K_h\ast f'')-f''\|_2\to0$, because $\int K(x)\,dx=1$. Similarly, $\|hg_h'''\|_2=\|(K')_h\ast f''\|_2\to0$, because $K'\in L^1(\mathbb{R})$ and $\int K'(x)\,dx=0$.
 
-    We now define $B_f(h):=\|hg_h'''\|_2^2\|g_h''\|_2^{-2}$. Note that $B_f(h)$ is well defined for all sufficiently small $h$ because $\|g_h''\|_2^2\to\|f''\|_2^2>0$ and thus $B_f(h)\to0$. Since $2-r>0$ because of $r<2$ we can now choose an $h_0>0$ with $B_f(h_0)<2-r$. Next, for $j\in\{2,3\}$ we employ the reverse triangle inequality and the Markov inequality to see that
+    We now define $B_f(h):=\|hg_h'''\|_2^2\|g_h''\|_2^{-2}$. Note that $B_f(h)$ is well defined for all sufficiently small $h$ because $\|g_h''\|_2^2\to\|f''\|_2^2>0$ and therefore $B_f(h)\to0$. Since $2-r>0$ because of $r<2$ we can now choose an $h_0>0$ with $B_f(h_0)<2-r$. Next, for $j\in\{2,3\}$ we employ the reverse triangle inequality and the Markov inequality to see that
     \begin{align}\label{eq:markov_inequality}
         \mathbb{P}\left(\big|\|\hat{f}_{h_0}^{(j)}\|_2-\|g_{h_0}^{(j)}\|_2\big|>\epsilon\right)\le\mathbb{P}\left(\|\hat{f}_{h_0}^{(j)}-g_{h_0}^{(j)}\|_2>\epsilon\right)\le\frac{\mathbb{E}[\|\hat{f}_{h_0}^{(j)}-g_{h_0}^{(j)}\|_2^2]}{\epsilon^2}
     \end{align}
-    for all $\epsilon>0$. The expectation on the right hand side of Equation~\eqref{eq:markov_inequality} is the integrated variance of $\hat{f}_{h_0}^{(j)}(x)$, which has the same form as the kernel density estimate in~\cite[Equation~1.2]{tsybakov2009introduction} with bandwidth $1$ and kernel $u\mapsto K_{h_0}^{(j)}(-u)$. Since $K$ is Gaussian, $K_{h_0}^{(j)}$ is square integrable and by~\cite[Proposition~1.4]{tsybakov2009introduction} it can be bounded above by $n^{-1}\|K_{h_0}^{(j)}\|_2^2$. Thus $\|\hat{f}_{h_0}^{(j)}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability.
+    for all $\epsilon>0$. The expectation on the right hand side of Equation~\eqref{eq:markov_inequality} is the integrated variance of $\hat{f}_{h_0}^{(j)}(x)$, which has the same form as the kernel density estimate in~\cite[Equation~1.2]{tsybakov2009introduction} with bandwidth $1$ and kernel $u\mapsto K_{h_0}^{(j)}(-u)$. Since $K$ is Gaussian, $K_{h_0}^{(j)}$ is square integrable and by~\cite[Proposition~1.4]{tsybakov2009introduction} it can be bounded above by $n^{-1}\|K_{h_0}^{(j)}\|_2^2$. Thus, $\|\hat{f}_{h_0}^{(j)}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability.
 
-    Therefore, the roughness ratio $B(h_0)=h_0^2R_3(h_0)R_2(h_0)^{-1}$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem, see~\cite[Theorem~2.3]{Vaart_1998}. To conclude this proof we set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B(h_0)\ge2-r)\le\mathbb{P}(|B(h_0)-B_f(h_0)|>\delta)\to 0$ as $n\to\infty$. Thus $\mathbb{P}(B(h_0)<2-r)\to1$ as $n\to\infty$. By part $(a)$ this finishes the proof of $(b)$.
+    Therefore, the roughness ratio $B(h_0)=h_0^2R_3(h_0)R_2(h_0)^{-1}$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem, see~\cite[Theorem~2.3]{Vaart_1998}. To conclude this proof, we set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B(h_0)\ge2-r)\le\mathbb{P}(|B(h_0)-B_f(h_0)|>\delta)\to 0$ as $n\to\infty$. Thus, $\mathbb{P}(B(h_0)<2-r)\to1$ as $n\to\infty$. By part $(a)$ this completes the proof of $(b)$.
 \end{proof}
 
-\todo[inline]{---end: polish---}
+The relevance of the above result lies in a better understanding of the occurrence of local minima of the energy functional $\hat{Q}_r$ on $(0,\infty)$. As established in Proposition~\ref{prop:main_thm2}, the spectrally selected bandwidth $h_{k_N}$ approaches the set of global minimizers of $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. At that point, the global minimizers could have been $h_{\min}$ or $h_{\max}$, which would not be as interesting for bandwidth selection. The existence of local minima on $(0,\infty)$ opens up the possibility that a global minimizer on $[h_{\min},h_{\max}]$ lies strictly inside the interval and thus is a local minimizer of $\hat{Q}_r$ on $(0,\infty)$ that is approached by the spectrally selected bandwidth if it is the unique global minimizer on $[h_{\min},h_{\max}]$.
+
+\todo[inline]{---begin: polish---}
 
 Using standard root finding methods (like Brent's method), we can look for stationary points and check if they are local minima. Afterwards, we can compare its value with the values of the energy functional at the borders $h_{\min}$ and $h_{\max}$ to see if the detected local minimum is, in fact, a global minimum on the interval $[h_{\min},h_{\max}]$.
 
 The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
+
+\textbf{Replace optimization with eigenvector computation}
+
+Having established the connection between Energy functional minimization and Spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
+
+A papular minimization algorithm for univariate functions on a closed interval is Brent's method. We compare this minimization approach with our spectral selector in terms of time and which bandwidth is chosen. Our spectral method uses different values for $N$ and $\lambda_N=N^{1.9}$. We use samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots ,100$ and $n=200$ from $N(0,1)$.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        Method
+        & \shortstack{Mean time $\pm$ SE\\(ms)}
+        & \shortstack{Mean selected\\bandwidth}
+        & \shortstack{Mean absolute relative\\bandwidth error (\%)} \\
+        \midrule
+        Brent in $\log h$
+        & $3.85 \pm 0.30$  & $0.27215$ & $<10^{-5}$ \\
+        Spectral, $N=100$
+        & $16.76 \pm 1.46$ & $0.26197$ & $5.79$ \\
+        Spectral, $N=200$
+        & $21.68 \pm 0.92$ & $0.26697$ & $2.97$ \\
+        Spectral, $N=400$
+        & $49.09 \pm 2.39$ & $0.26969$ & $1.55$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{}
+    \label{tab:brent_spectral_timing}
+\end{table}
+
+As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
+
+These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
+
+In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible.
 
 \todo[inline]{---end: polish---}
 
