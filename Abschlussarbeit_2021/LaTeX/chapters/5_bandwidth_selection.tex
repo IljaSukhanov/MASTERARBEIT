@@ -630,10 +630,28 @@ From the explicit formula of the energy functional we see that it is analytic on
 
 \todo[inline]{---begin: polish---}
 
+The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. 
 
-The existence of local extrema can be characterized by the roughness ratio $B(h):=h^2R_3(h)/R_2(h)$, where $R_j(h):=\|\partial_x^j\hat{f}_h(x)\|_2^2$. This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. The energy functional can consequently be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$.
+This roughness ratio is, for example, also used in~\cite[Equation~8]{coleman-smith_classification_2013}. 
 
-The energy functional has both a local minimum and a local maximum iff $B(h)<2-r$ for some $h>0$. This can be seen as follows: \textcolor{red}{First notice that $R_j'(h)=-2hR_{j+1}(h)$.} From this follows $\hat{Q}_r'(h)=h^{3-2r}R_2(h)(2-r-B(h))$. 
+
+\begin{Prop}
+    Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_h^{(j)}\|_2^2$. Then
+    \begin{enumerate}
+        \item[(a)] $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h)<2-r$ for some $h>0$
+        \item[(b)] If $0<\|f''\|_2^2<\infty$ then $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum})\to1$ as the sample size $n$ goes to infinity
+    \end{enumerate}
+\end{Prop}
+
+\begin{proof}
+    Due to the heat equation, we have $\partial_hK_h(x)=h\partial_x^2K_h(x)$ and therefore also $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)=h\hat{f}_h^{(2)}(x)$. Set $u(x,t):=\hat{f}^{(2)}_{\sqrt{2t}}(x)$ and $F(t):=\|u(\cdot,t)\|_2^2$. By the heat-equation energy identity, $(1/2)F'(t)=-\|\partial_xu(\cdot,t)\|_2^2$. This gives
+    \begin{align*}
+        \frac{1}{2}\partial_h\|\hat{f}_h^{(2)}\|_2^2=\frac{1}{2}\partial_h F(h^2/2)=\frac{h}{2}F'(h^2/2)=-h\|\partial_xu(\cdot,h^2/2)\|_2^2=-h\|\hat{f}^{(3)}_h\|_2^2.
+    \end{align*}
+    This shows $R_2'(h)=-2hR_3(h)$.
+
+    The energy functional can be written as $\hat{Q}_r(h)=(1/2)h^{4-2r}R_2(h)$ and consequently $\hat{Q}_r'(h)=h^{3-2r}R_2(h)(2-r-B(h))$
+\end{proof}
 
 \textcolor{red}{We also have $B(h)\to5/2$ for $h\to0$ and $h\to\infty$.}
 
