@@ -636,7 +636,7 @@ The existence of local extrema thus depends on the realized sample $(X_1,\dots,X
     Let $\hat{f}_{h}$ be the kernel density estimator with a Gaussian kernel $K$ constructed from independent and identically distributed data $X_1,\dots,X_n\sim f$. Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_{h}^{(j)}\|_2^2$. Then
     \begin{enumerate}
         \item[(a)] For $r>-1/2$ the energy functional $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h_0)<2-r$ for some $h_0>0$.
-        \item[(b)] For $-1/2<r<2$ we have $\mathbb{P}(\hat{Q}_r(h)\text{ has at least one local min and max})\to1$ as $n\to\infty$.
+        \item[(b)] For $-1/2<r<2$ we have $\mathbb{P}(\hat{Q}_r\text{ has at least one local min and max})\to1$ as $n\to\infty$.
     \end{enumerate}
 \end{Prop}
 
@@ -664,9 +664,9 @@ The existence of local extrema thus depends on the realized sample $(X_1,\dots,X
 
     We now define $B_f(h):=\|hg_h'''\|_2^2\|g_h''\|_2^{-2}$. Note that $B_f(h)$ is well defined for all sufficiently small $h$ because $\|g_h''\|_2^2\to\|f''\|_2^2>0$ and thus $B_f(h)\to0$. Since $2-r>0$ because of $r<2$ we can now choose an $h_0>0$ with $B_f(h_0)<2-r$. Next, for $j\in\{2,3\}$ we employ the reverse triangle inequality and the Markov inequality to see that
     \begin{align}\label{eq:markov_inequality}
-        \mathbb{P}\left(\big|\|\hat{f}_{h_0,n}^{(j)}\|_2-\|g_{h_0}^{(j)}\|_2\big|>\epsilon\right)\le\mathbb{P}\left(\|\hat{f}_{h_0,n}^{(j)}-g_{h_0}^{(j)}\|_2>\epsilon\right)\le\frac{\mathbb{E}[\|\hat{f}_{h_0,n}^{(j)}-g_{h_0}^{(j)}\|_2^2]}{\epsilon^2}
+        \mathbb{P}\left(\big|\|\hat{f}_{h_0}^{(j)}\|_2-\|g_{h_0}^{(j)}\|_2\big|>\epsilon\right)\le\mathbb{P}\left(\|\hat{f}_{h_0}^{(j)}-g_{h_0}^{(j)}\|_2>\epsilon\right)\le\frac{\mathbb{E}[\|\hat{f}_{h_0}^{(j)}-g_{h_0}^{(j)}\|_2^2]}{\epsilon^2}
     \end{align}
-    for all $\epsilon>0$. The expectation on the right hand side of Equation~\eqref{eq:markov_inequality} is the integrated variance of $\hat{f}_{h_0,n}^{(j)}(x)$, which has the same form as the kernel density estimate in~\cite[Equation~1.2]{tsybakov2009introduction} with bandwidth $1$ and kernel $u\mapsto K_{h_0}^{(j)}(-u)$. Since $K$ is Gaussian, $K_{h_0}^{(j)}$ is square integrable and by~\cite[Proposition~1.4]{tsybakov2009introduction} it can be bounded above by $n^{-1}\|K_{h_0}^{(j)}\|_2^2$. Thus $\|\hat{f}_{h_0}^{(j)}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability.
+    for all $\epsilon>0$. The expectation on the right hand side of Equation~\eqref{eq:markov_inequality} is the integrated variance of $\hat{f}_{h_0}^{(j)}(x)$, which has the same form as the kernel density estimate in~\cite[Equation~1.2]{tsybakov2009introduction} with bandwidth $1$ and kernel $u\mapsto K_{h_0}^{(j)}(-u)$. Since $K$ is Gaussian, $K_{h_0}^{(j)}$ is square integrable and by~\cite[Proposition~1.4]{tsybakov2009introduction} it can be bounded above by $n^{-1}\|K_{h_0}^{(j)}\|_2^2$. Thus $\|\hat{f}_{h_0}^{(j)}\|_2$ converges to $\|g_{h_0}^{(j)}\|_2$ in probability.
 
     Therefore, the roughness ratio $B(h_0)=h_0^2R_3(h_0)R_2(h_0)^{-1}$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem, see~\cite[Theorem~2.3]{Vaart_1998}. To conclude this proof we set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B(h_0)\ge2-r)\le\mathbb{P}(|B(h_0)-B_f(h_0)|>\delta)\to 0$ as $n\to\infty$. Thus $\mathbb{P}(B(h_0)<2-r)\to1$ as $n\to\infty$. By part $(a)$ this finishes the proof of $(b)$.
 \end{proof}
