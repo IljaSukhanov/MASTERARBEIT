@@ -604,9 +604,7 @@ Set $d_{ij}:=X_i-X_j$. For the Gaussian kernel the energy functional $\hat{Q}_r$
 \begin{align}\label{eq:gaussian_energy_functional_formula}
     \hat{Q}_r(h)=\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\underbrace{\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}+\frac{d_{ij}^4}{16h^4}\right)}_{=S(h)},
 \end{align}
-where we have set $z_{ij}(h):=d_{ij}^2/(4h^2)$, $S(h):=\sum_{i,j=1}^{n}e^{-z_{ij}(h)}p(z_{ij}(h))$ and $p(z):=z^2-3z+3/4$ for later use.
-
-To see this, use Equation~\eqref{eq:frechet_derivative_kde_formula} from Lemma~\ref{lem:frechet_derivative_of_kde} and the expression for $L$ from Remark~\ref{rem:gaussian_kernel_satisfies_decay_assumption} to write
+where we have set $z_{ij}(h):=d_{ij}^2/(4h^2)$, $S(h):=\sum_{i,j=1}^{n}e^{-z_{ij}(h)}p(z_{ij}(h))$ and $p(z):=z^2-3z+3/4$ for later use. To see this, use Equation~\eqref{eq:frechet_derivative_kde_formula} from Lemma~\ref{lem:frechet_derivative_of_kde} and the expression for $L$ from Remark~\ref{rem:gaussian_kernel_satisfies_decay_assumption} to write
 \begin{align*}
     \hat{Q}_r(h)&=\frac{1}{2}h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2\stackrel{\eqref{eq:frechet_derivative_kde_formula}}{=}\frac{1}{2n^2}h^{-2(1+r)}\left\|\sum_{j=1}^{n}L\left(\frac{x-X_j}{h}\right)\right\|_2^2\\&
     =\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
@@ -659,7 +657,14 @@ We compare this minimization approach with our spectral selector in terms of com
 
 Prior to conducting the experiment we must determine a way of obtaining a reference bandwidth, i.e., an approximation of a global minimizer of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$. For each sample, we use the bandwidth selected by the refined Brent search with refinement setting $M=1025$ and denote it by $h_{\text{ref}}$. We define the relative error of any other selected bandwidth $\hat{h}$ with respect to this reference bandwidth by $|\hat{h}-h_{\text{ref}}|/h_{\text{ref}}$.
 
-The specific choice of $M=1025$ is motivated by a preceding experiment, where the number of local minima found by the refined Brent search in relation to the refinement setting $M$ is examined. 
+The specific choice of $M=1025$ is motivated by a preceding experiment, where the number of local minima found by the refined Brent search in relation to the refinement setting $M$ is examined, see Figure~[].
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/pdfs/brent_minima_vs_subintervals/001_matplotlib_figure.pdf}
+    \caption{}
+    \label{fig:brent_minima_vs_refinement}
+\end{figure}
 
 
 \begin{table}[htbp]
