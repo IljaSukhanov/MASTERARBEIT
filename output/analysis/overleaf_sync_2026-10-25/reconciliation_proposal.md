@@ -39,19 +39,17 @@ The applied operation replaced **only these four repository files with their exa
 
 | Repository file | What the ZIP changes | Exact comparison |
 | --- | --- | --- |
-| `Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex` | Adds a plotting TODO; replaces the AR(1)–AR(3) order-selection table with the AR(1)–AR(5) descent-chain/BIC/PACF table; updates the table reference, caption, label, and TODO dates. | [Chapter 3 diff](diffs/3_application_to_time_series.tex.diff) |
 | `Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex` | Rewrites the introduction; adds the truncation-error and node-selection discussion; expands the Perron-vector stability discussion and Markov-chain comparison; moves literature-positioning TODOs; retains the user's other TODO and notation edits. | [Chapter 5 diff](diffs/5_bandwidth_selection.tex.diff) |
-| `Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex` | Removes the Beta-extension TODO and replaces the red continuity placeholder with the supplied proof discussion. | [Appendix diff](diffs/9999_appendix.tex.diff) |
+| `Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex` | Replaces the red continuity placeholder with the supplied proof discussion. | [Appendix diff](diffs/9999_appendix.tex.diff) |
 | `Abschlussarbeit_2021/LaTeX/bibliography.bib` | Adds the citation keys `de2009intermediate` and `hershey_approximating_2007`. | [Bibliography diff](diffs/bibliography.bib.diff) |
 
-These descriptions summarize the author's changes; this investigation does not validate their mathematical claims or the cited literature. The exact source text is in the diffs and the supplied ZIP (recorded input path: `/Users/iljasukhanov/Downloads/MASTERARBEIT.zip`; checksum in [comparison.json](comparison.json)).
+These descriptions summarize the author's changes; this investigation does not validate their mathematical claims or the cited literature. The retained non-AR source changes are in the diffs; the original changes are in the supplied ZIP (recorded input path: `/Users/iljasukhanov/Downloads/MASTERARBEIT.zip`; checksum in [comparison.json](comparison.json)).
 
 
 ## Recorded figure and result dependencies
 
 - All **16 figure references in the main thesis and its included chapters** resolve to an existing asset in both the ZIP and GitHub. Every corresponding asset has identical content. A seventeenth reference in the separate, inactive `Application_to_point_processes.tex` file also resolves identically. No figure-path edit or figure replacement is needed for this reconciliation.
 - The static scan checked explicit `input`, `include`, and `includegraphics` arguments using the repository root and main-document directory as candidate bases. It verifies file availability and content identity, not compilation or all possible TeX macro expansion. The main file mixes repository-relative and main-directory-relative paths; the reconciliation does not alter them.
-- The 45 selection-count and under/over-selection values in the ZIP's updated AR-order table match the saved [generated table](/Users/iljasukhanov/MASTERARBEIT/Code/Code_AR_processes/outputs/csv/ar_order_selection_final/030cde6f724e3c30/7ac02863db38b8d0/table_2_2_style.tex). This is a comparison with saved results; the experiments were not rerun.
 - Both newly used bibliography keys are supplied by the ZIP's bibliography. No duplicate bibliography entry keys were found there.
 - The newly written chapter 5 still has literal `Figure~[]` placeholders and an explicit TODO to add a figure. These are preserved exactly. Available PDFs for the quadrature discussion include [error over repeated samples](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf) and [error across sample sizes](/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_sample_sizes/001_maximum_error_for_five_sample_sizes_at_omega_450_200_samples_per_size_n_50_h_in_.pdf). Those two PDFs are in GitHub and absent from the ZIP. The continuous-minimizer figure (recorded filename `001_continuous_minimizers_n_100_1000_full_interval_gaussian_samples_m_1000_per_n_h_i.pdf`; identity in [comparison.json](comparison.json)) is already present in both. Choosing or inserting any of these is separate from preserving the supplied text.
 
@@ -79,7 +77,7 @@ request for other protected thesis edits.
 
 ## Patch, validation, and input provenance
 
-- [overleaf_thesis_changes.patch](overleaf_thesis_changes.patch) contains exactly the four proposed replacements as a reviewable diff. It adds 149 lines and removes 59 lines in total.
+- [overleaf_thesis_changes.patch](overleaf_thesis_changes.patch) retains the non-AR portions of the historical review diff; AR portions were removed later.
 - At proposal time, `git apply --check` succeeded against the unchanged working files. After approval, the four files were copied directly from the ZIP and verified byte for byte before and after publication.
 - An independent in-memory application of every patch hunk reconstructed all four ZIP files byte for byte, including line endings. The original ZIP checksum was also rechecked.
 - All 27 protected repository files retained their original SHA-256 checksums throughout the initial inspection. After approval, only the four listed thesis files changed; the other 23 protected files and all non-thesis tracked content stayed identical.

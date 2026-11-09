@@ -1,15 +1,6 @@
 diff --git a/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex b/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex
 --- a/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex
 +++ b/Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex
-@@ -125,8 +125,6 @@
- \end{proof}
- 
- \subsection{Proof of Proposition~\ref{prop:sliding_window_fails_brunel}}\label{sec:proof_sliding_window_fails_brunel}
--
--\todo[inline]{Extend to Beta distributed innovations}
- 
- \begin{proof}
-     Let $\{U_t\}\stackrel{\text{iid}}{\sim}\text{Beta}(\alpha,\beta)$, $Z_t=a+(b-a)U_t$ and write $X_t=\sum_{j=0}^{\infty}\psi_jZ_{t-j}$. Set $c=(b+a)/2$ and $d=(b-a)/2$. Also set $\kappa:=\min\{\alpha,\beta\}$. Then, $X_t=\sum_{\psi_j\ge0}\psi_jZ_{t-j}+\sum_{\psi_j<0}\psi_jZ_{t-j}\le b\sum_{\psi_j\ge0}\psi_j+a\sum_{\psi_j<0}\psi_j=c\sum_{j=0}^{\infty}\psi_j+d\sum_{j=0}^{\infty}|\psi_j|$ and similarly $X_t\ge c\sum_{j=0}^{\infty}\psi_j-d\sum_{j=0}^{\infty}|\psi_j|$. Thus, $\operatorname{supp}(X_t)=[G-H,G+H]$, where $G:=c\sum_{j=0}^{\infty}\psi_j$ and $H:=d\sum_{j=0}^{\infty}|\psi_j|$. Consequently,
 @@ -312,7 +310,15 @@
      \end{align*}
      where the remainder $r_h(\tau)$ fulfills $\|r_h(\tau)\|_2/|\tau|\to0$ as $\tau\to0$ as established in Equation~\eqref{eq:dom_conv_consequence}.

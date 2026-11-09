@@ -1,4 +1,0 @@
-ar3_conditional_restarts_2000_200: real retained process fit; result and attempt scores independently match MAE
-ar3_early_abort_200_12starts: real retained process fit; result and attempt scores independently match MAE
-ar3_single_start_restart_vs_horvath: real retained process fit; result and attempt scores independently match MAE
-Restart script smoke checks completed; temporary traces removed.

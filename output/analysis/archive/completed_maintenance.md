@@ -3,8 +3,7 @@
 Archived on 25 October 2026. These reports describe completed work. Their solver
 versions, notebook counts, test counts, and rerun commands belong to the recorded
 work and may differ from the current code. Current usage is documented in the
-[KDE guide](../../../Code/Code_kde/README.md) and
-[AR guide](../../../Code/Code_AR_processes/README.md).
+[KDE guide](../../../Code/Code_kde/README.md).
 
 The original report text is retained below, with section headings and relative
 links adjusted for this archive. Supporting data, validation records, scripts,

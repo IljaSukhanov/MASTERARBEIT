@@ -1,7 +1,0 @@
-ar3_coefficient_tracker: all cells ran, trajectories verified, exported scores match MAE
-ar3_failed_coefficient_tracking: all cells ran, trajectories verified, exported scores match MAE
-notebook-smoke:60: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
-notebook-smoke:50: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
-ar3_minimum_width_vs_T: real four-method MAEs, bootstrap summaries, paired differences and all revised plots verified
-ar3_minimum_width_k4: paired comparisons and four-method MAEs verified for orders 1 through 5
-Notebook smoke checks completed; temporary figures and data removed.
