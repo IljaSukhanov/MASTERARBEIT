@@ -646,8 +646,6 @@ The existence of local extrema thus depends on the realized sample $(X_1,\dots,X
 
 The relevance of the above result lies in a better understanding of the occurrence of local minima of the energy functional $\hat{Q}_r$ on $(0,\infty)$. As established in Proposition~\ref{prop:main_thm2}, the spectrally selected bandwidth $h_{k_N}$ approaches the set of global minimizers of $\hat{Q}_r$ on the interval $[h_{\min},h_{\max}]$. At that point, the global minimizers could have been $h_{\min}$ or $h_{\max}$, which would not be as interesting for bandwidth selection. The existence of local minima on $(0,\infty)$ opens up the possibility that a global minimizer on $[h_{\min},h_{\max}]$ lies strictly inside the interval and thus is a local minimizer of $\hat{Q}_r$ on $(0,\infty)$ that is approached by the spectrally selected bandwidth if it is the unique global minimizer on $[h_{\min},h_{\max}]$.
 
-\todo[inline]{--- 09.11: begin polish---}
-
 \textbf{Replace optimization with eigenvector computation}
 
 Having established the connection between energy functional minimization and spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
@@ -655,50 +653,68 @@ Having established the connection between energy functional minimization and spe
 A popular minimization algorithm for univariate functions on a closed interval is Brent's method, compare with~\cite[Section~10.2]{winkler_numerical_1993}. In Python, it is implemented by the function \texttt{scipy.optimize.minimize\_scalar}. Since $\hat{Q}_r$ may contain multiple local minima, we can perform a refined search by partitioning the interval $[h_{\min},h_{\max}]$ into subintervals $[h_i,h_{i+1}]$, $i=1,\dots,M-1$ and applying Brent's method to each interval $[h_{i-1},h_{i+1}]$, $i=2,\dots,M-1$ where $\hat{Q}_r(h_{i-1})>\hat{Q}_r(h_i)$ and $\hat{Q}_r(h_{i+1})>\hat{Q}_r(h_i)$. This refinement strategy increases the computational cost, but may also help find the smallest local minimum when there are multiple. Afterwards, we select the bandwidth with the smallest energy functional value among all detected local minima and the endpoints $h_{\min}$ and $h_{\max}$. 
 
 
-\todo[inline]{---}
+\todo[inline]{--- 09.11: begin polish---}
 
 We compare this minimization approach with our spectral selector in terms of computation time and selected bandwidth. We again use independent samples $(X_1^{(l)},\allowbreak\dots,\allowbreak X_n^{(l)})$, $l=1,\dots,100$, and $n=200$ with independent $X_1^{(l)},\dots,X_n^{(l)}\sim f$ where $f$ is the density of the standard normal distribution. Our spectral method uses different values for $N$ and $\lambda_N=N^{3/2}$. For Brent's method, we also use multiple configurations, namely an unrefined search over the entire interval $[h_{\min},h_{\max}]$, which is fastest but may miss lower minima, and a refined search with increasing levels of refinement $M$.
+
+Prior to conducting the experiment we must determine a way of obtaining a reference bandwidth, i.e., an approximation of a global minimizer of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$. For each sample, we use the bandwidth selected by the refined Brent search with refinement setting $M=1025$ and denote it by $h_{\text{ref}}$. We define the relative error of any other selected bandwidth $\hat{h}$ with respect to this reference bandwidth by $|\hat{h}-h_{\text{ref}}|/h_{\text{ref}}$.
+
+The specific choice of $M=1025$ is motivated by a preceding experiment, where the number of local minima found by the refined Brent search in relation to the refinement setting $M$ is examined. 
 
 
 \begin{table}[htbp]
     \centering
     \footnotesize
     \setlength{\tabcolsep}{3pt}
-    \begin{tabular}{lccccc}
+    \begin{tabular}{lccccccc}
         \toprule
-        Method
+        Method & \shortstack{$M$ (Brent)\\$N$ (spectral)}
         & \shortstack{Mean time\\$\pm$ SE (ms)}
-        & \shortstack{Mean\\bandwidth}
-        & \shortstack{Mean absolute\\rel. error (\%)}
-        & \shortstack{Minima\\found}
-        & \shortstack{Endpoint\\selected} \\
+        & \shortstack{Assembly\\(ms)}
+        & \shortstack{Perron\\(ms)}
+        & \shortstack{Mean error\\(\%)}
+        & \shortstack{Max. error\\(\%)}
+        & \shortstack{Mean\\minima} \\
         \midrule
-        Brent, unrefined
-        & $3.95 \pm 0.11$ & $0.27962$ & $5.574$ & 100 & 0 \\
+        & Unrefined
+        & $3.95 \pm 0.11$ & -- & --
+        & $5.57$ & $275.37$ & -- \\
+        & 33
+        & $9.08 \pm 0.16$ & -- & --
+        & $1.1\mathrm{e}{-6}$ & $5.4\mathrm{e}{-6}$ & 1.10 \\
+        & 65
+        & $15.78 \pm 0.32$ & -- & --
+        & $9.5\mathrm{e}{-7}$ & $4.3\mathrm{e}{-6}$ & 1.13 \\
+        Brent & 129
+        & $28.62 \pm 0.62$ & -- & --
+        & $9.8\mathrm{e}{-7}$ & $4.4\mathrm{e}{-6}$ & 1.17 \\
+        & 257
+        & $54.17 \pm 1.49$ & -- & --
+        & $9.7\mathrm{e}{-7}$ & $3.9\mathrm{e}{-6}$ & 1.20 \\
+        & 513
+        & $103.13 \pm 2.05$ & -- & --
+        & $9.3\mathrm{e}{-7}$ & $3.9\mathrm{e}{-6}$ & 1.21 \\
+        & 1025
+        & $206.60 \pm 4.35$ & -- & --
+        & -- & -- & 1.23 \\
         \midrule
-        Brent, linear, $M=33$
-        & $9.08 \pm 0.16$ & $0.27215$ & $<10^{-5}$ & 110 & 0 \\
-        Brent, linear, $M=65$
-        & $15.78 \pm 0.32$ & $0.27215$ & $<10^{-5}$ & 113 & 0 \\
-        Brent, linear, $M=129$
-        & $28.62 \pm 0.62$ & $0.27215$ & $<10^{-5}$ & 117 & 0 \\
-        Brent, linear, $M=257$
-        & $54.17 \pm 1.49$ & $0.27215$ & $<10^{-5}$ & 120 & 0 \\
-        Brent, linear, $M=513$
-        & $103.13 \pm 2.05$ & $0.27215$ & $<10^{-5}$ & 121 & 0 \\
-        Brent, linear, $M=1025$
-        & $206.60 \pm 4.35$ & $0.27215$ & $0$ & 123 & 0 \\
-        \midrule
-        Spectral, $N=100$
-        & $11.94 \pm 0.36$ & $0.24330$ & $13.305$ & --- & --- \\
-        Spectral, $N=200$
-        & $15.31 \pm 0.31$ & $0.25563$ & $8.246$ & --- & --- \\
-        Spectral, $N=400$
-        & $29.49 \pm 0.65$ & $0.26284$ & $5.049$ & --- & --- \\
+        & 100
+        & $11.11 \pm 0.07$ & 10.30 & 0.80
+        & $13.31$ & $41.84$ & -- \\
+        & 200
+        & $14.74 \pm 0.07$ & 12.25 & 2.49
+        & $8.25$ & $39.54$ & -- \\
+        Spectral & 400
+        & $28.02 \pm 0.10$ & 17.33 & 10.69
+        & $5.05$ & $19.82$ & -- \\
+        & 600
+        & $56.28 \pm 0.21$ & 26.44 & 29.83
+        & $3.69$ & $15.64$ & -- \\
+        & 800
+        & $97.51 \pm 0.23$ & 36.78 & 60.74
+        & $3.00$ & $12.71$ & -- \\
         \bottomrule
     \end{tabular}
-    \caption{}
-    \label{tab:brent_spectral_timing}
 \end{table}
 
 As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
