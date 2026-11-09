@@ -674,22 +674,14 @@ Prior to conducting the experiment we must determine a way of obtaining a refere
 
 The specific choice of $M=769$ is motivated by a preceding experiment, where the number of local minima found by the refined Brent search across the 100 samples in relation to the refinement setting $M$ is examined, see Figure~\ref{fig:brent_minima_vs_refinement}. We found that for all tested values from $M=769$ onward the number of detected local minima across the $100$ samples remained at $123$. This provides numerical evidence that there are $123$ local minima across these samples. Specifically, two local minima were found in $23$ samples and one local minimum was found in each of the remaining $77$ samples. Thus, at least one local minimum was found in each of the $100$ tested samples.
 
-\begin{figure}
+\begin{figure}[p]
     \centering
     \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/pdfs/brent_minima_vs_subintervals/001_matplotlib_figure.pdf}
     \caption{Number of detected local minima across $100$ energy functional minimizations using the refined Brent method for increasing levels of refinement $M$. Here, $M-1$ indicates the number of subinterval into which the search space is divided. Tested values include $M-1\in\{2^k:k=1,\dots,14\}\cup\{3\cdot2^k:k=0,1,\dots,14\}$. The dashed orange line indicates the first tested value from which the number of detected minima remained at $123$.}
     \label{fig:brent_minima_vs_refinement}
 \end{figure}
 
-As can be seen in Table~\ref{tab:brent_spectral_timing} using a refined Brent search with only $M=33$ is faster and selects bandwidths much closer to the reference bandwidths than any spectral setting tested. Increasing the refinement $M$ increases the computational time without significantly improving the relative error. Although the number of detected local minima increases, these additional minima have higher energy functional values than the selected minima.
-
-For the tested values of $N$, increasing the number of candidate bandwidths $N$ for the spectral selector with $\lambda_N=N^{3/2}$ increases the computation time, while the mean relative error decreases steadily, which is in accordance with the asymptotic behavior established in Proposition~\ref{prop:main_thm2}. We note that for smaller numbers of bandwidths the assembly of the scale similarity matrix dominates the total computation time, while for larger numbers of bandwidths the Perron vector computation dominates.
-
-These findings suggest that for the sole purpose of selecting a bandwidth the spectral machinery is asymptotically redundant. Under the assumptions of Proposition~\ref{prop:main_thm2} the spectrally selected bandwidth approaches the global minimizer of the energy functional $\hat{Q}_r$ on the fixed interval $[h_{\min},h_{\max}]$ given that it is unique. Thus, asymptotically, spectral bandwidth selection leads to the same bandwidth as direct minimization of the energy functional. As shown in the experiments above, a suitably refined Brent search can be much more efficient for this task.
-
-In future work, we can explore cases where the energy functional is not as easily analytically tractable as it is for the Gaussian kernel. In such cases classical minimization could be more difficult while spectral scale selection might remain feasible. In addition, for data coming from a more complex distribution such as a Gaussian mixture model, the Perron vector may be useful beyond its maximum entry. It could provide weights for multiple competing bandwidths for example bandwidths corresponding to kernel density estimates that either preserve or merge modes of a multimodal distribution.
-
-\begin{table}[htbp]
+\begin{table}[p]
     \centering
     \footnotesize
     \setlength{\tabcolsep}{3pt}
@@ -739,6 +731,14 @@ In future work, we can explore cases where the energy functional is not as easil
     \caption{Runtime comparison between Brent's method and the spectral approach for different values of $M$ and $N$ respectively. The mean computation times are reported with their standard errors and for the spectral approach, broken down into scale similarity matrix assembly, including grid construction and subsequent Perron vector computation, including bandwidth selection via $\arg\max$. The mean and maximum relative errors with respect to the reference bandwidth are given together with the total number of detected local minima for the Brent searches.}
     \label{tab:brent_spectral_timing}
 \end{table}
+
+As can be seen in Table~\ref{tab:brent_spectral_timing} using a refined Brent search with only $M=33$ is faster and selects bandwidths much closer to the reference bandwidths than any spectral setting tested. Increasing the refinement $M$ increases the computational time without significantly improving the relative error. Although the number of detected local minima increases, these additional minima have higher energy functional values than the selected minima.
+
+For the tested values of $N$, increasing the number of candidate bandwidths $N$ for the spectral selector with $\lambda_N=N^{3/2}$ increases the computation time, while the mean relative error decreases steadily, which is in accordance with the asymptotic behavior established in Proposition~\ref{prop:main_thm2}. We note that for smaller numbers of bandwidths the assembly of the scale similarity matrix dominates the total computation time, while for larger numbers of bandwidths the Perron vector computation dominates.
+
+These findings suggest that for the sole purpose of selecting a bandwidth the spectral machinery is asymptotically redundant. Under the assumptions of Proposition~\ref{prop:main_thm2} the spectrally selected bandwidth approaches the global minimizer of the energy functional $\hat{Q}_r$ on the fixed interval $[h_{\min},h_{\max}]$ given that it is unique. Thus, asymptotically, spectral bandwidth selection leads to the same bandwidth as direct minimization of the energy functional. As shown in the experiments above, a suitably refined Brent search can be much more efficient for this task.
+
+In future work, we can explore cases where the energy functional is not as easily analytically tractable as it is for the Gaussian kernel. In such cases classical minimization could be more difficult while spectral scale selection might remain feasible. In addition, for data coming from a more complex distribution such as a Gaussian mixture model, the Perron vector may be useful beyond its maximum entry. It could provide weights for multiple competing bandwidths for example bandwidths corresponding to kernel density estimates that either preserve or merge modes of a multimodal distribution.
 
 \textbf{Expected energy functional}
 
