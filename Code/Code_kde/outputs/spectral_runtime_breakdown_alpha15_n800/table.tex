@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+    \centering
+    \small
+    \begin{tabular}{ccccc}
+        \toprule
+        $N$ & \shortstack{Matrix assembly\\(ms)} & \shortstack{Perron and selection\\(ms)} & \shortstack{Total\\(ms)} & \shortstack{Assembly\\share (\%)} \\
+        \midrule
+        $100$ & $10.30 \pm 0.06$ & $0.80 \pm 0.01$ & $11.11 \pm 0.07$ & $92.8$ \\
+        $200$ & $12.25 \pm 0.06$ & $2.49 \pm 0.02$ & $14.74 \pm 0.07$ & $83.1$ \\
+        $400$ & $17.33 \pm 0.08$ & $10.69 \pm 0.04$ & $28.02 \pm 0.10$ & $61.9$ \\
+        $600$ & $26.44 \pm 0.15$ & $29.83 \pm 0.08$ & $56.28 \pm 0.21$ & $47.0$ \\
+        $800$ & $36.78 \pm 0.15$ & $60.74 \pm 0.11$ & $97.51 \pm 0.23$ & $37.7$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{Mean spectral computation times $\pm$ standard errors over 100 samples of size 200, with geometric bandwidth grids and $\lambda_N=N^{3/2}$. Matrix assembly includes the grid, divergence matrix and preparation of the stabilized similarity matrix. The Perron stage includes the eigensolver, normalization, checks and bandwidth selection. The assembly share is the ratio of mean assembly time to mean total time.}
+\end{table}

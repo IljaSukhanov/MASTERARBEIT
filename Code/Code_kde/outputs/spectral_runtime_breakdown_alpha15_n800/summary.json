@@ -1,0 +1,337 @@
+{
+  "configuration": {
+    "samples": 100,
+    "sample_size": 200,
+    "distribution": "N(0,1)",
+    "h_interval": [
+      0.01,
+      2.0
+    ],
+    "grid": "geometric",
+    "N_values": [
+      100,
+      200,
+      400,
+      600,
+      800
+    ],
+    "lambda_rule": "N**1.5",
+    "frequency_cutoff": 450.0,
+    "frequency_intervals": 1376,
+    "previous_results": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/brent_linear_refinements_spectral_alpha15/results.csv",
+    "sample_hashes_match": true,
+    "previous_sizes_peak_matches": 300,
+    "new_sizes_finer_frequency_checks": 200,
+    "new_sizes_finer_frequency_mismatches": [],
+    "timer": "perf_counter_ns; one initialized fresh measurement per method and sample; method order randomized separately for each sample",
+    "matrix_assembly": "grid generation, Fourier divergence computation, and preparation of the shifted similarity matrix, with associated checks/orchestration",
+    "perron": "complete existing perron_eigenpair call (including preprocessing, eigh, normalization and residual checks) plus final peak selection",
+    "eigensolver": "nested scipy.linalg.eigh call (two largest eigenpairs)",
+    "validation_not_timed": true,
+    "thread_limit_requested": 1,
+    "threadpools_reported": [],
+    "thread_environment": {
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "python": "3.12.5",
+    "numpy": "2.3.1",
+    "scipy": "1.16.0",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "bandwidth_reference": "linear refined Brent M=1025 for each sample; not a global certificate"
+  },
+  "results": [
+    {
+      "N": 100,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.07588208,
+        "se": 0.0013957018009980108,
+        "median": 0.07664599999999999
+      },
+      "divergence_ms": {
+        "mean": 9.934976260000003,
+        "se": 0.057390445045154795,
+        "median": 9.881708
+      },
+      "similarity_preparation_ms": {
+        "mean": 0.29172993,
+        "se": 0.0077156721861083395,
+        "median": 0.263583
+      },
+      "matrix_assembly_ms": {
+        "mean": 10.30258827,
+        "se": 0.06154443456334938,
+        "median": 10.227729
+      },
+      "perron_solver_ms": {
+        "mean": 0.7828070999999999,
+        "se": 0.014029558884175421,
+        "median": 0.7553129999999999
+      },
+      "eigensolver_ms": {
+        "mean": 0.54889457,
+        "se": 0.0026368753271170378,
+        "median": 0.5451250000000001
+      },
+      "perron_other_ms": {
+        "mean": 0.23391252999999995,
+        "se": 0.01338857686865825,
+        "median": 0.2037085
+      },
+      "selection_ms": {
+        "mean": 0.02135252,
+        "se": 0.00030938372939791386,
+        "median": 0.021041999999999998
+      },
+      "perron_and_selection_ms": {
+        "mean": 0.8041596199999997,
+        "se": 0.014091787765849064,
+        "median": 0.7769585
+      },
+      "total_ms": {
+        "mean": 11.10674789,
+        "se": 0.0666792737583379,
+        "median": 11.029937
+      },
+      "matrix_fraction_of_mean_total": 0.9275972023526321,
+      "perron_fraction_of_mean_total": 0.07240279764736784,
+      "mean_selected_bandwidth": 0.2432991414794306,
+      "mean_absolute_relative_bandwidth_error_percent": 13.305238966776468
+    },
+    {
+      "N": 200,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.07543336,
+        "se": 0.001490470687808439,
+        "median": 0.0727085
+      },
+      "divergence_ms": {
+        "mean": 11.47639128,
+        "se": 0.05656035619734123,
+        "median": 11.377728999999999
+      },
+      "similarity_preparation_ms": {
+        "mean": 0.69473248,
+        "se": 0.011668549971234992,
+        "median": 0.6594789999999999
+      },
+      "matrix_assembly_ms": {
+        "mean": 12.24655712,
+        "se": 0.06151359192713459,
+        "median": 12.1449995
+      },
+      "perron_solver_ms": {
+        "mean": 2.46663834,
+        "se": 0.018018127830173945,
+        "median": 2.4303125
+      },
+      "eigensolver_ms": {
+        "mean": 1.8293449999999996,
+        "se": 0.004298099725142812,
+        "median": 1.8259375
+      },
+      "perron_other_ms": {
+        "mean": 0.63729334,
+        "se": 0.016345874233593273,
+        "median": 0.5896250000000001
+      },
+      "selection_ms": {
+        "mean": 0.022855009999999995,
+        "se": 0.000812055246477925,
+        "median": 0.021541
+      },
+      "perron_and_selection_ms": {
+        "mean": 2.48949335,
+        "se": 0.018340980488668873,
+        "median": 2.4495620000000002
+      },
+      "total_ms": {
+        "mean": 14.73605047,
+        "se": 0.07093432960995422,
+        "median": 14.6621045
+      },
+      "matrix_fraction_of_mean_total": 0.8310610190248622,
+      "perron_fraction_of_mean_total": 0.16893898097513776,
+      "mean_selected_bandwidth": 0.2556278143826524,
+      "mean_absolute_relative_bandwidth_error_percent": 8.245655668892397
+    },
+    {
+      "N": 400,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.07478412000000001,
+        "se": 0.0016642708458479327,
+        "median": 0.070083
+      },
+      "divergence_ms": {
+        "mean": 14.588071309999998,
+        "se": 0.06948825064975497,
+        "median": 14.538354
+      },
+      "similarity_preparation_ms": {
+        "mean": 2.6688124899999996,
+        "se": 0.023918041130686078,
+        "median": 2.573167
+      },
+      "matrix_assembly_ms": {
+        "mean": 17.33166792,
+        "se": 0.07713707313331167,
+        "median": 17.2853125
+      },
+      "perron_solver_ms": {
+        "mean": 10.665567479999998,
+        "se": 0.03797665585318976,
+        "median": 10.5211455
+      },
+      "eigensolver_ms": {
+        "mean": 8.640998810000001,
+        "se": 0.011044937072738197,
+        "median": 8.6190415
+      },
+      "perron_other_ms": {
+        "mean": 2.0245686699999994,
+        "se": 0.031203063259377245,
+        "median": 1.8947915
+      },
+      "selection_ms": {
+        "mean": 0.02478587,
+        "se": 0.00034344954686741736,
+        "median": 0.024146
+      },
+      "perron_and_selection_ms": {
+        "mean": 10.69035335,
+        "se": 0.0381935567702763,
+        "median": 10.5459785
+      },
+      "total_ms": {
+        "mean": 28.022021270000003,
+        "se": 0.09949052195620015,
+        "median": 28.0127915
+      },
+      "matrix_fraction_of_mean_total": 0.6185017045346065,
+      "perron_fraction_of_mean_total": 0.38149829546539343,
+      "mean_selected_bandwidth": 0.26283734497999584,
+      "mean_absolute_relative_bandwidth_error_percent": 5.04861373061403
+    },
+    {
+      "N": 600,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.07982581999999999,
+        "se": 0.0023839710357444967,
+        "median": 0.07447899999999999
+      },
+      "divergence_ms": {
+        "mean": 20.402483790000005,
+        "se": 0.11510681745669431,
+        "median": 19.926021
+      },
+      "similarity_preparation_ms": {
+        "mean": 5.962430760000001,
+        "se": 0.06193905481555939,
+        "median": 5.826021
+      },
+      "matrix_assembly_ms": {
+        "mean": 26.444740370000005,
+        "se": 0.15318809087492002,
+        "median": 25.926084
+      },
+      "perron_solver_ms": {
+        "mean": 29.803482090000003,
+        "se": 0.07931913620198537,
+        "median": 29.532625000000003
+      },
+      "eigensolver_ms": {
+        "mean": 24.995793299999992,
+        "se": 0.04341607500533633,
+        "median": 24.820917
+      },
+      "perron_other_ms": {
+        "mean": 4.80768879,
+        "se": 0.044656423400493014,
+        "median": 4.6820625
+      },
+      "selection_ms": {
+        "mean": 0.0292905,
+        "se": 0.00048602821269485327,
+        "median": 0.0277085
+      },
+      "perron_and_selection_ms": {
+        "mean": 29.832772590000005,
+        "se": 0.07961672033350696,
+        "median": 29.559354
+      },
+      "total_ms": {
+        "mean": 56.277512959999996,
+        "se": 0.21353125494956218,
+        "median": 55.7113125
+      },
+      "matrix_fraction_of_mean_total": 0.46989888108232436,
+      "perron_fraction_of_mean_total": 0.5301011189176759,
+      "mean_selected_bandwidth": 0.26562385826132523,
+      "mean_absolute_relative_bandwidth_error_percent": 3.689822633252308
+    },
+    {
+      "N": 800,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.07952047,
+        "se": 0.0014312353376747973,
+        "median": 0.076604
+      },
+      "divergence_ms": {
+        "mean": 25.1416142,
+        "se": 0.08923005965361266,
+        "median": 24.915416999999998
+      },
+      "similarity_preparation_ms": {
+        "mean": 11.555274610000001,
+        "se": 0.07471363140984813,
+        "median": 11.297353999999999
+      },
+      "matrix_assembly_ms": {
+        "mean": 36.776409279999996,
+        "se": 0.14521750112487733,
+        "median": 36.500084
+      },
+      "perron_solver_ms": {
+        "mean": 60.702789970000005,
+        "se": 0.1078607847057254,
+        "median": 60.3835625
+      },
+      "eigensolver_ms": {
+        "mean": 51.23942331999999,
+        "se": 0.05155838473442513,
+        "median": 51.0636665
+      },
+      "perron_other_ms": {
+        "mean": 9.46336665,
+        "se": 0.07369921456952663,
+        "median": 9.178479
+      },
+      "selection_ms": {
+        "mean": 0.032557499999999996,
+        "se": 0.001305290161054413,
+        "median": 0.0310205
+      },
+      "perron_and_selection_ms": {
+        "mean": 60.735347469999994,
+        "se": 0.107912275035593,
+        "median": 60.4144795
+      },
+      "total_ms": {
+        "mean": 97.51175675,
+        "se": 0.22635897452316497,
+        "median": 96.9006665
+      },
+      "matrix_fraction_of_mean_total": 0.3771484639979065,
+      "perron_fraction_of_mean_total": 0.6228515360020933,
+      "mean_selected_bandwidth": 0.2670217285829687,
+      "mean_absolute_relative_bandwidth_error_percent": 3.0010817852119556
+    }
+  ]
+}
