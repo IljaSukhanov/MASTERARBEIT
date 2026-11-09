@@ -736,7 +736,7 @@ In future work, we can explore cases where the energy functional is not as easil
         & $3.00$ & $12.71$ & -- \\
         \bottomrule
     \end{tabular}
-    \caption{Runtime comparison between Brent's method and the spectral approach for different values of $M$ and $N$ respectively. The mean computation times are reported with their standard errors and for the spectral approach, broken down into scale similarity matrix assembly and subsequent Perron vector computation. The mean and maximum relative errors with respect to the reference bandwidth are given together with the total number of detected local minima for the Brent searches.}
+    \caption{Runtime comparison between Brent's method and the spectral approach for different values of $M$ and $N$ respectively. The mean computation times are reported with their standard errors and for the spectral approach, broken down into scale similarity matrix assembly, including grid construction and subsequent Perron vector computation, including bandwidth selection via $\arg\max$. The mean and maximum relative errors with respect to the reference bandwidth are given together with the total number of detected local minima for the Brent searches.}
     \label{tab:brent_spectral_timing}
 \end{table}
 
