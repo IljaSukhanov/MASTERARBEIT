@@ -1,0 +1,31 @@
+subintervals,M,samples,detected_minima_total,case
+1,2,100,0,no interior grid points; no search
+2,3,100,100,linear scan and bounded Brent
+3,4,100,100,linear scan and bounded Brent
+4,5,100,100,linear scan and bounded Brent
+6,7,100,100,linear scan and bounded Brent
+8,9,100,100,linear scan and bounded Brent
+12,13,100,101,linear scan and bounded Brent
+16,17,100,102,linear scan and bounded Brent
+24,25,100,105,linear scan and bounded Brent
+32,33,100,110,linear scan and bounded Brent
+48,49,100,111,linear scan and bounded Brent
+64,65,100,113,linear scan and bounded Brent
+96,97,100,116,linear scan and bounded Brent
+128,129,100,117,linear scan and bounded Brent
+192,193,100,119,linear scan and bounded Brent
+256,257,100,120,linear scan and bounded Brent
+384,385,100,122,linear scan and bounded Brent
+512,513,100,121,linear scan and bounded Brent
+768,769,100,123,linear scan and bounded Brent
+1024,1025,100,123,linear scan and bounded Brent
+1536,1537,100,123,linear scan and bounded Brent
+2048,2049,100,123,linear scan and bounded Brent
+3072,3073,100,123,linear scan and bounded Brent
+4096,4097,100,123,linear scan and bounded Brent
+6144,6145,100,123,linear scan and bounded Brent
+8192,8193,100,123,linear scan and bounded Brent
+12288,12289,100,123,linear scan and bounded Brent
+16384,16385,100,123,linear scan and bounded Brent
+24576,24577,100,123,linear scan and bounded Brent
+49152,49153,100,123,linear scan and bounded Brent
