@@ -1,0 +1,35 @@
+{
+  "seed": 31415926,
+  "sample_index_zero_based": 213,
+  "n": 200,
+  "distribution": "standard normal",
+  "interval": [
+    0.01,
+    2.0
+  ],
+  "r": 0,
+  "scan_spacing": "linear",
+  "coarse_M": 513,
+  "fine_M": 8193,
+  "minima": [
+    {
+      "h": 0.02552362663200998,
+      "energy": 0.02111243574546736,
+      "slope": -6.838422883727787e-10,
+      "second_derivative": 36.292256671158455
+    },
+    {
+      "h": 0.16109102545344556,
+      "energy": 0.004691377146999596,
+      "slope": 1.6258273584742e-09,
+      "second_derivative": 0.7826097102421752
+    },
+    {
+      "h": 0.3853232910316717,
+      "energy": 0.0026863934045544403,
+      "slope": 1.832778924304922e-11,
+      "second_derivative": 0.20540331105064424
+    }
+  ],
+  "certified_global": false
+}

@@ -1,0 +1,38 @@
+{
+  "M_values": [
+    33,
+    49,
+    65,
+    97,
+    129,
+    193,
+    257,
+    385,
+    513,
+    769,
+    1025,
+    1537,
+    2049,
+    3073,
+    4097,
+    6145,
+    8193,
+    12289,
+    16385,
+    24577,
+    49153
+  ],
+  "samples": 100,
+  "n": 200,
+  "r": 0,
+  "interval": [
+    0.01,
+    2.0
+  ],
+  "spacing": "linear",
+  "endpoints_included": true,
+  "finest_grid_points": 49153,
+  "previous_sample_counts_checked": 600,
+  "mismatches": [],
+  "global_minimum_certificate": false
+}
