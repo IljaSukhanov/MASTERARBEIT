@@ -7,10 +7,10 @@ from scipy.optimize import minimize_scalar
 from scipy.spatial.distance import pdist
 
 from kde_tools.continuous_minimizers import (
-    METHODS, R_VALUES, continuous_ise_qr_minima, ise_log_energy,
+    METHODS, R_VALUES, continuous_ise_qr_minima, ise_log_energy, qr_log_energy,
 )
 from kde_tools.density import exact_oracle_ise_values
-from kde_tools.qhat import continuous_qhat_minimum, GaussianQhatObjective
+from kde_tools.qhat import continuous_qhat_minimum
 
 
 class ContinuousComparisonTests(unittest.TestCase):
@@ -27,6 +27,8 @@ class ContinuousComparisonTests(unittest.TestCase):
 
     def test_log_derivatives_match_finite_differences(self):
         functions = [lambda z: ise_log_energy(self.d2, self.samples, z)]
+        functions += [lambda z, r=r: qr_log_energy(self.d2, len(self.samples), z, r)
+                      for r in R_VALUES.values()]
         z, step = np.log(0.31), 1e-4
         for function in functions:
             value, gradient, curvature = function(z)
@@ -37,16 +39,15 @@ class ContinuousComparisonTests(unittest.TestCase):
     def test_all_selectors_match_dense_exact_search_and_refined_scan(self):
         result = continuous_ise_qr_minima(self.samples)
         refined = continuous_ise_qr_minima(self.samples, scan_points=513, spatial_points=65536)
-        h_grid = np.geomspace(.01, 2, 1025)
-        qhat = GaussianQhatObjective(self.samples)
+        log_h = np.linspace(np.log(.01), np.log(2), 1025)
         for method in METHODS:
-            function = ((lambda h: ise_log_energy(self.d2, self.samples, np.log(h))) if method == "ISE"
-                        else (lambda h: qhat.derivatives(h, R_VALUES[method])))
-            values = np.array([function(h)[0] for h in h_grid])
+            function = ((lambda z: ise_log_energy(self.d2, self.samples, z)) if method == "ISE"
+                        else (lambda z: qr_log_energy(self.d2, len(self.samples), z, R_VALUES[method])))
+            values = np.array([function(z)[0] for z in log_h])
             candidates = [values[0], values[-1]]
             for index in np.flatnonzero((values[1:-1] < values[:-2])
                                         & (values[1:-1] < values[2:]))+1:
-                fit = minimize_scalar(lambda h: function(h)[0], bounds=h_grid[[index-1, index+1]],
+                fit = minimize_scalar(lambda z: function(z)[0], bounds=log_h[[index-1, index+1]],
                                       method="bounded", options={"xatol": 1e-12})
                 candidates.append(fit.fun)
             self.assertAlmostEqual(result[method]["objective"], min(candidates), delta=1e-11)
