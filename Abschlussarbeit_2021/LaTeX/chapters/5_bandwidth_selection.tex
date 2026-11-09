@@ -648,33 +648,53 @@ The relevance of the above result lies in a better understanding of the occurren
 
 \todo[inline]{--- 09.11: begin polish---}
 
-Using standard root finding methods (like Brent's method), we can look for stationary points and check if they are local minima. Afterwards, we can compare its value with the values of the energy functional at the borders $h_{\min}$ and $h_{\max}$ to see if the detected local minimum is, in fact, a global minimum on the interval $[h_{\min},h_{\max}]$.
-
-The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
-
 \textbf{Replace optimization with eigenvector computation}
 
-Having established the connection between Energy functional minimization and Spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
+Having established the connection between energy functional minimization and spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and if these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
 
-A papular minimization algorithm for univariate functions on a closed interval is Brent's method. We compare this minimization approach with our spectral selector in terms of time and which bandwidth is chosen. Our spectral method uses different values for $N$ and $\lambda_N=N^{1.9}$. We use samples $(X_1^{(i)},\dots,X_n^{(i)})$, $i=1,\dots ,100$ and $n=200$ from $N(0,1)$.
+A popular minimization algorithm for univariate functions on a closed interval is Brent's method, compare with~\cite[Section~10.2]{winkler_numerical_1993}. In Python, it is implemented by the function \texttt{scipy.optimize.minimize\_scalar}. Since $\hat{Q}_r$ may contain multiple local minima, we can perform a refined search by partitioning the interval $[h_{\min},h_{\max}]$ into subintervals $[h_i,h_{i+1}]$, $i=1,\dots,M-1$ and applying Brent's method to each interval $[h_{i-1},h_{i+1}]$, $i=2,\dots,M-1$ where $\hat{Q}_r(h_{i-1})>\hat{Q}_r(h_i)$ and $\hat{Q}_r(h_{i+1})>\hat{Q}_r(h_i)$. This refinement strategy increases the computational cost, but may also help find the smallest local minimum when there are multiple. Afterwards, we select the bandwidth with the smallest energy functional value among all detected local minima and the endpoints $h_{\min}$ and $h_{\max}$. 
+
+
+\todo[inline]{---}
+
+We compare this minimization approach with our spectral selector in terms of computation time and selected bandwidth. We again use independent samples $(X_1^{(l)},\allowbreak\dots,\allowbreak X_n^{(l)})$, $l=1,\dots,100$, and $n=200$ with independent $X_1^{(l)},\dots,X_n^{(l)}\sim f$ where $f$ is the density of the standard normal distribution. Our spectral method uses different values for $N$ and $\lambda_N=N^{3/2}$. For Brent's method, we also use multiple configurations, namely an unrefined search over the entire interval $[h_{\min},h_{\max}]$, which is fastest but may miss lower minima, and a refined search with increasing levels of refinement $M$.
+
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{lccc}
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccccc}
         \toprule
         Method
-        & \shortstack{Mean time $\pm$ SE\\(ms)}
-        & \shortstack{Mean selected\\bandwidth}
-        & \shortstack{Mean absolute relative\\bandwidth error (\%)} \\
+        & \shortstack{Mean time\\$\pm$ SE (ms)}
+        & \shortstack{Mean\\bandwidth}
+        & \shortstack{Mean absolute\\rel. error (\%)}
+        & \shortstack{Minima\\found}
+        & \shortstack{Endpoint\\selected} \\
         \midrule
-        Brent in $\log h$
-        & $3.85 \pm 0.30$  & $0.27215$ & $<10^{-5}$ \\
+        Brent, unrefined
+        & $3.95 \pm 0.11$ & $0.27962$ & $5.574$ & 100 & 0 \\
+        \midrule
+        Brent, linear, $M=33$
+        & $9.08 \pm 0.16$ & $0.27215$ & $<10^{-5}$ & 110 & 0 \\
+        Brent, linear, $M=65$
+        & $15.78 \pm 0.32$ & $0.27215$ & $<10^{-5}$ & 113 & 0 \\
+        Brent, linear, $M=129$
+        & $28.62 \pm 0.62$ & $0.27215$ & $<10^{-5}$ & 117 & 0 \\
+        Brent, linear, $M=257$
+        & $54.17 \pm 1.49$ & $0.27215$ & $<10^{-5}$ & 120 & 0 \\
+        Brent, linear, $M=513$
+        & $103.13 \pm 2.05$ & $0.27215$ & $<10^{-5}$ & 121 & 0 \\
+        Brent, linear, $M=1025$
+        & $206.60 \pm 4.35$ & $0.27215$ & $0$ & 123 & 0 \\
+        \midrule
         Spectral, $N=100$
-        & $16.76 \pm 1.46$ & $0.26197$ & $5.79$ \\
+        & $11.94 \pm 0.36$ & $0.24330$ & $13.305$ & --- & --- \\
         Spectral, $N=200$
-        & $21.68 \pm 0.92$ & $0.26697$ & $2.97$ \\
+        & $15.31 \pm 0.31$ & $0.25563$ & $8.246$ & --- & --- \\
         Spectral, $N=400$
-        & $49.09 \pm 2.39$ & $0.26969$ & $1.55$ \\
+        & $29.49 \pm 0.65$ & $0.26284$ & $5.049$ & --- & --- \\
         \bottomrule
     \end{tabular}
     \caption{}
@@ -686,6 +706,16 @@ As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimizati
 These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
 
 In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible.
+
+
+
+
+
+\todo[inline]{---}
+
+
+
+The black dotted horizontal line in Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} represents $h_{\ast}=\arg\min_{h\in[h_{\min},h_{\max}]}\hat{Q}_0(h)$. The green histograms inside Figures~\ref{fig:distribution_of_chosen_bandwidths}and~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size} also represent the minimizer of the energy functional $\hat{Q}_0$.
 
 \todo[inline]{---09.11: end polish---}
 
@@ -737,6 +767,9 @@ We have thus established a foundation for a theoretical bridge between classical
 
 \todo[inline]{09.11: Polish!}
 
+
+\todo[inline]{---1---}
+
 The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
 
 They set $\mathcal{H}=[h_{\min},h_{\max}]$ and define $\hat{f}_{h,\eta}(x)=n^{-1}\sum_{j=1}^{n}(K_h\ast K_{\eta})(x-X_j)$ and
@@ -756,6 +789,9 @@ Lacour and Massart~\cite{lacour_minimal_2016} build upon the work of Goldenshlug
 
 Another important paper dealing with analyzing the KDE across a family of bandwidths is by Chaudhuri and Marron~\cite{chaudhuri_sizer_nodate}. Their \enquote{SiZer} (Significant Zero crossings) method simultaneously studies a wide range of bandwidths and avoids the classical need to choose a bandwidth. This is a visual data analysis tool that produces a colored map, where for each location-scale pair $(x,h)$ the derivative $\hat{f}_h'(x)$ is computed. The corresponding point $(x,h)$ on the color map is blue if the derivative is significantly positive, red if the derivative is significantly negative, and purple if the derivative is not significantly different from 0. It is a visual aid that lets the practitioner see at one glance how significant features like bumps depend on the chosen bandwidth.
 
+\todo[inline]{---1---}
+\todo[inline]{---2---}
+
 We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate} which is a direct precedent for the form of our energy functional $\hat{Q}_r(h)=(1/2)h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2$. For a continuous signal $f$ its convolution with the Gaussian kernel $K$ is studied: $L(x,t):=(K_{\sqrt{t}}\ast f)(x)$. A $\gamma$-normalized derivative operator is defined by $\partial_{\gamma}L(x,t):=t^{\gamma/2}\partial_xL(x,t)$. \textcolor{red}{The main principle of the paper is that a scale at which suitable combinations of these normalized derivatives assume a local maximum can reflect a characteristic length of structure in the data.} The developed methods are applied in computer vision, for example, to detect blobs, junctions, edges, or ridges. By the Gaussian heat equation, $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)$. Setting $t=h^2$ now gives
 \begin{align*}
     \partial_{\gamma}^2L(x,h^2)=h^{2\gamma}\partial_x^2(K_h\ast\mu_n)(x)=h^{2\gamma}\partial_x^2\hat{f}_h(x)=h^{2\gamma-1}\partial_h\hat{f}_h(x)
@@ -765,7 +801,13 @@ and for $\gamma=1-r/2$ we get $\partial_{1-r/2}^2L(x,h^2)=h^{1-r}\partial_h\hat{
     E_2(h^2)=\int |\partial_{1-r/2}^2L(x,h^2)|^2\,dx=h^{2(1-r)}\int|\partial_h\hat{f}_h(x)|^2\,dx=2\hat{Q}_r(h).
 \end{align*}
 
+\todo[inline]{---2---}
+\todo[inline]{---3---}
+
 Shi, Belkin and Yu~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}\exp{(-(\|x_i-x_j\|)^2/(2\omega^2))}$, where the data $x_1,\dots,x_n$ is assumed to come from a multivariate Gaussian distribution, and, among other things, compute its Perron vector $v_0$ and use its maximum index $k=\arg\max(v_0)_i$ to estimate the mean $\mu$ of the data by $x_k$. They then extend it to data coming from a multivariate Gaussian mixture model, construct the same kernel matrix, and estimate the number of components by the number of eigenvectors of $K_n$ which have no sign changes. They estimate the mean $\mu_g$ of each component $g$ by $x_{k(g)}$, where $k(g)=\arg\max(v_0^{(g)})_i$. They give a theoretical justification through the theory of eigenfunctions. This work serves as a precedent for using the maximum index of the Perron vector (and certain other nonleading eigenvectors) for statistical inference.
+
+\todo[inline]{---3---}
+\todo[inline]{---4---}
 
 Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} can be listed as related work regarding the phenomenon that the Perron vector localizes near the unique maximum of some (energy) functional.
 
@@ -777,3 +819,5 @@ From the proof of Proposition~\ref{prop:main_thm2} a similar localization result
 \begin{align*}
     \sum_{i:|h_i-h^{\ast}|\ge\epsilon}a_{i,N}\to0,\quad N\to\infty.
 \end{align*}
+
+\todo[inline]{---4---}
