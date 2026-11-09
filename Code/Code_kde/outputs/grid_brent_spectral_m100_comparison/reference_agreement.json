@@ -1,0 +1,8 @@
+{
+  "log_bandwidth_tolerance": 1e-06,
+  "selected_bandwidth_matches": 100,
+  "selected_bandwidth_mismatch_samples": [],
+  "all_detected_valleys_match": 100,
+  "valley_mismatch_samples": [],
+  "maximum_relative_bandwidth_error": 4.735164861161288e-08
+}

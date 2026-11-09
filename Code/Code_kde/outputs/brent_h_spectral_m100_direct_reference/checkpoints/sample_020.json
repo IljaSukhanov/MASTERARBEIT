@@ -1,0 +1,248 @@
+{
+  "sample_id": 20,
+  "sample_sha256": "d3ef59b0c16727e8af155aa29a0c52b3ba4a3d3ca3f947dfdd8b95deb4143e77",
+  "reference": {
+    "global_minimum": {
+      "h": 0.12946185993997886,
+      "energy": 0.003353367388278107,
+      "objective": 0.003353367388278107,
+      "log_derivative": 0.0,
+      "log_curvature": 0.0130627224879769,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 0.0,
+      "is_global_minimum": true
+    },
+    "global_minimizers": [
+      {
+        "h": 0.12946185993997886,
+        "energy": 0.003353367388278107,
+        "objective": 0.003353367388278107,
+        "log_derivative": 0.0,
+        "log_curvature": 0.0130627224879769,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 0.0,
+        "is_global_minimum": true
+      }
+    ],
+    "local_minima": [
+      {
+        "h": 0.12946185993997886,
+        "energy": 0.003353367388278107,
+        "objective": 0.003353367388278107,
+        "log_derivative": 0.0,
+        "log_curvature": 0.0130627224879769,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 0.0,
+        "is_global_minimum": true
+      }
+    ],
+    "local_maxima": [
+      {
+        "h": 1.772650490190968,
+        "energy": 0.03398592750584724,
+        "objective": 0.03398592750584724,
+        "log_derivative": -9.915106163592133e-15,
+        "log_curvature": -0.05305793007626592,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 1.8687321856205237e-13,
+        "is_global_minimum": false
+      }
+    ],
+    "stationary_points": [
+      {
+        "h": 0.12946185993997886,
+        "energy": 0.003353367388278107,
+        "objective": 0.003353367388278107,
+        "log_derivative": 0.0,
+        "log_curvature": 0.0130627224879769,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 0.0,
+        "is_global_minimum": true
+      },
+      {
+        "h": 1.772650490190968,
+        "energy": 0.03398592750584724,
+        "objective": 0.03398592750584724,
+        "log_derivative": -9.915106163592133e-15,
+        "log_curvature": -0.05305793007626592,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 1.8687321856205237e-13,
+        "is_global_minimum": false
+      }
+    ],
+    "endpoints": [
+      {
+        "h": 0.01,
+        "energy": 0.04597293418270693,
+        "objective": 0.04597293418270693,
+        "log_derivative": -0.04754664133566974,
+        "log_curvature": 0.0713228176904309,
+        "boundary": -1,
+        "kind": "endpoint",
+        "newton_correction": 0.6666399740689001,
+        "is_global_minimum": false
+      },
+      {
+        "h": 2.0,
+        "energy": 0.03361874259646204,
+        "objective": 0.03361874259646204,
+        "log_derivative": -0.005912110146404165,
+        "log_curvature": -0.04446167288221988,
+        "boundary": 1,
+        "kind": "endpoint",
+        "newton_correction": 0.13297093346139938,
+        "is_global_minimum": false
+      }
+    ],
+    "best_local_minimum": {
+      "h": 0.12946185993997886,
+      "energy": 0.003353367388278107,
+      "objective": 0.003353367388278107,
+      "log_derivative": 0.0,
+      "log_curvature": 0.0130627224879769,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 0.0,
+      "is_global_minimum": true
+    },
+    "local_minimum_count": 1,
+    "diagnostics": {
+      "settings": {
+        "version": "bandwidth_energy_stationary_search_v2",
+        "scan_points": 257,
+        "check_resolution": true,
+        "max_refinements": 2,
+        "root_xtol": 2e-12,
+        "root_rtol": 1e-14,
+        "root_match_tolerance": 1e-07,
+        "bracket_expansion": 8,
+        "comparison_rtol": 1e-10,
+        "comparison_atol": 0.0,
+        "scan_backend": "exact",
+        "half_width": 16.0,
+        "spatial_points": 32768
+      },
+      "scan_points": 513,
+      "search_coordinate": "bandwidth",
+      "refinements": 1,
+      "resolution_stable": true,
+      "maximum_log_h_discrepancy": 1.8685053504443131e-13,
+      "exact_evaluations": 592,
+      "approximate_scan": false,
+      "certified_global": false,
+      "scan_backend": "exact",
+      "effective_half_width": null
+    },
+    "r": 0.0
+  },
+  "measured_order": [
+    "brent_h",
+    "spectral_N100",
+    "spectral_N200",
+    "spectral_N400"
+  ],
+  "rows": [
+    {
+      "sample_id": 20,
+      "method": "brent_h",
+      "N": "",
+      "alpha": "",
+      "selected_h": 0.12946185922792325,
+      "seconds": 0.00688904199978424,
+      "time_ms": 6.88904199978424,
+      "brent_h": 0.12946185922792325,
+      "reference_h": 0.12946185993997886,
+      "reference_boundary": 0,
+      "absolute_relative_difference_to_brent_percent": 0.0,
+      "absolute_relative_reference_error_percent": 5.500118793676413e-07,
+      "within_5_percent_of_reference": true,
+      "matches_reference_within_log_tolerance_1e_minus6": true,
+      "energy_at_selected_h": 0.0033533673882781083,
+      "relative_energy_excess_percent": 4.440892098500626e-14,
+      "function_evaluations": 20
+    },
+    {
+      "sample_id": 20,
+      "method": "spectral_N100",
+      "N": 100,
+      "alpha": 1.9,
+      "selected_h": 0.1452567628746954,
+      "seconds": 0.010752167000646295,
+      "time_ms": 10.752167000646295,
+      "brent_h": 0.12946185922792325,
+      "reference_h": 0.12946185993997886,
+      "reference_boundary": 0,
+      "absolute_relative_difference_to_brent_percent": 12.200430104255297,
+      "absolute_relative_reference_error_percent": 12.200429487139603,
+      "within_5_percent_of_reference": false,
+      "matches_reference_within_log_tolerance_1e_minus6": false,
+      "energy_at_selected_h": 0.0034254960100368846,
+      "relative_energy_excess_percent": 2.150931091263897,
+      "function_evaluations": ""
+    },
+    {
+      "sample_id": 20,
+      "method": "spectral_N200",
+      "N": 200,
+      "alpha": 1.9,
+      "selected_h": 0.1358846970993162,
+      "seconds": 0.01555404099963198,
+      "time_ms": 15.55404099963198,
+      "brent_h": 0.12946185922792325,
+      "reference_h": 0.12946185993997886,
+      "reference_boundary": 0,
+      "absolute_relative_difference_to_brent_percent": 4.961181547752422,
+      "absolute_relative_reference_error_percent": 4.961180970453455,
+      "within_5_percent_of_reference": true,
+      "matches_reference_within_log_tolerance_1e_minus6": false,
+      "energy_at_selected_h": 0.0033675705813423565,
+      "relative_energy_excess_percent": 0.42355016375175136,
+      "function_evaluations": ""
+    },
+    {
+      "sample_id": 20,
+      "method": "spectral_N400",
+      "N": 400,
+      "alpha": 1.9,
+      "selected_h": 0.13321819091956202,
+      "seconds": 0.02913300000000163,
+      "time_ms": 29.13300000000163,
+      "brent_h": 0.12946185922792325,
+      "reference_h": 0.12946185993997886,
+      "reference_boundary": 0,
+      "absolute_relative_difference_to_brent_percent": 2.901496791441555,
+      "absolute_relative_reference_error_percent": 2.9014962254710985,
+      "within_5_percent_of_reference": true,
+      "matches_reference_within_log_tolerance_1e_minus6": false,
+      "energy_at_selected_h": 0.0033584794353090247,
+      "relative_energy_excess_percent": 0.15244518237957916,
+      "function_evaluations": ""
+    }
+  ],
+  "validation": [
+    {
+      "N": 100,
+      "refined_peak_matches": true,
+      "relative_residual": 3.8315696156778167e-16,
+      "maximum_absolute_divergence_refinement_change": 5.441553596607918e-10
+    },
+    {
+      "N": 200,
+      "refined_peak_matches": true,
+      "relative_residual": 4.622281841134873e-16,
+      "maximum_absolute_divergence_refinement_change": 5.441555817053967e-10
+    },
+    {
+      "N": 400,
+      "refined_peak_matches": true,
+      "relative_residual": 3.0307818764101807e-16,
+      "maximum_absolute_divergence_refinement_change": 5.441561923280602e-10
+    }
+  ]
+}

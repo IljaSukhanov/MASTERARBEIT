@@ -114,7 +114,7 @@ def process_sample(index, sample):
             result = results[alpha]
             selected_h = float(grid[result.selected_index])
             error = 100*abs(selected_h-h_star)/h_star
-            selected_q = float(objective.log_energy(np.log(selected_h))[0])
+            selected_q = objective.energy(selected_h)
             rows.append(dict(
                 sample_id=index, N=n_grid, alpha=alpha, lambda_N=float(n_grid**alpha),
                 selected_h=selected_h, reference_h=h_star, reference_boundary=target["boundary"],

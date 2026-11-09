@@ -15,7 +15,7 @@ import math
 import numpy as np
 from scipy.spatial.distance import pdist
 
-from .qhat import _energy, _samples, _scan_matrix, njit, GaussianQhatObjective, minimize_qhat
+from .qhat import _samples, _scan_matrix, njit, GaussianQhatObjective, minimize_qhat
 from .energy_minimization import energy_search_id, minimize_bandwidth_energy, search_config
 
 
@@ -43,14 +43,6 @@ if njit is not None:
         return s, g, k
 else:
     _ise_pair_sums = _ise_pair_sums_numpy
-
-
-def qr_log_energy(d2, n, log_h, r):
-    """Q_r and its first two derivatives with respect to log h."""
-    value, gradient, curvature = _energy(d2, n, log_h)
-    factor = np.exp(-2*r*log_h)
-    return factor * np.array([value, gradient-2*r*value,
-                              curvature-4*r*gradient+4*r*r*value])
 
 
 def ise_log_energy(d2, samples, log_h, sigma2=1.0):

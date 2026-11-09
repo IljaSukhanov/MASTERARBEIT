@@ -34,40 +34,40 @@ from kde_tools.qhat import GaussianQhatObjective, minimize_qhat
 
 
 def coarse_qhat_minima(samples, h_min=0.01, h_max=2.0, *, scan_points=33):
-    """Refine detected nondegenerate Q_0 minima on a coarse log-h grid.
+    """Refine detected nondegenerate Q_0 minima on a coarse geometrically spaced bandwidth grid.
 
     A fresh objective constructs sample distances inside every call. All scan
     values, derivatives, refined roots and endpoint values are analytic.
-    The log-h root tolerances match the shared search's default tolerances.
+    The bandwidth root tolerances match the shared search's default tolerances.
     """
     if not np.isfinite(h_min) or not np.isfinite(h_max) or not 0 < h_min < h_max:
         raise ValueError("Require finite 0 < h_min < h_max.")
     if isinstance(scan_points, bool) or not isinstance(scan_points, int) or scan_points < 3:
         raise ValueError("scan_points must be an integer of at least 3.")
     objective = GaussianQhatObjective(samples)
-    z = np.linspace(np.log(h_min), np.log(h_max), scan_points)
-    values = np.array([objective.log_energy(t) for t in z])
+    h_grid = np.geomspace(h_min, h_max, scan_points)
+    values = np.array([objective.derivatives(h) for h in h_grid])
     gradient = values[:, 1]
     roots = []
     brackets = []
     for i in np.flatnonzero((gradient[:-1] < 0) & (gradient[1:] > 0)):
-        root = brentq(lambda t: objective.log_energy(t)[1], z[i], z[i+1],
+        root = brentq(lambda h: objective.derivatives(h)[1], h_grid[i], h_grid[i+1],
                       xtol=2e-12, rtol=1e-14)
         roots.append(float(root))
-        brackets.append([float(np.exp(z[i])), float(np.exp(z[i+1]))])
+        brackets.append([float(h_grid[i]), float(h_grid[i+1])])
     for i in range(1, scan_points-1):
         if gradient[i] == 0 and gradient[i-1] < 0 < gradient[i+1]:
-            roots.append(float(z[i]))
+            roots.append(float(h_grid[i]))
 
-    def point(t, kind):
-        value, slope, curvature = map(float, objective.log_energy(t))
-        return dict(h=float(np.exp(t)), energy=value, log_derivative=slope,
-                    log_curvature=curvature, kind=kind)
+    def point(h, kind):
+        value, slope, curvature = map(float, objective.derivatives(h))
+        return dict(h=float(h), energy=value, log_derivative=h*slope,
+                    log_curvature=h*h*curvature+h*slope, kind=kind)
 
     stationary_candidates = [point(t, "minimum") for t in sorted(set(roots))]
     minima = [p for p in stationary_candidates if p["log_curvature"] > 0]
     unresolved = [p for p in stationary_candidates if p["log_curvature"] <= 0]
-    endpoints = [point(z[0], "endpoint"), point(z[-1], "endpoint")]
+    endpoints = [point(h_grid[0], "endpoint"), point(h_grid[-1], "endpoint")]
     endpoints[0]["h"], endpoints[1]["h"] = float(h_min), float(h_max)
     return {
         "local_minima": minima, "endpoints": endpoints,
@@ -75,7 +75,7 @@ def coarse_qhat_minima(samples, h_min=0.01, h_max=2.0, *, scan_points=33):
         "best_candidate": min(endpoints+minima, key=lambda p: p["energy"]),
         "scan_points": scan_points, "minimum_brackets": brackets,
         "unresolved_stationary_candidates": unresolved,
-        "exact_evaluations": len(objective._exact),
+        "exact_evaluations": len(objective._bandwidth_exact),
         "resolution_check_performed": False, "certified_global": False,
     }
 

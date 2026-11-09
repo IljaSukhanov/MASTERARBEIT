@@ -1,6 +1,6 @@
 """One continuous search for interval and interior bandwidth-energy minima.
 
-The objective supplies (value, first derivative, second derivative) in log h.
+The objective supplies value and two derivatives in the selected coordinate.
 An optional inexpensive scan supplies candidate brackets only. All reported
 points and endpoint comparisons use the exact objective. SciPy's brentq
 refines sign-changing brackets (official reference:
@@ -20,7 +20,7 @@ from scipy.interpolate import CubicHermiteSpline
 from scipy.optimize import brentq
 
 
-ENERGY_SEARCH_VERSION = "bandwidth_energy_stationary_search_v1"
+ENERGY_SEARCH_VERSION = "bandwidth_energy_stationary_search_v2"
 
 
 @dataclass(frozen=True)
@@ -104,11 +104,14 @@ def same_stationary_points(first, second, tolerance=1e-7):
 
 
 def minimize_bandwidth_energy(log_energy, h_min, h_max, *, scan=None, config=None,
-                              scan_points=None):
+                              scan_points=None, bandwidth_coordinates=False):
     """Return BOTH the interval minimum and detected strict interior minima.
 
-    log_energy(z) returns three finite numbers: energy, d/dz, d²/dz².
-    scan(z_array), if supplied, returns shape (len(z_array), 3) approximations.
+    By default the callback returns energy and two derivatives in log h.
+    With bandwidth_coordinates=True it receives h and returns derivatives
+    in h. The optional scan uses the same coordinate and returns an (n, 3)
+    array of approximations. Reported log derivatives remain available for
+    existing callers.
     This function owns root isolation, refinement, classification, endpoint
     comparison and resolution checks for every caller, including Q_r and ISE.
 
@@ -121,7 +124,8 @@ def minimize_bandwidth_energy(log_energy, h_min, h_max, *, scan=None, config=Non
     cfg = search_config(config, scan_points=scan_points)
     if not np.isfinite(h_min) or not np.isfinite(h_max) or not 0 < h_min < h_max:
         raise ValueError("Require finite 0 < h_min < h_max.")
-    lower, upper = float(np.log(h_min)), float(np.log(h_max))
+    lower, upper = ((float(h_min), float(h_max)) if bandwidth_coordinates
+                    else (float(np.log(h_min)), float(np.log(h_max))))
     cache = {}
 
     def exact(z):
@@ -135,7 +139,10 @@ def minimize_bandwidth_energy(log_energy, h_min, h_max, *, scan=None, config=Non
 
     def point(z, kind, boundary=0):
         value, gradient, curvature = map(float, exact(z))
-        h = float(h_min if boundary < 0 else h_max if boundary > 0 else np.exp(z))
+        h = float(h_min if boundary < 0 else h_max if boundary > 0 else
+                  z if bandwidth_coordinates else np.exp(z))
+        if bandwidth_coordinates:
+            gradient, curvature = h*gradient, h*h*curvature+h*gradient
         return dict(h=h, energy=value, objective=value, log_derivative=gradient,
                     log_curvature=curvature, boundary=boundary, kind=kind,
                     newton_correction=(abs(gradient/curvature) if curvature else None))
@@ -145,7 +152,8 @@ def minimize_bandwidth_energy(log_energy, h_min, h_max, *, scan=None, config=Non
                             xtol=cfg.root_xtol, rtol=cfg.root_rtol))
 
     def search(points):
-        z = np.linspace(lower, upper, points)
+        z = (np.geomspace(lower, upper, points) if bandwidth_coordinates
+             else np.linspace(lower, upper, points))
         values = (np.asarray(scan(z), dtype=float) if scan is not None
                   else np.array([exact(t) for t in z]))
         if values.shape != (points, 3) or not np.all(np.isfinite(values)):
@@ -201,8 +209,10 @@ def minimize_bandwidth_energy(log_energy, h_min, h_max, *, scan=None, config=Non
             elif curvature < 0:
                 kind = "maximum"
             duplicate_tolerance = 8*max(cfg.root_xtol, cfg.root_rtol*max(1., abs(z0)))
+            previous = (result[-1]["h"] if bandwidth_coordinates else
+                        np.log(result[-1]["h"])) if result else None
             if (result and result[-1]["kind"] == kind and
-                    abs(np.log(result[-1]["h"])-z0) <= duplicate_tolerance):
+                    abs(previous-z0) <= duplicate_tolerance):
                 continue
             result.append(point(z0, kind))
         return result
@@ -239,6 +249,7 @@ def minimize_bandwidth_energy(log_energy, h_min, h_max, *, scan=None, config=Non
                                                        if minima else None),
                 local_minimum_count=len(minima),
                 diagnostics=dict(settings=energy_search_settings(cfg), scan_points=points,
+                                 search_coordinate="bandwidth" if bandwidth_coordinates else "log_bandwidth",
                                  refinements=refinements, resolution_stable=stable,
                                  maximum_log_h_discrepancy=resolution_error,
                                  exact_evaluations=len(cache), approximate_scan=scan is not None,

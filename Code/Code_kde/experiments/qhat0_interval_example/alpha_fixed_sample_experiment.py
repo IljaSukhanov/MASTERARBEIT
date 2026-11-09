@@ -78,7 +78,7 @@ def main():
                 index = result.selected_index
                 eigen_seconds = perf_counter()-started
                 selected_h = float(grid[index])
-                selected_q = float(objective.log_energy(np.log(selected_h))[0])
+                selected_q = objective.energy(selected_h)
                 rows.append(dict(
                     N=n_grid, alpha=alpha, lambda_N=lambda_value,
                     selected_index_zero_based=index, selected_index_one_based=index+1,

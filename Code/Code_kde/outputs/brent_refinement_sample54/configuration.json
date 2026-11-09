@@ -1,0 +1,30 @@
+{
+  "sample_id": 54,
+  "sample_id_indexing": "zero-based",
+  "n": 200,
+  "r": 0,
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "sample_sha256": "497e83d4c25e85998fce71d8fefee73357e50e92d4ad58c8271925be9e23c181",
+  "M_includes_endpoints": true,
+  "additional_M": [
+    3,
+    5,
+    9,
+    17
+  ],
+  "benchmarked_M": [
+    33,
+    65,
+    129,
+    257,
+    513,
+    1025
+  ],
+  "reference": "geometric refined Brent M=1025, same sample",
+  "reference_h": 0.12043417399886945,
+  "reference_is_certified_global": false,
+  "unrefined_h": 0.45207382669226054
+}

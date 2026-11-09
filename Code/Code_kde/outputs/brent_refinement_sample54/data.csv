@@ -1,0 +1,21 @@
+sample_id,spacing,M,selected_h,valleys,source
+54,linear,3,0.45207382669226054,1,additional calculation
+54,linear,5,0.12043417704644985,1,additional calculation
+54,linear,9,0.12043417557495036,1,additional calculation
+54,linear,17,0.12043417382717331,1,additional calculation
+54,linear,33,0.12043417543743161,2,saved paired comparison
+54,linear,65,0.12043417554572136,2,saved paired comparison
+54,linear,129,0.12043417708314808,2,saved paired comparison
+54,linear,257,0.12043417523839267,2,saved paired comparison
+54,linear,513,0.12043417551704484,2,saved paired comparison
+54,linear,1025,0.1204341755307223,2,saved paired comparison
+54,geometric,3,0.45207382669226054,1,additional calculation
+54,geometric,5,0.12043417347325655,1,additional calculation
+54,geometric,9,0.12043417444154389,1,additional calculation
+54,geometric,17,0.12043417545734457,1,additional calculation
+54,geometric,33,0.12043417552885305,2,saved paired comparison
+54,geometric,65,0.1204341739638888,2,saved paired comparison
+54,geometric,129,0.12043417468149173,2,saved paired comparison
+54,geometric,257,0.12043417493149834,2,saved paired comparison
+54,geometric,513,0.12043417413906081,2,saved paired comparison
+54,geometric,1025,0.12043417399886945,2,saved paired comparison

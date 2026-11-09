@@ -1,0 +1,391 @@
+{
+  "sample": {
+    "filename": "qhat_reference_sample.csv",
+    "seed": 20260823,
+    "sample_size": 200,
+    "sample_sha256": "02d31fe05d5de19cde046e1999ca559c25ddbbd59fe25c1b1fd0766a59efa113"
+  },
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "r": 0.0,
+  "reference": {
+    "global_minimum": {
+      "h": 0.1764236320306243,
+      "energy": 0.002494497106857865,
+      "objective": 0.002494497106857865,
+      "log_derivative": -6.370288030054825e-15,
+      "log_curvature": 0.010125560122228424,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 6.291294459918586e-13,
+      "is_global_minimum": true
+    },
+    "global_minimizers": [
+      {
+        "h": 0.1764236320306243,
+        "energy": 0.002494497106857865,
+        "objective": 0.002494497106857865,
+        "log_derivative": -6.370288030054825e-15,
+        "log_curvature": 0.010125560122228424,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 6.291294459918586e-13,
+        "is_global_minimum": true
+      }
+    ],
+    "local_minima": [
+      {
+        "h": 0.1764236320306243,
+        "energy": 0.002494497106857865,
+        "objective": 0.002494497106857865,
+        "log_derivative": -6.370288030054825e-15,
+        "log_curvature": 0.010125560122228424,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 6.291294459918586e-13,
+        "is_global_minimum": true
+      }
+    ],
+    "local_maxima": [
+      {
+        "h": 1.9537992608627197,
+        "energy": 0.030946619429029164,
+        "objective": 0.030946619429029164,
+        "log_derivative": 1.1963541141544553e-15,
+        "log_curvature": -0.04910856729692917,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 2.436141349677015e-14,
+        "is_global_minimum": false
+      }
+    ],
+    "stationary_points": [
+      {
+        "h": 0.1764236320306243,
+        "energy": 0.002494497106857865,
+        "objective": 0.002494497106857865,
+        "log_derivative": -6.370288030054825e-15,
+        "log_curvature": 0.010125560122228424,
+        "boundary": 0,
+        "kind": "minimum",
+        "newton_correction": 6.291294459918586e-13,
+        "is_global_minimum": true
+      },
+      {
+        "h": 1.9537992608627197,
+        "energy": 0.030946619429029164,
+        "objective": 0.030946619429029164,
+        "log_derivative": 1.1963541141544553e-15,
+        "log_curvature": -0.04910856729692917,
+        "boundary": 0,
+        "kind": "maximum",
+        "newton_correction": 2.436141349677015e-14,
+        "is_global_minimum": false
+      }
+    ],
+    "endpoints": [
+      {
+        "h": 0.01,
+        "energy": 0.06103433558453302,
+        "objective": 0.06103433558453302,
+        "log_derivative": -0.05375513564913435,
+        "log_curvature": -0.0329227517719888,
+        "boundary": -1,
+        "kind": "endpoint",
+        "newton_correction": 1.6327655726174772,
+        "is_global_minimum": false
+      },
+      {
+        "h": 2.0,
+        "energy": 0.030933331935512457,
+        "objective": 0.030933331935512457,
+        "log_derivative": -0.0011316268211817955,
+        "log_curvature": -0.04771020793417943,
+        "boundary": 1,
+        "kind": "endpoint",
+        "newton_correction": 0.023718756848491993,
+        "is_global_minimum": false
+      }
+    ],
+    "best_local_minimum": {
+      "h": 0.1764236320306243,
+      "energy": 0.002494497106857865,
+      "objective": 0.002494497106857865,
+      "log_derivative": -6.370288030054825e-15,
+      "log_curvature": 0.010125560122228424,
+      "boundary": 0,
+      "kind": "minimum",
+      "newton_correction": 6.291294459918586e-13,
+      "is_global_minimum": true
+    },
+    "local_minimum_count": 1,
+    "diagnostics": {
+      "settings": {
+        "version": "bandwidth_energy_stationary_search_v2",
+        "scan_points": 257,
+        "check_resolution": true,
+        "max_refinements": 2,
+        "root_xtol": 2e-12,
+        "root_rtol": 1e-14,
+        "root_match_tolerance": 1e-07,
+        "bracket_expansion": 8,
+        "comparison_rtol": 1e-10,
+        "comparison_atol": 0.0,
+        "scan_backend": "fourier",
+        "half_width": 16.0,
+        "spatial_points": 32768
+      },
+      "scan_points": 513,
+      "search_coordinate": "bandwidth",
+      "refinements": 1,
+      "resolution_stable": true,
+      "maximum_log_h_discrepancy": 6.294964549622656e-13,
+      "exact_evaluations": 87,
+      "approximate_scan": true,
+      "certified_global": false,
+      "scan_backend": "fourier",
+      "effective_half_width": 16.0
+    },
+    "r": 0.0
+  },
+  "runs": [
+    {
+      "seconds": 0.007661916999950336,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.007563083000150073,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.00792341700025645,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.008177791999969486,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.008282750000034866,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.0075167089999013115,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.008376249999855645,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.008887791999768524,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    },
+    {
+      "seconds": 0.008534749999853375,
+      "result": {
+        "h": 0.17642362930334016,
+        "energy": 0.0024944971068578624,
+        "boundary": 0,
+        "interior_candidate": {
+          "h": 0.17642362930334016,
+          "energy": 0.0024944971068578624,
+          "boundary": 0
+        },
+        "endpoints": [
+          {
+            "h": 0.01,
+            "energy": 0.06103433558453302,
+            "boundary": -1
+          },
+          {
+            "h": 2.0,
+            "energy": 0.030933331935512457,
+            "boundary": 1
+          }
+        ],
+        "minimizer_function_evaluations": 18
+      }
+    }
+  ],
+  "median_time_ms": 8.177791999969486,
+  "relative_bandwidth_error": 1.5458723511852323e-08
+}

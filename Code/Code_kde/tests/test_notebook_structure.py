@@ -45,7 +45,7 @@ class NotebookStructureTests(unittest.TestCase):
             for h in (.1, .4, 1.5):
                 self.assertAlmostEqual(
                     local_custom_beta_metric(h, differences, beta=beta),
-                    objective.log_energy(np.log(h), 1-beta/2)[0], places=12,
+                    objective.energy(h, 1-beta/2), places=12,
                 )
                 self.assertAlmostEqual(inverse_psi_beta(psi_beta(h, beta), beta), h, places=12)
 

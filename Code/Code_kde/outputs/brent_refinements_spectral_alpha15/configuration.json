@@ -1,0 +1,51 @@
+{
+  "version": "brent_refinements_spectral_alpha15_v1",
+  "samples": 100,
+  "sample_size": 200,
+  "distribution": "N(0,1)",
+  "sample_seed": 20260830,
+  "sample_sha256": "0a354f209d8737aa84924baf560f0da5073ee573ad4cded6fceedfb570dd7dae",
+  "h_interval": [
+    0.01,
+    2.0
+  ],
+  "r": 0.0,
+  "N_values": [
+    100,
+    200,
+    400
+  ],
+  "lambda_rule": "N**1.5",
+  "spectral_grid": "geometric",
+  "M_values": [
+    33,
+    65,
+    129,
+    257,
+    513,
+    1025
+  ],
+  "brent_scan_spacings": [
+    "linear",
+    "geometric"
+  ],
+  "brent_grid_point_meaning": "M includes both endpoints",
+  "brent_xatol": 2e-12,
+  "brent_maxiter": 1000,
+  "reference": "existing resolution-checked analytic derivative-based search; sample hashes and resolution checked; not a global certificate",
+  "match_log_bandwidth_tolerance": 1e-06,
+  "timing": "One initialized fresh call per sample and method; randomized separately per sample; a one-thread limit is requested but system libraries may not be detectable. Includes sample-specific pair distances, grid scan and Brent refinements or similarity construction and eigensolve, plus endpoint comparisons. Excludes reference, validation, imports, sample generation and saving.",
+  "thread_environment": {
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "quadrature_cutoff": 450.0,
+  "quadrature_intervals": 1376,
+  "spectral_solver": "stabilized_eigh_v1",
+  "python_version": "3.12.5",
+  "numpy_version": "2.3.1",
+  "scipy_version": "1.16.0",
+  "platform": "macOS-26.5.1-arm64-arm-64bit"
+}
