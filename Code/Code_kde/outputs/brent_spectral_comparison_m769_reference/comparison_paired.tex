@@ -1,0 +1,48 @@
+\begin{table}[htbp]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccccccc}
+        \toprule
+        Method & \shortstack{$M$ (Brent)\\$N$ (spectral)}
+        & \shortstack{Mean time\\$\pm$ SE (ms)}
+        & \shortstack{Assembly\\(ms)}
+        & \shortstack{Perron\\(ms)}
+        & \shortstack{Mean error\\(\%)}
+        & \shortstack{Max. error\\(\%)}
+        & \shortstack{Mean\\minima} \\
+        \midrule
+        & Unrefined
+        & $4.07 \pm 0.14$ & -- & --
+        & $5.57$ & $275.37$ & -- \\
+        & 33
+        & $9.59 \pm 0.29$ & -- & --
+        & $1.2\mathrm{e}{-6}$ & $4.0\mathrm{e}{-6}$ & 1.10 \\
+        Brent & 129
+        & $29.71 \pm 0.71$ & -- & --
+        & $1.1\mathrm{e}{-6}$ & $3.8\mathrm{e}{-6}$ & 1.17 \\
+        & 513
+        & $103.10 \pm 2.46$ & -- & --
+        & $8.9\mathrm{e}{-7}$ & $3.0\mathrm{e}{-6}$ & 1.21 \\
+        & 769
+        & $154.76 \pm 3.12$ & -- & --
+        & -- & -- & 1.23 \\
+        \midrule
+        & 100
+        & $11.44 \pm 0.12$ & 10.55 & 0.88
+        & $13.31$ & $41.84$ & -- \\
+        & 200
+        & $15.49 \pm 0.23$ & 12.72 & 2.77
+        & $8.25$ & $39.54$ & -- \\
+        Spectral & 400
+        & $30.11 \pm 0.17$ & 18.53 & 11.58
+        & $5.05$ & $19.82$ & -- \\
+        & 600
+        & $60.15 \pm 1.08$ & 28.88 & 31.26
+        & $3.69$ & $15.64$ & -- \\
+        & 800
+        & $103.24 \pm 1.04$ & 40.45 & 62.79
+        & $3.00$ & $12.71$ & -- \\
+        \bottomrule
+    \end{tabular}
+\end{table}

@@ -1,0 +1,16 @@
+{
+  "samples": 100,
+  "sample_size": 200,
+  "distribution": "N(0,1)",
+  "interval": [
+    0.01,
+    2.0
+  ],
+  "r": 0,
+  "spacing": "linear",
+  "bandwidth_reference": "brent_linear_769",
+  "timing": "fresh warmed calls in randomized order per sample; no cross-method objective cache; spectral times are from a separate earlier instrumented run",
+  "requested_thread_limit": 1,
+  "detected_threadpools": [],
+  "previous_brent_selected_bandwidths_agreed": true
+}

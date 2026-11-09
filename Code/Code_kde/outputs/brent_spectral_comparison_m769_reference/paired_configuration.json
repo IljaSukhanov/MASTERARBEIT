@@ -1,0 +1,31 @@
+{
+  "samples": 100,
+  "n": 200,
+  "distribution": "N(0,1)",
+  "r": 0,
+  "interval": [
+    0.01,
+    2
+  ],
+  "reference": "linear refined Brent M=769, sample by sample",
+  "spectral_N": [
+    100,
+    200,
+    400,
+    600,
+    800
+  ],
+  "lambda_rule": "N**1.5",
+  "spectral_grid": "geometric",
+  "brent_grid": "linear",
+  "brent_M": [
+    33,
+    129,
+    513,
+    769
+  ],
+  "timing": "All ten methods timed on each paired sample, in randomized order; warmups included before timing. Spectral calls instrumented for phase split. Independent fresh calls, no reused objective cache.",
+  "all_1000_bandwidths_match_prior_runs": true,
+  "requested_thread_limit": 1,
+  "detected_threadpools": []
+}
