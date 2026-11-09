@@ -10,7 +10,11 @@ We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribut
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R},
 \end{align*}
+\begingroup
+\setlength{\emergencystretch}{1em}
 where $h>0$ is the bandwidth and $K$ is a symmetric density function. Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ can be seen as a Monte Carlo estimate of $\mathbb{E}_{X\sim f}[K_h(x-X)]=(f\ast K_h)(x)$. It can also be seen as a plug-in estimator for $(f\ast K_h)(x)$ where in place of the density $f$ the empirical measure $P_n:=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ is used: $(P_n\ast K_h)(x)=\int K_h(x-y)\,P_n(dy)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
+\par
+\endgroup
 
 As a technical detail, we note that $\|f''\|_2^2>0$. If this were not the case, then $f''$ would be the constant zero function by continuity of $f''$, making $f$ an affine function, which is impossible since $f$ is a density on $\mathbb{R}$.
 
@@ -44,11 +48,19 @@ The first term $\int\hat{f}_h^2$ can be computed from the data. The third term $
 \begin{align*}
     \hat{f}_{h,-i}(x):=\frac{1}{(n-1)h}\sum_{j\ne i}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R}.
 \end{align*}
-Here, unbiasedness means that the expectations of $\mathbb{E}_{X\sim f}[\hat{f}_h(X)]$ and $n^{-1}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i)$ over the sample $(X_1,\dots,X_n)$ coincide. The Ordinary Least Squares Cross-Validation bandwidth is
+\begingroup
+\setlength{\emergencystretch}{2em}
+Here, unbiasedness means that the expectations of $\mathbb{E}_{X\sim f}[\hat{f}_h(X)]$ and $n^{-1}\allowbreak\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i)$ over the sample $(X_1,\dots,X_n)$ coincide. The Ordinary Least Squares Cross-Validation bandwidth is
 \begin{align*}
     \hat{h}_{\operatorname{CV}}\in\arg\min_{h>0}\operatorname{CV}(h),\quad\operatorname{CV}(h):=\int\hat{f}_h(x)^2\,dx-\frac{2}{n}\sum_{i=1}^{n}\hat{f}_{h,-i}(X_i).
 \end{align*}
+\par
+\endgroup
+\begingroup
+\setlength{\emergencystretch}{1em}
 In terms of convergence guaranty, if $K$ has additionally compact support and Hölder-continuous second derivative and $f$ has integrable and bounded first and second derivatives and the second derivative is uniformly continuous, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Theorem~2.2]{hall_extent_nodate}. In particular, this implies that the ISE evaluated at $\hat{h}_{\text{CV}}$ converges to the ISE evaluated at its true minimizer $\hat{h}_0$ in probability.
+\par
+\endgroup
 
 \textbf{Plug-in methods}
 
@@ -91,7 +103,11 @@ We already established above that a minimizer of the MISE always exists. The que
 
 Denote by $M_n(h)$ the MISE between $\phi_{\mu,\sigma^2}$ and a Gaussian kernel density estimate and notice first that $h\mapsto M_n(h)=(2\sqrt{\pi})^{-1}((nh)^{-1}+(1-1/n)/(\sqrt{\sigma^2+h^2})+\sigma^{-1})-2(\sqrt{2\pi}\sqrt{2\sigma^2+h^2})^{-1}$ is continuous on $(0,\infty)$. We set $Q_n(h):=2\sqrt{\pi}h^2M_n'(h)$ and see that $Q_n(h)\to2\sqrt{2}-1>0$ for $h\to\infty$ and $Q_n(h)\to-1/n<0$ for $h\to0$. Also, we have $Q_n'(h)>0$ for all $h>0$, which implies that $Q_n$ only has one zero, and, in turn, the minimizer of $M_n$ is unique.
 
-The connection between the minimum of the ISE and the minimum of the MISE is as follows. First, $\min_h\operatorname{ISE}(h)\le\operatorname{ISE}(h_0)$ for all $h_0>0$. Therefore $\mathbb{E}[\min_h\operatorname{ISE}(h)]\le\mathbb{E}[\operatorname{ISE}(h_0)]$ and since this is true for all $h_0>0$, it follows $\mathbb{E}[\min_h\operatorname{ISE}(h)]\le\min_h[\operatorname{MISE}(h)]$.
+\begingroup
+\setlength{\emergencystretch}{1em}
+The connection between the minimum of the ISE and the minimum of the MISE is as follows. First, $\min_h\operatorname{ISE}(h)\le\operatorname{ISE}(h_0)$ for all $h_0>0$. Therefore $\mathbb{E}[\min_h\operatorname{ISE}(h)]\le\mathbb{E}[\operatorname{ISE}(h_0)]$ and since this is true for all $h_0>0$, it follows $\mathbb{E}[\min_h\operatorname{ISE}(h)]\le\min_h\operatorname{MISE}(h)$.
+\par
+\endgroup
 
 \section{Divergences between distributions}\label{sec:divergences}
 
@@ -666,11 +682,17 @@ The specific choice of $M=769$ is motivated by a preceding experiment, where the
 
 \todo[inline]{--- 09.11: begin polish---}
 
-As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
 
-These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
 
-In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible.
+As can be seen in Table~\ref{tab:brent_spectral_timing} using a refined Brent search with only $M=33$ is faster and selects bandwidths much closer to the reference bandwidths than any spectral setting tested. Increasing the refinement $M$ increases the computational time without significantly improving the relative error. Although the number of detected local minima increases, these additional minima have higher energy functional values than the selected minima.
+
+Increasing the number of candidate bandwidths $N$ for the spectral selector with $\lambda_N=N^{3/2}$ increases the computation time, while the relative error decreases steadily, which is in accordance with Proposition~\ref{prop:main_thm2}. We note that for smaller numbers of bandwidths the assembly of the scale similarity matrix dominates the total computation time, while for larger numbers of bandwidths the Perron vector computation dominates.
+
+
+These findings suggest that for the sole purpose of selecting a bandwidth the spectral machinery is asymptotically redundant. Under the assumptions of Proposition~\ref{prop:main_thm2} the spectrally selected bandwidth approaches the global minimizer of the energy functional $\hat{Q}_r$ on the fixed interval $[h_{\min},h_{\max}]$ given that it is unique. Thus, asymptotically, spectral bandwidth selection leads to the same bandwidth as direct minimization of the energy functional. As shown in the experiments above, a suitably refined Brent search can be much more efficient for this task.
+
+
+In future work, we can explore cases where the energy functional is not as easily analytically tractable as it is for the Gaussian kernel. In such cases classical minimization could be more difficult while spectral scale selection might remain feasible. In addition, for data coming from a more complex distribution such as a Gaussian mixture model, the Perron vector may be useful beyond its maximum entry. It could provide weights for multiple competing bandwidths for example bandwidths corresponding to kernel density estimates that either preserve or merge modes of a multimodal distribution.
 
 
 \begin{table}[htbp]
@@ -685,50 +707,45 @@ In future work, we can explore cases where the energy functional is not as easil
         & \shortstack{Perron\\(ms)}
         & \shortstack{Mean error\\(\%)}
         & \shortstack{Max. error\\(\%)}
-        & \shortstack{Mean\\minima} \\
+        & \shortstack{Total\\minima} \\
         \midrule
         & Unrefined
-        & $3.95 \pm 0.11$ & -- & --
-        & $5.57$ & $275.37$ & -- \\
+        & $4.07 \pm 0.14$ & -- & --
+        & $5.57$ & $275.37$ & 100 \\
         & 33
-        & $9.08 \pm 0.16$ & -- & --
-        & $1.1\mathrm{e}{-6}$ & $5.4\mathrm{e}{-6}$ & 1.10 \\
-        & 65
-        & $15.78 \pm 0.32$ & -- & --
-        & $9.5\mathrm{e}{-7}$ & $4.3\mathrm{e}{-6}$ & 1.13 \\
+        & $9.59 \pm 0.29$ & -- & --
+        & $1.2\mathrm{e}{-6}$ & $4.0\mathrm{e}{-6}$ & 110 \\
         Brent & 129
-        & $28.62 \pm 0.62$ & -- & --
-        & $9.8\mathrm{e}{-7}$ & $4.4\mathrm{e}{-6}$ & 1.17 \\
-        & 257
-        & $54.17 \pm 1.49$ & -- & --
-        & $9.7\mathrm{e}{-7}$ & $3.9\mathrm{e}{-6}$ & 1.20 \\
+        & $29.71 \pm 0.71$ & -- & --
+        & $1.1\mathrm{e}{-6}$ & $3.8\mathrm{e}{-6}$ & 117 \\
         & 513
-        & $103.13 \pm 2.05$ & -- & --
-        & $9.3\mathrm{e}{-7}$ & $3.9\mathrm{e}{-6}$ & 1.21 \\
-        & 1025
-        & $206.60 \pm 4.35$ & -- & --
-        & -- & -- & 1.23 \\
+        & $103.10 \pm 2.46$ & -- & --
+        & $8.9\mathrm{e}{-7}$ & $3.0\mathrm{e}{-6}$ & 121 \\
+        & 769
+        & $154.76 \pm 3.12$ & -- & --
+        & -- & -- & 123 \\
         \midrule
         & 100
-        & $11.11 \pm 0.07$ & 10.30 & 0.80
+        & $11.44 \pm 0.12$ & 10.55 & 0.88
         & $13.31$ & $41.84$ & -- \\
         & 200
-        & $14.74 \pm 0.07$ & 12.25 & 2.49
+        & $15.49 \pm 0.23$ & 12.72 & 2.77
         & $8.25$ & $39.54$ & -- \\
         Spectral & 400
-        & $28.02 \pm 0.10$ & 17.33 & 10.69
+        & $30.11 \pm 0.17$ & 18.53 & 11.58
         & $5.05$ & $19.82$ & -- \\
         & 600
-        & $56.28 \pm 0.21$ & 26.44 & 29.83
+        & $60.15 \pm 1.08$ & 28.88 & 31.26
         & $3.69$ & $15.64$ & -- \\
         & 800
-        & $97.51 \pm 0.23$ & 36.78 & 60.74
+        & $103.24 \pm 1.04$ & 40.45 & 62.79
         & $3.00$ & $12.71$ & -- \\
         \bottomrule
     \end{tabular}
-    \caption{}
+    \caption{Runtime comparison between Brent's method and the spectral approach for different values of $M$ and $N$ respectively. The mean computation times are reported with their standard errors and for the spectral approach, broken down into scale similarity matrix assembly and subsequent Perron vector computation. The mean and maximum relative errors with respect to the reference bandwidth are given together with the total number of detected local minima for the Brent searches.}
     \label{tab:brent_spectral_timing}
 \end{table}
+
 
 
 
