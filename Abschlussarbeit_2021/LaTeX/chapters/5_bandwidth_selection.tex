@@ -655,9 +655,9 @@ A popular minimization algorithm for univariate functions on a closed interval i
 
 We compare this minimization approach with our spectral selector in terms of computation time and selected bandwidth. We again use independent samples $(X_1^{(l)},\allowbreak\dots,\allowbreak X_n^{(l)})$, $l=1,\dots,100$, and $n=200$ with independent $X_1^{(l)},\dots,X_n^{(l)}\sim f$ where $f$ is the density of the standard normal distribution. Our spectral method uses different values for $N$ and $\lambda_N=N^{3/2}$. For Brent's method, we also use multiple configurations, namely an unrefined search over the entire interval $[h_{\min},h_{\max}]$, which is fastest but may miss lower minima, and a refined search with increasing levels of refinement $M$.
 
-Prior to conducting the experiment we must determine a way of obtaining a reference bandwidth, i.e., an approximation of a global minimizer of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$. For each sample, we use the bandwidth selected by the refined Brent search with refinement setting $M=1025$ and denote it by $h_{\text{ref}}$. We define the relative error of any other selected bandwidth $\hat{h}$ with respect to this reference bandwidth by $|\hat{h}-h_{\text{ref}}|/h_{\text{ref}}$.
+Prior to conducting the experiment we must determine a way of obtaining a reference bandwidth, i.e., an approximation of a global minimizer of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$. For each sample, we use the bandwidth selected by the refined Brent search with refinement setting $M=769$ and denote it by $h_{\text{ref}}$. We define the relative error of any other selected bandwidth $\hat{h}$ with respect to this reference bandwidth by $|\hat{h}-h_{\text{ref}}|/h_{\text{ref}}$.
 
-The specific choice of $M=1025$ is motivated by a preceding experiment, where the number of local minima found by the refined Brent search in relation to the refinement setting $M$ is examined, see Figure~[].
+The specific choice of $M=769$ is motivated by a preceding experiment, where the number of local minima found by the refined Brent search across the 100 samples in relation to the refinement setting $M$ is examined, see Figure~\ref{fig:brent_minima_vs_refinement}. We found that from $M=769$ onward the number of the detected local minima across all 100 samples saturated at $123$. This is strong numerical evidence that across those 100 samples there are 123 local minima. Specifically among the 100 samples, for ... two local minima were found and for the remaining ... one local minimum was found. In particular at least one local minimum was found in each of the $100$ tested samples. 
 
 \begin{figure}
     \centering
@@ -665,6 +665,12 @@ The specific choice of $M=1025$ is motivated by a preceding experiment, where th
     \caption{}
     \label{fig:brent_minima_vs_refinement}
 \end{figure}
+
+As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
+
+These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
+
+In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible.
 
 
 \begin{table}[htbp]
@@ -720,13 +726,9 @@ The specific choice of $M=1025$ is motivated by a preceding experiment, where th
         & $3.00$ & $12.71$ & -- \\
         \bottomrule
     \end{tabular}
+    \caption{}
+    \label{tab:brent_spectral_timing}
 \end{table}
-
-As can be seen in Table~\ref{tab:brent_spectral_timing}, using direct minimization is much more efficient. Increasing the number of candidate bandwidths $N$ for the spectral selector increases the computation time even more, while the relative error decreases. The decrease in relative error is in accordance with Proposition~\ref{prop:main_thm2}. For increasing grid fineness ($N\to\infty$) and simultaneously decreasing concentration penalization ($\lambda_N\to\infty$), the spectrally selected bandwidth approaches the energy functional minimizer. 
-
-These findings lead us to the conclusion that the spectral machinery is asymptotically redundant: the spectral selector is asymptotically equivalent to a normalized curvature-energy criterion.
-
-In future work, we can explore cases where the energy functional is not as easily analytically tractable (like it is when we use the Gaussian kernel), thus making classical minimization approaches more difficult while spectral scale selection might remain feasible.
 
 
 
