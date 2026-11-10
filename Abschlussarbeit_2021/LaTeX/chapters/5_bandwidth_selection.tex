@@ -843,7 +843,6 @@ and for $\gamma=1-r/2$ we get $\partial_{1-r/2}^2L(x,h^2)=h^{1-r}\partial_h\hat{
 Shi, Belkin and Yu~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}\exp{(-(\|x_i-x_j\|)^2/(2\omega^2))}$, where the data $x_1,\dots,x_n$ is assumed to come from a multivariate Gaussian distribution, and, among other things, compute its Perron vector $v_0$ and use its maximum index $k=\arg\max(v_0)_i$ to estimate the mean $\mu$ of the data by $x_k$. They then extend it to data coming from a multivariate Gaussian mixture model, construct the same kernel matrix, and estimate the number of components by the number of eigenvectors of $K_n$ which have no sign changes. They estimate the mean $\mu_g$ of each component $g$ by $x_{k(g)}$, where $k(g)=\arg\max(v_0^{(g)})_i$. They give a theoretical justification through the theory of eigenfunctions. This work serves as a precedent for using the maximum index of the Perron vector (and certain other nonleading eigenvectors) for statistical inference.
 
 \todo[inline]{---3---}
-\todo[inline]{---4---}
 
 The work of Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} is related to the phenomenon that the Perron vector localizes near the unique maximum of some function.
 
@@ -866,7 +865,3 @@ Since $\eta$ and $\epsilon$ were arbitrarily chosen, it follows that
     \sum_{\substack{i\in S_N\\\|\frac{i}{N}-x^{\ast}\|\le\epsilon}}w_i^2=1-\sum_{\substack{i\in S_N\\\|\frac{i}{N}-x^{\ast}\|>\epsilon}}w_i^2\to1,\quad N\to\infty.
 \end{align*}
 Comparing it with Equation~\eqref{eq:squared_mass_concentration} from Corollary~\ref{cor:cor_cor_cor} we see that both results describe concentration of squared Perron vector weights in any fixed neighborhood of a unique maximizer.
-
-
-
-\todo[inline]{---4---}
