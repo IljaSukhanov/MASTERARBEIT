@@ -389,3 +389,38 @@
 
     Therefore, the roughness ratio $B(h_0)=h_0^2R_3(h_0)R_2(h_0)^{-1}$ converges to $B_f(h_0)$ in probability too because of the continuous mapping theorem, see~\cite[Theorem~2.3]{Vaart_1998}. To conclude this proof, we set $\delta:=(2-r-B_f(h_0))/2>0$ and observe that $\mathbb{P}(B(h_0)\ge2-r)\le\mathbb{P}(|B(h_0)-B_f(h_0)|>\delta)\to 0$ as $n\to\infty$. Thus, $\mathbb{P}(B(h_0)<2-r)\to1$ as $n\to\infty$. By part $(a)$ this completes the proof of $(b)$.
 \end{proof}
+
+
+\subsection*{Proof of Corollary~\ref{cor:cor_cor_cor}}\label{sec:proof_cor_cor_cor}
+
+\begin{proof}
+    Using the notation of the proof of Proposition~\ref{prop:main_thm2} we have $\rho_Nu^{(N)}=A^{(N)}u^{(N)}$, where $u^{(N)}=v^{(N)}/\|v^{(N)}\|_2$ and thus
+    \begin{equation}\label{eq:cor_proof_01}
+        \begin{aligned}
+            \rho_N&=(u^{(N)})^{T}A^{(N)}u^{(N)}=\sum_{i,j=1}^{N}A_{ij}^{(N)}u_i^{(N)}u_j^{(N)}\stackrel{(\ast)}{\le}\frac{1}{2}\sum_{i,j=1}^{N}A_{ij}^{(N)}\left((u_i^{(N)})^2+(u_j^{(N)})^2\right)\\&
+            =\frac{1}{2}\sum_{i=1}^{N}(u_i^{(N)})^2\underbrace{\sum_{j=1}^{N}A_{ij}^{(N)}}_{=a_{i,N}}+\frac{1}{2}\sum_{j=1}^{N}(u_j^{(N)})^2\underbrace{\sum_{i=1}^{N}A_{ji}^{(N)}}_{=a_{j,N}}=\sum_{i=1}^{N}\underbrace{(u_i^{(N)})^2}_{=w_i^{(N)}}a_{i,N}
+        \end{aligned}
+    \end{equation}
+    by the symmetry and nonnegativity of $A^{(N)}$, where in the inequality marked with $(\ast)$ we have used $0\le (a-b)^2=a^2+b^2-2ab$ and thus $ab\le (a^2+b^2)/2$.
+
+    For any $\epsilon>0$ there exists a $\delta>0$ such that $g(h)\le M-\delta$ for all $h\in[h_{\min},h_{\max}]$ satisfying $|h-h_Q|\ge\epsilon$. To see this, define $K_{\epsilon}:=\{h\in[h_{\min},h_{\max}]:|h-h_Q|\ge\epsilon\}$. If $K_{\epsilon}$ is empty, then all $h_i$ have a distance to $h_Q$ less than $\epsilon$ and $\sum_{i:|h_i-h_Q|\le\epsilon}w_i^{(N)}=\sum_{i=1}^{N}w_i^{(N)}=1$ and the statement in Equation~\eqref{eq:squared_mass_concentration} holds automatically. If $K_{\epsilon}$ is nonempty then, since it is compact and $g$ is continuous, $g$ attains a maximum on it which we denote by $M_{\epsilon}$. Since $h_Q$ is assumed to be the unique maximizer and $h_Q\notin K_{\epsilon}$ we must have $M_{\epsilon}<M$. Setting $\delta:=M-M_{\epsilon}>0$ gives $g(h)\le M_{\epsilon}$ whenever $h\in K_{\epsilon}$, which is the same as saying that $g(h)\le M-\delta$ whenever $|h-h_Q|\ge\epsilon$.
+
+    We recall from step 1 of the proof of Proposition~\ref{prop:main_thm2} that $a_{i,N}\le g(h_i)+\xi_N$ for any $i=1,\dots,N$ and all sufficiently large $N$, where $\xi_N\to0$ as $N\to\infty$.
+
+    For $\epsilon>0$ we define $I_N(\epsilon):=\{i=1,\dots,N:|h_i-h_Q|\ge\epsilon\}$ and continue
+    \begin{align*}
+        \rho_N&\stackrel{\eqref{eq:cor_proof_01}}{\le}\sum_{i=1}^{N}w_i^{(N)}a_{i,N}\le\sum_{i=1}^{N}w_i^{(N)}(g(h_i)+\xi_N)\\&
+        =\sum_{i\in I_N(\epsilon)}w_i^{(N)}\underbrace{g(h_i)}_{\le M-\delta}+\sum_{i\notin I_N(\epsilon)}w_i^{(N)}\underbrace{g(h_i)}_{\le M}+\xi_N\\&\le(M-\delta)\sum_{i\in I_N(\epsilon)}w_i^{(N)}+M\sum_{i\notin I_N(\epsilon)}w_i^{(N)}+\xi_N\\&
+        =M+\xi_N-\delta\sum_{i\in I_N(\epsilon)}w_i^{(N)}
+    \end{align*}
+
+    Therefore,
+    \begin{align*}
+        0\le\sum_{i\in I_N(\epsilon)}w_i^{(N)}\le\frac{M+\xi_N-\rho_N}{\delta}\to0,
+    \end{align*}
+    because $\xi_N\to0$ and $\rho_N\to M$ by step 2 of the proof of Proposition~\ref{prop:main_thm2}. Consequently, because
+    \begin{align*}
+        1-\sum_{i\in I_N(\epsilon)}w_i^{(N)}\le\sum_{\substack{i=1\\|h_i-h_Q|\le\epsilon}}^{N}w_i^{(N)}\le 1
+    \end{align*}
+    this proves the statement made in Equation~\eqref{eq:squared_mass_concentration}.
+\end{proof}
