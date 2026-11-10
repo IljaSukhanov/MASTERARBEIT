@@ -803,29 +803,24 @@ We have thus established a foundation for a theoretical bridge between classical
 
 \todo[inline]{09.11: Polish!}
 
-
-\todo[inline]{---1---}
-
-The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on the comparison across different smoothing scales. 
-
-They set $\mathcal{H}=[h_{\min},h_{\max}]$ and define $\hat{f}_{h,\eta}(x)=n^{-1}\sum_{j=1}^{n}(K_h\ast K_{\eta})(x-X_j)$ and
+The paper by Goldenshluger and Lepski~\cite{goldenshluger_bandwidth_2011} can be seen as a precedent for a bandwidth selector that is based on comparisons across different smoothing scales. In the one-dimensional setting they consider $\mathcal{H}=[h_{\min},h_{\max}]$ and define $\hat{f}_{h,\eta}(x)=n^{-1}\sum_{j=1}^{n}(K_h\ast K_{\eta})(x-X_j)$ and
 \begin{align*}
     \hat{\mathcal{R}}_h:=\sup_{\eta\in\mathcal{H}}\left(\|\hat{f}_{h,\eta}-\hat{f}_{\eta}\|_2-m_2(h,\eta)\right)_++\sup_{\eta\in\mathcal{H}}m_2(\eta,h),
 \end{align*}
-where $m_2(h,\eta):=(25/3\sqrt{n})\left(\|K_{\eta}\|_2+\|K_h\ast K_{\eta}\|_2\right)$. Their bandwidth selector is $\hat{h}=\arg\min\{\hat{R}_h:h\in\mathcal{H}\}$.
-
-
-They then proceed to show the oracle inequality
+where $m_2(h,\eta):=\frac{25}{3}n^{-1/2}\left(\|K_{\eta}\|_2+\|K_h\ast K_{\eta}\|_2\right)$ and $(x)_+$ is the positive part of $x$. Their bandwidth selector is $\hat{h}=\arg\min\{\hat{\mathcal{R}}_h:h\in\mathcal{H}\}$. Under suitable assumptions on the density $f$, the kernel $K$ and the bandwidth set $\mathcal{H}$ they obtain an oracle inequality of the form
 \begin{align*}
     \mathbb{E}[\|\hat{f}_{\hat{h}}-f\|_2]\le C\inf_{h\in\mathcal{H}}\mathbb{E}[\|\hat{f}_h-f\|_2]+\delta_n,
 \end{align*}
-where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. \textcolor{red}{This means that the risk of their selector performs within a constant factor of the best candidate bandwidth plus a remainder.}
+where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. This means that the risk of the selected estimator $\hat{f}_{\hat{h}}$ is at most a constant multiple of the smallest risk among the candidate estimators $\hat{f}_h$, $h\in\mathcal{H}$ plus a remainder.
 
-Lacour and Massart~\cite{lacour_minimal_2016} build upon the work of Goldenshluger and Lepski by providing considerations on how to make this procedure practically usable. Namely they use $\mathcal{H}=\{e^{-k}:3\le k\le 10\}\cup\{0.002+k\cdot0.02,0\le k\le 24\}$. That is, they sidestep the continuous optimization that would be needed to obtain $\hat{h}$ by discretization of the interval $\mathcal{H}$.
 
-Another important paper dealing with analyzing the KDE across a family of bandwidths is by Chaudhuri and Marron~\cite{chaudhuri_sizer_nodate}. Their \enquote{SiZer} (Significant Zero crossings) method simultaneously studies a wide range of bandwidths and avoids the classical need to choose a bandwidth. This is a visual data analysis tool that produces a colored map, where for each location-scale pair $(x,h)$ the derivative $\hat{f}_h'(x)$ is computed. The corresponding point $(x,h)$ on the color map is blue if the derivative is significantly positive, red if the derivative is significantly negative, and purple if the derivative is not significantly different from 0. It is a visual aid that lets the practitioner see at one glance how significant features like bumps depend on the chosen bandwidth.
+Lacour and Massart~\cite{lacour_minimal_2016} study a simplified version of the Goldenshluger-Lepski procedure that compares kernel density estimates directly over a finite set of bandwidths, compare with~\cite[Equation~2]{lacour_minimal_2016}. In their simulations they use $\mathcal{H}=\{e^{-k}:3\le k\le 10\}\cup\{0.002+k\cdot0.02,0\le k\le 24\}$.
 
-\todo[inline]{---1---}
+
+Chaudhuri and Marron~\cite{chaudhuri_sizer_nodate} also study kernel density estimates across a family of bandwidths. Their \enquote{SiZer} (Significant Zero crossings) method examines a range of bandwidths simultaneously, avoiding the need to select a single bandwidth. It produces a colored map based on the derivative $\hat{f}_h'(x)$ at each location-scale pair $(x,h)$. The point $(x,h)$ is blue if the derivative is significantly positive, red if it is significantly negative, and purple if it is not significantly different from $0$. It is a visual aid that lets the practitioner see at a glance how significant features such as bumps depend on the bandwidth.
+
+
+
 \todo[inline]{---2---}
 
 We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate} which is a direct precedent for the form of our energy functional $\hat{Q}_r(h)=(1/2)h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2$. For a continuous signal $f$ its convolution with the Gaussian kernel $K$ is studied: $L(x,t):=(K_{\sqrt{t}}\ast f)(x)$. A $\gamma$-normalized derivative operator is defined by $\partial_{\gamma}L(x,t):=t^{\gamma/2}\partial_xL(x,t)$. \textcolor{red}{The main principle of the paper is that a scale at which suitable combinations of these normalized derivatives assume a local maximum can reflect a characteristic length of structure in the data.} The developed methods are applied in computer vision, for example, to detect blobs, junctions, edges, or ridges. By the Gaussian heat equation, $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)$. Setting $t=h^2$ now gives
