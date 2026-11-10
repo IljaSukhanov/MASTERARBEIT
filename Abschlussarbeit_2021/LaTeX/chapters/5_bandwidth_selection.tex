@@ -612,6 +612,49 @@ The question now is whether the result of Proposition~\ref{prop:main_thm} can be
 \end{proof}
 
 
+We state a Corollary of Proposition~\ref{prop:main_thm2} which is a statement about the localization of the squared entries of the Perron vector $v^{(N)}$. As $N\to\infty$, the total squared weight inside any fixed but arbitrarily small neighborhood of $h_Q$ tends to $1$, assuming that $h_Q$ is the unique minimizer of the energy functional $\hat{Q}_r$ on $[h_{\min},h_{\max}]$.
+
+\begin{Cor}\label{cor:cor_cor_cor}
+    Assume the same setting as in the Propositions~\ref{prop:main_thm} and~\ref{prop:main_thm2}. Let $h_Q$ by the unique minimizer of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$. Let $v^{(N)}$ be the Perron vector of the scale similarity matrix $S^{(N)}$ and define the vector $w^{(N)}$ of normalized squared entries of $v^{(N)}$ by $w_i^{(N)}:=(v_i^{(N)})^2/\sum_{j=1}^{N}(v_j^{(N)})^2$. Then
+    \begin{align}\label{eq:squared_mass_concentration}
+        \sum_{\substack{i=1\\|h_i-h_Q|\le\epsilon}}^{N}w_i^{(N)}\to1,\quad N\to\infty
+    \end{align}
+    for every $\epsilon>0$.
+\end{Cor}
+
+\begin{proof}
+    Using the notation of the proof of Proposition~\ref{prop:main_thm2} we have $\rho_Nu^{(N)}=A^{(N)}u^{(N)}$, where $u^{(N)}=v^{(N)}/\|v^{(N)}\|_2$ and thus
+    \begin{equation}\label{eq:cor_proof_01}
+        \begin{aligned}
+            \rho_N&=(u^{(N)})^{T}A^{(N)}u^{(N)}=\sum_{i,j=1}^{N}A_{ij}^{(N)}u_i^{(N)}u_j^{(N)}\stackrel{(\ast)}{\le}\frac{1}{2}\sum_{i,j=1}^{N}A_{ij}^{(N)}\left((u_i^{(N)})^2+(u_j^{(N)})^2\right)\\&
+            =\frac{1}{2}\sum_{i=1}^{N}(u_i^{(N)})^2\underbrace{\sum_{j=1}^{N}A_{ij}^{(N)}}_{=a_{i,N}}+\frac{1}{2}\sum_{j=1}^{N}(u_j^{(N)})^2\underbrace{\sum_{i=1}^{N}A_{ji}^{(N)}}_{=a_{j,N}}=\sum_{i=1}^{N}\underbrace{(u_i^{(N)})^2}_{=w_i^{(N)}}a_{i,N}
+        \end{aligned}
+    \end{equation}
+    by the symmetry and nonnegativity of $A^{(N)}$, where in the inequality marked with $(\ast)$ we have used that $0\le (a-b)^2=a^2+b^2-2ab$ and thus $ab\le (a^2+b^2)/2$.
+
+    For any $\epsilon>0$ there exists a $\delta>0$ such that $g(h)\le M-\delta$ for all $h\in[h_{\min},h_{\max}]$ satisfying $|h-h_Q|\ge\epsilon$. To see this, define $K_{\epsilon}:=\{h\in[h_{\min},h_{\max}]:|h-h_Q|\ge\epsilon\}$. If $K_{\epsilon}$ is empty, then all $h_i$ have a distance to $h^{\ast}$ less than $\epsilon$ and $\sum_{i:|h_i-h_Q|\le\epsilon}w_i^{(N)}=\sum_{i=1}^{N}w_i^{(N)}=1$ and the statement in Equation~\eqref{eq:squared_mass_concentration} holds automatically. If $K_{\epsilon}$ is nonempty then since it is compact and $g$ is continuous, $g$ attains a maximum on it which we denote by $M_{\epsilon}$. Since $h_Q$ is assumed to be the unique maximizer and $h_Q\notin K_{\epsilon}$ we must have $M_{\epsilon}<M$. Setting $\delta:=M-M_{\epsilon}>0$ gives $g(h)\le M_{\epsilon}$ whenever $h\in K_{\epsilon}$, which is the same as saying that $g(h)\le M-\delta$ whenever $|h-h_Q|\ge\epsilon$.
+
+    We recall from step 1 of the proof of Proposition~\ref{prop:main_thm2} that $a_{i,N}\le g(h_i)+\xi_N$ for any $i=1,\dots,N$ and all sufficiently large $N$, where $\xi_N\to0$ as $N\to\infty$.
+
+    For $\epsilon>0$ we define $I_N(\epsilon):=\{i=1,\dots,N:|h_i-h_Q|\ge\epsilon\}$ and continue
+    \begin{align*}
+        \rho_N&\stackrel{\eqref{eq:cor_proof_01}}{\le}\sum_{i=1}^{N}w_i^{(N)}a_{i,N}\le\sum_{i=1}^{N}w_i^{(N)}(g(h_i)+\xi_N)\\&
+        =\sum_{i\in I_N(\epsilon)}w_i^{(N)}\underbrace{g(h_i)}_{\le M-\delta}+\sum_{i\notin I_N(\epsilon)}w_i^{(N)}\underbrace{g(h_i)}_{\le M}+\xi_N\\&\le(M-\delta)\sum_{i\in I_N(\epsilon)}w_i^{(N)}+M\sum_{i\notin I_N(\epsilon)}w_i^{(N)}+\xi_N\\&
+        =M+\xi_N-\delta\sum_{i\in I_N(\epsilon)}w_i^{(N)}
+    \end{align*}
+
+    Therefore,
+    \begin{align*}
+        0\le\sum_{i\in I_N(\epsilon)}w_i^{(N)}\le\frac{M+\xi_N-\rho_N}{\delta}\to0,
+    \end{align*}
+    because $\xi_N\to0$ and $\rho_N\to M$ by step 2 of the proof of Proposition~\ref{prop:main_thm2}. Consequently, because
+    \begin{align*}
+        1-\sum_{i\in I_N(\epsilon)}w_i^{(N)}\le\sum_{\substack{i=1\\|h_i-h_Q|\le\epsilon}}^{N}w_i^{(N)}\le 1
+    \end{align*}
+    this proves the statement made in Equation~\eqref{eq:squared_mass_concentration}.
+\end{proof}
+
+
 \subsection{Properties of the energy functional and its connection to the MISE}\label{sec:expected_energy_functional}
 
 Motivated by the connection between the minimizers of the energy functional $\hat{Q}_r$ and the asymptotic behavior of the spectrally selected bandwidth established in Section~\ref{sec:perron_vector_concentrates}, we first study some properties of $\hat{Q}_r$. In particular, we are interested in the existence and uniqueness of its global and local minimizers. Afterwards, we present a connection between the expected energy functional $\mathbb{E}[\hat{Q}_r]$ and the MISE. Together with the results of the previous Section~\ref{sec:perron_vector_concentrates}, this establishes a theoretical bridge between the spectral scale selection methodology and optimal bandwidth selection in the classical sense.
@@ -832,22 +875,26 @@ Shi, Belkin and Yu~\cite{shi_data_2008} construct the kernel matrix $K_n$ with e
 
 The work of Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} is related to the phenomenon that the Perron vector localizes near the unique maximum of some function.
 
-They start with a system of differential equations $y_j'(t)=\sum_{i\in S_N}y_i(t)H_{ij}$, $j\in S_N$, where $S_N\subseteq\mathbb{Z}^{d}$ is a finite index set. They assume the matrix $H\in\mathbb{R}^{|S_N|\times|S_N|}$ to have nonnegative off-diagonal entries and to be irreducible. They then use the decomposition $H=M+\operatorname{diag}(H_i,i\in S_N)$, where $H_i=\sum_{j\in S_N}H_{ij}$, $i\in S_N$ are the row sums of $H$. The matrix $M$ is an irreducible Markov generator, that is it is irreducible, has nonnegative off diagonal entries and its rows sum to $0$. They take the strictly positive left eigenvector $\pi$ of $M$, assume reversibility, that is $\pi_iM_{ij}=\pi_jM_{ji}$ and define $F_{ij}:=\pi_i^{1/2}M_{ij}\pi_j^{-1/2}$ for $i\ne j$ and $F_{ii}=-\sum_{j\ne i}F_{ij}$ to be the symmetrized version of $M$. They use this matrix $F$ to define a symmetrized version $\Tilde{H}$ of $H$ by defining $\Tilde{H}_{ij}:=F_{ij}+(H_{ii}-F_{ii})\delta_{ij}$. Consequently, $\Tilde{H}=F+\operatorname{diag}(\Tilde{H}_i,i\in S_N)$, where again $\Tilde{H}_i$ are the row sums of $\Tilde{H}$. For their localization result, they consider the Perron vector $w$ of $\Tilde{H}$ normalized to have unit Euclidean norm.
+They start with a system of differential equations $y_j'(t)=\sum_{i\in S_N}y_i(t)H_{ij}$, $j\in S_N$, where $S_N\subseteq\mathbb{Z}^{d}$ is a finite index set. They assume that the matrix $H\in\mathbb{R}^{|S_N|\times|S_N|}$ has nonnegative off-diagonal entries and is irreducible. They then use the decomposition $H=M+\operatorname{diag}(H_i,i\in S_N)$, where $H_i=\sum_{j\in S_N}H_{ij}$, $i\in S_N$ are the row sums of $H$. The matrix $M$ is an irreducible Markov generator, that is, it is irreducible, has nonnegative off diagonal entries and its rows sum to $0$. They take the strictly positive left eigenvector $\pi$ of $M$, assume reversibility, that is, $\pi_iM_{ij}=\pi_jM_{ji}$ and define $F_{ij}:=\pi_i^{1/2}M_{ij}\pi_j^{-1/2}$ for $i\ne j$ and $F_{ii}=-\sum_{j\ne i}F_{ij}$ to be the symmetrized version of $M$. They use this matrix $F$ to define a symmetrized version $\Tilde{H}$ of $H$ by defining $\Tilde{H}_{ij}:=F_{ij}+(H_{ii}-F_{ii})\delta_{ij}$. Consequently, $\Tilde{H}=F+\operatorname{diag}(\Tilde{H}_i,i\in S_N)$, where again $\Tilde{H}_i$ are the row sums of $\Tilde{H}$. For their localization result, they consider the Perron vector $w$ of $\Tilde{H}$ normalized to have unit Euclidean norm.
 
-They make the assumption that the rescaled index set $N^{-1}S_N$ is asymptotically dense inside some compact set $D\subseteq\mathbb{R}^d$ and that the size of $S_N$ is proportional to $N^d$. They also assume that $\Tilde{H}_i$ can be approximated by a twice continuously differentiable and bounded function $E$, that is $|\Tilde{H}_i-E(i/N)|\le CN^{-1}$ for some constant $C>0$, all $i\in S_N$ and sufficiently large $N$. Under these and the remaining assumptions of their Theorem~1 they show in Theorem~2 that for some constant $\rho>0$ and for every choice of $0<\beta\le1$ no matter how small
+They make the assumption that the rescaled index set $N^{-1}S_N$ is asymptotically dense inside some compact set $D\subseteq\mathbb{R}^d$ and that the size of $S_N$ is proportional to $N^d$. They also assume that $\Tilde{H}_i$ can be approximated by a bounded and twice continuously differentiable function $E$, that is, $|\Tilde{H}_i-E(i/N)|\le CN^{-1}$ for some constant $C>0$, all $i\in S_N$ and sufficiently large $N$. Under these and the remaining assumptions of their Theorem~1 they show in Theorem~2 that for some constant $\rho>0$ and for every choice of $0<\beta\le1$ no matter how small
+\begin{align}\label{eq:baake_thm2_result}
+    1\ge\sum_{\substack{i\in S_N\\\frac{i}{N}\in \overline{B}_{r_N}\left(x^{\ast}\right)}}w_i^2\ge1-\beta
+\end{align}
+for all sufficiently large $N$. Here, $x^{\ast}$ is the unique global maximizer of $E$ on $D$ that is assumed to exist and to lie inside $\operatorname{int}(D)$ with Hessian of $E$ at $x^{\ast}$ assumed to be negative definite. And by $\overline{B}_{r_N}(x^{\ast})$ we mean the closed ball with center $x^{\ast}$ and radius $r_N:=\sqrt{\rho/(\beta N)}$. The interpretation is as follows. For any choice of $0<\beta\le1$ the sum of the squared Perron vector entries over all indices whose rescaling $i/N$ lies within a distance $r_N$ from the maximizer of $E$ is at least $1-\beta$ for all sufficiently large $N$. In particular, note that if we want to guaranty a large coverage $1-\beta$, meaning that the guaranteed lower bound for the sum of squared Perron vector entries over a certain set of indices is closer to $1$, we choose a smaller $\beta$. For fixed $N$ this increases the radius of the ball, so the sum may contain more indices.
+
+
+We can connect this result to our setting using the following reasoning. Let $\eta>0$ and $\epsilon>0$ be arbitrary and choose $0<\beta<\min\{\eta,1\}$. Since $r_N\to0$ we have eventually $r_N<\epsilon$ and therefore $\overline{B}_{\epsilon}(x^{\ast})^c\subseteq\overline{B}_{r_N}(x^{\ast})^c$, where $A^c$ denotes the complement of a set $A\subseteq\mathbb{R}^d$. By Equation~\eqref{eq:baake_thm2_result} we thus have
 \begin{align*}
-    1\ge\sum_{\substack{i\in S_N\\\frac{i}{N}\in \overline{B}_{x^{\ast}}\left(\sqrt{\frac{\rho}{\beta N}}\right)}}w_i^2\ge1-\beta
+    0\le\sum_{\substack{i\in S_N\\\frac{i}{N}\notin\overline{B}_{\epsilon}(x^{\ast})}}w_i^2\le
+    \sum_{\substack{i\in S_N\\\frac{i}{N}\notin\overline{B}_{r_N}(x^{\ast})}}w_i^2\le\beta<\eta
 \end{align*}
-for all sufficiently large $N$. Here, $x^{\ast}$ is the unique global maximizer of $E$ on $D$ that is assumed to exist and to lie inside $\operatorname{int}(D)$ with Hessian of $E$ at $x^{\ast}$ assumed to be negative definite. And by $\overline{B}_x(r)$ we mean the closed ball with center $x$ and radius $r>0$. The interpretation is as follows. For any choice of $0<\beta\le1$ the sum of the squared Perron vector entries over all indices whose rescaling $i/N$ lies within a distance $\sqrt{\rho/(\beta N)}$ of the maximizer of $E$ is at least $1-\beta$ for all sufficiently large $N$. In particular note that if we want to guarantee a large coverage $1-\beta$, meaning that the guaranteed lower bound for the sum of squared Perron vector entries over a certain set of indices is closer to $1$, we choose a smaller $\beta$. For fixed $N$ this increases the radius of the ball so the sum may contain more indices.
-
-
-
-\todo[inline]{---}
-
-
-From the proof of Proposition~\ref{prop:main_thm2} a similar localization result follows in our setting: if $v^{(N)}$ is the Perron vector of $S^{(N)}$, define $a_{i,N}:=(v^{(N)}_i)^2/\sum_{j=1}^{N}(v^{(N)}_j)^2$. For all $\epsilon>0$ we then have
+Since $\eta$ and $\epsilon$ were arbitrarily chosen, it follows that
 \begin{align*}
-    \sum_{i:|h_i-h^{\ast}|\ge\epsilon}a_{i,N}\to0,\quad N\to\infty.
+    \sum_{\substack{i\in S_N\\\|\frac{i}{N}-x^{\ast}\|\le\epsilon}}w_i^2=1-\sum_{\substack{i\in S_N\\\|\frac{i}{N}-x^{\ast}\|>\epsilon}}w_i^2\to1,\quad N\to\infty.
 \end{align*}
+Comparing it with Equation~\eqref{eq:squared_mass_concentration} from Corollary~\ref{cor:cor_cor_cor} we see that both results describe concentration of squared Perron vector weights in any fixed neighborhood of a unique maximizer.
+
+
 
 \todo[inline]{---4---}
