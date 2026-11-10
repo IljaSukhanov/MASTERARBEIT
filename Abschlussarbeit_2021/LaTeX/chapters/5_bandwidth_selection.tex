@@ -838,11 +838,15 @@ and for $\gamma=1-r/2$ we get $\partial_{1-r/2}^2L(x,h^2)=h^{1-r}\partial_h\hat{
 \end{align*}
 
 \todo[inline]{---2---}
-\todo[inline]{---3---}
 
-Shi, Belkin and Yu~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}\exp{(-(\|x_i-x_j\|)^2/(2\omega^2))}$, where the data $x_1,\dots,x_n$ is assumed to come from a multivariate Gaussian distribution, and, among other things, compute its Perron vector $v_0$ and use its maximum index $k=\arg\max(v_0)_i$ to estimate the mean $\mu$ of the data by $x_k$. They then extend it to data coming from a multivariate Gaussian mixture model, construct the same kernel matrix, and estimate the number of components by the number of eigenvectors of $K_n$ which have no sign changes. They estimate the mean $\mu_g$ of each component $g$ by $x_{k(g)}$, where $k(g)=\arg\max(v_0^{(g)})_i$. They give a theoretical justification through the theory of eigenfunctions. This work serves as a precedent for using the maximum index of the Perron vector (and certain other nonleading eigenvectors) for statistical inference.
+Shi et al.~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}e^{-\|X_i-X_j\|^2/(2\omega^2)}$ where the data $X_1,\dots,X_n$ are first assumed to come from a multivariate Gaussian distribution. Among other things, they compute its Perron vector $v_0$ and use an index $k\in\arg\max\{|(v_0)_i|:i=1,\dots,n\}$ of the largest absolute entry to estimate the mean $\mu$ of the distribution by $X_k$.
 
-\todo[inline]{---3---}
+For data coming from a multivariate Gaussian mixture model, Shi et al. construct the same kernel matrix $K_n$ and estimate the number of components by the number of eigenvectors $v$ of $K_n$ that have no sign changes on $\{i:|v_i|\ge n^{-1}\max_j|v_j|\}$. Denoting these eigenvectors by $v_0^1,\dots, v_0^G$, where $G$ is the estimated number of components, they estimate the mean $\mu_g$ of each component $g=1,\dots,G$ by $X_{k(g)}$, where $k(g)\in\arg\max\{|(v_0^g)_i|:i=1,\dots,n\}$.
+
+They provide a theoretical justification using eigenfunctions of integral operators. Their work serves as a precedent for using indices of the largest absolute entries of the Perron vector and certain other nonleading eigenvectors for statistical inference.
+
+Similarly, our method uses a maximum index $k_N$ of the Perron vector $v^{(N)}$ of a scale similarity matrix $S^{(N)}$ but selects a candidate bandwidth $h_{k_N}$ instead of a data point $X_k$ for mean estimation.
+
 
 The work of Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} is related to the phenomenon that the Perron vector localizes near the unique maximum of some function.
 
