@@ -12,7 +12,10 @@ We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribut
 \end{align*}
 \begingroup
 \setlength{\emergencystretch}{1em}
-where $h>0$ is the bandwidth and $K$ is a symmetric density function. Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ can be seen as a Monte Carlo estimate of $\mathbb{E}_{X\sim f}[K_h(x-X)]=(f\ast K_h)(x)$. It can also be seen as a plug-in estimator for $(f\ast K_h)(x)$ where in place of the density $f$ the empirical measure $P_n:=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ is used: $(P_n\ast K_h)(x)=\int K_h(x-y)\,P_n(dy)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x)$.
+where $h>0$ is the bandwidth and $K$ is a symmetric density function. Using the shorthand notation $K_h(y):=h^{-1}K(h^{-1}y)$ we can also write $\hat{f}_h(x)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)$. The kernel density estimate $\hat{f}_h(x)$ can be seen as a Monte Carlo estimate of $\mathbb{E}_{X\sim f}[K_h(x-X)]=(f\ast K_h)(x)$. It can also be seen as a plug-in estimator for $(f\ast K_h)(x)$ where the density $f$ is replaced by the empirical measure $P_n:=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$. Indeed,
+\begin{align}\label{eq:convolution_with_emp_measure}
+    (P_n\ast K_h)(x)=\int K_h(x-y)\,P_n(dy)=n^{-1}\sum_{j=1}^{n}K_h(x-X_j)=\hat{f}_h(x).
+\end{align}
 \par
 \endgroup
 
@@ -814,25 +817,28 @@ where $m_2(h,\eta):=\frac{25}{3}n^{-1/2}\left(\|K_{\eta}\|_2+\|K_h\ast K_{\eta}\
 where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. This means that the risk of the selected estimator $\hat{f}_{\hat{h}}$ is at most a constant multiple of the smallest risk among the candidate estimators $\hat{f}_h$, $h\in\mathcal{H}$ plus a remainder.
 
 
-Lacour and Massart~\cite{lacour_minimal_2016} study a simplified version of the Goldenshluger-Lepski procedure that compares kernel density estimates directly over a finite set of bandwidths, compare with~\cite[Equation~2]{lacour_minimal_2016}. In their simulations they use $\mathcal{H}=\{e^{-k}:3\le k\le 10\}\cup\{0.002+k\cdot0.02,0\le k\le 24\}$.
+Lacour and Massart~\cite{lacour_minimal_2016} study a simplified version of the Goldenshluger-Lepski procedure that compares kernel density estimates directly over a finite set of bandwidths, compare with~\cite[Equation~2]{lacour_minimal_2016}. In their simulations they use $\mathcal{H}=\{e^{-k}:k\in\mathbb{Z},3\le k\le 10\}\cup\{0.002+k\cdot0.02:k\in\mathbb{Z},0\le k\le 24\}$.
 
 
 Chaudhuri and Marron~\cite{chaudhuri_sizer_nodate} also study kernel density estimates across a family of bandwidths. Their \enquote{SiZer} (Significant Zero crossings) method examines a range of bandwidths simultaneously, avoiding the need to select a single bandwidth. It produces a colored map based on the derivative $\hat{f}_h'(x)$ at each location-scale pair $(x,h)$. The point $(x,h)$ is blue if the derivative is significantly positive, red if it is significantly negative, and purple if it is not significantly different from $0$. It is a visual aid that lets the practitioner see at a glance how significant features such as bumps depend on the bandwidth.
 
 
+We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate} which is a direct precedent for the form of our energy functional $\hat{Q}_r(h)=(1/2)h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2$. For a continuous signal $f$ he studies its convolution with the Gaussian kernel $K$ given by $L(x,t):=(K_{\sqrt{t}}\ast f)(x)$. A $\gamma$-normalized derivative operator is defined by $\partial_{\gamma}L(x,t):=t^{\gamma/2}\partial_xL(x,t)$. The main principle of the paper is that a scale at which suitable combinations of these normalized derivatives attain a local maximum can indicate a characteristic length of a structure in the data. The developed methods are applied in computer vision, for example, to detect blobs, junctions, edges, or ridges.
 
-\todo[inline]{---2---}
-
-We also mention the paper by Lindeberg~\cite{lindeberg_feature_nodate} which is a direct precedent for the form of our energy functional $\hat{Q}_r(h)=(1/2)h^{2(1-r)}\|\partial_h\hat{f}_h\|_2^2$. For a continuous signal $f$ its convolution with the Gaussian kernel $K$ is studied: $L(x,t):=(K_{\sqrt{t}}\ast f)(x)$. A $\gamma$-normalized derivative operator is defined by $\partial_{\gamma}L(x,t):=t^{\gamma/2}\partial_xL(x,t)$. \textcolor{red}{The main principle of the paper is that a scale at which suitable combinations of these normalized derivatives assume a local maximum can reflect a characteristic length of structure in the data.} The developed methods are applied in computer vision, for example, to detect blobs, junctions, edges, or ridges. By the Gaussian heat equation, $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)$. Setting $t=h^2$ now gives
+In our setting we apply this construction to the empirical measure $P_n=n^{-1}\sum_{j=1}^{n}\delta_{X_j}$ in place of the continuous signal $f$ so that $L_n(x,t)=(K_{\sqrt{t}}\ast P_n)(x)=\hat{f}_{\sqrt{t}}(x)$, compare with Equation~\eqref{eq:convolution_with_emp_measure}. By the Gaussian heat equation, $\partial_h\hat{f}_h(x)=h\hat{f}_h''(x)$. Setting $t=h^2$ now gives
 \begin{align*}
-    \partial_{\gamma}^2L(x,h^2)=h^{2\gamma}\partial_x^2(K_h\ast\mu_n)(x)=h^{2\gamma}\partial_x^2\hat{f}_h(x)=h^{2\gamma-1}\partial_h\hat{f}_h(x)
+    \partial_{\gamma}^2L_n(x,h^2)=h^{2\gamma}\hat{f}_h''(x)=h^{2\gamma-1}\partial_h\hat{f}_h(x).
 \end{align*}
-and for $\gamma=1-r/2$ we get $\partial_{1-r/2}^2L(x,h^2)=h^{1-r}\partial_h\hat{f}_h(x)$. Lindeberg~\cite[Equation~79]{lindeberg_feature_nodate} also introduces the energy measure $E_2(t):=\int|\partial_\gamma^2L(x,t)|^2\,dx$. In our setting, this directly evaluates to
+Lindeberg~\cite[Equation~79]{lindeberg_feature_nodate} also introduces a class of energy measures which in one dimension is given by $E_m(t):=\int(\partial_\gamma^mL(x,t))^2\,dx$. Applying this definition to $L_n$ and setting $m=2$ gives
 \begin{align*}
-    E_2(h^2)=\int |\partial_{1-r/2}^2L(x,h^2)|^2\,dx=h^{2(1-r)}\int|\partial_h\hat{f}_h(x)|^2\,dx=2\hat{Q}_r(h).
+    E_2(h^2)=\int(\partial_{\gamma}^2L_n(x,h^2))^2\,dx=h^{4\gamma-2}\int(\partial_h\hat{f}_h(x))^2\,dx=h^{4\gamma-2}\|\partial_h\hat{f}_h\|_2^2.
 \end{align*}
+For $\gamma=1-r/2$ we recover our energy functional up to a factor of two, that is, $E_2(h^2)=2\hat{Q}_r(h)$.
 
-\todo[inline]{---2---}
+% \begingroup
+% \setlength{\emergencystretch}{1em}
+% \par
+% \endgroup
 
 Shi et al.~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}e^{-\|X_i-X_j\|^2/(2\omega^2)}$ where the data $X_1,\dots,X_n$ are first assumed to come from a multivariate Gaussian distribution. Among other things, they compute its Perron vector $v_0$ and use an index $k\in\arg\max\{|(v_0)_i|:i=1,\dots,n\}$ of the largest absolute entry to estimate the mean $\mu$ of the distribution by $X_k$.
 
