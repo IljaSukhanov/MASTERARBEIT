@@ -177,11 +177,13 @@
     Thus, using the second inequality in Equation~\eqref{eq:delta_N_j_lower_and_upper_bound}, it follows $D_{i_Nj}\ge c(\delta_{N,j})^2$ with constant $c=h_{\min}^{4-2r}(4\pi)^{-1}\int g(\omega)\,d\omega$. Note that the constant is, in fact, positive due to the continuity of the integrand $g(\omega)$ and because $g(\omega)\ne0$ on a disk $\{\omega:|\omega|\le\delta\}\setminus\{0\}$ for some $\delta>0$. It follows $S_{i_Nj}^{(N)}=e^{-\lambda_ND_{i_Nj}}\le e^{-c\lambda_N(\delta_{N,j})^2}=e^{-ct_{N,j}^2}$. 
 
     Continuing
-    \begin{align*}
-        \epsilon_NT_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\epsilon_N\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
-        \le\epsilon_N\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
-        \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt.
-    \end{align*}
+    \begin{equation}\label{eq:tail_bound}
+        \begin{aligned}
+            \epsilon_NT_N(A)&\le\epsilon_N\sum_{1\le j\le N:\epsilon_N|j-i_N|>A}e^{-ct_{N,j}^2}=\epsilon_N\sum_{1-i_N\le k\le N-i_N:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}\\&
+            \le\epsilon_N\sum_{k\in\mathbb{Z}:|k|>\epsilon_N^{-1}A}e^{-c\epsilon_N^2k^2}=2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\epsilon_Ne^{-c\epsilon_N^2k^2}\\&
+            \le2\sum_{k=\lfloor\epsilon_N^{-1}A\rfloor+1}^{\infty}\int_{(k-1)\epsilon_N}^{k\epsilon_N}e^{-ct^2}\,dt\le2\int_{A-\epsilon_N}^{\infty}e^{-ct^2}\,dt.
+        \end{aligned}
+    \end{equation}
     We see that $\epsilon_NT_N(A)$ is asymptotically bounded and therefore
     \begin{align*}
         \limsup_{N\to\infty}\epsilon_NT_N(A)\le2\int_{A}^{\infty}e^{-ct^2}\,dt\le\frac{2}{A}\int_A^{\infty}te^{-ct^2}\,dt=\frac{e^{-cA^2}}{cA}.
@@ -222,10 +224,12 @@
         \epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}=\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}+\epsilon_N\sum_{j\in I_N(A)}e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}\eta_{N,j}.
     \end{align}
     The absolute value of the second term tends to zero as the following bound shows:
-    \begin{align*}
+    \begin{align}\label{eq:local_error_bound}
         \left|\epsilon_N\sum_{j\in I_N(A)}\underbrace{e^{-\lambda_N\delta_{N,j}^2\hat{Q}_r(h_{i_N})}}_{\le 1}\eta_{N,j}\right|\le\underbrace{\epsilon_N\#I_N(A)}_{\le2A+\epsilon_N}\sup_{j\in I_N(A)}|\eta_{N,j}|\to0,\quad N\to\infty.
-    \end{align*}
+    \end{align}
     It remains to show that $\sup_{j\in I_N(A)}|\eta_{N,j}|\to0$ for $N\to\infty$. We have $\lambda_N|\rho_{N,j}|\le\lambda_N(\delta_{N,j})^2b_N(A)\le A^2b_N(A)$ for all $j\in I_N(A)$. Consequently, $|\eta_{N,j}|=|e^{-\lambda_N\rho_{N,j}}-1|\le\max\{e^{A^2b_N(A)}-1,1-e^{-A^2b_N(A)}\}\to0$ as $N\to\infty$.
+
+    We stress that in steps 1 and 2 we did not use the assumption of $h_0$ being an interior bandwidth. In particular this means that the bounds in Equations~\eqref{eq:tail_bound} and~\eqref{eq:local_error_bound} are also true for index sequences $(i_N)$ for which $h_{i_N}$ converges to $h_{\min}$ or $h_{\max}$.
 
     \textit{Step 3: Show convergence to a Gaussian integral via a Riemann sum argument}
 
@@ -293,13 +297,16 @@
     \begin{align}\label{eq:proof_main_thm2_001}
         a_{i_{l_j},N_{l_j}}=\epsilon_{N_{l_j}}\underbrace{\sum_{k\in I_{N_{l_j}}(A)}S_{i_{l_j},k}^{(N_{l_j})}}_{=:P_{N_{l_j}}(A)}+\epsilon_{N_{l_j}}\underbrace{\sum_{k\notin I_{N_{l_j}}(A)}S_{i_{l_j},k}^{(N_{l_j})}}_{=:T_{N_{l_j}}(A)},
     \end{align}
-    where again $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$ and $t_{N,j}:=\epsilon_N(j-i_N)=\lambda_N^{1/2}(\psi_r(h_j)-\psi_r(h_{i_N}))$ as in the proof of Proposition~\ref{prop:main_thm}. There, it was established that $\limsup_{j\to\infty}\epsilon_{N_{l_j}}T_{N_{l_j}}(A)\le(cA)^{-1}e^{-cA^2}$ for some positive constant $c>0$, cf. step 1 of the proof of Proposition~\ref{prop:main_thm}. Set $q_0:=\hat{Q}_r(h_0)$ and $q_j:=\hat{Q}_r(h_{i_{l_j}})$. We also have
+    where again $I_N(A):=\{j=1,\dots,N:|t_{N,j}|\le A\}$ and $t_{N,j}:=\epsilon_N(j-i_N)=\lambda_N^{1/2}(\psi_r(h_j)-\psi_r(h_{i_N}))$ as in the proof of Proposition~\ref{prop:main_thm}. There, it was established that $\limsup_{j\to\infty}\epsilon_{N_{l_j}}T_{N_{l_j}}(A)\le(cA)^{-1}e^{-cA^2}$ for some positive constant $c>0$, cf. step 1 of the proof of Proposition~\ref{prop:main_thm}, in particular Equation~\eqref{eq:tail_bound}. Set $q_0:=\hat{Q}_r(h_0)$ and $q_j:=\hat{Q}_r(h_{i_{l_j}})$. We also have
     \begin{equation}\label{eq:proof_main_thm2_002}
         \begin{aligned}
-            \epsilon_{N_{l_j}}P_{N_{l_j}}&\stackrel{\eqref{eq:local_sum_approx}}{=}\epsilon_{N_{l_j}}\sum_{k\in I_{N_{l_j}}(A)}e^{-t_{N_{l_j},k}^2q_j}+\mathbf{o}(1)\\&
+            \epsilon_{N_{l_j}}P_{N_{l_j}}&\stackrel{\eqref{eq:local_sum_approx},\,\eqref{eq:local_error_bound}}{=}\epsilon_{N_{l_j}}\sum_{k\in I_{N_{l_j}}(A)}e^{-t_{N_{l_j},k}^2q_j}+\mathbf{o}(1)\\&
             =\epsilon_{N_{l_j}}\sum_{k\in I_{N_{l_j}}(A)}e^{-t_{N_{l_j},k}^2q_0}+\underbrace{\epsilon_{N_{l_j}}\sum_{k\in I_{N_{l_j}}(A)}\left(e^{-t_{N_{l_j},k}^2q_j}-e^{-t_{N_{l_j},k}^2q_0}\right)}_{\to0\text{ (compare with Equation~\eqref{eq:help_help005})}}+\mathbf{o}(1).
         \end{aligned}
     \end{equation}
+    The application of the Equations~\eqref{eq:tail_bound}, \eqref{eq:local_sum_approx} and~\eqref{eq:local_error_bound} from steps 1 and 2 of the proof of Proposition~\ref{prop:main_thm} is justified even if $h_0$ is an endpoint as stressed earlier in that proof.
+
+    
     Recalling the notation $m_N:=\lfloor\epsilon_N^{-1}A\rfloor$, we have
     \begin{align}\label{eq:proof_main_thm2_003}
         \sum_{k\in I_{N_{l_j}}(A)}e^{-q_0t_{N_{l_j},k}^2}=\sum_{\substack{p=1-i_{l_j},\dots,N_{l_j}-i_{l_j}\\-\epsilon_{N_{l_j}}^{-1}A\le p\le\epsilon_{N_{l_j}}^{-1}A}}e^{-q_0(p\epsilon_{N_{l_j}})^2}\le\sum_{p=-m_{N_{l_j}}}^{m_{N_{l_j}}}e^{-q_0(p\epsilon_{N_{l_j}})^2}=:G_{N_{l_j}}(A).
