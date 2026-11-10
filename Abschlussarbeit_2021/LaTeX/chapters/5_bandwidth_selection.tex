@@ -812,7 +812,7 @@ They set $\mathcal{H}=[h_{\min},h_{\max}]$ and define $\hat{f}_{h,\eta}(x)=n^{-1
 \begin{align*}
     \hat{\mathcal{R}}_h:=\sup_{\eta\in\mathcal{H}}\left(\|\hat{f}_{h,\eta}-\hat{f}_{\eta}\|_2-m_2(h,\eta)\right)_++\sup_{\eta\in\mathcal{H}}m_2(\eta,h),
 \end{align*}
-where $m_2(h,\eta):=g_2(K_{\eta})+g_2(K_h\ast K_{\eta})$ and $g_2(U):=(25/3\sqrt{n})\|U\|_2$. Their bandwidth selector is $\hat{h}=\arg\min\{\hat{R}_h:h\in\mathcal{H}\}$.
+where $m_2(h,\eta):=(25/3\sqrt{n})\left(\|K_{\eta}\|_2+\|K_h\ast K_{\eta}\|_2\right)$. Their bandwidth selector is $\hat{h}=\arg\min\{\hat{R}_h:h\in\mathcal{H}\}$.
 
 
 They then proceed to show the oracle inequality
