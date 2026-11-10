@@ -830,11 +830,20 @@ Shi, Belkin and Yu~\cite{shi_data_2008} construct the kernel matrix $K_n$ with e
 \todo[inline]{---3---}
 \todo[inline]{---4---}
 
-Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} can be listed as related work regarding the phenomenon that the Perron vector localizes near the unique maximum of some (energy) functional.
+The work of Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} is related to the phenomenon that the Perron vector localizes near the unique maximum of some function.
 
-They have an index set $S(N)\subseteq\mathbb{Z}^{d}$ with some scalar value $E_i$ for each index $i\in S(N)$. Let $F_N$ be a rate matrix and define $\Tilde{H}_N:=F_N+\operatorname{diag}(E_i)$. Let $w$ be the unique Perron vector of $\Tilde{H}_N$ with strictly positive entries $w_i>0$ and define the squared entries $a_i:=w_i^2$. Furthermore, they let $D\subseteq\mathbb{R}^d$ be a compact set such that $S(N)$ is asymptotically dense in $D$. They define a function $E$ on $D$ with $E_i=E(i/N)+\mathbf{O}(N^{-1})$. Let $x^{\ast}$ be the unique global maximizer of $E$.
+They start with a system of differential equations $y_j'(t)=\sum_{i\in S_N}y_i(t)H_{ij}$, $j\in S_N$, where $S_N\subseteq\mathbb{Z}^{d}$ is a finite index set. They assume the matrix $H\in\mathbb{R}^{|S_N|\times|S_N|}$ to have nonnegative off-diagonal entries and to be irreducible. They then use the decomposition $H=M+\operatorname{diag}(H_i,i\in S_N)$, where $H_i=\sum_{j\in S_N}H_{ij}$, $i\in S_N$ are the row sums of $H$. The matrix $M$ is an irreducible Markov generator, that is it is irreducible, has nonnegative off diagonal entries and its rows sum to $0$. They take the strictly positive left eigenvector $\pi$ of $M$, assume reversibility, that is $\pi_iM_{ij}=\pi_jM_{ji}$ and define $F_{ij}:=\pi_i^{1/2}M_{ij}\pi_j^{-1/2}$ for $i\ne j$ and $F_{ii}=-\sum_{j\ne i}F_{ij}$ to be the symmetrized version of $M$. They use this matrix $F$ to define a symmetrized version $\Tilde{H}$ of $H$ by defining $\Tilde{H}_{ij}:=F_{ij}+(H_{ii}-F_{ii})\delta_{ij}$. Consequently, $\Tilde{H}=F+\operatorname{diag}(\Tilde{H}_i,i\in S_N)$, where again $\Tilde{H}_i$ are the row sums of $\Tilde{H}$. For their localization result, they consider the Perron vector $w$ of $\Tilde{H}$ normalized to have unit Euclidean norm.
 
-For any $1\ge\beta>0$ no matter how small, the sum over all $a_i$ with $|i/N-x^{\ast}|\ge\sqrt{\rho/(\beta N)}$ is less than $\beta$. For increasing $N$ the fraction of indices for in the region where $99\%$ of the mass is put shrinks to zero.
+They make the assumption that the rescaled index set $N^{-1}S_N$ is asymptotically dense inside some compact set $D\subseteq\mathbb{R}^d$ and that the size of $S_N$ is proportional to $N^d$. They also assume that $\Tilde{H}_i$ can be approximated by a twice continuously differentiable and bounded function $E$, that is $|\Tilde{H}_i-E(i/N)|\le CN^{-1}$ for some constant $C>0$, all $i\in S_N$ and sufficiently large $N$. Under these and the remaining assumptions of their Theorem~1 they show in Theorem~2 that for some constant $\rho>0$ and for every choice of $0<\beta\le1$ no matter how small
+\begin{align*}
+    1\ge\sum_{\substack{i\in S_N\\\frac{i}{N}\in \overline{B}_{x^{\ast}}\left(\sqrt{\frac{\rho}{\beta N}}\right)}}w_i^2\ge1-\beta
+\end{align*}
+for all sufficiently large $N$. Here, $x^{\ast}$ is the unique global maximizer of $E$ on $D$ that is assumed to exist and to lie inside $\operatorname{int}(D)$ with Hessian of $E$ at $x^{\ast}$ assumed to be negative definite. And by $\overline{B}_x(r)$ we mean the closed ball with center $x$ and radius $r>0$. The interpretation is as follows. For any choice of $0<\beta\le1$ the sum of the squared Perron vector entries over all indices whose rescaling $i/N$ lies within a distance $\sqrt{\rho/(\beta N)}$ of the maximizer of $E$ is at least $1-\beta$ for all sufficiently large $N$. In particular note that if we want to guarantee a large coverage $1-\beta$, meaning that the guaranteed lower bound for the sum of squared Perron vector entries over a certain set of indices is closer to $1$, we choose a smaller $\beta$. For fixed $N$ this increases the radius of the ball so the sum may contain more indices.
+
+
+
+\todo[inline]{---}
+
 
 From the proof of Proposition~\ref{prop:main_thm2} a similar localization result follows in our setting: if $v^{(N)}$ is the Perron vector of $S^{(N)}$, define $a_{i,N}:=(v^{(N)}_i)^2/\sum_{j=1}^{N}(v^{(N)}_j)^2$. For all $\epsilon>0$ we then have
 \begin{align*}
