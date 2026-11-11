@@ -1,10 +1,6 @@
 \chapter{Spectral Scale Selection for Kernel Density Estimation}\label{chap:kde}
 
-\todo[inline]{What to do with this prelude?}
-
-\textcolor{red}{In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$. The goal is to develop a methodological connection between the spectral scale selection principle introduced in~\cite{Baralic2026} and the classical problem in nonparametric statistics of bandwidth selection for kernel density estimation. We will explain why the spectral construction selects what it selects and how this selection relates to classical bandwidth selection procedures. More concretely, let $h_{\text{oracle}}$ be the bandwidth that minimizes $\mathbb{E}[\|f-\hat{f}_h\|_2^2]$ and define $S_{ij}^{(\lambda)}=e^{-\lambda D_{ij}}$ with $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ for some candidate bandwidths $0<h_1<\dots<h_N$. Does the peak of the Perron vector of $S$ relate to $h_{\text{oracle}}$?}
-
-Throughout this chapter, all integrals are over the real line unless stated otherwise.
+In this chapter, we apply the scale selection methodology introduced in~\cite{Baralic2026} to a sequence of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$. Throughout this chapter, all integrals are over the real line, unless stated otherwise.
 
 \section{Preliminaries on Kernel Density Estimation}\label{sec:preliminaries_kde}
 
