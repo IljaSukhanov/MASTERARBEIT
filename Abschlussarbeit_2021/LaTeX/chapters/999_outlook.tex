@@ -45,19 +45,10 @@ The numerical experiments in Section~\ref{sec:numerical_experiments} are restric
 
 Some preliminary experiments suggest an interesting behavior, see Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. 
 
-Similar to Figure~[] the distributions of the spectrally chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$ are shown. 
+Similar to Figure~\ref{fig:distribution_of_chosen_bandwidths} the distributions of the spectrally chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,1000$ are shown. The orange bars indicate $\lambda=1$ while the blue bars indicate $\lambda_N=N^{3/2}$ with $N=1000$. For increasing sample size we observe that orange distribution shifts from a peak at around $h=?$ to a second peak around $h=?$. For intermediate values of $n$ the distribution of spectrally chosen bandwidths is bimodal. The blue distribution, which corresponds to a much larger $\lambda$ does not have this intermediate bimodality.
 
+This raises two questions: Can these two peaks be analytically described? At what $n$ does this \enquote{mode switch} happen and how does this $n$ depend on $\lambda$? 
 
-For $\lambda=1$ (orange) we observe that the distribution of the spectrally selected bandwidths shifts from a peak around $h\approx$ to a second peak around $h\approx$ when the sample size $n$ increases. For intermediate values of $n$ the distribution of spectrally chosen bandwidths is bimodal. This raises two questions: Can these two peaks be analytically described? At what $n$ does this \enquote{mode switch} happen and how does this $n$ depend on $\lambda$? 
-
-
-
-
-Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$ for different choices of $\lambda$. For reference, the distributions of the ISE minimizer and the energy functional minimizer are also shown in gray and green, respectively. The distributions of the grid minimizers of $\hat{Q}_0$ and the ISE overlap, with the latter shifted towards larger bandwidths relative to the former. Here, by a grid minimizer, we mean the minimizer over the bandwidth grid. As $\lambda$ increases, the distribution of the spectrally chosen bandwidth $h_{k_N}$ moves towards that of the energy functional minimizer. For our largest choice of $\lambda$, the two distributions show substantial overlap.
-
-
-
-Figure~\ref{fig:spectral-lambda-comparison} shows a comparison between the distributions of spectrally chosen bandwidths for increasing sample size $n$ where $\lambda=1$ in the left image and $\lambda=1000^{3/2}$ in the right image. We see that for small $\lambda$ a mode switch occurs while for larger $\lambda$ the distribution only shifts slightly.
 
 \begin{figure}[htbp]
     \centering
