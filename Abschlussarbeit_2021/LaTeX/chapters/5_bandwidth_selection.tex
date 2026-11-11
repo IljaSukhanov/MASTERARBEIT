@@ -416,7 +416,7 @@ Henceforth, we use the fixed bandwidth grid endpoints $h_{\min}=0.01$ and $h_{\m
 
 The choice of a Gaussian kernel and Gaussian data allows us to obtain explicit formulas for the ISE and MISE as functions of $h$. We can therefore minimize them numerically over suitable closed intervals using standard optimization routines for univariate functions. We denote by $h_{\text{oracle}}$ and $\hat{h}_0$ the numerically obtained minimizers of the MISE and ISE, respectively.
 
-\subsection{Fixed sample experiments}
+\subsection{Fixed sample experiments}\label{sec:fixed_sample}
 
 For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)$, $n=200$ with $X_i\sim N(0,1)$ and study the influence of the grid fineness $N$ and the inverse concentration penalty $\lambda=\lambda_N$. Figure~\ref{fig:stationary_distribution_plot_001} shows the relation $h_i$ vs  $v_i$, where $v$ is the Perron vector of $S^{(\lambda)}=(S_{ij}^{(\lambda)})$, $S_{ij}^{(\lambda)}=\exp{(-\frac{\lambda}{2}\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2)}$ for $\lambda\in\{1,10,100,1000\}$. We see that the Perron vector has a flat plateau for $\lambda=1$ and $\lambda=10$, which means that many bandwidths are considered central. In this experiment, increasing $\lambda$ leads to the Perron vector having a more pronounced peak, which is consistent with the interpretation of $\tau=\lambda^{-1}$ as a concentration penalty for the row-normalized similarities.
 
@@ -436,9 +436,9 @@ Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the spectrally selected b
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
 
-In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. We set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization of the row-normalized similarities. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the spectrally chosen bandwidth for a fixed sample as $\lambda$ increases. The blue dashed line indicates the mean of the two bandwidths $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$ where $(j^{\ast},j^{\ast}+1)$ is the index pair that minimizes $D_{ij}$ over $i\ne j$. For increasing $\lambda$ the spectrally chosen bandwidth is eventually close to the mean of $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$. We will explain this behavior in Section~\ref{sec:res_2} below. 
+In Section~\ref{sec:similarity_transformations} we established the interpretation of $\tau$ as a penalty weight. We set $\lambda=1/\tau$ and study $\lambda\to\infty$. This corresponds to a decrease in concentration penalization of the row-normalized similarities. Figure~\ref{fig:chosen_bandwidths_vs_lambda} shows the spectrally chosen bandwidth for a fixed sample as $\lambda$ increases. The blue dashed line indicates the mean of the two bandwidths $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$ where $(j^{\ast},j^{\ast}+1)$ is the index pair that minimizes $D_{ij}$ over $i\ne j$. For increasing $\lambda$ the spectrally chosen bandwidth is eventually close to the mean of $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$. We will explain this behavior in Section~\ref{sec:res_2} below.
 
-\textcolor{red}{Also note that the curve sharply jumps around $\lambda\approx17.87375$. This observation motivates us to ask more questions: Does it happen under repeated sampling? If so, at what $\lambda$ does the switch happen each time? Is it an interesting property about this method or just a numerical artifact? We leave these questions for future work; see the Outlook chapter~\ref{chap:outlook}.}
+Note that the curve exhibits a sudden jump at $\lambda\approx17.87375$, where the spectrally selected bandwidth switches to a different region of the bandwidth grid. We briefly discuss questions raised by this observation in the Outlook chapter~\ref{chap:outlook}.
 
 \begin{figure}
     \centering

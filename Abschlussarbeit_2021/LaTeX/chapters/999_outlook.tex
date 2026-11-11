@@ -1,14 +1,6 @@
 \chapter{Outlook}\label{chap:outlook}
 
-\todo[inline]{11.11: Polish!}
-
-\begin{itemize}
-    \item behavior with respect to increasing sample size $n$ is mainly unexplored, bandwidth grid must scale with $n$
-    \item Analysis of local minima of the energy functional might be of independent interest but also because of the connection to the Perron vector
-    \item sudden switch for the fixed $N$ increasing $\lambda$ experiments
-\end{itemize}
-
-During the research for this thesis, several interesting questions and ideas emerged that could not be investigated in further detail in the present work. This chapter presents these questions and discusses possible directions for future research.
+During the research for this thesis, several interesting questions and ideas emerged that could not be investigated in further detail in this work. This chapter presents these questions and discusses possible directions for future research.
 
 \textbf{Alternative similarity constructions}
 
@@ -18,22 +10,17 @@ Many other divergences, such as the Rényi divergence, could also be considered.
 
 \textbf{Extension to asymmetric divergences}
 
-
 In contrast to distances, divergences need not be symmetric or satisfy the triangle inequality and therefore provide a more general notion of dissimilarity. The resulting scale similarity matrix $S$ may be asymmetric so we distinguish between its left and right Perron vectors, denoted by $l$ and $r$, respectively. A natural way to combine these two vectors is to form their entrywise product and normalize it, yielding the vector $\pi$ with entries
 \begin{align*}
     \pi_i=\frac{l_ir_i}{\sum_{j=1}^{N}l_jr_j}.
 \end{align*}
 For symmetric matrices, this reduces to $\pi_i=v_i^2/\sum_{j=1}^{N}v_j^2$, where $v$ is the Perron vector of $S$. If $S$ is nonnegative and irreducible, we can choose $v$ to have strictly positive entries, so squaring and normalizing them preserves the ranking of the scales. In particular, $\arg\max\{\pi_i:1\le i\le N\}=\arg\max\{v_i:1\le i\le N\}$. This construction gives rise to the study of our methodology for generally asymmetric divergences, most prominently the Kullback-Leibler divergence $D_{\text{KL}}(p,q)=\int p(x)\log{(p(x)/q(x))}\,dx$ which arises as a limit of the $\alpha$-divergence as $\alpha\uparrow1$ as well as the other parametrized divergences introduced in Section~\ref{sec:divergences}.
 
-
 \textbf{Davis-Kahan Perron vector analysis}
 
 Our efforts in Section~\ref{sec:bregman_divergences} to control the truncation error rigorously and assess the quadrature error numerically when approximating the squared $L^2$-distance between Gaussian kernel density estimates can be seen as a first step toward subsequent error analyses. Since we only compute an approximation $\Tilde{S}$ of the true scale similarity matrix $S$, the resulting Perron vector is also just an approximation. If $S$ and $\Tilde{S}$ are symmetric and the largest eigenvalue of $S$ is simple, the Davis--Kahan theorem (see e.g.~\cite[Corollary~1]{yu_useful_2015}) states that the sine of the angle between the true Perron vector and its approximation is controlled by the operator norm of the error matrix $S-\Tilde{S}$ and the eigenvalue gap of $S$, that is, the difference between its largest and second largest eigenvalues. Bounds on the eigenvalue gap for our scale similarity matrices and on the operator norm of $S-\Tilde{S}$ could be investigated in the future. The goal would be to obtain explicit, rigorous bounds on the sine of the angle between the approximate and true Perron vectors for a large class of scale similarity matrices. 
 
 We also note that in this work we used the Fourier approximation for its computational advantage over the exact formulas. For other divergences, closed form expressions between kernel density estimates may not be available, making accurate and efficient approximations necessary. For example, Hershey and Olsen~\cite{hershey_approximating_2007} discuss approximations of the Kullback-Leibler divergence between Gaussian mixture models. This is relevant to our work because a kernel density estimate with a Gaussian kernel is itself the density of a Gaussian mixture.
-
-
-
 
 \textbf{Data from Gaussian mixture models}
 
@@ -44,10 +31,6 @@ In cases where the data come from a Gaussian mixture model, there may be multipl
 The numerical experiments in Section~\ref{sec:numerical_experiments} are restricted to a fixed sample size, while the behavior of the spectrally selected bandwidth as the sample size varies remains largely unexplored. Preliminary experiments suggest interesting behavior as the sample size increases, as illustrated in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. 
 
 As in Figure~\ref{fig:distribution_of_chosen_bandwidths}, the distributions of the spectrally selected bandwidths over repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,1000$ are shown. Each subplot shows the distributions for different values of $\lambda$ and the sample size $n$ increases across the subplots. The orange, magenta, green and blue bars correspond to $\lambda=1,20,400,8000$ respectively. As the sample size increases, the orange distribution, corresponding to the smallest value of $\lambda$, shifts from one peak to another. For intermediate values of $n$ the distribution appears to be bimodal. A similar shift occurs for the magenta distribution, but at a larger sample size. The green and blue distributions do not show such a shift for the sample sizes that were considered.
-
-
-This raises two questions: Can these two peaks be analytically described? At what $n$ does this \enquote{mode switch} happen and how does this $n$ depend on $\lambda$? 
-
 
 \begin{figure}[htbp]
     \centering
@@ -82,18 +65,8 @@ This raises two questions: Can these two peaks be analytically described? At wha
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
 \end{figure}
 
+\textbf{Miscellaneous}
 
-\textbf{Bandwidth grid that scales with sample size}
+When studying the behavior of the spectrally selected bandwidth for fixed $N$ and increasing $\lambda$ in Section~\ref{sec:fixed_sample} we observed a sudden jump in the curve in Figure~\ref{fig:chosen_bandwidths_vs_lambda} at $\lambda\approx17.87375$. That is, as $\lambda$ passes this value the spectrally chosen bandwidth abruptly switches to a different region of the bandwidth grid. This observation raises several questions about whether such a switch occurs under repeated sampling and if so, at which value of $\lambda$ it occurs for each sample. It would also be interesting to investigate whether the switch is an inherent property of the method or a numerical artifact.
 
-\todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
-
-\todo[inline]{explain the sharp jump? (Outlook)}
-
-
-Also note that the curve sharply jumps around $\lambda\approx17.87375$. This observation motivates us to ask more questions: Does it happen under repeated sampling? If so, at what $\lambda$ does the switch happen each time? Is it an interesting property about this method or just a numerical artifact? We leave these questions for future work; see the Outlook chapter~\ref{chap:outlook}.
-
-
-
-
-
-
+In Section~\ref{sec:expected_energy_functional}, we studied the existence of local extrema of the energy functional $\hat{Q}_r$. This study was motivated by the connection established in Proposition~\ref{prop:main_thm2} between the global minimizers of $\hat{Q}_r$ on a fixed interval $[h_{\min},h_{\max}]$ and the bandwidth selected via the Perron vector of an appropriately constructed scale similarity matrix. In the subsequent numerical experiment, we searched for local minima of $\hat{Q}_0$ and found that some samples led to multiple detected local minima. See Table~\ref{tab:brent_spectral_timing}. We regard the distribution of the number of local minima of $\hat{Q}_r$ and its dependence on the sample size $n$ as a topic of independent interest.
