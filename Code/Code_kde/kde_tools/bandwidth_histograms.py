@@ -24,14 +24,17 @@ def plot_thesis_bandwidth_distributions(h_grid, counts, *, sample_size,
     labels = (r'$\lambda=1$', r'$\lambda_N=N^{1/2}$',
               r'$\lambda_N=N$', r'$\lambda_N=N^{3/2}$')
     colors = ('#DF6818', '#A14AA4', '#199C70', '#2867B2')
+    edges = np.r_[starts - .5, stops[-1] - .5]
     for values, color, label in zip(grouped, colors, labels):
         selected = np.flatnonzero(values)
         ax.bar(centers[selected], values[selected] / repetitions,
-               width=.94 * (stops - starts)[selected], color=color, alpha=.68,
+               width=.94 * (stops - starts)[selected], color=color, alpha=.35,
                edgecolor='white', linewidth=.3, label=label)
+        ax.stairs(values / repetitions, edges, color=color, linewidth=1.1,
+                  zorder=3)
     oracle = gaussian_mise_oracle_bandwidth(sample_size)
     position = np.interp(np.log(oracle), np.log(grid), np.arange(len(grid)))
-    ax.axvline(position, color='tab:red', linestyle='--', linewidth=1.8,
+    ax.axvline(position, color='tab:red', linestyle='--', linewidth=1.8, zorder=4,
                label=r'$h_{\mathrm{oracle}}$')
     ticks = np.unique(np.linspace(0, len(grid) - 1, 7, dtype=int))
     ax.set_xticks(ticks, [f'{grid[i]:.3g}' for i in ticks])
