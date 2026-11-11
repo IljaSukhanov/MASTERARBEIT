@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 from matplotlib.ticker import FormatStrFormatter, MultipleLocator
 import numpy as np
 
@@ -18,8 +19,8 @@ def plot_thesis_bandwidth_distributions(h_grid, counts, *, sample_size,
     )
     centers = (starts + stops - 1) / 2
     fig, ax = plt.subplots(figsize=(8, 3.7))
-    labels = (r'$\lambda=1$', r'$\lambda_N=N^{1/2}$',
-              r'$\lambda_N=N$', r'$\lambda_N=N^{3/2}$')
+    labels = (r'$\lambda=1$', r'$\lambda=20$',
+              r'$\lambda=400$', r'$\lambda=8000$')
     colors = ('#DF6818', '#A14AA4', '#199C70', '#2867B2')
     edges = np.r_[starts - .5, stops[-1] - .5]
     for values, color, label in zip(grouped, colors, labels):
@@ -43,6 +44,10 @@ def plot_thesis_bandwidth_distributions(h_grid, counts, *, sample_size,
     for side in ('top', 'right', 'left'):
         ax.spines[side].set_visible(False)
     ax.spines['bottom'].set_color('#E5ECF6')
+    legend_handles = [Patch(facecolor=color, edgecolor=color, label=label)
+                      for color, label in zip(colors, labels)]
+    ax.legend(handles=legend_handles, loc='center right', ncol=1,
+              frameon=False, fontsize=9, labelcolor='#304967')
     ax.set_xlabel(r'chosen bandwidth $h_{k_N}$', fontsize=11, color='#304967', labelpad=9)
     ax.set_ylabel('relative frequency', fontsize=11, color='#304967', labelpad=9)
     fig.tight_layout()

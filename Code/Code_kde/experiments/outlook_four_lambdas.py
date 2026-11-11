@@ -110,7 +110,7 @@ def main():
             counts = np.stack([np.bincount(selected[:, j], minlength=N) for j in range(4)])
             fig, ax, (_, _, grouped) = plot_thesis_bandwidth_distributions(
                 GRID, counts, sample_size=n, repetitions=M, positions_per_bin=BINNING)
-            assert ax.get_legend() is None and np.all(grouped.sum(axis=1) == M)
+            assert len(ax.get_legend().get_texts()) == 4 and np.all(grouped.sum(axis=1) == M)
             fig.savefig(OUT / f'distribution_of_chosen_bandwidths_n{n}.pdf', bbox_inches='tight')
             plt.close(fig)
             print(f'n={n}: PDF saved; max residual={residuals.max():.2g}; min gap={gaps.min():.2g}', flush=True)
