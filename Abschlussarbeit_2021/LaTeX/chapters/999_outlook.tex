@@ -2,78 +2,19 @@
 
 \todo[inline]{11.11: Polish!}
 
-\begin{itemize}
-    \item Other similarity constructions (via bounded divergences)
-    \item rigorous error control is essential when approximating the integrals since the error propagates through to the Perron vector and by Davis Kahan the sine (and subsequently the distance) between true and approximate Perron vector is controlled by the spectral gap of the similarity matrix and the approximation quality of the approximate similarity matrix
+\begin{itemize}  
     \item extension to asymmetric divergences via scalar product of left and right eigenvector, connection to Doob transform
-    \item Inspect data coming from more complex distributions, such as Gaussian mixture models, Perron vector entries can be used to rank the scales
     \item behavior with respect to increasing sample size $n$ is mainly unexplored, bandwidth grid must scale with $n$
     \item Analysis of local minima of the energy functional might be of independent interest but also because of the connection to the Perron vector
 \end{itemize}
 
-During the research many interesting questions arose that could not be explored further due to limited resources. We use this Outlook chapter to present those ideas that can be approached in future research.
+During the research for this thesis, several interesting questions and ideas emerged that could not be investigated in further detail in the present work. This chapter presents these questions and discusses possible directions for future research.
 
+\textbf{Alternative similarity constructions}
 
-Regarding the spectral scale methodology that we invented in Chapter~\ref{chap:kde}, the natural next step is to first test the other symmetric divergences: Hellinger, Jensen-Shannon, and Total Variation.
+The natural next step is to first test the other symmetric divergences namely the squared Hellinger distance, the Jensen-Shannon divergence, and the total variation distance. These three divergences also have the special property that they are bounded. From~\cite[Equation~(137)]{sason_f-divergence_2016} we have the uniform bound $D_f(p,q)\le C_f:=f(0)+f^{\ast}(0)$ over all densities $p,q\in\mathcal{P}$, where $f^{\ast}(0):=\lim_{t\downarrow0}tf(t^{-1})$. Equality holds for densities with disjoint supports such as $p=\mathbf{1}_{[0,1]}$ and $q=\mathbf{1}_{[2,3]}$. Hence, $D_f$ is bounded if and only if $C_f<\infty$. For symmetric $D_f$, the symmetry characterization of $f$-divergences shows that $C_f<\infty$ is equivalent to $2f(0)<\infty$. For the functions $f$ defining the squared Hellinger distance, the Jensen-Shannon divergence and the total variation distance, we have $f(0)=1/2$, $f(0)=(\log{2})/2$ and $f(0)=1/2$ respectively. For bounded divergences with $C_f>0$ we could thus use a more straightforward similarity transformation by defining $S^{(N)}_{ij}:=C_f-D_f(\hat{f}_{h_i},\hat{f}_{h_j})$ and optionally normalizing it by setting $\Tilde{S}^{(N)}_{ij}:=C_f^{-1}S^{(N)}_{ij}=1-D_f(\hat{f}_{h_i},\hat{f}_{h_j})/C_f$.
 
-These three divergences also have the special property that they are bounded. From~\cite[Equation~(137)]{sason_f-divergence_2016} we have the uniform bound $D_f(p,q)\le C_f:=f(0)+f^{\ast}(0)$ for all $p,q\in\mathcal{P}$. Here, $f^{\ast}(0)=\lim_{t\downarrow0}tf(t^{-1})$. It follows that a $f$-divergence is bounded if and only if $f(0)+f^{\ast}(0)<\infty$. In case $D_f$ is symmetric, this is equivalent to $2f(0)<\infty$ by the symmetry characterization of $f$-divergences. For bounded divergences, we can use a more straightforward similarity transformation by defining $S^{(N)}_{ij}:=C_f-D_f(\hat{f}_{h_i},\hat{f}_{h_j})$ and optionally normalizing $\Tilde{S}^{(N)}_{ij}:=C_f^{-1}S^{(N)}_{ij}=1-D_f(\hat{f}_{h_i},\hat{f}_{h_j})/C_f$.
-
-For example, the total variation divergence can be written as
-\begin{align*}
-    d_{\text{TV}}(p,q)=\frac{1}{2}\int|p(x)-q(x)|\,dx=1-\int\min\{p(x),q(x)\}\,dx.
-\end{align*}
-Thus, $d_{\text{TV}}(p,q)\le1$ and $1-d_{\text{TV}}(p,q)=\int\min\{p(x),q(x)\}\,dx$ is a similarity measure between $p$ and $q$. Similarly for the squared Hellinger distance we can write
-\begin{align*}
-    H^2(p,q)=\frac{1}{2}\int\left(\sqrt{p(x)}-\sqrt{q(x)}\right)^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx.
-\end{align*}
-So again $H^2(p,q)\le1$ and $1-H^2(p,q)=\int\sqrt{p(x)q(x)}\,dx$ is a similarity measure between $p$ and $q$, which is also known as the Bhattacharyya kernel in the literature; see~\cite{jebara_probability_nodate}. The JS divergence can also be bounded:
-\begin{align*}
-    \operatorname{JS}(p,q)=\int q(x)f_{\operatorname{JS}}\left(\frac{p(x)}{q(x)}\right)\,dx\le\frac{\log{2}}{2}\int q(x)\left(\frac{p(x)}{q(x)}+1\right)\,dx=\log{2},
-\end{align*}
-because
-\begin{align*}
-    f_{\operatorname{JS}}(t)=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right)=\frac{t}{2}\log{\underbrace{\frac{2t}{t+1}}_{\le2}}+\frac{1}{2}\log{\underbrace{\frac{2}{t+1}}_{\le2}}\le\frac{\log{2}}{2}(t+1)
-\end{align*}
-for all $t\ge0$.
-
-Many other divergences, for example, the Rényi divergence can be considered as well. Based on the property of the divergence, like boundedness or conditionally negative definiteness, the properties of the resulting scale similarity matrix differ and by proxy the behavior of the Perron vector. This can lead to a rich theory connecting information theory and kernel density estimation with bandwidth scale selection via the eigenvectors of an appropriately constructed scale similarity matrix.
-
-\textbf{Numerical Approximation of the $\alpha$-divergence and total variation}
-
-Following the need for rigorous error bounds when approximating the divergences, we give truncation bounds for the $\alpha$-divergence and the total variation divergence. 
-
-
-Let $A=[a,b]$ and $A^c=\mathbb{R}\setminus A$. We first aim to bound the truncation error $E_{\text{trunc}}=|\int_{A^c}f(p(x),q(x))\,dx|$, where $f$ is any of the functions that appear in a divergence, and $p=\hat{f}_h$ and $q=\hat{f}_g$ are kernel density estimates with a Gaussian kernel. It holds
-\begin{align*}
-    \tau_h:=\int_{A^c}\hat{f}_h=\frac{1}{n}\sum_{j=1}^{n}\underbrace{\int\limits_{\mathbb{R}\setminus(a,b)}\frac{1}{h}K\left(\frac{x-X_j}{h}\right)\,dx}_{=\Phi((a-X_j)/h)+\Phi((X_j-b)/h)}.
-\end{align*}
-Setting $a=X_{\min}-L h_{\max}$ and $b=X_{\max}+Lh_{\max}$, where $X_{\min}=\min X_j$, $X_{\max}=\max X_j$ and $h_{\max}=\max h_i$, we obtain
-\begin{align*}
-    \Phi((a-X_j)/h)+\Phi((X_j-b)/h)\le2\Phi(-L)=:\delta_L
-\end{align*}
-and thus $\tau_h\le 2\Phi(-L)$ for any $h\le h_{\max}$. Using the upper bound for the above truncation error, we choose $L$ such that $\delta_L\le\epsilon$. This can be achieved by setting $L\ge\Phi^{-1}(1-\epsilon/2)$.
-
-Replacing $\int p^{\alpha}q^{1-\alpha}$ in Equation~\eqref{eq:alpha_divergence1} with the truncated integral $\int_a^bp^{\alpha}q^{1-\alpha}$ leads to the truncation error
-\begin{align*}
-    E_{\text{trunc}}=\frac{1}{\alpha(1-\alpha)}\int_{A^c}p^{\alpha}q^{1-\alpha}\stackrel{\text{Hölder}}{\le}\frac{1}{\alpha(1-\alpha)}\left(\int_{A^c}p\right)^{\alpha}\left(\int_{A^c}q\right)^{1-\alpha}\le\frac{\delta_L}{\alpha(1-\alpha)}
-\end{align*}
-for the $\alpha$-divergence and truncating the total variation yields
-\begin{align*}
-    \frac{1}{2}\int_{A^c}|p-q|\le\frac{1}{2}\int_{A^c}p+\frac{1}{2}\int_{A^c}q\le\delta_L.
-\end{align*}
-
-As a consequence, we see that approximating $\alpha$-divergence and total variation using the composite trapezoidal rule allows clean error control.
-
-\textbf{Numerical Approximation of Jensen-Shannon divergence}
-
-For KL and JS divergence it is natural to use the Gauss-Hermite quadrature, which is a quadrature rule that approximates integrals of the form $\int_{-\infty}^{\infty}e^{-x^2}f(x)\,dx$ by $\sum_{m=1}^{M}w_mf(x_m)$ with the nodes $x_m$ being the $M$-th Hermite Polynomial $H_M$ and weights $w_m=(2^{M-1}M!\sqrt{\pi})/(M^2H_{M-1}^2(x_m))$. For reference on Gauss-Hermite quadrature, see~\cite[Section~25.4.46]{abramowitz_stegun1972}. We can write (and consequently approximate) the KL-divergence between two kernel density estimates $\hat{f}_h$ and $\hat{f}_g$ as
-\begin{align*}
-    D_{\text{KL}}(\hat{f}_h\|\hat{f}_g)&=\frac{1}{\sqrt{\pi}}\frac{1}{n}\sum_{i=1}^{n}\int_{-\infty}^{+\infty}e^{-x^2}\log{\left(\hat{f}_h(X_j+h\sqrt{2}x)-\hat{f}_g(X_j+h\sqrt{2}x)\right)}\,dx\\&
-    \approx\frac{1}{\sqrt{\pi}}\frac{1}{n}\sum_{i=1}^{n}\sum_{m=1}^{M}w_m\log{\left(\hat{f}_h(X_j+h\sqrt{2}x_m)-\hat{f}_g(X_j+h\sqrt{2}x_m)\right)}.
-\end{align*}
-Using the formula in Equation~\eqref{eq:JS_KL_formula} we can also approximate the JS-divergence between $\hat{f}_h$ and $\hat{f}_g$.
-
-One advantage of the Gauss-Hermite quadrature is that we do not need to care about the truncation error because there is none.
+Many other divergences, such as the Rényi divergence, could also be considered. Depending on the properties of the divergence, such as boundedness or conditional negative definiteness, and the chosen similarity transformation, the properties of the resulting scale similarity matrix and the behavior of its Perron vector may differ. This could lead to a rich theory connecting information theory and kernel density estimation with bandwidth scale selection via the eigenvectors of an appropriately constructed scale similarity matrix.
 
 \textbf{Extension to asymmetric divergences}
 
@@ -87,9 +28,18 @@ where $r$ and $l$ are the right and left principal eigenvectors of $S$, that is,
 
 This construction gives rise to the study of our methodology for generally asymmetric divergences, most prominently the Kullback-Leibler divergence: $D_{\operatorname{KL}}(p,q)=\int p\log{(p/q)}$ (as a limit of $\alpha$-divergence for $\alpha\to1$).
 
-\textbf{Data coming from the Gaussian mixture model}
+\textbf{Davis-Kahan Perron vector analysis}
 
-In cases where the data comes from a Gaussian mixture model, there might not exist a unique \enquote{optimal} bandwidth, and our spectral approach could serve as a ranking procedure for candidate bandwidths. We will be particularly interested in cases where the globally optimal bandwidth (with respect to some error criterion) would not be picked by the Perron vector, and instead another bandwidth is picked because it has a more central position.
+Our efforts in Section~\ref{sec:bregman_divergences} to control the truncation error rigorously and assess the quadrature error numerically when approximating the squared $L^2$-distance between Gaussian kernel density estimates can be seen as a first step toward subsequent error analyses. Since we only compute an approximation $\Tilde{S}$ of the true scale similarity matrix $S$, the resulting Perron vector is also just an approximation. If $S$ and $\Tilde{S}$ are symmetric and the largest eigenvalue of $S$ is simple, the Davis--Kahan theorem (see e.g.~\cite[Corollary~1]{yu_useful_2015}) states that the sine of the angle between the true Perron vector and its approximation is controlled by the operator norm of the error matrix $S-\Tilde{S}$ and the eigenvalue gap of $S$, that is, the difference between its largest and second largest eigenvalues. Bounds on the eigenvalue gap for our scale similarity matrices and on the operator norm of $S-\Tilde{S}$ could be investigated in the future. The goal would be to obtain explicit, rigorous bounds on the sine of the angle between the approximate and true Perron vectors for a large class of scale similarity matrices. 
+
+We also note that in this work we used the Fourier approximation for its computational advantage over the exact formulas. For other divergences, closed form expressions between kernel density estimates may not be available, making accurate and efficient approximations necessary. For example, Hershey and Olsen~\cite{hershey_approximating_2007} discuss approximations of the Kullback-Leibler divergence between Gaussian mixture models. This is relevant to our work because a kernel density estimate with a Gaussian kernel is itself the density of a Gaussian mixture.
+
+
+
+
+\textbf{Data from Gaussian mixture models}
+
+In cases where the data come from a Gaussian mixture model, there may be multiple optimal bandwidths. For example Figure 5 in~\cite{10.1214/aos/1176348653} suggests that for certain sample sizes the MISE of a specific Gaussian mixture model may have multiple global minima. Our spectral approach could serve as a ranking procedure for candidate bandwidths. We would be particularly interested in how these multiple globally optimal bandwidths are ranked by the Perron vector.
 
 \textbf{Increasing sample size experiments}
 
@@ -157,9 +107,6 @@ For $\lambda=1$ (orange) we observe that the distribution of the spectrally sele
 \todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
 
 \todo[inline]{explain the sharp jump? (Outlook)}
-
-
-\textbf{Davis-Kahan Perron vector analysis}
 
 
 

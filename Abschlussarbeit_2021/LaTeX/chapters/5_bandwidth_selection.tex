@@ -139,9 +139,9 @@ Since we will use divergences to construct scale similarity matrices, it is impo
 In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one of the symmetric divergences, namely the Bregman $\beta$-divergence with $\beta=2$ (which is half of the squared $L^2$ distance) introduced in Section~\ref{sec:bregman_divergences} below, since it leads to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. \textcolor{red}{The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.}
 
 A prominent parametrized family of $f$-divergences is the so called \textit{$\alpha$-divergence} (see \cite[Equation~(7)]{cichocki_families_2010}) where the function $f=f_{\alpha}$, $\alpha\in(0,1)$ is given by
-\begin{align*}
+\begin{align}\label{eq:alpha_generator}
     f_{\alpha}(t):=\frac{1}{\alpha(\alpha-1)}\left(t^{\alpha}-\alpha t-(1-\alpha)\right),\quad t>0.
-\end{align*}
+\end{align}
 The actual divergence is then given by
 \begin{align}\label{eq:alpha_divergence1}
     D_{\alpha}(p\|q):=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right).
@@ -152,9 +152,9 @@ Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, wherea
 Another class of divergences are the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. We have used a normalizing factor $1/2$ so that when setting $s=1$ we recover the well known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the following chain of inequalities: $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
 
 Another important divergence that belongs to the class of $f$-divergences is the \textit{Jensen Shannon divergence}. The function $f=f_{\operatorname{JS}}$ is set to be
-\begin{align*}
+\begin{align}\label{eq:js_generator}
     f_{\operatorname{JS}}(t):=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right),\quad t>0.
-\end{align*}
+\end{align}
 The divergence is then given by $\operatorname{JS}(p,q):=\int q(x)f_{\operatorname{JS}}(p(x)/q(x))\,dx$. The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
 \begin{align}\label{eq:JS_KL_formula}
     \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}\left(p\big\|\frac{p+q}{2}\right)+\operatorname{KL}\left(q\big\|\frac{p+q}{2}\right)\right),
@@ -814,7 +814,7 @@ where $m_2(h,\eta):=\frac{25}{3}n^{-1/2}\left(\|K_{\eta}\|_2+\|K_h\ast K_{\eta}\
 \begin{align*}
     \mathbb{E}[\|\hat{f}_{\hat{h}}-f\|_2]\le C\inf_{h\in\mathcal{H}}\mathbb{E}[\|\hat{f}_h-f\|_2]+\delta_n,
 \end{align*}
-where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. This means that the risk of the selected estimator $\hat{f}_{\hat{h}}$ is at most a constant multiple of the smallest risk among the candidate estimators $\hat{f}_h$, $h\in\mathcal{H}$ plus a remainder.
+where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. This means that the risk of the selected estimator $\hat{f}_{\hat{h}}$ is at most a constant multiple of the smallest risk among the candidate estimators $\hat{f}_h$, $h\in\mathcal{H}$ plus a remainder.\todo{make connection clearer}
 
 
 Lacour and Massart~\cite{lacour_minimal_2016} study a simplified version of the Goldenshluger-Lepski procedure that compares kernel density estimates directly over a finite set of bandwidths, compare with~\cite[Equation~2]{lacour_minimal_2016}. In their simulations they use $\mathcal{H}=\{e^{-k}:k\in\mathbb{Z},3\le k\le 10\}\cup\{0.002+k\cdot0.02:k\in\mathbb{Z},0\le k\le 24\}$.
