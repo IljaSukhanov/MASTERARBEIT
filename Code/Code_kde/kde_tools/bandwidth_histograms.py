@@ -6,9 +6,6 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter, MultipleLocator
 import numpy as np
 
-from .bandwidths import gaussian_mise_oracle_bandwidth
-
-
 def plot_thesis_bandwidth_distributions(h_grid, counts, *, sample_size,
                                         repetitions, positions_per_bin=5):
     """Draw four spectral distributions in the thesis comparison style."""
@@ -32,10 +29,6 @@ def plot_thesis_bandwidth_distributions(h_grid, counts, *, sample_size,
                edgecolor='white', linewidth=.3, label=label)
         ax.stairs(values / repetitions, edges, color=color, linewidth=1.1,
                   zorder=3)
-    oracle = gaussian_mise_oracle_bandwidth(sample_size)
-    position = np.interp(np.log(oracle), np.log(grid), np.arange(len(grid)))
-    ax.axvline(position, color='tab:red', linestyle='--', linewidth=1.8, zorder=4,
-               label=r'$h_{\mathrm{oracle}}$')
     ticks = np.unique(np.linspace(0, len(grid) - 1, 7, dtype=int))
     ax.set_xticks(ticks, [f'{grid[i]:.3g}' for i in ticks])
     ax.set_xlim(-.5, len(grid) - .5)
