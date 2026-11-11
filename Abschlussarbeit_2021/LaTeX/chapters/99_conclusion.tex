@@ -1,5 +1,11 @@
 \chapter{Conclusion}\label{chap:conclusion}
 
-\todo[inline]{11.11: Write!}
+This thesis was concerned with applying the spectral scale selection methodology developed in the manuscript~\cite{Baralic2026} to bandwidth selection in kernel density estimation. We developed a framework for how to construct pairwise similarity matrices by drawing from the field of information theory and the many choices of divergences between probability distribution it provides.
 
-The second part of this thesis was concerned about applying the spectral scale selection methodology developed in the manuscript~\cite{Baralic2026} to bandwidth selection in kernel density estimation. We developed a framework for how to construct pairwise similarity matrices using the notion of divergences between probability distributions. Our main result establishes an interesting connection between energy functional minimization and spectral scale selection. 
+The subsequent transformation via completely monotone functions such as the exponential function $\exp{(-\lambda x)}$ is motivated by us through Schoenberg's theorem which gives characterizations on the divergence so that the similarity matrix is positive definite. Another motivation was given through interpreting the sum normalized rows as solution to a penalized energy minimization with penalty $\lambda$ that controlling the concentration of each row.
+
+The arrangement of the candidate bandwidths is controlled by a parameter $r$ with $r=1$ corresponding to a linear arrangement and $r=0$ to a geometric arrangement. These candidate bandwidths are used to form a sequence of kernel density estimates from which the scale similarity matrix is build.
+
+The main result of this thesis is Proposition~\ref{prop:main_thm2} and it describes the behavior of the Perron vector of the scale similarity matrix $S^{(N)}$ constructed from half the squared $L^2$ distance between kernel density estimates at different bandwidth scales. Under certain assumptions the spectrally selected bandwidth approaches the set of global minimizers of an energy functional $\hat{Q}_r$ on a fixed interval.
+
+The existence of local minima of $\hat{Q}_r$ was examined and a connection to classical bandwidth selection was established through the unique minimizer $h_{\text{AMQ}}$ of the leading term approximation of the expected energy functional $\mathbb{E}[\hat{Q}_r]$. For the specific choice of $r=13/14$ it is asymptotically equivalent to the oracle bandwidth.
