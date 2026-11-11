@@ -11,21 +11,23 @@ from .bandwidths import gaussian_mise_oracle_bandwidth
 
 def plot_thesis_bandwidth_distributions(h_grid, counts, *, sample_size,
                                         repetitions, positions_per_bin=5):
-    """Draw the two spectral distributions in the thesis comparison style."""
+    """Draw four spectral distributions in the thesis comparison style."""
     grid = np.asarray(h_grid, dtype=float)
     counts = np.asarray(counts)
-    if counts.shape != (2, len(grid)):
-        raise ValueError("Expected counts for the two spectral choices.")
+    if counts.shape != (4, len(grid)):
+        raise ValueError("Expected counts for the four spectral choices.")
     starts, stops, grouped = grouped_grid_counts(
         counts, len(grid), repetitions, positions_per_bin,
     )
     centers = (starts + stops - 1) / 2
     fig, ax = plt.subplots(figsize=(8, 3.7))
-    labels = (r'$\lambda=1$', r'$\lambda_N=N^{3/2}$')
-    for values, color, label in zip(grouped, ('#C65D00', '#3979A7'), labels):
+    labels = (r'$\lambda=1$', r'$\lambda_N=N^{1/2}$',
+              r'$\lambda_N=N$', r'$\lambda_N=N^{3/2}$')
+    colors = ('#DF6818', '#A14AA4', '#199C70', '#2867B2')
+    for values, color, label in zip(grouped, colors, labels):
         selected = np.flatnonzero(values)
         ax.bar(centers[selected], values[selected] / repetitions,
-               width=.94 * (stops - starts)[selected], color=color, alpha=.7,
+               width=.94 * (stops - starts)[selected], color=color, alpha=.68,
                edgecolor='white', linewidth=.3, label=label)
     oracle = gaussian_mise_oracle_bandwidth(sample_size)
     position = np.interp(np.log(oracle), np.log(grid), np.arange(len(grid)))
