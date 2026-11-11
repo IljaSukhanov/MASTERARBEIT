@@ -136,7 +136,7 @@ for the set of all probability densities. Note that $\mathcal{P}\subseteq L^1(\m
 
 Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Fortunately, the $f$-divergence has a well known symmetry characterization: $D_f$ is symmetric, that is, $D_f(p\|q)=D_f(q\|p)$ for all $p,q\in\mathcal{P}$ if and only if there exists a constant $c\in\mathbb{R}$ such that $f(t)-f^{\ast}(t)=c(t-1)$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(t):=tf(t^{-1})$, for a reference see~\cite[Propositions 1 and 2]{sason_f-divergences_2018}.
 
-In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one of the symmetric divergences, namely the Bregman $\beta$-divergence with $\beta=2$ (which is half of the squared $L^2$ distance) introduced in Section~\ref{sec:bregman_divergences} below, since it leads to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. \textcolor{red}{The reason we still introduce the divergences in such generality is so that the ideas in the Outlook can be better appreciated.}
+In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one of the symmetric divergences, namely the Bregman $\beta$-divergence with $\beta=2$ (which is half of the squared $L^2$ distance) introduced in Section~\ref{sec:bregman_divergences} below, since it leads to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. We still introduce the divergences in such generality so that the ideas in the Outlook may be better appreciated.
 
 A prominent parametrized family of $f$-divergences is the so called \textit{$\alpha$-divergence} (see \cite[Equation~(7)]{cichocki_families_2010}) where the function $f=f_{\alpha}$, $\alpha\in(0,1)$ is given by
 \begin{align}\label{eq:alpha_generator}
@@ -456,7 +456,7 @@ After having examined the behavior for fixed $\lambda$ and increasing $N$ in Fig
     \label{fig:N_lambda_joint_limit_for_different_alpha}
 \end{figure}
 
-\subsection{Repeated sampling experiments}
+\subsection{Repeated sample experiments}
 
 The spectrally chosen bandwidth is a discrete random variable whose value depends on the sample $(X_1,\dots,X_n)$. A natural question to ask is how the spectrally chosen bandwidth, seen as a statistic, is distributed under repeated sampling and how this distribution depends on how large $\lambda$ is in relation to the number of bandwidths $N$. Figure~\ref{fig:distribution_of_chosen_bandwidths} shows the results of studying the distribution of the chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$ for different choices of $\lambda$. For reference, the distributions of the ISE minimizer and the energy functional minimizer are also shown in gray and green, respectively. The distributions of the grid minimizers of $\hat{Q}_0$ and the ISE overlap, with the latter shifted towards larger bandwidths relative to the former. Here, by a grid minimizer, we mean the minimizer over the bandwidth grid. As $\lambda$ increases, the distribution of the spectrally chosen bandwidth $h_{k_N}$ moves towards that of the energy functional minimizer. For our largest choice of $\lambda$, the two distributions show substantial overlap.
 
@@ -814,7 +814,9 @@ where $m_2(h,\eta):=\frac{25}{3}n^{-1/2}\left(\|K_{\eta}\|_2+\|K_h\ast K_{\eta}\
 \begin{align*}
     \mathbb{E}[\|\hat{f}_{\hat{h}}-f\|_2]\le C\inf_{h\in\mathcal{H}}\mathbb{E}[\|\hat{f}_h-f\|_2]+\delta_n,
 \end{align*}
-where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. This means that the risk of the selected estimator $\hat{f}_{\hat{h}}$ is at most a constant multiple of the smallest risk among the candidate estimators $\hat{f}_h$, $h\in\mathcal{H}$ plus a remainder.\todo{make connection clearer}
+where $C>0$ is a constant independent of $n$ and $f$ and $\delta_n$ is a remainder independent of $f$. This means that the risk of the selected estimator $\hat{f}_{\hat{h}}$ is at most a constant multiple of the smallest risk among the candidate estimators $\hat{f}_h$, $h\in\mathcal{H}$ plus a remainder.
+
+In particular if $K$ is the Gaussian kernel then $K_h\ast K_{\eta}=K_{\sqrt{h^2+\eta^2}}$ and hence $\hat{f}_{h,\eta}(x)=\hat{f}_{\sqrt{h^2+\eta^2}}(x)$. Thus, like our approach, their method is also based on pairwise comparisons of kernel density estimates across different bandwidth scales. However they take a different route by using these pairwise comparisons to construct the data driven selection criterion $\mathcal{\hat{R}}_h$.
 
 
 Lacour and Massart~\cite{lacour_minimal_2016} study a simplified version of the Goldenshluger-Lepski procedure that compares kernel density estimates directly over a finite set of bandwidths, compare with~\cite[Equation~2]{lacour_minimal_2016}. In their simulations they use $\mathcal{H}=\{e^{-k}:k\in\mathbb{Z},3\le k\le 10\}\cup\{0.002+k\cdot0.02:k\in\mathbb{Z},0\le k\le 24\}$.
