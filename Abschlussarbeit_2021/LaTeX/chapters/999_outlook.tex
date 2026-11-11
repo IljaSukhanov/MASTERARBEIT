@@ -41,11 +41,10 @@ In cases where the data come from a Gaussian mixture model, there may be multipl
 
 \textbf{Increasing sample size experiments}
 
-The numerical experiments in Section~\ref{sec:numerical_experiments} are restricted to a fixed sample size, while the behavior of the spectrally selected bandwidth remains largely unexplored.
+The numerical experiments in Section~\ref{sec:numerical_experiments} are restricted to a fixed sample size, while the behavior of the spectrally selected bandwidth as the sample size varies remains largely unexplored. Preliminary experiments suggest interesting behavior as the sample size increases, as illustrated in Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. 
 
-Some preliminary experiments suggest an interesting behavior, see Figure~\ref{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}. 
+As in Figure~\ref{fig:distribution_of_chosen_bandwidths}, the distributions of the spectrally selected bandwidths over repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,1000$ are shown. Each subplot shows the distributions for different values of $\lambda$ and the sample size $n$ increases across the subplots. The orange, magenta, green and blue bars correspond to $\lambda=1,20,400,8000$ respectively. As the sample size increases, the orange distribution, corresponding to the smallest value of $\lambda$, shifts from one peak to another. For intermediate values of $n$ the distribution appears to be bimodal. A similar shift occurs for the magenta distribution, but at a larger sample size. The green and blue distributions do not show such a shift for the sample sizes that were considered.
 
-Similar to Figure~\ref{fig:distribution_of_chosen_bandwidths} the distributions of the spectrally chosen bandwidths under repeatedly drawn samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,1000$ are shown. The orange bars indicate $\lambda=1$ while the blue bars indicate $\lambda_N=N^{3/2}$ with $N=1000$. For increasing sample size we observe that orange distribution shifts from a peak at around $h=?$ to a second peak around $h=?$. For intermediate values of $n$ the distribution of spectrally chosen bandwidths is bimodal. The blue distribution, which corresponds to a much larger $\lambda$ does not have this intermediate bimodality.
 
 This raises two questions: Can these two peaks be analytically described? At what $n$ does this \enquote{mode switch} happen and how does this $n$ depend on $\lambda$? 
 
@@ -79,20 +78,19 @@ This raises two questions: Can these two peaks be analytically described? At wha
         \caption{$n=1000$}
     \end{subfigure}
 
-    \caption{Distribution of chosen bandwidths changes for increasing sample size $n$. A clear transition between two regimes is visible.}
+    \caption{Distributions of spectrally selected bandwidths for $\lambda\in\{1,20,400,8000\}$ and sample sizes $n\in\{300,400,500,1000\}$ based on $L=1000$ samples and $N=400$ geometrically spaced bandwidth candidates. Each bin combines two consecutive bandwidth candidates.}
     \label{fig:distribution_of_chosen_bandwidths_for_increasing_sample_size}
 \end{figure}
 
-
-Comparison of spectrally selected bandwidth distributions
-    for different sample sizes, with $N=1000$ and $M=1000$ repetitions.
-    Note the different vertical scales.
 
 \textbf{Bandwidth grid that scales with sample size}
 
 \todo[inline]{grid must scale with $n$? Otherwise spectrally selected bandwidth will not be consistent (outlook)}
 
 \todo[inline]{explain the sharp jump? (Outlook)}
+
+
+Also note that the curve sharply jumps around $\lambda\approx17.87375$. This observation motivates us to ask more questions: Does it happen under repeated sampling? If so, at what $\lambda$ does the switch happen each time? Is it an interesting property about this method or just a numerical artifact? We leave these questions for future work; see the Outlook chapter~\ref{chap:outlook}.
 
 
 
