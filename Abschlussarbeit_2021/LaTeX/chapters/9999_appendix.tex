@@ -69,7 +69,7 @@
 
 
 \begin{proof}
-    Let $D$ be conditionally negative definite. By~\cite[Theorem~2.2]{berg_harmonic_1984} this is equivalent to $\Tilde{S}_t=(\exp{(-tD(x_i,x_j))})_{i,j=1}^{n}$ being positive semi-definite for all finite choices of points $x_1,\dots,x_n\in X$. Let $\phi$ be a completely monotone function. Then by~\cite[Corollary~6.14]{berg_harmonic_1984}, there exists a nonnegative measure $\mu$ on $\mathcal{B}([0,\infty))$ such that $\phi(z)=\int_{[0,\infty)}e^{-tz}\,d\mu(t)$. By the continuity of $\phi$ at zero and the monotone convergence theorem we have $\mu([0,\infty))=\phi(0)<\infty$. This makes $\phi(D(x_i,x_i))=\phi(0)$ well defined. Consequently, we write
+    Let $D$ be conditionally negative definite. By~\cite[Theorem~2.2]{berg_harmonic_1984} this is equivalent to $\Tilde{S}_t=(\exp{(-tD(x_i,x_j))})_{i,j=1}^{n}$ being positive semi-definite for all finite choices of points $x_1,\dots,x_n\in X$. Let $\phi$ be a completely monotone function. Then by~\cite[Corollary~6.14]{berg_harmonic_1984}, there exists a nonnegative measure $\mu$ on $\mathcal{B}([0,\infty))$ such that $\phi(z)=\int_{[0,\infty)}e^{-tz}\,d\mu(t)$ for all $z>0$. By the continuity of $\phi$ at zero and the monotone convergence theorem, we have $\mu([0,\infty))=\phi(0)<\infty$. Thus $\mu$ is finite and the integral representation also holds at $z=0$. Consequently, we write
     \begin{align*}
         \sum_{i,j=1}^{n}a_ia_j\phi(D(x_i,x_j))&=\sum_{i,j=1}^{n}a_ia_j\int\limits_{[0,\infty)}\exp{(-tD(x_i,x_j))}\,d\mu(t)\\&
         =\int\limits_{[0,\infty)}\underbrace{\sum_{i,j=1}^{n}a_ia_j\exp{(-tD(x_i,x_j))}}_{=a^{T}\Tilde{S}_ta\ge0}\,d\mu(t)\ge0
@@ -265,7 +265,7 @@
 
     \textit{Step 4: Combine steps 1-3}
 
-    We first must make sure that $q_0>0$. For all sufficiently large $N$ we have $i_N+1\in I_N(A)$, because $|t_{N,i_N+1}|=\epsilon_N\to0$. Thus $0<c\le D_{i_N,i_N+1}\delta_{N,i_N+1}^{-2}=q_N+\delta_{N,i_N+1}^{-2}\rho_{N,j}$ by the first sentence of $\textit{Step 1}$ and Equation~\eqref{eq:help_equation_000202}. Taking the limit yields $0<c\le q_0$ due to Equation~\eqref{eq:help_equation_000203} and the continuity of $\hat{Q}_r$. Finally,
+    We first must make sure that $q_0>0$. For all sufficiently large $N$ we have $i_N+1\in I_N(A)$, because $|t_{N,i_N+1}|=\epsilon_N\to0$. Thus $0<c\le D_{i_N,i_N+1}\delta_{N,i_N+1}^{-2}=q_N+\delta_{N,i_N+1}^{-2}\rho_{N,i_N+1}$ by the first sentence of $\textit{Step 1}$ and Equation~\eqref{eq:help_equation_000202}. Taking the limit yields $0<c\le q_0$ due to Equation~\eqref{eq:help_equation_000203} and the continuity of $\hat{Q}_r$. Finally,
     \begin{align*}
         &\int\limits_{-A}^{A}e^{-q_0t^2}\,dt\stackrel{\text{steps 2, 3}}{=}\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\liminf_{N\to\infty}\epsilon_NT_N(A)\\&
         \le\liminf_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\limsup_{N\to\infty}\epsilon_NR_{i_N}^{(N)}\le\lim_{N\to\infty}\epsilon_N\sum_{j\in I_N(A)}S_{i_Nj}^{(N)}+\limsup_{N\to\infty}\epsilon_NT_N(A)\\&
