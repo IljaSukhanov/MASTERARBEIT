@@ -50,7 +50,7 @@
     \begin{align*}
         \langle\delta_k,\delta_l\rangle_2&=\int\delta_k(x)\delta_l(x)\,dx=\frac{1}{2\pi}\int\limits_{\mathbb{R}}|P_n(\omega)|^2b_k(\omega)b_l(\omega)\,d\omega.
     \end{align*}
-    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ is continuous and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2b_k(\omega)b_l(\omega)$ is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. We have found a set with positive Lebesgue measure on which the integrand is positive, which implies that the integral $\langle\delta_k,\delta_l\rangle_2$ itself is positive, that is, $\langle\delta_k,\delta_l\rangle_2>0$.
+    Since $h_k<h_{k+1}$, we have $b_k(\omega)<0$ for all $\omega\ne0$. Also, notice that $\omega\mapsto P_n(\omega)$ is continuous and $P_n(0)=1$. Thus $P_n(\omega)\ne0$ for all $\omega\in B_{\epsilon}(0)$ for some $\epsilon>0$. It follows that the function $\omega\mapsto|P_n(\omega)|^2b_k(\omega)b_l(\omega)$, which is nonnegative on $\mathbb{R}$, is strictly positive on $B_{\epsilon}(0)\setminus\{0\}$. We have found a set with positive Lebesgue measure on which the integrand is positive, which implies that the integral $\langle\delta_k,\delta_l\rangle_2$ itself is positive, that is, $\langle\delta_k,\delta_l\rangle_2>0$.
 
     Now, let $i<j<k$. We have
     \begin{align*}
@@ -60,7 +60,7 @@
     \end{align*}
     because
     \begin{align*}
-        \langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle&=\bigg\langle\sum_{r=j}^{k-1}\underbrace{(\hat{f}_{h_{r+1}}-\hat{f}_{h_r})}_{=\delta_r},\sum_{s=i}^{j-1}\underbrace{(\hat{f}_{h_{s+1}}-\hat{f}_{h_s})}_{=\delta_s}\bigg\rangle\\&=\sum_{r=j}^{k-1}\sum_{s=i}^{j-1}\langle\delta_r,\delta_s\rangle>0,
+        \langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle&=\bigg\langle\sum_{l=j}^{k-1}\underbrace{(\hat{f}_{h_{l+1}}-\hat{f}_{h_l})}_{=\delta_r},\sum_{m=i}^{j-1}\underbrace{(\hat{f}_{h_{m+1}}-\hat{f}_{h_m})}_{=\delta_s}\bigg\rangle\\&=\sum_{l=j}^{k-1}\sum_{m=i}^{j-1}\langle\delta_l,\delta_m\rangle>0,
     \end{align*}
      by the first part of the proof.
 \end{proof}
@@ -74,7 +74,7 @@
         \sum_{i,j=1}^{n}a_ia_j\phi(D(x_i,x_j))&=\sum_{i,j=1}^{n}a_ia_j\int\limits_{[0,\infty)}\exp{(-tD(x_i,x_j))}\,d\mu(t)\\&
         =\int\limits_{[0,\infty)}\underbrace{\sum_{i,j=1}^{n}a_ia_j\exp{(-tD(x_i,x_j))}}_{=a^{T}\Tilde{S}_ta\ge0}\,d\mu(t)\ge0
     \end{align*}
-    for all $a_1,\dots,a_n\in\mathbb{R}$. This shows that the matrix $S=(\phi(D(x_i,x_j)))_{i,j=1}^{n}$ is positive semi-definite. If $(b)$ holds, then $(a)$ follows directly by the equivalence stated in~\cite[Theorem~2.2]{berg_harmonic_1984} since $\exp{(-t\cdot)}$ is a completely monotone function for all $t>0$. \cite[Proposition~3.2]{berg_harmonic_1984} gives the implication $(a)\implies (c)$, while the reverse direction can easily be checked by us: it holds
+    for all $a_1,\dots,a_n\in\mathbb{R}$. This shows that the matrix $S=(\phi(D(x_i,x_j)))_{i,j=1}^{n}$ is positive semi-definite. If $(b)$ holds, then $(a)$ follows directly by the equivalence stated in~\cite[Theorem~2.2]{berg_harmonic_1984} since $\exp{(-t\cdot)}$ is a completely monotone function for all $t>0$. \cite[Proposition~3.2]{berg_harmonic_1984} gives the implication $(a)\implies (c)$, while the reverse direction can easily be checked by us. Let $c_1,\dots,c_n\in\mathbb{R}$ with $\sum_{j=1}^{n}c_j=0$. Then
     \begin{align*}
         \sum_{i,j=1}^{n}c_ic_j\|\Phi(x_i)-\Phi(x_j)\|_{\mathcal{H}}^2=-2\sum_{i,j=1}^{n}c_ic_j\langle\Phi(x_i),\Phi(x_j)\rangle=-2\left\|\sum_{j=1}^{n}c_j\Phi(x_j)\right\|_{\mathcal{H}}^{2}\le0.
     \end{align*}
@@ -84,7 +84,7 @@
 \subsection*{Proof of Lemma~\ref{lem:asymptotic_approx_r_linear_spacing}}\label{sec:proof_asymptotic_approx_r_linear_spacing}
 
 \begin{proof}
-    First, suppose $0<r\le1$. We have $h_{j_N}^r-h_{i_N}^r=r(j_N-i_N)\Delta_{r,N}$ from which follows
+    First, suppose $0<r\le1$. We have $h_{j_N}^r-h_{i_N}^r=r(j_N-i_N)\Delta_{r,N}$, from which follows
     \begin{align*}
         h_{j_N}=\left(h_{i_N}^r+r\delta_{ij}^{r,N}\right)^{1/r}=h_{i_N}\left(1+r\underbrace{\frac{\delta_{ij}^{r,N}}{h_{i_N}^r}}_{=:c_N}\right)^{1/r}.
     \end{align*}
@@ -196,7 +196,7 @@
         \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
         =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
     \end{align*}
-    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $\alpha_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large. Also by the first inequality of Equation~\ref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
+    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $\alpha_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large. Also by the first inequality of Equation~\eqref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
     \begin{align*}
         \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_{h_{i_N}}\|_2
         \le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
@@ -229,11 +229,11 @@
     \end{align}
     It remains to show that $\sup_{j\in I_N(A)}|\eta_{N,j}|\to0$ for $N\to\infty$. We have $\lambda_N|\rho_{N,j}|\le\lambda_N(\delta_{N,j})^2b_N(A)\le A^2b_N(A)$ for all $j\in I_N(A)$. Consequently, $|\eta_{N,j}|=|e^{-\lambda_N\rho_{N,j}}-1|\le\max\{e^{A^2b_N(A)}-1,1-e^{-A^2b_N(A)}\}\to0$ as $N\to\infty$.
 
-    We stress that in steps 1 and 2 we did not use the assumption of $h_0$ being an interior bandwidth. In particular this means that the bounds in Equations~\eqref{eq:tail_bound} and~\eqref{eq:local_error_bound} are also true for index sequences $(i_N)$ for which $h_{i_N}$ converges to $h_{\min}$ or $h_{\max}$.
+    We stress that in steps 1 and 2 we did not use the assumption of $h_0$ being an interior bandwidth. In particular, this means that the bounds in Equations~\eqref{eq:tail_bound} and~\eqref{eq:local_error_bound} are also true for index sequences $(i_N)$ for which $h_{i_N}$ converges to $h_{\min}$ or $h_{\max}$.
 
     \textit{Step 3: Show convergence to a Gaussian integral via a Riemann sum argument}
 
-    We now show the convergence of the first non-vanishing term on the right side of Equation~\ref{eq:local_sum_approx} to a Gaussian integral. From now on to shorten the notation we set $q_N:=\hat{Q}_r(h_{i_N})$ and $q_0:=\hat{Q}_r(h_0)$. Since $\hat{Q}_r$ is continuous in $h_0$, we have $q_N\to q_0$ for $N\to\infty$. Therefore
+    We now show the convergence of the first non-vanishing term on the right side of Equation~\eqref{eq:local_sum_approx} to a Gaussian integral. From now on to shorten the notation we set $q_N:=\hat{Q}_r(h_{i_N})$ and $q_0:=\hat{Q}_r(h_0)$. Since $\hat{Q}_r$ is continuous in $h_0$, we have $q_N\to q_0$ for $N\to\infty$. Therefore
     \begin{equation}\label{eq:help_help005}
         \begin{aligned}
             &\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|\\&\le\underbrace{\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_N}-\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}\right|}_{\le\epsilon_N\#I_N(A)A^2|q_N-q_0|\le(2A+\epsilon_N)A^2|q_N-q_0|\to0}+\left|\epsilon_N\sum_{j\in I_N(A)}e^{-t_{N,j}^2q_0}-\int_{-A}^{A}e^{-t^2q_0}\,dt\right|.
@@ -324,7 +324,7 @@
         \rho_N&=\max_{x\ne 0}(x^{T}A^{(N)}x)/(x^{T}x)=(v^{(N)})^{T}A^{(N)}v^{(N)}/(v^{(N)})^{T}(v^{(N)})
         \ge y^{T}A^{(N)}y/(y^{T}y)
     \end{align*}
-    for all $y\in\mathbb{R}^{N}$, $y\ne0$. Let $0<\eta<M$. By continuity of $g$ we can find a nonempty closed interval $J\subseteq(h_{\min},h_{\max})$ such that $g(h)\ge M-\eta$ for all $h\in J$. Denote the interval by $J=[u,v]$, $u<v$. The set of indices $I_N:=\{i=1,\dots,N:h_i\in J\}$ is nonempty for all sufficiently large $N$. To check this, choose $i_N=\min\{i=1,\dots,N:h_i\ge u\}$. Then $2<i_N\le N$ and $h_{i_N-1}<u\le h_{i_N}$. Thus, $0\le h_{i_N}-u\le h_{i_N}-h_{i_N-1}\le h_{\max}^{1-r}\Delta_{r,N}\to0$ by Equation~\eqref{eq:delta_N_j_lower_and_upper_bound} and $h_{i_N}\le v$ eventually. Define the vector $y_0^{(N)}\in\mathbb{R}^{N}$ by $(y_0^{(N)})_i=\mathbf{1}\{i\in I_N\}$. By the previous argument, $y_0^{(N)}\ne0$ for sufficiently large $N$. It follows
+    for all $y\in\mathbb{R}^{N}$, $y\ne0$. Let $0<\eta<M$. By continuity of $g$ we can find a nonempty closed interval $J\subseteq(h_{\min},h_{\max})$ such that $g(h)\ge M-\eta$ for all $h\in J$. Denote the interval by $J=[u,w]$, $u<w$. The set of indices $I_N:=\{i=1,\dots,N:h_i\in J\}$ is nonempty for all sufficiently large $N$. To check this, choose $i_N=\min\{i=1,\dots,N:h_i\ge u\}$. Then $2\le i_N\le N$ and $h_{i_N-1}<u\le h_{i_N}$. Thus, $0\le h_{i_N}-u\le h_{i_N}-h_{i_N-1}\le h_{\max}^{1-r}\Delta_{r,N}\to0$ by Equation~\eqref{eq:delta_N_j_lower_and_upper_bound} and $h_{i_N}\le w$ eventually. Define the vector $y_0^{(N)}\in\mathbb{R}^{N}$ by $(y_0^{(N)})_i=\mathbf{1}\{i\in I_N\}$. By the previous argument, $y_0^{(N)}\ne0$ for sufficiently large $N$. It follows
     \begin{equation}\label{eq:proof_main_thm2_00000}
         \begin{aligned}
             \rho_N&\ge(y_0^{(N)})^{T}A^{(N)}y_0^{(N)}/((y_0^{(N)})^{T}y_0^{(N)})=\frac{1}{\# I_N}\sum_{i,j\in I_N}A_{ij}^{(N)}\\&
@@ -349,7 +349,7 @@
     \end{equation}
     During the above calculations, we have bounded the number of index pairs $(i,j)$ with $i\in I_N$, $j\notin I_N$ and $|i-j|=k$ above by $2k$. This can be done because $I_N$ is a set of consecutive indices which we can denote by $i_1,\dots,i_K$ and where only the first $\min\{k,K\}$ indices can have an index $j$ to the left of $I_N$ with $|i-j|=k$. Similarly, only the last $\min\{k,K\}$ indices can have an index $j$ to the right of $I_N$ with $|i-j|=k$. In the last inequality, we have also used $\int_{k-1}^k(x+1)e^{-c\epsilon_N^2x^2}\,dx\ge ke^{-c\epsilon_N^2k^2}$ for all $k\in\mathbb{N}$.
 
-    The interval $J$ contains $\#I_N$ bandwidths, and two consecutive bandwidths have a gap of at most $h_{\max}^{1-r}\Delta_{r,N}$. Therefore, the length $v-u$ of the interval $J$ is bounded above by $(\#I_N+1)h_{\max}^{1-r}\Delta_{r,N}$. Using this, we get $\epsilon_N\#I_N\ge(v-u)h_{\max}^{r-1}\lambda_N^{1/2}-\epsilon_N\to\infty$, because $\lambda_N\to\infty$ and $\epsilon_N\to0$. Together with Equation~\eqref{eq:main_thm2_009} this finally shows $E_N\le c^{-1}(\#I_N\epsilon_N)^{-1}+\pi^{1/2}c^{-1/2}\epsilon_N(\epsilon_N\#I_N)^{-1}\to0$ as $N\to\infty$.
+    The interval $J$ contains $\#I_N$ bandwidths, and two consecutive bandwidths have a gap of at most $h_{\max}^{1-r}\Delta_{r,N}$. Therefore, the length $w-u$ of the interval $J$ is bounded above by $(\#I_N+1)h_{\max}^{1-r}\Delta_{r,N}$. Using this, we get $\epsilon_N\#I_N\ge(w-u)h_{\max}^{r-1}\lambda_N^{1/2}-\epsilon_N\to\infty$, because $\lambda_N\to\infty$ and $\epsilon_N\to0$. Together with Equation~\eqref{eq:main_thm2_009} this finally shows $E_N\le c^{-1}(\#I_N\epsilon_N)^{-1}+\pi^{1/2}c^{-1/2}\epsilon_N(\epsilon_N\#I_N)^{-1}\to0$ as $N\to\infty$.
 
     \textit{Step 2.3: Combine steps 2.1 and 2.2}
 

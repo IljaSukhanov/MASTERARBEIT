@@ -4,7 +4,7 @@ In this chapter, we apply the scale selection methodology introduced in~\cite{Ba
 
 \section{Preliminaries on Kernel Density Estimation}\label{sec:preliminaries_kde}
 
-We have data $X_1,\dots.X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. We assume throughout that $f$ is square integrable, twice continuously differentiable, and that its second derivative is square integrable. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
+We have data $X_1,\dots,X_n\in\mathbb{R}$ sampled independently from a distribution with unknown density $f$. We assume throughout that $f$ is square integrable, twice continuously differentiable, and that its second derivative is square integrable. The kernel density function $\hat{f}_h$ estimates this unknown density. It is defined by
 \begin{align*}
     \hat{f}_h(x)\coloneqq \frac{1}{nh}\sum_{j=1}^{n}K\left(\frac{x-X_j}{h}\right),\quad x\in\mathbb{R},
 \end{align*}
@@ -25,9 +25,9 @@ Throughout, we will assume that $K\in L^2(\mathbb{R})$ and $\mu_2(K):=\int x^2K(
     \item the Gaussian kernel $K(u)=(2\pi)^{-1/2}\exp{(-u^2/2)}$, $u\in\mathbb{R}$
 \end{itemize}
 
-The Epanechnikov kernel has compact support, which is beneficial for some convergence guaranties, while its derivative is not continuous. The Gaussian kernel, on the other hand, is infinitely often differentiable and also allows for explicit formulas and efficient computation in practice.
+The Epanechnikov kernel has compact support, which is beneficial for some convergence guarantees, while its derivative is not continuous. The Gaussian kernel, on the other hand, is infinitely often differentiable and also allows for explicit formulas and efficient computation in practice.
 
-The question of how to choose the bandwidth $h$ is widely known in the literature. See, for example, the more recent review~\cite{heidenreich_bandwidth_2013}. We present some of the most popular methods below in order to give background on classical bandwidth selection. Following the review~\cite{heidenreich_bandwidth_2013}, bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. The methods of both classes minimize some approximation of the (mean) integrated squared error.
+The question of how to choose the bandwidth $h$ is widely known in the literature. See, for example, the more recent review~\cite{heidenreich_bandwidth_2013}. We present some of the most popular methods below to provide background on classical bandwidth selection. Following the review~\cite{heidenreich_bandwidth_2013}, bandwidth selectors can be divided into several classes, including plug-in and cross-validation methods. The methods of both classes minimize some approximation of the (mean) integrated squared error.
 
 \begin{Def}
     Let $f$ be a density, and $\hat{f}_h$ its kernel density estimate. The integrated squared error (ISE) between $f$ and $\hat{f}_h$ is given by
@@ -59,7 +59,7 @@ Here, unbiasedness means that the expectations of $\mathbb{E}_{X\sim f}[\hat{f}_
 \endgroup
 \begingroup
 \setlength{\emergencystretch}{1em}
-In terms of convergence guaranty, if $K$ has additionally compact support and a Hölder-continuous second derivative and $f$ has integrable and bounded first and second derivatives and the second derivative is uniformly continuous, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Theorem~2.2]{hall_extent_nodate}. In particular, this implies that the ISE evaluated at $\hat{h}_{\text{CV}}$ converges to the ISE evaluated at its true minimizer $\hat{h}_0$ in probability.
+In terms of convergence guarantee, if $K$ has additionally compact support and a Hölder-continuous second derivative and $f$ has integrable and bounded first and second derivatives and the second derivative is uniformly continuous, then it is known that $n(\operatorname{ISE}(\hat{h}_{\text{CV}})-\operatorname{ISE}(\hat{h}_0))$ converges in distribution to a scaled chi-square distribution; see~\cite[Theorem~2.2]{hall_extent_nodate}. In particular, this implies that the ISE evaluated at $\hat{h}_{\text{CV}}$ converges to the ISE evaluated at its true minimizer $\hat{h}_0$ in probability.
 \par
 \endgroup
 
@@ -82,7 +82,7 @@ Plug-in methods use Equation~\eqref{eq:h_amise} as a starting point and try to f
     \|f^{''}\|_2^2=\frac{3}{8\sqrt{\pi}\sigma^{5}},\quad\text{and } h_{\operatorname{AMISE}}=\left(\frac{4}{3}\right)^{1/5}\sigma n^{-1/5}\approx1.06\sigma n^{-1/5}.
 \end{align*}
 
-There are many other more sophisticated plug-in methods, one of them being the Sheather and Jones' plug in selector, denoted by $\hat{h}_{\text{SJ}}$ It is used fairly commonly in practice; see, for example, the documentation of the kde packages of the statistics software R and SAS. There exist consistency results for this plug-in selector under suitable assumptions on $f$ and $K$: the result in~\cite[Equation~(10)]{sheather_reliable_1991} implies that the relative error $(\hat{h}_{\text{SJ}}-h_{\text{oracle}})/h_{\text{oracle}}$ converges to zero in probability.
+There are many other more sophisticated plug-in methods, one of them being the Sheather and Jones' plug in selector, denoted by $\hat{h}_{\text{SJ}}$. It is used fairly commonly in practice; see, for example, the documentation of the kde packages of the statistics software R and SAS. There exist consistency results for this plug-in selector under suitable assumptions on $f$ and $K$: the result in~\cite[Equation~(10)]{sheather_reliable_1991} implies that the relative error $(\hat{h}_{\text{SJ}}-h_{\text{oracle}})/h_{\text{oracle}}$ converges to zero in probability.
 
 \textbf{Exact MISE formula for Gaussian mixture models}
 
@@ -132,7 +132,7 @@ for the set of all probability densities. Note that $\mathcal{P}\subseteq L^1(\m
 
 Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Fortunately, the $f$-divergence has a well known symmetry characterization: $D_f$ is symmetric, that is, $D_f(p\|q)=D_f(q\|p)$ for all $p,q\in\mathcal{P}$ if and only if there exists a constant $c\in\mathbb{R}$ such that $f(t)-f^{\ast}(t)=c(t-1)$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(t):=tf(t^{-1})$, for a reference see~\cite[Propositions 1 and 2]{sason_f-divergences_2018}.
 
-In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one of the symmetric divergences, namely the Bregman $\beta$-divergence with $\beta=2$ (which is half of the squared $L^2$ distance) introduced in Section~\ref{sec:bregman_divergences} below, since it leads to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. We still introduce the divergences in such generality so that the ideas in the Outlook may be better appreciated.
+In the following, we introduce a few classes of parametrized $f$-divergences. Each of those parametrized classes has exactly one symmetric divergence among them. The numerical experiments below will make use of just one symmetric divergence, namely the Bregman $\beta$-divergence with $\beta=2$ (which is half of the squared $L^2$ distance) introduced in Section~\ref{sec:bregman_divergences} below, since it leads to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in the outlook Chapter~\ref{chap:outlook}. We still introduce the divergences in such generality so that the ideas in the Outlook may be better appreciated.
 
 A prominent parametrized family of $f$-divergences is the so called \textit{$\alpha$-divergence} (see \cite[Equation~(7)]{cichocki_families_2010}) where the function $f=f_{\alpha}$, $\alpha\in(0,1)$ is given by
 \begin{align}\label{eq:alpha_generator}
@@ -143,7 +143,7 @@ The actual divergence is then given by
     D_{\alpha}(p\|q):=\frac{1}{\alpha(\alpha-1)}\left(\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx-1\right).
 \end{align}
 
-Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q):=(1/2)\int(\sqrt{p(x)}-\sqrt{q(x)})^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx$ is the squared Hellinger distance. In particular, by the symmetry characterization of $f$-divergences, the $\alpha$-divergence is symmetric iff $\alpha=1/2$. By Hölders inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q):=\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
+Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback-Leibler divergence. At $\alpha=1/2$ we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q):=(1/2)\int(\sqrt{p(x)}-\sqrt{q(x)})^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx$ is the squared Hellinger distance. In particular, by the symmetry characterization of $f$-divergences, the $\alpha$-divergence is symmetric iff $\alpha=1/2$. By Hölder's inequality $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q):=\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx$ and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
 Another class of divergences are the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. We have used a normalizing factor $1/2$ so that when setting $s=1$ we recover the well known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the following chain of inequalities: $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
 
@@ -185,11 +185,11 @@ The derivation of the formula uses mainly the Gaussian convolution identity, tha
 
 \textbf{Numerical Approximation}
 
-The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equation~\eqref{eq:beta2_exact_formula01} the computational efficiency is of the order $\mathbf{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
+The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equation~\eqref{eq:beta2_exact_formula01} the computational complexity is of the order $\mathbf{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
 In the following, we will briefly describe the approach following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$, $\omega\in\mathbb{R}$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$, see~\cite[Example~2.6]{plonka_numerical_2018}. Using the linearity and translation property of the Fourier transform (see~\cite[Theorem~2.5]{plonka_numerical_2018}), we obtain the Fourier transform of a kernel density function with a Gaussian kernel:
 \begin{align}\label{eq:fourier_transform_of_kde}
-    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=:P_n(\omega)}\exp{(-h^2\omega^2)/2}.
+    \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=:P_n(\omega)}\exp{(-h^2\omega^2/2)}.
 \end{align}
 Next, we use Parseval's identity (see~\cite[Lemma~2.21]{plonka_numerical_2018}) to get
 \begin{align*}
@@ -206,7 +206,7 @@ where $\operatorname{erfc}(z):=2\pi^{-1/2}\int_z^{\infty}e^{-t^2}\,dt$ is the co
 \begin{align*}
     G_{ij}\approx G_{ij}^{(\Omega,K)}:=\frac{\Omega}{\pi}\sum_{k=0}^{K}c_kg_{ij}(\omega_k),
 \end{align*}
-where $c_k:=1/(2K)$ for $k=0,K$ and $c_k:=1/K$ else are the quadrature weights and $\omega_k=k\Omega/K$, $k=0,1,\dots,K$ are equidistant nodes. We determine a suitable number of nodes experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, setting $E_K:=\max_l\max_{ij}|G_{ij}-G_{ij}^{(\Omega_0,K)}|$ (the maximum absolute error) and choosing $K$ so that $E_k\le\delta$ for some prescribed error tolerance $\delta>0$. See Figure~\ref{fig:fourier_approx_experiment} for a visualization of this experiment. It suggests the choice of $K_0=1376$ when prescribing $\delta=10^{-8}$.
+where $c_k:=1/(2K)$ for $k=0,K$ and $c_k:=1/K$ else are the quadrature weights and $\omega_k=k\Omega/K$, $k=0,1,\dots,K$ are equidistant nodes. We determine a suitable number of nodes experimentally by generating samples $(X_1^{(l)},\dots,X_n^{(l)})$, $l=1,\dots,L$, setting $E_K:=\max_l\max_{ij}|G_{ij}-G_{ij}^{(\Omega_0,K)}|$ (the maximum absolute error) and choosing $K$ so that $E_K\le\delta$ for some prescribed error tolerance $\delta>0$. See Figure~\ref{fig:fourier_approx_experiment} for a visualization of this experiment. It suggests the choice of $K_0=1376$ when prescribing $\delta=10^{-8}$.
 
 \begin{figure}
     \centering
@@ -227,7 +227,7 @@ Having chosen $\Omega$ and $K$ we carry out a small experiment comparing the run
         Fourier approximation & 0.009558 & $6.762\times 10^{-9}$\\
         \hline
     \end{tabular}
-    \caption{Runtime comparison over $L=100$ independent standard normal samples of size $n=200$ with $N=50$ geometrically spaces bandwidths on $[0.01,2]$, $\Omega_0=450$ and $K_0=1376$.}
+    \caption{Runtime comparison over $L=100$ independent standard normal samples of size $n=200$ with $N=50$ geometrically spaced bandwidths on $[0.01,2]$, $\Omega_0=450$ and $K_0=1376$.}
     \label{tab:exact_fourier_gram_runtime}
 \end{table}
 
@@ -235,7 +235,7 @@ Error control is important because approximation errors in the similarity matrix
 
 \section{Assembly of Scale Similarity Matrices}\label{sec:assembly_of_scale_sim_matrices}
 
-Having introduced divergences between densities in the previous chapter, we know use them to construct scale similarity matrices $S=(S_{ij})$ between kernel densities estimates at different bandwidths. From now on, we consider only the Bregman $\beta$-divergence with $\beta=2$ because it is symmetric, it has computational advantages, and we will be able to prove results about it in Section~\ref{sec:res_2} below. We will refer to it as the $L^2$-divergence.
+Having introduced divergences between densities in the previous section, we now use them to construct scale similarity matrices $S=(S_{ij})$ between kernel density estimates at different bandwidths. From now on, we consider only the Bregman $\beta$-divergence with $\beta=2$ because it is symmetric, it has computational advantages, and we will be able to prove results about it in Section~\ref{sec:res_2} below. We will refer to it as the $L^2$-divergence.
 
 \subsection{Properties of Divergence matrices and its Perron vector}
 
@@ -254,7 +254,7 @@ Note that for a Robinson similarity, the inequalities in Equation~\eqref{eq:def_
 The following Lemma motivates replacing the divergence matrix $D$ with a similarity matrix $S$. Let $\rho(D)$ be the largest eigenvalue of $D$ and $v$ its Perron vector. The eigenvector equation gives $\rho(D)v_i=\sum_{j=1}^{N}D_{ij}v_j$. Thus, each component $v_i$ is proportional to a weighted sum of the dissimilarities $D_{i1},\dots,D_{iN}$. Intuitively, $v_i$ tends to be large when an object $x_i$ associated with scale $i$ is far from objects associated with many other scales. For squared Hilbert space distances, the following Lemma shows that if the objects, ordered by scale, form an acute chain, then the largest components of $v$ occur only at the smallest or largest scale. Using the Perron vector of $D$ directly for scale selection would therefore select one of these boundary scales.
 
 \begin{Lem}\label{lem:acute_chain_perron_vec}
-    Let $(H,\langle\cdot,\cdot\rangle)$ be a real Hilbert space and let $x_1,\dots,x_N$, $N\ge2$ be distinct points in $\mathcal{H}$ that form an acute chain, that is,
+    Let $(\mathcal{H},\langle\cdot,\cdot\rangle)$ be a real Hilbert space and let $x_1,\dots,x_N$, $N\ge2$ be distinct points in $\mathcal{H}$ that form an acute chain, that is,
     \begin{align}\label{eq:acute_chain_condition}
         \langle x_{k+1}-x_k,x_{l+1}-x_l\rangle\ge0\quad\text{for all }k,l=1,\dots,N-1.
     \end{align}
@@ -313,9 +313,9 @@ Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shan
     \|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}^2&=\int_{-\infty}^{\infty}\int_0^{\infty}\left(\Phi(p)(x,t)-\Phi(q)(x,t)\right)^2\,dt\,dx\\&
     =\int_{-\infty}^{\infty}\int_{0}^{\infty}\frac{\left(e^{-tq(x)/2}-e^{-tp(x)/2}\right)^2}{2t^2}\,dt\,dx\\&
     \stackrel{(\ast)}{=}\int_{-\infty}^{\infty}\frac{1}{2}\log{\left(\frac{q(x)^{q(x)}p(x)^{p(x)}}{(q(x)/2+p(x)/2)^{q(x)+p(x)}}\right)}\,dx\\&
-    =\int_{-\infty}^{\infty}j(p(x),q(x))\,dx=\text{JS}(p,q),
+    =\text{JS}(p,q),
 \end{align*}
-where in step $(\ast)$ we have use a well known integral identity, see, for example~\cite{yomikuan2020integral}.
+where in step $(\ast)$ we have used a well known integral identity, see, for example~\cite{yomikuan2020integral}.
 
 \begin{table}[htbp]
     \centering
@@ -402,7 +402,7 @@ The transformation $K\mapsto K_h$ stretches $K$ horizontally while keeping the a
 
 \section{Numerical Experiments}\label{sec:numerical_experiments}
 
-In our numerical experiments, we restrict ourselves to the $L_2$ divergence $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ as it is closely related to the MISE criterion for optimal bandwidth selection and can be efficiently computed using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
+In our numerical experiments, we restrict ourselves to the $L^2$ divergence $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ as it is closely related to the MISE criterion for optimal bandwidth selection and can be efficiently computed using the Fourier transform. We leave the other symmetric divergences (Total variation, squared Hellinger, Jensen-Shannon) and asymmetric parametrized divergences as future work; see Outlook~\ref{chap:outlook}.
 
 We use the similarity transformation $S_{ij}=\exp{(-\lambda D_{ij})}$ and vary the inverse penalty parameter $\lambda=\tau^{-1}$. Specifically, we will look at the limit $\lambda\to\infty$, which corresponds to a decreasing penalization on the concentration of the row-normalized similarities, as we discussed in Section~\ref{sec:similarity_transformations}. Through the eigenvector equations $\rho(S)v_i=\sum_{j=1}^{N}S_{ij}v_j$, changing $\lambda$ can also affect the Perron vector $v$ of $S$.
 
@@ -443,7 +443,8 @@ Note that the curve exhibits a sudden jump at $\lambda\approx17.87375$, where th
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
 
-After having examined the behavior for fixed $\lambda$ and increasing $N$ in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the behavior for fixed $N$ and increasing $\lambda$ in Figure~\ref{fig:chosen_bandwidths_vs_lambda} we would like to study the behavior of the spectrally chosen bandwidth under the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We take $\lambda_N=N^{\alpha}$ and test $\alpha\in\{0,0.5,1,1.5,2\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. The curve at the bottom of Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} corresponds to the curve at the bottom of Figure~\ref{fig:grid_fineness_chosen_bandwidths}. For $\alpha>1/2$ the curves appear to approach an entirely different bandwidth. As we will describe in Section~\ref{sec:perron_vector_concentrates} below, the spectral selector is related to the minimizer $h_Q$ of an energy functional $\hat{Q}_0$ on the interval $[h_{\min},h_{\max}]$. For this particular sample, numerical minimization of this energy functional gives $h_{Q}\approx0.1764$.
+After having examined the behavior for fixed $\lambda$ and increasing $N$ in Figure~\ref{fig:grid_fineness_chosen_bandwidths} and the behavior for fixed $N$ and increasing $\lambda$ in Figure~\ref{fig:chosen_bandwidths_vs_lambda} we would like to study the behavior of the spectrally chosen bandwidth under the joint limit $(N,\lambda_N)\to(\infty,\infty)$. We take $\lambda_N=N^{\alpha}$ and test $\alpha\in\{0,0.5,1,1.5,2\}$. Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} summarizes the results. The curve at the bottom of Figure~\ref{fig:N_lambda_joint_limit_for_different_alpha} corresponds to the curve at the bottom of Figure~\ref{fig:grid_fineness_chosen_bandwidths}. For $\alpha>0$ the curves appear to approach an entirely different bandwidth and the larger $\alpha$ the faster this happens. For $\alpha=1/2$ the approach is still slow over the range of $N$ shown. Note that $\alpha=2$ lies outside the assumption $\lambda_N/N^2\to0$ of Proposition~\ref{prop:main_thm} below. As we will describe in Section~\ref{sec:perron_vector_concentrates} below, the spectral selector is related to the minimizer $h_Q$ of an energy functional $\hat{Q}_0$ on the interval $[h_{\min},h_{\max}]$. For this particular sample, numerical minimization of this energy functional gives $h_{Q}\approx0.1764$.
+
 
 \begin{figure}
     \centering
@@ -512,7 +513,7 @@ Here we explain the results of the experiment with fixed $N$ and increasing $\la
 \end{align*}
 In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with edges between $h_i$ and $h_j$ if and only if $(i,j)\in\arg\min_{i\ne j}D_{ij}$.
 
-In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ divergence as established in Proposition~\ref{prop:L2_divergence_matrix} there must exist some $j^{\ast}=1,\dots,N-1$ such that the adjacent index pair $(j^{\ast},j^{\ast}+1)$ minimizes $D_{ij}$ over $i\ne j$. Assume for contradiction that all index pairs $(i_0,j_0)$ that minimize $D_{ij}$ over $i\ne j$ have at least one other index strictly in between them. Set $a=\min\{i_0,j_0\}$ and $b=\max\{i_0,j_0\}$. Then $a<a+1<b$ and by symmetry and the Robinson property $d_{\ast}=D_{i_0j_0}=D_{ab}\ge D_{a,a+1}\ge d_{\ast}$ and thus $(a,a+1)$ would be an adjacent pair that minimizes $D_{ij}$ over $i\ne j$, a contradiction.
+In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ divergence as established in Proposition~\ref{prop:L2_divergence_matrix} there must exist some $j^{\ast}=1,\dots,N-1$ such that the adjacent index pair $(j^{\ast},j^{\ast}+1)$ minimizes $D_{ij}$ over $i\ne j$. Assume for contradiction that all index pairs $(i_0,j_0)$ that minimize $D_{ij}$ over $i\ne j$ have at least one other index strictly in between them. Set $a=\min\{i_0,j_0\}$ and $b=\max\{i_0,j_0\}$. Then $a<a+1<b$, and by symmetry and the Robinson property $d_{\ast}=D_{i_0j_0}=D_{ab}\ge D_{a,a+1}\ge d_{\ast}$ and thus $(a,a+1)$ would be an adjacent pair that minimizes $D_{ij}$ over $i\ne j$, a contradiction.
 
 Now assume that $d_{\ast}=D_{j^{\ast},j^{\ast}+1}$ for some unique $j^{\ast}=1,\dots,N-1$. As a side note, this would automatically establish uniqueness among all $i<j$ because otherwise, if there were a non-adjacent pair $(i_0,j_0)$ with $i_0<j_0$ attaining $d_{\ast}$ we would have by the Robinson property that both adjacent pairs $(i_0,i_0+1)$ and $(j_0-1,j_0)$ also attain $d_{\ast}$, contradicting the uniqueness of $j^{\ast}$.
 
@@ -521,7 +522,7 @@ We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ co
     \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
 \end{align*}
 
-This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth is eventually either $h_{j_{\ast}}$ or $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
+This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth is eventually either $h_{j_{\ast}}$ or $h_{j^{\ast}+1}$ where $j^{\ast}\in\arg\min_jD_{j,j+1}$.
 
 \subsection{Perron Vector Localization and the Energy Functional}\label{sec:perron_vector_concentrates}
 
@@ -592,7 +593,7 @@ Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \begin{align}\label{eq:eigenvector_equations_111}
     \sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}=\underbrace{\rho(S^{(N)})}_{>0}v_i^{(N)},\quad\text{for all }i=1,\dots,N.
 \end{align}
-The Perron vector $v^{(N)}$ has a large entry $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|=1$ we can interpret the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar, in terms of $L^2$-distance, to other kernel density estimates whose bandwidths $h_j$ also have been given a large weight.
+The Perron vector $v^{(N)}$ has a large entry $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|_1=1$ we can interpret the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar, in terms of $L^2$-distance, to other kernel density estimates whose bandwidths $h_j$ also have been given a large weight.
 
 Proposition~\ref{prop:main_thm} establishes that for a finer and finer bandwidth grid the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately proportional to $\hat{Q}_r^{-1/2}(h_{i_N})$, which means that large row sums correspond to a low value of the energy functional $\hat{Q}_r$. Through the eigenvector equations~\eqref{eq:eigenvector_equations_111} this provides an informal explanation for why, asymptotically, the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
 
@@ -678,7 +679,7 @@ The relevance of the above result lies in a better understanding of the occurren
 
 \textbf{Perron vector computation vs. numerical minimization}
 
-Having established the connection between energy functional minimization and spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and whether these methods have convergence guaranties with the computation of the Perron vector of some scale similarity matrix.
+Having established the connection between energy functional minimization and spectral scale selection, we can begin to compare these two methods in terms of runtime efficiency. The hope is that we can replace numerical minimization where it is often not clear which method to choose and whether these methods have convergence guarantees with the computation of the Perron vector of some scale similarity matrix.
 
 A popular minimization algorithm for univariate functions on a closed interval is Brent's method, see for example~\cite[Section~10.2]{winkler_numerical_1993}. In Python, it is implemented by the function \texttt{scipy.optimize.minimize\_scalar}. Since $\hat{Q}_r$ may contain multiple local minima, we can perform a refined search by partitioning the interval $[h_{\min},h_{\max}]$ into subintervals $[h_i,h_{i+1}]$, $i=1,\dots,M-1$ and applying Brent's method to each interval $[h_{i-1},h_{i+1}]$, $i=2,\dots,M-1$ where $\hat{Q}_r(h_{i-1})>\hat{Q}_r(h_i)$ and $\hat{Q}_r(h_{i+1})>\hat{Q}_r(h_i)$. This refinement strategy increases the computational cost, but may also help find the smallest local minimum when there are multiple. Afterwards, we select the bandwidth with the smallest energy functional value among all detected local minima and the endpoints $h_{\min}$ and $h_{\max}$.
 
@@ -784,17 +785,17 @@ Differentiating $\operatorname{AMQ}_r(h)$ gives
 \begin{align*}
     \operatorname{AMQ}_r'(h)=\frac{1}{2n}\frac{1}{h^{2+2r}}\left((n-1)(4-2r)\|f''\|_2^2h^5-(1+2r)\|L\|_2^2\right)
 \end{align*}
-For $n\ge2$ and $r<2$ the expression inside the parentheses is strictly increasing and for $r>-1/2$, it is negative for sufficiently small $h$ and positive for sufficiently large $h$. Since the factor outside the parentheses is positive, the sign of $\operatorname{AMQ}_r'(h)$ changes only once. Thus, the unique minimizer of $\operatorname{AMQ}_r(h)$ over $(0,\infty)$ is
+For $n\ge2$ and $r<2$, the expression inside the parentheses is strictly increasing and for $r>-1/2$, it is negative for sufficiently small $h$ and positive for sufficiently large $h$. Since the factor outside the parentheses is positive, the sign of $\operatorname{AMQ}_r'(h)$ changes only once. Thus, the unique minimizer of $\operatorname{AMQ}_r(h)$ over $(0,\infty)$ is
 \begin{align*}
     h_{\operatorname{AMQ},r}(n):=\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{(n-1)\|f''\|_2^2}\right)^{1/5},
 \end{align*}
 given that $n\ge2$ and $r\in(-1/2,2)$.
 
-We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise}. We therefore get
+We recall that the asymptotic minimizer of the mean integrated squared error is given in Equation~\eqref{eq:h_amise}. Since $\mu_2(K)=1$ for the Gaussian kernel, we get
 \begin{align}\label{eq:h_amq_limit}
     \frac{h_{\operatorname{AMQ},r}(n)}{h_{\operatorname{AMISE}}(n)}=\underbrace{\left(\frac{1+2r}{4-2r}\frac{\|L\|_2^2}{\|K\|_2^2}\right)^{1/5}}_{=:C_r(K)}\left(\frac{n}{n-1}\right)^{1/5}\to C_r(K),\quad n\to\infty,
 \end{align}
-that is $h_{\operatorname{AMQ},r}$ and $h_{\operatorname{AMISE}}$ are asymptotically proportional with constant $C_r(K)$, and by the asymptotic equivalence of $h_{\operatorname{AMISE}}$ and $h_{\text{oracle}}$ established earlier, $h_{\operatorname{AMQ},r}$ and $h_{\text{oracle}}$ are also asymptotically proportional with constant $C_r(K)$. If $K$ is the Gaussian kernel, then $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. In this case, $C_r(K)=((3+6r)/(16-8r))^{1/5}$, which equals $1$ for $r=13/14$. Thus, for $r=13/14$, which corresponds to a nearly linear bandwidth grid, the minimizers of the MISE and the leading-term approximation of the expected energy functional are asymptotically equivalent as the sample size grows.
+that is, $h_{\operatorname{AMQ},r}$ and $h_{\operatorname{AMISE}}$ are asymptotically proportional with constant $C_r(K)$, and by the asymptotic equivalence of $h_{\operatorname{AMISE}}$ and $h_{\text{oracle}}$ established earlier, $h_{\operatorname{AMQ},r}$ and $h_{\text{oracle}}$ are also asymptotically proportional with constant $C_r(K)$. Since $K$ is chosen to be the Gaussian kernel, we have $\|K\|_2^2=1/(2\sqrt{\pi})$ and $\|L\|_2^2=3/(8\sqrt{\pi})$. Hence, $C_r(K)=((3+6r)/(16-8r))^{1/5}$, which equals $1$ for $r=13/14$. Thus, for $r=13/14$, which corresponds to a nearly linear bandwidth grid, the minimizers of the MISE and the leading-term approximation of the expected energy functional are asymptotically equivalent as the sample size grows.
 
 
 We have thus established a foundation for a theoretical bridge between classical bandwidth selection and our spectral scale selection approach. First, for a fixed sample, the spectral selector $h_{k_N}$, where $k_N\in\arg\max\{v_i^{(N)}:1\le i\le N\}$ and $v^{(N)}$ is the Perron vector of the scale similarity matrix $S^{(N)}$, approaches the set of minimizers of the energy functional $\hat{Q}_r$ on the compact interval $[h_{\min},h_{\max}]$ as $N\to\infty$. Second, for $r=13/14$, the unique minimizer over $(0,\infty)$ of the leading-term approximation of the expected energy functional $\mathbb{E}[\hat{Q}_r(h)]$ is asymptotically equivalent to the oracle bandwidth $h_{\text{oracle}}$ as $n\to\infty$.
@@ -851,7 +852,7 @@ They make the assumption that the rescaled index set $N^{-1}S_N$ is asymptotical
 \begin{align}\label{eq:baake_thm2_result}
     1\ge\sum_{\substack{i\in S_N\\\frac{i}{N}\in \overline{B}_{r_N}\left(x^{\ast}\right)}}w_i^2\ge1-\beta
 \end{align}
-for all sufficiently large $N$. Here, $x^{\ast}$ is the unique global maximizer of $E$ on $D$ that is assumed to exist and to lie inside $\operatorname{int}(D)$ with Hessian of $E$ at $x^{\ast}$ assumed to be negative definite. And by $\overline{B}_{r_N}(x^{\ast})$ we mean the closed ball with center $x^{\ast}$ and radius $r_N:=\sqrt{\rho/(\beta N)}$. The interpretation is as follows. For any choice of $0<\beta\le1$ the sum of the squared Perron vector entries over all indices whose rescaling $i/N$ lies within a distance $r_N$ from the maximizer of $E$ is at least $1-\beta$ for all sufficiently large $N$. In particular, note that if we want to guaranty a large coverage $1-\beta$, meaning that the guaranteed lower bound for the sum of squared Perron vector entries over a certain set of indices is closer to $1$, we choose a smaller $\beta$. For fixed $N$ this increases the radius of the ball, so the sum may contain more indices.
+for all sufficiently large $N$. Here, $x^{\ast}$ is the unique global maximizer of $E$ on $D$ that is assumed to exist and to lie inside $\operatorname{int}(D)$ with Hessian of $E$ at $x^{\ast}$ assumed to be negative definite. And by $\overline{B}_{r_N}(x^{\ast})$ we mean the closed ball with center $x^{\ast}$ and radius $r_N:=\sqrt{\rho/(\beta N)}$. The interpretation is as follows. For any choice of $0<\beta\le1$ the sum of the squared Perron vector entries over all indices whose rescaling $i/N$ lies within a distance $r_N$ from the maximizer of $E$ is at least $1-\beta$ for all sufficiently large $N$. In particular, note that if we want to guarantee a large coverage $1-\beta$, meaning that the guaranteed lower bound for the sum of squared Perron vector entries over a certain set of indices is closer to $1$, we choose a smaller $\beta$. For fixed $N$ this increases the radius of the ball, so the sum may contain more indices.
 
 
 We can connect this result to our setting using the following reasoning. Let $\eta>0$ and $\epsilon>0$ be arbitrary and choose $0<\beta<\min\{\eta,1\}$. Since $r_N\to0$ we have eventually $r_N<\epsilon$ and therefore $\overline{B}_{\epsilon}(x^{\ast})^c\subseteq\overline{B}_{r_N}(x^{\ast})^c$, where $A^c$ denotes the complement of a set $A\subseteq\mathbb{R}^d$. By Equation~\eqref{eq:baake_thm2_result} we thus have
