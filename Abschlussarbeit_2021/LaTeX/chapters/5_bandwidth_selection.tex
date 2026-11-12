@@ -521,9 +521,9 @@ We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ co
     \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
 \end{align*}
 
-This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth eventually is either $h_{j_{\ast}}$ or $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
+This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth is eventually either $h_{j_{\ast}}$ or $h_{j_{\ast}+1}$ where $j_{\ast}\in\arg\min_jD_{j,j+1}$.
 
-\subsection{Perron vector concentrates at minimizer of normalized curvature-energy functional}\label{sec:perron_vector_concentrates}
+\subsection{Perron Vector Localization and the Energy Functional}\label{sec:perron_vector_concentrates}
 
 To explain the results, we need the concept of a Fréchet derivative, which is introduced, for example, in Zeidler~\cite[Section~4.2]{zeidler_applied_1995}. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ a nonempty open subset. Let $\Psi:U\to Y$ be a map. A bounded linear operator $d\Psi(u):X\to Y$ is called the Fréchet derivative of $\Psi$ at the point $u\in U$ if
 \begin{align*}
