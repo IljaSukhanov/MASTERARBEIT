@@ -693,14 +693,14 @@ Prior to conducting the experiment, we need a reference bandwidth, that is, an a
 
 The specific choice of $M=769$ is motivated by a preceding experiment, in which we examine the number of local minima found by the refined Brent search across the 100 samples as a function of the refinement setting $M$ (see Figure~\ref{fig:brent_minima_vs_refinement}). We found that, for all tested values from $M=769$ onward, the number of detected local minima across the $100$ samples remained at $123$. This provides numerical evidence that there are $123$ local minima across these samples. Specifically, two local minima were found in $23$ samples, and one local minimum was found in each of the remaining $77$ samples. Thus, at least one local minimum was found in each of the $100$ tested samples.
 
-\begin{figure}[htbp]
+\begin{figure}[p]
     \centering
-    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/pdfs/brent_minima_vs_subintervals/001_matplotlib_figure.pdf}
+    \includegraphics[width=0.80\linewidth]{Code/Code_kde/outputs/pdfs/brent_minima_vs_subintervals/001_matplotlib_figure.pdf}
     \caption{Number of detected local minima across $100$ energy functional minimizations using the refined Brent method for increasing levels of refinement $M$. Here, $M-1$ indicates the number of subintervals into which the search space is divided. The tested values are $M-1\in\{2^k:k=1,\dots,14\}\cup\{3\cdot2^k:k=0,1,\dots,14\}$. The dashed orange line indicates the first tested value from which the number of detected minima remained at $123$.}
     \label{fig:brent_minima_vs_refinement}
 \end{figure}
 
-\begin{table}[htbp]
+\begin{table}[p]
     \centering
     \footnotesize
     \setlength{\tabcolsep}{3pt}
