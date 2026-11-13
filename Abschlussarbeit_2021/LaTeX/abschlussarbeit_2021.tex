@@ -30,13 +30,18 @@ BCOR15mm               % Bindekorrektur
 \usepackage{subcaption}
 
 % Resolve project-root paths also when compiling from this LaTeX directory.
+% Figures are referenced as outputs/... and searched in both code layouts:
+% Code/outputs (current) and Code/Code_kde/outputs (older Overleaf snapshot).
 \newif\ifbuildfromprojectroot
 \makeatletter
 \IfFileExists{chapters/0_abstract.tex}{%
   \buildfromprojectrootfalse
-  \graphicspath{{../../}}%
+  \graphicspath{{../../}{../../Code/}{../../Code/Code_kde/}}%
   \def\input@path{{../../}}%
-}{\buildfromprojectroottrue}
+}{%
+  \buildfromprojectroottrue
+  \graphicspath{{./}{Code/}{Code/Code_kde/}}%
+}
 \makeatother
 
 % Literaturverzeichnis mit BibLaTeX

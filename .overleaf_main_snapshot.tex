@@ -1,0 +1,200 @@
+\NeedsTeXFormat{LaTeX2e}
+\documentclass[a4paper,12pt,
+headsepline,           % Linie zw. Kopfzeile und Text
+oneside,               % einseitig
+pointlessnumbers,      % keine Punkte nach den letzten Ziffern in Überschriften
+bibtotoc,              % LV im IV
+%DIV=15,               % Satzspiegel auf 15er Raster, schmalere Ränder   
+BCOR15mm               % Bindekorrektur
+%,draft
+]{scrbook}
+\KOMAoptions{DIV=last} % Neuberechnung Satzspiegel nach Laden von Paket helvet
+
+\pagestyle{headings}
+\usepackage{blindtext}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{multirow}
+
+% für Texte in deutscher Sprache
+\usepackage[british]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Helvetica als Standard-Dokumentschrift
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault} 
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+% Literaturverzeichnis mit BibLaTeX
+% \usepackage[babel,german=quotes]{csquotes}
+\usepackage[style=english]{csquotes}
+\usepackage[backend=bibtex8]{biblatex}
+\bibliography{bibliography}
+
+% Alternative mit Paket-Option backend=biber und \addbibresource
+% \usepackage[backend=biber]{biblatex}
+
+% \addbibresource{bibliography.bib}
+
+% Für Tabellen mit fester Gesamtbreite und variabler Spaltenbreite
+\usepackage{tabularx} 
+
+% Besondere Schriftauszeichnungen
+\usepackage{url}              % \url{http://...} in Schreibmaschinenschrift
+\usepackage{color}            % zum Setzen farbigen Textes
+
+\usepackage{amssymb,amsmath,amsthm} % Pakete für Mathe-Umgebungen und -Symbole
+\setcounter{MaxMatrixCols}{20}
+
+\usepackage{todonotes}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{setspace}         % Paket für div. Abstände, z.B. ZA
+%\onehalfspacing              % nur dann, wenn gefordert; ist sehr groß!!
+\setlength{\parindent}{0pt}   % kein linker Einzug der ersten Absatzzeile
+\setlength{\parskip}{1.4ex plus 0.35ex minus 0.3ex} % Absatzabstand, leicht variabel
+
+% Tiefe, bis zu der Überschriften in das Inhaltsverzeichnis kommen
+\setcounter{tocdepth}{3}      % ist Standard
+
+% Beispiele für Quellcode
+\usepackage{listings}
+\lstset{language=Java,
+  showstringspaces=false,
+  frame=single,
+  numbers=left,
+  basicstyle=\ttfamily,
+  numberstyle=\tiny}
+
+% hier Namen etc. einsetzen
+\newcommand{\fullname}{Ilja Sukhanov}
+\newcommand{\email}{ilja.sukhanov@uni-ulm.de}
+\newcommand{\titel}{Spectral Scale Selection for Kernel Density Estimation}
+\newcommand{\jahr}{2026}
+\newcommand{\matnr}{1211998}
+\newcommand{\gutachterA}{Prof.\,Dr.\,Evgeny Spodarev}
+\newcommand{\gutachterB}{Prof.\,Dr.\,Henning Bruhn-Fujimoto}
+
+% hier die Fakultät auswählen
+%\newcommand{\fakultaet}{---  Im Quellcode anpassen nicht vergessen! ---}
+\newcommand{\fakultaet}{Mathematics and\\Economics}
+
+% hier das Institut einsetzen
+\newcommand{\institut}{Institute of Stochastics}
+
+% Informationen, die LaTeX in die PDF-Datei schreibt
+\pdfinfo{
+  /Author (\fullname)
+  /Title (\titel)
+  /Producer     (pdfeTex 3.14159-1.30.6-2.2)
+  /Keywords ()
+}
+
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+pdftitle=\titel,
+pdfauthor=\fullname,
+pdfsubject={Diplomarbeit},
+pdfproducer={pdfeTex 3.14159-1.30.6-2.2},
+colorlinks=false,
+pdfborder=0 0 0	% keine Box um die Links!
+}
+
+% Trennungsregeln
+\hyphenation{Sil-ben-trenn-ung}
+
+
+\newtheorem{Def}{Definition}
+\newtheorem{Prop}{Proposition}
+\newtheorem{Thm}{Theorem}
+\newtheorem{Example}{Example}
+\newtheorem{Lem}{Lemma}
+\newtheorem{Rem}{Remark}
+\newtheorem{Cor}{Corollary}
+\newtheorem{conjecture}{Conjecture}
+
+
+\begin{document}
+\frontmatter
+
+% Titelseite
+\thispagestyle{empty}
+\begin{addmargin*}[4mm]{-10mm}
+
+\hfill
+\includegraphics[height=1.8cm]{Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf}\\[1em]
+
+{\footnotesize
+%{\bfseries Universität Ulm} \textbar ~89069 Ulm \textbar ~Germany
+\hspace*{115mm}\parbox[t]{35mm}{\bfseries Faculty of\\
+\fakultaet\\
+% TODO hier Institut anpassen
+\mdseries \institut}\\[2cm]
+
+\parbox{140mm}{\bfseries \LARGE \titel}\\[2.5em]
+{\footnotesize Master's thesis at the University Ulm}\\[3em]
+
+{\footnotesize \bfseries Submitted by:}\\
+{\footnotesize \fullname\\ \email}\\ \matnr\\[2em]
+{\footnotesize \bfseries Reviewer:}\\                     
+{\footnotesize \gutachterA\\ \gutachterB}\\[2em]
+{\footnotesize \jahr}
+}
+\end{addmargin*}
+
+
+% Impressum
+\clearpage
+\thispagestyle{empty}
+{ \small
+  \flushleft
+  Version \today \\\vfill
+  \copyright~\jahr~\fullname\\[0.5em]
+  Typeset with PDF-\LaTeXe
+}
+
+% ab hier Zeilenabstand etwas größer 
+\setstretch{1.2}
+
+\tableofcontents
+
+\mainmatter
+\input{Abschlussarbeit_2021/LaTeX/chapters/0_abstract}
+\input{Abschlussarbeit_2021/LaTeX/chapters/1_intro_methods}
+% \input{Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series}
+\input{Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection}
+\input{Abschlussarbeit_2021/LaTeX/chapters/99_conclusion}
+\input{Abschlussarbeit_2021/LaTeX/chapters/999_outlook}
+\input{Abschlussarbeit_2021/LaTeX/chapters/9999_appendix}
+
+\appendix
+
+\backmatter
+
+\printbibliography
+
+\clearpage
+\thispagestyle{empty}
+
+Name: \fullname \hfill Matriculation Number: \matnr \vspace{2cm}
+
+\minisec{Declaration}
+
+
+I declare that I have written this thesis myself and have used no sources or aids other than those indicated. I used AI tools to assist with programming, idea generation, literature searches, and text polishing.\vspace{2cm}
+
+
+
+Ulm, \dotfill
+
+\hspace{10cm} {\footnotesize \fullname}
+\end{document}
