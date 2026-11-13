@@ -1,0 +1,851 @@
+{
+  "scope": "Pre-unification KDE energy-minimization results; unrelated spectral and AR results retained",
+  "files_removed": 206,
+  "bytes_removed": 78877560,
+  "deleted_files": [
+    {
+      "path": "Code/Code_kde/outputs/analysis/local_q1_minimizers_selected_n/figure_validation.json",
+      "bytes": 366
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/local_qr_minimizers_vs_n/distance_figure_validation.json",
+      "bytes": 325
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/local_qr_minimizers_vs_n/figure_validation.json",
+      "bytes": 959
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/local_qr_minimizers_vs_n/progress_summary.csv",
+      "bytes": 1294
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/similarity_max_eigenvalue_vs_n/max_eigenvalue_vs_N.png",
+      "bytes": 101890
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/similarity_max_eigenvalue_vs_n/qhat_r_over_0_to_2.png",
+      "bytes": 124343
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/similarity_max_eigenvalue_vs_n/qhat_r_over_0_to_2_summary.json",
+      "bytes": 274
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/similarity_max_eigenvalue_vs_n/rescaled_A_max_eigenvalue_vs_N.png",
+      "bytes": 91913
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/similarity_max_eigenvalue_vs_n/scaled_max_eigenvalue_vs_N.png",
+      "bytes": 95024
+    },
+    {
+      "path": "Code/Code_kde/outputs/analysis/similarity_max_eigenvalue_vs_n/settings.json",
+      "bytes": 859
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/settings.json",
+      "bytes": 1207
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/validation.json",
+      "bytes": 30201
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/b4afbc6cd382/settings.json",
+      "bytes": 853
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_ise_qhat_distributions_vs_n/thesis/b4afbc6cd382/validation.json",
+      "bytes": 14935
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_minimizers_hmax10/histogram.csv",
+      "bytes": 125205
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_minimizers_hmax10/selections.csv",
+      "bytes": 1553365
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_minimizers_hmax10/settings.json",
+      "bytes": 443
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_minimizers_hmax10/summary.csv",
+      "bytes": 594
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/continuous_minimizers_hmax10/validation.json",
+      "bytes": 5491
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/energy_r0_wide_domain/energy.csv",
+      "bytes": 249032
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/energy_r0_wide_domain/summary.json",
+      "bytes": 1226
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/energy_r1_wide_domain/energy.csv",
+      "bytes": 242377
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/energy_r1_wide_domain/summary.json",
+      "bytes": 1170
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/fast_l2_bandwidth_distributions_vs_n_lambda/thesis/continuous_qhat/5cb20df5201a/settings.json",
+      "bytes": 867
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/fast_l2_bandwidth_distributions_vs_n_lambda/thesis/continuous_qhat/5cb20df5201a/validation.json",
+      "bytes": 6245
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/linear_grid_joint_n_lambda_limit/metric.csv",
+      "bytes": 78524
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/linear_grid_joint_n_lambda_limit/reference.json",
+      "bytes": 365
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/linear_grid_joint_n_lambda_limit/results.csv",
+      "bytes": 15253
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/linear_grid_joint_n_lambda_limit/sample.csv",
+      "bytes": 5107
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/linear_grid_joint_n_lambda_limit/settings.json",
+      "bytes": 902
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/linear_grid_joint_n_lambda_limit/validation.json",
+      "bytes": 837
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/candidates.csv",
+      "bytes": 404622
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/distribution_descriptive.csv",
+      "bytes": 571
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/distribution_fits.csv",
+      "bytes": 2061
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/distribution_predictive_scores.csv",
+      "bytes": 420202
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/distribution_scaling_check.json",
+      "bytes": 104
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/histogram.csv",
+      "bytes": 3799
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/histogram_overlay.csv",
+      "bytes": 5946
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/histogram_overlay_figure39_style.csv",
+      "bytes": 24178
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/resolution_checks.csv",
+      "bytes": 37309
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/results.csv",
+      "bytes": 298859
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/samples.npy",
+      "bytes": 1600128
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/settings.json",
+      "bytes": 856
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/summary.csv",
+      "bytes": 528
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_energy_minimizers_n200/validation.json",
+      "bytes": 522
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_q1_minimizers_selected_n/candidates.csv",
+      "bytes": 446982
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_q1_minimizers_selected_n/histogram.csv",
+      "bytes": 28373
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_q1_minimizers_selected_n/selections.csv",
+      "bytes": 216547
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_q1_minimizers_selected_n/settings.json",
+      "bytes": 540
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_q1_minimizers_selected_n/summary.csv",
+      "bytes": 446
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_q1_minimizers_selected_n/validation.json",
+      "bytes": 3306
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/candidates.csv",
+      "bytes": 11217172
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/checkpoint.sqlite",
+      "bytes": 44429312
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/distribution_distance_raw_checks.csv",
+      "bytes": 958
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/distribution_distance_to_ise.csv",
+      "bytes": 6013
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/distribution_distance_validation.json",
+      "bytes": 1276
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/histogram.csv",
+      "bytes": 632379
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/ise_histogram.csv",
+      "bytes": 157258
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/ise_reference_validation.json",
+      "bytes": 3893
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/selections.csv",
+      "bytes": 7124245
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/settings.json",
+      "bytes": 990
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/summary.csv",
+      "bytes": 5954
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/local_qr_minimizers_vs_n/validation.json",
+      "bytes": 44648
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/r13over14_joint_n_lambda_limit/metric.csv",
+      "bytes": 78642
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/r13over14_joint_n_lambda_limit/reference.json",
+      "bytes": 365
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/r13over14_joint_n_lambda_limit/results.csv",
+      "bytes": 15357
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/r13over14_joint_n_lambda_limit/sample.csv",
+      "bytes": 5107
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/r13over14_joint_n_lambda_limit/settings.json",
+      "bytes": 949
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/r13over14_joint_n_lambda_limit/validation.json",
+      "bytes": 836
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/continuous_ise_Q0_Q1_Q13over14_full_n100_1000_M1000.png",
+      "bytes": 274415
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/continuous_ise_Q0_Q1_Q13over14_full_n1100_2000_M1000.png",
+      "bytes": 274289
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/continuous_ise_Q0_Q1_Q13over14_interior_and_boundary_n100_1000_M1000.png",
+      "bytes": 310401
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_ise_qhat_distributions_vs_n/thesis/5b5fa0b0a92f/continuous_ise_Q0_Q1_Q13over14_interior_and_boundary_n1100_2000_M1000.png",
+      "bytes": 349404
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_minimizers_hmax10/continuous_minimizers_n100.png",
+      "bytes": 71415
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_minimizers_hmax10/continuous_minimizers_n1000.png",
+      "bytes": 71363
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_minimizers_hmax10/continuous_minimizers_n1500.png",
+      "bytes": 71981
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/continuous_minimizers_hmax10/continuous_minimizers_n2000.png",
+      "bytes": 71756
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/energy_r0_wide_domain/energy_r0_wide_domain.png",
+      "bytes": 178613
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/energy_r1_wide_domain/energy_r1_wide_domain.png",
+      "bytes": 185418
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/fast_l2_bandwidth_distributions_vs_n_lambda/thesis/overlaid_lambdas/spectral_l2_overlay_lambda1_10_100_1000_with_continuous_qhat_M1000_N201.png",
+      "bytes": 290433
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/linear_grid_joint_n_lambda_limit/linear_grid_joint_N_lambda_limit.png",
+      "bytes": 137422
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_energy_minimizers_n200/distribution_fits.png",
+      "bytes": 181902
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_energy_minimizers_n200/histogram_overlay.png",
+      "bytes": 80576
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_energy_minimizers_n200/histogram_overlay_figure39_style.png",
+      "bytes": 101270
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_energy_minimizers_n200/local_energy_minimizers_n200.png",
+      "bytes": 117190
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_q1_minimizers_selected_n/local_q1_minimizers_selected_n.png",
+      "bytes": 164632
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_qr_minimizers_vs_n/all_sample_sizes_page1.png",
+      "bytes": 366881
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_qr_minimizers_vs_n/all_sample_sizes_page2.png",
+      "bytes": 359209
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_qr_minimizers_vs_n/distribution_distance_to_ise.png",
+      "bytes": 187707
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/local_qr_minimizers_vs_n/selected_histograms.png",
+      "bytes": 204949
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/r13over14_joint_n_lambda_limit/r13over14_joint_N_lambda_limit.png",
+      "bytes": 138181
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_ise_qhat_distributions_vs_n/001_continuous_minimizers_n_100_1000_full_interval_gaussian_samples_m_1000_per_n_h_i.pdf",
+      "bytes": 60168
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_ise_qhat_distributions_vs_n/002_continuous_minimizers_n_1100_2000_full_interval_gaussian_samples_m_1000_per_n_h_.pdf",
+      "bytes": 60494
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_ise_qhat_distributions_vs_n/003_continuous_minimizers_n_100_1000_interior_and_boundary_mass_gaussian_samples_m_1.pdf",
+      "bytes": 65577
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_ise_qhat_distributions_vs_n/004_continuous_minimizers_n_1100_2000_interior_and_boundary_mass_gaussian_samples_m_.pdf",
+      "bytes": 65997
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_minimizers_hmax10/001_global_bandwidth_minimizers.pdf",
+      "bytes": 24281
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_minimizers_hmax10/002_global_bandwidth_minimizers.pdf",
+      "bytes": 24174
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_minimizers_hmax10/003_global_bandwidth_minimizers.pdf",
+      "bytes": 24474
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/continuous_minimizers_hmax10/004_global_bandwidth_minimizers.pdf",
+      "bytes": 24113
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/energy_r0_wide_domain/001_energy_functional_widehat_q_0_h_frac_h_2_2_partial_h_widehat_f_h_2_2.pdf",
+      "bytes": 34919
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/energy_r1_wide_domain/001_energy_functional_widehat_q_1_h_frac_1_2_partial_h_widehat_f_h_2_2.pdf",
+      "bytes": 37327
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/001_continuous_localized_kernel_criterion_on_0_01_2.pdf",
+      "bytes": 22617
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/001_continuous_localized_kernel_criterion_on_0_05_1.pdf",
+      "bytes": 21975
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/001_joint_grid_localization_limit_for_beta_0_142857.pdf",
+      "bytes": 34819
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/001_sampling_distribution_of_the_calibrated_spectral_selector.pdf",
+      "bytes": 29233
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/002_finite_selector_versus_continuous_reference.pdf",
+      "bytes": 28674
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/002_joint_grid_localization_limit_for_beta_0_142857.pdf",
+      "bytes": 31327
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/002_joint_grid_localization_limit_for_beta_2.pdf",
+      "bytes": 29572
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/002_positive_power_regimes_near_the_continuous_reference.pdf",
+      "bytes": 27416
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/002_sampling_distribution_of_the_spectral_selector_n_100_n_1000_lambda_1000.pdf",
+      "bytes": 31078
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/002_selected_bandwidth_across_grid_resolutions.pdf",
+      "bytes": 27794
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_failure_of_the_continuum_quadrature_regime_beta_0_142857.pdf",
+      "bytes": 36303
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+      "bytes": 34753
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_joint_grid_localization_limit_for_beta_0_142857.pdf",
+      "bytes": 30675
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_mesh_resolution_diagnostic_must_tend_to_0.pdf",
+      "bytes": 27967
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_sampling_distribution_of_the_spectral_selector_n_200_n_1000_lambda_1000.pdf",
+      "bytes": 30922
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/004_failure_of_the_continuum_quadrature_regime_beta_0_142857.pdf",
+      "bytes": 38830
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/004_joint_grid_localization_limit_for_beta_0_142857.pdf",
+      "bytes": 31736
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/004_mesh_scale_versus_localization_scale_beta_0_142857.pdf",
+      "bytes": 31809
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/004_positive_power_regimes_near_the_continuous_reference.pdf",
+      "bytes": 27416
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/004_sampling_distribution_of_the_spectral_selector_n_300_n_1000_lambda_1000.pdf",
+      "bytes": 29149
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/005_mesh_resolution_diagnostic_must_tend_to_0.pdf",
+      "bytes": 27967
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/005_mesh_scale_versus_localization_scale_beta_0_142857.pdf",
+      "bytes": 35616
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/005_off_diagonal_similarity_mass_beta_0_142857.pdf",
+      "bytes": 33546
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/005_sampling_distribution_of_the_spectral_selector_n_400_n_1000_lambda_1000.pdf",
+      "bytes": 28963
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/006_nearest_neighbor_collapse_beta_0_142857.pdf",
+      "bytes": 28743
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/006_off_diagonal_similarity_mass_beta_0_142857.pdf",
+      "bytes": 37106
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/006_perron_profiles_at_the_finest_grid_n_3000.pdf",
+      "bytes": 24709
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/006_sampling_distribution_of_the_spectral_selector_n_500_n_1000_lambda_1000.pdf",
+      "bytes": 28851
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/007_fixed_sample_perron_convergence_to_arg_min_widehat_q_n_beta_beta_0_142857.pdf",
+      "bytes": 29990
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/007_mesh_robustness_stress_test_on_one_fixed_sample_n_400_n_200_one_perturbed_grid_p.pdf",
+      "bytes": 35008
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/007_nearest_neighbor_collapse_beta_0_142857.pdf",
+      "bytes": 32033
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/007_sampling_distribution_of_the_spectral_selector_n_600_n_1000_lambda_1000.pdf",
+      "bytes": 29953
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/008_joint_grid_localization_limit_for_beta_0_142857.pdf",
+      "bytes": 45129
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/008_row_sum_mechanism_n_1000_lambda_n_1_beta_0_142857.pdf",
+      "bytes": 34682
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/008_sampling_distribution_of_the_calibrated_spectral_selector.pdf",
+      "bytes": 29233
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/008_sampling_distribution_of_the_spectral_selector_n_700_n_1000_lambda_1000.pdf",
+      "bytes": 29709
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/009_failure_of_the_continuum_quadrature_regime_beta_0_142857.pdf",
+      "bytes": 38830
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/009_fixed_sample_perron_convergence_to_arg_min_widehat_q_n_beta_beta_0_142857.pdf",
+      "bytes": 29990
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/009_sampling_distribution_of_the_spectral_selector_n_800_n_1000_lambda_1000.pdf",
+      "bytes": 29840
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/010_mesh_scale_versus_localization_scale_beta_0_142857.pdf",
+      "bytes": 35616
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/010_row_sum_mechanism_n_1000_lambda_n_1_beta_0_142857.pdf",
+      "bytes": 34682
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/010_sampling_distribution_of_the_spectral_selector_n_900_n_1000_lambda_1000.pdf",
+      "bytes": 29685
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/011_full_perron_to_asymptotic_bridge_beta_0_142857.pdf",
+      "bytes": 30795
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/011_off_diagonal_similarity_mass_beta_0_142857.pdf",
+      "bytes": 37106
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/011_sampling_distribution_of_the_spectral_selector_n_1000_n_1000_lambda_1000.pdf",
+      "bytes": 28399
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/012_nearest_neighbor_collapse_beta_0_142857.pdf",
+      "bytes": 32033
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/012_spectral_error_on_the_statistical_bandwidth_scale.pdf",
+      "bytes": 21110
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/013_failure_of_the_continuum_quadrature_regime_beta_0_142857.pdf",
+      "bytes": 49076
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/013_sampling_concentration_of_the_rescaled_perron_peak.pdf",
+      "bytes": 26038
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/014_mesh_scale_versus_localization_scale_beta_0_142857.pdf",
+      "bytes": 48542
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/015_off_diagonal_similarity_mass_beta_0_142857.pdf",
+      "bytes": 49350
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/016_nearest_neighbor_collapse_beta_0_142857.pdf",
+      "bytes": 44224
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/017_localization_mesh_criterion_beta_0_142857.pdf",
+      "bytes": 46374
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/018_criterion_at_n_3000_beta_0_142857.pdf",
+      "bytes": 21851
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/019_mesh_robustness_stress_test_on_one_fixed_sample_n_400_n_200_one_perturbed_grid_p.pdf",
+      "bytes": 35008
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/020_mesh_sensitivity_at_n_400_beta_0_142857.pdf",
+      "bytes": 36366
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/021_sensitivity_to_a_microscopic_mesh_defect_beta_0_142857.pdf",
+      "bytes": 26855
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/022_similarity_advantage_of_compressed_gap_c_0_2.pdf",
+      "bytes": 29000
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/023_critical_mesh_scale_beta_0_142857.pdf",
+      "bytes": 22751
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/024_monte_carlo_distribution_of_hat_h_rm_spec_n_200_n_1000_beta_1_7_lambda_n_n_1_9.pdf",
+      "bytes": 25847
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/025_empirical_distribution_of_hat_h_rm_spec_n_200.pdf",
+      "bytes": 24142
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/026_distribution_of_selected_bandwidths_over_200_samples_n_200_n_1000_beta_1_7_lambd.pdf",
+      "bytes": 45627
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/027_distribution_of_selected_bandwidths_over_200_samples_n_200_n_1000_beta_1_7_lambd.pdf",
+      "bytes": 45627
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/028_monte_carlo_distribution_of_hat_h_rm_spec_n_200_n_1000_beta_1_7_lambda_n_n_1_9.pdf",
+      "bytes": 25078
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/029_empirical_distribution_of_hat_h_rm_spec_n_200.pdf",
+      "bytes": 27424
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/030_distribution_of_selected_bandwidths_over_2000_samples_n_200_n_1000_beta_1_7_lamb.pdf",
+      "bytes": 48364
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/fast_l2_bandwidth_distributions_vs_n_lambda/001_bandwidth_distributions_spectral_selections_and_continuous_widehat_q_minimizers_.pdf",
+      "bytes": 70532
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/linear_grid_joint_n_lambda_limit/001_linear_bandwidth_grid_r_1_joint_n_lambda_n_experiment.pdf",
+      "bytes": 37115
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_energy_minimizers_n200/001_conditional_distributions_of_local_minimizers_empirical_fits_n_200.pdf",
+      "bytes": 33684
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_energy_minimizers_n200/001_interior_local_bandwidth_minimizers.pdf",
+      "bytes": 25123
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_energy_minimizers_n200/001_interior_local_energy_minimizers_1_000_paired_samples_n_200.pdf",
+      "bytes": 27735
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_energy_minimizers_n200/001_overlaid_histograms_of_interior_local_minimizers_n_200.pdf",
+      "bytes": 25046
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_q1_minimizers_selected_n/001_interior_local_minimizers_of_widehat_q_1.pdf",
+      "bytes": 30373
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_qr_minimizers_vs_n/001_interior_local_bandwidth_minimizers.pdf",
+      "bytes": 37744
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_qr_minimizers_vs_n/001_local_energy_minimizers_and_ise_optimal_bandwidths.pdf",
+      "bytes": 40185
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_qr_minimizers_vs_n/002_interior_local_minimizers_n_100_to_1000.pdf",
+      "bytes": 60758
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_qr_minimizers_vs_n/002_local_energy_and_ise_minimizers_n_100_to_1000.pdf",
+      "bytes": 65910
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_qr_minimizers_vs_n/003_interior_local_minimizers_n_1100_to_2000.pdf",
+      "bytes": 59388
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/local_qr_minimizers_vs_n/003_local_energy_and_ise_minimizers_n_1100_to_2000.pdf",
+      "bytes": 64631
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/r13over14_joint_n_lambda_limit/001_bandwidth_grid_r_13_14_joint_n_lambda_n_experiment.pdf",
+      "bytes": 39665
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/similarity_max_eigenvalue_vs_n/001_largest_eigenvalue_of_a_n_versus_n_lambda_n_n_1_5.pdf",
+      "bytes": 31094
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/similarity_max_eigenvalue_vs_n/001_largest_similarity_eigenvalue_versus_n_lambda_n_1n_1_5.pdf",
+      "bytes": 28127
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/similarity_max_eigenvalue_vs_n/001_sample_energy_widehat_q_r_h_same_data_n_200_r_0_928571.pdf",
+      "bytes": 33927
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/similarity_max_eigenvalue_vs_n/002_largest_similarity_eigenvalue_versus_n_lambda_n_n_1_5.pdf",
+      "bytes": 28117
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/similarity_max_eigenvalue_vs_n/002_rescaled_similarity_eigenvalue_versus_n_lambda_n_1n_1_5.pdf",
+      "bytes": 32803
+    },
+    {
+      "path": "output/analysis/continuous_minimizers_selected_n/figure39_full_interval_preview.png",
+      "bytes": 221003
+    },
+    {
+      "path": "output/analysis/continuous_minimizers_selected_n/figure39_without_insets_preview.png",
+      "bytes": 226213
+    },
+    {
+      "path": "output/analysis/continuous_minimizers_selected_n/full_interval_histogram_counts.csv",
+      "bytes": 126922
+    },
+    {
+      "path": "output/analysis/continuous_minimizers_selected_n/full_interval_validation.json",
+      "bytes": 5752
+    },
+    {
+      "path": "output/analysis/continuous_minimizers_selected_n/inset_removal_validation.json",
+      "bytes": 21517
+    },
+    {
+      "path": "output/analysis/continuous_minimizers_selected_n/inset_removal_visual_validation.json",
+      "bytes": 794
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n100.pdf",
+      "bytes": 116747
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1000.pdf",
+      "bytes": 116744
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n1500.pdf",
+      "bytes": 117457
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n/continuous_minimizers_n2000.pdf",
+      "bytes": 117453
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n_hmax10/continuous_minimizers_n100.pdf",
+      "bytes": 24281
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n_hmax10/continuous_minimizers_n1000.pdf",
+      "bytes": 24174
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n_hmax10/continuous_minimizers_n1500.pdf",
+      "bytes": 24474
+    },
+    {
+      "path": "output/pdf/continuous_minimizers_selected_n_hmax10/continuous_minimizers_n2000.pdf",
+      "bytes": 24113
+    },
+    {
+      "path": "output/pdf/local_q1_minimizers_selected_n/local_q1_minimizers_selected_n.pdf",
+      "bytes": 30373
+    },
+    {
+      "path": "output/pdf/local_qr_minimizers_vs_n/all_sample_sizes.pdf",
+      "bytes": 108443
+    },
+    {
+      "path": "output/pdf/local_qr_minimizers_vs_n/distribution_distance_to_ise.pdf",
+      "bytes": 23215
+    },
+    {
+      "path": "output/pdf/local_qr_minimizers_vs_n/selected_histograms.pdf",
+      "bytes": 40185
+    },
+    {
+      "path": "output/research/local_energy_minimizer_distribution_n200.md",
+      "bytes": 6080
+    },
+    {
+      "path": "output/research/local_qr_distribution_distance_to_ise.md",
+      "bytes": 5120
+    }
+  ],
+  "preserved_inputs": [
+    "Code/Code_kde/inputs/qhat_reference_sample.csv",
+    "Code/Code_kde/inputs/qhat_sampling.json"
+  ],
+  "preserved_unified_results": "Code/Code_kde/outputs/data/qhat_minimization_control/e7c6466ed02b",
+  "thesis_sources_changed": false,
+  "validation": {
+    "targeted_tests_passed": 74,
+    "test_log": "output/analysis/qhat_minimization_unification/cleanup_tests.log",
+    "control_notebook_loads_canonical_input": true,
+    "changed_code_and_notebooks_syntax_checked": 24,
+    "all_deleted_paths_absent": true,
+    "thesis_sources_unchanged": true
+  },
+  "rerun_changes": [
+    "Canonical inputs no longer depend on deleted result folders.",
+    "ISE reference recomputes using the shared minimizer instead of recovering old figure counts.",
+    "Pre-unification imports are disabled in active notebook configurations.",
+    "Old empirical tables and fitted summaries removed from active notebooks and research notes."
+  ]
+}

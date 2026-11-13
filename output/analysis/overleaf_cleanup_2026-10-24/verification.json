@@ -1,0 +1,27 @@
+{
+  "baseline_commit": "7e919a1e0835e122be008b2e997a973e831e5a14",
+  "protected_thesis_files_unchanged": 27,
+  "all_python_sources_unchanged": true,
+  "all_notebook_source_cells_and_metadata_unchanged": true,
+  "all_input_files_unchanged": true,
+  "all_pdf_exports_unchanged": true,
+  "thesis_graphic_references_unchanged": 17,
+  "preexisting_unresolved_graphic_references": [],
+  "removed_png_previews": 33,
+  "removed_cache_files": 42,
+  "cleared_notebooks": 9,
+  "diagnostic_csv_files_retained_locally": 29,
+  "python_syntax_and_json_checks_passed": true,
+  "full_numerical_experiments_rerun": false,
+  "tracked_before": {
+    "files": 623,
+    "bytes": 72382991,
+    "utf8_text_bytes_including_notebooks": 13074447
+  },
+  "tracked_after_before_final_report_sizes": {
+    "files": 559,
+    "bytes": 57028367,
+    "utf8_text_bytes_including_notebooks": 5055165
+  },
+  "changed_paths_before_final_report": 76
+}
