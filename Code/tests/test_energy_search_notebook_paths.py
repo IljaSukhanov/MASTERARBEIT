@@ -1,5 +1,12 @@
 """Execute migrated notebook search cells with reduced, isolated inputs."""
 
+# Permit running individual tests and unittest discovery from the project root.
+import sys as _sys
+from pathlib import Path as _Path
+_code_root = str(_Path(__file__).resolve().parents[1])
+if _code_root not in _sys.path:
+    _sys.path.insert(0, _code_root)
+
 import ast
 import contextlib
 import csv

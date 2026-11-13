@@ -9,6 +9,7 @@ from pathlib import Path
 import hashlib
 import json
 import os
+import sys
 import time
 
 import matplotlib
@@ -18,12 +19,15 @@ import numpy as np
 from scipy.sparse.linalg import eigsh
 from threadpoolctl import threadpool_limits
 
+CODE = Path(__file__).resolve().parents[1]
+if str(CODE) not in sys.path:
+    sys.path.insert(0, str(CODE))
+
 from kde_tools.bandwidth_histograms import plot_thesis_bandwidth_distributions
 from kde_tools.fourier.similarities import beta2_divergence_matrix_fourier
 from kde_tools.perron import perron_peak_index
 
 
-CODE = Path(__file__).resolve().parents[1]
 DATA = CODE / 'outputs/data/outlook_four_lambdas_n400'
 OUT = CODE / 'outputs/images/thesis'
 SIZES = (300, 400, 500, 1000)

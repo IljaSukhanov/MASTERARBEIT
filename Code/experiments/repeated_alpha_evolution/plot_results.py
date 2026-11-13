@@ -3,6 +3,7 @@ from pathlib import Path
 import csv
 import json
 import os
+import sys
 
 import matplotlib
 matplotlib.use('Agg')
@@ -10,9 +11,12 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter, MultipleLocator
 import numpy as np
 
+CODE = Path(__file__).resolve().parents[2]
+if str(CODE) not in sys.path:
+    sys.path.insert(0, str(CODE))
+
 from kde_tools.bandwidths import gaussian_mise_oracle_bandwidth
 
-CODE = Path(__file__).resolve().parents[2]
 DATA = CODE / 'outputs/data/repeated_alpha_evolution'
 OUT = CODE / 'outputs/pdfs/repeated_alpha_evolution'
 grid_size_requested = int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '400'))

@@ -1,5 +1,12 @@
 """Run each thesis experiment group independently with isolated small inputs."""
 
+# Permit running individual tests and unittest discovery from the project root.
+import sys as _sys
+from pathlib import Path as _Path
+_code_root = str(_Path(__file__).resolve().parents[1])
+if _code_root not in _sys.path:
+    _sys.path.insert(0, _code_root)
+
 from pathlib import Path
 import shutil
 import tempfile

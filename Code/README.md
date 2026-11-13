@@ -22,7 +22,7 @@ reads the saved N=400 checkpoint from `outputs/data/repeated_alpha_evolution/n40
 To regenerate the repeated-sample plots from that checkpoint:
 
 ```bash
-PYTHONPATH=. python experiments/repeated_alpha_evolution/plot_results.py
+python experiments/repeated_alpha_evolution/plot_results.py
 ```
 
 `outputs/images/thesis/` and `outputs/pdfs/` contain PDFs directly included by
@@ -39,7 +39,7 @@ repeated-sample checkpoint is missing, but its fixed-sample thesis value can be
 reproduced independently:
 
 ```bash
-PYTHONPATH=. python experiments/spectral_lambda_jump_study/repeated_peak_switch_analysis.py --reference-only
+python experiments/spectral_lambda_jump_study/repeated_peak_switch_analysis.py --reference-only
 ```
 
 The full peak-switch study still requires its original checkpoint or a
@@ -50,5 +50,7 @@ compatible replacement, supplied with `--source`.
 ```bash
 MPLBACKEND=Agg python -m unittest discover -s tests
 ```
+
+From the project root, use `MPLBACKEND=Agg python -m unittest discover -s Code/tests`.
 
 The tests run reduced examples and use isolated temporary output directories.

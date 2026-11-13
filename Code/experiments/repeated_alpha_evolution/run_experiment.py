@@ -13,16 +13,20 @@ from pathlib import Path
 import hashlib
 import json
 import os
+import sys
 import time
 
 import numpy as np
 from scipy.sparse.linalg import eigsh
 
+CODE = Path(__file__).resolve().parents[2]
+if str(CODE) not in sys.path:
+    sys.path.insert(0, str(CODE))
+
 from kde_tools.fourier.similarities import DEFAULT_FREQUENCY_CUTOFF, DEFAULT_FREQUENCY_INTERVALS
 from kde_tools.perron import perron_peak_index
 
 
-CODE = Path(__file__).resolve().parents[2]
 M, N, SAMPLE_SIZE, SEED = 1000, int(os.environ.get('REPEATED_ALPHA_GRID_SIZE', '400')), 200, 20260828
 if N < 3:
     raise ValueError('REPEATED_ALPHA_GRID_SIZE must be at least 3.')
