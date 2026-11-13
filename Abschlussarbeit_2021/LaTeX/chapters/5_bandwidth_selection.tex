@@ -512,7 +512,7 @@ Here we explain the results of the experiment with fixed $N$ and increasing $\la
         0 & ,\text{else}.
     \end{cases}
 \end{align*}
-In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with edges between $h_i$ and $h_j$ if and only if $(i,j)\in\arg\min_{i\ne j}D_{ij}$.
+In the limit, this is an adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with edges between $h_i$ and $h_j$ if and only if $(i,j)\in\arg\min_{k\ne l}D_{kl}$.
 
 In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ divergence as established in Proposition~\ref{prop:L2_divergence_matrix} there must exist some $j^{\ast}=1,\dots,N-1$ such that the adjacent index pair $(j^{\ast},j^{\ast}+1)$ minimizes $D_{ij}$ over $i\ne j$. Assume for contradiction that all index pairs $(i_0,j_0)$ that minimize $D_{ij}$ over $i\ne j$ have at least one other index strictly in between them. Set $a=\min\{i_0,j_0\}$ and $b=\max\{i_0,j_0\}$. Then $a<a+1<b$, and by symmetry and the Robinson property $d_{\ast}=D_{i_0j_0}=D_{ab}\ge D_{a,a+1}\ge d_{\ast}$ and thus $(a,a+1)$ would be an adjacent pair that minimizes $D_{ij}$ over $i\ne j$, a contradiction.
 
