@@ -1,0 +1,934 @@
+{
+  "date": "2026-10-19",
+  "commit": "dc7cdfda66eac31dcf7f82d4a064b28fd2693ba0",
+  "scope": {
+    "current_sources_scanned": 89,
+    "remaining_tracked_csv_and_image_files_including_pdf": 1221
+  },
+  "high_confidence_candidates": [
+    {
+      "path": "Code/Code_kde/outputs/csv/08_kl_distance_matrices/bandwidths.csv",
+      "bytes": 2500,
+      "MB": 0.0025,
+      "kind": "CSV",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/08_kl_distance_matrices/kl_matrix_mc.csv",
+      "bytes": 250224,
+      "MB": 0.250224,
+      "kind": "CSV",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/08_kl_distance_matrices/kl_matrix_population.csv",
+      "bytes": 250000,
+      "MB": 0.25,
+      "kind": "CSV",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/08_kl_distance_matrices/kl_standard_errors.csv",
+      "bytes": 250000,
+      "MB": 0.25,
+      "kind": "CSV",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/gaussian_hellinger_bandwidth_distributions_vs_n/preview/ea67e9744ba1/frequencies.csv",
+      "bytes": 7392,
+      "MB": 0.007392,
+      "kind": "CSV",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb",
+      "deleted_in": "6fbbd18d43e4cc7b963842f87293498069486ea0",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/051e2bed669302314a391ea2141223f7f61cd5ba/Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/gaussian_hellinger_bandwidth_distributions_vs_n/preview/ea67e9744ba1/selections.csv",
+      "bytes": 7975,
+      "MB": 0.007975,
+      "kind": "CSV",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb",
+      "deleted_in": "6fbbd18d43e4cc7b963842f87293498069486ea0",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/051e2bed669302314a391ea2141223f7f61cd5ba/Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/data/gaussian_hellinger_bandwidth_distributions_vs_n/preview/ea67e9744ba1/summary.csv",
+      "bytes": 1257,
+      "MB": 0.001257,
+      "kind": "CSV",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb",
+      "deleted_in": "6fbbd18d43e4cc7b963842f87293498069486ea0",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/051e2bed669302314a391ea2141223f7f61cd5ba/Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/gaussian_hellinger_bandwidth_distributions_vs_n/preview/ea67e9744ba1/h2_increasing_n_M20_N21.png",
+      "bytes": 221034,
+      "MB": 0.221034,
+      "kind": "image",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb",
+      "deleted_in": "6fbbd18d43e4cc7b963842f87293498069486ea0",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/051e2bed669302314a391ea2141223f7f61cd5ba/Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/001_kernel_density_estimate.pdf",
+      "bytes": 23703,
+      "MB": 0.023703,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/002_bandwidth_comparison_using_the_gaussian_kernel.pdf",
+      "bytes": 23325,
+      "MB": 0.023325,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/003_interactive_kde_gaussian_kernel_n_200_sigma_1.pdf",
+      "bytes": 24925,
+      "MB": 0.024925,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/004_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 26424,
+      "MB": 0.026424,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/004_oracle_bandwidth_via_integrated_squared_error.pdf",
+      "bytes": 16395,
+      "MB": 0.016395,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/005_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 26820,
+      "MB": 0.02682,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/006_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 25790,
+      "MB": 0.02579,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/007_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 25433,
+      "MB": 0.025433,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/008_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24810,
+      "MB": 0.02481,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/009_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24356,
+      "MB": 0.024356,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/010_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24328,
+      "MB": 0.024328,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/011_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 23744,
+      "MB": 0.023744,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/012_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 23847,
+      "MB": 0.023847,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/013_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24428,
+      "MB": 0.024428,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/014_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24953,
+      "MB": 0.024953,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/015_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 25375,
+      "MB": 0.025375,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/016_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 25433,
+      "MB": 0.025433,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/017_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 25199,
+      "MB": 0.025199,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/018_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24335,
+      "MB": 0.024335,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/019_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24306,
+      "MB": 0.024306,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/020_interactive_kde_epanechnikov_kernel_n_200_sigma_1.pdf",
+      "bytes": 24415,
+      "MB": 0.024415,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/021_oracle_bandwidth_via_integrated_squared_error.pdf",
+      "bytes": 16395,
+      "MB": 0.016395,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/022_tv_overlap_h_0_303.pdf",
+      "bytes": 22515,
+      "MB": 0.022515,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/023_bandwidths_selected_by_non_l_2_similarity_methods.pdf",
+      "bytes": 20424,
+      "MB": 0.020424,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/024_js_similarity.pdf",
+      "bytes": 21745,
+      "MB": 0.021745,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/025_plotly_figure.pdf",
+      "bytes": 25323,
+      "MB": 0.025323,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/026_sample_size_versus_selected_kde_squared_integrated_error.pdf",
+      "bytes": 27583,
+      "MB": 0.027583,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/100_kde_test/027_selected_bandwidth_widehat_h_n.pdf",
+      "bytes": 33725,
+      "MB": 0.033725,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/100_kde_test.ipynb",
+      "deleted_in": "e9dab1f7716b4247b8aba7f732858dac5cdd6d25",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/8dee98b335ac505eab61f63fd429b4ab08adc0b9/Code/Code_kde/100_kde_test.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/gaussian_hellinger_bandwidth_distributions_vs_n/001_h_2_spectral_bandwidth_distributions_for_increasing_sample_size_gaussian_data_m_.pdf",
+      "bytes": 28747,
+      "MB": 0.028747,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb",
+      "deleted_in": "6fbbd18d43e4cc7b963842f87293498069486ea0",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/051e2bed669302314a391ea2141223f7f61cd5ba/Code/Code_kde/gaussian_hellinger_bandwidth_distributions_vs_n.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kde_mixture_bandwidth_selector_comparison/001_plotly_figure.pdf",
+      "bytes": 31398,
+      "MB": 0.031398,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kde_mixture_bandwidth_selector_comparison.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kde_mixture_bandwidth_selector_comparison.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kde_mixture_bandwidth_selector_comparison/002_oracle_ise.pdf",
+      "bytes": 38948,
+      "MB": 0.038948,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kde_mixture_bandwidth_selector_comparison.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kde_mixture_bandwidth_selector_comparison.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/001_monte_carlo_kl_matrix_between_gaussian_kdes_n_200_sigma_1_0_n_mc_1000.pdf",
+      "bytes": 24212,
+      "MB": 0.024212,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/002_population_kl_matrix_between_gaussian_smoothed_densities_n_0_sigma_2_h_i_2_sigma.pdf",
+      "bytes": 26891,
+      "MB": 0.026891,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/003_finite_sample_kde_kl_minus_population_gaussian_kl.pdf",
+      "bytes": 22134,
+      "MB": 0.022134,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/004_stationary_distribution_of_the_perron_doob_chain.pdf",
+      "bytes": 20620,
+      "MB": 0.02062,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/005_left_right_and_stationary_perron_scores.pdf",
+      "bytes": 20828,
+      "MB": 0.020828,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/006_stationary_distribution_of_the_doob_chain.pdf",
+      "bytes": 19031,
+      "MB": 0.019031,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/007_kl_spectral_bandwidth_versus_mise_oracle.pdf",
+      "bytes": 25968,
+      "MB": 0.025968,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/008_stationary_distributions_for_increasing_lambda.pdf",
+      "bytes": 26013,
+      "MB": 0.026013,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/kl_divergence_doob_selector_experiments/009_dependence_of_spectral_bandwidth_on_lambda.pdf",
+      "bytes": 17831,
+      "MB": 0.017831,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/kl_divergence_doob_selector_experiments.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/001_1_gaussian.pdf",
+      "bytes": 85116,
+      "MB": 0.085116,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/002_2_skewed_unimodal.pdf",
+      "bytes": 89933,
+      "MB": 0.089933,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/003_3_strongly_skewed.pdf",
+      "bytes": 90624,
+      "MB": 0.090624,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/004_4_kurtotic_unimodal.pdf",
+      "bytes": 88802,
+      "MB": 0.088802,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/005_5_outlier.pdf",
+      "bytes": 84320,
+      "MB": 0.08432,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/006_6_bimodal.pdf",
+      "bytes": 88226,
+      "MB": 0.088226,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/007_7_separated_bimodal.pdf",
+      "bytes": 88719,
+      "MB": 0.088719,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/008_8_skewed_bimodal.pdf",
+      "bytes": 88756,
+      "MB": 0.088756,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/009_9_trimodal.pdf",
+      "bytes": 87072,
+      "MB": 0.087072,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/010_10_claw.pdf",
+      "bytes": 88190,
+      "MB": 0.08819,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/011_11_double_claw.pdf",
+      "bytes": 90939,
+      "MB": 0.090939,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/012_12_asymmetric_claw.pdf",
+      "bytes": 90920,
+      "MB": 0.09092,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/013_13_asymmetric_double_claw.pdf",
+      "bytes": 94771,
+      "MB": 0.094771,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/014_14_smooth_comb.pdf",
+      "bytes": 89458,
+      "MB": 0.089458,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/marron_wand_15_gmm_mise_density/015_15_discrete_comb.pdf",
+      "bytes": 92058,
+      "MB": 0.092058,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/marron_wand_15_gmm_mise_density.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/three_component_gmm_perron_vs_qhat/001_population_scale_space_3_2_1_modal_regimes.pdf",
+      "bytes": 256460,
+      "MB": 0.25646,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/three_component_gmm_perron_vs_qhat/002_scale_by_scale_perron_and_doob_reweighting.pdf",
+      "bytes": 33171,
+      "MB": 0.033171,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/three_component_gmm_perron_vs_qhat/003_modal_regime_mass_under_three_scale_measures.pdf",
+      "bytes": 25061,
+      "MB": 0.025061,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/three_component_gmm_perron_vs_qhat/004_local_stability_versus_global_similarity_reweighting.pdf",
+      "bytes": 39737,
+      "MB": 0.039737,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/three_component_gmm_perron_vs_qhat/005_similarity_geometry_and_selected_kdes.pdf",
+      "bytes": 70025,
+      "MB": 0.070025,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/three_component_gmm_perron_vs_qhat/006_reweighting_across_similarity_scales.pdf",
+      "bytes": 38505,
+      "MB": 0.038505,
+      "kind": "PDF figure",
+      "status": "original_generator_deleted_no_current_replacement_located",
+      "former_generator": "Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb",
+      "deleted_in": "3fdf5a5ac061682aeb6177805b12f1a7f67796f4",
+      "historical_source_url": "https://github.com/IljaSukhanov/MASTERARBEIT/blob/4d7ba4a6adf2d407a05cfe0570f0a4117f742b19/Code/Code_kde/three_component_gmm_perron_vs_qhat.ipynb"
+    }
+  ],
+  "additional_review_candidates": [
+    {
+      "path": "Code/Code_kde/outputs/csv/01_equal_minima/equal_minima_hellinger_grid_consistency_repeat.csv",
+      "bytes": 9282,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/01_equal_minima/geometric_grid_001_2_selector_summary.csv",
+      "bytes": 756,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/01_equal_minima/geometric_grid_all_selected_kdes_summary.csv",
+      "bytes": 499,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/01_equal_minima/kl_stationary_equal_minima_summary.csv",
+      "bytes": 588,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/01_equal_minima/selector_comparison_equal_minima.csv",
+      "bytes": 594,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/02_grid_and_consistency_studies/hellinger_geometric_grid_stability.csv",
+      "bytes": 9282,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/03_three_minima_scenarios/all_selectors_three_minima_scenarios.csv",
+      "bytes": 8587,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/03_three_minima_scenarios/hellinger_on_three_minima_scenarios.csv",
+      "bytes": 1612,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/03_three_minima_scenarios/hellinger_three_scenarios_grid_stability.csv",
+      "bytes": 82722,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/gaussian_kspacing_selected_kdes_summary.csv",
+      "bytes": 699,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_adaptive_scaled_grid.csv",
+      "bytes": 53992,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_adaptive_scaled_grid_slopes.csv",
+      "bytes": 176,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_adaptive_scaled_grid_summary.csv",
+      "bytes": 2637,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_kspacing_grid.csv",
+      "bytes": 55239,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_kspacing_grid_slopes.csv",
+      "bytes": 268,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_kspacing_grid_summary.csv",
+      "bytes": 2788,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_scaled_grid.csv",
+      "bytes": 41082,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_scaled_grid_slopes.csv",
+      "bytes": 174,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_scaled_grid_summary.csv",
+      "bytes": 1946,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_spacing_range_grid.csv",
+      "bytes": 29137,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_spacing_range_grid_slopes.csv",
+      "bytes": 344,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_gaussian_spacing_range_grid_summary.csv",
+      "bytes": 2537,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_skewed_unimodal.csv",
+      "bytes": 36962,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_skewed_unimodal_slopes.csv",
+      "bytes": 308,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/04_bandwidth_scaling/spectral_bandwidth_vs_n_skewed_unimodal_summary.csv",
+      "bytes": 3936,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/06_skewed_unimodal/skewed_unimodal_all_selectors_summary.csv",
+      "bytes": 2511,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/07_two_gaussian_scan/two_gaussian_minima_representatives.csv",
+      "bytes": 548,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/07_two_gaussian_scan/two_gaussian_two_minima_random_scan.csv",
+      "bytes": 60428,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/csv/07_two_gaussian_scan/two_gaussian_two_minima_scan.csv",
+      "bytes": 32772,
+      "kind": "csv",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/02_grid_and_consistency_studies/bandwidth_choice.png",
+      "bytes": 52410,
+      "kind": "images",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/02_grid_and_consistency_studies/bandwidth_consistency.png",
+      "bytes": 63496,
+      "kind": "images",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/02_grid_and_consistency_studies/bandwidth_selection2.png",
+      "bytes": 45975,
+      "kind": "images",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/02_grid_and_consistency_studies/chat_rate_controlled_hellinger_scaling_fast.png",
+      "bytes": 255953,
+      "kind": "images",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/02_grid_and_consistency_studies/concistency_result2.png",
+      "bytes": 44032,
+      "kind": "images",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_kde/outputs/images/05_oracle_ise_curves/oracle_ise_curve_example.png",
+      "bytes": 74670,
+      "kind": "images",
+      "status": "no_current_producer_located_history_not_yet_attributed"
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/csv/ar3_single_path_geometric_descent/gamma0_beta_minimum_width_matrix.csv",
+      "bytes": 1071,
+      "kind": "csv",
+      "status": "legacy_output_directory_generator_now_uses_ar3_geo",
+      "identical_existing_new_path": ""
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/images/ar3_single_path_geometric_descent/gamma0_beta_minimum_width_matrix.png",
+      "bytes": 177107,
+      "kind": "images",
+      "status": "legacy_output_directory_generator_now_uses_ar3_geo",
+      "identical_existing_new_path": "Code/Code_AR_processes/outputs/images/ar3_geo/gamma0_beta_minimum_width_matrix.png"
+    },
+    {
+      "path": "Code/Code_AR_processes/outputs/pdfs/ar3_single_path_geometric_descent/fixed_ar3_process.pdf",
+      "bytes": 27072,
+      "kind": "pdfs",
+      "status": "legacy_output_directory_generator_now_uses_ar3_geo",
+      "identical_existing_new_path": "Code/Code_AR_processes/outputs/pdfs/ar3_geo/fixed_ar3_process.pdf"
+    }
+  ],
+  "no_outputs_deleted_by_audit": true
+}

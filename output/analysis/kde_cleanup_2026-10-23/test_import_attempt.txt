@@ -1,0 +1,22 @@
+Matplotlib is building the font cache; this may take a moment.
+test_kde_tools (unittest.loader._FailedTest.test_kde_tools) ... ERROR
+
+======================================================================
+ERROR: test_kde_tools (unittest.loader._FailedTest.test_kde_tools)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_kde_tools
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/tests/test_kde_tools.py", line 26, in <module>
+    from kde_tools.plotting_functions import (
+  File "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/kde_tools/plotting_functions.py", line 7, in <module>
+    import plotly.graph_objects as go
+ModuleNotFoundError: No module named 'plotly'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
