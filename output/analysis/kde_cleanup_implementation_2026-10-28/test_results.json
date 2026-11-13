@@ -1,0 +1,9 @@
+{
+  "python": "/opt/anaconda3/bin/python3",
+  "tests_run": 122,
+  "successful": true,
+  "elapsed_seconds": 13.33796699999948,
+  "failures": [],
+  "errors": [],
+  "skipped": []
+}
