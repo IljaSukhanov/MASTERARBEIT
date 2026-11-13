@@ -60,7 +60,7 @@
     \end{align*}
     because
     \begin{align*}
-        \langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle&=\bigg\langle\sum_{l=j}^{k-1}\underbrace{(\hat{f}_{h_{l+1}}-\hat{f}_{h_l})}_{=\delta_r},\sum_{m=i}^{j-1}\underbrace{(\hat{f}_{h_{m+1}}-\hat{f}_{h_m})}_{=\delta_s}\bigg\rangle\\&=\sum_{l=j}^{k-1}\sum_{m=i}^{j-1}\langle\delta_l,\delta_m\rangle>0,
+        \langle\hat{f}_{h_k}-\hat{f}_{h_j},\hat{f}_{h_j}-\hat{f}_{h_i}\rangle&=\bigg\langle\sum_{l=j}^{k-1}\underbrace{(\hat{f}_{h_{l+1}}-\hat{f}_{h_l})}_{=\delta_l},\sum_{m=i}^{j-1}\underbrace{(\hat{f}_{h_{m+1}}-\hat{f}_{h_m})}_{=\delta_m}\bigg\rangle\\&=\sum_{l=j}^{k-1}\sum_{m=i}^{j-1}\langle\delta_l,\delta_m\rangle>0,
     \end{align*}
      by the first part of the proof.
 \end{proof}
@@ -69,7 +69,7 @@
 
 
 \begin{proof}
-    Let $D$ be conditionally negative definite. By~\cite[Theorem~2.2]{berg_harmonic_1984} this is equivalent to $\Tilde{S}_t=(\exp{(-tD(x_i,x_j))})_{i,j=1}^{n}$ being positive semi-definite for all finite choices of points $x_1,\dots,x_n\in X$. Let $\phi$ be a completely monotone function. Then by~\cite[Corollary~6.14]{berg_harmonic_1984}, there exists a nonnegative measure $\mu$ on $\mathcal{B}([0,\infty))$ such that $\phi(z)=\int_{[0,\infty)}e^{-tz}\,d\mu(t)$ for all $z>0$. By the continuity of $\phi$ at zero and the monotone convergence theorem, we have $\mu([0,\infty))=\phi(0)<\infty$. Thus $\mu$ is finite and the integral representation also holds at $z=0$. Consequently, we write
+    Let $D$ be conditionally negative definite. By~\cite[Theorem~2.2]{berg_harmonic_1984} this is equivalent to $\Tilde{S}_t=(\exp{(-tD(x_i,x_j))})_{i,j=1}^{n}$ being positive semi-definite for all finite choices of points $x_1,\dots,x_n\in X$ and all $t>0$. Let $\phi$ be a completely monotone function continuous at zero. Then by~\cite[Corollary~6.14]{berg_harmonic_1984}, there exists a nonnegative measure $\mu$ on $\mathcal{B}([0,\infty))$ such that $\phi(z)=\int_{[0,\infty)}e^{-tz}\,d\mu(t)$ for all $z>0$. By the continuity of $\phi$ at zero and the monotone convergence theorem, we have $\mu([0,\infty))=\phi(0)<\infty$. Thus $\mu$ is finite and the integral representation also holds at $z=0$. Consequently, we write
     \begin{align*}
         \sum_{i,j=1}^{n}a_ia_j\phi(D(x_i,x_j))&=\sum_{i,j=1}^{n}a_ia_j\int\limits_{[0,\infty)}\exp{(-tD(x_i,x_j))}\,d\mu(t)\\&
         =\int\limits_{[0,\infty)}\underbrace{\sum_{i,j=1}^{n}a_ia_j\exp{(-tD(x_i,x_j))}}_{=a^{T}\Tilde{S}_ta\ge0}\,d\mu(t)\ge0
@@ -88,15 +88,18 @@
     \begin{align*}
         h_{j_N}=\left(h_{i_N}^r+r\delta_{ij}^{r,N}\right)^{1/r}=h_{i_N}\left(1+r\underbrace{\frac{\delta_{ij}^{r,N}}{h_{i_N}^r}}_{=:c_N}\right)^{1/r}.
     \end{align*}
-    Note that $c_N=\mathbf{O}(\delta_{ij}^{r,N})$ because $h_{i_N}^{-r}$ is bounded above by $h_{\min}^{-r}$. In particular, since $|j_N-i_N|=\mathbf{o}(N)$ by assumption, $c_N$ is a null sequence. The first order Taylor approximation of $(1+x)^{1/r}$ around $0$ is $(1+x)^{1/r}=1+x/r+\mathbf{O}(x^2)$. We get
+    Note that $|c_N|\le h_{\min}^{-r}|\delta_{ij}^{r,N}|$ because $h_{i_N}\ge h_{\min}$. By Taylor's theorem $(1+x)^{1/r}=1+x/r+R(x)$ with $|R(x)|\le K_rx^2$ for all $|x|\le1/2$, where $K_r:=(2r)^{-1}|r^{-1}-1|\max_{|y|\le1/2}(1+y)^{1/r-2}$ depends only on $r$. Set $\delta_0:=h_{\min}^r/(2r)$. If $|\delta_{ij}^{r,N}|\le\delta_0$ then $|rc_N|\le1/2$ and hence
     \begin{align*}
-        h_{j_N}-h_{i_N}&=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+\mathbf{O}((\delta_{ij}^{r,N})^2)\right)\\&
-        =h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2)
+        h_{j_N}-h_{i_N}&=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+R(rc_N)\right)\\&
+        =h_{i_N}^{1-r}\delta_{ij}^{r,N}+h_{i_N}R(rc_N),
     \end{align*}
-    by properties of the $\mathbf{O}$-notation.
+    where $|h_{i_N}R(rc_N)|\le h_{\max}K_rr^2h_{\min}^{-2r}(\delta_{ij}^{r,N})^2$. This proves the claim with $C:=h_{\max}K_rr^2h_{\min}^{-2r}$.
 
-    For $r=0$ we have $h_{j_N}=h_{i_N}\exp{(\delta_{ij}^{0,N})}$. Since $\delta_{ij}^{0,N}\to0$ and $h_{i_N}\le h_{\max}$, a Taylor expansion of $e^x$ around $0$ yields $h_{j_N}-h_{i_N}=h_{i_N}\delta_{ij}^{0,N}+\mathbf{O}((\delta_{ij}^{0,N})^2)$.
+    For $r=0$ we have $h_{j_N}=h_{i_N}\exp{(\delta_{ij}^{0,N})}$ and thus $h_{j_N}-h_{i_N}=h_{i_N}\delta_{ij}^{0,N}+h_{i_N}(\exp{(\delta_{ij}^{0,N})}-1-\delta_{ij}^{0,N})$. Since $|e^x-1-x|\le\sum_{k=2}^{\infty}|x|^k/(k!)\le x^2\sum_{k=2}^{\infty}1/(k!)=(e-2)x^2$ for all $|x|\le1$ the claim follows with $\delta_0:=1$ and $C:=h_{\max}(e-2)$. 
+
+    Since $|j_N-i_N|=\mathbf{o}(N)$ by assumption and $\Delta_{r,N}=(\psi_r(h_{\max})-\psi_r(h_{\min}))/(N-1)=\mathbf{O}(N^{-1})$ by Definition~\ref{def:r_linear} and Remark~\ref{rem:r_linear_grid}, we have $\delta_{ij}^{r,N}=(j_N-i_N)\Delta_{r,N}\to0$, so $|\delta_{ij}^{r,N}|\le\delta_0$ holds for all sufficiently large $N$. Thus, in both cases above, we have $|h_{j_N}-h_{i_N}-h_{i_N}^{1-r}\delta_{ij}^{r,N}|\le C(\delta_{ij}^{r,N})^2$ for all sufficiently large $N$, which proves $h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2)$.
 \end{proof}
+
 
 \subsection*{Proof of Lemma~\ref{lem:frechet_derivative_of_kde}}\label{sec:proof_frechet_derivative_of_kde}
 
@@ -196,7 +199,7 @@
         \hat{f}_{h_j}-\hat{f}_{h_{i_N}}&=\hat{f}_{h_{i_N}+\tau_{N,j}}-\hat{f}_{h_{i_N}}=\tau_{N,j}\partial_{h}\hat{f}_{h_{i_N}}+u_{N,j}\\&
         =h_{i_N}^{1-r}\delta_{N,j}\partial_h\hat{f}_{h_{i_N}}+r_{N,j},
     \end{align*}
-    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $\alpha_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for some constant $C>0$ and all $N$ sufficiently large. Also by the first inequality of Equation~\eqref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
+    where $u_{N,j}\in L^2(\mathbb{R})$ is the remainder with $\|u_{N,j}\|_2\le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)$ and $r_{N,j}:=u_{N,j}+\alpha_{N,j}\partial_h\hat{f}_{h_{i_N}}$ with $\alpha_{N,j}=\mathbf{O}(\delta_{N,j}^2)$, that is, $|\alpha_{N,j}|\le C\delta_{N,j}^2$ for all $j\in I_N(A)$ and all $N$ with $A\lambda_N^{-1/2}\le\delta_0$, where $C,\delta_0>0$ are the constants from Lemma~\ref{lem:asymptotic_approx_r_linear_spacing}, which do not depend on $j$. Also by the first inequality of Equation~\eqref{eq:delta_N_j_lower_and_upper_bound} we have $|\tau_{N,j}|\le h_{\max}^{1-r}|\delta_{N,j}|$. Since $h\mapsto\partial_h\hat{f}_h$ is continuous in $L^2(\mathbb{R})$, as established in the proof of Lemma~\ref{lem:frechet_derivative_of_kde} it follows by the reverse triangle inequality that $h\mapsto\|\partial_h\hat{f}_h\|_2$ is continuous in $\mathbb{R}$. Thus, $M_0:=\max_{h\in[h_{\min},h_{\max}]}\|\partial_h\hat{f}_h\|_2$ is finite. We now have $\|r_{N,j}\|_2\le|\delta_{N,j}|a_N(A)$ for some null sequence $a_N(A)$, because
     \begin{align*}
         \|r_{N,j}\|_2&\le\|u_{N,j}\|_2+C\delta_{N,j}^2\|\partial_h\hat{f}_{h_{i_N}}\|_2
         \le|\tau_{N,j}|\mu_{[h_{\min},h_{\max}]}(|\tau_{N,j}|)+C\delta_{N,j}^2M_0\\&
@@ -417,7 +420,7 @@
         hG_r'(h)&=2C\sum_{i,j=1}^{n}z_{ij}(h)e^{-z_{ij}(h)}q(z_{ij}(h))\\&
         =2C\sum_{\substack{i,j=1\\X_i\ne X_j}}^{n}z_{ij}(h)e^{-z_{ij}(h)}q(z_{ij}(h)),\quad z_{ij}(h)=(X_i-X_j)^2/(4h^2)
     \end{align*}
-    where $q(z):=z^2-5z+15/4$. For $X_i\ne X_j$, we have $z_{ij}(h)\to\infty$ as $h\downarrow0$ and $z_{ij}(h)\to0$ as $h\to\infty$. Since $zq(z)e^{-z}\to0$ as $z\to0$ by continuity at zero and as $z\to\infty$ by~\cite[Theorem~8.6(f)]{rudin_real_1987}, we have $hG_r'(h)\to0$ for both $h\downarrow0$ and $h\to\infty$. Hence, by Equation~\eqref{eq:bh_formula}, we can conclude that $B(h)\to5/2$ for both $h\downarrow0$ and $h\to\infty$, and since $5/2>2-r$ whenever $r>-1/2$, we have $B(h)>2-r$. Therefore $\hat{Q}_r'(h)<0$ for all sufficiently small $h$ and all sufficiently large $h$. 
+    where $q(z):=z^2-5z+15/4$. For $X_i\ne X_j$, we have $z_{ij}(h)\to\infty$ as $h\downarrow0$ and $z_{ij}(h)\to0$ as $h\to\infty$. Since $zq(z)e^{-z}\to0$ as $z\to0$ by continuity at zero and as $z\to\infty$ by~\cite[Theorem~8.6(f)]{rudin_real_1987}, we have $hG_r'(h)\to0$ both as $h\downarrow0$ and as $h\to\infty$. Hence, by Equation~\eqref{eq:bh_formula}, we can conclude that $B(h)\to5/2$ both as $h\downarrow0$ and as $h\to\infty$, and since $5/2>2-r$ whenever $r>-1/2$, we have $B(h)>2-r$, and therefore $\hat{Q}_r'(h)<0$, for all sufficiently small $h$ and all sufficiently large $h$.
 
     Assume that $B(h_0)<2-r$ for some $h_0>0$. Then $\hat{Q}_r'(h_0)>0$ and by our previous considerations, we can choose $0<a<h_0<b$ so that $\hat{Q}_r'(a),\hat{Q}_r'(b)<0$. By continuity of $\hat{Q}_r$, a minimum on $[a,h_0]$ and a maximum on $[h_0,b]$ are attained. The signs $\hat{Q}_r'(a)<0$, $\hat{Q}_r'(h_0)>0$, $\hat{Q}_r'(b)<0$ exclude the respective endpoints as minimizers and maximizers. This lets us conclude the existence of a local minimum at some $h_1\in(a,h_0)$ and a local maximum at some $h_2\in(h_0,b)$. Conversely, if $\hat{Q}_r$ has a local minimum at, say, $s>0$, then it is also a strict local minimum due to the analyticity and nonconstancy of $\hat{Q}_r$, that is, $\hat{Q}_r(t)>\hat{Q}_r(s)$ for all $t>s$ sufficiently close to $s$. By the mean value theorem, there must exist some $h_0\in(s,t)$ with $\hat{Q}_r'(h_0)=(\hat{Q}_r(t)-\hat{Q}_r(s))/(t-s)>0$. Therefore, $B(h_0)<2-r$.
 

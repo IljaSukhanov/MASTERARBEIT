@@ -273,7 +273,7 @@ The \enquote{acute chain condition} has a precedent in the theory of the so-call
 We now show that when choosing the Gaussian kernel, the family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$ satisfies the acute chain condition and, as a consequence, the matrix $D=(D_{ij})$, $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
 
 \begin{Prop}\label{prop:L2_divergence_matrix}
-    The following two properties hold:
+    Let $\hat{f}_h$ be the kernel density estimate with the Gaussian kernel. Then the following two properties hold.
     \begin{enumerate}
         \item[(a)] The family of kernel density estimates $\{\hat{f}_{h_i}\}_{i=1}^{N}$, $0<h_1<\dots<h_N$ satisfies the acute chain condition stated in Equation~\eqref{eq:acute_chain_condition}.
         \item[(b)] The divergence matrix $D=(D_{ij})$ with entries given by $D_{ij}=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$ is a Robinson matrix.
@@ -299,7 +299,7 @@ The following Theorem connects the concepts presented above and is based on Scho
     \begin{enumerate}
         \item[(a)] $D:X\times X\to\mathbb{R}$ is conditionally negative definite.
         \item[(b)] For all $x_1,\dots,x_n\in X$ the matrix $S\in\mathbb{R}^{n\times n}$ defined by the entries $S_{ij}=\phi(D(x_i,x_j))$ is positive semi-definite for any completely monotone function $\phi:\mathbb{R}_{\ge0}\to\mathbb{R}$ that is continuous at zero.
-        \item[(c)] There exists some Hilbert space embedding $\Phi:X\to\mathcal{H}$ such that $D(x,y)=\|\Phi(x)-\Phi(y)\|_{\mathcal{H}}^{2}$.
+        \item[(c)] There exists some Hilbert space embedding $\Phi:X\to\mathcal{H}$ such that $D(x,y)=\|\Phi(x)-\Phi(y)\|_{\mathcal{H}}^{2}$ for all $x,y\in X$.
     \end{enumerate}
     The equivalence $(a)\iff(b)$ can be strengthened to strict positive definiteness by additionally assuming that $D(x,y)>0$ for all $x\ne y$ (which is the case for divergences) and requiring $\phi$ to be non-constant and the points $x_1,\dots,x_n$ to be pairwise distinct.
 \end{Thm}
@@ -386,6 +386,7 @@ Next we formulate a Lemma that gives the first order asymptotic approximation fo
     \begin{align*}
         h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2).
     \end{align*}
+    More precisely, there exist constants $C,\delta_0>0$, depending only on $r$, $h_{\min}$ and $h_{\max}$, such that $|h_{j_N}-h_{i_N}-h_{i_N}^{1-r}\delta_{ij}^{r,N}|\le C(\delta_{ij}^{r,N})^2$ whenever $|\delta_{ij}^{r,N}|\le\delta_0$.
 \end{Lem}
 
 \begin{proof}
@@ -507,7 +508,7 @@ One particular advantage of this construction is that it preserves the Perron ve
 Here we explain the results of the experiment with fixed $N$ and increasing $\lambda$ presented in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. Taking the limit $\lambda\to\infty$ we get
 \begin{align*}
     \lim\limits_{\lambda\to\infty}\Tilde{A}_{ij}^{(\lambda)}=\begin{cases}
-        1 & ,(i,j)\in\arg\min_{i\ne j}D_{ij}\\
+        1 & ,(i,j)\in\arg\min_{k\ne l}D_{kl}\\
         0 & ,\text{else}.
     \end{cases}
 \end{align*}
@@ -522,7 +523,7 @@ We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ co
     \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
 \end{align*}
 
-This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth is eventually either $h_{j_{\ast}}$ or $h_{j^{\ast}+1}$ where $j^{\ast}\in\arg\min_jD_{j,j+1}$.
+This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth is eventually either $h_{j^{\ast}}$ or $h_{j^{\ast}+1}$ where $j^{\ast}\in\arg\min_jD_{j,j+1}$.
 
 \subsection{Perron Vector Localization and the Energy Functional}\label{sec:perron_vector_concentrates}
 
