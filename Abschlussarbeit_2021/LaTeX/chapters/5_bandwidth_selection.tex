@@ -210,7 +210,7 @@ where $c_k:=1/(2K)$ for $k\in\{0,K\}$ and $c_k:=1/K$ otherwise are the quadratur
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf}
+    \includegraphics[width=0.8\linewidth]{Code/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf}
     \caption{Maximum absolute error $E_K$ over $L=200$ independent standard normal samples of size $n=200$ with $N=50$ geometrically spaced bandwidths on $[0.01,2]$ and $\Omega_0=450$. All $K\in\{64+k\cdot16,k=0,1,\dots,140\}$ are tested. The horizontal dashed line indicates the prescribed tolerance $\delta=10^{-8}$, and the vertical gray dotted line marks $K_0=1376$, the first tested value below it.}
     \label{fig:fourier_approx_experiment}
 \end{figure}
@@ -420,7 +420,7 @@ For the first set of experiments, we draw one fixed sample $X=(X_1,\dots,X_n)$, 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf}
+    \includegraphics[width=0.85\linewidth]{Code/outputs/images/thesis/stationary_distribution_plot_001.pdf}
     \caption{Perron vector entries $v_i^{(\lambda)}$ against bandwidth candidates $h_i$ on a geometric grid with $N=201$. Darker curves correspond to larger $\lambda$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, and the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$.}
     \label{fig:stationary_distribution_plot_001}
 \end{figure}
@@ -429,7 +429,7 @@ Figure~\ref{fig:grid_fineness_chosen_bandwidths} shows the spectrally selected b
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
+    \includegraphics[width=0.85\linewidth]{Code/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf}
     \caption{Spectrally chosen bandwidth $h_{k_N}^{(\lambda)}$ against the number of bandwidth candidates $N$ on a geometric bandwidth grid. Darker curves correspond to larger $\lambda$. The black dashed line indicates $N=201$.}
     \label{fig:grid_fineness_chosen_bandwidths}
 \end{figure}
@@ -440,7 +440,7 @@ Note that the curve exhibits a sudden jump at $\lambda\approx17.87375$, where th
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.85\linewidth]{Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
+    \includegraphics[width=0.85\linewidth]{Code/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf}
     \caption{Spectrally chosen bandwidths $h_{k_N}^{(\lambda)}$ against $\lambda$ on a geometric grid with $N=201$. The red dashed line marks $h_{\text{oracle}}\approx0.383$, and the gray dotted line marks the sample ISE minimizer $\hat{h}_0\approx0.4116$. The blue dashed line indicates the mean of the two bandwidths $h_{j^{\ast}}$ and $h_{j^{\ast}+1}$, where $(j^{\ast},j^{\ast}+1)$ is the index pair that minimizes $D_{ij}$ over $i\ne j$.}
     \label{fig:chosen_bandwidths_vs_lambda}
 \end{figure}
@@ -454,7 +454,7 @@ The spectrally chosen bandwidth is a discrete random variable whose value depend
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=0.65\linewidth]{Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf}
+    \includegraphics[width=0.65\linewidth]{Code/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf}
     \caption{Spectrally chosen bandwidth $h_{k_N}$ against the number of bandwidth candidates $N$ on a geometric bandwidth grid. Different curves correspond to different exponents $\alpha$ in $\lambda_N=N^{\alpha}$. Darker curves correspond to larger $\alpha$. The red dotted line indicates the minimizer $h_Q\approx0.1764$ of the energy functional $\hat{Q}_0$. The inset plot shows the energy functional $\hat{Q}_0$ on the interval $[0.01,2]$ with its minimizer $h_{Q}\approx0.1764$.}
     \label{fig:N_lambda_joint_limit_for_different_alpha}
 \end{figure}
@@ -465,14 +465,14 @@ The spectrally chosen bandwidth is a discrete random variable whose value depend
 
     \begin{subfigure}[t]{0.44\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_0.pdf}
+        \includegraphics[width=\linewidth]{Code/outputs/pdfs/repeated_alpha_evolution/alpha_0.pdf}
         \caption{$\lambda_N=1$}
         \label{fig:bandwidth_lambda_one}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.44\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_1_2.pdf}
+        \includegraphics[width=\linewidth]{Code/outputs/pdfs/repeated_alpha_evolution/alpha_1_2.pdf}
         \caption{$\lambda_N=N^{1/2}=20$}
     \end{subfigure}
 
@@ -480,13 +480,13 @@ The spectrally chosen bandwidth is a discrete random variable whose value depend
 
     \begin{subfigure}[t]{0.44\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_1.pdf}
+        \includegraphics[width=\linewidth]{Code/outputs/pdfs/repeated_alpha_evolution/alpha_1.pdf}
         \caption{$\lambda_N=N=400$}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.44\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{Code/Code_kde/outputs/pdfs/repeated_alpha_evolution/alpha_3_2.pdf}
+        \includegraphics[width=\linewidth]{Code/outputs/pdfs/repeated_alpha_evolution/alpha_3_2.pdf}
         \caption{$\lambda_N=N^{3/2}=8000$}
     \end{subfigure}
 
@@ -699,7 +699,7 @@ The specific choice of $M=769$ is motivated by a preceding experiment, in which 
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=0.80\linewidth]{Code/Code_kde/outputs/pdfs/brent_minima_vs_subintervals/001_matplotlib_figure.pdf}
+    \includegraphics[width=0.80\linewidth]{Code/outputs/pdfs/brent_minima_vs_subintervals/001_matplotlib_figure.pdf}
     \caption{Number of detected local minima across $100$ energy functional minimizations using the refined Brent method for increasing levels of refinement $M$. Here, $M-1$ indicates the number of subintervals into which the search space is divided. The tested values are $M-1\in\{2^k:k=1,\dots,14\}\cup\{3\cdot2^k:k=0,1,\dots,14\}$. The dashed orange line indicates the first tested value from which the number of detected minima remained at $123$.}
     \label{fig:brent_minima_vs_refinement}
 \end{figure}

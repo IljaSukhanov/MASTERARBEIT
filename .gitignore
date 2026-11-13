@@ -6,7 +6,7 @@ __pycache__/
 .DS_Store
 .pytest_cache/
 
-/Code/Code_kde/outputs/data/
+/Code/outputs/data/
 
 # Generated diagnostic tables remain local; keep them out of Overleaf sync.
 /output/analysis/**/*.csv
