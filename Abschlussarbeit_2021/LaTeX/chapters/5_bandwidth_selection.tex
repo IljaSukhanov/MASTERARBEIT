@@ -110,7 +110,7 @@ The connection between the minimum of the ISE and the minimum of the MISE is as 
 \par
 \endgroup
 
-\section{Divergences between distributions}\label{sec:divergences}
+\section{Divergences between Distributions}\label{sec:divergences}
 
 Let $(X,\mathcal{A})$ be a measurable space and $\mu$ a $\sigma$-finite measure on it. Let $\mathcal{P}_{\mu}$ be the set of all probability measures $\nu$ on $(X,\mathcal{A})$ that are absolutely continuous with respect to $\mu$. We call a map $D:\mathcal{P}_{\mu}\times\mathcal{P}_{\mu}\to\mathbb{R}_{\ge0}\cup\{\infty\}$ with $D(P,Q)=0$ if and only if $P=Q$ a divergence, cf.~\cite[Section~2.1]{birrell_f_nodate}. It is a dissimilarity measure that is not necessarily symmetric and need not satisfy the triangle inequality, and is therefore a weaker notion of a metric. We present two important classes of divergences: $f$-divergences and Bregman divergences.
 
@@ -147,11 +147,11 @@ Taking the limit $\alpha\to1$ we recover the Kullback-Leibler divergence, wherea
 
 Another class of divergences are the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. We have used a normalizing factor $1/2$ so that when setting $s=1$ we recover the well known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the following chain of inequalities: $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
 
-Another important divergence that belongs to the class of $f$-divergences is the \textit{Jensen Shannon divergence}. The function $f=f_{\operatorname{JS}}$ is set to be
+Another important divergence that belongs to the class of $f$-divergences is the \textit{Jensen--Shannon divergence}. The function $f=f_{\operatorname{JS}}$ is set to be
 \begin{align}\label{eq:js_generator}
     f_{\operatorname{JS}}(t):=\frac{1}{2}\left(t\log{t}-(t+1)\log{\frac{t+1}{2}}\right),\quad t>0.
 \end{align}
-The divergence is then given by $\operatorname{JS}(p,q):=\int q(x)f_{\operatorname{JS}}(p(x)/q(x))\,dx$. The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback-Leibler divergence, as it can be written like
+The divergence is then given by $\operatorname{JS}(p,q):=\int q(x)f_{\operatorname{JS}}(p(x)/q(x))\,dx$. The JS-divergence is also symmetric. In fact, the JS-divergence is a symmetrization of the Kullback--Leibler divergence, as it can be written like
 \begin{align}\label{eq:JS_KL_formula}
     \operatorname{JS}(p,q)=\frac{1}{2}\left(\operatorname{KL}\left(p\big\|\frac{p+q}{2}\right)+\operatorname{KL}\left(q\big\|\frac{p+q}{2}\right)\right),
 \end{align}
@@ -171,7 +171,7 @@ The $\beta$-divergence $D_{\beta}$ is defined for all $\beta>1$ by $D_{\beta}(p\
 \begin{align*}
     D_{\beta}(p\|q)=\frac{1}{\beta(\beta-1)}\int\left(p(x)^{\beta}+(\beta-1)q(x)^{\beta}-\beta p(x)q(x)^{\beta-1}\right)\,dx.
 \end{align*}
-See, for example,~\cite[Equation~(51)]{cichocki_families_2010}. Restricting the class of densities to those in $L^{\beta}(\mathbb{R})$ ensures that $D_{\beta}(p,q)$ is finite.
+See, for example,~\cite[Equation~(51)]{cichocki_families_2010}. Restricting the class of densities to those in $L^{\beta}(\mathbb{R})$ ensures that $D_{\beta}(p\|q)$ is finite.
 
 By the above symmetry characterization, the $\beta$-divergence is symmetric only for $\beta=2$. In this case, for $p,q\in L^2(\mathbb{R})$ we get
 \begin{align*}
@@ -179,15 +179,15 @@ By the above symmetry characterization, the $\beta$-divergence is symmetric only
 \end{align*}
 that is, for $\beta=2$ the $\beta$-divergence is just half of the squared $L^2$-distance. If $p(x)=\hat{f}_h(x)=n^{-1}\sum_jK_h(x-X_j)$ and $q(x)=\hat{f}_s(x)=n^{-1}\sum_jK_s(x-X_j)$ are kernel density estimates with a Gaussian kernel $K$, we can obtain an explicit formula for $D_2(\hat{f}_h,\hat{f}_s)$. We have
 \begin{align}\label{eq:beta2_exact_formula01}
-    D_2(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},\quad G_{hs}:=\langle\hat{f}_h,\hat{f}_s\rangle_2=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{\sqrt{h^2+s^2}}(X_i-X_j).
+    D_2(\hat{f}_h,\hat{f}_s)=\frac{1}{2}G_{hh}+\frac{1}{2}G_{ss}-G_{hs},\quad G_{hs}:=\langle\hat{f}_h,\hat{f}_s\rangle_2=\frac{1}{n^2}\sum_{i,j=1}^{n}\phi_{h^2+s^2}(X_i-X_j).
 \end{align}
 The derivation of the formula uses mainly the Gaussian convolution identity, that is, the fact that for Gaussian densities $f_1=\phi_{\mu_1,\sigma_1^2}$ and $f_2=\phi_{\mu_2,\sigma_2^2}$ their convolution is $f_1\ast f_2=\phi_{\mu_1+\mu_2,\sigma_1^2+\sigma_2^2}$.
 
-\textbf{Numerical Approximation}
+\textbf{Numerical approximation}
 
 The $L^2$ distance between two Gaussian kernel density estimates can be computed extremely fast using the Fourier transform. Although an exact formula is given in Equation~\eqref{eq:beta2_exact_formula01} the computational complexity is of the order $\mathbf{O}(N^2n^2)$, where $N$ is the size of the bandwidth grid and $n$ the sample size.
 
-In the following, we will briefly describe the approach following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$, $\omega\in\mathbb{R}$. The Fourier transform of the Gaussian density $\phi_{\sigma}$ is famously given by $\mathcal{F}[\phi_{\sigma}](\omega)=\exp{(-\sigma^2\omega^2/2)}$, see~\cite[Example~2.6]{plonka_numerical_2018}. Using the linearity and translation property of the Fourier transform (see~\cite[Theorem~2.5]{plonka_numerical_2018}), we obtain the Fourier transform of a kernel density function with a Gaussian kernel:
+In the following, we will briefly describe the approach following the book~\cite{plonka_numerical_2018}. For any function $f\in L^1(\mathbb{R})$ the Fourier transform is defined as $\mathcal{F}:f\mapsto\mathcal{F}[f]$ where $\mathcal{F}[f](\omega)=\int f(x)\exp{(-ix\omega)}\,dx$, $\omega\in\mathbb{R}$. The Fourier transform of the Gaussian density $\phi_{0,\sigma^2}$ is famously given by $\mathcal{F}[\phi_{0,\sigma^2}](\omega)=\exp{(-\sigma^2\omega^2/2)}$, see~\cite[Example~2.6]{plonka_numerical_2018}. Using the linearity and translation property of the Fourier transform (see~\cite[Theorem~2.5]{plonka_numerical_2018}), we obtain the Fourier transform of a kernel density function with a Gaussian kernel:
 \begin{align}\label{eq:fourier_transform_of_kde}
     \mathcal{F}[\hat{f}_h](\omega)=\underbrace{\left(\frac{1}{n}\sum_{j=1}^{n}\exp{(-iX_j\omega)}\right)}_{=:P_n(\omega)}\exp{(-h^2\omega^2/2)}.
 \end{align}
@@ -237,9 +237,10 @@ Error control is important because approximation errors in the similarity matrix
 
 Having introduced divergences between densities in the previous section, we now use them to construct scale similarity matrices $S=(S_{ij})$ between kernel density estimates at different bandwidths. From now on, we consider only the Bregman $\beta$-divergence with $\beta=2$ because it is symmetric, it has computational advantages, and we will be able to prove results about it in Section~\ref{sec:res_2} below. We will refer to it as the $L^2$-divergence.
 
-\subsection{Properties of Divergence matrices and its Perron vector}
+\subsection{Properties of divergence matrices and their Perron vectors}
 
-In this subsection, we give structural results on the divergence matrix $D=(D_{ij})_{i,j=1}^{N}$ with $D_{ij}:=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the similarity transformation that we will introduce in Section~\ref{sec:similarity_transformations} below, because otherwise our scale selection procedure will choose either the first or last scale.
+In this subsection, we give structural results on the divergence matrix $D=(D_{ij})_{i,j=1}^{N}$ with $D_{ij}:=(1/2)\|\hat{f}_{h_i}-\hat{f}_{h_j}\|_2^2$. In particular we show that $D$ is a so called Robinson matrix. We also show that it fulfills the kernel density estimates $\hat{f}_{h_1},\dots,\hat{f}_{h_N}$ fulfill the acute chain condition, which leads to the Perron vector of $D$ peaking at either of the bordering scales. This further motivates the similarity transformation that we will introduce in Section~\ref{sec:similarity_transformations} below, because otherwise our scale selection procedure will choose either the first or last scale.
+
 
 \begin{Def}[Robinson matrix]
     A matrix $D$ with entries $D_{ij}$ is called a two-way Robinson dissimilarity matrix (cf.~\cite[Section~1.1]{BRUCKER2026306}) if it holds
@@ -258,7 +259,7 @@ The following Lemma motivates replacing the divergence matrix $D$ with a similar
     \begin{align}\label{eq:acute_chain_condition}
         \langle x_{k+1}-x_k,x_{l+1}-x_l\rangle\ge0\quad\text{for all }k,l=1,\dots,N-1.
     \end{align}
-    Let $D=(D_{ij})\in\mathbb{R}^{N\times N}$, $D_{ij}=\|x_i-x_j\|^2$ be the pairwise distance matrix and $v=(v_j)\in\mathbb{R}^N$ its Perron vector. Then $v$ has its largest entries at the border, that is,
+    Let $D=(D_{ij})\in\mathbb{R}^{N\times N}$, $D_{ij}=\|x_i-x_j\|^2$ be the matrix of pairwise squared distances and $v=(v_j)\in\mathbb{R}^N$ its Perron vector. Then $v$ has its largest entries at the border, that is,
     \begin{align*}
         \arg\max_{1\le j\le N}v_j\subseteq\{1,N\}.
     \end{align*}
@@ -286,7 +287,7 @@ We now show that when choosing the Gaussian kernel, the family of kernel density
 
 \subsection{Similarity transformations}\label{sec:similarity_transformations}
 
-A matrix $A\in\mathbb{R}^{n\times n}$ is positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ is called conditionally negative definite if
+A matrix $A\in\mathbb{R}^{n\times n}$ is positive semi-definite if $x^TAx\ge0$ for all $x\in\mathbb{R}^n$, and positive definite if $x^TAx>0$ for all $x\in\mathbb{R}^n$, $x\ne0$. A symmetric map $D:X\times X\to\mathbb{R}$ is called conditionally negative definite if
 \begin{align*}
     \sum_{i,j=1}^{n}a_ia_jD(x_i,x_j)\le0
 \end{align*}
@@ -308,7 +309,7 @@ The following Theorem connects the concepts presented above and is based on Scho
     See Appendix Section~\ref{sec:proof_schoenberg}.
 \end{proof}
 
-Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite. In fact, using Schoenberg's theorem above, we can also include $L^2$-divergence, squared Hellinger, and Total Variation in the class of conditionally negative definite divergences. We can use the equivalence $(a)\iff(c)$ from Theorem~\ref{thm:schoenberg} to show that $L^2$-divergence, squared Hellinger and Total Variation are conditionally negative definite by giving the isometric Hilbert space embeddings. See Table~\ref{tab:hilbert_divergence_embeddings} for an overview. Specifically, the fact that $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}^2=\operatorname{JS}(p,q)$ for the choice of $\Phi$ given in Table~\ref{tab:hilbert_divergence_embeddings} can be easily seen:
+Fuglede and Topsøe~\cite{fuglede_jensen-shannon_2004} show that the Jensen-Shannon divergence is conditionally negative definite. In fact, using Schoenberg's theorem above, we can also include $L^2$-divergence, squared Hellinger, and Total Variation in the class of conditionally negative definite divergences. We can use the equivalence $(a)\iff(c)$ from Theorem~\ref{thm:schoenberg} to show that $L^2$-divergence, squared Hellinger and Total Variation are conditionally negative definite by giving the isometric Hilbert space embeddings. See Table~\ref{tab:hilbert_divergence_embeddings} for an overview. Specifically, the fact that $\|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R}\times(0,\infty))}^2=\operatorname{JS}(p,q)$ for the choice of $\Phi$ given in Table~\ref{tab:hilbert_divergence_embeddings} can be easily seen:
 \begin{align*}
     \|\Phi(p)-\Phi(q)\|_{L^2(\mathbb{R},(0,\infty))}^2&=\int_{-\infty}^{\infty}\int_0^{\infty}\left(\Phi(p)(x,t)-\Phi(q)(x,t)\right)^2\,dt\,dx\\&
     =\int_{-\infty}^{\infty}\int_{0}^{\infty}\frac{\left(e^{-tq(x)/2}-e^{-tp(x)/2}\right)^2}{2t^2}\,dt\,dx\\&
@@ -379,10 +380,10 @@ The geometric grid can equivalently be written as
 \end{align*}
 Taking the limit $N\to+\infty$ increases the fineness of the grid.
 
-Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of a $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}(j_N-i_N)\Delta_{r,N}$. In other words, for large $N$ and $|j_N-i_N|=\mathbf{o}(N)$, we approximate the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ in terms of the difference between two transformed bandwidths $\psi_r(h_{j_N})-\psi_r(h_{i_N})=\Delta_{r,N}(j_N-i_N)$.
+Next we formulate a Lemma that gives the first order asymptotic approximation for the spacing $h_{j_N}-h_{i_N}$ of an $r$-linear grid, where $(i_N)$ and $(j_N)$ are appropriately chosen index sequences. It tells us that for large $N$ the difference between the two scales $h_{j_N}$ and $h_{i_N}$ is approximately $h_{i_N}^{1-r}(j_N-i_N)\Delta_{r,N}$. In other words, for large $N$ and $|j_N-i_N|=\mathbf{o}(N)$, we approximate the difference between two untransformed bandwidths $h_{j_N}-h_{i_N}$ in terms of the difference between two transformed bandwidths $\psi_r(h_{j_N})-\psi_r(h_{i_N})=\Delta_{r,N}(j_N-i_N)$.
 
 \begin{Lem}\label{lem:asymptotic_approx_r_linear_spacing}
-    Let $\mathcal{H}_N$ be a $r$-linear grid and let $(i_N)_{N\in\mathbb{N}_{\ge2}}$ and $(j_N)_{N\in\mathbb{N}_{\ge2}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}_{\ge2}$ for which $|j_N-i_N|=\mathbf{o}(N)$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ to be the signed difference between $\psi_r(h_{j_N})$ and $\psi_r(h_{i_N})$. Then
+    Let $\mathcal{H}_N$ be an $r$-linear grid and let $(i_N)_{N\in\mathbb{N}_{\ge2}}$ and $(j_N)_{N\in\mathbb{N}_{\ge2}}$ be two index sequences that satisfy $1\le i_N,j_N\le N$ for all $N\in\mathbb{N}_{\ge2}$ for which $|j_N-i_N|=\mathbf{o}(N)$. Set $\delta^{r,N}_{ij}:=(j_N-i_N)\Delta_{r,N}$ to be the signed difference between $\psi_r(h_{j_N})$ and $\psi_r(h_{i_N})$. Then
     \begin{align*}
         h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2).
     \end{align*}
@@ -498,7 +499,7 @@ The spectrally chosen bandwidth is a discrete random variable whose value depend
 
 Before explaining our results, we briefly discuss the numerical aspect of preventing underflow in exponential evaluations, which means that $e^{-x}$ may be rounded to $0$ when $x$ is sufficiently large. This is relevant in our setting because we consider expressions of the form $e^{-\lambda D_{ij}}$ with $D_{ij}>0$ for $i\ne j$ and $\lambda\to\infty$. The problem of numerical over- and underflow in such settings is well known and it is advised to apply techniques like shifting the exponent, see~\cite{blanchard_accurate_2019}.
 
-Let $S^{(\lambda)}$ be the scale similarity matrix with entries $S^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $S^{(\lambda)}=I_N+A^{(\lambda)}$ with $A^{(\lambda)}$ having zero diagonal and $A^{(\lambda)}_{ij}=S^{(\lambda)}_{ij}$ for all $i\ne j$. The matrices $S^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}:=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}:=\min_{i\ne j}D_{ij}$ is the smallest divergence between two kernel density estimates at distinct bandwidths $h_i$ and $h_j$. The off diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$.
+Let $S^{(\lambda)}$ be the scale similarity matrix with entries $S^{(\lambda)}_{ij}=\exp{(-\lambda D_{ij})}$. Since the diagonal entries are equal to $1$, we can write $S^{(\lambda)}=I_N+A^{(\lambda)}$ with $A^{(\lambda)}$ having zero diagonal and $A^{(\lambda)}_{ij}=S^{(\lambda)}_{ij}$ for all $i\ne j$. The matrices $S^{(\lambda)}$ and $A^{(\lambda)}$ have the same Perron vector. The Perron vector also stays the same if we multiply the matrix by a positive scalar. We therefore define $\Tilde{A}^{(\lambda)}:=e^{\lambda d_{\ast}}A^{(\lambda)}$, where $d_{\ast}:=\min_{i\ne j}D_{ij}$ is the smallest divergence between two kernel density estimates at distinct bandwidths $h_i$ and $h_j$. The off-diagonal entries of $\Tilde{A}^{(\lambda)}$ are given by $\Tilde{A}^{(\lambda)}_{ij}=e^{\lambda(d_{\ast}-D_{ij})}$.
 
 One particular advantage of this construction is that it preserves the Perron vector while making large values of $\lambda$ numerically more manageable: adding $\lambda d_{\ast}$ to the exponent makes the largest off-diagonal entry equal to $1$. Thus, the off-diagonal entries of $\Tilde{A}^{(\lambda)}$ cannot all underflow to zero. In the code, we use \texttt{scipy.linalg.eigh} to efficiently compute the Perron vector of the symmetric matrix $\Tilde{A}^{(\lambda)}$.
 
@@ -518,14 +519,14 @@ In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ di
 
 Now assume that $d_{\ast}=D_{j^{\ast},j^{\ast}+1}$ for some unique $j^{\ast}=1,\dots,N-1$. As a side note, this would automatically establish uniqueness among all $i<j$ because otherwise, if there were a non-adjacent pair $(i_0,j_0)$ with $i_0<j_0$ attaining $d_{\ast}$ we would have by the Robinson property that both adjacent pairs $(i_0,i_0+1)$ and $(j_0-1,j_0)$ also attain $d_{\ast}$, contradicting the uniqueness of $j^{\ast}$.
 
-We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ for $\lambda\to\infty$. First write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$, where the limit is understood entry-wise. The matrix $B$ can be written as $B=e_{j^{\ast}}e_{j^{\ast}+1}^{T}+e_{j^{\ast}+1}e_{j^{\ast}}^{T}$. Direct calculations show that $e_{j^{\ast}}+e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $1$, $e_{j^{\ast}}-e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j^{\ast},j^{\ast}+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ is the sum normalized Perron vector of $B$. An application of the Davis-Kahan theorem (see~\cite[Corollary~1]{yu_useful_2015}) now yields
+We can show that the Perron vector $v^{(\lambda)}$ of $\Tilde{A}^{(\lambda)}$ converges to $(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ for $\lambda\to\infty$. First write $B=\lim\limits_{\lambda\to\infty}\Tilde{A}^{(\lambda)}$, where the limit is understood entry-wise. The matrix $B$ can be written as $B=e_{j^{\ast}}e_{j^{\ast}+1}^{T}+e_{j^{\ast}+1}e_{j^{\ast}}^{T}$. Direct calculations show that $e_{j^{\ast}}+e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $1$, $e_{j^{\ast}}-e_{j^{\ast}+1}$ is an eigenvector with eigenvalue $-1$ and $e_i$, $i\ne j^{\ast},j^{\ast}+1$ are eigenvectors with eigenvalues $0$. Therefore, $v=(1/2)e_{j^{\ast}}+(1/2)e_{j^{\ast}+1}$ is the sum-normalized Perron vector of $B$. An application of the Davis-Kahan theorem (see~\cite[Corollary~1]{yu_useful_2015}) now yields
 \begin{align*}
     \|v^{(\lambda)}-v\|&\le\frac{1+\sqrt{N}}{\sqrt{2}}\left\|\frac{v^{(\lambda)}}{\|v^{(\lambda)}\|}-\frac{v}{\|v\|}\right\|\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_{\operatorname{op}}\\&\le2(1+\sqrt{N})\|\Tilde{A}^{(\lambda)}-B\|_F\to0,\quad\lambda\to\infty.
 \end{align*}
 
 This explains the results shown in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. As $\lambda\to\infty$, the spectrally chosen bandwidth is eventually either $h_{j^{\ast}}$ or $h_{j^{\ast}+1}$ where $j^{\ast}\in\arg\min_jD_{j,j+1}$.
 
-\subsection{Perron Vector Localization and the Energy Functional}\label{sec:perron_vector_concentrates}
+\subsection{Perron vector localization and the energy functional}\label{sec:perron_vector_concentrates}
 
 To explain the results, we need the concept of a Fréchet derivative, which is introduced, for example, in Zeidler~\cite[Section~4.2]{zeidler_applied_1995}. Let $X$ and $Y$ be Banach spaces and $U\subseteq X$ a nonempty open subset. Let $\Psi:U\to Y$ be a map. A bounded linear operator $d\Psi(u):X\to Y$ is called the Fréchet derivative of $\Psi$ at the point $u\in U$ if
 \begin{align*}
@@ -653,9 +654,9 @@ We can describe the behavior of $\hat{Q}_r$ for $h\to0$ and $h\to\infty$. Namely
     h^{1+2r}\hat{Q}_r(h)&\sim\frac{3M}{16n^2\sqrt{\pi}},&&\quad h\downarrow0\\
     h^{1+2r}\hat{Q}_r(h)&\sim\frac{3}{16\sqrt{\pi}},&&\quad h\to\infty,
 \end{align*}
-where $M:=\#\{(i,j):X_i=X_j\}\ge n>0$. In particular, $\hat{Q}_r(h)\to\infty$ for $h\to0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum. For later use, we set $G_r(h):=h^{1+2r}\hat{Q}_r(h)$. It holds $G_r(h)=CS(h)$ with constant $C:=4^{-1}n^{-2}\pi^{-1/2}$.
+where $M:=\#\{(i,j):X_i=X_j\}\ge n>0$. In particular, $\hat{Q}_r(h)\to\infty$ for $h\downarrow0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$. Because $\hat{Q}_r(h)>0$ for all $h>0$ this implies that $\hat{Q}_r$ has no global minimum on $(0,\infty)$. For later use, we set $G_r(h):=h^{1+2r}\hat{Q}_r(h)$. It holds $G_r(h)=CS(h)$ with constant $C:=4^{-1}n^{-2}\pi^{-1/2}$.
 
-From the explicit formula of the energy functional we see that it is analytic on $(0,\infty)$, which allows us to conclude that the set of its minimizers on a fixed nonempty interval is finite. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$ then $\mathcal{H}_Q$ would have a limit point in that interval (see~\cite[Theorem~2.37]{rudin_real_1987}). By the identity theorem for analytic functions (see~\cite[Corollary~1.2.7]{Krantz2012-yf}) we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$, which is a contradiction to the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$.
+From the explicit formula of the energy functional we see that it is analytic on $(0,\infty)$, which allows us to conclude that the set of its minimizers on $[h_{\min},h_{\max}]$ is finite. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$ then $\mathcal{H}_Q$ would have a limit point in that interval (see~\cite[Theorem~2.37]{rudin_real_1987}). By the identity theorem for analytic functions (see~\cite[Corollary~1.2.7]{Krantz2012-yf}) we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$, which is a contradiction to the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ for $h\to\infty$.
 
 \textbf{Local extrema of the energy functional}
 
@@ -847,7 +848,7 @@ Similarly, our method uses a maximum index $k_N$ of the Perron vector $v^{(N)}$ 
 
 The work of Baake et al.~\cite[Theorem 2]{baake_asymptotic_2005} is related to the phenomenon that the Perron vector localizes near the unique maximum of some function.
 
-They start with a system of differential equations $y_j'(t)=\sum_{i\in S_N}y_i(t)H_{ij}$, $j\in S_N$, where $S_N\subseteq\mathbb{Z}^{d}$ is a finite index set. They assume that the matrix $H\in\mathbb{R}^{|S_N|\times|S_N|}$ has nonnegative off-diagonal entries and is irreducible. They then use the decomposition $H=M+\operatorname{diag}(H_i,i\in S_N)$, where $H_i=\sum_{j\in S_N}H_{ij}$, $i\in S_N$ are the row sums of $H$. The matrix $M$ is an irreducible Markov generator, that is, it is irreducible, has nonnegative off diagonal entries and its rows sum to $0$. They take the strictly positive left eigenvector $\pi$ of $M$, assume reversibility, that is, $\pi_iM_{ij}=\pi_jM_{ji}$ and define $F_{ij}:=\pi_i^{1/2}M_{ij}\pi_j^{-1/2}$ for $i\ne j$ and $F_{ii}=-\sum_{j\ne i}F_{ij}$ to be the symmetrized version of $M$. They use this matrix $F$ to define a symmetrized version $\Tilde{H}$ of $H$ by defining $\Tilde{H}_{ij}:=F_{ij}+(H_{ii}-F_{ii})\delta_{ij}$. Consequently, $\Tilde{H}=F+\operatorname{diag}(\Tilde{H}_i,i\in S_N)$, where again $\Tilde{H}_i$ are the row sums of $\Tilde{H}$. For their localization result, they consider the Perron vector $w$ of $\Tilde{H}$ normalized to have unit Euclidean norm.
+They start with a system of differential equations $y_j'(t)=\sum_{i\in S_N}y_i(t)H_{ij}$, $j\in S_N$, where $S_N\subseteq\mathbb{Z}^{d}$ is a finite index set. They assume that the matrix $H\in\mathbb{R}^{|S_N|\times|S_N|}$ has nonnegative off-diagonal entries and is irreducible. They then use the decomposition $H=M+\operatorname{diag}(H_i,i\in S_N)$, where $H_i=\sum_{j\in S_N}H_{ij}$, $i\in S_N$ are the row sums of $H$. The matrix $M$ is an irreducible Markov generator, that is, it is irreducible, has nonnegative off-diagonal entries and its rows sum to $0$. They take the strictly positive left eigenvector $\pi$ of $M$, assume reversibility, that is, $\pi_iM_{ij}=\pi_jM_{ji}$ and define $F_{ij}:=\pi_i^{1/2}M_{ij}\pi_j^{-1/2}$ for $i\ne j$ and $F_{ii}=-\sum_{j\ne i}F_{ij}$ to be the symmetrized version of $M$. They use this matrix $F$ to define a symmetrized version $\Tilde{H}$ of $H$ by defining $\Tilde{H}_{ij}:=F_{ij}+(H_{ii}-F_{ii})\delta_{ij}$. Consequently, $\Tilde{H}=F+\operatorname{diag}(\Tilde{H}_i,i\in S_N)$, where again $\Tilde{H}_i$ are the row sums of $\Tilde{H}$. For their localization result, they consider the Perron vector $w$ of $\Tilde{H}$ normalized to have unit Euclidean norm.
 
 They make the assumption that the rescaled index set $N^{-1}S_N$ is asymptotically dense inside some compact set $D\subseteq\mathbb{R}^d$ and that the size of $S_N$ is proportional to $N^d$. They also assume that $\Tilde{H}_i$ can be approximated by a bounded and twice continuously differentiable function $E$, that is, $|\Tilde{H}_i-E(i/N)|\le CN^{-1}$ for some constant $C>0$, all $i\in S_N$ and sufficiently large $N$. Under these and the remaining assumptions of their Theorem~1 they show in Theorem~2 that for some constant $\rho>0$ and for every choice of $0<\beta\le1$ no matter how small
 \begin{align}\label{eq:baake_thm2_result}
