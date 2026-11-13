@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=24mm,headheight=15pt,footskip=13mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,enumitem,fancyhdr,microtype,parskip}
+\definecolor{ink}{HTML}{19334C}
+\definecolor{accent}{HTML}{176B80}
+\definecolor{muted}{HTML}{52616E}
+\hypersetup{colorlinks=true,urlcolor=accent,pdftitle={Section 3.2 Remaining Tasks}}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\color{muted}THESIS \textbar\ SECTION 3.2}\fancyhead[R]{\small\color{muted}REMAINING TASKS}\fancyfoot[R]{\small\color{muted}\thepage}\renewcommand{\headrulewidth}{0.3pt}
+\setlist[itemize]{leftmargin=*,itemsep=1em,topsep=0.4em}
+\newcommand{\todoitem}[1]{\item[$\square$] \textbf{#1}}
+\newcommand{\heading}[1]{\section*{\color{ink}#1}}
+\begin{document}
+{\Large\color{accent} THESIS REVISION GUIDE}\\[0.3em]
+{\LARGE\bfseries\color{ink} Section 3.2: Remaining Tasks}\\[0.5em]
+{\large Concrete work still to do, with citation cleanup deferred}
+
+The introduction and \S3.2.1 have no substantive tasks remaining on this checklist.
+
+\heading{Remaining tasks: \S3.2.2 and numerical approximation}
+\begin{itemize}
+\todoitem{Repair the general $\beta$-divergence setup.} Reconcile the domain and regularity assumptions with the power generator for general real $\beta>0$; the current generator is stated for all real arguments. Ensure that the special $\beta=1$ case is well-defined on the stated domain.
+\todoitem{Align the Bregman symmetry statement with its source.} The statement currently omits the Legendre-type generator assumption of the cited \href{https://arxiv.org/html/2604.24047}{Tsuchida--Nielsen theorem}. Establish the needed assumptions or revise the statement so its scope is justified.
+\todoitem{Verify the interval count used for the reported main experiments.} The current workflow defaults to $K=1376$, consistent with the numerical study, but some existing thesis figures predate the change in default. Check which setting generated the reported results and describe it accurately.
+\todoitem{Compile the finished thesis.} Check that the section's figures and cross-references render after the changes.
+\end{itemize}
+
+\vfill
+\noindent\rule{\textwidth}{0.3pt}\\[-0.3em]
+{\footnotesize\color{muted}Based on \texttt{Abschlussarbeit\_2021/LaTeX/chapters/5\_bandwidth\_selection.tex} and the KDE numerical implementation. Completed and optional items are omitted.}
+\end{document}

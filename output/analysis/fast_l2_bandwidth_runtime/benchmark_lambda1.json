@@ -1,0 +1,157 @@
+{
+  "measured_at_utc": "2026-10-07T20:39:01.842512+00:00",
+  "settings": {
+    "repetitions": 1000,
+    "grid_size": 201,
+    "sigma2": 1.0,
+    "h_min": 0.01,
+    "h_max": 2.0,
+    "fft_half_width": 12.0,
+    "fft_spatial_points": 8192,
+    "seed": 20260830,
+    "maximum_sample_size": 1000
+  },
+  "lambda": 1.0,
+  "timings": [
+    {
+      "n": 100,
+      "measurements": [
+        {
+          "repetition": 0,
+          "fft_divergence_seconds": 0.1249800410005264,
+          "spectral_seconds": 0.014511499997752253,
+          "total_seconds": 0.13949154099827865
+        },
+        {
+          "repetition": 1,
+          "fft_divergence_seconds": 0.08660508399771061,
+          "spectral_seconds": 0.0036136659982730635,
+          "total_seconds": 0.09021874999598367
+        },
+        {
+          "repetition": 2,
+          "fft_divergence_seconds": 0.07970395799929975,
+          "spectral_seconds": 0.003760708001209423,
+          "total_seconds": 0.08346466600050917
+        }
+      ],
+      "median_seconds": 0.09021874999598367
+    },
+    {
+      "n": 500,
+      "measurements": [
+        {
+          "repetition": 0,
+          "fft_divergence_seconds": 0.2415030830015894,
+          "spectral_seconds": 0.0060420419977162965,
+          "total_seconds": 0.2475451249993057
+        },
+        {
+          "repetition": 1,
+          "fft_divergence_seconds": 0.2343387920045643,
+          "spectral_seconds": 0.006617082995944656,
+          "total_seconds": 0.24095587500050897
+        },
+        {
+          "repetition": 2,
+          "fft_divergence_seconds": 0.1714593340002466,
+          "spectral_seconds": 0.00507316600123886,
+          "total_seconds": 0.17653250000148546
+        }
+      ],
+      "median_seconds": 0.24095587500050897
+    },
+    {
+      "n": 1000,
+      "measurements": [
+        {
+          "repetition": 0,
+          "fft_divergence_seconds": 0.3499252080000588,
+          "spectral_seconds": 0.004389292000269052,
+          "total_seconds": 0.3543145000003278
+        },
+        {
+          "repetition": 1,
+          "fft_divergence_seconds": 0.35497333399689524,
+          "spectral_seconds": 0.0037887500002398156,
+          "total_seconds": 0.35876208399713505
+        },
+        {
+          "repetition": 2,
+          "fft_divergence_seconds": 0.2969712080011959,
+          "spectral_seconds": 0.0033229580003535375,
+          "total_seconds": 0.30029416600154946
+        }
+      ],
+      "median_seconds": 0.3543145000003278
+    }
+  ],
+  "completion": [
+    {
+      "n": 100,
+      "completed": 185,
+      "remaining": 815,
+      "estimated_seconds_per_repetition": 0.09021874999598367
+    },
+    {
+      "n": 200,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.127903031247115
+    },
+    {
+      "n": 300,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.16558731249824632
+    },
+    {
+      "n": 400,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.20327159374937764
+    },
+    {
+      "n": 500,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.24095587500050897
+    },
+    {
+      "n": 600,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.26362760000047275
+    },
+    {
+      "n": 700,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.28629932500043653
+    },
+    {
+      "n": 800,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.30897105000040026
+    },
+    {
+      "n": 900,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.33164277500036404
+    },
+    {
+      "n": 1000,
+      "completed": 0,
+      "remaining": 1000,
+      "estimated_seconds_per_repetition": 0.3543145000003278
+    }
+  ],
+  "estimated_full_minutes": 39.54653020822055,
+  "estimated_remaining_minutes": 39.268355729066265,
+  "method": "Linear interpolation of median timings of three repetitions at n=100,500,1000.",
+  "limitations": "Excludes checkpoint-writing and final plotting overhead; concurrent work and hardware conditions affect runtime.",
+  "python_executable": "/usr/local/bin/python3",
+  "numpy_version": "2.3.1"
+}

@@ -1,0 +1,444 @@
+{
+  "date": "2026-10-29",
+  "completed_at": "2026-10-29T22:40:02.371965+01:00",
+  "scope": "Whole project except the protected Abschlussarbeit_2021 directory and Git internals",
+  "removed_files": [
+    {
+      "path": ".DS_Store",
+      "reason": "OS folder metadata",
+      "bytes": 10244,
+      "sha256": "d9ca3916e9709d787003560ac5cfad204267ffc6961a5ba88cb0dde72c8ed5eb"
+    },
+    {
+      "path": "Code/Code_kde/.DS_Store",
+      "reason": "OS folder metadata",
+      "bytes": 18436,
+      "sha256": "274a960d99a0f2d85397b03de2030cf38ed093ce5980db8e1b84d7d6b9c448bb"
+    },
+    {
+      "path": "Code/Code_kde/tests/__pycache__/test_thesis_workflows.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 13919,
+      "sha256": "7ad8fcb5ddb92e307208c78049e6aa09aac7c1144c0fad313cdc18d57b677abc"
+    },
+    {
+      "path": "Code/Code_kde/tests/__pycache__/test_energy_minimization.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 16514,
+      "sha256": "13eba782a80e088616176d5ed2768d2dc61e9167c25f02f37a23ff209325d0c0"
+    },
+    {
+      "path": "Code/Code_kde/tests/__pycache__/test_perron.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 21951,
+      "sha256": "c17e2297ecf9ac5c6ef3c170373f3ac52fec37b64d72f1d4ca6fb28ecc2de943"
+    },
+    {
+      "path": "Code/Code_kde/tests/__pycache__/test_qhat.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 6762,
+      "sha256": "3c239e3251f3e3577a56ca32aea9c0ce1e4f735d7cf65e007cb9ba409f69f0eb"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/fourier/__pycache__/reconstruction.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 3017,
+      "sha256": "94075311451a8cce07b3f9e130380b28fc6ea650c6154555c0d90738f16f87b6"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/fourier/__pycache__/__init__.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 919,
+      "sha256": "f4a78860f97cf98f965e11ce60267fb248d07724e1a6236c0d7803b1c1648cd4"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/fourier/__pycache__/similarities.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 7466,
+      "sha256": "72f680e701ce385ec4f4e03ee7308c265fd7bf417a3ebd6cdfc85a70aa472cb5"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/pdf_export.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 6819,
+      "sha256": "a8bc861acef3a96ab029ac6c90fb2e3fe00ce2c18f0b24be04a8aea906c2833b"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/gaussian_mixtures.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 9720,
+      "sha256": "fa0fdd4e2b9536c8fc730c5d9308b2c9dddc2fa45571e4dd14e1d7b4297644d3"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/qhat.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 14767,
+      "sha256": "d707da01a6b32f2d659e45c45fc82efc86c21cc0ab8b2e63fb0b69a3e84660f1"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/bandwidths.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 8748,
+      "sha256": "d60f1bab5dae145485ac91e437ac1e88abdd09cb4a8314da9344038ef4326da3"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/energy_minimization.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 17686,
+      "sha256": "371f75573b4cd9177892523872ff259aa4676a1ac6804a0d708b2dcb5de03166"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/density.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 5084,
+      "sha256": "af3f7c9b6424419600803fa17cf27ecfadc049636e590f31d018db1a0f81bfd0"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/thesis_exports.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 1956,
+      "sha256": "8f54762c0f1a5d55ae5a4fe0605e27513cf9e9326da86990f4d0517b2795aedd"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/qhat._pair_sums-40.py312.1.nbc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 27464,
+      "sha256": "2e0e11febd7e47e33e3c687851b456874fc37ad02de589397ffd1a3f088f60a9"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/perron.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 13649,
+      "sha256": "3bb9472c6311f541967ed1a69b1902f3e9d8b9cecda05f5621c35073f7dc7f7c"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/__init__.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 2409,
+      "sha256": "7756e6cd18ae06f16684084ecb8bb7d293e8162cab01bd6e44deae1263f9474c"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/similarities.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 7368,
+      "sha256": "32b85677109fc25675c1e59a4da17cfa63b3e38f15c041d98dee2de3084974a4"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/quadrature.cpython-312.pyc",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 704,
+      "sha256": "8bcc9ab2f15be0a204208781fc5e47f12f333d9de86d39a431fd05a7475a572c"
+    },
+    {
+      "path": "Code/Code_kde/kde_tools/__pycache__/qhat._pair_sums-40.py312.nbi",
+      "reason": "Regenerable interpreter or application cache",
+      "bytes": 576,
+      "sha256": "ff5ba2f06c22fd4b3224296849e0a6a62ebcf1f046f71ea5bd2e2dfa787dc6b1"
+    },
+    {
+      "path": "Code/.DS_Store",
+      "reason": "OS folder metadata",
+      "bytes": 8196,
+      "sha256": "95fac2ae12db6f7830a57d4aeef14ce2847d75cef8ddf57daafde47aba809224"
+    },
+    {
+      "path": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_mean_and_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geom.pdf",
+      "reason": "Superseded mean-and-maximum preview; current notebook exports maximum error. Original per-sample numerical results remain available.",
+      "replacement": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
+      "bytes": 21078,
+      "sha256": "9d07cdd594b928595d55795c7181c3ea43327747ce7662e61e28462b5461ff90"
+    }
+  ],
+  "removed_file_count": 24,
+  "removed_bytes": 245452,
+  "relocated_files": [
+    {
+      "from": "tmp/pdfs/build_minimum_width_note.py",
+      "to": "output/analysis/minimum_width_linf_beta_experiment/build_note.py",
+      "reason": "Keep the report builder outside temporary storage",
+      "bytes": 15212,
+      "sha256": "9fc1af6e2a625dab9a0d1b4f8c31c8178c9190330b8a77e8fd8e2ffff9b7b43d",
+      "content_change": "None; byte-identical move.",
+      "sha256_after": "9fc1af6e2a625dab9a0d1b4f8c31c8178c9190330b8a77e8fd8e2ffff9b7b43d"
+    },
+    {
+      "from": "tmp/pdfs/minimum_width_linf_beta_experiment.tex",
+      "to": "output/pdf/minimum_width_linf_beta_experiment.tex",
+      "reason": "Keep the TeX source beside its report PDF",
+      "bytes": 8919,
+      "sha256": "5f129be934730acd6b3cf7b92221af2f76713726c319e17fdb0e32a04898ed11",
+      "content_change": "None; byte-identical move.",
+      "sha256_after": "5f129be934730acd6b3cf7b92221af2f76713726c319e17fdb0e32a04898ed11"
+    },
+    {
+      "from": "tmp/pdfs/ar_harmonics_v6/check_formulas.py",
+      "to": "output/analysis/ar_support_harmonics/check_formulas.py",
+      "reason": "Keep report checks outside temporary storage and point them to the retained PDF",
+      "bytes": 3412,
+      "sha256": "fedf687924ba831515dc3560569f7b0302666361aa8135f7e72d02d83d2d7946",
+      "content_change": "Only the PDF location changed from the removed temporary path to the existing report PDF.",
+      "sha256_after": "d6fc322e5e83653ecd4c7577ee4187e277745306e0784a6254e36ee6e8f6d75d"
+    },
+    {
+      "from": "tmp/pdfs/novelty_review/render.swift",
+      "to": "output/analysis/report_tools/render_pdf.swift",
+      "reason": "Retain the reusable PDF renderer outside temporary storage",
+      "bytes": 1678,
+      "sha256": "428f62eb379a611bd2a17f39c41aefe2d584f4d15cd04ccc2847ade4b0e9589e",
+      "content_change": "None; byte-identical move.",
+      "sha256_after": "428f62eb379a611bd2a17f39c41aefe2d584f4d15cd04ccc2847ade4b0e9589e"
+    },
+    {
+      "from": "tmp/pdfs/width_harmonics/verification.json",
+      "to": "output/analysis/width_harmonics/verification.json",
+      "reason": "Keep verification beside its generating analysis and repair the trailing PDF metadata",
+      "bytes": 2514,
+      "sha256": "fad89549099e4b69555dded8a20bcabe0c9e05966b395744a891ca13a4849c84",
+      "content_change": "The trailing PDF note became a JSON field; all original numerical fields are unchanged.",
+      "sha256_after": "db09c00d6eb2ed63ec8d593d498e81710fb012fe72797cb477864f9bf87e810a"
+    }
+  ],
+  "removed_empty_directories": [
+    "Code/Code_AR_processes/outputs/csv/ar_order_selection_final/030cde6f724e3c30/7ac02863db38b8d0/checkpoints",
+    "Code/Code_AR_processes/outputs/csv/ar_coefficient_estimation_final/1b5bb834ea4e8cc9/eb96419f40fcab23/checkpoints",
+    "Code/Code_kde/outputs/images/continuous_ise_qhat_distributions_vs_n/thesis/6fff59e02cd8",
+    "Code/Code_AR_processes/outputs/images/ar_coefficient_estimation_final/1b5bb834ea4e8cc9/eb96419f40fcab23",
+    "Code/Code_AR_processes/outputs/csv/ar3_minimum_width_k4/mse_vs_T_100_processes/processes",
+    "Code/Code_kde/outputs/images/continuous_ise_qhat_distributions_vs_n/thesis",
+    "Code/Code_kde/outputs/data/figure_3_5_bandwidth_distribution_n1000/frequency_trapezoid_v1",
+    "Code/Code_kde/outputs/data/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/frequency_trapezoid_v1",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_13a6eb665f15b143",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_37201c397668b3b2",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_9cb43b8e6cf8947b",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_52049d95ff4e3942",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_1e063eeb26083a68",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_30a0701e000531f5",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_2a1790165d71df18",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments/hierarchical_process_wins_ed3e02a5c08368bd",
+    "Code/Code_AR_processes/outputs/images/ar3_best_coefficient_tracking/mae",
+    "Code/Code_AR_processes/outputs/images/ar_coefficient_estimation_final/1b5bb834ea4e8cc9",
+    "Code/Code_AR_processes/outputs/images/ar3_failed_coefficient_tracking/mae",
+    "Code/Code_AR_processes/outputs/images/order_selection/cross_process",
+    "Code/Code_AR_processes/outputs/images/order_selection/ar2",
+    "Code/Code_AR_processes/outputs/csv/ar3_conditional_restarts_2000_200/traces",
+    "Code/Code_AR_processes/outputs/csv/ar3_best_coefficient_tracking/mae",
+    "Code/Code_AR_processes/outputs/csv/ar3_population_breakpoint_selectors/replications",
+    "Code/Code_AR_processes/outputs/csv/ar3_failed_coefficient_tracking/mae",
+    "Code/Code_AR_processes/outputs/csv/ar3_single_start_restart_vs_horvath/traces",
+    "Code/Code_AR_processes/outputs/csv/ar3_order_selection_warm_starts/processes",
+    "Code/Code_AR_processes/outputs/csv/ar3_order_selection_warm_starts/replications",
+    "Code/Code_AR_processes/outputs/csv/ar3_early_abort_200_12starts/traces",
+    "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_9cb43b8e6cf8947b",
+    "Code/Code_AR_processes/outputs/pdfs/ar3_best_coefficient_tracking/mae",
+    "Code/Code_AR_processes/outputs/pdfs/ar3_failed_coefficient_tracking/mae",
+    "Code/Code_kde/kde_tools/fourier/__pycache__",
+    "Code/Code_kde/outputs/images/continuous_ise_qhat_distributions_vs_n",
+    "Code/Code_AR_processes/outputs/images/ar_tuning_experiments",
+    "Code/Code_AR_processes/outputs/images/ar3_best_coefficient_tracking",
+    "Code/Code_AR_processes/outputs/images/ar_coefficient_estimation_final",
+    "Code/Code_AR_processes/outputs/images/ar_thesis_figures_without_green",
+    "Code/Code_AR_processes/outputs/images/ar3_failed_coefficient_tracking",
+    "Code/Code_AR_processes/outputs/images/ar3_minimum_width_k4",
+    "Code/Code_AR_processes/outputs/images/order_selection",
+    "Code/Code_AR_processes/outputs/pdfs/ar3_best_coefficient_tracking",
+    "Code/Code_AR_processes/outputs/pdfs/ar3_failed_coefficient_tracking",
+    "Code/Code_AR_processes/outputs/pdfs/ar3_minimum_width_k4",
+    "Code/Code_kde/tests/__pycache__",
+    "Code/Code_kde/kde_tools/__pycache__",
+    "Code/Code_AR_processes/tests/__pycache__",
+    "Code/Code_AR_processes/ar_tools/__pycache__",
+    "Code/Code_AR_processes/.matplotlib-cache",
+    "output/analysis/ar3_conditional_restarts_2000_200/__pycache__",
+    "output/analysis/ar3_single_start_restart_vs_horvath/__pycache__",
+    "output/analysis/ar3_early_abort_200_12starts/__pycache__",
+    "output/analysis/ar_e1_vs_random_2026-10-21",
+    "output/analysis/continuous_minimizers_selected_n",
+    "tmp/pdfs/width_harmonics",
+    "tmp/pdfs/novelty_review",
+    "tmp/pdfs/ar_harmonics_v6",
+    "tmp/pdfs",
+    "tmp"
+  ],
+  "verification": {
+    "protected_files_unchanged": 27,
+    "protected_file_sha256": {
+      "Abschlussarbeit_2021/.DS_Store": "5a5b53201b9676abe2682178c2f9cdfd0319278cbc4c85245818bf91ee99a35f",
+      "Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.pdf": "ca8ce3d4f95f83b82d79fceadbd873b36fe485c98844c61019d76e0d622d2aa2",
+      "Abschlussarbeit_2021/LaTeX/setspace.sty": "780a631839fd0503fde899d07c30fda47b6c6542f2a495500f7114c41a721cf4",
+      "Abschlussarbeit_2021/LaTeX/.DS_Store": "90f9158248939ae8dbeadf2b0093569966e48f3d5c6f2a74643fabaffab0c14e",
+      "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf": "733201a84a7566f5526cba6fdcd5efc74db28ed8977acbdf13e7a2f581bb0782",
+      "Abschlussarbeit_2021/LaTeX/images/PNG-Bild.png": "331d14b77f5984020ae580ec0e8d4714100bd4663f46e2f2078cdd45e1282aa5",
+      "Abschlussarbeit_2021/LaTeX/images/AR3_experiment.pdf": "44d2026e87c669d7e31dafa3d29b52f3e7a2f894a8477b8c2a5a7ce91e7581f9",
+      "Abschlussarbeit_2021/LaTeX/images/AR3_experiment.png": "99e785592284b73bf0365218798a323cef8be357dcc4c34ba5c6180fb06b6b9e",
+      "Abschlussarbeit_2021/LaTeX/images/AR2_experiment.png": "516f99c9c75dcd2939376440065748b1606001fb3ac53b0463971936fb57e246",
+      "Abschlussarbeit_2021/LaTeX/images/AR2_experiment.pdf": "d94651fc5401354a79d684a9932838316ee97de6bd74ffada754132a4a84e858",
+      "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png": "c88b219c90a3b6711a295b46568f345e309a16b09f3e31f8f0a88901632718aa",
+      "Abschlussarbeit_2021/LaTeX/images/AR1_experiment.png": "76e8d5311ba6698e96b2dc534d5f8ecb8b4c649d972810e70525ce9a6e43e599",
+      "Abschlussarbeit_2021/LaTeX/images/matern_type_I_II.pdf": "03cff2df6be363dfd62a57ae732b0531cd6665ae4b1865c8863b98a1dbf7f520",
+      "Abschlussarbeit_2021/LaTeX/images/AR1_experiment.pdf": "c66c8129d81cf0601475fd28c9e37e8ea59aed54b178a034da5f474d559a25ea",
+      "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex": "e9f20dae3aeee5a6a9566674cabf4408ca976181175573d9bf65108c31495ad9",
+      "Abschlussarbeit_2021/LaTeX/chapters/999_outlook.tex": "5dd6a5e4a5713113ca1a6404642f37f3e43cc321f1c1e0d5d4cf2a20870b0a18",
+      "Abschlussarbeit_2021/LaTeX/chapters/99_conclusion.tex": "c8dd63e47c45ff155d15dbfd2423bd07c84b7078ec5e5d26dfd268e55c23d204",
+      "Abschlussarbeit_2021/LaTeX/chapters/1_intro_methods.tex": "3c870ca075991023e64f441c19891d2e2641be4797d331e58ca59f8d3a71b956",
+      "Abschlussarbeit_2021/LaTeX/chapters/0_abstract.tex": "eeef37018d6b0ac94956cee30fe2c5048fde07689a19c5e99f4e0d1244340c9c",
+      "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex": "532d155e768e5b0f2c673d09a784a9a4c10b545a15beed498305b329ead8a937",
+      "Abschlussarbeit_2021/LaTeX/chapters/9999_appendix.tex": "cd5602bde3a06647e52480f2a8fd563b12e64d2378455151acf7748d992e9ed5",
+      "Abschlussarbeit_2021/LaTeX/references.bib": "11190ec8ba4a7ba2fe77d09480dbe327ee106070dcb0c6b02dc82abe2d2506ec",
+      "Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.tex": "3e1ef2c52072bfeeae045eef549dd2111e18ebb68fb207f41c964c6c32dfc64f",
+      "Abschlussarbeit_2021/LaTeX/Nutzungshinweise.txt": "9003e60cd738377cd20971a48098d6b622a335c397497dcdfe830c8b7fcf970e",
+      "Abschlussarbeit_2021/LaTeX/bibliography.bib": "3d87f7c3223b8fbc01652cb699fac06b19c285054aca43ec84fcd7dedd1df631",
+      "Abschlussarbeit_2021/data/.DS_Store": "97df59883fa966c73e553756c33ee17bce73ca82d6114ecd5a105beb409716e8",
+      "Abschlussarbeit_2021/Application_to_point_processes.tex": "de50e0e73f1f1757f8f09ccf2febf6714d6a6d57e43e886b41af020c5303b2f6"
+    },
+    "unchanged_existing_files_at_original_paths": 691,
+    "unexpected_changes_or_missing_files": [],
+    "retained_file_inventory_sha256": "a10e32f9578cbc8e960642690d52ed218ff16076d6a9bb56655b70a46ff92931",
+    "thesis_graphic_references_resolve_and_assets_unchanged": [
+      {
+        "source": "Abschlussarbeit_2021/Application_to_point_processes.tex",
+        "target": "Abschlussarbeit_2021/LaTeX/images/matern_type_I_II.pdf",
+        "resolved": "Abschlussarbeit_2021/LaTeX/images/matern_type_I_II.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/abschlussarbeit_2021.tex",
+        "target": "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf",
+        "resolved": "Abschlussarbeit_2021/LaTeX/images/logo_uulm_sw.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png",
+        "resolved": "Abschlussarbeit_2021/LaTeX/images/proj_subgradient_descent_visualization.png"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_52049d95ff4e3942/01_hierarchical_100_processes_100_realizations_mean_and_max_process_win_counts_2x2.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_tuning_experiments/hierarchical_process_wins_52049d95ff4e3942/01_hierarchical_100_processes_100_realizations_mean_and_max_process_win_counts_2x2.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_ar1_time_series_overlay.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_beta_sliding_window_2d/beta_sliding_window_clouds_2d.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "01_beta_1_1_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/01_beta_1_1_mean_mae_vs_order.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "02_beta_0p5_0p5_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/02_beta_0p5_0p5_mean_mae_vs_order.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "03_beta_2_2_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/03_beta_2_2_mean_mae_vs_order.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "04_beta_1_2_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/04_beta_1_2_mean_mae_vs_order.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "05_beta_2_1_mean_mae_vs_order.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar_coefficient_estimation_by_shape/05_beta_2_1_mean_mae_vs_order.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/3_application_to_time_series.tex",
+        "target": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf",
+        "resolved": "Code/Code_AR_processes/outputs/pdfs/ar1_sliding_window_embedding/001_ar_1_sliding_window_embedding_with_bounded_innovations.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/g_rs_error_vs_k_repeated_samples/001_maximum_error_over_200_samples_at_omega_450_n_200_n_50_h_in_0_01_2_geometric_ban.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/stationary_distribution_plot_001.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/grid_fineness_chosen_bandwidths.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/chosen_bandwidth_vs_lambda_M1_fixed_sample.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/experiment_1_joint_n_lambda_limit/003_finite_selector_versus_continuous_reference.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf",
+        "resolved": "Code/Code_kde/outputs/pdfs/spectral_bandwidth_distribution_n1000_lambda_n3_2_m1000/001_bandwidth_distributions_5_consecutive_grid_points_per_bin_n_1000_n_200_m_1000_la.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n300.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n400.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n500.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf",
+        "resolved": "Code/Code_kde/outputs/images/thesis/distribution_of_chosen_bandwidths_n1000.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "output/pdf/spectral_bandwidths_across_n_lambda1_N1000.pdf",
+        "resolved": "output/pdf/spectral_bandwidths_across_n_lambda1_N1000.pdf"
+      },
+      {
+        "source": "Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex",
+        "target": "output/pdf/localized_spectral_bandwidths_across_n_N1000.pdf",
+        "resolved": "output/pdf/localized_spectral_bandwidths_across_n_N1000.pdf"
+      }
+    ],
+    "python_files_parsed": 101,
+    "notebooks_parsed": 15,
+    "notebook_code_cells_parsed": 136,
+    "json_files_parsed_before_adding_this_manifest": 244,
+    "relocated_harmonics_checker": {
+      "successful": true,
+      "interpreter": "/Users/iljasukhanov/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "scope": "Existing formula assertions and the ten-page report PDF content checks.",
+      "environment_note": "The project Anaconda interpreter lacks pypdf; the check passed with the bundled workspace interpreter. No dependencies were installed."
+    },
+    "full_numerical_experiments_rerun": false,
+    "full_test_suites_rerun": false,
+    "git_history_modified": false
+  },
+  "retention_notes": [
+    "Distinct experiment runs and reproducibility caches were kept, including NumPy-version-specific results.",
+    "Automatic PDFs and delivery PDFs that remain in use were kept even where byte-identical.",
+    "Research reports, recovery evidence, raw inputs, active notebooks, and shared mathematical implementations were retained.",
+    "Historical documentation links to previously removed assets were inventoried but not rewritten as current scientific evidence."
+  ],
+  "snapshot_note": "Historical cleanup record; entries for subsequently removed files are omitted."
+}

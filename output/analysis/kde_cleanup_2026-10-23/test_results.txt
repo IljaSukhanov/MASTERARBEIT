@@ -1,0 +1,17 @@
+/Users/iljasukhanov/.matplotlib is not a writable directory
+Matplotlib created a temporary cache directory at /var/folders/tr/kt47kz8d61ngpcfl5d_s9fc80000gn/T/matplotlib-yn5mow1s because there was an issue with the default path (/Users/iljasukhanov/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+Matplotlib is building the font cache; this may take a moment.
+Existing DensityTests class, executed unchanged with its numerical imports.
+The full test-module import requires Plotly, which is unavailable in this Python environment.
+test_density_rows_have_unit_mass (existing_kde_density_tests.DensityTests.test_density_rows_have_unit_mass) ... ok
+test_exact_gram_matches_fine_quadrature (existing_kde_density_tests.DensityTests.test_exact_gram_matches_fine_quadrature) ... ok
+test_exact_mixture_ise_matches_quadrature (existing_kde_density_tests.DensityTests.test_exact_mixture_ise_matches_quadrature) ... ok
+test_exact_mixture_mise_contains_standard_normal_case (existing_kde_density_tests.DensityTests.test_exact_mixture_mise_contains_standard_normal_case) ... ok
+test_exact_mixture_mise_matches_quadrature (existing_kde_density_tests.DensityTests.test_exact_mixture_mise_matches_quadrature) ... ok
+test_psi_beta_bandwidth_grid_is_linear_in_transformed_scale (existing_kde_density_tests.DensityTests.test_psi_beta_bandwidth_grid_is_linear_in_transformed_scale) ... ok
+test_psi_beta_bandwidth_grid_special_cases (existing_kde_density_tests.DensityTests.test_psi_beta_bandwidth_grid_special_cases) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.057s
+
+OK
