@@ -32,10 +32,18 @@ Brent checkpoints and prior results without first updating the corresponding
 scripts. Some full numerical runs are computationally expensive, and execution
 times depend on the machine and runtime environment.
 
-The Brent reproduction chain is not currently complete from a clean start: the
-saved grid comparison contains only 57 of the 100 checkpoints required by a
-later script. The peak-switch analysis also has a missing default checkpoint.
-Keep the existing results until those paths are repaired and verified.
+The saved grid comparison contains 57 of the 100 reference checkpoints. The
+Brent refinement script recomputes missing references using the same exact
+search and checks their resolution. The peak-switch analysis's default
+repeated-sample checkpoint is missing, but its fixed-sample thesis value can be
+reproduced independently:
+
+```bash
+PYTHONPATH=. python experiments/spectral_lambda_jump_study/repeated_peak_switch_analysis.py --reference-only
+```
+
+The full peak-switch study still requires its original checkpoint or a
+compatible replacement, supplied with `--source`.
 
 ## Tests
 
@@ -43,6 +51,4 @@ Keep the existing results until those paths are repaired and verified.
 MPLBACKEND=Agg python -m unittest discover -s tests
 ```
 
-The existing test suite has known failures; in particular, tests that run
-experiment scripts may execute scripts with file-writing side effects. Run the
-suite on an isolated copy when preserving the original results matters.
+The tests run reduced examples and use isolated temporary output directories.

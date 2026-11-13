@@ -27,12 +27,13 @@ KDE_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(KDE_ROOT))
 from kde_tools.bandwidths import bandwidth_grid_linear_in_psi_beta
 from kde_tools.experiment_inputs import paired_gaussian_sample_bank, sampling_inputs
+from kde_tools.energy_minimization import EnergySearchConfig
 from kde_tools.fourier.similarities import (
     DEFAULT_FREQUENCY_CUTOFF, DEFAULT_FREQUENCY_INTERVALS,
     beta2_divergence_matrix_fourier, gaussian_kde_l2_gram_fourier,
 )
 from kde_tools.perron import PERRON_SOLVER_VERSION, perron_eigenpair_from_divergence
-from kde_tools.qhat import GaussianQhatObjective, bounded_qhat_minimum, grid_brent_qhat_minimum
+from kde_tools.qhat import GaussianQhatObjective, bounded_qhat_minimum, grid_brent_qhat_minimum, minimize_qhat
 from kde_tools.similarities import beta2_divergence_matrix, squared_l2_distance_from_gram
 
 N_VALUES = (100, 200, 400)
@@ -53,6 +54,14 @@ def method_key(method, size):
 
 def load_reference(index, sample):
     path = REFERENCE_DIR/f'sample_{index:03d}.json'
+    if not path.is_file():
+        # The original grid-comparison run was interrupted. Use the same
+        # exact reference search as that experiment for missing checkpoints.
+        reference = minimize_qhat(sample, .01, 2., r=0.,
+                                  config=EnergySearchConfig(scan_backend='exact'))
+        if reference['diagnostics']['resolution_stable'] is not True:
+            raise ValueError(f'Recomputed reference not stable at index {index}.')
+        return reference
     record = json.loads(path.read_text())
     sample_hash = hashlib.sha256(sample.tobytes()).hexdigest()
     if sample_hash != record['sample_sha256']:

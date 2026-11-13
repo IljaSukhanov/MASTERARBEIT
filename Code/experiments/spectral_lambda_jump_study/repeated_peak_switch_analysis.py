@@ -155,9 +155,33 @@ def atomic_json(path, value):
     temporary.replace(path)
 
 
+def figure_3_3_crossing(half_width=12.0, spatial_points=8192):
+    """Reproduce the thesis's fixed-sample peak switch without a checkpoint."""
+    with threadpool_limits(limits=1):
+        reference = np.random.default_rng(20260823).normal(size=200)
+        h_grid = bandwidth_grid_linear_in_psi_beta(grid_size=201)
+        divergence = beta2_divergence_matrix_fft(
+            reference, h_grid, half_width=half_width, spatial_points=spatial_points,
+        )
+        event = crossing_event(
+            divergence, h_grid, 17.86, 17.88,
+            perron_eigenpair_from_divergence(divergence, 17.86),
+            perron_eigenpair_from_divergence(divergence, 17.88), -1,
+        )
+    if event['status'] != 'confirmed' or event['peak_count_at_crossing'] != 2:
+        raise ArithmeticError('The fixed-sample peak switch was not confirmed.')
+    return event
+
+
 def run_analysis(source_checkpoint=DEFAULT_SOURCE, output_directory=None,
                  max_samples=None, checkpoint_every=25):
     source_checkpoint = Path(source_checkpoint)
+    if not source_checkpoint.is_file():
+        raise FileNotFoundError(
+            f'Missing repeated-sample checkpoint: {source_checkpoint}. '
+            'Supply an available checkpoint with --source; to reproduce the '
+            'thesis fixed-sample switch without it, use --reference-only.'
+        )
     with np.load(source_checkpoint, allow_pickle=False) as source:
         source_configuration = json.loads(str(source["configuration_json"].item()))
         samples = source["samples"].copy()
@@ -189,20 +213,10 @@ def run_analysis(source_checkpoint=DEFAULT_SOURCE, output_directory=None,
     print(f"Peak analysis: {len(records)}/{count} samples cached.", flush=True)
     # Positive control: reproduce the two-peak crossing in Figure 3.3.
     with threadpool_limits(limits=1):
-        reference = np.random.default_rng(20260823).normal(size=200)
-        reference_h_grid = bandwidth_grid_linear_in_psi_beta(grid_size=201)
-        reference_divergence = beta2_divergence_matrix_fft(
-            reference, reference_h_grid,
+        reference_event = figure_3_3_crossing(
             half_width=source_configuration["fft_half_width"],
             spatial_points=source_configuration["fft_spatial_points"],
         )
-        reference_event = crossing_event(
-            reference_divergence, reference_h_grid, 17.86, 17.88,
-            perron_eigenpair_from_divergence(reference_divergence, 17.86),
-            perron_eigenpair_from_divergence(reference_divergence, 17.88), -1,
-        )
-        assert reference_event["status"] == "confirmed"
-        assert reference_event["peak_count_at_crossing"] == 2
         assert abs(reference_event["lambda_crossing"] - 17.8737506447) < 1e-5
         atomic_json(output_directory / "figure_3_3_positive_control.json", reference_event)
         started = time.perf_counter()
@@ -412,7 +426,14 @@ if __name__ == "__main__":
     parser.add_argument("--max-samples", type=int)
     parser.add_argument("--output-directory", type=Path)
     parser.add_argument("--compute-only", action="store_true")
+    parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
+    parser.add_argument("--reference-only", action="store_true",
+                        help="Reproduce the thesis's fixed-sample crossing without a checkpoint.")
     args = parser.parse_args()
-    output = run_analysis(max_samples=args.max_samples, output_directory=args.output_directory)
-    if not args.compute_only:
-        plot_analysis(output)
+    if args.reference_only:
+        print(json.dumps(figure_3_3_crossing(), indent=2))
+    else:
+        output = run_analysis(source_checkpoint=args.source, max_samples=args.max_samples,
+                              output_directory=args.output_directory)
+        if not args.compute_only:
+            plot_analysis(output)

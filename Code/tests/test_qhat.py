@@ -5,10 +5,9 @@ import unittest
 import numpy as np
 from scipy.integrate import quad
 from scipy.optimize import minimize_scalar
-from scipy.spatial.distance import pdist
 
 from kde_tools.qhat import (
-    _energy,
+    GaussianQhatObjective,
     continuous_qhat_minimum,
     gaussian_qhat,
 )
@@ -29,10 +28,12 @@ class ContinuousQhatTests(unittest.TestCase):
 
     def test_analytic_log_derivatives_match_finite_differences(self):
         samples = np.random.default_rng(74).normal(size=20)
-        d2 = pdist(samples[:, None], metric="sqeuclidean")
+        objective = GaussianQhatObjective(samples)
         z, step = np.log(0.23), 1e-4
-        value, gradient, curvature = _energy(d2, len(samples), z)
-        lower, upper = (_energy(d2, len(samples), z + s*step)[0] for s in (-1, 1))
+        h = np.exp(z)
+        value, first_h, second_h = objective.derivatives(h)
+        gradient, curvature = h * first_h, h * first_h + h*h * second_h
+        lower, upper = (objective.energy(np.exp(z + s*step)) for s in (-1, 1))
         self.assertAlmostEqual(gradient, (upper-lower)/(2*step), delta=1e-8)
         self.assertAlmostEqual(curvature, (upper+lower-2*value)/step**2, delta=1e-7)
 

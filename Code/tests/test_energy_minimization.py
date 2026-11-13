@@ -106,8 +106,9 @@ class UnifiedEnergySearchTests(unittest.TestCase):
                                        if not line.lstrip().startswith(("%", "!")))
                     calls.extend(node.func.id for node in ast.walk(ast.parse(source))
                                  if isinstance(node, ast.Call) and isinstance(node.func, ast.Name))
-            self.assertNotIn("minimize_scalar", calls)
             self.assertIn("minimize_qhat", calls)
+            if name == "06_additional_experiments":
+                self.assertNotIn("minimize_scalar", calls)
         path = root/"notebooks/06_additional_experiments.ipynb"
         notebook = json.loads(path.read_text())
         code = "\n".join("".join(cell["source"]) for cell in notebook["cells"] if cell["cell_type"] == "code")

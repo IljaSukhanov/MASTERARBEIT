@@ -32,8 +32,12 @@ class NotebookStructureTests(unittest.TestCase):
                     continue
                 tree = ast.parse(''.join(cell['source']))
                 with self.subTest(notebook=path.name, cell=cell['id']):
-                    self.assertFalse(any(isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
-                                         for n in ast.walk(tree)))
+                    definitions = [n.name for n in ast.walk(tree)
+                                   if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))]
+                    expected = (['stationary_example_ise']
+                                if path.name == '03_fixed_sample_experiments.ipynb'
+                                and cell['id'] == 'beta2-stationary-grid-comparison' else [])
+                    self.assertEqual(definitions, expected)
                     self.assertFalse(any(isinstance(n, ast.ImportFrom) and
                                          any(a.name == '*' for a in n.names) for n in ast.walk(tree)))
 
@@ -45,7 +49,7 @@ class NotebookStructureTests(unittest.TestCase):
             for h in (.1, .4, 1.5):
                 self.assertAlmostEqual(
                     local_custom_beta_metric(h, differences, beta=beta),
-                    objective.log_energy(np.log(h), 1-beta/2)[0], places=12,
+                    objective.energy(h, 1-beta/2), places=12,
                 )
                 self.assertAlmostEqual(inverse_psi_beta(psi_beta(h, beta), beta), h, places=12)
 

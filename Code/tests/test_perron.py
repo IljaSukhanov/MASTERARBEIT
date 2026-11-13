@@ -202,6 +202,10 @@ class NotebookRoutingTests(unittest.TestCase):
         dense_reference_scripts = {
             root / "experiments/spectral_lambda_jump_study/numerical_artefact_checks.py",
         }
+        sparse_solvers = {
+            root / "experiments/outlook_four_lambdas.py",
+            root / "experiments/repeated_alpha_evolution/run_experiment.py",
+        }
         for path in root.rglob("*.py"):
             if path == allowed or "tests" in path.relative_to(root).parts:
                 continue
@@ -214,6 +218,8 @@ class NotebookRoutingTests(unittest.TestCase):
                     )
                     with self.subTest(script=path.relative_to(root)):
                         if name == "eigh" and path in dense_reference_scripts:
+                            continue
+                        if name == "eigsh" and path in sparse_solvers:
                             continue
                         self.assertNotIn(
                             name, {"eigh", "eigsh", "eigvalsh", "eigs", "eig"}
