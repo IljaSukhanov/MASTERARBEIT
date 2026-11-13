@@ -29,11 +29,25 @@ BCOR15mm               % Bindekorrektur
 \usepackage{graphicx}
 \usepackage{subcaption}
 
+% Resolve project-root paths also when compiling from this LaTeX directory.
+\newif\ifbuildfromprojectroot
+\makeatletter
+\IfFileExists{chapters/0_abstract.tex}{%
+  \buildfromprojectrootfalse
+  \graphicspath{{../../}}%
+  \def\input@path{{../../}}%
+}{\buildfromprojectroottrue}
+\makeatother
+
 % Literaturverzeichnis mit BibLaTeX
 % \usepackage[babel,german=quotes]{csquotes}
 \usepackage[style=english]{csquotes}
 \usepackage[backend=bibtex8]{biblatex}
-\bibliography{bibliography}
+\ifbuildfromprojectroot
+  \bibliography{Abschlussarbeit_2021/LaTeX/bibliography}
+\else
+  \bibliography{bibliography}
+\fi
 
 % Alternative mit Paket-Option backend=biber und \addbibresource
 % \usepackage[backend=biber]{biblatex}

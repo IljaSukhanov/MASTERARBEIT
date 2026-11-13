@@ -20,6 +20,32 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ScriptEntrypointTests(unittest.TestCase):
+    def test_notebook_setups_from_each_project_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            code = workspace / 'Code'
+            shutil.copytree(ROOT/'kde_tools', code/'kde_tools',
+                            ignore=shutil.ignore_patterns('__pycache__'))
+            shutil.copytree(ROOT/'notebooks', code/'notebooks')
+            shutil.copytree(ROOT/'experiments/joint_limits', code/'experiments/joint_limits',
+                            ignore=shutil.ignore_patterns('__pycache__'))
+            env = os.environ.copy()
+            env.pop('PYTHONPATH', None)
+            env.update(MPLBACKEND='Agg', MPLCONFIGDIR=str(workspace/'matplotlib'),
+                       PYTHONDONTWRITEBYTECODE='1')
+            program = '''
+import json, sys
+from pathlib import Path
+for path in sorted(Path(sys.argv[1]).glob('*.ipynb')):
+    cells = json.loads(path.read_text())['cells']
+    setup = next(cell for cell in cells if cell['cell_type'] == 'code')
+    exec(compile(''.join(setup['source']), str(path), 'exec'), {})
+'''
+            for cwd in (workspace, code, code/'notebooks'):
+                completed = subprocess.run([sys.executable, '-c', program, str(code/'notebooks')],
+                                           cwd=cwd, env=env, capture_output=True, text=True, timeout=90)
+                self.assertEqual(completed.returncode, 0, f'{cwd}:\n{completed.stderr}')
+
     def test_thesis_scripts_from_project_root(self):
         with tempfile.TemporaryDirectory() as directory:
             workspace = Path(directory)
