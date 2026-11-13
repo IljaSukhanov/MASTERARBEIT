@@ -1,0 +1,209 @@
+{
+  "configuration": {
+    "samples": 100,
+    "sample_size": 200,
+    "distribution": "N(0,1)",
+    "h_interval": [
+      0.01,
+      2.0
+    ],
+    "grid": "geometric",
+    "N_values": [
+      100,
+      200,
+      400
+    ],
+    "lambda_rule": "N**1.5",
+    "frequency_cutoff": 450.0,
+    "frequency_intervals": 1376,
+    "previous_results": "/Users/iljasukhanov/MASTERARBEIT/Code/Code_kde/outputs/brent_linear_refinements_spectral_alpha15/results.csv",
+    "sample_hashes_and_selected_bandwidths_match": true,
+    "timer": "perf_counter_ns; one initialized fresh measurement per method and sample; method order randomized separately for each sample",
+    "matrix_assembly": "grid generation, Fourier divergence computation, and preparation of the shifted similarity matrix, with associated checks/orchestration",
+    "perron": "complete existing perron_eigenpair call (including preprocessing, eigh, normalization and residual checks) plus final peak selection",
+    "eigensolver": "nested scipy.linalg.eigh call (two largest eigenpairs)",
+    "validation_not_timed": true,
+    "thread_limit_requested": 1,
+    "threadpools_reported": [],
+    "thread_environment": {
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "python": "3.12.5",
+    "numpy": "2.3.1",
+    "scipy": "1.16.0",
+    "platform": "macOS-26.5.1-arm64-arm-64bit"
+  },
+  "results": [
+    {
+      "N": 100,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.0713988,
+        "se": 0.0014552924706571924,
+        "median": 0.069167
+      },
+      "divergence_ms": {
+        "mean": 10.07445208,
+        "se": 0.08123314436390486,
+        "median": 9.914166999999999
+      },
+      "similarity_preparation_ms": {
+        "mean": 0.3488225199999999,
+        "se": 0.016187172385412053,
+        "median": 0.317812
+      },
+      "matrix_assembly_ms": {
+        "mean": 10.494673400000002,
+        "se": 0.08509547227614168,
+        "median": 10.3239385
+      },
+      "perron_solver_ms": {
+        "mean": 0.82255583,
+        "se": 0.016998138657209148,
+        "median": 0.7845
+      },
+      "eigensolver_ms": {
+        "mean": 0.57042537,
+        "se": 0.009277532251069098,
+        "median": 0.5514165
+      },
+      "perron_other_ms": {
+        "mean": 0.25213046,
+        "se": 0.010139424664842887,
+        "median": 0.219375
+      },
+      "selection_ms": {
+        "mean": 0.023323359999999998,
+        "se": 0.0003154864035297261,
+        "median": 0.022875
+      },
+      "perron_and_selection_ms": {
+        "mean": 0.84587919,
+        "se": 0.01713897928188219,
+        "median": 0.8068335
+      },
+      "total_ms": {
+        "mean": 11.34055259,
+        "se": 0.09709121458007183,
+        "median": 11.135438
+      },
+      "matrix_fraction_of_mean_total": 0.9254111134984827,
+      "perron_fraction_of_mean_total": 0.07458888650151747
+    },
+    {
+      "N": 200,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.07427414,
+        "se": 0.001912600673841719,
+        "median": 0.0692495
+      },
+      "divergence_ms": {
+        "mean": 11.73996666,
+        "se": 0.0911375764665254,
+        "median": 11.521958
+      },
+      "similarity_preparation_ms": {
+        "mean": 0.7681025499999999,
+        "se": 0.018396548759621358,
+        "median": 0.6980625
+      },
+      "matrix_assembly_ms": {
+        "mean": 12.582343349999999,
+        "se": 0.09821716629105486,
+        "median": 12.3314795
+      },
+      "perron_solver_ms": {
+        "mean": 2.5921995300000003,
+        "se": 0.03670840436205822,
+        "median": 2.4795835
+      },
+      "eigensolver_ms": {
+        "mean": 1.88618036,
+        "se": 0.01891779570112221,
+        "median": 1.8398955
+      },
+      "perron_other_ms": {
+        "mean": 0.70601917,
+        "se": 0.024615195011011226,
+        "median": 0.639542
+      },
+      "selection_ms": {
+        "mean": 0.025026650000000004,
+        "se": 0.0007758557994175845,
+        "median": 0.023417
+      },
+      "perron_and_selection_ms": {
+        "mean": 2.6172261800000003,
+        "se": 0.037289322954477316,
+        "median": 2.5030415
+      },
+      "total_ms": {
+        "mean": 15.199569529999998,
+        "se": 0.12003717179744273,
+        "median": 14.904125
+      },
+      "matrix_fraction_of_mean_total": 0.8278091905935707,
+      "perron_fraction_of_mean_total": 0.17219080940642933
+    },
+    {
+      "N": 400,
+      "samples": 100,
+      "grid_ms": {
+        "mean": 0.07851248,
+        "se": 0.002035655913825052,
+        "median": 0.0735
+      },
+      "divergence_ms": {
+        "mean": 15.015887480000002,
+        "se": 0.21319778069026335,
+        "median": 14.6735625
+      },
+      "similarity_preparation_ms": {
+        "mean": 2.7915895899999996,
+        "se": 0.05181606406526821,
+        "median": 2.6268124999999998
+      },
+      "matrix_assembly_ms": {
+        "mean": 17.885989549999998,
+        "se": 0.2386952981397897,
+        "median": 17.461729499999997
+      },
+      "perron_solver_ms": {
+        "mean": 11.076424999999999,
+        "se": 0.09481405317004289,
+        "median": 10.849582999999999
+      },
+      "eigensolver_ms": {
+        "mean": 8.92522919,
+        "se": 0.07168534542719665,
+        "median": 8.720854
+      },
+      "perron_other_ms": {
+        "mean": 2.1511958100000004,
+        "se": 0.03732397933950637,
+        "median": 2.0532915000000003
+      },
+      "selection_ms": {
+        "mean": 0.029231259999999995,
+        "se": 0.000668122706569941,
+        "median": 0.028146
+      },
+      "perron_and_selection_ms": {
+        "mean": 11.10565626,
+        "se": 0.09505893754984951,
+        "median": 10.8886875
+      },
+      "total_ms": {
+        "mean": 28.991645809999994,
+        "se": 0.3187482678647008,
+        "median": 28.496312
+      },
+      "matrix_fraction_of_mean_total": 0.6169359844976666,
+      "perron_fraction_of_mean_total": 0.3830640155023335
+    }
+  ]
+}

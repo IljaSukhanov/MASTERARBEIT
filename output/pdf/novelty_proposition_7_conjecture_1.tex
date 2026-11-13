@@ -1,0 +1,386 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=21mm,top=20mm,bottom=21mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,tabularx,enumitem,xcolor,fancyhdr,hyperref}
+\definecolor{ink}{HTML}{17354B}
+\definecolor{muted}{HTML}{526574}
+\definecolor{linkblue}{HTML}{126B8A}
+\hypersetup{colorlinks=true,urlcolor=linkblue,linkcolor=linkblue,pdftitle={Novelty assessment: Proposition 7 and Conjecture 1},pdfauthor={Literature assessment prepared for Ilja Sukhanov}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5.5pt}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\arraystretch}{1.2}
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=*,itemsep=4pt,topsep=3pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\color{muted}SPECTRAL KDE BANDWIDTH SELECTION}
+\fancyhead[R]{\small\color{muted}Literature and mathematical assessment}
+\fancyfoot[L]{\small\color{muted}12 September 2026}
+\fancyfoot[R]{\small\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\headheight}{14pt}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Hh}{\mathcal H}
+\newcommand{\Qh}{\widehat Q}
+\newcommand{\fh}{\widehat f}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\erf}{\operatorname{erf}}
+\newcommand{\pageheading}[2]{\newpage{\small\color{muted}#1}\par\vspace{2pt}{\LARGE\bfseries\color{ink}#2}\par\vspace{7pt}}
+\newcommand{\subhead}[1]{\par\vspace{5pt}{\large\bfseries\color{ink}#1}\par}
+\newtheorem*{theorem}{Sufficient theorem}
+\begin{document}
+{\small\color{muted}RESEARCH ASSESSMENT \quad / \quad 12 SEPTEMBER 2026}\par
+\vspace{7pt}
+{\Huge\bfseries\color{ink}How novel is the spectral\newline bandwidth result?}\par
+\vspace{7pt}
+{\large Proposition 7, Conjecture 1, and their closest literature}\par
+\vspace{7pt}
+\textbf{Assessment.} The intended result in Proposition 7 is a specialization of classical Laplace asymptotics and local Gaussian-kernel mass calculations. I would not present it as a new general asymptotic principle. I did not locate an earlier statement with the exact KDE curve, transformed deterministic grid, and joint limit in Conjecture 1. That leaves room for a useful KDE-specific theorem. However, localization of principal eigenfunctions and selection by their largest entries both have substantial precedents.
+
+\textbf{A stronger mathematical conclusion is available:} under a coherent version of the Gaussian-kernel setup already used in the chapter, Conjecture 1 follows from an elementary variational argument. Pages 6--8 give a self-contained proof for a general smooth, injective, regular Hilbert-space curve, then verify the assumptions for every fixed finite sample of real observations. This is an independent derivation for this assessment, not a claim of priority for the general theorem.
+
+\subhead{What can reasonably be claimed?}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.24\linewidth}X >{\raggedright\arraybackslash}p{0.21\linewidth}@{}}
+\toprule
+\textbf{Component} & \textbf{Assessment against the literature} & \textbf{Confidence}\\
+\midrule
+Proposition 7: local row mass & Established mechanism; useful explicit KDE/grid specialization. The present statement needs correction. & High on the mechanism.\\
+Conjecture 1: Perron peak location & Exact formulation not found; broader spectral concentration and eigenvector-peak ideas are established. & Moderate on exact-statement novelty.\\
+Gaussian affinities between functions & Already used in functional diffusion maps. & High that this alone is not new.\\
+KDE selector and grid calibration & Potentially the strongest contribution: connect a scale-selection procedure to a specific energy and its statistical target. & Promising; not a priority certificate.\\
+\bottomrule
+\end{tabularx}
+
+\subhead{Three distinctions that determine the verdict}
+First, a familiar analytical mechanism can still yield a worthwhile new application. Second, your matrix is the \emph{raw symmetric affinity matrix}; results for a normalized diffusion operator or graph Laplacian do not automatically prove your claim. Third, a fixed-sample spectral limit is different from statistical optimality as the sample size tends to infinity.
+
+\textbf{Immediate correction.} Proposition 7 currently assumes $N^2=o(\lambda_N)$. The intended continuum formula instead needs $\lambda_N\to\infty$ and $\lambda_N/N^2\to0$ on a fixed interval. At literal endpoints, the leading Gaussian mass is halved. These issues concern validity before they concern novelty.
+
+\textbf{Scope.} This report assesses the current LaTeX source, public literature located through the review date, and a separately derived proof. No thesis file was modified. Absence of a matching search result cannot establish global priority, particularly against unpublished manuscripts.
+
+\pageheading{01 / EXACT CLAIM}{What the two statements mean}
+Fix the observations $X_1,\ldots,X_n$ and $0<h_{\min}<h_{\max}<\infty$. Write
+\[
+ \fh_h(x)=\frac1{nh}\sum_{j=1}^n K\!\left(\frac{x-X_j}{h}\right),
+ \qquad D(p,q)=\tfrac12\norm{p-q}_{L^2}^2.
+\]
+Use the grid coordinate from the chapter,
+\[
+ t=\psi_r(h)=\begin{cases}(h^r-1)/r,&r>0,\\ \log h,&r=0,\end{cases}
+ \quad 0\le r\le1,\quad a=\psi_r(h_{\min}),\quad b=\psi_r(h_{\max}).
+\]
+Let $t_i=a+(i-1)\Delta_N$, $\Delta_N=(b-a)/(N-1)$, and $h_i=\psi_r^{-1}(t_i)$. The curve in $L^2(\R)$ is $\gamma(t)=\fh_{\psi_r^{-1}(t)}$. Its squared speed is
+\begin{equation}\label{eq:q}
+ q(t)=\tfrac12\norm{\gamma'(t)}_2^2
+ =\tfrac12 h^{2(1-r)}\norm{\partial_h\fh_h}_2^2
+ =\Qh_{n,\beta}(h),\qquad \beta=2(1-r).
+\end{equation}
+This identity reconciles the $r$ notation in the grid calculation with the $\beta$ exponent in the following expected-energy result. The current proposition and conjecture mix those subscripts and refer to $\psi_\beta$ where the earlier grid definition uses $\psi_r$.
+
+Set $\eps_N=\lambda_N^{-1/2}$ and
+\[
+ S_{ij}=\exp\!\left(-\frac{\norm{\gamma(t_i)-\gamma(t_j)}_2^2}{2\eps_N^2}\right),
+ \qquad A_N=\frac{\Delta_N}{\eps_N}S_N,\qquad m(t)=\sqrt{\frac\pi{q(t)}}.
+\]
+Proposition 7 is intended to say that the row sums of $A_N$ approach $m(t_i)$ in the interior. Conjecture 1 says that a largest entry of the positive top eigenvector approaches the set where $m$ is largest, equivalently where $q$ is smallest. Multiplication by $\Delta_N/\eps_N$ does not change that eigenvector.
+
+\subhead{Why the printed asymptotic regime cannot work}
+Every diagonal entry of $S_N$ equals one. Consequently, with $R_i=\sum_jS_{ij}$,
+\[
+ \sqrt{\lambda_N}\Delta_N R_i\ \ge\ \sqrt{\lambda_N}\Delta_N.
+\]
+Under the printed assumption $N^2=o(\lambda_N)$, the right-hand side diverges. It therefore cannot converge to the finite proposed value when $q(t_i)>0$. Under the conjecture's regime, $\Delta_N/\eps_N\to0$: many grid points resolve the width of a local Gaussian peak, which is exactly the needed condition.
+
+\subhead{Other statement and proof repairs}
+The full Gaussian constant requires points sufficiently far from the boundary on the $\eps_N$ scale. At $a$ or $b$ the constant is $m/2$; even a fixed grid index tends into this boundary layer. Also, Taylor expansion at a fixed pair of indices is not enough for a growing row sum. One must control the remainder after multiplication by $\lambda_N$, the off-diagonal tail, and the quadrature error uniformly. Mere differentiability of a general kernel does not supply the stated $L^2$ differentiability; the Gaussian case supplies considerably more regularity.
+
+\pageheading{02 / LOCAL KERNEL ASYMPTOTICS}{Proposition 7 and established results}
+\subhead{The closest analytical precedents}
+\textbf{Coifman and Lafon (2006), Appendix B, Lemmas 8 and 9.} Their interior expansion of a localized radial integral operator has a zeroth-order term equal to the kernel mass times the input function. The appendix also treats boundary effects. Your formula is the one-dimensional Gaussian mass calculation after using a non-unit-speed coordinate along the KDE curve. Their stated setting is a finite-dimensional embedded manifold, so the Hilbert-space formulation should be justified directly rather than called a verbatim corollary.\footnote{Coifman and Lafon, \emph{Diffusion maps}, Appendix B. \href{https://doi.org/10.1016/j.acha.2006.04.006}{Publisher record}; reference [1].}
+
+\textbf{Berry and Sauer (2016), Lemmas 3.8 and 3.9.} Lemma 3.8 recalls the radial-kernel expansion; Lemma 3.9 gives the local-kernel expansion with position-dependent leading mass $m(x)$. This is especially close conceptually: the leading mass of the local Gaussian changes with its local quadratic form. In your coordinate that quadratic form is the scalar $q(t)$, hence $m(t)=\sqrt{\pi/q(t)}$.\footnote{Berry and Sauer, \emph{Local kernels and the geometric structure of data}, Lemmas 3.8--3.9. \href{https://arxiv.org/html/1407.1426v3}{Full text}; reference [2].}
+
+\textbf{Berry and Sauer, boundary density estimation (preprint 2015; revised 2016).} Theorem 3.2 and the Gaussian boundary factor show how a truncated local kernel loses mass at a boundary. At an endpoint in one dimension, exactly one half of the leading symmetric Gaussian mass remains. This directly explains why an unqualified all-row version of Proposition 7 fails even after reversing its rate assumption.\footnote{Berry and Sauer, \emph{Density Estimation on Manifolds with Boundary}, Theorem 3.2 and Gaussian boundary factor. \href{https://arxiv.org/html/1511.08271v3}{Full text}; reference [3].}
+
+These are instances of the older Laplace method: expand the exponent to second order around its minimum, rescale, and integrate the limiting Gaussian. The NIST account records the classical method; it is not a priority source for your application.\footnote{NIST Digital Library of Mathematical Functions, \href{https://dlmf.nist.gov/2.3\#iii}{Section 2.3(iii), Laplace's method}; reference [4].}
+
+\subhead{The geometric interpretation is sampling density along a curve}
+Since arc length satisfies $ds=\norm{\gamma'(t)}\,dt$, a uniform grid in $t$ has density per unit arc length proportional to $1/\norm{\gamma'(t)}$. Thus
+\[
+ m(t)=\frac{\sqrt{2\pi}}{\norm{\gamma'(t)}}.
+\]
+The large row sums occur where the chosen grid places many nearby functions per unit arc length. This is a local density effect, expressed through the speed of the KDE curve. It is not an intrinsic curvature calculation. A different grid changes the density and the selected energy.
+
+\textbf{Novelty judgment.} The explicit $h^{2(1-r)}$ factor, constants, deterministic mesh condition, and boundary qualification make a useful specialized lemma. They do not support a strong claim that the underlying row-sum asymptotic is new. A defensible presentation would explain the specialization and cite local-kernel asymptotics, while proving the exact hypotheses needed here.
+
+\pageheading{03 / SPECTRAL CONCENTRATION}{The closest precedents for Conjecture 1}
+\textbf{Shi, Belkin and Yu (2008): an eigenvector-maximum estimator already exists.} Their ICML paper studies Gaussian-kernel convolution operators. Proposition 1 gives an explicit leading eigenfunction when the distribution of the input points is Gaussian. Its maximum is at the Gaussian center, and Algorithm 1 selects the observed point corresponding to the largest absolute entry of the leading eigenvector to estimate that center. This is a direct precedent for using an affinity eigenvector's maximum as a location selector. It is not a theorem for arbitrary KDE curves or your deterministic joint mesh limit.\footnote{Shi, Belkin and Yu, \emph{Data Spectroscopy: Learning Mixture Models using Eigenspaces of Convolution Operators}, Section 2, Proposition 1 and Algorithm 1. \href{https://www.stat.berkeley.edu/users/binyu/ps/ICML08.pdf}{Author-hosted full text}; reference [5].}
+
+The Gaussian distribution in that example is the distribution of the \emph{points on which the affinity is built}. In your problem those points are the functions $\fh_h$. It must not be confused with assuming that the observations $X_j$ in your KDE have a Gaussian distribution.
+
+\textbf{Shi, Belkin and Yu (2009): raw-kernel eigenfunctions and localization.} The expanded Annals paper establishes properties of the leading eigenfunction and develops localization and perturbation results for mixture distributions. Theorem 2 concerns positivity and simplicity; Theorem 3 and Corollary 2 address mixture structure. These results substantiate the older connection between affinity eigenfunctions, distributional concentration, and clustering. They do not by themselves establish your precise $\lambda_N/N^2\to0$ argmax theorem.\footnote{Shi, Belkin and Yu, \emph{Data spectroscopy: Eigenspaces of convolution operators and clustering}, Theorems 2--3 and Corollary 2. \href{https://arxiv.org/pdf/0807.3719}{Full text}; reference [6].}
+
+\textbf{Djidjou-Demasse, Ducrot and Fabre (2017): a particularly close concentration theorem.} Their localized positive integral operator has the form
+\[
+ (L_\eps u)(x)=\int m_\eps(x-y)\Psi(y)u(y)\,dy.
+\]
+Theorem 2.2 identifies the limiting principal eigenvalue with the maximum of the weight. Theorem 2.3 proves concentration of the normalized principal eigenfunction near a selected maximum under smoothness, finitely many nondegenerate maxima, and kernel-tail assumptions. A symmetric conjugate uses the kernel $\sqrt{\Psi(x)}m_\eps(x-y)\sqrt{\Psi(y)}$. This is a close precedent for the concentration mechanism. It is not the same operator as the chord-distance kernel on your Hilbert-space curve, and its stronger localization assumptions are unnecessary for the set-convergence result proved below.\footnote{Djidjou-Demasse, Ducrot and Fabre, \emph{Steady state concentration for a phenotypic structured problem modeling the evolutionary epidemiology of spore producing pathogens}, Assumptions 2.1--2.4 and Theorems 2.2--2.3. \href{https://lmah.univ-lehavre.fr/~ducrot/pdf/DemasseDucrotFabre_M3AS.pdf}{Author-hosted full text}; reference [7].}
+
+\textbf{Perona and Freeman (1998): the broader affinity-eigenvector idea is older still.} Their grouping method uses a dominant affinity eigenvector to identify a strongly associated group. This is historical context for raw-affinity selection, rather than an asymptotic proof of your energy-minimization statement.\footnote{Perona and Freeman, \emph{A factorization approach to grouping}, Section 4. \href{https://www.merl.com/publications/docs/TR99-03.pdf}{Author/institution-hosted full text}; reference [8].}
+
+\textbf{Novelty judgment.} I found no exact predecessor combining your KDE curve, power/log grid, and joint deterministic limit. That is a narrower conclusion than saying that Perron localization or eigenvector-peak selection is new. The proof below also suggests that the general argmax statement should be positioned as an accessible consequence of established local-operator ideas.
+
+\pageheading{04 / NEIGHBORING LITERATURE}{What overlaps, and what does not}
+\textbf{Functional diffusion maps.} Barroso et al. (2024; published online in 2023), Section 3.2, use the affinity
+\[
+ k(x_i,x_j)=\exp\!\left(-\frac{\norm{x_i-x_j}_{L^2}^2}{2\sigma^2}\right)
+\]
+for functional observations. Consequently, a Gaussian similarity based on $L^2$ distances between functions is established. Their diffusion-map construction has a different objective and normalization; the paper does not supply your KDE bandwidth minimizer.\footnote{Barroso et al., \emph{Functional diffusion maps}, Section 3.2. \href{https://doi.org/10.1007/s11222-023-10332-1}{Full article}; reference [9].}
+
+\textbf{Bandwidth selection through stability across scales.} Comaniciu (2003) proposes a data-driven bandwidth method using stability across scales, with a specialized Jensen--Shannon divergence in the construction. The estimator and target are local multivariate structures rather than your global $L^2$ KDE curve and Perron vector. This is nevertheless a relevant precedent against claiming that choosing bandwidth by stability across scales is itself new.\footnote{Comaniciu, \emph{An Algorithm for Data-Driven Bandwidth Selection}, Section 4 and Appendix B. \href{https://comaniciu.net/Papers/BandwidthSelection.pdf}{Author-hosted full text}; reference [10].}
+
+\textbf{Scale-normalized derivatives.} Lindeberg's automatic scale selection uses extrema of normalized Gaussian-derivative responses for image features. It is not the same as minimizing the global norm in (\ref{eq:q}), but it predates the broad idea of compensating a scale derivative by a power of the scale.\footnote{Lindeberg, \emph{Feature Detection with Automatic Scale Selection}. \href{https://www.csc.kth.se/cvap/abstracts/cvap198.html}{Author's publication record and abstract}; reference [11].}
+
+\textbf{Integrated derivative energies in KDE.} Hall and Marron (1987) study integrated squared density derivatives, an established ingredient of bandwidth selection. Botev, Grotowski and Kroese (2010), Section 2, explicitly describe Gaussian KDE as a heat-equation solution. With bandwidth $h$ rather than variance $h^2$, this gives the identity
+\[
+ \partial_h\fh_h=h\,\partial_{xx}\fh_h,
+ \qquad \Qh_{n,\beta}(h)=\tfrac12h^{\beta+2}\norm{\fh_h''}_2^2.
+\]
+This algebraic consequence links your criterion to familiar derivative-energy quantities. It does not establish a prior exact Perron-based selector or the particular calibration in the following proposition.\footnote{Hall and Marron, \emph{Estimation of integrated squared density derivatives}, \href{https://doi.org/10.1016/0167-7152(87)90083-6}{publisher abstract}, reference [12]; Botev, Grotowski and Kroese, \emph{Kernel density estimation via diffusion}, Section 2, equation (2), \href{https://arxiv.org/pdf/1011.2602}{full text}, reference [13].}
+
+\subhead{Two common false matches}
+Consistency results for graph Laplacians or empirical integral operators require care: the matrix/operator, sampling scheme, and bandwidth regime may differ. Von Luxburg, Belkin and Bousquet (2008) and Rosasco, Belkin and De Vito (2010) are useful comparison points, not automatic proofs of this conjecture.\footnote{\href{https://arxiv.org/abs/0804.0678}{Consistency of spectral clustering}, reference [14]; \href{https://jmlr.org/papers/v11/rosasco10a.html}{On Learning with Integral Operators}, reference [15].}
+Likewise, selecting the width of a Gaussian graph kernel is different from selecting the bandwidth of a KDE represented as a graph node. Lindenbaum et al. (2020) concern the former, corresponding more closely to your $\lambda$ than to your $h$.\footnote{Lindenbaum et al., \emph{Gaussian bandwidth selection for manifold learning and classification}. \href{https://pmc.ncbi.nlm.nih.gov/articles/PMC7330274/}{Full text}; reference [16].}
+
+\pageheading{05 / A PRECISE REPLACEMENT}{A theorem that implies the conjecture}
+\textit{The following theorem and proof are derived independently for this assessment. They are supplied to assess the mathematical contribution, not attributed to a source or asserted to be a new general theorem.}
+
+\begin{theorem}
+Let $\gamma:[a,b]\to\Hh$ be a $C^2$ injective curve in a real Hilbert space, with $a<b$ and $\inf_{t\in[a,b]}\norm{\gamma'(t)}>0$. Put
+\[
+ t_i=a+(i-1)\Delta_N,\quad \Delta_N=(b-a)/(N-1),\quad
+ q(t)=\tfrac12\norm{\gamma'(t)}^2,\quad m(t)=\sqrt{\pi/q(t)}.
+\]
+Suppose $\eps_N\to0$ and $\Delta_N/\eps_N\to0$. Let
+\[
+ S_{ij}^{(N)}=e^{-\norm{\gamma(t_i)-\gamma(t_j)}^2/(2\eps_N^2)},
+ \quad A_N=(\Delta_N/\eps_N)S_N,
+ \quad \theta_N=\rho(A_N).
+\]
+If $v^{(N)}$ is its positive Perron vector and $k_N$ is any index attaining its largest entry, then
+\begin{equation}\label{eq:conclusion}
+ \theta_N\longrightarrow \max_{[a,b]}m,
+ \qquad
+ \dist\!\left(t_{k_N},\argmin_{[a,b]}q\right)\longrightarrow0.
+\end{equation}
+There is no requirement of a unique or nondegenerate minimizer, an interior minimizer, or a uniform spectral gap.
+\end{theorem}
+
+\subhead{The accompanying corrected row-sum statement}
+Let $a_{i,N}=\sum_j(A_N)_{ij}$. Uniformly over all rows,
+\begin{equation}\label{eq:boundary}
+ a_{i,N}=\frac{\sqrt\pi}{2\sqrt{q(t_i)}}
+ \left[
+ \erf\!\left(\frac{\sqrt{q(t_i)}(b-t_i)}{\eps_N}\right)
+ +\erf\!\left(\frac{\sqrt{q(t_i)}(t_i-a)}{\eps_N}\right)
+ \right]+o(1).
+\end{equation}
+Here $\erf(x)=(2/\sqrt\pi)\int_0^x e^{-u^2}\,du$. In particular,
+\[
+ a_{i,N}\le m(t_i)+o(1)\quad\hbox{uniformly};\qquad
+ a_{i,N}-m(t_i)\to0
+\]
+uniformly on compact subintervals of $(a,b)$. The latter conclusion also holds along any sequence whose distance from both endpoints divided by $\eps_N$ tends to infinity. At either endpoint the limit is $m/2$.
+
+\subhead{Why row sums alone do not finish the argument}
+A Perron vector is not generally proportional to the row-sum vector. The missing step is to prove that the normalized largest eigenvalue tends to the largest possible \emph{interior} local mass. A localized test function gives the lower bound; the maximum row sum gives the upper bound. At an index where the eigenvector is largest, the eigenvalue equation then forces the row sum to be almost maximal. This proves peak location without identifying the entire eigenvector profile.
+
+\pageheading{06 / PROOF, PART I}{Local mass and the mesh approximation}
+Define $d(t,s)=\tfrac12\norm{\gamma(s)-\gamma(t)}^2$ and $k_\eps(t,s)=e^{-d(t,s)/\eps^2}$. Taylor's theorem in the Hilbert space gives, uniformly near the diagonal,
+\begin{equation}\label{eq:taylor}
+ d(t,s)=q(t)(s-t)^2+O(|s-t|^3).
+\end{equation}
+Since $q$ has a positive minimum, there are $c,\delta>0$ such that $d(t,s)\ge c|s-t|^2$ for $|s-t|\le\delta$. For every fixed $\delta>0$, compactness and injectivity also give
+\[
+ \inf\{d(t,s):t,s\in[a,b],\ |s-t|\ge\delta\}>0.
+\]
+Thus distant parts of the curve make an exponentially small contribution, even if the curve is not globally a straight line.
+
+\textbf{Step 1: uniform local integral.} After $s=t+\eps z$, (\ref{eq:taylor}) implies
+\begin{equation}\label{eq:localintegral}
+ \frac1\eps\int_a^b k_\eps(t,s)\,ds
+ =\int_{(a-t)/\eps}^{(b-t)/\eps}e^{-q(t)z^2}\,dz+o(1)
+\end{equation}
+uniformly in $t$. For completeness, on $|z|\le M$ the exponent error is $O(\eps M^3)$ uniformly. Outside this region but within $|s-t|\le\delta$, both integrands have integrable Gaussian upper bounds independent of $t$ and $\eps$. The region $|s-t|>\delta$ is exponentially negligible. First let $\eps\to0$, then $M\to\infty$. Evaluation of the Gaussian integral gives the expression in (\ref{eq:boundary}).
+
+\textbf{Step 2: uniform quadrature control.} The total variation of $s\mapsto k_\eps(t,s)$ on $[a,b]$ is bounded independently of small $\eps$ and $t$. Indeed, near the diagonal,
+\[
+ |\partial_s d(t,s)|\le C|s-t|,\qquad
+ |\partial_s k_\eps(t,s)|
+ \le C\eps^{-2}|s-t|e^{-c|s-t|^2/\eps^2}.
+\]
+The integral of this bound is finite uniformly in $\eps$. Away from the diagonal, bounded derivatives and positive separation give a bound of order $\eps^{-2}e^{-c_\delta/\eps^2}$ on a fixed interval. The error of a grid sum, including its extra endpoint term, therefore satisfies
+\[
+ \sup_i\left|\Delta_N\sum_{j=1}^N k_{\eps_N}(t_i,t_j)
+ -\int_a^b k_{\eps_N}(t_i,s)\,ds\right|\le C\Delta_N.
+\]
+Dividing by $\eps_N$ makes this error vanish precisely under $\Delta_N/\eps_N\to0$. Combining this with Step 1 proves (\ref{eq:boundary}) and the uniform row upper bound.
+
+\textbf{Why this repairs the original approximation.} At the relevant scale $s-t=O(\eps_N)$, the cubic exponent remainder divided by $\eps_N^2$ is $O(\eps_N)$. This explicitly controls the growing factor $\lambda_N$. It avoids the unsupported replacement of an exponential remainder by a term independent of $\lambda_N$, and it treats every offset contributing appreciably to a row sum.
+
+\pageheading{07 / PROOF, PART II}{From mass to the Perron maximum}
+\textbf{Step 3: the largest eigenvalue.} Let $m_* =\max_{[a,b]}m$. The row bound gives
+\[
+ \theta_N\le\max_i a_{i,N}\le m_*+o(1).
+\]
+For a fixed nonzero real $g\in C_c^1((a,b))$, apply the same localized integral and quadrature arguments to $k_\eps(t,s)g(s)$. They give the approximate-identity limit for the sampled vector $g_N=(g(t_i))_i$, and hence
+\begin{equation}\label{eq:rayleigh}
+ \frac{g_N^TA_Ng_N}{g_N^Tg_N}
+ \longrightarrow
+ \frac{\int_a^b m(t)g(t)^2\,dt}{\int_a^b g(t)^2\,dt}.
+\end{equation}
+One can also obtain (\ref{eq:rayleigh}) directly by writing its numerator as
+$\Delta_N^2\eps_N^{-1}\sum_{i,j}k_{\eps_N}(t_i,t_j)g(t_i)g(t_j)$
+and its denominator as $\Delta_N\sum_i g(t_i)^2$.
+
+For any $\eta>0$, continuity supplies an interior interval on which $m>m_*-\eta$, even if its actual maximum occurs at an endpoint. Choose $g$ supported there. The variational characterization for the symmetric matrix $A_N$ implies $\liminf\theta_N\ge m_*-\eta$. Sending $\eta\downarrow0$ proves $\theta_N\to m_*$.
+
+\textbf{Step 4: a maximum entry forces an almost maximal mass.} Since $v_j\le v_{k_N}$ and every matrix entry is positive,
+\[
+ \theta_Nv_{k_N}=\sum_j(A_N)_{k_Nj}v_j
+ \le a_{k_N,N}v_{k_N}.
+\]
+Divide by $v_{k_N}>0$ and use the uniform upper bound to obtain
+\[
+ \theta_N\le a_{k_N,N}\le m(t_{k_N})+o(1).
+\]
+It follows that $m(t_{k_N})\to m_*$. Compactness and continuity imply (\ref{eq:conclusion}). This handles all choices of a maximizing index and all minimizing sets. It asserts neither a rate nor a particular mixture among tied minimizers.\hfill$\square$
+
+\subhead{Why the Gaussian KDE satisfies the theorem}
+For fixed finite real observations, the Fourier transform of the Gaussian KDE is
+\[
+ \mathcal F\fh_h(\omega)=e^{-h^2\omega^2/2}\varphi_n(\omega),\qquad
+ \varphi_n(\omega)=\frac1n\sum_{j=1}^n e^{-i\omega X_j}.
+\]
+The continuous function $\varphi_n$ equals one at zero, so it is nonzero in a neighborhood of zero. Distinct positive bandwidths have distinct Gaussian multipliers there; the curve is injective. Moreover,
+\[
+ \mathcal F(\partial_h\fh_h)(\omega)
+ =-h\omega^2e^{-h^2\omega^2/2}\varphi_n(\omega)
+\]
+is not zero in $L^2$. All bandwidth derivatives are square-integrable and vary continuously on a compact positive bandwidth interval. Thus the curve is smooth and regular, including after the smooth change $t=\psi_r(h)$. Its derivative norm has a positive minimum by compactness. The continuous inverse coordinate map transfers convergence of distances to the minimizing set from $t$ to $h$. This proves the intended conjecture in that fixed-sample Gaussian setup; no distributional assumption on the observations is needed.
+
+\pageheading{08 / INTERPRETATION AND LIMITS}{What the theorem establishes statistically}
+\subhead{The grid is part of the criterion}
+More generally, if the grid is uniform in a smooth coordinate with $w(h)=dt/dh>0$, then
+\[
+ q(h)=\frac{\norm{\partial_h\fh_h}_2^2}{2w(h)^2},
+ \qquad m(h)=\frac{\sqrt{2\pi}\,w(h)}{\norm{\partial_h\fh_h}_2}.
+\]
+The selected bandwidth therefore depends on how bandwidths are sampled. For the power/log family, $w(h)=h^{r-1}$ and $\beta=2(1-r)$. This dependence is a substantive interpretation of the procedure, not a numerical discretization detail that disappears in the limit. It gives a plausible contribution: explaining exactly how the chosen scale grid determines the limiting objective.
+
+\subhead{Raw and normalized matrices give different answers}
+Let $D_N=\operatorname{diag}(R_1,\ldots,R_N)$. The row-normalized matrix $P=D_N^{-1}S_N$ has the constant vector as its right Perron vector. Since $S_N$ is symmetric, its stationary distribution is proportional to $R_i$. The symmetric normalization $D_N^{-1/2}S_ND_N^{-1/2}$ has top eigenvector proportional to $\sqrt{R_i}$. These are exact algebraic statements. The argument in this report is needed for the \emph{unnormalized} $S_N$, whose Perron vector need not equal either of those explicit vectors. A claim about $D_N-S_N$ would concern another operator again.
+
+\subhead{Conjecture 1 does not by itself establish AMISE optimality}
+The result proved above holds with $n$ and the observations fixed while the grid is refined and the affinity becomes local. The following proposition in the chapter---a separate result from Proposition 7---compares the minimizer of an asymptotic approximation to $\mathbb E\Qh_{n,\beta}$ with $h_{\mathrm{AMISE}}$. Its stated ratio is
+\[
+ \left(\frac{3-\beta}{2+\beta}\frac{R(L)}{R(K)}\right)^{1/5},
+ \qquad L(u)=-K(u)-uK'(u).
+\]
+For the standard Gaussian, $R(L)/R(K)=3/4$, giving ratio one at $\beta=1/7$ (equivalently $r=13/14$). This explicit calibration may be a more distinctive application-level observation. The review did not locate the same calibration, but did not independently establish priority for the entire following proposition.
+
+To infer statistical optimality of the actual Perron-based bandwidth requires additional work. Minimizing an expected criterion does not imply that its empirical minimizer is close. The fixed-sample spectral limit also supplies no bound uniform in growing $n$. Finally, a fixed $h_{\min}>0$ cannot contain a target of order $n^{-1/5}$ for all large $n$.
+
+There is also a range issue: for any fixed finite sample and Gaussian kernel, $\norm{\partial_h\fh_h}_2^2\sim R(L)h^{-3}$ as $h\to\infty$, by rescaling and letting $X_j/h\to0$. Therefore $\Qh_{n,\beta}(h)\to0$ for the chapter's $0\le\beta\le2$. Minimization over an unrestricted bandwidth range is driven toward arbitrarily large bandwidths. The finite admissible interval is mathematically consequential. A statistical theorem must specify how that interval and the three parameters $n,N,\lambda_N$ are coordinated.
+
+\pageheading{09 / RECOMMENDED POSITIONING}{A defensible contribution statement}
+\subhead{Claims supported by this assessment}
+The strongest defensible emphasis is the \textbf{KDE application and its exact characterization}: for a specified bandwidth grid and the raw affinity matrix, identify the weighted derivative energy that determines the limiting selection. Present the row-sum calculation as a local-kernel asymptotic lemma. Present the Perron-maximum conclusion as a rigorously proved consequence, while acknowledging the existing eigenfunction-concentration and eigenvector-peak literature.
+
+The Gaussian verification is also useful: the theorem holds for any fixed finite set of observations, including repeated observations, without assuming the sample distribution is Gaussian. The statement permits multiple minima and boundary minima. Those are clean aspects of the formulation, although their publication novelty cannot be inferred solely from not finding the identical statement.
+
+\subhead{Suggested wording for a paper or thesis}
+\begin{quote}
+We analyze spectral bandwidth selection along a Gaussian kernel-density-estimation scale curve. On a grid uniform in a power or logarithmic bandwidth coordinate, local Gaussian-kernel asymptotics identify the normalized similarity mass with the inverse speed of the curve. A variational argument then shows that the largest entry of the unnormalized affinity matrix's Perron vector approaches the minimizers of the corresponding weighted squared bandwidth derivative. This provides an explicit fixed-sample characterization of the criterion selected by the spectral procedure and of its dependence on the bandwidth grid.
+\end{quote}
+In a final related-work discussion, cite the local-kernel references [1--3], eigenvector-peak and concentration references [5--8], and the adjacent functional and scale-selection work [9--13]. The wording above deliberately makes a concrete contribution claim without asserting that localized positive operators or their concentration behavior are new.
+
+\subhead{Claims that are not yet justified}
+\begin{itemize}
+\item ``A new general principle that Perron vectors select the slowest-changing scale.'' The underlying local-density and concentration mechanisms have earlier precedents.
+\item ``The first use of Gaussian affinities between functions'' or ``the first use of eigenvector maxima as location estimates.'' The reviewed sources directly contradict those broad claims.
+\item ``The spectral selector is asymptotically AMISE-optimal.'' The additional stochastic and joint-limit steps on page 9 remain necessary.
+\item ``No one has proved Conjecture 1 before.'' An extensive search can identify close prior work; it cannot certify universal absence.
+\end{itemize}
+
+\subhead{An unresolved priority issue within the project}
+The local bibliography cites Barali\'c, Chernyshev, Spodarev and Sukhanov, \emph{Spectral scale selection principle in TDA} (2026), as an unpublished manuscript, and the chapter says it applies that methodology. The exact title did not lead to a public manuscript in this search. Its contents were not available for comparison. Accordingly, this report cannot separate your new KDE analysis from results already proved in that shared manuscript, or decide attribution among its authors. That comparison is needed before a final priority statement.
+
+\textbf{Overall judgment.} Proposition 7 is best treated as an established asymptotic technique specialized to your construction. Conjecture 1 can be made a theorem in the intended Gaussian setting and may be worth presenting as a KDE-specific result. The best prospect for a stronger research contribution is the combination of that characterization, grid calibration, and a rigorous statistical analysis of the resulting bandwidth selector.
+
+\pageheading{10 / SEARCH SCOPE}{Coverage, evidence, and limitations}
+\subhead{How the literature was checked}
+The search followed the mathematical objects rather than only the phrase ``spectral bandwidth selection.'' It covered local Gaussian integrals and Laplace asymptotics; manifold kernels and boundary corrections; principal eigenfunctions of positive integral operators; raw affinity matrices and data spectroscopy; functional diffusion maps; and KDE scale-space, stability, and integrated derivative criteria. Older foundational papers and later developments were considered together, with references followed from the closest matches.
+
+Representative query families included:
+\begin{itemize}
+\item ``Gaussian kernel row sum asymptotic local density manifold'' and ``local kernels zeroth moment boundary'';
+\item ``principal eigenfunction concentration small kernel bandwidth maximum density'' and ``positive integral operator eigenfunction concentration'';
+\item ``Perron eigenvector maximum kernel density bandwidth selection'' and ``data spectroscopy eigenvector maximum'';
+\item ``functional diffusion maps L2 Gaussian kernel'';
+\item ``kernel density bandwidth stability across scales'', ``minimum change bandwidth'', and ``integrated squared bandwidth derivative'';
+\item exact-name and notation searches for the shared TDA manuscript, the proposed criterion, and the Gaussian $\beta=1/7$ calibration.
+\end{itemize}
+These are descriptions of the search families, not a claim that one search engine indexes every relevant result or that a fixed query list exhausts the subject.
+
+\subhead{Depth of source inspection}
+The decisive local-kernel, data-spectroscopy, and positive-operator concentration sources were checked at the level of theorem statements, assumptions, or algorithms. Full texts were inspected for [1--3], [5--10], [13], and [16]; the integral-operator and spectral-clustering literature [14--15] was inspected for scope and operator distinctions. Lindeberg [11] and Hall--Marron [12] were used from author or publisher records/abstracts for limited background claims. The NIST reference [4] supplies an authoritative account of a classical method. The full bibliography records the accessible locations.
+
+The distinction matters: a paper mentioning ``spectral,'' ``Gaussian,'' or ``bandwidth'' was not treated as proving the conjecture. Conversely, differently named results were included where the underlying local positive-operator mechanism was close. Secondary search pages served discovery; the substantive comparisons use original papers or author/publisher records.
+
+\subhead{What remains uncertain}
+This was an extensive public-web and reference-following review, not a certified MathSciNet/zbMATH systematic search, a survey of all languages, or access to unpublished work. Recent or poorly indexed papers may be missing. The exact KDE/grid/joint-limit theorem was not located; that is a finding about the reviewed evidence, not a proof of first publication.
+
+The mathematical proof in this report is independent of that absence finding. It establishes a sufficient version of the conjecture under stated hypotheses and makes the novelty assessment more precise. It does not prove finite-grid accuracy, a localization rate, a limiting eigenvector shape, or consistency as $n\to\infty$.
+
+\textbf{Local source examined.} The statements occur in\par
+\begingroup\small\nolinkurl{Abschlussarbeit_2021/LaTeX/chapters/5_bandwidth_selection.tex}\par\endgroup
+around lines 745--812; the expected-energy result begins around line 818. The source, rather than an older compiled PDF, was used for the claim identification. Thesis sources and outputs were left unchanged.
+
+\pageheading{11 / REFERENCES}{Primary sources and access points}
+\small
+\begin{enumerate}[label={[\arabic*]},itemsep=8pt]
+\item Coifman, R. R., and Lafon, S. (2006). Diffusion maps. \emph{Applied and Computational Harmonic Analysis}, 21, 5--30. \href{https://doi.org/10.1016/j.acha.2006.04.006}{doi:10.1016/j.acha.2006.04.006}. \href{https://cis.temple.edu/~latecki/Courses/RobotFall08/Papers/DiffusionMaps06.pdf}{Accessible full text}. Relevant: Appendix B, Lemmas 8--9.
+\item Berry, T., and Sauer, T. (2016). Local kernels and the geometric structure of data. \emph{Applied and Computational Harmonic Analysis}, 40(3), 439--469. \href{https://doi.org/10.1016/j.acha.2015.03.002}{doi:10.1016/j.acha.2015.03.002}. \href{https://arxiv.org/html/1407.1426v3}{Full preprint text}. Relevant: Lemmas 3.8--3.9.
+\item Berry, T., and Sauer, T. (2015; revised 2016). Density Estimation on Manifolds with Boundary. Preprint, \href{https://arxiv.org/abs/1511.08271}{arXiv:1511.08271}. \href{https://arxiv.org/html/1511.08271v3}{Full text}. Relevant: Theorem 3.2 and the Gaussian boundary mass.
+\item National Institute of Standards and Technology. Digital Library of Mathematical Functions, \href{https://dlmf.nist.gov/2.3\#iii}{Section 2.3(iii): Laplace's Method}. Accessed 12 September 2026.
+\item Shi, T., Belkin, M., and Yu, B. (2008). Data Spectroscopy: Learning Mixture Models using Eigenspaces of Convolution Operators. \emph{Proceedings of the 25th International Conference on Machine Learning}. \href{https://www.stat.berkeley.edu/users/binyu/ps/ICML08.pdf}{Author-hosted full text}. Relevant: Section 2, Proposition 1 and Algorithm 1.
+\item Shi, T., Belkin, M., and Yu, B. (2009). Data spectroscopy: Eigenspaces of convolution operators and clustering. \emph{The Annals of Statistics}, 37(6B), 3960--3984. \href{https://doi.org/10.1214/09-AOS700}{doi:10.1214/09-AOS700}. \href{https://arxiv.org/pdf/0807.3719}{Full text}. Relevant: Theorems 2--3 and Corollary 2.
+\item Djidjou-Demasse, R., Ducrot, A., and Fabre, F. (2017). Steady state concentration for a phenotypic structured problem modeling the evolutionary epidemiology of spore producing pathogens. \emph{Mathematical Models and Methods in Applied Sciences}, 27(2), 385--426. \href{https://doi.org/10.1142/S0218202517500051}{doi:10.1142/S0218202517500051}. \href{https://lmah.univ-lehavre.fr/~ducrot/pdf/DemasseDucrotFabre_M3AS.pdf}{Author-hosted full text}. Relevant: Assumptions 2.1--2.4; Theorems 2.2--2.3.
+\item Perona, P., and Freeman, W. T. (1998). A factorization approach to grouping. \emph{Computer Vision---ECCV '98}, 655--670. \href{https://doi.org/10.1007/BFb0055696}{doi:10.1007/BFb0055696}. \href{https://www.merl.com/publications/docs/TR99-03.pdf}{Institution-hosted full text}. Relevant: dominant affinity eigenvectors and grouping, Section 4.
+\end{enumerate}
+\normalsize
+
+\pageheading{12 / REFERENCES}{Related applications and operator theory}
+\small
+\begin{enumerate}[label={[\arabic*]},start=9,itemsep=8pt]
+\item Barroso, M., Ala\'iz, C. M., Torrecilla, J. L., and Fern\'andez, A. (2024; online 2023). Functional diffusion maps. \emph{Statistics and Computing}, 34, article 22. \href{https://doi.org/10.1007/s11222-023-10332-1}{doi:10.1007/s11222-023-10332-1}. Relevant: Section 3.2, $L^2$ Gaussian affinity for functions.
+\item Comaniciu, D. (2003). An Algorithm for Data-Driven Bandwidth Selection. \emph{IEEE Transactions on Pattern Analysis and Machine Intelligence}, 25(2). \href{https://comaniciu.net/Papers/BandwidthSelection.pdf}{Author-hosted full text}. Relevant: scale stability, Section 4; divergence construction, Appendix B.
+\item Lindeberg, T. (1998). Feature Detection with Automatic Scale Selection. \emph{International Journal of Computer Vision}, 30(2), 77--116. \href{https://www.csc.kth.se/cvap/abstracts/cvap198.html}{Author's record and abstract}, including the earlier technical report. Used for background on normalized derivative scale selection.
+\item Hall, P., and Marron, J. S. (1987). Estimation of integrated squared density derivatives. \emph{Statistics \& Probability Letters}, 6(2), 109--115. \href{https://doi.org/10.1016/0167-7152(87)90083-6}{doi:10.1016/0167-7152(87)90083-6}. \href{https://repository.lib.ncsu.edu/items/3aca3497-7c46-4970-a265-e3263ec6aa93}{Institutional record}. Used at abstract/record level for the established derivative-energy context.
+\item Botev, Z. I., Grotowski, J. F., and Kroese, D. P. (2010). Kernel density estimation via diffusion. \emph{The Annals of Statistics}, 38(5), 2916--2957. \href{https://doi.org/10.1214/10-AOS799}{doi:10.1214/10-AOS799}. \href{https://arxiv.org/pdf/1011.2602}{Full text}. Relevant: Section 2, equation (2), and the heat-equation representation of Gaussian KDE.
+\item Von Luxburg, U., Belkin, M., and Bousquet, O. (2008). Consistency of spectral clustering. \emph{The Annals of Statistics}. \href{https://arxiv.org/abs/0804.0678}{arXiv record and full-text access}. Used to distinguish normalized and unnormalized graph-Laplacian consistency from the present raw-affinity problem.
+\item Rosasco, L., Belkin, M., and De Vito, E. (2010). On Learning with Integral Operators. \emph{Journal of Machine Learning Research}, 11, 905--934. \href{https://jmlr.org/papers/v11/rosasco10a.html}{Journal record}; \href{https://jmlr.org/papers/volume11/rosasco10a/rosasco10a.pdf}{full text}. Used for empirical integral-operator spectral approximation context.
+\item Lindenbaum, O., Salhov, M., Yeredor, A., and Averbuch, A. (2020). Gaussian bandwidth selection for manifold learning and classification. \emph{Data Mining and Knowledge Discovery}, 34(6), 1676--1712. \href{https://doi.org/10.1007/s10618-020-00692-x}{doi:10.1007/s10618-020-00692-x}. \href{https://pmc.ncbi.nlm.nih.gov/articles/PMC7330274/}{Full text}. Different target parameter: width of the graph affinity.
+\end{enumerate}
+\normalsize
+\vfill
+\textbf{Unpublished local reference, not assessed as prior public literature.}\par
+Barali\'c, D., Chernyshev, V., Spodarev, E., and Sukhanov, I. (2026). \emph{Spectral scale selection principle in TDA}. Listed in the thesis bibliography as an unpublished manuscript, ``Paper PCA project.'' No public full text was located in this review; its mathematical overlap remains unassessed.
+\end{document}

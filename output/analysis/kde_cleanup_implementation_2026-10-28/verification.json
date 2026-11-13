@@ -1,0 +1,96 @@
+{
+  "notebooks_before": 20,
+  "notebooks_after": 16,
+  "python_files_after": 65,
+  "notebook_code_cells_checked": 141,
+  "syntax_errors": [],
+  "notebooks_with_pdf_export_setup": 16,
+  "preserved_files_checked": 512,
+  "changed_or_missing_preserved_files": [],
+  "unchanged_numerical_package_files": 22,
+  "changed_numerical_package_files": [],
+  "deleted_files": [
+    "Code/Code_kde/outputs/analysis/local_q1_minimizers_selected_n/run_experiment.py",
+    "Code/Code_kde/xx_notebooks_asymptotics/r13over14_joint_N_lambda_limit.ipynb",
+    "Code/Code_kde/xx_notebooks_continuous_minimizers/q1_local_minimizers_selected_n.ipynb",
+    "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_sample_sizes.ipynb",
+    "Code/Code_kde/xx_notebooks_overview/g_rs_error_vs_k_single_sample.ipynb"
+  ],
+  "main_guide_covers_every_notebook": true,
+  "broken_links_in_modified_documents": [],
+  "broken_implementation_report_links": [],
+  "active_references_to_deleted_code": [],
+  "git_diff_check_passed": true,
+  "tests": {
+    "python": "/opt/anaconda3/bin/python3",
+    "tests_run": 122,
+    "successful": true,
+    "elapsed_seconds": 13.33796699999948,
+    "failures": [],
+    "errors": [],
+    "skipped": []
+  },
+  "equivalence": {
+    "single_sample_full_saved_export": {
+      "rows": 141,
+      "columns": 7,
+      "sample_size": 200,
+      "bandwidths": 50,
+      "maximum_csv_absolute_difference": 2.220446049250313e-16,
+      "indices_equal": true
+    },
+    "q1_original_runner_comparisons": [
+      {
+        "case": "canonical_n100_sample0",
+        "local_minima": 1,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      },
+      {
+        "case": "canonical_n100_sample1",
+        "local_minima": 1,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      },
+      {
+        "case": "canonical_n100_sample2",
+        "local_minima": 1,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      },
+      {
+        "case": "canonical_n200_sample0",
+        "local_minima": 1,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      },
+      {
+        "case": "canonical_n200_sample1",
+        "local_minima": 1,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      },
+      {
+        "case": "canonical_n200_sample2",
+        "local_minima": 1,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      },
+      {
+        "case": "no_local_minimum",
+        "local_minima": 0,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      },
+      {
+        "case": "multiscale",
+        "local_minima": 2,
+        "maximum_h_energy_difference": 0.0,
+        "interval_boundary": 1
+      }
+    ],
+    "all_checks_passed": true,
+    "original_source_revision": "cfd86d40511e83c85634ee75317d0e3b3121b373"
+  },
+  "protected_thesis_git_status": ""
+}
