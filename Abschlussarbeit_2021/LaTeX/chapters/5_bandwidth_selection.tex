@@ -132,7 +132,7 @@ for the set of all probability densities. Note that $\mathcal{P}\subseteq L^1(\m
 
 Since we will use divergences to construct scale similarity matrices, it is important to know under which conditions on $f$ the $f$-divergence and thus the scale similarity matrix are symmetric. Fortunately, the $f$-divergence has a well-known symmetry characterization. The divergence $D_f$ is symmetric, that is, $D_f(p\|q)=D_f(q\|p)$ for all $p,q\in\mathcal{P}$, if and only if there exists a constant $c\in\mathbb{R}$ such that $f(t)-f^{\ast}(t)=c(t-1)$, where $f^{\ast}:\mathbb{R}_{>0}\to\mathbb{R}$ is defined by $f^{\ast}(t):=tf(t^{-1})$. For a reference, see~\cite[Propositions~1 and~2]{sason_f-divergences_2018}.
 
-In the following, we introduce a few classes of parametrized $f$-divergences. Each of these classes contains exactly one symmetric divergence among them. The numerical experiments below will make use of just one symmetric divergence, namely the Bregman $\beta$-divergence with $\beta=2$ (which is half of the squared $L^2$ distance) introduced in Section~\ref{sec:bregman_divergences} below, since it leads to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in Chapter~\ref{chap:outlook}. We nevertheless introduce the divergences in this generality so that the ideas in Chapter~\ref{chap:outlook} can be better appreciated.
+In the following, we introduce a few classes of parametrized $f$-divergences. Each of these classes contains exactly one symmetric divergence. The numerical experiments below will make use of just one symmetric divergence, namely the Bregman $\beta$-divergence with $\beta=2$ (which is half of the squared $L^2$ distance) introduced in Section~\ref{sec:bregman_divergences} below, since it leads to symmetric scale similarity matrices, of which we analyze the Perron vector. A possible extension of our scale selection principle to asymmetric scale similarity matrices is discussed in Chapter~\ref{chap:outlook}. We nevertheless introduce the divergences in this generality so that the ideas in Chapter~\ref{chap:outlook} can be better appreciated.
 
 A prominent parametrized family of $f$-divergences is the so-called \textit{$\alpha$-divergence} (see~\cite[Equation~(7)]{cichocki_families_2010}), where the function $f=f_{\alpha}$, $\alpha\in(0,1)$, is given by
 \begin{align}\label{eq:alpha_generator}
@@ -145,7 +145,7 @@ The resulting divergence is then given by
 
 Taking the limit $\alpha\to1$, we recover the Kullback--Leibler divergence, whereas taking the limit $\alpha\to0$ recovers the reverse Kullback--Leibler divergence. At $\alpha=1/2$, we obtain $D_{1/2}(p\|q)=4D_H(p,q)$, where $D_H(p,q):=(1/2)\int(\sqrt{p(x)}-\sqrt{q(x)})^2\,dx=1-\int\sqrt{p(x)q(x)}\,dx$ is the squared Hellinger distance. In particular, by the symmetry characterization of $f$-divergences, the $\alpha$-divergence is symmetric if and only if $\alpha=1/2$. By Hölder's inequality, we have $0\le C_{\alpha}(p,q)\le 1$, where $C_{\alpha}(p,q):=\int p(x)^{\alpha}q(x)^{1-\alpha}\,dx$, and thus $0\le D_{\alpha}(p\| q)\le\alpha^{-1}(1-\alpha)^{-1}$ for all $\alpha\in(0,1)$.
 
-Another class of divergences is given by the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. We have used the normalizing factor $1/2$ so that setting $s=1$ recover the well-known total variation distance: $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the inequalities $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
+Another class of divergences is given by the \textit{$\chi^s$-divergences} (see~\cite[Equation~(32)]{sason_f-divergences_2018}). They are determined by $f_s(t)=(1/2)|t-1|^s$, $t>0$, where $s\ge1$. We have used the normalizing factor $1/2$ so that setting $s=1$ recovers the well-known total variation distance $d_{\text{TV}}(p,q):=(1/2)\int|p(x)-q(x)|\,dx$, which is the only symmetric $\chi^s$-divergence. The total variation distance and the squared Hellinger distance are related by the inequalities $D_H(p,q)\le d_{\text{TV}}(p,q)\le2\sqrt{D_H(p,q)}$.
 
 Another important divergence that belongs to the class of $f$-divergences is the \textit{Jensen--Shannon divergence}. The function $f=f_{\operatorname{JS}}$ is set to be
 \begin{align}\label{eq:js_generator}
@@ -335,7 +335,7 @@ where in step $(\ast)$ we have used a well-known integral identity (see, for exa
     \label{tab:hilbert_divergence_embeddings}
 \end{table}
 
-In the context of our scale selection methodology, Theorem~\ref{thm:schoenberg} gives a general construction principle for a scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})$ that is guaranteed to be positive (semi-) definite. Namely, we set $S^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$ where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function that is continuous at zero.
+In the context of our scale selection methodology, Theorem~\ref{thm:schoenberg} gives a general construction principle for a scale similarity matrix $S^{(N)}=(S^{(N)}_{ij})$ that is guaranteed to be positive (semi-) definite. Namely, we set $S^{(N)}_{ij}=\phi(D(\hat{f}_{h_i},\hat{f}_{h_j}))$, where $D$ is some conditionally negative definite divergence and $\phi$ a completely monotone function that is continuous at zero.
 
 Additionally, the transformation $S_{ij}=\exp{(-D_{ij}/\tau)}$ can be motivated as follows. Let $H(p):=-\sum_jp_j\log{p_j}$ be the entropy of a probability vector $p\in\mathbb{R}^{N}$, which can be interpreted as an uncertainty measure. The entropy $H(p)$ is maximal for $p=(N^{-1},\dots,N^{-1})$ and minimal for $p=e_j$ for some $j=1,\dots,N$, where $e_j$ is the $j$-th unit vector in $\mathbb{R}^N$. In contrast, $-H(p)$ can be seen as a concentration measure, that is, high values of $-H(p)$ correspond to $p$ being concentrated on few scales, and small values of $-H(p)$ correspond to $p$ being nearly uniform.
 
@@ -509,13 +509,13 @@ One particular advantage of this construction is that it preserves the Perron ve
 Here, we explain the results of the experiment with fixed $N$ and increasing $\lambda$ presented in Figure~\ref{fig:chosen_bandwidths_vs_lambda}. Taking the limit $\lambda\to\infty$, we get
 \begin{align*}
     \lim\limits_{\lambda\to\infty}\Tilde{A}_{ij}^{(\lambda)}=\begin{cases}
-        1 & \text{if }(i,j)\in\arg\min_{k\ne l}D_{kl}\\
+        1 & \text{if }(i,j)\in\arg\min_{k\ne l}D_{kl},\\
         0 & \text{otherwise}.
     \end{cases}
 \end{align*}
 In the limit, this is the adjacency matrix of a graph on $\{h_1,\dots,h_N\}$ with edges between $h_i$ and $h_j$ if and only if $(i,j)\in\arg\min_{k\ne l}D_{kl}$.
 
-In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ divergence as established in Proposition~\ref{prop:L2_divergence_matrix} there must exist some $j^{\ast}\in\{1,\dots,N-1\}$ such that the adjacent index pair $(j^{\ast},j^{\ast}+1)$ minimizes $D_{ij}$ over $i\ne j$. Assume, for contradiction, that all index pairs $(i_0,j_0)$ that minimize $D_{ij}$ over $i\ne j$ have at least one other index strictly in between them. Set $a=\min\{i_0,j_0\}$ and $b=\max\{i_0,j_0\}$. Then $a<a+1<b$, and by symmetry and the Robinson property $d_{\ast}=D_{i_0j_0}=D_{ab}\ge D_{a,a+1}\ge d_{\ast}$, and thus $(a,a+1)$ would be an adjacent pair that minimizes $D_{ij}$ over $i\ne j$, a contradiction.
+In fact, if $D$ is a Robinson matrix, which is the case when we use the $L^2$ divergence as established in Proposition~\ref{prop:L2_divergence_matrix}, there must exist some $j^{\ast}\in\{1,\dots,N-1\}$ such that the adjacent index pair $(j^{\ast},j^{\ast}+1)$ minimizes $D_{ij}$ over $i\ne j$. Assume, for contradiction, that all index pairs $(i_0,j_0)$ that minimize $D_{ij}$ over $i\ne j$ have at least one other index strictly in between them. Set $a=\min\{i_0,j_0\}$ and $b=\max\{i_0,j_0\}$. Then $a<a+1<b$, and by symmetry and the Robinson property $d_{\ast}=D_{i_0j_0}=D_{ab}\ge D_{a,a+1}\ge d_{\ast}$, and thus $(a,a+1)$ would be an adjacent pair that minimizes $D_{ij}$ over $i\ne j$, a contradiction.
 
 Now assume that $d_{\ast}=D_{j^{\ast},j^{\ast}+1}$ for a unique $j^{\ast}\in\{1,\dots,N-1\}$. As a side note, this would automatically establish uniqueness among all $i<j$ because otherwise, if there were a non-adjacent pair $(i_0,j_0)$ with $i_0<j_0$ attaining $d_{\ast}$, then, by the Robinson property, both adjacent pairs $(i_0,i_0+1)$ and $(j_0-1,j_0)$ would also attain $d_{\ast}$, contradicting the uniqueness of $j^{\ast}$.
 
@@ -536,7 +536,7 @@ where $r_u:\{\tau\in X:u+\tau\in U\}\to Y$ is a remainder that fulfills $\|r_u(\
 
 Assume that the line segment $\{u+t\tau:t\in[0,1]\}$ is inside $U$ and that $\Psi$ is Fréchet differentiable at every point of that segment. Define $\gamma:[0,1]\to Y$ by $\gamma(t)=\Psi(u+t\tau)$. Using the chain rule, we have $\gamma'(t)=d\Psi(u+t\tau)[\tau]$. Now, if $\Psi\in C^{1}(U)$, then $\gamma$ is continuously differentiable, and by the fundamental theorem of calculus, $\Psi(u+\tau)-\Psi(u)=\gamma(1)-\gamma(0)=\int_0^1\gamma'(t)\,dt=\int_0^1d\Psi(u+t\tau)[\tau]\,dt$. 
 
-This yields the following bound on norm of the remainder.
+This yields the following bound on the norm of the remainder.
 \begin{equation}\label{eq:frechet_remainder_bound}
     \begin{aligned}
         \|r_u(\tau)\|_Y&\le\int_0^1\|(d\Psi(u+t\tau)-d\Psi(u))[\tau]\|_Y\,dt\\&
@@ -599,7 +599,7 @@ Let $v^{(N)}$ be the Perron vector of $S^{(N)}$, that is,
 \end{align}
 The Perron vector $v^{(N)}$ has a large entry $v_i^{(N)}$ if the weighted row sum $\sum_{j=1}^{N}S_{ij}^{(N)}v_j^{(N)}$ is large. Using the normalization $\|v^{(N)}\|_1=1$, we can interpret the entries $v_i^{(N)}$ as weights, which allows us to say that the Perron vector gives a bandwidth $h_i$ a higher weight if $\hat{f}_{h_i}$ is similar, in terms of $L^2$-distance, to other kernel density estimates whose bandwidths $h_j$ have also been given a large weight.
 
-Proposition~\ref{prop:main_thm} establishes that, for increasingly fine bandwidth grids, the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately proportional to $\hat{Q}_r^{-1/2}(h_{i_N})$, which means that large row sums correspond to low values of the energy functional $\hat{Q}_r$. Through the eigenvector equations~\eqref{eq:eigenvector_equations_111} this provides an informal explanation of why, asymptotically, the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
+Proposition~\ref{prop:main_thm} establishes that, for increasingly fine bandwidth grids, the unweighted row sum $\sum_{j=1}^{N}S_{i_Nj}^{(N)}$ is approximately proportional to $\hat{Q}_r^{-1/2}(h_{i_N})$, which means that large row sums correspond to low values of the energy functional $\hat{Q}_r$. Through the eigenvector equations~\eqref{eq:eigenvector_equations_111}, this provides an informal explanation of why, asymptotically, the Perron vector peaks at the minimizer of the energy functional $\hat{Q}_r$.
 
 Moreover, since the energy functional $\hat{Q}_r$ evaluated at $h=\psi_r^{-1}(t)$ is half the squared operator norm of the Fréchet derivative of the curve $\Phi:t\mapsto\hat{f}_{\psi_r^{-1}(t)}$, that is, $\|d\Phi(t)\|_{\operatorname{op}}^2=2\hat{Q}_r(h)$ by the chain rule, its minimizer corresponds to the point at which the $L^2$-curve $\Phi:t\mapsto\hat{f}_{\psi_r^{-1}(t)}$ changes most slowly.
 
@@ -657,7 +657,7 @@ We can describe the behavior of $\hat{Q}_r$ as $h\downarrow0$ and as $h\to\infty
 \end{align*}
 where $M:=\#\{(i,j):X_i=X_j\}\ge n>0$. In particular, $\hat{Q}_r(h)\to\infty$ as $h\downarrow0$ and $\hat{Q}_r(h)\to0$ as $h\to\infty$. Since $\hat{Q}_r(h)>0$ for all $h>0$, this implies that $\hat{Q}_r$ has no global minimum on $(0,\infty)$. For later use, we set $G_r(h):=h^{1+2r}\hat{Q}_r(h)$. Then $G_r(h)=CS(h)$ with the constant $C:=4^{-1}n^{-2}\pi^{-1/2}$.
 
-From the explicit formula, we see that the energy functional it is analytic on $(0,\infty)$, which allows us to conclude that the set of its minimizers on $[h_{\min},h_{\max}]$ is finite. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$, then $\mathcal{H}_Q$ would have a limit point in that interval (see~\cite[Theorem~2.37]{rudin_real_1987}). By the identity theorem for analytic functions (see~\cite[Corollary~1.2.7]{Krantz2012-yf}), we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$, which contradicts the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ as $h\to\infty$.
+From the explicit formula, we see that the energy functional is analytic on $(0,\infty)$, which allows us to conclude that the set of its minimizers on $[h_{\min},h_{\max}]$ is finite. If there were infinitely many minimizers of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$, then $\mathcal{H}_Q$ would have a limit point in that interval (see~\cite[Theorem~2.37]{rudin_real_1987}). By the identity theorem for analytic functions (see~\cite[Corollary~1.2.7]{Krantz2012-yf}), we would consequently have that $\hat{Q}_r$ is constant on $(0,\infty)$, which contradicts the facts that $\hat{Q}_r(h)>0$ for all $h>0$ and $\hat{Q}_r(h)\to0$ as $h\to\infty$.
 
 \textbf{Local extrema of the energy functional}
 
@@ -669,7 +669,7 @@ The existence of local extrema thus depends on the realized sample $(X_1,\dots,X
     Let $\hat{f}_{h}$ be the kernel density estimate with a Gaussian kernel $K$ constructed from independent and identically distributed data $X_1,\dots,X_n\sim f$. Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_{h}^{(j)}\|_2^2$. Then
     \begin{enumerate}
         \item[(a)] For $r>-1/2$, the energy functional $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h_0)<2-r$ for some $h_0>0$.
-        \item[(b)] For $-1/2<r<2$, we have $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum and maximum})\to1$ as $n\to\infty$.
+        \item[(b)] For $-1/2<r<2$, we have $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum and one maximum})\to1$ as $n\to\infty$.
     \end{enumerate}
 \end{Prop}
 
@@ -691,7 +691,7 @@ As in Section~\ref{sec:numerical_experiments}, we use the interval $[h_{\min},h_
 
 Prior to conducting the experiment, we need a reference bandwidth, that is, an approximation of a global minimizer of $\hat{Q}_r$ on $[h_{\min},h_{\max}]$. For each sample, we use the bandwidth selected by the refined Brent search with refinement setting $M=769$ and denote it by $h_{\text{ref}}$. We define the relative error of any other selected bandwidth $\hat{h}$ with respect to this reference bandwidth by $|\hat{h}-h_{\text{ref}}|/h_{\text{ref}}$.
 
-The specific choice of $M=769$ is motivated by a preceding experiment, in which we examine the number of local minima found by the refined Brent search across the 100 samples as a function of to the refinement setting $M$ (see Figure~\ref{fig:brent_minima_vs_refinement}). We found that, for all tested values from $M=769$ onward, the number of detected local minima across the $100$ samples remained at $123$. This provides numerical evidence that there are $123$ local minima across these samples. Specifically, two local minima were found in $23$ samples, and one local minimum was found in each of the remaining $77$ samples. Thus, at least one local minimum was found in each of the $100$ tested samples.
+The specific choice of $M=769$ is motivated by a preceding experiment, in which we examine the number of local minima found by the refined Brent search across the 100 samples as a function of the refinement setting $M$ (see Figure~\ref{fig:brent_minima_vs_refinement}). We found that, for all tested values from $M=769$ onward, the number of detected local minima across the $100$ samples remained at $123$. This provides numerical evidence that there are $123$ local minima across these samples. Specifically, two local minima were found in $23$ samples, and one local minimum was found in each of the remaining $77$ samples. Thus, at least one local minimum was found in each of the $100$ tested samples.
 
 \begin{figure}[p]
     \centering
@@ -711,7 +711,7 @@ The specific choice of $M=769$ is motivated by a preceding experiment, in which 
         & \shortstack{Assembly\\(ms)}
         & \shortstack{Perron\\(ms)}
         & \shortstack{Mean error\\(\%)}
-        & \shortstack{Maximum\\error(\%)}
+        & \shortstack{Maximum\\error (\%)}
         & \shortstack{Total\\minima} \\
         \midrule
         & Unrefined

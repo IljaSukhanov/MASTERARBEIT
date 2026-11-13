@@ -2,7 +2,7 @@
 
 The motivation for the topic of this thesis comes from the unpublished manuscript~\cite{Baralic2026}, where a spectral scale selection principle is developed for settings within the field of Topological Data Analysis (TDA).
 
-In TDA, methods such as persistent homology analyze topological features such as connected components, holes, and cavities of simplicial complexes built from high-dimensional point clouds across a wide range of scales and thereby avoid committing to one specific scale.
+In TDA, methods such as persistent homology analyze topological features including connected components, holes, and cavities of simplicial complexes built from high-dimensional point clouds across a wide range of scales and thereby avoid committing to one specific scale.
 
 The manuscript argues that, in many applications, one must still choose a certain scale and continue working with the simplicial complex at that scale. For example, in manifold reconstruction, persistent homology might output a range of scales at which the simplicial complex has stable topological features, but in many downstream tasks, one must commit to a certain scale at which the homotopy type of the simplicial complex built from the point cloud resembles that of the manifold from which the points were drawn.
 
@@ -12,7 +12,7 @@ The central question of this thesis is whether a similar methodology can be deve
 
 This situation is similar, as we again have a sequence of objects, this time density functions instead of simplicial complexes, indexed by a scale parameter. In KDE, this parameter is the bandwidth, which controls the degree of oscillation of the density estimate, whereas the filtration parameter $\epsilon$ indicates a distance threshold in Euclidean space.
 
-KDE also requires one to choose the bandwidth appropriately. Bandwidth selection is a classical topic in non-parametric statistics, and most methods are based on minimizing an approximation of an error criterion, most often the (mean) integrated squared error, or on estimating a minimizer of such an criterion.
+KDE also requires one to choose the bandwidth appropriately. Bandwidth selection is a classical topic in non-parametric statistics, and most methods are based on minimizing an approximation of an error criterion, most often the (mean) integrated squared error, or on estimating a minimizer of such a criterion.
 
 The goal of this thesis is to develop a spectral scale selection principle in the context of KDE, explain what the spectral method selects, and connect it to classical bandwidth selection.
 
@@ -20,7 +20,7 @@ The core idea is to construct scale similarity matrices $S$ by $S_{ij}=\phi(D_{i
 
 The thesis is organized as follows. Section~\ref{sec:preliminaries_kde} provides preliminaries on kernel density estimation and classical bandwidth selection methods that are based on the (mean) integrated squared error between the true but unknown density $f$ and the kernel density estimate $\hat{f}_h$.
 
-In Section~\ref{sec:divergences}, we present two classes of divergences, namely $f$-divergences and Bregman divergences associated with a function $\phi$. We characterize the functions $f$ and $\phi$ for which these divergences are symmetric, which results in symmetric scale similarity matrix. Special attention is given to the $L^2$ divergence, which arises from the Bregman $\beta$-divergence for $\beta=2$. In particular, we discuss its approximate computation via the Fourier transform, which can be more efficient than the explicit formula.
+In Section~\ref{sec:divergences}, we present two classes of divergences, namely $f$-divergences and Bregman divergences associated with a function $\phi$. We characterize the functions $f$ and $\phi$ for which these divergences are symmetric, which results in symmetric scale similarity matrices. Special attention is given to the $L^2$ divergence, which arises from the Bregman $\beta$-divergence for $\beta=2$. In particular, we discuss its approximate computation via the Fourier transform, which can be more efficient than the explicit formula.
 
 Section~\ref{sec:assembly_of_scale_sim_matrices} is subdivided into three subsections, the first of which gives some structural properties of the divergence matrix $D=(D_{ij})$, where $D_{ij}$ is half the squared $L^2$ distance between kernel density estimates at different bandwidth scales $h_i$ and $h_j$, corresponding to the Bregman $\beta$-divergence with $\beta=2$. In particular, an endpoint bias for the Perron vector of $D$ is proven. The second subsection introduces theoretically motivated similarity transformations $\phi$ to obtain a similarity matrix $S$ via $S_{ij}=\phi(D_{ij})$. The third subsection is concerned with a general parametrized bandwidth grid construction. It proposes a way to choose the bandwidth candidates $0<h_1<\dots<h_N$, depending on a parameter $r\in[0,1]$ that controls the arrangement of the bandwidths, where $r=1$ corresponds to linearly arranged bandwidths and $r=0$ to geometrically arranged bandwidths.
 
