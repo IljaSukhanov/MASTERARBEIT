@@ -1,6 +1,6 @@
 \chapter{Appendix}\label{chap:appendix}
 
-\subsection*{Proof of Lemma~\ref{lem:acute_chain_perron_vec}}\label{sec:proof_acute_chain_perron_vec}
+\section{Proof of Lemma~\ref{lem:acute_chain_perron_vec}}\label{sec:proof_acute_chain_perron_vec}
 
 \begin{proof}
     Since the points $x_j$ are distinct, all off-diagonal entries in the matrix $D$ are positive, making $D$ irreducible, and by the Perron--Frobenius theorem, its Perron vector $v$ has positive entries and is unique up to scaling. We fix $v$ so that $v^{T}\mathbf{1}=1$ and interpret $v$ as a discrete probability distribution on $\{x_1,\dots,x_N\}$. Let $X$ be a discrete random variable with $\mathbb{P}(X=x_j)=v_j$. We write $\mu:=\mathbb{E}[X]=\sum_{j=1}^{N}v_jx_j$ for the expected value and $\sigma^2:=\operatorname{Var}[X]=\sum_{j=1}^{N}v_j\|x_j-\mu\|^2$ for the variance. Then
@@ -43,7 +43,7 @@
     and therefore $v_i<\max\{v_1,v_N\}$ for all interior coordinates $i=2,\dots,N-1$.
 \end{proof}
 
-\subsection*{Proof of Proposition~\ref{prop:L2_divergence_matrix}}\label{sec:proof_L2_divergence_matrix}
+\section{Proof of Proposition~\ref{prop:L2_divergence_matrix}}\label{sec:proof_L2_divergence_matrix}
 
 \begin{proof}
     The Fourier transform $\mathcal{F}[\hat{f}_h]$ of a kernel density estimate $\hat{f}_h$ with a Gaussian kernel is given by $\mathcal{F}[\hat{f}_h](\omega)=P_n(\omega)\exp{(-h^2\omega^2/2)}$, as stated in Equation~\eqref{eq:fourier_transform_of_kde}. We set $\delta_k:=\hat{f}_{h_{k+1}}-\hat{f}_{h_k}$. By linearity of the Fourier transform, $\mathcal{F}[\delta_k](\omega)=P_n(\omega)b_k(\omega)$, where we have set $b_k(\omega):=\exp{(-h_{k+1}^2\omega^2/2)}-\exp{(-h_k^2\omega^2/2)}$. Using Parseval's identity, we write
@@ -65,7 +65,7 @@
      by the first part of the proof.
 \end{proof}
 
-\subsection*{Proof of Theorem~\ref{thm:schoenberg}}\label{sec:proof_schoenberg}
+\section{Proof of Theorem~\ref{thm:schoenberg}}\label{sec:proof_schoenberg}
 
 
 \begin{proof}
@@ -81,7 +81,7 @@
     Now, we additionally assume that $D(x,y)>0$ for all $x\ne y$, that $\phi$ is non-constant, and that $x_1,\dots,x_n$ are pairwise distinct. Assume again that $(a)$ holds. Then, by the equivalence to $(c)$, we have $0<D(x_i,x_j)=\|\Phi(x_i)-\Phi(x_j)\|_{\mathcal{H}}^{2}$ for $i\ne j$. Thus, the points $z_i=\Phi(x_i)$ are pairwise distinct. Invoking~\cite[Theorem~3.1]{guella_gaussian_2022}, we see that the matrix $\Tilde{S}_t$ is strictly positive definite for any $t>0$, that is, $a^T\Tilde{S}_ta>0$ for all $a\in\mathbb{R}^{n}$, $a\ne0$. Since $\phi$ is assumed to be non-constant, this forces $\mu((0,\infty))>0$. Thus, $a^{T}Sa=\int_{[0,\infty)}a^{T}\Tilde{S}_ta\,d\mu(t)>0$, that is, $S$ is strictly positive definite.
 \end{proof}
 
-\subsection*{Proof of Lemma~\ref{lem:asymptotic_approx_r_linear_spacing}}\label{sec:proof_asymptotic_approx_r_linear_spacing}
+\section{Proof of Lemma~\ref{lem:asymptotic_approx_r_linear_spacing}}\label{sec:proof_asymptotic_approx_r_linear_spacing}
 
 \begin{proof}
     First, suppose $0<r\le1$. We have $h_{j_N}^r-h_{i_N}^r=r(j_N-i_N)\Delta_{r,N}$, from which it follows that
@@ -107,7 +107,7 @@
 \end{proof}
 
 
-\subsection*{Proof of Lemma~\ref{lem:frechet_derivative_of_kde}}\label{sec:proof_frechet_derivative_of_kde}
+\section{Proof of Lemma~\ref{lem:frechet_derivative_of_kde}}\label{sec:proof_frechet_derivative_of_kde}
 
 \begin{proof}
     Let $h>0$. For every $x\in\mathbb{R}$, we have
@@ -153,7 +153,7 @@
     for all $h\in J$ and $\tau\in\mathbb{R}$ with $h+\tau\in J$. Since $d\Psi$ is continuous and $J$ is compact, $d\Psi:J\to\mathcal{L}(\mathbb{R},L^2(\mathbb{R}))$ is uniformly continuous, and hence $\mu_{J}(|\tau|)\to0$ as $\tau\to0$.
 \end{proof}
 
-\subsection*{Proof of Proposition~\ref{prop:main_thm}}\label{sec:proof_main_thm}
+\section{Proof of Proposition~\ref{prop:main_thm}}\label{sec:proof_main_thm}
 
 \begin{proof}
     Recall that $\Delta_{r,N}=\psi_r(h_{j+1})-\psi_r(h_j)=(\psi_r(h_{\max})-\psi_r(h_{\min}))/(N-1)=\mathbf{O}(N^{-1})$ is the spacing between the transformed bandwidths $\psi_r(h_j)$ and $\psi_r(h_{j+1})$. Set $\epsilon_N:=\lambda_N^{1/2}\Delta_{r,N}$ and $t_{N,j}:=\epsilon_N(j-i_N)$, and note that $\epsilon_N=t_{N,j+1}-t_{N,j}$ for all $j=1,\dots,N-1$. We also set $\delta_{N,j}:=(j-i_N)\Delta_{r,N}=\psi_r(h_j)-\psi_r(h_{i_N})$ to be the signed difference between $\psi_r(h_j)$ and $\psi_r(h_{i_N})$. Note that $t_{N,j}=\lambda_N^{1/2}(\psi_r(h_j)-\psi_r(h_{i_N}))=\lambda_N^{1/2}\delta_{N,j}$ is the rescaled spacing between the two transformed bandwidths. We have $\psi_r(h_{\min})-\psi_r(h_{i_N})\to\psi_r(h_{\min})-\psi_r(h_0)<0$ and $\psi_r(h_{\max})-\psi_r(h_{i_N})\to \psi_r(h_{\max})-\psi_r(h_0)>0$ because $\psi_r$ is strictly increasing and continuous (see Remark~\ref{rem:r_linear_grid}) and $h_0$ is assumed to be an interior bandwidth. Thus, since $\lambda_N\to\infty$, we have $t_{N,1}=\sqrt{\lambda_N}(\psi_r(h_{\min})-\psi_r(h_{i_N}))\to-\infty$ and $t_{N,N}=\sqrt{\lambda_N}(\psi_r(h_{\max})-\psi_r(h_{i_N}))\to\infty$. We also have
@@ -287,7 +287,7 @@
     \end{align*}
 \end{proof}
 
-\subsection*{Proof of Proposition~\ref{prop:main_thm2}}\label{sec:proof_main_thm2}
+\section{Proof of Proposition~\ref{prop:main_thm2}}\label{sec:proof_main_thm2}
 
 \begin{proof}
     First, we note that $\mathcal{H}_Q$ is nonempty because $\hat{Q}_r$ is continuous on the compact interval $[h_{\min},h_{\max}]$. In addition, $\mathcal{H}_Q$ is finite, as shown in Section~\ref{sec:expected_energy_functional}. Define the matrix $A^{(N)}:=\sqrt{\lambda_N}\Delta_{r,N}S^{(N)}$ and denote the $i$-th row sum of $A^{(N)}$ by $a_{i,N}$. By the definition of $A^{(N)}$, we have $a_{i,N}=\sqrt{\lambda_N}\Delta_{r,N}R_{i}^{(N)}$, where $R_{i}^{(N)}$ is the $i$-th row sum of $S^{(N)}$. Since $\epsilon_N:=\sqrt{\lambda_N}\Delta_{r,N}$ is a positive scalar, the sum-normalized Perron vectors of $A^{(N)}$ and $S^{(N)}$ coincide and thus $A^{(N)}v^{(N)}=\rho_Nv^{(N)}$, where $\rho_N$ denotes the principal eigenvalue of $A^{(N)}$. By the defining property of the index sequence $(k_N)$ and the eigenvector equation, we have
@@ -376,7 +376,7 @@
 \end{proof}
 
 
-\subsection*{Proof of Corollary~\ref{cor:cor_cor_cor}}\label{sec:proof_cor_cor_cor}
+\section{Proof of Corollary~\ref{cor:cor_cor_cor}}\label{sec:proof_cor_cor_cor}
 
 \begin{proof}
     Using the notation of the proof of Proposition~\ref{prop:main_thm2}, we have $\rho_Nu^{(N)}=A^{(N)}u^{(N)}$, where $u^{(N)}:=v^{(N)}/\|v^{(N)}\|_2$, and thus
@@ -410,7 +410,7 @@
     this proves the statement made in Equation~\eqref{eq:squared_mass_concentration}.
 \end{proof}
 
-\subsection*{Proof of Proposition~\ref{prop:energy_functional_local_extrema}}\label{sec:proof_energy_functional_local_extrema}
+\section{Proof of Proposition~\ref{prop:energy_functional_local_extrema}}\label{sec:proof_energy_functional_local_extrema}
 
 \begin{proof}
     By the heat equation, we have $\partial_hK_h(x)=h\partial_x^2K_h(x)$ and therefore also $\partial_h\hat{f}_h(x)=h\partial_x^2\hat{f}_h(x)=h\hat{f}_h^{(2)}(x)$. Set $u(x,t):=\hat{f}^{(2)}_{\sqrt{2t}}(x)$ and $F(t):=\|u(\cdot,t)\|_2^2$. By the energy identity for solutions of the heat equation (see, for example,~\cite[Equation~(1.23)]{wang_decay_2012}), we have $(1/2)F'(t)=-\|\partial_xu(\cdot,t)\|_2^2$. This gives
