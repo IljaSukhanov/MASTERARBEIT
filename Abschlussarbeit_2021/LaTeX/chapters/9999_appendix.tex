@@ -93,9 +93,15 @@
         h_{j_N}-h_{i_N}&=h_{i_N}\left(\left(1+rc_N\right)^{1/r}-1\right)=h_{i_N}\left(c_N+R(rc_N)\right)\\&
         =h_{i_N}^{1-r}\delta_{ij}^{r,N}+h_{i_N}R(rc_N),
     \end{align*}
+    {\emergencystretch=2em\relax
     where $|h_{i_N}R(rc_N)|\le h_{\max}K_rr^2h_{\min}^{-2r}(\delta_{ij}^{r,N})^2$. This proves the claim with $C:=\max\{h_{\max}K_rr^2h_{\min}^{-2r},1\}$.
+    \par
+    }
 
+    {\emergencystretch=2em\relax
     For $r=0$, we have $h_{j_N}=h_{i_N}\exp{(\delta_{ij}^{0,N})}$ and thus $h_{j_N}-h_{i_N}=h_{i_N}\delta_{ij}^{0,N}+h_{i_N}(\exp{(\delta_{ij}^{0,N})}-1-\delta_{ij}^{0,N})$. Since $|e^x-1-x|\le\sum_{k=2}^{\infty}|x|^k/(k!)\le x^2\sum_{k=2}^{\infty}1/(k!)=(e-2)x^2$ for all $|x|\le1$, the claim follows with $\delta_0:=1$ and $C:=h_{\max}(e-2)$. 
+    \par
+    }
 
     Since $|j_N-i_N|=\mathbf{o}(N)$ by assumption and $\Delta_{r,N}=(\psi_r(h_{\max})-\psi_r(h_{\min}))/(N-1)=\mathbf{O}(N^{-1})$ by Definition~\ref{def:r_linear} and Remark~\ref{rem:r_linear_grid}, we have $\delta_{ij}^{r,N}=(j_N-i_N)\Delta_{r,N}\to0$, so $|\delta_{ij}^{r,N}|\le\delta_0$ holds for all sufficiently large $N$. Thus, in both cases above, we have $|h_{j_N}-h_{i_N}-h_{i_N}^{1-r}\delta_{ij}^{r,N}|\le C(\delta_{ij}^{r,N})^2$ for all sufficiently large $N$, which proves $h_{j_N}-h_{i_N}=h_{i_N}^{1-r}\delta_{ij}^{r,N}+\mathbf{O}((\delta_{ij}^{r,N})^2)$.
 \end{proof}

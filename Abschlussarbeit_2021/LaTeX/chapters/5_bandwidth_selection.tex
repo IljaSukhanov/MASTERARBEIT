@@ -646,7 +646,11 @@ where we have set $z_{ij}(h):=d_{ij}^2/(4h^2)$, $S(h):=\sum_{i,j=1}^{n}e^{-z_{ij
     =\frac{1}{2n^2}h^{-2(1+r)}\sum_{i,j=1}^{n}\int L\left(\frac{x-X_i}{h}\right)L\left(\frac{x-X_j}{h}\right)\,dx\\&
     \stackrel{(\ast)}{=}\frac{1}{4n^2\sqrt{\pi}}h^{-1-2r}\sum_{i,j=1}^{n}e^{-d_{ij}^2/(4h^2)}\left(\frac{3}{4}-3\frac{d_{ij}^2}{4h^2}+\frac{d_{ij}^4}{16h^4}\right),
 \end{align*}
+{\emergencystretch=2em\relax
 where in step $(\ast)$ we have evaluated the integral by completing the square in the exponent, by substitution, and by using the formula $\int u^{2k}e^{-u^2/2}\,du=(2\pi)^{1/2}(2k)!2^{-k}(k!)^{-1}$, $k\in\mathbb{N}_0$.
+\par
+}
+
 
 Since $L(u)<0$ for all $u>1$ (and hence $\|L\|_2^2>0$), we have $L(h^{-1}(x-X_j))<0$ for all $x>h+\max_jX_j$. Thus, the function $x\mapsto \sum_{j=1}^{n}L(h^{-1}(x-X_j))$ is strictly negative on the interval $(h+\max_jX_j,\infty)$, and $\hat{Q}_r$ is strictly positive on $(0,\infty)$.
 
@@ -669,7 +673,7 @@ The existence of local extrema thus depends on the realized sample $(X_1,\dots,X
     Let $\hat{f}_{h}$ be the kernel density estimate with a Gaussian kernel $K$ constructed from independent and identically distributed data $X_1,\dots,X_n\sim f$. Define the roughness ratio $B(h):=h^2R_3(h)R_2(h)^{-1}$, where $R_j(h):=\|\hat{f}_{h}^{(j)}\|_2^2$. Then
     \begin{enumerate}
         \item[(a)] For $r>-1/2$, the energy functional $\hat{Q}_r$ has a local minimum and a local maximum on $(0,\infty)$ if and only if $B(h_0)<2-r$ for some $h_0>0$.
-        \item[(b)] For $-1/2<r<2$, we have $\mathbb{P}(\hat{Q}_r\text{ has at least one local minimum and one maximum})\to1$ as $n\to\infty$.
+        \item[(b)] For $-1/2<r<2$, the probability that $\hat{Q}_r$ has at least one local minimum and one maximum tends to $1$ as $n\to\infty$.
     \end{enumerate}
 \end{Prop}
 
@@ -837,7 +841,10 @@ Lindeberg~\cite[Equation~(79)]{lindeberg_feature_nodate} also introduces a class
 For $\gamma=1-r/2$, we recover our energy functional up to a factor of two, that is, $E_2(h^2)=2\hat{Q}_r(h)$.
 
 
+{\emergencystretch=2em\relax
 The authors of~\cite{shi_data_2008} construct the kernel matrix $K_n$ with entries $(K_n)_{ij}=n^{-1}e^{-\|X_i-X_j\|^2/(2\omega^2)}$, where the data $X_1,\dots,X_n$ are first assumed to come from a multivariate Gaussian distribution. Among other things, they compute its Perron vector $v_0$ and use an index $k\in\arg\max\{|(v_0)_i|:i=1,\dots,n\}$ of the largest absolute entry to estimate the mean $\mu$ of the distribution by $X_k$.
+\par
+}
 
 For data coming from a multivariate Gaussian mixture model, they construct the same kernel matrix $K_n$ and estimate the number of components by the number of eigenvectors $v$ of $K_n$ that have no sign changes on $\{i:|v_i|\ge n^{-1}\max_j|v_j|\}$. Denoting these eigenvectors by $v_0^1,\dots, v_0^G$, where $G$ is the estimated number of components, they estimate the mean $\mu_g$ of each component $g=1,\dots,G$ by $X_{k(g)}$, where $k(g)\in\arg\max\{|(v_0^g)_i|:i=1,\dots,n\}$.
 
